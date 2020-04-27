@@ -27,5 +27,11 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string ContainerType3Id { get; set; }
         public string ContainerType4Id { get; set; }
         public string ContainerType5Id { get; set; }
+        public int? Quantity1 { get; set; }
+        public int? Quantity2 { get; set; }
+        public int? Quantity3 { get; set; }
+        public int? Quantity4 { get; set; }
+        public int? Quantity5 { get; set; }
+        public string ProductId { get; set; }
     }
 }

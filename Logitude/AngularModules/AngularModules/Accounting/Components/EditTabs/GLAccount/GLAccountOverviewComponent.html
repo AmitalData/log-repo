@@ -464,7 +464,7 @@
                                                 <!-- SourceType -->
                                                 <div style="color:white;padding: 10px 5px 2px 5px;    font-size: 11px;">
                                                     <span title="{{transaction['SourceType']}}" [class]="'SourceTypeIcon color-' + transaction['SourceTypeCode']"
-                                                        (click)="OpenSource(transaction['SourceId'])" style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;color:white !important;">{{GetIconText(transaction)}}</span>
+                                                        (click)="OpenSource(transaction, transaction['SourceId'])" style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;color:white !important;">{{GetIconText(transaction)}}</span>
                                                 </div>
                                                 <div style="width: 50px;padding: 9px 0;    font-size: 11px;">
                                                     <a href="javascript:;" (click)="OpenSource(transaction, transaction['SourceId'])">

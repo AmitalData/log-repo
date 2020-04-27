@@ -42,7 +42,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Rate).HasColumnName("Rate");
             this.Property(t => t.ExpectedAmountLocal).HasColumnName("ExpectedAmountLocal");
             this.Property(t => t.Notes).HasColumnName("Notes");
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
             this.Property(t => t.ValueDate).HasColumnName("ValueDate");
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId");
             this.Property(t => t.ChargesTypeId).HasColumnName("ChargesTypeId");
@@ -65,7 +65,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AccountedAmountInLocalCurrency).HasColumnName("AccountedAmountInLocalCurrency");          
             this.Property(t => t.ShipmentPayableAmountTypeCode).HasColumnName("ShipmentPayableAmountTypeCode");
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
-            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
             this.Property(t => t.OpenAmount).HasColumnName("OpenAmount");          
             this.Property(t => t.OpenAmountInProfitCurrency).HasColumnName("OpenAmountInProfitCurrency");
             this.Property(t => t.CorrectionAmount).HasColumnName("CorrectionAmount");

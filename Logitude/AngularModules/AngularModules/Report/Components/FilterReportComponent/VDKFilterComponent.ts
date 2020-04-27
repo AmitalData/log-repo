@@ -8,7 +8,7 @@ import { DateTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'VDKFilterComponent',
     templateUrl: './VDKFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -87,7 +87,7 @@ export class VDKFilterComponent extends BaseComponent {
         this.FromDate = DateTool.GetCurrentDateAsUtc();
         this.FromDate.setMonth(this.FromDate.getMonth() - 1);
         this.ToDate = DateTool.GetCurrentDateAsUtc();
-        this.RunReport(false);
+        //this.RunReport(false);
     }
 
 

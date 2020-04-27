@@ -6,7 +6,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {CourierMasterPM} from '../../../Customs/EntityPMs/CourierMasterPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierConnectedDeclarationListTemplate.html',
 })
 
@@ -112,7 +112,7 @@ export class CourierConnectedDeclarationListTemplate {
        
     //    this.CD.detach();
     //    editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-    //    editWindow.WindowClosed.subscribe(res => {
+    //    editWindow.WindowClosed.subscribe((res:any) => {
     //        this.CD.reattach();
            
            

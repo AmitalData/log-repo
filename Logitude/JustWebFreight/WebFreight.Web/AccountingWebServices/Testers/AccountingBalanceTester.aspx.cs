@@ -2356,7 +2356,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 Category5Id = "",
                 ChartOfAccountsId = "1-186",
                 AccountTypeCode = "",
-                IsReconciled=null,
+                IsReconciled = null,
+                ChartOfAccountsTypeCode = "2"
 
             };
             var SerializeObjectByteParam = LogitudeXmlSerializer.SerializeObject<CardIndexReportParams>(myLedgerTransactionBalanceFilter);

@@ -60,7 +60,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a4df3e57-188f-4efc-804d-1304e18920ec&quot;"
     FieldName="&quot;Id&quot;"
@@ -1434,5 +1436,15 @@
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;TestingMode&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;OpenFormatReport.Features.TestingMode&quot;"
+      FeatureDefaultText="&quot;Testing Mode&quot;" />
+  </AdditionalFeatures>
 </entity>

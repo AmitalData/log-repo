@@ -2,7 +2,7 @@
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './InfrastructureFieldTemplateComponent.html',
 })
 

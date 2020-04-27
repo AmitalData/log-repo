@@ -8,7 +8,7 @@ import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {AppTool} from '../../../Infrastructure/Tools';
 @Component({
-    moduleId: module.id,
+    
     selector: 'StatisticsByCustomerFilterComponent',
     templateUrl: './StatisticsByCustomerFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -53,7 +53,7 @@ export class StatisticsByCustomerFilterComponent extends BaseComponent {
         this.FromDate = this.SetDate(Year, month - 1, 1);
         this.ToDate = this.SetDate(Year, month, daysofmonth);
 
-        this.RunReport(false);
+        //this.RunReport(false);
     }
 
     public IsByCreateDate: boolean = true;

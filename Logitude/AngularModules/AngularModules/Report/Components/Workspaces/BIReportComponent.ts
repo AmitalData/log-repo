@@ -86,7 +86,7 @@ export class BIReportComponent {
     }
 
     EditBIReportClicked(report: BIReportList) {
-        this.entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe((response:any) => {
             if (!AppTool.IsNullOrEmpty(report.Id)) {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {

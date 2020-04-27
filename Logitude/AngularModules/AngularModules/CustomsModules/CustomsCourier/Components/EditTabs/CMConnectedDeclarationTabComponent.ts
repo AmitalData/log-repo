@@ -11,7 +11,7 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CMConnectedDeclarationTabComponent.html',
 })
 
@@ -40,8 +40,8 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         this.entityPM = entityArgs.EntityPM;
         this.connectedListIds = new ObservableCollection([]);
         this.notConnectedListIds = new ObservableCollection([]);
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe((response:any) => {
              
             this.IsVisibile = true;
             this.BuildColumns();

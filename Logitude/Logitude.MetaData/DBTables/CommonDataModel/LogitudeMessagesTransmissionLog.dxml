@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="LogitudeMessagesTransmissionLogs"
+  ShortName="LogitudeMessagesTransLogs"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -20,6 +22,20 @@
   <Column
     Name="SourceTenant"
     Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HAWB"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ParticipantId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -59,22 +75,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="HAWB"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="SentDate"
     Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ParticipantId"
-    Type="varchar"
-    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -96,13 +98,6 @@
     Name="CASSCode"
     Type="varchar"
     Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="UserEmail"
-    Type="varchar"
-    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -196,6 +191,13 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="UserEmail"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="SearchFields"

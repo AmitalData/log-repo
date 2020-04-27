@@ -32,7 +32,9 @@
   Code="&quot;479b&quot;"
   Name="&quot;SLAEscalation Query Group&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;CRM&quot;">
+  ClientModuleName="&quot;CRM&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;3959329f-8857-457f-87a9-2f4c40cd368d&quot;"
     FieldName="&quot;Id&quot;"
@@ -681,4 +683,5 @@
       IsFollowUp="false" />
   </EventTypes>
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

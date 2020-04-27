@@ -20,7 +20,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'GeneratedDocumentCustomFieldComponent',
     templateUrl: './GeneratedDocumentCustomFieldComponent.html',
     inputs: ['DocumentCustomArgs'],    

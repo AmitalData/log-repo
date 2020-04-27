@@ -50,7 +50,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;459faa37-574c-47da-9f7a-b3ed064c70fd&quot;"
     FieldName="&quot;Code&quot;"
@@ -451,4 +453,6 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

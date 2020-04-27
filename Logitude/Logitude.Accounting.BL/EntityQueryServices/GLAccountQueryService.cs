@@ -79,12 +79,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
-        public List<string> GetGLAccountsWithoutLedgerTransactions(List<string> glAccountIds, int tenant)
+        public List<string> GetGLAccountsWithoutLedgerTransactions(List<string> glAccountIds,OpenFormatReportPM openFormatReport, int tenant)
         {
-            return (from l in context.LedgerTransactions
+            List<string> accountIds = (from l in context.LedgerTransactions
 
-                    where !glAccountIds.Contains(l.AccountId) && l.Tenant == tenant
-                    select l.AccountId).ToList();
+                                       where glAccountIds.Contains(l.AccountId) && l.Tenant == tenant && l.AccountingDate >= openFormatReport.FromDate && l.AccountingDate <= openFormatReport.ToDate
+                                       select l.AccountId).ToList();
+
+            return glAccountIds.Where(d => !accountIds.Contains(d)).ToList();
+
 
         }
 
@@ -214,14 +217,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
         public IQueryable<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId, 
-    bool IncludeChildAccounts)
+    bool IncludeChildAccounts,string ChartOfAccountsTypeCode)
         {
            // List<String> allIdAccounts = new List<string>() { GLAccountId };
             IQueryable<string> allIdAccounts = repository.GetQId(new List<string>() { GLAccountId }, tenant);
             if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4)
-                || !String.IsNullOrWhiteSpace(cat5) || !String.IsNullOrWhiteSpace(gLAccountType) || !String.IsNullOrWhiteSpace(chartOfAccountsId))
+                || !String.IsNullOrWhiteSpace(cat5) || !String.IsNullOrWhiteSpace(gLAccountType) || !String.IsNullOrWhiteSpace(chartOfAccountsId)
+                || !String.IsNullOrWhiteSpace(ChartOfAccountsTypeCode))
             {
-                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId);
+                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode);
                  //   .ToList();
             }
 
@@ -1069,9 +1073,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 CardPM cardPM = GetCardById(cardId, tenant);
 
 
-                if (cardPM.PartnerTypeId == PartnerTypeValues.Customer || cardPM.PartnerTypeId == PartnerTypeValues.CustomClearance || cardPM.PartnerTypeId == PartnerTypeValues.CustomAgent || cardPM.PartnerTypeId == PartnerTypeValues.CustomsShipper || cardPM.PartnerTypeId == PartnerTypeValues.Coloader)
-                    msg = GetCustomersErrorMessage(tenant, connectedCards);
-                else 
+                //if (cardPM.PartnerTypeId == PartnerTypeValues.CustomClearance || cardPM.PartnerTypeId == PartnerTypeValues.CustomAgent || cardPM.PartnerTypeId == PartnerTypeValues.CustomsShipper || cardPM.PartnerTypeId == PartnerTypeValues.Coloader)
+                //    msg = GetCustomersErrorMessage(tenant, connectedCards);
+                //else
                     msg = GetVendorsWarningMessage(tenant, connectedCards);
                 throw new ApplicationException(msg);
             }

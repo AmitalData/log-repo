@@ -17,7 +17,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'EditTranslationComputingPartners',
-    moduleId: module.id,
+    
     templateUrl: './EditTranslationComputingPartners.html',
 })
 
@@ -43,7 +43,7 @@ export class EditTranslationComputingPartners extends BaseComponent {
         var service: ComputingPartnerTranslationPMService = new ComputingPartnerTranslationPMService();    
           var  Id = this.TranslatedEntity.Id;
         if (Id != null) {
-            service.get(this.TranslatedEntity.Id).subscribe(p => {
+            service.get(this.TranslatedEntity.Id).subscribe((p:any) => {
                 if (!p.HasError) {
                     this.EntityPM = p.Result;
                     this.SetUiProperties();

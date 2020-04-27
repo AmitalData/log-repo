@@ -2,7 +2,8 @@
 <Table
   Name="ARPayments"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Invoice">
   <Column
     Name="Id"
     Type="varchar"
@@ -18,6 +19,38 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="DebitAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ProfitCurrencyExchangeRate"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AmountInProfitCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="PaymentNo"
     Type="varchar"
     Size="20">
@@ -28,7 +61,7 @@
     Name="CreateDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="CreatedByUserId"
@@ -61,7 +94,7 @@
     Name="AmountInLocalCurrency"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="BranchId"
@@ -108,27 +141,12 @@
     Name="AmountInPaymentCurrency"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="PaidBy"
     Type="nvarchar"
     Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AccountingPaymentMethodId"
-    Type="varchar"
-    Size="15"
-    DefaultValue="''">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DebitAccountId"
-    Type="varchar"
-    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -150,7 +168,7 @@
     Name="PaymentCurrencyExchangeRate"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ExchangeRateDate"
@@ -166,12 +184,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="RegisterDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="SearchFields"
     Type="nvarchar"
     Size="-1">
@@ -180,13 +192,14 @@
   </Column>
   <Column
     Name="OpenAmount"
-    Type="float">
+    Type="float"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
-    Name="OpenAmountInLocalCurrency"
-    Type="float">
+    Name="ValueDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -212,42 +225,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Account"
-    Type="nvarchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ValueDate"
+    Name="RegisterDate"
     Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="UpdatedByUserId"
-    Type="varchar"
-    Size="15">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="UpdateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ProfitCurrencyExchangeRate"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AmountInProfitCurrency"
-    Type="float">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="CreditCardTypeId"
@@ -257,78 +238,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="BankAccountId"
+    Name="Account"
     Type="nvarchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CashbookId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="TransferTries"
-    Type="int"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="TransferError"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsTransferStarted"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="TransferStatusCode"
-    Type="varchar"
-    Size="2">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ExternalAccountingEntityId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="InvoiceNumber"
-    Type="varchar"
     Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShipmentNumber"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SATXML"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SATAdditionalFieldsXML"
-    Type="nvarchar"
-    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -340,9 +252,31 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="SATXML"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SATTransferStatusCode"
+    Type="varchar"
+    Size="2"
+    DefaultValue="'NT'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="TransmissionError"
     Type="nvarchar"
     Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MetodoPagoCode"
+    Type="varchar"
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -375,25 +309,41 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="CashbookId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExternalAccountingEntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SATAdditionalFieldsXML"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="SATApprovalDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="FechaPago"
-    Type="datetime">
+    Name="InvoiceNumber"
+    Type="varchar"
+    Size="20">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ApprovedDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ApprovedByUserId"
+    Name="ShipmentNumber"
     Type="varchar"
     Size="15">
     <Constraints
@@ -407,17 +357,57 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="SATTransferStatusCode"
-    Type="varchar"
-    Size="2"
-    DefaultValue="'NT'">
+    Name="BankAccountId"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransferError"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransferTries"
+    Type="int"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="MetodoPagoCode"
+    Name="IsTransferStarted"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TransferStatusCode"
     Type="varchar"
-    Size="3">
+    Size="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AccountingPaymentMethodId"
+    Type="varchar"
+    Size="15"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ApprovedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ApprovedByUserId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -440,6 +430,18 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="FechaPago"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OpenAmountInLocalCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="CreatedByPartner"
     Type="varchar"
     Size="25">
@@ -452,6 +454,99 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AccountingCancelationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CancelationNotes"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field1"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field2"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field3"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field4"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field5"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field6"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field7"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field8"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field9"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field10"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DebitAccountId"
+    ReferencedTable="Accounts1"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -493,23 +588,8 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="AccountingPaymentMethodId"
-    ReferencedTable="AccountingPaymentMethods"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="DebitAccountId"
-    ReferencedTable="Accounts1"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="BillToAddressId"
     ReferencedTable="Addresses"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="UpdatedByUserId"
-    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -518,24 +598,9 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="TransferStatusCode"
-    ReferencedTable="ARPaymentTransferStatus"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="SATPaymentMethodCode"
     ReferencedTable="SATPaymentMethods"
     ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ApprovedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="BankAccountLiteId"
-    ReferencedTable="BankAccountLites"
-    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="SATTransferStatusCode"
@@ -546,6 +611,26 @@
     ForeignKeyColumn="MetodoPagoCode"
     ReferencedTable="MetodoPagos"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BankAccountLiteId"
+    ReferencedTable="BankAccountLites"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TransferStatusCode"
+    ReferencedTable="ARPaymentTransferStatus"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AccountingPaymentMethodId"
+    ReferencedTable="AccountingPaymentMethods"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ApprovedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />

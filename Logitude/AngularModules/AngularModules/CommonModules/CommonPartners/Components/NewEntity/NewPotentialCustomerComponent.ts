@@ -21,7 +21,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewPotentialCustomerComponent.html',
 })
 
@@ -33,7 +33,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
     public Contact: ContactPM;
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private args: NewEntityArgs;
     public DataContext: NewPotentialCustomerComponent = this;  
     public ContactDataContext: ContactItem; 
@@ -64,7 +64,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
             this.IsRadioButtonsVisible = true;
         }
 
-        this.entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Address", 0).subscribe((response:any) => {
             this.entityResourceService.getEntityResourceByTableName("Contact").subscribe(response2 => {
                 this.entityResourceService.getEntityResourceByTableName("Customer").subscribe(response3 => {
                     this.IsResourcesReady = true;
@@ -778,7 +778,7 @@ export class ContactItem extends BaseComponent {
         else {
             var domainService: PartnersDomainService = new PartnersDomainService();
 
-            domainService.GetContactsByEmail(email).subscribe(myResult => {
+            domainService.GetContactsByEmail(email).subscribe((myResult:any) => {
                 if (myResult != null) {
                     this.loadedContact = myResult[0];
 

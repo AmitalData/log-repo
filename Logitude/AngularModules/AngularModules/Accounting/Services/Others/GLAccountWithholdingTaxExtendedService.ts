@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -11,27 +12,24 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 
 export class GLAccountWithholdingTaxExtendedPMService {
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GLAccountingWithholdingTax';
     }
 
     GetDeductionPercentage(vendorId: string, date: Date) {
-        return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-            return Observable.defer(() => {
-                return this._http.get(this._apiUrl + '/GetDeductionPercentage?vendorId=' + vendorId + '&registerDate=' + ServiceHelper.GetDateString(date), { headers: authHeader })
-                    .map(response => {
-                        var myResult = response.json();
+        return defer(() => {
+             
+            return defer(() => {
+                return this._http.get(this._apiUrl + '/GetDeductionPercentage?vendorId=' + vendorId + '&registerDate=' + ServiceHelper.GetDateString(date), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                        var myResult = response;
                         var serviceResponse: ServiceResponse;
                         serviceResponse = new ServiceResponse();
                         serviceResponse.Result = myResult;
                         return serviceResponse;
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             });
         });
     }

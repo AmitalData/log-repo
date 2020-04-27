@@ -1,13 +1,15 @@
 
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+
+import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
-import { Guid } from '../../../Infrastructure/Utilities/Guid';
-import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+
 
 import { CardPM } from '../../EntityPMs/CardPM';
 
@@ -15,10 +17,10 @@ import { CardPM } from '../../EntityPMs/CardPM';
 @Injectable()
 
 export class CardExtendedPMService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CardExtended';
     }
 
@@ -29,11 +31,9 @@ export class CardExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDisconnectGLAccountFromCard?' + 'id=' + id + '&partnerTypeId=' + partnerTypeId + '&eventTypeCode=' + eventTypeCode, {
-                headers: authHeader
-            }).map(response => {
-                var result = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDisconnectGLAccountFromCard?' + 'id=' + id + '&partnerTypeId=' + partnerTypeId + '&eventTypeCode=' + eventTypeCode,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result :any = response;
                 
 
                 var serviceResponse: ServiceResponse;
@@ -44,12 +44,24 @@ export class CardExtendedPMService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
 
+    GetAllConnectedPartnersByGLAccountId(glAccountId: string) {
 
+        var url = this._apiUrl + '/GetAllConnectedPartnersByGLAccountId?glAccountId=' + glAccountId;
+        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var allLists = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
 
 
 

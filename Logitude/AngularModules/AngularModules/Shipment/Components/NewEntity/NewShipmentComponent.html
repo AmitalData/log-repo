@@ -92,7 +92,7 @@
     }
 </style>
 
-<table *ngIf="ScreenIsReady">
+<table [hidden]="!ScreenIsReady">
     <tr>
         <td>
             <div class="FillParent CurvedArea">
@@ -1425,7 +1425,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="MediaFill">
-                                                                    <div class="LocationDirective" #Child></div>
+                                                                    <div class="LocationDirective" ChildDirective></div>
                                                                 </div>
                                                             </td>
                                                         </tr>

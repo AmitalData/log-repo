@@ -9,7 +9,7 @@ import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './OccasionWorkspaceComponent.html',
 })
 
@@ -39,7 +39,7 @@ export class OccasionWorkspaceComponent {
     }
 
     NewOccasionClicked() {
-        this._entityResourceService.getEntityResourceByTableName("OccasionType", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("OccasionType", 0).subscribe((response:any) => {
             var windowTitle = "New Occasion";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 850;
@@ -59,7 +59,7 @@ export class OccasionWorkspaceComponent {
 
     public AllOccasionsCount: number = 0;
     LoadQueriesCounts() {
-        this.myDomainService.GetOccasionsSummary().subscribe(myResult => {
+        this.myDomainService.GetOccasionsSummary().subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var myData: OccasionSummary = myResponse.Result;

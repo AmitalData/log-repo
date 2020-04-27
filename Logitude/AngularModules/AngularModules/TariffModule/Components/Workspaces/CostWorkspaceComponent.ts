@@ -13,7 +13,7 @@ import { TariffList } from '../../EntityLists/TariffList';
 
 @Component({
     selector: 'CostComponent',
-    moduleId: module.id,
+    
     templateUrl: './CostWorkspaceComponent.html',
     providers: [EntityResourceService, TariffDomainService]
 })
@@ -51,7 +51,7 @@ export class CostWorkspaceComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe((response:any) => {
             if (this.CurrentSession == null)
                 this.CurrentSession = SessionLocator.SelectedSession;
             this.LoadAllScreenData();
@@ -203,7 +203,7 @@ export class CostWorkspaceComponent implements OnInit {
                 listArgs.ObjectTableName = "Tariff";
                 listArgs.DisplayTitle = "Air Freight Cost Tariffs";
                 listArgs.BackButtonTitle = "Tariff";
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
@@ -221,7 +221,7 @@ export class CostWorkspaceComponent implements OnInit {
                 listArgs.ObjectTableName = "Tariff";
                 listArgs.DisplayTitle = "Air Surcharges Cost";
                 listArgs.BackButtonTitle = "Tariff";
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
@@ -239,7 +239,7 @@ export class CostWorkspaceComponent implements OnInit {
                 listArgs.ObjectTableName = "Tariff";
                 listArgs.DisplayTitle = TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");
                 listArgs.BackButtonTitle = "Tariff";
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
@@ -257,7 +257,7 @@ export class CostWorkspaceComponent implements OnInit {
                 listArgs.ObjectTableName = "Tariff";
                 listArgs.DisplayTitle = "Ocean LCL Freight Cost";
                 listArgs.BackButtonTitle = "Tariff";
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
@@ -274,7 +274,7 @@ export class CostWorkspaceComponent implements OnInit {
                 listArgs.ObjectTableName = "Tariff";
                 listArgs.DisplayTitle = "Ocean FCL Freight Cost";
                 listArgs.BackButtonTitle = "Tariff";
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
@@ -291,7 +291,7 @@ export class CostWorkspaceComponent implements OnInit {
                 listArgs.ObjectTableName = "Tariff";
                 listArgs.DisplayTitle = "Ocean FCL Surcharges Cost";
                 listArgs.BackButtonTitle = "Tariff";
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
@@ -336,7 +336,7 @@ export class CostWorkspaceComponent implements OnInit {
     public RecentTariffsList: TariffList[] = [];
     LoadRecentTariffs() {
         var tariffService: TariffDomainService = new TariffDomainService();
-        tariffService.GetRecentTariffs().subscribe(myResult => {
+        tariffService.GetRecentTariffs().subscribe((myResult:any) => {
             if (myResult == null) {
                 this.RecentTariffsList = [];
                 this.RecentTariffsCount = 0;

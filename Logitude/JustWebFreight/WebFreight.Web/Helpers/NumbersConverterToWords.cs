@@ -142,13 +142,36 @@ namespace WebFreight.Web.Helpers
             }
             result = FixSpaces(result);
             result = Trim(result);
+
             if (result.Length >= 7)
-                if (result.Substring(0, 7) == "un mil ") result = result.Substring(3, result.Length - 3);
+            {
+                if (result.Substring(0, 7) == "un mil ")
+                {
+                    result = result.Substring(3, result.Length - 3);
+                }
+            }
+
             if (result.Length >= 3)
-                if (result.Substring(result.Length - 3, 3) == " un") result = result + "o";
-            if (result == "un ") result = "uno";
-            if (result.Substring(result.Length - 2, 2) == "y ")
-                result = result.Substring(0, result.Length - 2);
+            {
+                if (result.Substring(result.Length - 3, 3) == " un")
+                {
+                    result = result + "o";
+                }
+            }
+
+            if (result == "un ")
+            {
+                result = "uno";
+            }
+
+            if (result.Length >= 2)
+            {
+                if (result.Substring(result.Length - 2, 2) == "y ")
+                {
+                    result = result.Substring(0, result.Length - 2);
+                }
+            }
+
             if (InStr(result, "millones") != RInStr(result, "millones"))
             {
                 var z = InStr(result, "millones");
@@ -324,14 +347,31 @@ namespace WebFreight.Web.Helpers
             }
             result = FixSpaces(result);
             result = Trim(result);
+
             if (result.Length >= 9)
+            {
                 if (result.Substring(0, 9) == "un mille ")
+                {
                     result = result.Substring(3, result.Length - 3);
+                }
+            }
+
             if (result.Length >= 3)
+            {
                 if (result.Substring(result.Length - 3, 3) == "et ")
+                {
                     result = result.Substring(0, result.Length - 3);
-            if (result.Substring(result.Length - 2, 2) == " -")
-                result = result.Substring(0, result.Length - 2);
+                }
+            }
+
+            if (result.Length >= 2)
+            {
+                if (result.Substring(result.Length - 2, 2) == " -")
+                {
+                    result = result.Substring(0, result.Length - 2);
+                }
+            }
+
             if (InStr(result, "millions") != RInStr(result, "millions"))
             {
                 var z = InStr(result, "millions");
@@ -1195,9 +1235,10 @@ namespace WebFreight.Web.Helpers
                 if (s.Substring(i, 1) != " ")
                 {
                     j = i;
-                    break;
+                   
+                   break;
                 }
-            return s.Substring(j, s.Length);
+            return s.Substring(j, s.Length-1);
         }
         private string RTrim(string s)
         {

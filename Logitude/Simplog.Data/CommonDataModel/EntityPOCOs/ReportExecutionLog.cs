@@ -29,6 +29,14 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime? StartDate { get; set; }
         public string ExecutedByServerName { get; set; }
 
+
+
+        public bool ExcelOnly { get; set; }
+
+
+
+
+
         [ForeignKey("StatusCode")]
         public virtual CommunicationStatusType CommunicationStatusType { get; set; }
 

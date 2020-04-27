@@ -17,7 +17,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'NewQuoteTemplateComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewQuoteTemplateComponent.html',
 })
 
@@ -40,14 +40,14 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     IsReady: boolean = false;
 
 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
 
         var _entityResourceService: EntityResourceService = new EntityResourceService();
-        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe(response => {
+        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe((response:any) => {
             this.IsReady = true;
             this.EntityPM = this.GetNewInstance();
             this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
@@ -147,7 +147,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     LoadQuoteTemplateList() {
         this.QuoteTemplateLists = [];
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
-        this.quoteTemplateExtendedPMService.GetQuoteTemplateLists(this.AddType).subscribe(res => {
+        this.quoteTemplateExtendedPMService.GetQuoteTemplateLists(this.AddType).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -189,7 +189,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
 
     CreateNewQuoteTemplate() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-        this.quoteTemplateExtendedPMService.insert(this.EntityPM).subscribe(res => {
+        this.quoteTemplateExtendedPMService.insert(this.EntityPM).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.EntityPM = pmResponse.Result;
@@ -214,7 +214,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     CopyQuoteTemplatePM() {
      
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-        this.quoteTemplateExtendedPMService.GetCopyQuoteTemplate(this.SelectedQuoteTemplate.Id, this.EntityPM.Name, SessionLocator.LoggedUserId, SessionLocator.Tenant).subscribe(res => {
+        this.quoteTemplateExtendedPMService.GetCopyQuoteTemplate(this.SelectedQuoteTemplate.Id, this.EntityPM.Name, SessionLocator.LoggedUserId, SessionLocator.Tenant).subscribe((res:any) => {
            
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {

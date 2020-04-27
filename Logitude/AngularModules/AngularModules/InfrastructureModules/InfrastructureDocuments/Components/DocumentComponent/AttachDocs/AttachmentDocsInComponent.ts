@@ -8,7 +8,7 @@ import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelp
 import {DownloadManager} from '../../../../../Infrastructure/Utilities/DownloadManager';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AttachDocsIn',
     templateUrl: './AttachmentDocsInComponent.html',
 })

@@ -5,7 +5,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FieldTemplateComponent.html',
 })
 
@@ -18,7 +18,7 @@ export class FieldTemplateComponent {
     public IsSpotLightTemplate: boolean = false;
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
-    @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
+    @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     constructor() {
 
     }
@@ -93,7 +93,7 @@ export class FieldTemplateComponent {
         editWindow.Width = 1500;
 
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
+        editWindow.WindowClosed.subscribe((res:any) => {
 
 
 

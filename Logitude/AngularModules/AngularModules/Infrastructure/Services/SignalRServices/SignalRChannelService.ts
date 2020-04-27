@@ -1,6 +1,6 @@
-import { Injectable, Inject,EventEmitter } from "@angular/core";
-import { Subject } from "rxjs/Subject";
-import { Observable } from "rxjs/Observable";
+import { Injectable, Inject, EventEmitter } from "@angular/core";
+import { Observable, Subject, interval } from "rxjs";
+import { timeInterval } from 'rxjs/operators';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { SessionInfo } from '../../Utilities/SessionInfo';
@@ -188,7 +188,7 @@ export class SignalRChannelService {
         window.logitudeHubConnected = false;
         console.log("logitude hub was disconnected, will restart connection after 30 seconds...");
 
-        var upgradingSystemsub = this.startReconnectTimer().subscribe(res => {
+        var upgradingSystemsub = this.startReconnectTimer().subscribe((res:any) => {
             upgradingSystemsub.unsubscribe();
             if (this.connectionStarted != true) {
                 //console.log("reconnecting to hub.");
@@ -205,7 +205,7 @@ export class SignalRChannelService {
 
 
     startReconnectTimer() {
-        return Observable.interval(30000).timeInterval();
+      return interval(30000).pipe(timeInterval());
     }
 
     /**

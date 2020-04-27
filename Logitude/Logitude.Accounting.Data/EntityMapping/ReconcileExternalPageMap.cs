@@ -50,9 +50,9 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.ToDate).HasColumnName("ToDate").IsRequired();
 
-            this.Property(t => t.StartBalance).HasColumnName("StartBalance").IsRequired();
+            this.Property(t => t.StartBalance).HasColumnName("StartBalance").IsRequired().HasPrecision(18, 2);
 
-            this.Property(t => t.CloseBalance).HasColumnName("CloseBalance").IsRequired();
+            this.Property(t => t.CloseBalance).HasColumnName("CloseBalance").IsRequired().HasPrecision(18, 2);
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
 

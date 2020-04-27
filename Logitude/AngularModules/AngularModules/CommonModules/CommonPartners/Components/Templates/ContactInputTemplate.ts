@@ -15,7 +15,7 @@ import { AdditionalServiceListService } from '../../../../Common/Services/Standa
 import { AdditionalServiceList } from '../../../../Common/EntityLists/AdditionalServiceList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContactInputTemplate.html',
 })
 
@@ -178,7 +178,7 @@ export class ContactInputTemplate extends BaseComponent {
     private BuildProductsList() {
         this.ProductsList = [];
 
-        this.DomainService.GetCardContactProducts(this.CardId, this.EntityPM.Id).subscribe(result => {
+        this.DomainService.GetCardContactProducts(this.CardId, this.EntityPM.Id).subscribe((result:any) => {
             var products: CardContactProductPM[] = result.Result;
 
             products.forEach(item => {
@@ -191,7 +191,7 @@ export class ContactInputTemplate extends BaseComponent {
         this.ServicesList = [];
 
         var service: AdditionalServiceListService = new AdditionalServiceListService();
-        service.getAllFromCache().subscribe(result => {
+        service.getAllFromCache().subscribe((result:any) => {
             var fullServicesList = result.Result;
 
             fullServicesList.filter(i => i.InActive == false).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 }).forEach(item => {
@@ -397,7 +397,7 @@ export class ContactInputTemplate extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(email)) {
             if (email.indexOf('@') > -1 && email.indexOf('.') > -1) {
-                this.DomainService.GetContactsByEmail(email).subscribe(myResult => {
+                this.DomainService.GetContactsByEmail(email).subscribe((myResult:any) => {
                     if (myResult != null) {
                         this.loadedContact = myResult[0];
 
@@ -554,7 +554,7 @@ export class AdditionalServiceItem {
             if (value) {
                 var name = null;
                 var service: AdditionalServiceListService = new AdditionalServiceListService();
-                service.getSingleFromCache(this.entityList.Id).subscribe(myResult => {
+                service.getSingleFromCache(this.entityList.Id).subscribe((myResult:any) => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         var list: AdditionalServiceList = myResponse.Result;

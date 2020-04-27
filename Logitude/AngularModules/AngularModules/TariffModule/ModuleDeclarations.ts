@@ -8,6 +8,10 @@ import { WizardDimensionsComponent } from './Components/Workspaces/WizardDimensi
 import { TariffHelperComponent } from './Components/Helpers/TariffHelperComponent';
 import { TariffWorkspaceComponent } from './Components/Workspaces/TariffWorkspaceComponent';
 import { SettingsWorkspaceComponent } from './Components/Workspaces/SettingsWorkspaceComponent';
+import { ContainerDefaultsComponent } from './Components/Workspaces/ContainerDefaultsComponent';
+import { NewTariffProductsComponent } from './Components/NewEntity/NewTariffProductsComponent';
+import { TariffShortTitleComponent } from './Components/ShortTitles/TariffShortTitleComponent';
+
 // Tabs
 import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
 import { VersionTabComponent } from './Components/EditTabs/Tariff/VersionTabComponent';
@@ -26,6 +30,7 @@ import { AddTariffContainersComponent } from './Components/NewEntity/AddTariffCo
 
 export const Components =
     [
+        ContainerDefaultsComponent,
         CostWorkspaceComponent,
         TariffSettingComponent,
         NewAirFreightCostComponent,
@@ -50,6 +55,8 @@ export const Components =
         SettingsWorkspaceComponent,
         OceanFCLSurchargeVersionTabComponent,
         AddTariffContainersComponent,
+        NewTariffProductsComponent,
+        TariffShortTitleComponent,
     ];
 
 export const ControlsComponents =
@@ -86,6 +93,9 @@ export class ModuleDeclarations {
             case "SettingsWorkspaceComponent": { myResult = SettingsWorkspaceComponent; break; }
             case "OceanFCLSurchargeVersionTabComponent": { myResult = OceanFCLSurchargeVersionTabComponent; break; }
             case "AddTariffContainersComponent": { myResult = AddTariffContainersComponent; break; }
+            case "ContainerDefaultsComponent": { myResult = ContainerDefaultsComponent; break; }
+            case "NewTariffProductsComponent": { myResult = NewTariffProductsComponent; break; }
+            case "TariffShortTitleComponent": { myResult = TariffShortTitleComponent; break; }
         }
 
         return myResult;

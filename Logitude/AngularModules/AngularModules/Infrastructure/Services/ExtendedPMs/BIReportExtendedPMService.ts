@@ -1,39 +1,27 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {SessionInfo} from '../../Utilities/SessionInfo';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { Observable } from 'rxjs';
-
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
 @Injectable()
-
 export class BIReportExtendedPMService {
-    private _http: Http;
+    private httpClient: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/BIReportsExtended';
     }
 
-    DoesReportExist(name: string, folderId: string) {
+    DoesReportExist(name: string, folderId: string)  {
+        var url = this._apiUrl + '/getReportExist?' + 'name=' + name + '&folderId=' + folderId;
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        let callUrl = this._apiUrl + '/getReportExist?' + 'name=' + name + '&folderId=' + folderId;
-        return this._http.get(callUrl, {
-            headers: authHeader
-        }).map(response => {
-            var result = response.json();
-
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-            serviceResponse.Result = result;
+            serviceResponse.Result = response;
 
             return serviceResponse;
-
-        }).catch(ServiceHelper.HandleServiceError);
-
+        }), catchError(ServiceHelper.HandleServiceError));
     }
-
 }

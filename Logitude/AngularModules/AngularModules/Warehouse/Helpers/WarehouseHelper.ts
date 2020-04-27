@@ -1,7 +1,3 @@
-/// <reference path="../../infrastructure/locators/servicelocator.ts" />
-/// <reference path="../../infrastructure/utilities/infragenericfilter.ts" />
-/// <reference path="../../shipment/entitypms/shipmentpm.ts" />
-
 declare var System: any;
 declare var window: any;
 import {PackageTypeListService} from '../../Common/Services/StandardLists/PackageTypeListService';
@@ -240,7 +236,7 @@ export class WarehouseHelper {
                 if (this._warehouseEntryPMService == null) this._warehouseEntryPMService = new WarehouseEntryPMService();
                 if (entityPM.ActualEntryDate) entityPM.StatusCode = "ENTE";
 
-                    this._warehouseEntryPMService.insert(entityPM).subscribe(res => {
+                    this._warehouseEntryPMService.insert(entityPM).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
 
                         if (!pmResponse.HasError) {
@@ -351,7 +347,7 @@ export class WarehouseHelper {
                 if (this._warehouseReleasePMExtendedService == null) this._warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
                 if (entityPM.ActualReleaseDate) entityPM.StatusCode = "RELE";
 
-                this._warehouseReleasePMExtendedService.Insert(entityPM).subscribe(res => {
+                this._warehouseReleasePMExtendedService.Insert(entityPM).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
 
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -428,7 +424,7 @@ export class WarehouseHelper {
             warehouseEntryPM.GrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
             warehouseEntryPM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
             warehouseEntryPM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
-            warehouseEntryPM.ChargeableWeightUnitCode = SessionLocator.TenantPM.ChargeableWeightUnitCode;
+            //warehouseEntryPM.ChargeableWeightUnitCode = SessionLocator.TenantPM.ChargeableWeightUnitCode;
 
             warehouseEntryPM.EntryNumber = "123";
             //if (viewModel.IsFromShipment) {

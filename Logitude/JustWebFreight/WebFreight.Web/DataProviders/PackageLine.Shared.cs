@@ -47,6 +47,13 @@ namespace WebFreight.Web.DataProviders
             set { packageDescriptionOfGoods = value; }
         }
 
+        private string descriptionOfGoodsWithoutHCCode = "";
+        public string DescriptionOfGoodsWithoutHCCode
+        {
+            get { return descriptionOfGoodsWithoutHCCode; }
+            set { descriptionOfGoodsWithoutHCCode = value; }
+        }
+
         private string packageGrossWeight = "";
         public string PackageGrossWeight
         {
@@ -144,6 +151,9 @@ namespace WebFreight.Web.DataProviders
         public string ChassisNumber { get; set; }
         public string RegistrationNumber { get; set; }
         public string CountryName { get; set; }
+        public string Temperature { get; set; }
+
+
     }
 
     public class InsidePackageLine

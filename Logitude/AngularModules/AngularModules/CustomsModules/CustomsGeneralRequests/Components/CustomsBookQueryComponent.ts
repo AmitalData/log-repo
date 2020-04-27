@@ -23,7 +23,7 @@ import { CustomsBookList } from '../../../Customs/EntityLists/CustomsBookList';
 
 @Component({
     selector: 'CustomsBookQueryComponent',
-    moduleId: module.id,
+    
     templateUrl: './CustomsBookQueryComponent.html',
 })
 

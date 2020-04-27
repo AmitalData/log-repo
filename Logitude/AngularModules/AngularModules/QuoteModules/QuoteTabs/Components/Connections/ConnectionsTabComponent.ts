@@ -10,7 +10,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'ConnectionsTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './ConnectionsTabComponent.html',
 })
 

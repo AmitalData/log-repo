@@ -14,9 +14,13 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 declare var window: any;
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { GLAccountCurrencyExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountCurrencyExtendedPMService';
+import { GLAccountCurrencyPM } from '../../../EntityPMs/GLAccountCurrencyPM';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GLAccountAdditionalDataTabComponent.html',
  
 })
@@ -31,6 +35,8 @@ export class GLAccountAdditionalDataTabComponent extends BaseComponent  {
     ChildrenGLAccounts: ObservableCollection;
     glAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
+    gLAccountCurrencyExtendedPMService: GLAccountCurrencyExtendedPMService = new GLAccountCurrencyExtendedPMService();
+    entityResourceService: EntityResourceService = new EntityResourceService();
     public ChildrenFilterItems: ApiQueryFilters;
 
     public entityPM: GLAccountPM = null;
@@ -88,8 +94,81 @@ export class GLAccountAdditionalDataTabComponent extends BaseComponent  {
 
     }
 
-   
+    public IsConnectedWithExistGLAccount (DisplayNumber:string):boolean{
+     if(DisplayNumber.includes(this.entityPM.DisplayNumber+"\\")){
+        return false;
+     }
+     return true;
+    }
 
+    private DisConnect(GLAccount:GLAccountPM){
+        var CurrencyGLAccount:GLAccountCurrencyPM = this.MappingAndGetCurrencyGlAccount(GLAccount);
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+         this.gLAccountCurrencyExtendedPMService.Put(CurrencyGLAccount).subscribe((response: ServiceResponse) => {
+         this.CurrentSession.StopBusyIndicator();
+        if (response) {
+            if (!response.HasError) 
+            {
+                this.RemoveConnectedGLAccountCurrecyLine(GLAccount);
+            }
+         }
+ 
+    });
+    }
+    ConfirmDisConnect(GLAccount:GLAccountPM) {
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate('General.B.Ok');
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate('General.B.Cancel');
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.DisConnect(GLAccount);
+            }
+        });
+        confirmWindow.Show(TextCodeTranslator.Translate('GLAccount.O.WantToDisconnect'));
+    }
+   
+   private MappingAndGetCurrencyGlAccount(GLAccount:GLAccountPM):GLAccountCurrencyPM{
+        var glaccountCurrency: GLAccountCurrencyPM = new GLAccountCurrencyPM(null);
+            glaccountCurrency.CurrencyId =  GLAccount.CurrencyId;
+            glaccountCurrency.MainGLAccountId = this.entityPM.Id;
+            glaccountCurrency.GLAccountId =  GLAccount.Id;
+            glaccountCurrency.Tenant = this.entityPM.Tenant;
+    
+            return glaccountCurrency;
+    }
+
+Connect(){
+    if (this.entityPM.IsMultiCurrency) {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.entityPM;
+        windowArgs.ConnectedGLAccounts = this.ConnectedGLAccounts.Collection;
+        var windowTitle = TextCodeTranslator.Translate("GLAccount.O.ConnectToAnExisting");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 400;
+        logWindow.Height = 250;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.AddNewConnectedGLAccountCurrecyLine(comp);
+                }
+            });
+        });
+
+        this.entityResourceService.getEntityResourceByTableName("GLAccountCurrency").subscribe((response: any) => {     
+        logWindow.Show('./Accounting/Components/EditTabs/GLAccount/ConnectWithGLAccountComponent');
+    });
+    }
+    else {
+        var msg = new MessageWindow();
+        msg.RTL = true;
+        msg.Show(TextCodeTranslator.Translate("GLAccounts.O.MultiCurrencyForSplitted"));
+    }
+}
     Add() {
 
         if (this.entityPM.IsMultiCurrency) {
@@ -137,7 +216,18 @@ export class GLAccountAdditionalDataTabComponent extends BaseComponent  {
 
     }
 
+    AddNewConnectedGLAccountCurrecyLine(data:any) {
+        if (data.SelectedGLAccount) {
+            this.ConnectedGLAccounts.Insert(new SplittedByCurrencyAccount(data.SelectedGLAccount, this));
+        }
 
+    }
+    RemoveConnectedGLAccountCurrecyLine(GLAccount:GLAccountPM) {
+         if (GLAccount) {
+            this.ConnectedGLAccounts.Remove(this.ConnectedGLAccounts.Collection.filter(s=>s.DisplayNumber == GLAccount.DisplayNumber)[0]);
+        }
+
+    }
     Choose() {
        
         var args: any = {};
@@ -264,7 +354,7 @@ export class SplittedByCurrencyAccount extends BaseComponent {
         editWindow.Width = 1500;
 
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
+        editWindow.WindowClosed.subscribe((res:any) => {
 
 
             this.parent.BuildChildrenGLAccountsList();
@@ -315,7 +405,7 @@ export class GLAccountChild extends BaseComponent {
         editWindow.Width = 1500;
 
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
+        editWindow.WindowClosed.subscribe((res:any) => {
 
 
             this.parent.BuildChildrenGLAccountsList();

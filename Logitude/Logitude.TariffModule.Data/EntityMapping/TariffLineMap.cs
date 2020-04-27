@@ -158,6 +158,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.Surcharge10MinPrice).HasColumnName("Surcharge10MinPrice").HasPrecision(18, 3);
 
             this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TransitTime).HasColumnName("TransitTime").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

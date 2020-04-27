@@ -11,7 +11,7 @@ import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Component
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentTypeCopiesTab',
     templateUrl: './DocumentTypeCopiesComponent.html',
 })
@@ -30,7 +30,7 @@ export class DocumentTypeCopiesComponent extends BaseComponent implements OnInit
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeCopy", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeCopy", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {

@@ -16,7 +16,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'custom-send-options',
-    moduleId: module.id,
+    
     //templateUrl: 'CustomsRequestsComponent.html',
     host: {
         '(document:click)': 'handleClick($event)',
@@ -154,7 +154,7 @@ export class CustomSendOptionsComponent implements OnInit {
         }
     }
     ngOnInit() {
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
             this._IsLoaded = true;
             /// alert("this._IsLoaded");
             if (AppTool.IsNullOrEmpty(this.ButtonText)) {

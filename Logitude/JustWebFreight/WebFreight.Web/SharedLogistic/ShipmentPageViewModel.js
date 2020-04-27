@@ -12,6 +12,7 @@
     jQuery.IsBrandingEnabled = "";
     jQuery.TenantDateTimeFormat = null;
     jQuery.IsMoneyTabEnabled = false;
+    jQuery.DisplayDocumentsAndEvents = false;    
 
     var IsTabSelected_PAR = false;
     var IsTabSelected_PAC = false;
@@ -102,6 +103,8 @@
                 }
 
                 $.TenantDateTimeFormat = result.TenantDateTimeFormat;
+                $.DisplayDocumentsAndEvents = result.DisplayDocumentsAndEvents;
+
                 $.GetSingleEntityPM();
             },
 
@@ -494,14 +497,20 @@
 
                         if ($.IsExternalURL) {
 
-                            $("#DocumentsTabPageControl").css({
-                                "font-family": "Arial",
-                                "color": "#8F9293",
-                                "font-size": "16px",
-                                "margin-top": "20px",
-                            });
+                            if ($.DisplayDocumentsAndEvents) {
+                                $.GetShipmentDocuments();
+                            }
 
-                            $("#DocumentsTabPageControl").html("Documents information is only available for logged-in users");
+                            else {
+                                $("#DocumentsTabPageControl").css({
+                                    "font-family": "Arial",
+                                    "color": "#8F9293",
+                                    "font-size": "16px",
+                                    "margin-top": "20px",
+                                });
+
+                                $("#DocumentsTabPageControl").html("Documents information is only available for logged-in users");
+                            }
                         }
 
                         else {
@@ -520,14 +529,20 @@
 
                         if ($.IsExternalURL) {
 
-                            $("#EventsListBox").css({
-                                "font-family": "Arial",
-                                "color": "#8F9293",
-                                "font-size": "16px",
-                                "margin-top": "20px",
-                            });
+                            if ($.DisplayDocumentsAndEvents) {
+                                $.GetShipmentEvents();
+                            }
 
-                            $("#EventsListBox").html("Events information is only available for logged-in users");
+                            else {
+                                $("#EventsListBox").css({
+                                    "font-family": "Arial",
+                                    "color": "#8F9293",
+                                    "font-size": "16px",
+                                    "margin-top": "20px",
+                                });
+
+                                $("#EventsListBox").html("Events information is only available for logged-in users");
+                            }
                         }
 
                         else {

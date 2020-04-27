@@ -2,7 +2,8 @@
 <Table
   Name="TenantSettings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -40,6 +41,7 @@
   </Column>
   <Column
     Name="Size"
+    ShortName="Size_"
     Type="int">
     <Constraints
       Nullable="false" />

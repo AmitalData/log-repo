@@ -4,7 +4,7 @@
   ObjectTableName="&quot;TaxDeductionReport&quot;"
   IsNew="true"
   DBTableName="&quot;TaxDeductionReports&quot;"
-  OldDBTableName="&quot;TaxDeductionReports&quot;"
+  DBTableOldNames="TaxDeductionReports"
   ObjectTableSingular="&quot;Tax Deduction Report&quot;"
   ObjectTablePlural="&quot;Tax Deduction Reports&quot;"
   HasCustomFilter="false"
@@ -61,11 +61,13 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;d90ef37c-0a1f-4219-943b-e235ffee3b56&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -112,6 +114,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -125,6 +128,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -135,7 +139,7 @@
   <field
     Id="&quot;edc74f67-063f-4483-af9d-fc6b62bae7ec&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -182,6 +186,7 @@
     ListLableDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -195,6 +200,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -205,7 +211,7 @@
   <field
     Id="&quot;0ef1881c-438a-47cf-a255-03bdd4298905&quot;"
     FieldName="&quot;CreateDate&quot;"
-    OldFieldName="&quot;CreateDate&quot;"
+    OldNames="CreateDate"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -254,6 +260,7 @@
     ListLocalDefaultText="&quot;תאריך יצירה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -267,6 +274,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -277,7 +285,7 @@
   <field
     Id="&quot;75d690dd-dc90-43e2-af81-d89cc567c954&quot;"
     FieldName="&quot;CreatedByUserId&quot;"
-    OldFieldName="&quot;CreatedByUserId&quot;"
+    OldNames="CreatedByUserId"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -325,6 +333,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CreatedByUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -339,6 +348,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -349,7 +359,7 @@
   <field
     Id="&quot;55eb9857-5d67-474c-b526-c1c73bb61b72&quot;"
     FieldName="&quot;UpdateDate&quot;"
-    OldFieldName="&quot;UpdateDate&quot;"
+    OldNames="UpdateDate"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -399,6 +409,7 @@
     ListLocalDefaultText="&quot;תאריך עדכון&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -412,6 +423,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -422,7 +434,7 @@
   <field
     Id="&quot;d0e77d83-e974-496f-b158-5bcbe311cbc2&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
-    OldFieldName="&quot;UpdatedByUserId&quot;"
+    OldNames="UpdatedByUserId"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -469,6 +481,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="UpdatedByUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -483,6 +496,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -493,7 +507,7 @@
   <field
     Id="&quot;f17633d5-d6cc-4f31-abf2-c39c92e586c0&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -540,6 +554,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -553,6 +568,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -563,7 +579,7 @@
   <field
     Id="&quot;9ba17c33-222c-4bef-bef8-9a0d11f04fc2&quot;"
     FieldName="&quot;ReportNumber&quot;"
-    OldFieldName="&quot;ReportNumber&quot;"
+    OldNames="ReportNumber"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -613,6 +629,7 @@
     ListLocalDefaultText="&quot;מספר דוח&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -626,6 +643,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -636,7 +654,7 @@
   <field
     Id="&quot;7ea8151d-fa87-4ca1-9b49-1622c7566421&quot;"
     FieldName="&quot;StatusTypeCode&quot;"
-    OldFieldName="&quot;StatusTypeCode&quot;"
+    OldNames="StatusTypeCode"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -688,6 +706,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="TaxDeductionReportStatus"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="TaxDeductionReportStatus"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -702,6 +721,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -712,7 +732,7 @@
   <field
     Id="&quot;b19e5f79-1aed-49fd-a8be-43b40e72462e&quot;"
     FieldName="&quot;IsAdditionalReportExist&quot;"
-    OldFieldName="&quot;IsAdditionalReportExist&quot;"
+    OldNames="IsAdditionalReportExist"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -762,6 +782,7 @@
     ListLocalDefaultText="&quot;האם קיים דוח משלים&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -775,6 +796,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -785,7 +807,7 @@
   <field
     Id="&quot;ce976b2b-c36e-488b-8da7-7ec6ce09e958&quot;"
     FieldName="&quot;TaxYear&quot;"
-    OldFieldName="&quot;TaxYear&quot;"
+    OldNames="TaxYear"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -835,6 +857,7 @@
     ListLocalDefaultText="&quot;שנת מס&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -848,6 +871,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -858,7 +882,7 @@
   <field
     Id="&quot;cd50a1f5-af9e-42ed-856b-10c8ec014f1c&quot;"
     FieldName="&quot;Email&quot;"
-    OldFieldName="&quot;Email&quot;"
+    OldNames="Email"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -908,6 +932,7 @@
     ListLocalDefaultText="&quot;כתובת מייל לדיווח&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -921,6 +946,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -931,7 +957,7 @@
   <field
     Id="&quot;2f7fc65b-896e-49c8-92aa-8ee7989d2704&quot;"
     FieldName="&quot;ErrorMessage&quot;"
-    OldFieldName="&quot;ErrorMessage&quot;"
+    OldNames="ErrorMessage"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -981,6 +1007,7 @@
     ListLocalDefaultText="&quot;הערות שגיאה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -994,6 +1021,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1004,7 +1032,7 @@
   <field
     Id="&quot;68a61a69-6e26-4dfe-b7fa-c0086006ba1b&quot;"
     FieldName="&quot;CreatedByUser&quot;"
-    OldFieldName="&quot;CreatedByUser&quot;"
+    OldNames="CreatedByUser"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1053,6 +1081,7 @@
     ListLocalDefaultText="&quot;נוצר ע\&quot;י&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1066,6 +1095,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1076,7 +1106,7 @@
   <field
     Id="&quot;1681b25a-3915-45c0-9b21-2a5667d0fa5e&quot;"
     FieldName="&quot;Status&quot;"
-    OldFieldName="&quot;Status&quot;"
+    OldNames="Status"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1125,6 +1155,7 @@
     ListLocalDefaultText="&quot;סטטוס&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1138,6 +1169,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1148,7 +1180,7 @@
   <field
     Id="&quot;1ccef8bb-f895-4b4f-bbda-62e46c859532&quot;"
     FieldName="&quot;StatusLocalName&quot;"
-    OldFieldName="&quot;StatusLocalName&quot;"
+    OldNames="StatusLocalName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1192,6 +1224,7 @@
     DefaultText="&quot;StatusLocalName&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1205,6 +1238,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1253,10 +1287,10 @@
   <Screen
     Name="&quot;TaxDeductionReportHeaderScreen&quot;"
     ObjectTableName="&quot;TaxDeductionReport&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="1"
     IsReadOnly="true"
-    IsHeaderScreen="true">
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -1344,22 +1378,66 @@
       DefaultText="&quot;More&quot;"
       MenuButtonType="&quot;dropdownbutton&quot;"
       IndexOrder="0"
-      LocalDefaultText="&quot;נוספים&quot;">
+      LocalDefaultText="&quot;נוספים&quot;"
+      IsPackagable="false">
       <MenuItem
         EventCode="&quot;TXFL&quot;"
         DefaultText="&quot;Download Text file&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
-        LocalDefaultText="&quot;הורד קובץ טקסט&quot;" />
+        LocalDefaultText="&quot;הורד קובץ טקסט&quot;"
+        IsPackagable="false" />
       <MenuItem
         EventCode="&quot;DNPD&quot;"
         DefaultText="&quot;Download PDF file&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="1"
-        LocalDefaultText="&quot;הורד קובץ PDF  &quot;" />
+        LocalDefaultText="&quot;הורד קובץ PDF  &quot;"
+        IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;TaxDeductionReport.O.AccountWithoutVendor&quot;"
+      DefaultText="&quot;is not connected to Card&quot;"
+      LocalDefaultText="&quot;כרטיס הנהח לא מקושר לכרטיס ספק תפעולי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxDeductionReport.O.CardWithoutVatNumber&quot;"
+      DefaultText="&quot;GLAccount connected to a card without Vat Number &quot;"
+      LocalDefaultText="&quot; כרטיס תפעולי ללא חפ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxDeductionReport.O.CardWithoutAddress&quot;"
+      DefaultText="&quot;GLAccount connected to a card without Address&quot;"
+      LocalDefaultText="&quot;כרטיס תפועלי ללא כתובת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxDeductionReport.O.VendorGLAccount&quot;"
+      DefaultText="&quot;Vendor GLAccount&quot;"
+      LocalDefaultText="&quot;כרטיס הספק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxDeductionReport.O.Connected2ManyCards&quot;"
+      DefaultText="&quot;is connected to more than one Operational Vendor&quot;"
+      LocalDefaultText="&quot;מחובר ליותר מספק תפעולי אחד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;TaxDeductionReport.Features.Menu&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;TaxDeductionReport.Features.Menu&quot;"
+      FeatureDefaultText="&quot;Tax Deduction Report&quot;" />
+  </AdditionalFeatures>
 </entity>

@@ -17,7 +17,7 @@ import {CustomerList} from '../../../Common/EntityLists/CustomerList';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerWorkspaceComponent.html',
 })
 
@@ -440,7 +440,7 @@ export class CustomerWorkspaceComponent extends BaseComponent {
     public Customers_Active: number;
     public Customers_Inactive: number;
     private LoadQueriesCounts() {
-        this.myPartnersDomainService.GetCustomersCounts(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
+        this.myPartnersDomainService.GetCustomersCounts(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var myData: CRMSummary = myResponse.Result;
@@ -495,7 +495,7 @@ export class CustomerWorkspaceComponent extends BaseComponent {
 
         var myStartDateTime = DateTool.GetDateByMonth(-1);
 
-        this.myPartnersDomainService.GetCustomersDecreasedShipments(dateTypeCode, myStartDateTime, timeRange, this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
+        this.myPartnersDomainService.GetCustomersDecreasedShipments(dateTypeCode, myStartDateTime, timeRange, this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var myData: CompareDataClass[] = myResponse.Result;

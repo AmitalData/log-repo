@@ -83,7 +83,7 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     objectTable.MenuButtonGroupName = GetAttributeStringValue(fieldNode.Attributes["MenuButtonGroupName"]);
                     objectTable.MenuButtonGroupType = GetAttributeStringValue(fieldNode.Attributes["MenuButtonGroupType"]);
-                      
+
                     foreach (XmlNode fNode in fieldNode.ChildNodes)
                     {
                         MenuButtons.Add(BuildMenuButtons(fNode, objectTable));
@@ -195,9 +195,9 @@ namespace MeatadataGeneratorTool.Helpers
             }
 
             field.FieldName = GetAttributeStringValue(fieldNode.Attributes["FieldName"]);
-			field.GeneratedComponentPath = GetAttributeStringValue(fieldNode.Attributes["GeneratedComponentPath"]);
+            field.GeneratedComponentPath = GetAttributeStringValue(fieldNode.Attributes["GeneratedComponentPath"]);
 
-			if (fieldNode.Attributes["OldFieldName"] != null)
+            if (fieldNode.Attributes["OldFieldName"] != null)
             {
                 field.OldFieldName = GetAttributeStringValue(fieldNode.Attributes["OldFieldName"]);
             }
@@ -205,6 +205,21 @@ namespace MeatadataGeneratorTool.Helpers
             {
                 field.OldFieldName = GetAttributeStringValue(fieldNode.Attributes["FieldName"]);
             }
+
+
+            if (fieldNode.Attributes["OldNames"] != null)
+            {
+                field.OldNames = GetAttributeStringValue(fieldNode.Attributes["OldNames"]);
+            }
+            else
+            {
+                field.OldNames = GetAttributeStringValue(fieldNode.Attributes["FieldName"]);
+            }
+
+
+            field.ShortName = GetAttributeStringValue(fieldNode.Attributes["ShortName"]);
+
+
             field.ForeignEntity = GetAttributeStringValue(fieldNode.Attributes["ForeignEntity"]);
             field.FullLocalDefaultText = GetAttributeStringValue(fieldNode.Attributes["FullLocalDefaultText"]);
             field.HelpLocalDefaultText = GetAttributeStringValue(fieldNode.Attributes["HelpLocalDefaultText"]);
@@ -213,6 +228,9 @@ namespace MeatadataGeneratorTool.Helpers
             field.IsCustomFilter = GetAttributeBoolValue(fieldNode.Attributes["IsCustomFilter"]);
             field.IsDBField = GetAttributeBoolValue(fieldNode.Attributes["HasDataBaseField"]);
             field.IsForeignKey = GetAttributeBoolValue(fieldNode.Attributes["IsForeignKey"]);
+
+            field.DontBuildRelationOnDB = GetAttributeBoolValue(fieldNode.Attributes["DontBuildRelationOnDB"]);
+
             field.IsMulti = GetAttributeBoolValue(fieldNode.Attributes["IsMulti"]);
             field.IsPMField = GetAttributeBoolValue(fieldNode.Attributes["HasPMField"]);
             field.IsPrimaryKey = GetAttributeBoolValue(fieldNode.Attributes["IsPrimaryKey"]);
@@ -491,7 +509,7 @@ namespace MeatadataGeneratorTool.Helpers
                 Query.Perspective = GetAttributeStringValue(fieldNode.Attributes["Perspective"]);
             }
 
-           
+
 
             foreach (XmlNode fNode in fieldNode.ChildNodes)
             {
@@ -803,8 +821,8 @@ namespace MeatadataGeneratorTool.Helpers
             textCode.LocalDefaultText = GetAttributeStringValue(fieldNode.Attributes["LocalDefaultText"]);
             textCode.TextCodeTypeCode = GetAttributeStringValue(fieldNode.Attributes["TextCodeTypeCode"]);
             textCode.IsSpellChecked = GetAttributeBoolValue(fieldNode.Attributes["IsSpellChecked"]);
-            
-           
+
+
 
             return textCode;
         }
@@ -870,7 +888,7 @@ namespace MeatadataGeneratorTool.Helpers
             }
             catch (Exception)
             {
-                DCField.IsCloseField = false; 
+                DCField.IsCloseField = false;
 
             }
             try
@@ -906,14 +924,20 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.Id = GetAttributeStringValue(entity.Attributes["Id"]);
                 objectTable.ObjectTableName = GetAttributeStringValue(entity.Attributes["ObjectTableName"]);
                 objectTable.DBTableName = GetAttributeStringValue(entity.Attributes["DBTableName"]);
-                if (entity.Attributes["OldDBTableName"] != null)
+
+                objectTable.OldDBTableName = GetAttributeStringValue(entity.Attributes["OldDBTableName"]);
+
+                objectTable.DBTableShortName = GetAttributeStringValue(entity.Attributes["DBTableShortName"]);
+
+                if (entity.Attributes["DBTableOldNames"] != null)
                 {
-                    objectTable.OldDBTableName = GetAttributeStringValue(entity.Attributes["OldDBTableName"]);
+                    objectTable.DBTableOldNames = GetAttributeStringValue(entity.Attributes["DBTableOldNames"]);
                 }
                 else
                 {
-                    objectTable.OldDBTableName = GetAttributeStringValue(entity.Attributes["DBTableName"]);
+                    objectTable.DBTableOldNames = GetAttributeStringValue(entity.Attributes["DBTableName"]);
                 }
+
                 objectTable.DependencyFilter1 = GetAttributeStringValue(entity.Attributes["DependencyFilter1"]);
                 objectTable.DependencyFilter2 = GetAttributeStringValue(entity.Attributes["DependencyFilter2"]);
                 objectTable.DependencyFilter3 = GetAttributeStringValue(entity.Attributes["DependencyFilter3"]);
@@ -964,6 +988,8 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.ObjectTablePlural = GetAttributeStringValue(entity.Attributes["ObjectTablePlural"]);
                 objectTable.ObjectTableSingular = GetAttributeStringValue(entity.Attributes["ObjectTableSingular"]);
                 objectTable.ObjectTableTypeCode = GetAttributeStringValue(entity.Attributes["ObjectTableTypeCode"]);
+                objectTable.DxmlDatabaseTypeCode = GetAttributeStringValue(entity.Attributes["DxmlDatabaseTypeCode"]);
+                objectTable.DxmlDatabaseSchemaCode = GetAttributeStringValue(entity.Attributes["DxmlDatabaseSchemaCode"]);
                 objectTable.ShortTitleControlPath = GetAttributeStringValue(entity.Attributes["ShortTitleControlPath"]);
                 objectTable.SortingByObjectField = GetAttributeStringValue(entity.Attributes["SortingByObjectField"]);
                 objectTable.SortingByDirection = GetAttributeStringValue(entity.Attributes["SortingByDirection"]);
@@ -1018,17 +1044,17 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     objectTable.NoTS = false;
                 }
-				if (entity.Attributes["NoDefaultFeatures"] != null)
-				{
-					objectTable.NoDefaultFeatures = GetAttributeBoolValue(entity.Attributes["NoDefaultFeatures"]);
-				}
-				else
-				{
-					objectTable.NoDefaultFeatures = false;
-				}
+                if (entity.Attributes["NoDefaultFeatures"] != null)
+                {
+                    objectTable.NoDefaultFeatures = GetAttributeBoolValue(entity.Attributes["NoDefaultFeatures"]);
+                }
+                else
+                {
+                    objectTable.NoDefaultFeatures = false;
+                }
 
 
-				if (entity.Attributes["HasCompactSearch"] != null)
+                if (entity.Attributes["HasCompactSearch"] != null)
                 {
                     objectTable.HasCompactSearch = GetAttributeBoolValue(entity.Attributes["HasCompactSearch"]);
                 }
@@ -1061,7 +1087,7 @@ namespace MeatadataGeneratorTool.Helpers
                 }
                 else
                 {
-                    objectTable.AllowedForComputingPartners = false;
+                    objectTable.IsMetadataOnlyTable = false;
                 }
                 if (entity.Attributes["Code1"] != null && entity.Attributes["Name1"] != null)
                 {

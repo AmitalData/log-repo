@@ -20,7 +20,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationTapagTabComponent.html',
 })
 
@@ -39,7 +39,7 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
         super();
         this.tapagObslist = new ObservableCollection([]);
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.TapagConnectionTable").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.Tapag").subscribe((response: any) => {
                     this.EntityResourceService.getEntityResourceByTableName("Customs.Deposit").subscribe((response: any) => {
@@ -135,7 +135,7 @@ export class DeclarationTapagTabComponent extends BaseComponent implements OnIni
 
         if (!AppTool.IsNullOrEmpty(item)) {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.tapagPMService.get(item.Id).subscribe(response => {
+            this.tapagPMService.get(item.Id).subscribe((response:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 switch (item.TapagTypeCode) {
                     case "1":

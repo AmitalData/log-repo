@@ -6,7 +6,7 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {Guid} from '../../../../../Infrastructure/Utilities/Guid';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AttachDocsOut',
     templateUrl: './AttachDocsOutComponent.html',
 })

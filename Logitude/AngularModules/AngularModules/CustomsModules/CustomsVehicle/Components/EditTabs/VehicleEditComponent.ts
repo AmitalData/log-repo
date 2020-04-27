@@ -22,7 +22,7 @@ import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServi
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VehicleEditComponent.html',
     providers: [EntityArgs],
 })
@@ -45,7 +45,7 @@ export class VehicleEditComponent extends BaseComponent {
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.Vehicle";
         this.BuildTabs();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
            // this._IsLoaded = true;
             /// alert("this._IsLoaded");
         });

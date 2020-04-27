@@ -2,15 +2,8 @@
 <Table
   Name="SharedLogisticsSettings"
   Schema="dbo"
-  DBType="Main">
-  <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Tenant"
     Type="int">
@@ -81,6 +74,14 @@
     Name="IsMoneyTabEnabled"
     Type="bit">
     <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column

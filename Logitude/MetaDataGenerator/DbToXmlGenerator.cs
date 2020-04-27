@@ -171,12 +171,7 @@ namespace MetaDataGenerator
                 #region Write Xml To file
 
 
-                string tableName = table.Name;
-                if (table.Name.Contains("."))
-                {
-                    tableName = table.Name.Split('.')[1];
-                }
-                doc.Save(directoryPath + tableName + ".lxml");
+                WriteXMLToFile(directoryPath, table, doc);
 
                 #endregion
             }
@@ -237,14 +232,7 @@ namespace MetaDataGenerator
                 #region Write Xml To file
 
 
-                string tableName = table.Name;
-                if (table.Name.Contains("."))
-                {
-                    tableName = table.Name.Split('.')[1];
-                }
-
-                XmlDocument newdoc = new XmlDocument();
-                doc.Save(directoryPath + tableName + ".lxml");
+                WriteXMLToFile(directoryPath, table, doc);
 
                 #endregion
             }
@@ -320,19 +308,19 @@ namespace MetaDataGenerator
                             GenerateAdditionalTextCodes(doc, entityElement, table, fields);
                             break;
                         }
-					case "features":
-						{
-							GenerateAdditionalFeatures(doc, entityElement, table, fields);
-							break;
-						}
-					case "features and textCodes":
-						{
-							GenerateAdditionalTextCodes(doc, entityElement, table, fields);
-							GenerateAdditionalFeatures(doc, entityElement, table, fields);
+                    case "features":
+                        {
+                            GenerateAdditionalFeatures(doc, entityElement, table, fields);
+                            break;
+                        }
+                    case "features and textCodes":
+                        {
+                            GenerateAdditionalTextCodes(doc, entityElement, table, fields);
+                            GenerateAdditionalFeatures(doc, entityElement, table, fields);
 
-							break;
-						}
-					case "entity":
+                            break;
+                        }
+                    case "entity":
                         {
                             this.UpdateEntityElement(entityElement, doc, table, tableTextCodes);
                             break;
@@ -348,19 +336,44 @@ namespace MetaDataGenerator
                 #region Write Xml To file
 
 
-                string tableName = table.Name;
-                if (table.Name.Contains("."))
-                {
-                    tableName = table.Name.Split('.')[1];
-                }
-
-                XmlDocument newdoc = new XmlDocument();
-                doc.Save(directoryPath + tableName + ".lxml");
+                WriteXMLToFile(directoryPath, table, doc);
 
                 #endregion
             }
 
             return true;
+        }
+
+        private static void WriteXMLToFile(string directoryPath, ObjectTable table, XmlDocument doc)
+        {
+            string tableName = table.Name;
+            if (table.Name.Contains("."))
+            {
+                tableName = table.Name.Split('.')[1];
+            }
+
+            string dxmlFilePath = directoryPath + tableName + ".lxml";
+            //XmlDocument newdoc = new XmlDocument();
+             
+
+
+            FileStream fileStream;
+            if (File.Exists(dxmlFilePath))
+            {
+                fileStream = new FileStream(dxmlFilePath, FileMode.Truncate, FileAccess.Write);
+            }
+            else
+            {
+                fileStream = new FileStream(dxmlFilePath, FileMode.CreateNew, FileAccess.Write);
+            }
+
+            XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
+            XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
+
+            doc.Save(xmlWriter);
+            xmlWriter.Close();
+            xmlWriter.Dispose();
+            fileStream.Close();
         }
 
         #region GenerateEntityElement
@@ -701,23 +714,25 @@ namespace MetaDataGenerator
 
 
             RemoveOldNodes(doc, additionalTextCodesListXElement, "TextCode");
-           // XmlElement 
+            // XmlElement 
 
             List<TextCode> additionalTextCodes = (from a in allTextCodes
                                                   where a.ObjectTableId == table.Id && a.Tenant == 0
-                                                  && a.Id != table.DescriptionTextCodeId
+                                                  && (a.Id != table.DescriptionTextCodeId || a.TextCodeTypeCode.ToLower() == "o")
                                                   && a.Id != table.NewButtonTextCodeId
-                                                  && a.TextCodeTypeCode.ToLower() != "f" && a.TextCodeTypeCode.ToLower() != "th"
-                                                  && a.TextCodeTypeCode.ToLower() != "h"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "f" //&& a.TextCodeTypeCode.ToLower() != "th"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "h"
                                                   && a.TextCodeTypeCode.ToLower() != "t"
-                                                  && a.TextCodeTypeCode.ToLower() != "ch"
-                                                  && a.TextCodeTypeCode.ToLower() != "q"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "ch"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "q"
+                                                  && a.TextCodeTypeCode.ToLower() != "tip"
                                                   && !a.Code.Contains(".MenuButtons.")
                                                   && !a.Code.Contains(".Features.")
                                                   && !allFeatures.Any(f => f.NameTextCodeId == a.Id)
                                                   && !allQueries.Any(f => f.NameTextCodeId == a.Id)
                                                   && !allMenuButtons.Any(f => f.LabelTextCodeId == a.Id)
-                                                  && !tableObjectFields.Any(f => f.FullNameTextCodeId == a.Id || f.ListTextCodeId == a.Id || f.HelpTextCodeId == a.Id)
+                                                  && !tableObjectFields.Any(f => f.FullNameTextCodeId == a.Id || f.ListTextCodeId == a.Id || f.HelpTextCodeId == a.Id || f.ShortNameTextCodeId == a.Id)
+                                                  && !allTabs.Any(t => t.TabNameTextCodeId == a.Id)
                                                   select a).ToList();
 
             foreach (TextCode tcode in additionalTextCodes)

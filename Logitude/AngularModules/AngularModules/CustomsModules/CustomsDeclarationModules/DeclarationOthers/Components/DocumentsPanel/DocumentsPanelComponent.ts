@@ -22,7 +22,7 @@ import {CustDocMetaDataValuesWebService} from '../../../../../Customs/Services/W
 import {CustomsSettingListService} from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentsPanelComponent',
     templateUrl: "DocumentsPanelComponent.html",
 })
@@ -94,7 +94,7 @@ export class DocumentsPanelComponent {
 
         this.custDocRelatedDocsWebService.GetSingleDocumentsFilingPM(documentsFilingId).subscribe((resp: ServiceResponse) => {
             var documentFiling = resp.Result;
-            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe(res => {
+            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res:any) => {
 
 
                 var documentName = SessionLocator.Tenant + "_" + documentFiling.DocumentId;

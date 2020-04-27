@@ -27,7 +27,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   ParentTableName="Opportunity"
-  DefaultText="&quot;Opportunity Competitor&quot;">
+  DefaultText="&quot;Opportunity Competitor&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;cb51cc1e-98f2-447d-aa3f-da9fe10a6b3a&quot;"
     FieldName="&quot;OpportunityId&quot;"
@@ -260,4 +262,5 @@
     GenerateInList="false" />
   <EventTypes />
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

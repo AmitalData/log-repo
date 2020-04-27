@@ -35,7 +35,7 @@ import { ReconcileExternalPageLinePM } from '../../EntityPMs/ReconcileExternalPa
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ExtReconcileAdjustBankFeeComponent.html',
 
 })
@@ -296,7 +296,7 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
             this._BankAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(),
             this.Notes)
             .subscribe(
-                (res) => {
+                (res:ServiceResponse) => {
 
                     this.CurrentSession.StopBusyIndicator();
                     if (res.HasError) {

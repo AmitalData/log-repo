@@ -1,9 +1,7 @@
 import {EventEmitter, Output} from '@angular/core';
 import {TextCodeTranslator} from './Utilities/TextCodeTranslator';
-import {NumbersPipe} from './Pipes/NumbersPipe';
-import { forEach } from '@angular/router/src/utils/collection';
-import { DatePipe } from '@angular/common';
 import { SessionLocator } from './Utilities/SessionLocator';
+
 export class AppTool {
 
     public static GetCounterPrefixLength(prefix: string) {
@@ -831,10 +829,13 @@ export class AppTool {
 
         return result;
     }
-    public static GetChargeableWeightUnitCode(myTransportModeId: string, myShipmentTypeId: string) {
-        var myResult: string = this.TenantPM.ChargeableWeightUnitCode;
+    public static GetChargeableWeightUnitCode(myTransportModeId: string) {
+        var myResult: string;
 
-        if ((myTransportModeId == "O" && myShipmentTypeId == "LCLD") || (myTransportModeId == "I" && myShipmentTypeId == "LTL")) {
+        if (myTransportModeId == "A") {
+            myResult = this.TenantPM.ChargeableWeightUnitCode;
+        }
+        else if (myTransportModeId == "O" || myTransportModeId == "I") {
             myResult = this.TenantPM.WeightMeasurementUnitCode;
         }
 
@@ -2361,6 +2362,22 @@ export class FormatTool {
         if (!AppTool.IsNullOrEmpty(input)) {
             if (!AppTool.IsNullOrEmpty(input)) {
                 if (input.length <= 4) {
+                    var pattern = /^\d+$/;
+                    if (pattern.test(input)) {
+                        myResult = true;
+                    }
+                }
+            }
+        }
+
+        return myResult;
+    }
+    public static Validate_SLAC(input: string): boolean {
+        var myResult: boolean = false;
+
+        if (!AppTool.IsNullOrEmpty(input)) {
+            if (!AppTool.IsNullOrEmpty(input)) {
+                if (input.length <= 5) {
                     var pattern = /^\d+$/;
                     if (pattern.test(input)) {
                         myResult = true;

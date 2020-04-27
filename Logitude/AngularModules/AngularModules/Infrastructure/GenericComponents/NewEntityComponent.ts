@@ -16,7 +16,7 @@ import { InterestBasesPeriodPM } from '../../Accounting/EntityPMs/InterestBasesP
 import { InterestBasesTypePMService } from '../../Accounting/Services/StandardPMs/InterestBasesTypePMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewEntityComponent.html',
     providers: [EntityArgs]
 })
@@ -44,7 +44,7 @@ export class NewEntityComponent {
         this.entityArgs.ObjectTableName = this.ObjectTableName;
         this.entityArgs.IsNewEntity = true;
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
             this.InitEntityPM();
             this.BuildEditTabs();
             this.RunComponent();
@@ -100,7 +100,7 @@ export class NewEntityComponent {
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
-                res.subscribe(response => {
+                res.subscribe((response:any) => {
                  
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
@@ -285,6 +285,12 @@ export class NewEntityComponent {
                     case "Simplog.FreightLib.Views.Areas": {
                         myComponentName = "AreasTabComponent";
                         myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/AreasTabComponent";
+                        break;
+                    }
+
+                    case "Simplog.FreightLib.Views.TariffTranslations": {
+                        myComponentName = "TariffTranslationsTabComponent";
+                        myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/TariffTranslations/TariffTranslationsTabComponent";
                         break;
                     }
 

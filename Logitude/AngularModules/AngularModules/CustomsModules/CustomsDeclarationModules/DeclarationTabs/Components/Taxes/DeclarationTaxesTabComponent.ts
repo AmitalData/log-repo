@@ -22,7 +22,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 @Component({
 
-    moduleId: module.id,
+    
     templateUrl: './DeclarationTaxesTabComponent.html',
 })
 
@@ -53,12 +53,12 @@ export class DeclarationTaxesTabComponent implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsTax").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsTax").subscribe((response:any) => {
 
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationTax").subscribe(response => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationTax").subscribe((response:any) => {
                             this.EntityPM = this.entityArgs.EntityPM;
                             this.ObjectTableName = this.entityArgs.ObjectTableName;
                             this._entityListService = new EntityListService();
@@ -81,12 +81,12 @@ export class DeclarationTaxesTabComponent implements OnInit, OnDestroy {
         this.CD = null;
     }
     SetWindowArgs(args: any) {
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsTax").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsTax").subscribe((response:any) => {
 
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationTax").subscribe(response => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationTax").subscribe((response:any) => {
                             this.EntityPM = args.EntityPM;
                             this.EntityId = this.EntityPM.Id;
                             this.CIFValue = this.EntityPM.CIFValue;

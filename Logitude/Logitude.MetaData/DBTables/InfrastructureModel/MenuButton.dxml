@@ -2,7 +2,8 @@
 <Table
   Name="MenuButtons"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -47,6 +48,7 @@
   </Column>
   <Column
     Name="Index"
+    ShortName="Index_"
     Type="int">
     <Constraints
       Nullable="false" />
@@ -124,7 +126,8 @@
     ForeignKeyColumn="LabelTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="MenuButtonGroupId"
     ReferencedTable="MenuButtonGroups"
@@ -139,7 +142,8 @@
     ForeignKeyColumn="FeatureId"
     ReferencedTable="Features"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <UniqueConstraint
     Columns="EventCode,MenuButtonGroupId,Tenant" />
 </Table>

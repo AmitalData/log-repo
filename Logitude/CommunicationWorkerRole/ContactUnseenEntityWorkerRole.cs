@@ -2,6 +2,7 @@
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
@@ -35,10 +36,8 @@ namespace CommunicationWorkerRole
 {
     public class ContactUnseenEntityWorkerRole : WorkerEntryPoint
     {
-        QueueDescription queueDescription;
-        QueueClient client;
-        private bool _OnStartDone;
-        string contactunseenQueueName;
+      
+        IQueueService queueservice;
         string statusCode = string.Empty;
         ContactRepository contactRepository;
         ContactsUnseenEntitieRepository contactsUnseenEntitieRepository;
@@ -51,260 +50,285 @@ namespace CommunicationWorkerRole
 
         public override void Run()
         {
-            int? tenant = null;
+         
             while (IsRunning)
             {
-                try
+                if (!General.IsUpdating())
                 {
-                    var message = client.Receive(new TimeSpan(0, 0, 10));
-                    LastActivity = DateTime.UtcNow;
-                    string traceEventId = null;
-                    string statusName = "";
-                    DateTime? sourceEventDate = null;
-                    bool IsException = false;
-
-
-                    if (message != null)
+                    try
                     {
-                        LastActivity = DateTime.UtcNow;
-                        try
+                        queueservice = new DbQueueService();
+                        queueservice.InitializeQueue("contactunseenentityqueue", 0);
+                        var response = queueservice.Receive(new TimeSpan(0, 0, 10));
+                        int? tenant = null;
+                        string traceEventId = null;
+                        string statusName = "";
+                        DateTime? sourceEventDate = null;
+                        bool IsException = false;
+
+
+                        if (response != null && response.MessageId != null)
                         {
-                            if (message.Properties.Keys.Contains("TraceEventId")) traceEventId = message.Properties["TraceEventId"].ToString();
-
-                            if (message.Properties.Keys.Contains("Tenant")) tenant = (int)message.Properties["Tenant"];
-                            if (message.Properties.Keys.Contains("TenantName")) tenantName = message.Properties["TenantName"].ToString();
-                            if (message.Properties.Keys.Contains("SourceEventDate")) sourceEventDate = (DateTime?)message.Properties["SourceEventDate"];
-
-                            if (traceEventId == null || tenant == null)
+                            try
                             {
-                                message.Complete();
-                                continue;
-                            }
+                                traceEventId = response.MessageValues.Keys.Contains("TraceEventId") ? response.MessageValues["TraceEventId"].ToString() : "";
+                                tenantName = response.MessageValues.Keys.Contains("TenantName") ? response.MessageValues["TenantName"].ToString() : "";
+                                tenant = response.MessageValues.Keys.Contains("Tenant") && !string.IsNullOrEmpty(response.MessageValues["Tenant"].ToString()) ? (int?)int.Parse(response.MessageValues["Tenant"].ToString()) : null;
+                                sourceEventDate = response.MessageValues.Keys.Contains("SourceEventDate") && !string.IsNullOrEmpty(response.MessageValues["SourceEventDate"].ToString()) ? (DateTime?)DateTime.Parse(response.MessageValues["SourceEventDate"].ToString()) : null;
 
 
-                            traceEventRepository = new TraceEventRepository((int)tenant);
-                            TraceEvent traceEvent = traceEventRepository.GetSingleTraceEvent(traceEventId);
-
-                            if (traceEvent == null)
-                            {
-                                DelayQueueMessage(message);
-                                continue;
-                            }
-
-                            EventTypeRepository eventTypeRepository = new EventTypeRepository((int)tenant);
-                            EventType eventType = eventTypeRepository.GetSingleEventType(traceEvent.EventTypeId, (int)tenant);
-
-
-                            if (!eventType.IsCustomerView)
-                            {
-                                message.Complete();
-                                continue;
-                            }
-
-                            if (eventType.EntityStatus == null && eventType.Code != "EXCE")
-                            {
-                                message.Complete();
-                                continue;
-                            }
-
-                            shipmentRepository = new ShipmentRepository((int)tenant);
-                            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext((int)tenant);
-
-
-                            statusCode = eventType.EntityStatus != null ? eventType.EntityStatus.Code : "";
-                            statusName = eventType.EntityStatus != null ? eventType.EntityStatus.Name : "";
-
-
-                            CustomShipmentList shipment = GetShipment(tenant, traceEvent, shipmentsContext, statusCode, eventType.Code);
-
-
-                            if (shipment == null)
-                            {
-                                message.Complete();
-                                continue;
-                            }
-
-                            if (string.IsNullOrEmpty(shipment.CustomerId))
-                            {
-                                message.Complete();
-                                continue;
-                            }
-
-
-                            ICommonDataContext commoncontext = CommonDataContext.GetContext((int)tenant);
-
-                            CardContactRepository cardContactRep = new CardContactRepository(commoncontext);
-
-                            contactsUnseenEntitieRepository = new ContactsUnseenEntitieRepository((int)tenant);
-
-                            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                            {
-                                mobileNotificationLogRepository = new MobileNotificationLogRepository();
-                                scope.Complete();
-                            }
-
-                            contactRepository = new ContactRepository((int)tenant);
-
-
-                            List<CardContact> customerContacts = cardContactRep.GetCardContactsByCardId(shipment.CustomerId).Where(c => c.InternetAccess).ToList();
-
-                            List<ContactPassword> contactPasswords = null;
-                            List<string> emails = null;
-
-                            if ((!string.IsNullOrEmpty(statusCode) && statusCode != "SHOR") || eventType.Code == "EXCE")
-                            {
-                                emails = (from a in customerContacts  select a.Contact.Email).ToList();
-                                contactPasswords = new List<ContactPassword>();
-
-                                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                                if (traceEventId == null || tenant == null)
                                 {
-                                    ContactPasswordRepository contactPasswordRepository = new ContactPasswordRepository();
-                                    contactPasswords = contactPasswordRepository.context.ContactPasswords.Where(c => emails.Contains(c.Email)).ToList();
-
-                                    if (contactPasswords != null)
-                                    {
-                                        contactPasswords = contactPasswords.Where(d => d.Email != null).ToList();
-                                    }
-
-                                    scope.Complete();
+                                    queueservice.Complete();
+                                    continue;
                                 }
 
 
-                                ContactMobileDeviceRepository contactMobileDeviceRepository = new ContactMobileDeviceRepository();
-                                ContactMobileDevicesList = contactMobileDeviceRepository.GetAllContactMobileDevicesByEmails(emails);
+                                traceEventRepository = new TraceEventRepository((int)tenant);
+                                TraceEvent traceEvent = traceEventRepository.GetSingleTraceEvent(traceEventId);
 
-                            }
+                                if (traceEvent == null)
+                                {
+                                    queueservice.Complete();
+                                    continue;
+                                }
 
-                            #region  ShipmentLevelCode A
-
-                            IQueryable<CustomShipmentList> ShipmentLists = null;
-                            if (shipment.ShipmentLevelCode == "A" && shipment.CustomConnectToShipment && !string.IsNullOrEmpty(statusCode) && statusCode != "SHOR")
-                            {
-                                ShipmentLists = (from a in shipmentsContext.Shipments.Include("Ports")//.Include("ShipperCard").Include("ConsigneeCard")
-                                                 join sm in shipmentsContext.ShipmentMasterDatas.Include("Port")
-                                                 on a.MasterShipmentDataId equals sm.Id into shipmentJoin
-                                                 from m in shipmentJoin.DefaultIfEmpty()
-                                                 where a.CustomFileId == shipment.Id && a.Tenant == shipment.Tenant && a.CustomConnectToShipment == false && a.ShipmentLevelCode != "A"
-                                                 select new CustomShipmentList()
-                                                 {
-                                                     Id = a.Id,
-                                                     ShipperName = a.ShipperName,//a.ShipperCard != null ? a.ShipperCard.EnglishName : "",
-                                                     ConsigneeName = a.ConsigneeName, //a.ConsigneeCard != null ? a.ConsigneeCard.EnglishName : "",
-                                                     DirectionId = a.DirectionId,
-                                                     ShipmentLevelCode = a.ShipmentLevelCode,
-                                                     ShipperReference1 = a.ShipperReference1,
-                                                     ShipperReference2 = a.ShipperReference2,
-                                                     AgentReference1 = a.AgentReference1,
-                                                     AgentReference2 = a.AgentReference2,
-                                                     ConsigneeReference1 = a.ConsigneeReference1,
-                                                     ConsigneeReference2 = a.ConsigneeReference2,
-                                                     FromPortName = !string.IsNullOrEmpty(m.MainCarriageFromPort.Code) ? m.MainCarriageFromPort.Code : a.FromPort.Code,
-                                                     ToPortName = !string.IsNullOrEmpty(m.MainCarriageToPort.Code) ? m.MainCarriageToPort.Code : a.ToPort.Code,
-                                                     ForeignPartnerCountryCode = a.ForeignPartnerCountryCode,           
-                                                     TransportModeId = a.TransportModeId,
-                                                     CustomFileId = a.CustomFileId,
-
-                                                 });
-                            }
+                                EventTypeRepository eventTypeRepository = new EventTypeRepository((int)tenant);
+                                EventType eventType = eventTypeRepository.GetSingleEventType(traceEvent.EventTypeId, (int)tenant);
 
 
-                            #endregion
+                                if (!eventType.IsCustomerView)
+                                {
+                                    queueservice.Complete();
+                                    continue;
+                                }
 
-                            #region Create ContactUnseenEntity And CreateMobileNotificationLog
-                            NotificationIds = new List<string>();
-                            foreach (CardContact cardcontact in customerContacts)
-                            {
-                                if (eventType.Code == "EXCE") IsException = true;
+                                if (eventType.EntityStatus == null && eventType.Code != "EXCE")
+                                {
+                                    queueservice.Complete();
+                                    continue;
+                                }
+
+                                shipmentRepository = new ShipmentRepository((int)tenant);
+                                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext((int)tenant);
 
 
-                                    ContactsUnseenEntitie contactsUnseenEntitieentity = new ContactsUnseenEntitie() { CreateDate = TenantServerConfigration.GetCurrentDateTime(traceEvent.Tenant),Id = Guid.NewGuid().ToString(), Tenant = traceEvent.Tenant, EntityId = traceEvent.EntityId, ObjectTableId = traceEvent.ObjectTableId, ContactId = cardcontact.ContactId };
-                                    contactsUnseenEntitieRepository.Add(contactsUnseenEntitieentity);
-                             
+                                statusCode = eventType.EntityStatus != null ? eventType.EntityStatus.Code : "";
+                                statusName = eventType.EntityStatus != null ? eventType.EntityStatus.Name : "";
 
 
-                                //NotificationRecord
+                                CustomShipmentList shipment = GetShipment(tenant, traceEvent, shipmentsContext, statusCode, eventType.Code);
+
+
+                                if (shipment == null)
+                                {
+                                    queueservice.Complete();
+                                    continue;
+                                }
+
+                                if (string.IsNullOrEmpty(shipment.CustomerId))
+                                {
+                                    queueservice.Complete();
+                                    continue;
+                                }
+
+
+                                ICommonDataContext commoncontext = CommonDataContext.GetContext((int)tenant);
+
+                                CardContactRepository cardContactRep = new CardContactRepository(commoncontext);
+
+                                contactsUnseenEntitieRepository = new ContactsUnseenEntitieRepository((int)tenant);
+
+                                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                                {
+                                    mobileNotificationLogRepository = new MobileNotificationLogRepository();
+                                    scope.Complete();
+                                }
+
+                                contactRepository = new ContactRepository((int)tenant);
+
+
+                                List<CardContact> customerContacts = cardContactRep.GetCardContactsByCardId(shipment.CustomerId).Where(c => c.InternetAccess).ToList();
+
+                                List<ContactPassword> contactPasswords = null;
+                                List<string> emails = null;
+
                                 if ((!string.IsNullOrEmpty(statusCode) && statusCode != "SHOR") || eventType.Code == "EXCE")
                                 {
-                                    if (cardcontact.Contact != null && !string.IsNullOrEmpty(cardcontact.Contact.Email))
+                                    emails = (from a in customerContacts select a.Contact.Email).ToList();
+                                    contactPasswords = new List<ContactPassword>();
+
+                                    using (TransactionScope scope = TransactionFactory.GetTransaction())
                                     {
+                                        ContactPasswordRepository contactPasswordRepository = new ContactPasswordRepository();
+                                        contactPasswords = contactPasswordRepository.context.ContactPasswords.Where(c => emails.Contains(c.Email)).ToList();
 
-                                        ContactPassword contactPassword = contactPasswords.Where(d => d.Email.ToLower() == cardcontact.Contact.Email.ToLower()).FirstOrDefault();
-
-                                        if (contactPassword != null)
+                                        if (contactPasswords != null)
                                         {
-                                            if (shipment.ShipmentLevelCode == "A" && shipment.CustomConnectToShipment)
+                                            contactPasswords = contactPasswords.Where(d => d.Email != null).ToList();
+                                        }
+
+                                        scope.Complete();
+                                    }
+
+
+                                    ContactMobileDeviceRepository contactMobileDeviceRepository = new ContactMobileDeviceRepository();
+                                    ContactMobileDevicesList = contactMobileDeviceRepository.GetAllContactMobileDevicesByEmails(emails);
+
+                                }
+
+                                #region  ShipmentLevelCode A
+
+                                IQueryable<CustomShipmentList> ShipmentLists = null;
+                                if (shipment.ShipmentLevelCode == "A" && shipment.CustomConnectToShipment && !string.IsNullOrEmpty(statusCode) && statusCode != "SHOR")
+                                {
+                                    ShipmentLists = (from a in shipmentsContext.Shipments.Include("Ports")//.Include("ShipperCard").Include("ConsigneeCard")
+                                                     join sm in shipmentsContext.ShipmentMasterDatas.Include("Port")
+                                                     on a.MasterShipmentDataId equals sm.Id into shipmentJoin
+                                                     from m in shipmentJoin.DefaultIfEmpty()
+                                                     where a.CustomFileId == shipment.Id && a.Tenant == shipment.Tenant && a.CustomConnectToShipment == false && a.ShipmentLevelCode != "A"
+                                                     select new CustomShipmentList()
+                                                     {
+                                                         Id = a.Id,
+                                                         ShipperName = a.ShipperName,//a.ShipperCard != null ? a.ShipperCard.EnglishName : "",
+                                                         ConsigneeName = a.ConsigneeName, //a.ConsigneeCard != null ? a.ConsigneeCard.EnglishName : "",
+                                                         DirectionId = a.DirectionId,
+                                                         ShipmentLevelCode = a.ShipmentLevelCode,
+                                                         ShipperReference1 = a.ShipperReference1,
+                                                         ShipperReference2 = a.ShipperReference2,
+                                                         AgentReference1 = a.AgentReference1,
+                                                         AgentReference2 = a.AgentReference2,
+                                                         ConsigneeReference1 = a.ConsigneeReference1,
+                                                         ConsigneeReference2 = a.ConsigneeReference2,
+                                                         FromPortName = !string.IsNullOrEmpty(m.MainCarriageFromPort.Code) ? m.MainCarriageFromPort.Code : a.FromPort.Code,
+                                                         ToPortName = !string.IsNullOrEmpty(m.MainCarriageToPort.Code) ? m.MainCarriageToPort.Code : a.ToPort.Code,
+                                                         ForeignPartnerCountryCode = a.ForeignPartnerCountryCode,
+                                                         TransportModeId = a.TransportModeId,
+                                                         CustomFileId = a.CustomFileId,
+
+                                                     });
+                                }
+
+
+                                #endregion
+
+                                #region Create ContactUnseenEntity And CreateMobileNotificationLog
+                                NotificationIds = new List<string>();
+                                foreach (CardContact cardcontact in customerContacts)
+                                {
+                                    if (eventType.Code == "EXCE") IsException = true;
+
+
+                                    ContactsUnseenEntitie contactsUnseenEntitieentity = new ContactsUnseenEntitie() { CreateDate = TenantServerConfigration.GetCurrentDateTime(traceEvent.Tenant), Id = Guid.NewGuid().ToString(), Tenant = traceEvent.Tenant, EntityId = traceEvent.EntityId, ObjectTableId = traceEvent.ObjectTableId, ContactId = cardcontact.ContactId };
+                                    contactsUnseenEntitieRepository.Add(contactsUnseenEntitieentity);
+
+
+
+                                    //NotificationRecord
+                                    if ((!string.IsNullOrEmpty(statusCode) && statusCode != "SHOR") || eventType.Code == "EXCE")
+                                    {
+                                        if (cardcontact.Contact != null && !string.IsNullOrEmpty(cardcontact.Contact.Email))
+                                        {
+
+                                            ContactPassword contactPassword = contactPasswords.Where(d => d.Email.ToLower() == cardcontact.Contact.Email.ToLower()).FirstOrDefault();
+
+                                            if (contactPassword != null)
                                             {
-                                                if (ShipmentLists != null && ShipmentLists.Count() > 0)
+                                                if (shipment.ShipmentLevelCode == "A" && shipment.CustomConnectToShipment)
                                                 {
-                                                    foreach (CustomShipmentList item in ShipmentLists)
+                                                    if (ShipmentLists != null && ShipmentLists.Count() > 0)
                                                     {
-                                                        CreateMobileNotificationLog(contactPassword, traceEvent.Tenant, traceEvent.ObjectTableId, item.Id, statusName, IsException, traceEvent.Notes, item, sourceEventDate);
+                                                        foreach (CustomShipmentList item in ShipmentLists)
+                                                        {
+                                                            CreateMobileNotificationLog(contactPassword, traceEvent.Tenant, traceEvent.ObjectTableId, item.Id, statusName, IsException, traceEvent.Notes, item, sourceEventDate);
+                                                        }
                                                     }
                                                 }
-                                            }
 
-                                            else
-                                            {
-                                                CreateMobileNotificationLog(contactPassword, traceEvent.Tenant, traceEvent.ObjectTableId, traceEvent.EntityId, statusName, IsException, traceEvent.Notes, shipment, sourceEventDate);
+                                                else
+                                                {
+                                                    CreateMobileNotificationLog(contactPassword, traceEvent.Tenant, traceEvent.ObjectTableId, traceEvent.EntityId, statusName, IsException, traceEvent.Notes, shipment, sourceEventDate);
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            #endregion
+                                #endregion
 
 
-                            contactsUnseenEntitieRepository.SubmitChanges();
-                            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                            {
-                                mobileNotificationLogRepository.SubmitChanges();
-                                scope.Complete();
-                            }
-
-
-                            if (NotificationIds.Count > 0)
-                            {
-                                foreach (string notificationId in NotificationIds)
+                                contactsUnseenEntitieRepository.SubmitChanges();
+                                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                                 {
-                                    using (TransactionScope scope = TransactionFactory.GetNewTransactionWithDefaultIsolationLevel())
+                                    mobileNotificationLogRepository.SubmitChanges();
+                                    scope.Complete();
+                                }
+
+
+                                if (NotificationIds.Count > 0)
+                                {
+                                    foreach (string notificationId in NotificationIds)
                                     {
 
-                                        QueueClient clientnotificationsLog = ServiceBusQueueHelper.CreateMobileNotificationsLogQueue(traceEvent.Tenant);
-                                        BrokeredMessage messageotifications = new BrokeredMessage();
+                                        IQueueService queueservice = new DbQueueService();
+                                        queueservice.InitializeQueue("mobilenotificationlogqueue",0);
+                                        queueservice.Send(new Dictionary<string, string>() { { "Tenant", traceEvent.Tenant.ToString() }, { "TenantName", tenantName }, { "NotificationId", notificationId } }, null, null, null, null);
 
-                                        messageotifications.Properties["Tenant"] = traceEvent.Tenant;
-                                        messageotifications.Properties["NotificationId"] = notificationId;
-                                        messageotifications.Properties["TenantName"] = tenantName;
-                                        
-                                        clientnotificationsLog.Send(messageotifications);
-                                        scope.Complete();
                                     }
                                 }
+
+
+                                queueservice.Complete();
+                                LogDoneItemInMemory();
                             }
 
-                            
-                            message.Complete();
-                            LogDoneItemInMemory();
-                        }
+                            catch (Exception ex)
+                            {
+                                ExceptionHandler.HandleException(ex, DateTime.Now, (int)tenant, "", "ContactUnseenWorkerRole", "", null);
+                                #region HandleException
+                                if (response.MessageValues.Keys.Contains("TraceEventId"))
+                                {
+                                    if (response.RetryNumber <= 1)
+                                    {
+                                        queueservice.Delay(new TimeSpan(0, 0, 0, 5));
+                                    }
 
-                        catch (Exception ex)
+                                    if (response.RetryNumber > 1 && response.RetryNumber <= 2)
+                                    {
+                                        queueservice.Delay(new TimeSpan(0, 0, 0, 10));
+                                    }
+                                    if (response.RetryNumber >= 3)
+                                    {
+                                        queueservice.CompleteAsFailed();
+                                       
+                                    }
+                                }
+                                else
+                                {
+                                    queueservice.CompleteAsFailed();
+                                   
+                                }
+                                #endregion
+
+                            }
+
+                        }
+                        else
                         {
-                            ExceptionHandler.HandleException(ex, DateTime.Now, (int)tenant, "", "ContactUnseenWorkerRole", "", null);
-                            DelayQueueMessage(message);
-                      
+                            Thread.Sleep(10000);
                         }
-                     
+
                     }
-                    
+                    catch (Exception ex)
+                    {
+
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "unseen worker role start", null, null);
+                        Thread.Sleep(10000);
+
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-
-                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "unseen worker role start", null, null);
-
-                    client = StorageAcountDetails.CreateServiceBusQueueClient(contactunseenQueueName);
-
-                    Thread.Sleep(10000);
+                    Thread.Sleep(60000);
                 }
             }
         }
@@ -366,33 +390,7 @@ namespace CommunicationWorkerRole
         }
 
 
-        private static void DelayQueueMessage(BrokeredMessage message)
-        {
-            if (message.DeliveryCount < 11)
-            {
-                if (message.DeliveryCount >= 3 && message.DeliveryCount <= 5)
-                {
-                    //    Thread.Sleep(new TimeSpan(0, 0, 10));
-                    message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(5);
-                }
-
-                if (message.DeliveryCount > 5 && message.DeliveryCount <= 10)
-                {
-                    //Thread.Sleep(new TimeSpan(0, 0, 30));
-                    message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(10);
-                }
-                if (message.DeliveryCount == 11)
-                {
-                    message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(60);
-                }
-                message.Abandon();
-            }
-            else
-            {
-                // add error log
-                message.Complete();
-            }
-        }
+      
 
         private void CreateContactUnseenEntity(string contactId, int tenant, string objectTableId, string entityId, bool isException, string statusName, string shipmentnumber, string notes)
         {
@@ -605,55 +603,31 @@ namespace CommunicationWorkerRole
 
 
 
-
         public override bool OnStart()
         {
-            try
-            {
-                contactunseenQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment("contactunseenentityqueue");
-                if (!StorageAcountDetails.NameSpaceManager.QueueExists(contactunseenQueueName))
-                {
-                    queueDescription = new QueueDescription(contactunseenQueueName);
-                    queueDescription.MaxSizeInMegabytes = 5120;
-                    queueDescription.EnableDeadLetteringOnMessageExpiration = false;
-                    StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription);
-                }
-
-                client = StorageAcountDetails.CreateServiceBusQueueClient(contactunseenQueueName);
-            }
-            catch (Exception ex)
-            {
-                //  ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "email worker role start", null, null);
-            }
-
-            // Set the maximum number of concurrent connections
-            ServicePointManager.DefaultConnectionLimit = 12;
-
-
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "ContactUnseenEntity";
             DoneItemsInRange = new Dictionary<DateTime, int>();
-
-            //DiagnosticMonitor.Start("DiagnosticsConnectionString");
-
-            // For information on handling configuration changes
-            // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
-            RoleEnvironment.Changing += RoleEnvironmentChanging;
-
+            ConnectClient();
             return base.OnStart();
         }
 
-        private void RoleEnvironmentChanging(object sender, RoleEnvironmentChangingEventArgs e)
+        private void ConnectClient()
         {
-
-            // If a configuration setting is changing
-            if (e.Changes.Any(change => change is RoleEnvironmentConfigurationSettingChange))
+            try
             {
+                queueservice = new DbQueueService();
+                queueservice.InitializeQueue("contactunseenentityqueue", 0);
+            }
 
-                // Set e.Cancel to true to restart this role instance
-                e.Cancel = true;
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Contact Unseen worker role start", null, null);
             }
         }
+    
+
+        
 
     } 
 

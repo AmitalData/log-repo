@@ -22,7 +22,7 @@ import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/
 import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditTariffChargeComponent.html',
 
 })

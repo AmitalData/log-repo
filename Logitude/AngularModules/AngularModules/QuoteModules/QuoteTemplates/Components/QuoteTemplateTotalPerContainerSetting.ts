@@ -26,7 +26,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'QuoteTemplateTotalPerContainerSetting',
-    moduleId: module.id,
+    
     templateUrl: 'QuoteTemplateTotalPerContainerSetting.html',
 })
 
@@ -163,7 +163,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     LoadTableDesign() {
 
-        this.quoteTemplateTableDesignPMService.get(this.QuoteTemplateSettingPM.TotalPerContainersTableDesignId).subscribe(res => {
+        this.quoteTemplateTableDesignPMService.get(this.QuoteTemplateSettingPM.TotalPerContainersTableDesignId).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.TableDesignPM = pmResponse.Result;
@@ -185,7 +185,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
             ids += ("," + this.TableDesignPM.LinesDesignId);
         }
 
-        this.quoteTemplateTextDesignExtendedPMService.GetQuoteTemplateTextDesignPMListByIds(ids, SessionLocator.Tenant).subscribe(res => {
+        this.quoteTemplateTextDesignExtendedPMService.GetQuoteTemplateTextDesignPMListByIds(ids, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
@@ -243,7 +243,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
-                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
+                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
                     this.QuoteTemplateSettingPM.IsDirty = false;
                     this.SaveOthers(textDesignPmLists, textCodeDataLists);
                 });
@@ -284,7 +284,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
         items.forEach((item) => { item.IsDirty = false; });
 
 
-        this.quoteTemplateTextDesignExtendedPMService.updateQuoteTemplateTextDesignPMs(items).subscribe(res => {
+        this.quoteTemplateTextDesignExtendedPMService.updateQuoteTemplateTextDesignPMs(items).subscribe((res:any) => {
             this.IsSaveQuoteTemplateTextDesignRuning = false;
             this.SaveCompleted();
 
@@ -294,7 +294,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     SaveQuoteTemplateTableDesign() {
 
-        this.quoteTemplateTableDesignPMService.update(this.TableDesignPM).subscribe(res => {
+        this.quoteTemplateTableDesignPMService.update(this.TableDesignPM).subscribe((res:any) => {
             this.IsSaveQuoteTemplateTableDesignRuning = false;
             this.SaveCompleted();
 
@@ -303,7 +303,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     SaveQuoteTemplateSetting() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-        this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
+        this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
             this.QuoteTemplateSettingPM.IsDirty = false;
             this.SaveCompleted();
 
@@ -322,7 +322,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
         });
 
 
-        this.quoteTemplateTextCodeExtendedPMService.updateTextCodes(quoteTemplateTextCodePMLists).subscribe(res => {
+        this.quoteTemplateTextCodeExtendedPMService.updateTextCodes(quoteTemplateTextCodePMLists).subscribe((res:any) => {
             this.IsSaveQuoteTemplateTextCodeRuning = false;
             this.SaveCompleted();
 

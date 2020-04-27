@@ -402,31 +402,30 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Fill Report Data
 
-            dataProvider.TotalFCLShipments = shipments.Where(d => d.ShipmentType.Contains("FCL")).Count();
-            dataProvider.TotalLCLShipments = shipments.Where(d => d.ShipmentType.Contains("LCL")).Count();
-            dataProvider.TotalLCLWeight = shipments.Where(d => d.ShipmentType.Contains("LCL")).Sum(d => d.GrossWeightInKG);
+
+            dataProvider.TotalFCLShipments = shipments.Where(d => d.ShipmentTypeId == "FCLD" || d.ShipmentTypeId == "MYGO").Count();
+            dataProvider.TotalLCLShipments = shipments.Where(d => d.ShipmentTypeId == "LCLD").Count();
+            dataProvider.TotalLCLWeight = shipments.Where(d => d.ShipmentTypeId == "LCLD").Sum(d => d.GrossWeightInKG);
             dataProvider.TotalShipments = shipments.Count();
             dataProvider.TotalTEU = shipments.Sum(d => d.TEU);
 
             dataProvider.ShippingLineStatisticsReportList = (from a in shipments
-
                                                              group a by new
                                                              {
                                                                  a.MainCarriageCarrierId,
                                                                  a.MainCarriageCarrierName,
                                                              } into gr
-
                                                              orderby gr.Key.MainCarriageCarrierName
-
                                                              select new ShippingLineStatisticsDataProvider.ShippingLineStatisticsReport()
                                                              {
                                                                  Carrier = gr.Key.MainCarriageCarrierName == null ? "(No Carrier Specified)" : gr.Key.MainCarriageCarrierName,
-                                                                 FCLShipments = gr.Where(t => t.ShipmentType.Contains("FCL")).Count(),
-                                                                 LCLShipments = gr.Where(t => t.ShipmentType.Contains("LCL")).Count(),
+                                                                 FCLShipments = gr.Where(d =>  d.ShipmentTypeId == "FCLD" || d.ShipmentTypeId == "MYGO").Count(),
+                                                                 LCLShipments = gr.Where(d =>  d.ShipmentTypeId == "LCLD").Count(),
                                                                  TotalShipments = gr.Count(),
-                                                                 LCLWeight = gr.Where(t => t.ShipmentType.Contains("LCL")).Sum(t => t.GrossWeightInKG),
+                                                                 LCLWeight = gr.Where(d => d.ShipmentTypeId == "LCLD").Sum(t => t.GrossWeightInKG),
                                                                  TEU = gr.Sum(t => t.TEU),
                                                                  PercentageFromTotalShipment = ((double)gr.Count() / (double)dataProvider.TotalShipments),
+                                                                 VolumeInCBM = gr.Where(d => d.ShipmentTypeId == "LCLD").Sum(t => t.VolumeInCBM),
                                                              }).ToList();
             #endregion
 
@@ -1130,7 +1129,7 @@ namespace WebFreight.Web.ReportsWebServices
                      Notes = d.InternalNotes,
                      RegisterDate = d.RegisterDate,
                      ValueDate = d.ValueDate,
-                     PaymentMethod = d.PaymentMethod == null ? null : d.PaymentMethod.Name,
+                     PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
                      BillToVendorId = d.VendorId,
                      BranchId = d.BranchId,
                  }).ToList();
@@ -1657,6 +1656,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.Amount = a.AmountDueInLocalCurrency;
                 }
 
+                invoicesRecored.AmountInProfitCurrency = a.AmountDueInProfitCurrency;
                 dataProvider.InvoicesByPartnerList.Add(invoicesRecored);
             }
 
@@ -10774,6 +10774,27 @@ namespace WebFreight.Web.ReportsWebServices
             return agingReportLoader.LoadFromXML(xmlFilters);
 
         }
+
+
+        public byte[] LoadCustomerStatusDataProvider(byte[] xmlFilters, int tenant)
+        {
+            CustomerStatusDataProvider dataprovider = GetCustomerStatusDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(CustomerStatusDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+        private CustomerStatusDataProvider GetCustomerStatusDataProvider(byte[] xmlFilters, int tenant)
+        {
+            CustomerStatusDataProviderLoader customerStatusDataProvider = new CustomerStatusDataProviderLoader(tenant);
+
+            return customerStatusDataProvider.LoadFromXML(xmlFilters);
+
+        }
         #endregion
 
         #region Ledger Transaction report
@@ -11592,6 +11613,10 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_customer = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Customer").FirstOrDefault();
             QueryFilterItem filterItem_vendor = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Vendor").FirstOrDefault();
             QueryFilterItem filterItem_Category1 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category1").FirstOrDefault();
+            QueryFilterItem filterItem_Category2 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category2").FirstOrDefault();
+            QueryFilterItem filterItem_Category3 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category3").FirstOrDefault();
+            QueryFilterItem filterItem_Category4 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category4").FirstOrDefault();
+            
             QueryFilterItem filterItem_ChartOfAccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountId").FirstOrDefault();
             QueryFilterItem filterItem_UseZeroFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "UseBalanceFilter").FirstOrDefault();
             QueryFilterItem filterItem_Category5 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category5").FirstOrDefault();
@@ -11623,8 +11648,34 @@ namespace WebFreight.Web.ReportsWebServices
                     category1 = (string)filterItem_Category1.FieldValue;
                 }
             }
-
             //category2
+            string category2 = null;
+            if (filterItem_Category2 != null)
+            {
+                if (filterItem_Category2.FieldValue != null)
+                {
+                    category2 = (string)filterItem_Category2.FieldValue;
+                }
+            }
+            //category3
+            string category3 = null;
+            if (filterItem_Category3 != null)
+            {
+                if (filterItem_Category3.FieldValue != null)
+                {
+                    category3 = (string)filterItem_Category3.FieldValue;
+                }
+            }
+            //category1
+            string category4 = null;
+            if (filterItem_Category4 != null)
+            {
+                if (filterItem_Category4.FieldValue != null)
+                {
+                    category4 = (string)filterItem_Category4.FieldValue;
+                }
+            }
+            //category5
             string category5 = null;
             if (filterItem_Category5 != null)
             {
@@ -11723,6 +11774,9 @@ namespace WebFreight.Web.ReportsWebServices
                 DetailedControlVendors = vendor,
                 DetailedControlClients = customer,
                 Category1 = category1,
+                Category2 = category2,
+                Category3 = category3,
+                Category4 = category4,
                 Category5 = category5,
                 Suppress_DoNotShowCardWithoutActivity = useZeroFilter,
                 IsRevenueExpenseReport = false,
@@ -11771,6 +11825,9 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.CurrenciesDetailed = false;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.Category1 = null;
+                trailReportParam.Category2 = null;
+                trailReportParam.Category3 = null;
+                trailReportParam.Category4 = null;
                 trailReportParam.Category5 = null;
                 trailReportParam.MyTrailReportLevel = ReportLevel.ChartofaccountType;
                 var typeservice = TrailReportFactory.CreateNew(trailReportParam);
@@ -11838,6 +11895,9 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.CurrenciesDetailed = false;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.Category1 = null;
+                trailReportParam.Category2 = null;
+                trailReportParam.Category3 = null;
+                trailReportParam.Category4 = null;
                 trailReportParam.Category5 = null;
                 trailReportParam.MyTrailReportLevel = ReportLevel.Chartofaccount;
                 var service = TrailReportFactory.CreateNew(trailReportParam);
@@ -11884,8 +11944,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
-
+                                    Name =   chartOfAccount.LocalName ,
+                                    Number = chartOfAccount.Code,
                                     ParentId = item.ChartOfAcount3,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
                                     LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
@@ -11960,8 +12020,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
-
+                                    Name =  chartOfAccount.LocalName,
+                                    Number= chartOfAccount.Code,
                                     ParentId = item.ChartOfAcount2,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
                                     LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
@@ -12045,8 +12105,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
-
+                                    Name =  chartOfAccount.LocalName,
+                                    Number= chartOfAccount.Code,
                                     ParentId = item.ChartOfAcount1,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
                                     LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
@@ -12131,8 +12191,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
-
+                                    Name = chartOfAccount.LocalName,
+                                    Number = chartOfAccount.Code,
                                     ParentId = item.ChartOfAcountType,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
                                     LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
@@ -12221,8 +12281,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name = chartOfAccountType.Code + "-" + chartOfAccountType.LocalName + " ERROR",
-
+                                    Name =  chartOfAccountType.LocalName,
+                                    Number = chartOfAccountType.Code,
                                     ParentId = null,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
                                     LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
@@ -12274,6 +12334,9 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DetailedControlClients = customer;
                 trailReportParam.CurrenciesDetailed = currency;
                 trailReportParam.Category1 = category1;
+                trailReportParam.Category2 = category2;
+                trailReportParam.Category3 = category3;
+                trailReportParam.Category4 = category4;
                 trailReportParam.Category5 = category5;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = useZeroFilter;
@@ -12339,8 +12402,8 @@ namespace WebFreight.Web.ReportsWebServices
                                     ResultList parentrecord = new ResultList()
                                     {
                                         Id = record.ParentId,
-                                        Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
-
+                                        Name = chartOfAccount.LocalName,
+                                        Number = chartOfAccount.Code,
                                         ParentId = item.ChartOfAcountType,
                                         LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
                                         LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,

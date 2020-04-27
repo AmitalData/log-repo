@@ -2,7 +2,29 @@
 <Table
   Name="Reports"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
+  <Column
+    Name="ReportGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FeatureId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReportDocumentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Column
     Name="Id"
     Type="varchar"
@@ -10,13 +32,6 @@
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
-  </Column>
-  <Column
-    Name="Code"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="Tenant"
@@ -32,9 +47,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LocalName"
-    Type="nvarchar"
-    Size="60">
+    Name="FilterControlName"
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -53,30 +68,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="FilterControlName"
+    Name="Code"
     Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ReportGroupId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="FeatureId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ReportDocumentId"
-    Type="varchar"
-    Size="15">
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>
@@ -85,13 +79,6 @@
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="FilterHtmlComponentUrl"
-    Type="varchar"
-    Size="256">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="DefaultTemplateId"
@@ -108,11 +95,37 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FilterHtmlComponentUrl"
+    Type="varchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="FeatureUniqeCode"
     Type="varchar"
     Size="120">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="AvailableForScheduling"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExcelOnly"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="ReportGroupId"
@@ -123,7 +136,8 @@
     ForeignKeyColumn="FeatureId"
     ReferencedTable="Features"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="ReportDocumentId"
     ReferencedTable="Documents"

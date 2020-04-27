@@ -62,7 +62,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a92fef5c-066c-431c-aae2-a65423335f6b&quot;"
     FieldName="&quot;Code&quot;"
@@ -785,4 +787,23 @@
       Id="3" />
   </Records>
   <DataContracts />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;BANKCODEMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;BankCode.Features.BankCodeMenu&quot;"
+      FeatureDefaultText="&quot;Bank Codes&quot;" />
+  </AdditionalFeatures>
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;General.MC.ACC.BankCodes&quot;"
+      DefaultText="&quot;Bank Codes&quot;"
+      LocalDefaultText="&quot;קודי בנקים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
 </entity>

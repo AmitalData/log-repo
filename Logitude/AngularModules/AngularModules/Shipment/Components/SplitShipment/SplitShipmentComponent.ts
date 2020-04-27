@@ -9,7 +9,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SplitShipmentComponent.html',
 })
 

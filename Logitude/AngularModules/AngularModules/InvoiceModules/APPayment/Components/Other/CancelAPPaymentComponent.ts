@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { APPaymentPM } from '../../../../Invoice/EntityPMs/APPaymentPM';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -12,7 +11,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CancelAPPaymentComponent.html',
 })
 
@@ -46,7 +45,7 @@ export class CancelAPPaymentComponent extends BaseComponent {
 
     constructor() {
         super();
-        this._entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.SetUIProperties();
         });

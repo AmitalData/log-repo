@@ -29,15 +29,23 @@ namespace Logitude.Accounting.Data.Repositories
             return interestReport;
         }
 
-        public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant)
+        public InterestReport GetSingleByGraterInterestCalculationDate(string CustomerId, DateTime InterestCalculationDate, int tenant)
+        {
+            InterestReport interestReport = (from a in context.InterestReports
+                                             where a.Tenant == tenant && a.CustomerId == CustomerId && a.InterestCalculationDate > InterestCalculationDate && (a.InterestReportStatusCode == "2" || a.InterestReportStatusCode == "4")
+                                             select a).FirstOrDefault();
+            return interestReport;
+        }
+
+        public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant,string glaccountId)
         {
             decimal? closedBalance = (from a in context.InterestReports
-                                     where a.Tenant == tenant && a.InterestReportStatusCode != "1" && a.InterestReportStatusCode != "3"
+                                     where a.Tenant == tenant && a.InterestReportStatusCode != "1" && a.InterestReportStatusCode != "3" && a.GLAccountId==glaccountId
                                      orderby a.InterestCalculationDate descending
                                      select a.CloseBalance).FirstOrDefault();
             return closedBalance != null ? closedBalance.Value : 0;
         }
-
+       
    }
 
 }

@@ -655,6 +655,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                             CustomData.PaymentData.DclickTK = dict["DclickTK"];
                             //CustomData.PaymentData.thtk = dict["thtk"];
                             CustomData.PaymentData.TargetEnv = dict["TargetEnv"];
+                            CustomData.PaymentData.u71 = dict["u71"];
+
                         }
                     }
 
@@ -681,6 +683,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             MyPaymentData.currency = dict["currency"];
             MyPaymentData.sum = dict["sum"];
             MyPaymentData.op = dict["op"];
+            MyPaymentData.u71 = dict["u71"];
             MyPaymentData.DCdisable = dict["DCdisable"];
             MyPaymentData.DclickTK = dict["DclickTK"];
             MyPaymentData.thtk = dict["thtk"];

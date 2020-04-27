@@ -48,7 +48,7 @@ declare var htmlComponentProparitiesTrue, GetPlainTextFromHtml, htmlComponentPro
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendDocument',
     templateUrl: './SendControl.html',
     providers: [CommunicationLogExtendedPMService, CommunicationAttachmentExtendedPMService, DocumentOutPMService, ServiceArgs, DocumentTypeTemplatePMService, DocumentTypeTemplateListExtendedService, HtmlEditorService, DocumentsFilingExtendedPMService, DocumentExtendedService, DocumentTypePMExtendedService, DocumentTypeListService],
@@ -238,7 +238,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
        
         if (!dataContext.DocumentTypePM && !AppTool.IsNullOrEmpty(dataContext.Id)) {
             this.CurrentSession.StartBusyIndicator("Loading...");
-            this._documentTypePMService.GetSinglePMWithOutInclude(dataContext.Id, SessionLocator.Tenant).subscribe(res => {
+            this._documentTypePMService.GetSinglePMWithOutInclude(dataContext.Id, SessionLocator.Tenant).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     dataContext.DocumentTypePM = pmResponse.Result;
@@ -354,7 +354,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.froalaEditorSetting.IsDisableEdit = true;
             this.froalaEditorSetting.Height = froalaheight;
 
-            this._htmlEditorService.getSentMessageHtmlBody(this.SelectedInternalDocument.SelectedCommunicationLogViewMode.CurrentEntityPm.DocumentId, SessionInfo.LoggedUserTenant).subscribe(res => {
+            this._htmlEditorService.getSentMessageHtmlBody(this.SelectedInternalDocument.SelectedCommunicationLogViewMode.CurrentEntityPm.DocumentId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -365,7 +365,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         this.ReloadFroalaEditor();
                     }
 
-                    this._communicationAttachmentExtendedPMService.getCommunicationAttachmentsByCommunicationLogId(this.SelectedInternalDocument.SelectedCommunicationLogViewMode.Id, SessionInfo.LoggedUserTenant).subscribe(res => {
+                    this._communicationAttachmentExtendedPMService.getCommunicationAttachmentsByCommunicationLogId(this.SelectedInternalDocument.SelectedCommunicationLogViewMode.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
@@ -382,7 +382,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                     if (this.SelectedInternalDocument.IsViewGeneralAttachment) {
 
                                         logAttachments.forEach((attachment) => {
-                                            this._documentExtendedService.GetDocumentById(attachment.DocumentId, attachment.Tenant).subscribe(res => {
+                                            this._documentExtendedService.GetDocumentById(attachment.DocumentId, attachment.Tenant).subscribe((res:any) => {
                                                 var pmResponse: ServiceResponse = res;
                                                 count += 1;
                                                 if (!pmResponse.HasError) {
@@ -573,7 +573,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
 
 
-            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, true, templateId, "", "", this.From, this.ReplyTo, this.Cc, this.Bcc).subscribe(res => {
+            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, true, templateId, "", "", this.From, this.ReplyTo, this.Cc, this.Bcc).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -643,7 +643,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         this.SelectId = selectId;
         this.ReportTemplates = new Array<DocumentTypeTemplateViewModel>();
         this.DocumenttypetemplateLists = new Array<DocumentTypeTemplateViewModel>();
-        this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.CurrentDocumentType.Id, this.CurrentDocumentType.Tenant).subscribe(res => {
+        this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.CurrentDocumentType.Id, this.CurrentDocumentType.Tenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
              this.CurrentSession.StopBusyIndicator();
@@ -909,12 +909,12 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         }
 
 
-        this._htmlEditorService.sendDocumentHtml(filter).subscribe(res => {
+        this._htmlEditorService.sendDocumentHtml(filter).subscribe((res:any) => {
             var response: ServiceResponse = res;
 
             if (!response.HasError) {
                 this.IsSendDocumentSucceeded = true;
-                this._communicationLogExtendedPMService.getCommunicationLogPMsByEntityIdAndDocumentOutId(this.EntityId, this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe(res => {
+                this._communicationLogExtendedPMService.getCommunicationLogPMsByEntityIdAndDocumentOutId(this.EntityId, this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var myResult = pmResponse.Result;
@@ -925,7 +925,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         });
                         this.SelectedInternalDocument.CommunicationLogObsList = this.CommunicationLogs.filter(d => d.CurrentEntityPm.DocumentOutId == this.SelectedInternalDocument.CurrentDocument.Id);
 
-                        this._documentOutPMService.getSingleDocumentOutPM(this.SelectedInternalDocument.CurrentDocument.Id, this.SelectedInternalDocument.CurrentDocument.Tenant).subscribe(res => {
+                        this._documentOutPMService.getSingleDocumentOutPM(this.SelectedInternalDocument.CurrentDocument.Id, this.SelectedInternalDocument.CurrentDocument.Tenant).subscribe((res:any) => {
 
                             var pmResponse: ServiceResponse = res;
                             if (!pmResponse.HasError) {
@@ -983,7 +983,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     CloseButtonClicked() {
 
-        //this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe(res => {
+        //this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe((res:any) => {
         //});
 
 
@@ -1019,7 +1019,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         apiQueryFilters.GetAll = true;
         apiQueryFilters.Tenant = this.CurrentDocument.Tenant;
 
-        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
+        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -1084,7 +1084,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             childEntityId = "";
         }
 
-        this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, childEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, childEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -1202,7 +1202,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             if (mychildObjectTable.Name == "ARInvoice" || mychildObjectTable.Name == "APInvoice") childEntityId = "";
         }
 
-        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.EntityId, childEntityId, this.ObjectTableId, "I", this.CurrentDocumentType.Tenant, true).subscribe(res => {
+        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.EntityId, childEntityId, this.ObjectTableId, "I", this.CurrentDocumentType.Tenant, true).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -1463,7 +1463,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         var att = new AttachmentDocment(item.DocumentTypeCopyNameWithDocumentTypeName, item.FileSize, item.Id, this.order++);
 
 
-        this._documentExtendedService.GetDocumentById(item.Id, item.Tenant).subscribe(res => {
+        this._documentExtendedService.GetDocumentById(item.Id, item.Tenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -1672,7 +1672,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                     });
 
 
-                    this._documentTypePMService.putDocumentType(this.CurrentDocumentType).subscribe(res => {
+                    this._documentTypePMService.putDocumentType(this.CurrentDocumentType).subscribe((res:any) => {
                     });
 
                 }
@@ -1728,7 +1728,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
                 else {
 
-                    this.documentTypeTemplatePMService.get(selectitem.Id).subscribe(res => {
+                    this.documentTypeTemplatePMService.get(selectitem.Id).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
                             var myResult = pmResponse.Result;
@@ -1780,7 +1780,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     UpdateDocumentTypeTemplate(item: any) {
 
-        this.documentTypeTemplatePMService.update(item).subscribe(myResult => {
+        this.documentTypeTemplatePMService.update(item).subscribe((myResult:any) => {
 
         });
     }
@@ -1810,7 +1810,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 var childEntityId: string = !AppTool.IsNullOrEmpty(this.SelectedInternalDocument.ChildEntityId) ? this.SelectedInternalDocument.ChildEntityId : "";
                 var childObjectTableName: string = !AppTool.IsNullOrEmpty(this.SelectedInternalDocument.ChildObjectTableName) ? this.SelectedInternalDocument.ChildObjectTableName : "";
 
-                this._documentOutPMService.GetEntityPartners(this.EntityId, this.ObjecttableName, childEntityId, childObjectTableName).subscribe(res => {
+                this._documentOutPMService.GetEntityPartners(this.EntityId, this.ObjecttableName, childEntityId, childObjectTableName).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
 
                     if (!pmResponse.HasError) {
@@ -1947,7 +1947,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     AddTemplateFromLibrary() {
 
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe((response:any) => {
 
             this.IsDisableAddTemplateFromLibrary = true;
 

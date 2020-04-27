@@ -1,6 +1,7 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -15,70 +16,68 @@ import {SelectedNotifications} from '../../DataContract/SelectedNotifications';
 
 export class NotificationExtendedListService{
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     public static CachedData: Array<NotificationList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/NotificationListExtended';
     }
 
-    getByFilters(filters: ApiQueryFilters) {
+  getByFilters(filters: ApiQueryFilters) {
 
-        var urlparameters = '/getbyfilters?';
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
+    var urlparameters = '/getbyfilters?';
+    var mykeys = Object.keys(filters);
+    var addtionalFiltersValues = null;
+    for (var i in mykeys) {
+      var propName = mykeys[i];
+      var propValue = filters[propName];
 
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+      var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
-            if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
-            }
-            if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
+      if (urlparameters != "?") {
+        urlparameters = urlparameters.concat('&');
+      }
+      if (!ignoreFilter) {
+        propValue = encodeURIComponent(propValue);
+        urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+      }
 
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
-
-
-        }
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-        }
-
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callUrl = this._apiUrl.concat(urlparameters);//
+      if (propName == "AdditionalFilters" && propValue.length > 0)
+        addtionalFiltersValues = JSON.stringify(propValue);
 
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
-                var _mappedListsArray: Array<NotificationList> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
-
-                        var entity: NotificationList;
-                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
-
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
     }
+    if (addtionalFiltersValues) {
+      urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+    }
+
+    var authHeader = new Headers();
+    authHeader.append('Token', SessionInfo.Token);
+    var callUrl = this._apiUrl.concat(urlparameters);//
+
+
+    return defer(() => {
+      return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+
+        var _mappedListsArray: Array<NotificationList> = [];
+        if (response) {
+          for (var key in response) {
+
+            var entity: NotificationList;
+            entity = this.MapJsonToEntityList(response[key]);
+            _mappedListsArray.push(entity);
+
+          }
+        }
+
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+        serviceResponse.Result = _mappedListsArray;
+        return serviceResponse;
+      }), catchError(ServiceHelper.HandleServiceError));
+    });
+  }
 
 
     getCountByFilters(filters: ApiQueryFilters) {
@@ -114,17 +113,15 @@ export class NotificationExtendedListService{
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+          return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 var entity = this.MapJsonToEntity(serviceResponse.Result);
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -134,7 +131,7 @@ export class NotificationExtendedListService{
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -148,9 +145,8 @@ export class NotificationExtendedListService{
 
           
 
-            return this._http.put(this._apiUrl + '/PutNotificationsStatus/', JSON.stringify(notification),
-                { headers: authHeader }).map((res) => {
-                    var pm = res.json();
+          return this._http.put(this._apiUrl + '/PutNotificationsStatus/', JSON.stringify(notification), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var pm = res;
                     if (pm) {
                        
                         serviceResponse.Result = pm;
@@ -159,7 +155,7 @@ export class NotificationExtendedListService{
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -171,7 +167,7 @@ export class NotificationExtendedListService{
     PutNotificationBadjCount(notification: NotificationPM) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -185,9 +181,8 @@ export class NotificationExtendedListService{
 
 
 
-            return this._http.put(this._apiUrl + '/PutNotificationBadjCount/', JSON.stringify(notification),
-                { headers: authHeader }).map((res) => {
-                    var pm = res.json();
+          return this._http.put(this._apiUrl + '/PutNotificationBadjCount/', JSON.stringify(notification), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var pm = res;
                     if (pm) {
 
                         serviceResponse.Result = pm;
@@ -196,7 +191,7 @@ export class NotificationExtendedListService{
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -209,12 +204,12 @@ export class NotificationExtendedListService{
 
         var url = this._apiUrl + '/GetTopTenNotifications';
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetTopTenNotifications/?' + 'userId=' + userId, { headers: authHeader }).map(response => {
+        return defer(() => {
+          return this._http.get(this._apiUrl + '/GetTopTenNotifications/?' + 'userId=' + userId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 var _mappedListsArray: Array<NotificationPM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -228,7 +223,7 @@ export class NotificationExtendedListService{
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }  
 
@@ -238,15 +233,15 @@ export class NotificationExtendedListService{
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             var callURL = this._apiUrl + '/GetOpenNotificationsCount?' + 'userId=' + userId;
 
-            return this._http.get(callURL, { headers: authHeader }).map(response => {
+          return this._http.get(callURL, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         });
@@ -260,15 +255,15 @@ export class NotificationExtendedListService{
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             var callURL = this._apiUrl + '/GetNotificationsBadjCount?' + 'userId=' + userId;
 
-            return this._http.get(callURL, { headers: authHeader }).map(response => {
+            return this._http.get(callURL, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         });
@@ -277,7 +272,7 @@ export class NotificationExtendedListService{
     }
 
     PutNotificationStatus(selectedNotifications: SelectedNotifications) {
-    return Observable.defer(() => {
+    return defer(() => {
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
@@ -291,10 +286,9 @@ export class NotificationExtendedListService{
 
 
 
-        return this._http.put(this._apiUrl + '/PutNotificationStatus/', JSON.stringify(selectedNotifications),
-            { headers: authHeader }).map((res) => {
+      return this._http.put(this._apiUrl + '/PutNotificationStatus/', JSON.stringify(selectedNotifications), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = res.json();
+                serviceResponse.Result = res;
                 var _mappedListsArray: Array<NotificationPM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -308,7 +302,7 @@ export class NotificationExtendedListService{
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
     });
 
     }

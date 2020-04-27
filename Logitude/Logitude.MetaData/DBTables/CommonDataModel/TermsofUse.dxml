@@ -2,9 +2,11 @@
 <Table
   Name="TermsofUses"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Version"
+    ShortName="Version_"
     Type="int">
     <Constraints
       PrimaryKey="true"
@@ -12,6 +14,7 @@
   </Column>
   <Column
     Name="Date"
+    ShortName="Date_"
     Type="datetime">
     <Constraints
       Nullable="false" />

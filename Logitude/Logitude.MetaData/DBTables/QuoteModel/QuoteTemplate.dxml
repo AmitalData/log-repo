@@ -2,7 +2,8 @@
 <Table
   Name="QuoteTemplates"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Id"
     Type="varchar"
@@ -92,15 +93,15 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsDefault"
-    Type="bit">
+    Name="TemplateTypeCode"
+    Type="varchar"
+    Size="1">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="TemplateTypeCode"
-    Type="varchar"
-    Size="1">
+    Name="IsDefault"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>

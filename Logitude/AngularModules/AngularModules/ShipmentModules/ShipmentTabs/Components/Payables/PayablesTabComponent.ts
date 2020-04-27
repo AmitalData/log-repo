@@ -33,8 +33,10 @@ import { QuotePM } from '../../../../Quote/EntityPMs/QuotePM';
 import { QuotePMService } from '../../../../Quote/Services/StandardPMs/QuotePMService';
 import { CardList } from '../../../../Common/EntityLists/CardList';
 import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
+
+
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PayablesTabComponent.html',
 })
 
@@ -230,6 +232,11 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 tariffType = "OLC";
             }
 
+            if (this.IsFCLEntity) {
+
+                tariffType = "OFC";
+            }
+
             var WindowArgs: any =
             {
                 BetweenDate: betweenDate,
@@ -241,7 +248,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode,
                 GrossWeightUnit: this.EntityPM.GrossWeightUnitCode,
                 VolumeUnit: this.EntityPM.VolumeUnitCode,
-                ShipmentPM: this.EntityPM,
+                IsShipment: true,
                 FatherComponent: this,
                 TariffType: tariffType
             };
@@ -279,7 +286,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.IsDeleteAllPayablesVisible = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentPriceCheck") && (this.EntityPM.TransportModeId == "A" || this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD")) {
+        if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentPriceCheck") && (this.IsLCLEntity || this.IsFCLEntity)) {
             this.IsPriceCheckVisible = true;
         }
 
@@ -1218,6 +1225,8 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     }
 }
 export class ShipmentPayableItem extends BaseComponent {
+  public IsMinFromQuoteIconVisible: boolean = false; // fix angular 9
+
     public EntityPM: ShipmentPayablePM;
     public ShipmentPM: ShipmentPM;
     public ObjectTableName: string = "ShipmentPayable";

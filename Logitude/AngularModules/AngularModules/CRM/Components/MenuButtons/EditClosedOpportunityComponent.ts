@@ -15,13 +15,13 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditClosedOpportunityComponent.html',
 })
 
 export class EditClosedOpportunityComponent extends BaseComponent implements OnInit{
     private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     public EntityPM: OpportunityPM;
     public ObjectTableName: string = "Opportunity";
@@ -59,7 +59,7 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
 
     SetUIProperties() {
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe(result => {
+        oppTypeListService.getAllFromCache().subscribe((result:any) => {
 
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == this.EntityPM.OpportunityTypeId)[0];
             var typeCode: string = typeList == null ? null : typeList.Code;
@@ -130,7 +130,7 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
     OkButtonClicked() {
         this.CurrentSession.StartBusyIndicatorCreating();
         this.myService = new OpportunityPMService();
-        this.myService.update(this.EntityPM).subscribe(myResult => {
+        this.myService.update(this.EntityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -153,7 +153,7 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
         var isConfirmNeeded: boolean = false;
         this.newOpportunityTypeId = newValue;
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe(result => {
+        oppTypeListService.getAllFromCache().subscribe((result:any) => {
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == newValue)[0];
             if (typeList != null) {
                 this.newOpportunityTypeCode = typeList.Code;

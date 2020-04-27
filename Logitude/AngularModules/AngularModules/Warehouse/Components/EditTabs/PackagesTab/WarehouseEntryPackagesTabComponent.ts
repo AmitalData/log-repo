@@ -12,7 +12,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {AppTool} from '../../../../Infrastructure/Tools';
 @Component({
     selector: 'WarehouseEntryPackagesTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './WarehouseEntryPackagesTabComponent.html',
 
 })

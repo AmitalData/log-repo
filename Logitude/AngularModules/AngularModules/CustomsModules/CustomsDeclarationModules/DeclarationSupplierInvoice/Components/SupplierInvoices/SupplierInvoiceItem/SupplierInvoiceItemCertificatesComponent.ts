@@ -23,7 +23,7 @@ import { AttachmentTypeListService } from  '../../../../../../Customs/Services/S
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SupplierInvoiceItemCertificatesComponent.html',
 })
 
@@ -534,7 +534,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
         item.LineNumber = line,
         item.Identification = this.CatalogNumber;
         item.TypeCode = "MN";
-        this.productIdentificationTypeListService.getSingle(item.TypeCode).subscribe(response => {
+        this.productIdentificationTypeListService.getSingle(item.TypeCode).subscribe((response:any) => {
 
             var result: ProductIdentificationTypeList;
             result = response.Result;

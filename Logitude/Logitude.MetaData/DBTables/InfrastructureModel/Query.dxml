@@ -2,7 +2,8 @@
 <Table
   Name="Queries"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -242,7 +243,8 @@
     ForeignKeyColumn="OriginalQueryId"
     ReferencedTable="Queries"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="QueryGroupCode"
     ReferencedTable="QueryGroups"
@@ -252,12 +254,14 @@
     ForeignKeyColumn="NameTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="FeatureId"
     ReferencedTable="Features"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="SharedByUserId"
     ReferencedTable="Users"

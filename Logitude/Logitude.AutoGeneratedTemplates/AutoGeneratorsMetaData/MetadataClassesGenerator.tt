@@ -98,10 +98,34 @@ void SaveUpdateClassOutput(string outputFileName)
 
 
 <#+
+	  private string GenerateHashString(string entityString)
+        {
+            if (String.IsNullOrEmpty(entityString))
+            {
+                return "NULL";
+            }
+
+            MD5CryptoServiceProvider cryptoServiceProvider = new MD5CryptoServiceProvider();
+            byte[] stringBytes = Encoding.UTF8.GetBytes(entityString);
+            byte[] computedHash = cryptoServiceProvider.ComputeHash(stringBytes);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (var h in computedHash)
+            {
+                stringBuilder.Append(h.ToString("x2").ToLower());
+            }
+
+            return stringBuilder.ToString();
+        }
+
 Dictionary<string, string> GeneratedTabFeatures = new Dictionary<string, string>();
 Dictionary<string, string> GeneratedTabTextCodes = new Dictionary<string, string>();
+ string entityHashString= "NULL";
  private void WriteUpdateClassMethod(XElement entity)
 {
+		
+    entityHashString= GenerateHashString(entity.ToString());
+
 	string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
 	string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
 	if(tableName.Contains("."))
@@ -192,7 +216,8 @@ namespace <#= UpdateClassnamespacestring #>
    {  <#+
 
 	#>
-
+		
+		public const string HashString = "<#=entityHashString #>";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -203,11 +228,11 @@ namespace <#= UpdateClassnamespacestring #>
 	             <#+
 	  foreach (XAttribute p in entity.Attributes())
             {
-				if(p.Name != "Id" && p.Name != "ParentTableName" && p.Name != "NoViewController" && p.Name != "NoPMController" 
+				if(p.Name != "Id" && p.Name != "ParentTableName" && p.Name != "NoViewController" && p.Name != "NoPMController" && p.Name != "DxmlDatabaseTypeCode" && p.Name != "DxmlDatabaseSchemaCode" && p.Name != "DBTableShortName" && p.Name != "DBTableOldNames"
 					&& p.Name != "HasCompactSearch"  && p.Name != "ApplyDefaultValues"  && p.Name != "HasCustomValidator" && p.Name != "ApplyOnPropertyChangedCode" && p.Name != "HasApiHelper" && p.Name != "SortingByDirection"
 					  && p.Name != "DescriptionTextCodeId" && p.Name != "DownloadToExcelFeatureCode"
 					  && p.Name != "Code1"  && p.Name != "Name1" && p.Name != "Code2"  && p.Name != "Name2"
-					   && p.Name != "Code3"  && p.Name != "Name3" && p.Name != "Code4"  && p.Name != "Name4" && p.Name != "HeaderScreenId" && p.Name != "HeaderScreenCode" && p.Name != "NoDefaultFeatures" && p.Name != "IsMetadataOnlyTable")
+					   && p.Name != "Code3"  && p.Name != "Name3" && p.Name != "Code4"  && p.Name != "Name4" && p.Name != "HeaderScreenId" && p.Name != "HeaderScreenCode" && p.Name != "NoDefaultFeatures" && p.Name != "IsMetadataOnlyTable" && p.Name != "DxmlDatabaseTypeCode" && p.Name != "DxmlDatabaseSchemaCode" && p.Name != "DBTableShortName" && p.Name != "DBTableOldNames")
                 {
 				  #>
 				    <#= p.Name #> =  <#= p.Value #>,
@@ -215,6 +240,9 @@ namespace <#= UpdateClassnamespacestring #>
                 }
  
             }
+				  #>
+				    HashString =  <#=tableName #>UpdateClass.HashString,
+			      <#+  
 
 	#>
               
@@ -224,7 +252,7 @@ namespace <#= UpdateClassnamespacestring #>
  	 
 	 #>
 
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         <#+
 	         foreach(XElement field in entity.Elements("field"))  //get all classes
@@ -232,7 +260,7 @@ namespace <#= UpdateClassnamespacestring #>
 	         #>
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  <#+ var TableNameFull = entity.Attributes().Where(a => a.Name == "ObjectTableName").FirstOrDefault().Value;
 		  var ObjectTbl = TableNameFull;
 		if(ObjectTbl.ToString().Trim('"').Contains("."))
@@ -266,8 +294,13 @@ namespace <#= UpdateClassnamespacestring #>
 			}
 			#>
 	        queryGroupRepository.SubmitChanges();
+	        ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = objectTables.ContainsKey(<#= TableNameFull #>) ? objectTables[<#= TableNameFull #>] : null;
+            if (<#= ObjectTbl.Trim('"') #>ObjectTable == null)
+            {
+                <#= ObjectTbl.Trim('"') #>ObjectTable = objectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = objectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> <#= ObjectTbl.Trim('"') #>ObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == <#= TableNameFull #>).ToList();  <#+
 		int i = 0;
 		foreach(XElement Query in Queries) 
@@ -594,11 +627,11 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 				{  
 					if(p.Name != "Id" && p.Name != "ObjectFieldNotRequired" && p.Name != "IsForeignKey" && p.Name != "ForeignEntity"&& p.Name != "NavigationPropertyName"&& p.Name != "IsPrimaryKey"&& p.Name != "Order" && p.Name != "IsNullable" && p.Name != "HasDataBaseField"&& p.Name != "HasPMField" && p.Name != "AssociationName" && p.Name != "ThisKey" && p.Name != "OtherKey" && p.Name != "IsComposition" && p.Name != "NoMetaDataField" && p.Name != "GenerateInList" 
 					&& p.Name != "IsSpellCheckedFullFieldLable" && p.Name != "IsSpellCheckedHelpLocalDefaultText" && p.Name != "IsSpellCheckedShortLocalDefaultText" && p.Name != "IsSpellCheckedListLocalDefaultText"
-					&& p.Name != "IsChecked" && p.Name != "IsDeleted" && p.Name != "IsNew" && p.Name != "IsRequiered"  && p.Name != "LookUpTableId"
+					&& p.Name != "IsChecked" && p.Name != "IsDeleted" && p.Name != "IsNew" && p.Name != "IsRequiered"  && p.Name != "LookUpTableId" && p.Name != "DontBuildRelationOnDB" && p.Name != "ShortName" && p.Name != "OldNames"
 					&& p.Name != "FullNameTextCodeId"
 					&& p.Name != "HelpTextCodeId"
 					&& p.Name != "ListTextCodeId" && p.Name != "LookUpTableId"
-                 && p.Name != "ModelName"
+                 && p.Name != "ModelName" && p.Name != "DontBuildRelationOnDB" && p.Name != "ShortName" && p.Name != "OldNames"
 					
 
 )
@@ -628,7 +661,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 			 
 		 
 	#>		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 <#+
 }
@@ -1353,6 +1386,8 @@ using System.Data.Entity.Core.EntityClient;
 using System.Configuration;
 using Simplog.Server.Infrastructure;
 using System.Data.Common;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
 using <#= UpdateClassnamespacestring #>.EntityUpdateClasses;
 
 namespace <#= UpdateClassnamespacestring #>
@@ -1460,8 +1495,90 @@ namespace <#= UpdateClassnamespacestring #>
 		    this.ObjectContext.SaveChanges();
 
         }
+
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
+            ObjectContext = context;
+			CommonContext = commonContext;
+            TextCodeRepository = new TextCodeRepository(ObjectContext);
+            ObjectTableRepository = new ObjectTableRepository(ObjectContext);
+            ObjectFieldsRepository = new ObjectFieldRepository(ObjectContext);
+			queriesRepository = new QueryRepository(ObjectContext);
+			queryColumnsRepository = new QueryColumnRepository(ObjectContext);
+            queryGroupRepository = new QueryGroupRepository(ObjectContext);
+			advancedQueryFiltersRepository = new AdvancedQueryFilterRepository(ObjectContext);
+			screensRepository = new ScreensRepository(ObjectContext);
+			screenFieldsRepository = new ScreenFieldsRepository(ObjectContext);
+			objectTableTabsRepository = new ObjectTableTabRepository(ObjectContext);
+			EventTypeRepository = new EventTypeRepository(ObjectContext);
+			menuButtonRepository = new MenuButtonRepository(ObjectContext);
+			menuButtonGroupRepository = new MenuButtonGroupRepository(ObjectContext);
+			FeaturesRepository = new FeatureRepository(CommonContext);
+			EntityStatusRepository = new EntityStatusRepository(context);
+
+            ObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
+            ObjectTable generalTable = ObjectTables["General"];
+            TextCodes = TextCodeRepository.GetTextCodesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
+			TenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			ObjectFields = new Dictionary<string, ObjectField>();//ObjectFieldsRepository.GetObjectFieldsByTenant(0).ToDictionary(d => d.FieldName + d.ObjectTableId, a => a);
+			Queries = new Dictionary<string, Query>();//queriesRepository.GetQueriesByTenantSystemLevel(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			QueryColumns = new Dictionary<string, QueryColumn>();//queryColumnsRepository.GetQueryColumnsByTenant(0).ToDictionary(d => d.QueryCode + d.ObjectFieldCode, a => a);
+			tenantAdvancedFilters = new Dictionary<string, AdvancedQueryFilter>();//advancedQueryFiltersRepository.GetAdvancedQueryFiltersByTenant(0).ToDictionary(d => d.QueryCode + d.ObjectFieldCode, a => a);
+			tenantScreens = new Dictionary<string, Screen>();//screensRepository.GetScreensByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			tenantScreenFields = new Dictionary<string, ScreenField>();//screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenCode + d.ObjectFieldCode);
+			TenantObjectTableTabs = new Dictionary<string, ObjectTableTab>();//objectTableTabsRepository.GetObjectTableTabsByTenant(0).ToDictionary(d => d.Code, a => a);
+			tenantEventTypes = EventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			tenantMenuButtons = new Dictionary<string, MenuButton>();//menuButtonRepository.GetMenuButtonsByTenant(0).ToDictionary(d => d.EventCode + d.MenuButtonGroupId, a => a);
+			tenantMenuButtonGroups = menuButtonGroupRepository.GetMenuButtonGroupsByTenant(0).ToDictionary(d => d.Name, a => a);
+			AllEntityStatuses = EntityStatusRepository.GetEntityStatusByTenant(0).ToList();
 <#+
-	
+     
+#>
+
+			 MetadataUpdateUtility.RunPreDeleteProcedure();
+
+			 CreateAllObjectTablesMetadata();
+			 
+ 
+			 this.ObjectContext.SaveChanges();
+			 this.CommonContext.SaveChanges();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
+			//CreateAllObjectTables();
+		    //this.ObjectContext.SaveChanges();
+			//
+			//CreateAllObjectFields();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllQueries();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllScreens();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllTabs();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllEventTypes();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllClosedTables();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllFeatures();
+			//CreateAdditionalTextCodes();
+		    //this.ObjectContext.SaveChanges();
+		    //this.CommonContext.SaveChanges();
+//
+			//CreateAllMenuButtons();
+		    //this.ObjectContext.SaveChanges();
+//
+        }
+<#+
+	GenerateAllTableMethods(sourceFilePath);
 	GenerateAddTableMethods(sourceFilePath);
 	GenerateAddFieldMethods(sourceFilePath);
 #>
@@ -1481,7 +1598,140 @@ string outputfilePah = destinationFolder+"/"+updateClassName +".cs";
 }
 #>
 
+<#+  
 
+public void GenerateAllTableMethods(string sourceFilePath)
+{ 
+
+   #>
+
+		private static Dictionary<string,string> TablesHashStrings { get; set; }		 
+	    public static Dictionary<string, string> GetAllTablesHashStrings()
+        {
+			if (TablesHashStrings != null)
+				return TablesHashStrings;
+
+			TablesHashStrings = new Dictionary<string, string>();
+ <#+
+   foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+        {
+	 
+            var path= Host.ResolvePath(file);
+            XElement entity = XDocument.Load(path).Root;
+            string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+            string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
+            if(tableName.Contains("."))
+            {
+                tableName = tableName.ToString().Split('.')[1];
+                dBTableName = dBTableName.ToString().Split('.')[1];
+          
+            }
+            string classname = tableName + "UpdateClass";
+#>
+			TablesHashStrings.Add("<#=tableName #>",  <#=classname #>.HashString);
+<#+
+        }
+#>
+			return TablesHashStrings;
+        }
+        public void CreateAllObjectTablesMetadata()
+        {
+   <#+
+   foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+    {
+	 
+	 var path= Host.ResolvePath(file);
+     XElement entity = XDocument.Load(path).Root;
+	 string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
+	if(tableName.Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+          
+    }
+	string classname = tableName + "UpdateClass";
+	 
+		 #><#=""#>
+<#+
+#>
+			if(MetadataUpdateUtility.IsChangedMetadataTable("<#=tableName #>", ObjectTables, <#=classname #>.HashString))
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("<#=tableName #>");
+<#+
+			if(tableName == "General")
+				{
+#>
+				TextCodes = new Dictionary<string, TextCode>();
+				TenantFeatures = new Dictionary<string, Feature>();
+<#+
+}
+#>
+					<#=classname #>.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+<#+
+
+	var CloseTableCode = entity.Attribute(XName.Get("CloseTableCode"));
+	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
+	 string originalTableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	string IsCLosed = entity.Attribute(XName.Get("IsClosed")) != null ? entity.Attribute(XName.Get("IsClosed")).Value.Trim('"'):"false"; 
+			string IsMetadataOnlyTable = (entity.Attribute(XName.Get("IsMetadataOnlyTable")) != null?entity.Attribute(XName.Get("IsMetadataOnlyTable")).Value.Trim('"'):"false");
+   
+      	 
+	     
+
+    
+			if(tableName == "General")
+				{
+#>
+				ObjectTable generalTable = ObjectTables["General"];
+				TextCodes = TextCodeRepository.GetTextCodesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
+				TenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+<#+
+				}
+#>
+					scope.Complete();
+				}
+<#+
+			    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs.") && IsMetadataOnlyTable == "false")
+    {
+#>
+ 
+				<#=classname #>.Fill<#= tableName.Trim('"') #>();
+
+ 
+<#+
+    }
+#>
+			}
+<#+
+    }
+	#>
+
+        }
+   <#+
+
+}
+ 
+#>
 
 
 <#+
@@ -1589,7 +1839,7 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 		 #><#=""#>
 	   <#+
     #>
-	   <#=classname #>.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	   <#=classname #>.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	<#+
     }
 	#>
@@ -1618,7 +1868,7 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 		 #><#=""#>
 	   <#+
     #>
-	   <#=classname #>.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   <#=classname #>.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	<#+
     }
 	#>
@@ -1841,8 +2091,7 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 	#>
 
         }
-
-   <#+
+ <#+
 
 }
  

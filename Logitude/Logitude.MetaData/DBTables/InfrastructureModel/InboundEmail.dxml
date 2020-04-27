@@ -2,7 +2,8 @@
 <Table
   Name="InboundEmails"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -12,15 +13,29 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int">
+    Name="IsRejected"
+    Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="AnalyzeQueueId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="EntityId"
     Type="varchar"
     Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Uniquekey"
+    Type="varchar"
+    Size="10">
     <Constraints
       Nullable="true" />
   </Column>
@@ -37,13 +52,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Uniquekey"
-    Type="varchar"
-    Size="10">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="ObjectTableId"
     Type="varchar"
     Size="15">
@@ -58,17 +66,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsRejected"
-    Type="bit">
+    Name="Tenant"
+    Type="int">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="AnalyzeQueueId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"

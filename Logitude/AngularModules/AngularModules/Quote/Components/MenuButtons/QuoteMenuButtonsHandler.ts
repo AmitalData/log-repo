@@ -28,6 +28,7 @@ export class QuoteMenuButtonsHandler {
     public EntityPM: QuotePM;
     public entityArgs: EntityArgs
     private CurrentSession = SessionLocator.SelectedSession;
+    private isLCL: boolean = false;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
@@ -541,13 +542,13 @@ export class QuoteMenuButtonsHandler {
     }
     private StartBuildingShipment() {
         if (this.EntityPM.IsPotentialShipper) {
-            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
                 this.ConvertShipper();
             });
         }
 
         else if (this.EntityPM.IsPotentialConsignee) {
-            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
                 this.ConvertConsignee();
             });
         }
@@ -557,7 +558,7 @@ export class QuoteMenuButtonsHandler {
         }
     }
     private ConvertShipper() {
-        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ShipperId).subscribe(myResult => {
+        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ShipperId).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var shipper: CustomerPM = myResponse.Result;
@@ -591,7 +592,7 @@ export class QuoteMenuButtonsHandler {
         });
     }
     private ConvertConsignee() {
-        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ConsigneeId).subscribe(myResult => {
+        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ConsigneeId).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var consignee: CustomerPM = myResponse.Result;
@@ -620,7 +621,7 @@ export class QuoteMenuButtonsHandler {
         });
     }
     private OpenNewShipmentComponent() {
-        this.entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe((response:any) => {
             var shipmentPM: ShipmentPM = QuoteUtilities.BuildShipment(this.EntityPM);
 
             var args = new NewShipmentComponentArgs();
@@ -720,7 +721,7 @@ export class QuoteMenuButtonsHandler {
                     if (!myResult.HasError) {
                         var count = myResult.Result;
 
-                        if (count != 0) {
+                        if (count != null && count != 0) {
                             var window = new MessageWindow();
                             window.Width = 450;
                             window.Height = 180;
@@ -787,7 +788,7 @@ export class QuoteMenuButtonsHandler {
 
         if (this.isValid) {
             var quoteDomainService: QuoteDomainService = new QuoteDomainService();
-            quoteDomainService.GetIsQuoteConnectedToShipment(this.EntityPM.Id).subscribe(resp => {
+            quoteDomainService.GetIsQuoteConnectedToShipment(this.EntityPM.Id).subscribe((resp:any) => {
                 if (!resp.HasError) {
                     var result: boolean = resp.Result;
              
@@ -878,17 +879,208 @@ export class QuoteMenuButtonsHandler {
 
     private IsRunQuotation: boolean = false;
     private RunQuotationScreen() {
-
-        if (this.EntityPM && this.EntityPM.IsDirty) {
-            this.Validate();
-            if (this.isValid) {
-                this.IsRunQuotation = true;
-                this.entityArgs.EditComponent.SaveChanges();
-            }
-        } else {
-            this.OpenQuotationWindow();
+        if (this.EntityPM.QuoteTypeCode == "A") {
+            this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
+            this.CheckUpdateQuantities();
         }
+        if (this.IsUpdateQuantitiesVisible) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 400;
+            messageWindow.Height = 150;
+            messageWindow.Title = "Message";
+            messageWindow.Show(this.UpdateQuantitiesMessage);
+            messageWindow.WindowClosed.subscribe(s => {
+                this.isButtonClicked = false;
+            });
+        } else {
+            if (this.EntityPM && this.EntityPM.IsDirty) {
+                this.Validate();
+                if (this.isValid) {
+                    this.IsRunQuotation = true;
+                    this.entityArgs.EditComponent.SaveChanges();
+                }
+            } else {
+                this.OpenQuotationWindow(); 
+            }
+        }
+        
 
+    }
+
+    public UpdateQuantitiesMessage: string;
+    public IsUpdateQuantitiesVisible: boolean = false;
+    CheckUpdateQuantities() {
+        var updateMessage = null;
+        this.IsUpdateQuantitiesVisible = false;
+        if (this.isLCL) {
+            if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
+
+                var list: any[] = [];
+                var entityQuantity: number = null;
+                var displayUpdateMessage: boolean = false;
+
+                //"GRWT"
+                entityQuantity = this.EntityPM.GrossWeight;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GRWT" && f.CostQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "GRWT" && f.SaleQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
+                //"GWTN"
+                entityQuantity = this.EntityPM.GrossWeightPerTon;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GWTN" && f.CostQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "GWTN" && f.SaleQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
+                //"CHWT"
+                entityQuantity = this.EntityPM.ChargeableWeight;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "CHWT" && f.CostQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "CHWT" && f.SaleQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
+                //CWKG
+                entityQuantity = this.EntityPM.ChargeableWeightInKG;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "CWKG" && f.CostQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "CWKG" && f.SaleQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
+                //GWKG
+                entityQuantity = this.EntityPM.GrossWeightInKG;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GWKG" && f.CostQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "GWKG" && f.SaleQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
+                //"VOLU"
+                entityQuantity = this.EntityPM.Volume;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "VOLU" && f.CostQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "VOLU" && f.SaleQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
+                //"VCBM"
+                entityQuantity = this.EntityPM.VolumeInCBM;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "VCBM" && f.CostQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "VCBM" && f.SaleQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
+                //"BTEU"
+                entityQuantity = this.EntityPM.TEU;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "BTEU" && f.CostQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "BTEU" && f.SaleQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
+                //"QTY"
+                entityQuantity = this.EntityPM.NumberOfPackages;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
+                //"PRVL"
+                entityQuantity = this.EntityPM.ValueOfGoods;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRVL" && f.CostQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRVL" && f.SaleQuantity != entityQuantity).length > 0) {
+                    displayUpdateMessage = true;
+                }
+
+                //"PRFR"
+                if (this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
+                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRFR" || f.SaleMeasurementCode == "PRFR").length > 0) {
+
+                        var FRT_CostQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].CostTotalAmount;
+                        var FRT_SaleQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].SaleTotalAmount;
+
+                        if (AppTool.IsNullOrZero(FRT_CostQuantity)) {
+                            FRT_CostQuantity = 0;
+                        }
+
+                        if (AppTool.IsNullOrZero(FRT_SaleQuantity)) {
+                            FRT_SaleQuantity = 0;
+                        }
+
+                        if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRFR" && f.CostQuantity != null && f.CostQuantity != 0 && f.CostQuantity != FRT_CostQuantity).length > 0) {
+                            displayUpdateMessage = true;
+                        }
+
+                        if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRFR" && f.SaleQuantity != null && f.SaleQuantity != 0 && f.SaleQuantity != FRT_SaleQuantity).length > 0) {
+                            displayUpdateMessage = true;
+                        }
+                    }
+                }
+
+                if (displayUpdateMessage) {
+                    updateMessage= "Please update charge screen by pressing on \"Update\" button first";
+                }
+                
+            }
+            this.UpdateQuantitiesMessage = updateMessage;
+            this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+
+        } else {
+            var updateMessage = null;
+            var entityQuantity: number = null;
+
+
+            entityQuantity = this.EntityPM.TEU;
+            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "BTEU" && f.CostQuantity != entityQuantity).length > 0) {
+                displayUpdateMessage = true;
+            }
+            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "BTEU" && f.SaleQuantity != entityQuantity).length > 0) {
+                displayUpdateMessage = true;
+            }
+
+
+            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != this.EntityPM.NumberOfContainers).length > 0) {
+                displayUpdateMessage = true;
+            }
+            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != this.EntityPM.NumberOfContainers).length > 0) {
+                displayUpdateMessage = true;
+            }
+
+
+            if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
+                if (this.EntityPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods) || (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods)).length > 0) {
+                    updateMessage = "Please update charge screen by pressing on \"Update\" button first";
+                }
+
+                else if (this.EntityPM.QuoteCharges.filter(d => d.SaleMeasurementCode == "PRVL" && d.SaleQuantity != this.EntityPM.ValueOfGoods).length > 0) {
+                    updateMessage = "Please update charge screen by pressing on \"Update\" button first";
+                }
+            }
+
+
+            if (displayUpdateMessage) {
+                updateMessage = "Please update charge screen by pressing on \"Update\" button first";
+            }
+            this.UpdateQuantitiesMessage = updateMessage;
+            this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true; 
+        }
     }
 
     private OpenQuotationWindow() {

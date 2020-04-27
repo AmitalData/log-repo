@@ -29,7 +29,7 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VehiclesOwnersAndSafetyTabComponent.html',
 })
 
@@ -55,8 +55,8 @@ export class VehiclesOwnersAndSafetyTabComponent extends BaseComponent {
         super();
         this.SafetiesList = new ObservableCollection([]);
         this.OwnersList = new ObservableCollection([]);
-        this.EntityResourceService.getEntityResourceByTableName("Customs.VehicleOwner").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.VehicleSafetyAccessory").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.VehicleOwner").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.VehicleSafetyAccessory").subscribe((response:any) => {
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.EntityPM = this.entityArgs.EntityPM;
 

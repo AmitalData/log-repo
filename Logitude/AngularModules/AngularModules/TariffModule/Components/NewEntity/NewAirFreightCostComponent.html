@@ -97,7 +97,32 @@
                                                     <div></div>
                                                 </td>
                                                 <td style="text-align:left;">
-                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPriceSteps(period)"></IconButton>
+                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPriceSteps()"></IconButton>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <!-- All in charges  -->
+                                <tr *ngIf="EntityPM.TypeCode == 'AFC' || EntityPM.TypeCode == 'OLC' || EntityPM.TypeCode == 'OFC'" class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [NoObjectField]="true" [Text]="'All-In Charges'" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td colspan="2">
+                                        <table>
+                                            <tr>
+                                                <td style="width:1px; text-align:left;" title="{{AllInChargesText}}">
+                                                    {{AllInChargesText}}
+                                                </td>
+                                                <td style="width:20px;">
+                                                    <IconButton [Left]="5" [Name]="'Edit'" [IsSmall]="true" (click)="EditAllInCharges()"></IconButton>
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    <HelpIcon [Header]="'All-In Charges'" [Text]="'Surcharges defined as all-in for the first version only'"></HelpIcon>
                                                 </td>
                                             </tr>
                                         </table>
@@ -134,6 +159,27 @@
                                         <div></div>
                                     </td>
 
+                                </tr>
+
+                                <tr style="height: 5px;">
+                                    <td colspan="3">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <!--Tariff Product-->
+                                <tr class="FormFieldRow" *ngIf="EntityPM.TypeCode == 'AFC'">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'TariffProductId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'TariffProductId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [SelectedValue]="TariffProductId"
+                                                [DataContext]="DataContext"
+                                                [HideMaintenanceIcon]="true"
+                                                [LookUpTableName]="'TariffProduct'">
+                                        </LogLov>
+                                    </td>
                                 </tr>
 
                                 <tr style="height: 5px;">
@@ -197,7 +243,7 @@
                                                 </td>
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'ContainerType2Id'"
-                                                            [SelectedValue]="DataContext.ContainerType2Id"
+                                                            [SelectedValue]="ContainerType2Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'PackageType'"
@@ -217,7 +263,7 @@
                                                 </td>
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'ContainerType3Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="ContainerType3Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'PackageType'"
@@ -237,7 +283,7 @@
                                                 </td>
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'ContainerType4Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="ContainerType4Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'PackageType'"
@@ -257,7 +303,7 @@
                                                 </td>
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'ContainerType5Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="ContainerType5Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'PackageType'"
@@ -681,7 +727,7 @@
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'ContainerType2Id'"
-                                                            [SelectedValue]="DataContext.ContainerType2Id"
+                                                            [SelectedValue]="ContainerType2Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'PackageType'"
@@ -698,7 +744,7 @@
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'ContainerType3Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="ContainerType3Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'PackageType'"
@@ -715,7 +761,7 @@
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'ContainerType4Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="ContainerType4Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'PackageType'"
@@ -732,7 +778,7 @@
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'ContainerType5Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="ContainerType5Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'PackageType'"

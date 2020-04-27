@@ -1,6 +1,6 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
-import {Http} from '@angular/http';
+
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 //import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -9,9 +9,11 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {AmitalGatewayUtil} from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './Export2ExcelControl.html',
     //pipes: [TextCodeTranslationPipe],
@@ -26,9 +28,8 @@ export class Export2ExcelControl {
     url: string;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);//true;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private http: Http) {
-        ServiceHelper.Http = http;
-        //serviceArgs.http = http;
+  constructor(private http: HttpClient) {
+
     }
     ObjectTableName: string;
     FileName: string;
@@ -47,7 +48,7 @@ export class Export2ExcelControl {
 
         this.userid = args.userid;
         this.Filters = args.Filters;
-        myService.getExcelData(this.Filters, this.queryCode, args.tenant, args.userid, args.currentObjectTable).subscribe(myResult => {
+        myService.getExcelData(this.Filters, this.queryCode, args.tenant, args.userid, args.currentObjectTable).subscribe((myResult: any) => {
             if (myResult == "Faild") {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;
@@ -89,7 +90,7 @@ export class Export2ExcelControl {
         this.busyExportingVisibile = true;
         this.btnSaveToFileVisibile = false;
         var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.getExcelData(this.Filters, this.queryCode, this.tenant, this.userid, this.ObjectTableName).subscribe(myResult => {
+        myService.getExcelData(this.Filters, this.queryCode, this.tenant, this.userid, this.ObjectTableName).subscribe((myResult: any) => {
             if (myResult == "Faild") {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;

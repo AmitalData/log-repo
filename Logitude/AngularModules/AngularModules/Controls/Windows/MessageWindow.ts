@@ -90,7 +90,7 @@ export class MessageWindow {
 
 @Component({
     selector: 'MessageWindow',
-    moduleId: module.id,
+    
     templateUrl: "./MessageWindow.html",
 })
 

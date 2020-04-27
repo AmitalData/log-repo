@@ -20,7 +20,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {UserLicenseArgs} from '../../../Infrastructure/Args';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'UserWorkspace',
     templateUrl: './UserWorkspaceComponent.html',
     providers: [UserExtendedPMService]
@@ -88,7 +88,7 @@ export class UserWorkspaceComponent implements OnInit {
     }
 
     private LoadUserLicenses() {
-        this._userExtendedPMService.GetUserLicenses().subscribe(myResult => {
+        this._userExtendedPMService.GetUserLicenses().subscribe((myResult:any) => {
             if (myResult == null) {
                 this.LicensesManagmentsList = [];
             }
@@ -110,7 +110,7 @@ export class UserWorkspaceComponent implements OnInit {
         this.LicensesManagmentsList = [];
 
         var service: PackageListService = new PackageListService();
-        service.getAllFromCache().subscribe(result => {
+        service.getAllFromCache().subscribe((result:any) => {
             this.allPackages = result.Result;
             this.FillLicensesManagmentsList();
         });
@@ -219,7 +219,7 @@ export class UserWorkspaceComponent implements OnInit {
         this.InitCounts();
         this.isLoadDataSummaryCompleted = false;
 
-        this._userExtendedPMService.GetUsersWorkspaceSummary(SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._userExtendedPMService.GetUsersWorkspaceSummary(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -419,7 +419,7 @@ export class UserWorkspaceComponent implements OnInit {
     }
 
     ViewNewUserWindow() {
-        this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 965;
             logWindow.Height = 600;

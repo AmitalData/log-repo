@@ -8,7 +8,7 @@ import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 @Component({
     selector: 'ProductTypeGeneralTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './ProductTypeGeneralTabComponent.html',
 })
 

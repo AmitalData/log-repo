@@ -18,7 +18,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimImporterDeclATabComponent.html',
 })
 
@@ -43,11 +43,11 @@ export class ClaimImporterDeclATabComponent extends BaseComponent {
         this.CommercialSalelist = new ObservableCollection([]);
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsP3Loi").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsPage3A").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsPage3").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsP3Loi").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsPage3A").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsPage3").subscribe((response:any) => {
                             if (this.entityArgs.EntityPM != null) {
                                 this.EntityPM = this.entityArgs.EntityPM;
                                 this.BuildImporterDeclareList();

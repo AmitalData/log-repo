@@ -12,7 +12,6 @@ import { ObjectsLocator } from "../../../../Infrastructure/Locators/ObjectsLocat
 import { ConfirmWindow } from "../../../../Controls/Windows/ConfirmWindow";
 
 @Component({
-    moduleId: module.id,
     templateUrl: "./GLAccountSelectComponent.html"
 })
 export class GLAccountSelectComponent extends BaseComponent implements OnInit
@@ -48,11 +47,12 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
                 this.ReloadData();
             });
     }
-
+    PartnerId: string;
     SetWindowArgs(args)
     {
         this.chartOfAccountTypeCode = args.AccountTypeCode;
         this.cardId = args.CardId;
+        this.PartnerId = args.PartnerId;
     }
 
     public columns: any[] = null;
@@ -215,7 +215,7 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
 
     private handleError(errorsString: string)
     {
-        if (this.chartOfAccountTypeCode == "4") // 4- Vendor
+        if (this.chartOfAccountTypeCode == "4" || this.chartOfAccountTypeCode == "3" || this.PartnerId =="AC") // 4- Vendor 3- Customer
         {
             this.showWarningMessage(errorsString);
         }
@@ -224,6 +224,7 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
         }
 
     }
+
 
     private showErrorMessage(errorsString: string)
     {

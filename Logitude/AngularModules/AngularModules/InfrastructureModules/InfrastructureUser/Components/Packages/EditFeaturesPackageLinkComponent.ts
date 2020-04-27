@@ -4,7 +4,7 @@ import {PackageFeatureClass} from './EditPackageFeaturesComponent';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditFeaturesPackageLinkComponent.html',
 })
 

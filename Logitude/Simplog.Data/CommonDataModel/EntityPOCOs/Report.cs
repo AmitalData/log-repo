@@ -28,9 +28,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string DefaultMessageTemplateId { get; set; }
         public string FeatureUniqeCode { get; set; }
         public bool AvailableForScheduling { get; set; }
+        public bool ExcelOnly { get; set; }
 
 
-
+        
         [ForeignKey("DefaultMessageTemplateId")]
         public ReportsTemplate ReportsTemplateDefaultMessage { get; set; }
 

@@ -55,7 +55,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;ErrorLog,ErrorLogs,,,&quot;">
+  SearchFields="&quot;ErrorLog,ErrorLogs,,,&quot;"
+  DxmlDatabaseTypeCode="SystemLogs"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a0789014-96a2-4a08-8db4-26796b24e6c5&quot;"
     FieldName="&quot;UserName&quot;"
@@ -67,7 +69,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="100"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -215,7 +217,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="40"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -289,14 +291,14 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="7000"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
@@ -1113,11 +1115,11 @@
     <Feature
       Code="&quot;ALLERRORLOGS&quot;"
       FeatureTypeCode="&quot;QUER&quot;"
-      FeatureTextCodeCode="&quot;ErrorLogObjectTable.Features.AllErrorLog&quot;"
-      FeatureDefaultText="&quot;All Error Log&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ErrorLogObjectTable.Features.AllErrorLog&quot;"
+      FeatureDefaultText="&quot;All Error Log&quot;" />
   </AdditionalFeatures>
 </entity>

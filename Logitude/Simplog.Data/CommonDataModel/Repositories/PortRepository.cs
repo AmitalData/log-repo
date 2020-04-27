@@ -288,8 +288,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return null;
         }
-
-
+        
         public IQueryable<Port> GetSinglePortByCode(string input, bool byCode, int tenant)
         {
             if (byCode)
@@ -463,6 +462,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             var entity = (from a in context.Ports.Include("Country").Include("State")
                           where a.CombinedCode == code && a.Tenant == tenant
+                          select a).FirstOrDefault();
+            return entity;
+        }
+
+        public Port GetOceanPortByCombinedCode(string code, int tenant)
+        {
+            var entity = (from a in context.Ports.Include("Country").Include("State")
+                          where a.CombinedCode == code && a.Tenant == tenant && a.IsOcean
                           select a).FirstOrDefault();
             return entity;
         }

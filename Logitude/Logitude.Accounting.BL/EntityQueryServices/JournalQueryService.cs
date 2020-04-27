@@ -407,6 +407,22 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return journalPM;
         }
 
+        public JournalPM GetSinglePMForInterest(string id, int tenant)
+        {
+     
+ 
+            JournalPM pm  = (from a in context.Journals
+                             where a.Id == id && a.Tenant == tenant
+                              select new JournalPM()
+                              {
+                                  Id = a.Id,
+                                  JournalNumber = a.JournalNumber,
+
+                              }).FirstOrDefault();
+
+
+            return pm;
+        }
         public JournalPM GetSinglePM(string id, int tenant)
         {
             Journal poco = null;
@@ -454,20 +470,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<JournalPM> journalPMs = new List<JournalPM>();
             IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingIds(ids, tenant);
 
-            IQueryable<JournalPM> journals = from a in context.Journals
+            IQueryable<JournalPM> journals = from a in journalQuery
                                              join jl in context.JournalLines
                                              on a.Id equals jl.JournalId
                                            
                                              into groupJoin
                                           
                                              from groupJoinData in groupJoin
-                                             where groupJoinData.Line ==1
+                                            
                                              select new JournalPM()
                                              {
                                                  JournalNumber = a.JournalNumber,
                                                  AccountingDate = a.AccountingDate,
                                                  StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
-
+                                                TaxReportJournalLineNumber = groupJoinData.Line,
                                                  Id = a.Id,
                                                  LineCreditAccountTypeCode = groupJoinData.CreditAccount != null ? groupJoinData.CreditAccount.AccountTypeCode : null,
                                                  LineCreditAccountId = groupJoinData.CreditAccount != null ? groupJoinData.CreditAccount.Id : null,

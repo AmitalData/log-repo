@@ -57,7 +57,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;714cd054-2383-4439-9796-9d3860fd2a6f&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -148,7 +150,7 @@
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"
@@ -219,7 +221,7 @@
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"

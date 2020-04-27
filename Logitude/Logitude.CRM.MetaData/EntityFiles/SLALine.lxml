@@ -32,7 +32,9 @@
   Code="&quot;bfc8&quot;"
   Name="&quot;SLALine Query Group&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;CRM&quot;">
+  ClientModuleName="&quot;CRM&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;0d75b4a0-9543-4a23-858a-d708a3631659&quot;"
     FieldName="&quot;Id&quot;"
@@ -798,4 +800,5 @@
       IsFollowUp="false" />
   </EventTypes>
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

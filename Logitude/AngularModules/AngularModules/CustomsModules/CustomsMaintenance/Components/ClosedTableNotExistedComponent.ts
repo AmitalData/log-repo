@@ -18,7 +18,7 @@ import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/Requ
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClosedTableNotExistedComponent.html',
 })
 
@@ -49,7 +49,7 @@ export class ClosedTableNotExistedComponent implements OnInit {
 
     }
     ngOnInit() {
-        //this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        //this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
             //this._entityListService = new EntityListService();
             
             //this.RefreshBtnClick()

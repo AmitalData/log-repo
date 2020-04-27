@@ -11,7 +11,7 @@ declare var UploadLogoFile, HideImage , SetImage, ArrayBufferToBase64: any;
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'UploadLogo',
     templateUrl: './UploadLogoComponent.html',
     providers: [ImageLibraryService]
@@ -87,7 +87,7 @@ export class UploadLogoComponent implements AfterViewInit {
             this.CurrentSession.StartBusyIndicator("loading...");
 
         }
-        this._imageLibraryService.DownloadFile("logo" + SessionInfo.LoggedUserTenant, "jpg", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._imageLibraryService.DownloadFile("logo" + SessionInfo.LoggedUserTenant, "jpg", "logos", SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -148,7 +148,7 @@ export class UploadLogoComponent implements AfterViewInit {
         if (isload) {
             this.CurrentSession.StartBusyIndicator("Loading...");
         }
-        this._imageLibraryService.DownloadFile("verysmalllogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._imageLibraryService.DownloadFile("verysmalllogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -174,7 +174,7 @@ export class UploadLogoComponent implements AfterViewInit {
             this.CurrentSession.StartBusyIndicator("Loading...");
            
         }
-        this._imageLibraryService.DownloadFile("sharedLogtsitcslogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._imageLibraryService.DownloadFile("sharedLogtsitcslogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -257,7 +257,7 @@ export class UploadLogoComponent implements AfterViewInit {
         filter.Height = height;
         filter.Extension = extension;
         filter.UploadMode = "CompanyLogos";
-        this._imageLibraryService.UploadFile(filter).subscribe(res => {
+        this._imageLibraryService.UploadFile(filter).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             var result: any;

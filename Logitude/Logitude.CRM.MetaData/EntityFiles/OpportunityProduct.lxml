@@ -36,7 +36,9 @@
   NoViewController="false"
   NoPMController="false"
   HasCompactSearch="false"
-  ApplyDefaultValues="false">
+  ApplyDefaultValues="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;e0a830fd-d407-411d-a24b-2ec64fd60abe&quot;"
     FieldName="&quot;OpportunityId&quot;"
@@ -768,4 +770,5 @@
       IsFollowUp="false" />
   </EventTypes>
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

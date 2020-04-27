@@ -2,7 +2,15 @@
 <Table
   Name="ShipmentLevels"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Column
     Name="Code"
     Type="varchar"
@@ -12,17 +20,18 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="SearchFields"
     Type="nvarchar"
     Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

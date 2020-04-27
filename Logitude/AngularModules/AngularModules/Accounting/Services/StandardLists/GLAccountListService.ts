@@ -6,8 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -22,23 +23,22 @@ import {GLAccountList} from '../../EntityLists/GLAccountList';
 @Injectable()
 
 export class GLAccountListService {
-	private _http: Http;
+	private _http: HttpClient;
     private _apiUrl: string;   
 	public static CachedData: Array<GLAccountList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/glaccountviews';  
     }
 
     getSingle(id: string) {
 	   
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        
         var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var list = response.json();
+                var list = response.body;
                     
                 var entity: GLAccountList;
 				if(list)
@@ -54,19 +54,18 @@ export class GLAccountListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GLAccount", "GetSingleList", 'id=' + id); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));;
         });
     }
 
     getAll() {
         
-	   var authHeader = new Headers();
-       authHeader.append('Token', SessionInfo.Token);
+	   
         var callTime = new Date();
-       return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
+       return defer(() => {
+           return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>)=> {
 
-              var allLists = response.json();
+              var allLists = response.body;
               var _mappedListsArray: Array< GLAccountList> = [];
 		      if(allLists)
 			  {
@@ -85,7 +84,7 @@ export class GLAccountListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GLAccount", "GetAllLists", ""); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));;
         });
     }
 	
@@ -120,18 +119,15 @@ export class GLAccountListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+      
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+	   return defer(() => {
+           return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+               var serviceResponse: ServiceResponse;
+               serviceResponse = response.body;
                 var _mappedListsArray: Array< GLAccountList> = [];
 				if(serviceResponse.Result)
 				{
@@ -150,7 +146,7 @@ export class GLAccountListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "GLAccount", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));;
         });        
     }
 

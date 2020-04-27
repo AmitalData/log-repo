@@ -1,21 +1,17 @@
 
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import { Http, Headers, Response } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
-
-import {Observable} from 'rxjs/Rx';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import {AppTool, DateTool} from '../Tools';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 import {Guid} from '../Utilities/Guid';
 import {SessionInfo} from '../Utilities/SessionInfo';
 import {SessionLocator} from '../Utilities/SessionLocator';
 import {LogitudeErrorHandler} from '../Utilities/LogitudeErrorHandler';
-import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
-import {LoginService} from '../Services/LoginService';
+import { LoginService } from '../Services/LoginService';
+import { of } from 'rxjs';
 declare var window: any;
 
 export class ServiceHelper {
-    public static Http: Http;
     public static HttpClient: HttpClient;
 
     private static _CurrentSession = SessionLocator.SelectedSession;
@@ -32,16 +28,16 @@ export class ServiceHelper {
         var response: ServiceResponse;
         response = new ServiceResponse();
         response.HasError = true;
-        if (error instanceof Response) {
-            //var mm = error.json();
-            if (error.status == 400) {
-                var apiException = error.json();
+      if (error instanceof HttpErrorResponse) {
+            
+        if (error.status == 400) {
+          var apiException = error.error;
                 if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException" || apiException.ErrorType == "EntityCommandExecutionException" || apiException.ErrorType == "NullReferenceException") {
 
-                    var errorMessage:string = apiException.ShortErrorMessage;
+                    var errorMessage: string = apiException.ShortErrorMessage;
                     if (apiException.ShortErrorMessage) {
                         errorMessage = apiException.ShortErrorMessage;
-                       // response.ErrorsArray.push(apiException.ShortErrorMessage);
+                        // response.ErrorsArray.push(apiException.ShortErrorMessage);
                     }
                     else {
                         errorMessage = apiException.ExceptionMessage;
@@ -72,7 +68,7 @@ export class ServiceHelper {
                 }
 
                 // Ayman: please leave this commented
-               
+
                 else if (apiException.ErrorType == "OptimisticConcurrencyException") {
                     //var message: string = TextCodeTranslator.Translate("General.M.CantUpdateRecord");
                     response.ErrorsArray.push(apiException.ShortErrorMessage);
@@ -92,7 +88,93 @@ export class ServiceHelper {
                         var errorObject = JSON.parse(error["_body"]);
                         ServiceHelper.LogServiceError(errorObject.Message + " " + errorObject.ExceptionMessage, errorObject.StackTrace);
                     }
-                    catch(e){}
+                    catch (e) { }
+                    //ServiceHelper._LogitudeErrorHandler.handleError(error);
+                }
+            }
+        }
+        else if (error instanceof HttpErrorResponse)  {
+            response = ServiceHelper.HttpClientHandleServiceError(error);
+        }
+        else {
+
+            var exceptionmessage = error.message + '\n' + error.stack;
+            response.ErrorsArray.push(exceptionmessage);
+
+            ServiceHelper._LogitudeErrorHandler.handleError(error);
+        }
+
+        return of(response);
+    }
+
+
+    private static HttpClientHandleServiceError(error: any) {
+
+        var response: ServiceResponse;
+        response = new ServiceResponse();
+        response.HasError = true;
+
+      if (error instanceof HttpErrorResponse) {
+          
+            if (error.status == 400) {
+                var apiException = error.error;
+                if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException" || apiException.ErrorType == "EntityCommandExecutionException" || apiException.ErrorType == "NullReferenceException") {
+
+                    var errorMessage: string = apiException.ShortErrorMessage;
+                    if (apiException.ShortErrorMessage) {
+                        errorMessage = apiException.ShortErrorMessage;
+                        // response.ErrorsArray.push(apiException.ShortErrorMessage);
+                    }
+                    else {
+                        errorMessage = apiException.ExceptionMessage;
+                        //response.ErrorsArray.push(apiException.ExceptionMessage);
+                    }
+
+                    if (errorMessage) {
+                        if (errorMessage.indexOf('session expiration') == -1) {
+                            if (errorMessage.indexOf(';') != -1) {
+                                var errArray = errorMessage.split(';');
+                                for (var k in errArray) {
+                                    response.ErrorsArray.push(errArray[k]);
+                                }
+                            }
+                            else {
+                                response.ErrorsArray.push(errorMessage);
+                            }
+                        }
+                    }
+
+                }
+
+
+                else if (apiException.ErrorType == "AutenticationException") {
+                    if (!SessionLocator.IsSiguOut) {
+                        SessionLocator.HomeComponent.SignoutClicked();
+                    }
+                }
+
+                // Ayman: please leave this commented
+
+                else if (apiException.ErrorType == "OptimisticConcurrencyException") {
+                    //var message: string = TextCodeTranslator.Translate("General.M.CantUpdateRecord");
+                    response.ErrorsArray.push(apiException.ShortErrorMessage);
+                }
+
+                else {
+                    ServiceHelper.LogServiceError(apiException.ShortErrorMessage, apiException.ErrorMessage);
+                }
+            }
+            else {
+                if (error.status == 0) {
+
+                    ServiceHelper.LogServiceError("There seems to be an Internet Connection Problem", "net::ERR_CONNECTION_REFUSED", false);//("net::ERR_CONNECTION_REFUSED", "net::ERR_CONNECTION_REFUSED");
+                }
+                else if (error.status == 500) {
+                    try {
+                        var errorObject = JSON.parse(error["_body"]);
+                        ServiceHelper.LogServiceError(errorObject.Message + " " + errorObject.ExceptionMessage, errorObject.StackTrace);
+                    }
+                    catch (e) { }
                     //ServiceHelper._LogitudeErrorHandler.handleError(error);
                 }
             }
@@ -105,7 +187,7 @@ export class ServiceHelper {
             ServiceHelper._LogitudeErrorHandler.handleError(error);
         }
 
-        return Observable.of(response);
+       return response;
     }
 
     public static HandleTimerServiceError(error: any) {
@@ -113,10 +195,10 @@ export class ServiceHelper {
         var response: ServiceResponse;
         response = new ServiceResponse();
         response.HasError = true;
-        if (error instanceof Response) {
+      if (error instanceof HttpErrorResponse) {
             //var mm = error.json();
-            if (error.status == 400) {
-                var apiException = error.json();
+        if (error.status == 400) {
+          var apiException = error.error;
                 if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException") {
 
                     var errorMessage: string = apiException.ShortErrorMessage;
@@ -180,7 +262,7 @@ export class ServiceHelper {
              
         }
 
-        return Observable.of(response);
+        return of(response);
     }
 
     private static LogServiceError(exception: string, stackTrace: string, logException = true) {
@@ -199,7 +281,7 @@ export class ServiceHelper {
                             if (exception) {
                                 if (exception.indexOf("Internet Connection Problem") > -1) {
                                     var loginService: LoginService = new LoginService();
-                                    loginService.GetDocumentDownloadToken().subscribe(myResult => {
+                                    loginService.GetDocumentDownloadToken().subscribe((myResult:any) => {
                                         if (myResult) {
                                             SessionInfo.DocumentDownloadToken = myResult;
                                         }
@@ -386,6 +468,58 @@ export class ServiceHelper {
 
     public static GetLDocumentDownloadToken() {
         return SessionInfo.DocumentDownloadToken;
+    }
+
+    public static GetHttpHeaders() {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
+
+        return httpOptions;
+    }
+
+    public static GetHttpFullHeaders() {
+
+        const httpOptions: { headers; observe; } = {
+
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            }),
+
+            observe: 'response'
+        };
+
+        return httpOptions;
+    }
+
+    public static GetHttpHeadersWithoutToken() {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+
+        return httpOptions;
+    }
+
+    public static GetHttpFullHeadersWithoutToken() {
+
+        const httpOptions: { headers; observe; } = {
+
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+
+            observe: 'response'
+        };
+
+        return httpOptions;
     }
 }
 

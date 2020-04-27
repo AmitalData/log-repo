@@ -112,63 +112,60 @@
         border-bottom-left-radius: 3px;
     }
 </style>
-<table>
+<table style="height:100px">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
 
-    <tr>
+    <tr [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)">
         <td style="color:#1B90CB; font-size:15px; line-height: 15px;">
             {{'Accounting.General.O.FilterBy' | TextCodeTranslationPipe}}
         </td>
     </tr>
-
-
-
+  
     <!-- Filters and Balance -->
-    <tr style="height: 32px;" *ngIf="isReady">
+    <tr style="height:32px">
         <td colspan="4">
-            <table>
+            <table *ngIf="isReady">
 
                 <!-- Row 1 -->
                 <tr class="FieldRow">
                     <!-- 1 -->
                     <td style="width: 130px;">
                         <LogLabel [ObjectFieldName]="'GLAccountId'"
-                            [Text]="'GLTransactionReport.O.GLAccountNo' | TextCodeTranslationPipe"
-                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                  [Text]="'GLTransactionReport.O.GLAccountNo' | TextCodeTranslationPipe"
+                                  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                         </LogLabel>
                     </td>
 
                     <!-- 2 -->
                     <td style="width:245px">
                         <LogLov style="display: block;width: 150px;" float-start
-                            [ObjectFieldName]="'GLAccountId'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
-                            (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true" [HideAddLink]="true"
-                            [HideColumns]="true">
+                                [ObjectFieldName]="'GLAccountId'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
+                                (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true" [HideAddLink]="true"
+                                [HideColumns]="true">
                         </LogLov>
                     </td>
 
                     <!-- <td style="width:15px"></td> -->
-
                     <!-- 3 -->
                     <td style="width:150px">
                         <LogLabel [ObjectFieldName]="'ChartOfAccountId'"
-                            [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
-                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                  [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
+                                  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                         </LogLabel>
                     </td>
 
                     <!-- 4 -->
                     <td style="width:200px">
                         <LogLov style="display: block;width: 150px;" float-start
-                             [ObjectFieldName]="'ChartOfAccountId'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [LookUpTableName]="'ChartOfAccount'"
-                            (SelectedItemChanged)="ChartOfAccount = $event" [ForceShowAddLink]="true"
-                            [HideAddLink]="true" [HideColumns]="true">
+                                [ObjectFieldName]="'ChartOfAccountId'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [LookUpTableName]="'ChartOfAccount'"
+                                (SelectedItemChanged)="ChartOfAccount = $event" [ForceShowAddLink]="true"
+                                [HideAddLink]="true" [HideColumns]="true">
                         </LogLov>
                     </td>
 
@@ -178,11 +175,11 @@
                         <div [style.float]="isRTL ? 'right' : 'left'">
                             <div float-start style="width: 20px; padding-top: 2px;">
                                 <CheckBox (Checked)="AttachedGLAccountCheckBox = $event"
-                                    [IsChecked]="AttachedGLAccountCheckBox">
+                                          [IsChecked]="AttachedGLAccountCheckBox">
                                 </CheckBox>
                             </div>
                             <div float-end text-start
-                                style="width: 200px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                 style="width: 200px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
                                 {{'GLTransactionReport.O.WithClosedTransactions' | TextCodeTranslationPipe}}
                             </div>
                         </div>
@@ -204,15 +201,15 @@
                     <!-- 1 -->
                     <td>
                         <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
-                            [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                  [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                     </td>
 
                     <!-- 2 -->
                     <td>
                         <LogLov style="display: block;width: 150px;" float-start
-                            [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [QueryFilterItems]="CurrencyFilters"
-                            [SelectedValue]="CurrencyId" [LookUpTableName]="'Currency'" [HideColumns]="true">
+                                [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [QueryFilterItems]="CurrencyFilters"
+                                [SelectedValue]="CurrencyId" [LookUpTableName]="'Currency'" [HideColumns]="true">
                         </LogLov>
                     </td>
 
@@ -234,7 +231,7 @@
                                 </CheckBox>
                             </div>
                             <div float-end text-start
-                                style="width: 200px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                 style="width: 200px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
                                 {{'LedgerTransaction.O.IncludeChildAccounts' | TextCodeTranslationPipe}}
                             </div>
                         </div>
@@ -249,15 +246,15 @@
                     <td>
                         <div></div>
                     </td>
-                </tr >
+                </tr>
 
                 <!-- Row 3 -->
                 <tr class="FieldRow">
                     <!-- 1 -->
                     <td text-start>
                         <LogLabel [ObjectFieldName]="'FromDate'" [NoObjectField]="true"
-                            [Text]="'Accounting.General.O.Datefrom' | TextCodeTranslationPipe"
-                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                  [Text]="'Accounting.General.O.Datefrom' | TextCodeTranslationPipe"
+                                  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
 
@@ -282,10 +279,10 @@
                     </td>
 
                     <!-- 3 -->
-                    <td>
+                    <td style="padding-left:10px;">
                         <LogDatePicker style="display: block;width: 100px;" float-start [ObjectFieldName]="'FromDate'"
-                            [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
-                            [SelectedDateValue]="FromDate"></LogDatePicker>
+                                       [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
+                                       [SelectedDateValue]="FromDate"></LogDatePicker>
                         <div style="display: inline-block; padding: 0 12px;" text-start>
                             {{'Accounting.General.O.To' | TextCodeTranslationPipe}}
                         </div>
@@ -294,9 +291,9 @@
                     <!-- 4 -->
                     <td>
                         <LogDatePicker style="display: block;width: 130px;" float-start
-                            [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                            [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
-                            [SelectedDateValue]="ToDate"></LogDatePicker>
+                                       [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                       [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
+                                       [SelectedDateValue]="ToDate"></LogDatePicker>
                     </td>
 
                     <!-- 5 -->
@@ -304,11 +301,11 @@
                         <div [style.float]="isRTL ? 'right' : 'left'">
                             <div float-start style="width: 20px; padding-top: 2px;">
                                 <CheckBox (Checked)="IncludeRelatedCurrenciesAccount = $event"
-                                    [IsChecked]="IncludeRelatedCurrenciesAccount">
+                                          [IsChecked]="IncludeRelatedCurrenciesAccount">
                                 </CheckBox>
                             </div>
                             <div float-end text-start
-                                style="width: 200px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                 style="width: 200px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
                                 {{'LedgerTransaction.O.IncludeRelatedCurrenciesAccount' | TextCodeTranslationPipe}}
                             </div>
                         </div>
@@ -324,14 +321,15 @@
                     <td>
                         <div style="width: 100px;" float-left>
                             <button class="GreenButton"
-                                (click)="RunButtonClicked()">{{ 'AgingReport.O.RunReport' | TextCodeTranslationPipe }}</button>
+                                    (click)="RunButtonClicked()">{{RunReportTitle}}
+                            </button>
                         </div>
 
                     </td>
 
-                </tr >
+                </tr>
 
-                <tr style="height: 15px;">
+                <tr [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)" style="height: 15px;">
                     <div></div>
                 </tr>
 

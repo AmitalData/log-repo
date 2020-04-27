@@ -44,7 +44,7 @@ import { CustomsSettingExtendedListService } from '../../../../../Customs/Servic
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditSupplierInvoiceComponent.html',
 })
 export class AddEditSupplierInvoiceComponent extends BaseComponent {
@@ -234,7 +234,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
 
         
-        customsSettingExtendedListService.GetSkipAutoInsurancePromise(this.declarationPM.CustomerCode, this.declarationPM.Tenant).subscribe(myResult => {
+        customsSettingExtendedListService.GetSkipAutoInsurancePromise(this.declarationPM.CustomerCode, this.declarationPM.Tenant).subscribe((myResult:any) => {
             var res: ServiceResponse = myResult;
             if (res.Result.SkipAutoInsurance === true) {
                 this._SkipAutoInsurance = true;
@@ -242,10 +242,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ")) { // If FRITZ always check insurance- Task 37656
                 this._SkipAutoInsurance = false;
             }
-            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceFreightAmount").subscribe(response => {
-                    this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceModification").subscribe(response => {
-                        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceFreightAmount").subscribe((response:any) => {
+                    this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceModification").subscribe((response:any) => {
+                        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response:any) => {
 
                             this.BuildTabs();
                             this.RunComponent();
@@ -438,7 +438,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     itemsLineNumbers: string;
     public pointers: Array<CustomsDocumentPointerPM> = [];
     GetPointers() {
-        this.customsDocumentPointersExtendedPMService.GetCustomDocumentPointersForItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey.toString(), this.itemsLineNumbers).subscribe(response => {
+        this.customsDocumentPointersExtendedPMService.GetCustomDocumentPointersForItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey.toString(), this.itemsLineNumbers).subscribe((response:any) => {
             var result = response.Result;
             this.pointers = result;
 
@@ -754,7 +754,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             this.ContinueSaving(checkFreightValues); // if not use old calclate commestion code
 
             //if (this.calculateCommission) {
-            //    this.VendorCommissionPMService.get(this.EntityPM.VendorId, this.declarationPM.CustomerId).subscribe(myResult => {
+            //    this.VendorCommissionPMService.get(this.EntityPM.VendorId, this.declarationPM.CustomerId).subscribe((myResult:any) => {
 
             //        if (myResult) {
             //            if (!myResult.HasError) {
@@ -967,7 +967,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         if (this.IsNewEntity) {
 
-            this.supplierInvoicePMService.insert(this.EntityPM).subscribe(myResult => {
+            this.supplierInvoicePMService.insert(this.EntityPM).subscribe((myResult:any) => {
 
                 var res: ServiceResponse = myResult;
                 if (!res.HasError) {
@@ -986,7 +986,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         } else {
 
-            this.supplierInvoicePMService.update(this.EntityPM).subscribe(myResult => {
+            this.supplierInvoicePMService.update(this.EntityPM).subscribe((myResult:any) => {
 
                 var res: ServiceResponse = myResult;
                 if (!res.HasError) {
@@ -1020,7 +1020,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
                 this.supplierInvoicePMService
                     .get(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey)
-                    .subscribe(myResult => {
+                    .subscribe((myResult:any) => {
                         var res: ServiceResponse = myResult;
                         var entity = res.Result;
                         this.EntityPM = entity;// now we have the Sequence from server (and can update )
@@ -1063,7 +1063,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         return new Promise((resolve) => {
             if (this.IsNewEntity) {
-                this.supplierInvoicePMService.insert(this.EntityPM).subscribe(myResult => {
+                this.supplierInvoicePMService.insert(this.EntityPM).subscribe((myResult:any) => {
                     var res: ServiceResponse = myResult;
                     if (!res.HasError) {
                         this.entity = res.Result;
@@ -1109,7 +1109,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             }
             else {
-                this.supplierInvoicePMService.update(this.EntityPM).subscribe(myResult => {
+                this.supplierInvoicePMService.update(this.EntityPM).subscribe((myResult:any) => {
 
                     var res: ServiceResponse = myResult;
                     if (!res.HasError) {
@@ -1194,7 +1194,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     _FinishPromiseDoWhatPlannedDone: boolean;
     SaveChangesSync() {
 
-        //this.supplierInvoiceExtendedPMService.PutSupplierInvoicePercentage(this.EntityPM).subscribe(myResult => {
+        //this.supplierInvoiceExtendedPMService.PutSupplierInvoicePercentage(this.EntityPM).subscribe((myResult:any) => {
 
         //    if (myResult) {
         //        if (!myResult.HasError) {
@@ -1305,7 +1305,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                         //    supplierInvoice = this.EntityPM;
                         //}
 
-                        this.supplierInvoicePMService.update(supplierInvoice).subscribe(myResult => {
+                        this.supplierInvoicePMService.update(supplierInvoice).subscribe((myResult:any) => {
 
                             var res: ServiceResponse = myResult;
                             if (!res.HasError) {
@@ -1704,7 +1704,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         if (this.copyInvoiceWithItem) {
            
             
-                this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, counterKey, 0, this.NumberOfLoadedItems, "child").subscribe(response => {
+                this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, counterKey, 0, this.NumberOfLoadedItems, "child").subscribe((response:any) => {
                     if (!response.HasError) {
                         this.OldEntityPM = response.Result;
                         var supplierinvoiceitems: SupplierInvoiceItemPM[] = [];
@@ -1814,7 +1814,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     //                myGITITEMPM.ORIGINCOUNTRY = item.OriginCountryCode;
     //                myGITITEMPM.UNITID = item.InvoiceQuantityType;
 
-    //                this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe(myResult => {
+    //                this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe((myResult:any) => {
     //                    var mm: ServiceResponse = myResult;
     //                    if (!mm.HasError) {
     //                        this.entity = mm.Result;
@@ -2093,7 +2093,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     ReloadSupplierInvoiceWithItems(skippedItems, takenItems) {
         this.loadingNextItems = false;
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
-        this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey, skippedItems, takenItems, this.AccumulatedFilter).subscribe(response => {
+        this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey, skippedItems, takenItems, this.AccumulatedFilter).subscribe((response:any) => {
             this.EntityPM = response.Result;
             this.selectedTabCode = "GENERAL";
             this.GENERAL.InitTab(this.EntityPM, this, this.IsDisplayOnly, false, false);
@@ -2135,7 +2135,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     DocumentFilingId: string;
     GetDocumentFilingId() {
         console.log(" --->> Getting related document filing ...");
-        this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.declarationPM.Id, this.EntityPM.InvoiceCounterKey).subscribe(response => {
+        this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.declarationPM.Id, this.EntityPM.InvoiceCounterKey).subscribe((response:any) => {
             console.log("[Reponse] GetDocumentFilingIdForForInvoice: ", response);
             var result = response.Result;
             if (result) {
@@ -2161,7 +2161,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
     GetCustomerCommissions() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-        this.vendorCommissionService.GetCommissionsForCustomer(this.declarationPM.CustomerId).subscribe(response => {
+        this.vendorCommissionService.GetCommissionsForCustomer(this.declarationPM.CustomerId).subscribe((response:any) => {
             console.log("[Reponse] GetCommissionsForCustomer: ", response);
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             var result = response.Result;
@@ -2304,7 +2304,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
 
     getModTypeName() {
-        this._ModificationAndDiscountTypeListService.getSingleFromCache("I10").subscribe(myResult => {
+        this._ModificationAndDiscountTypeListService.getSingleFromCache("I10").subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var type = myResponse.Result;

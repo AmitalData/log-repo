@@ -4,7 +4,6 @@ import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@
 import { AppTool } from './../../../Tools';
 
 @Component({
-    moduleId: module.id,
     selector: 'LogToolTip',
     templateUrl: './LogToolTipComponent.html',
     styleUrls: ['./LogToolTipComponent.css']

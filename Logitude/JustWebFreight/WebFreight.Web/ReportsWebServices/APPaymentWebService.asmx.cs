@@ -208,7 +208,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     // payment method
                     APPaymentMethod paymentMethod = (from a in invoiceCotnext.APPaymentMethods
-                                                     where a.Id == currentPayment.PaymentMethodId
+                                                     where a.Id == currentPayment.AccountingPaymentMethodId
                                                      select a).FirstOrDefault();
 
                     if (paymentMethod != null)
@@ -282,9 +282,9 @@ namespace WebFreight.Web.ReportsWebServices
 
 
 
-                    if (currentPayment.PaymentMethod != null)
+                    if (currentPayment.AccountingPaymentMethod != null)
                     {
-                        if (currentPayment.PaymentMethod.Name == "Cash")
+                        if (currentPayment.AccountingPaymentMethod.Name == "Cash")
                         {
                             apPaymentDataProvider.ChequeOrPaymentRef = "Cash";
                             apPaymentDataProvider.Bank = "Cash";

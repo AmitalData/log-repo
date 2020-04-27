@@ -34,7 +34,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendManifestComponent',
     templateUrl: "SendManifestComponent.html",
 })
@@ -85,9 +85,9 @@ export class SendManifestService {
     LoadCompletedEvent: any;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        this.entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this.entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response:any) => {
                 });
 
             });
@@ -279,7 +279,7 @@ export class SendManifestService {
         //                    ObjectTableName: "Customs.Declaration",
         //                });
         //                cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
-        //                    .subscribe(myResult => {
+        //                    .subscribe((myResult:any) => {
         //                        var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
         //                        myDeclarationEditComponentController.CustomsAnswersShowManifest = true;
         //                        console.log("myDeclarationEditComponentController.CustomsAnswersShowManifest = true;");
@@ -349,7 +349,7 @@ export class SendManifestService {
         //            ObjectTableName: "Customs.Declaration",
         //        });
         //        cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
-        //            .subscribe(myResult => {
+        //            .subscribe((myResult:any) => {
         //                var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
         //                myDeclarationEditComponentController.CustomsAnswersShowManifest = true;
         //                console.log("myDeclarationEditComponentController.CustomsAnswersShowManifest = true;");

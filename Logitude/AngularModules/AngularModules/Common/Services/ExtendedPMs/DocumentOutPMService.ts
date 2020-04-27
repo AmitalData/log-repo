@@ -1,8 +1,9 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 import {DocumentOutPM} from '../../EntityPMs/DocumentOutPM';
 
@@ -13,10 +14,10 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 @Injectable()
 export class DocumentOutPMService {
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DocumentOutExtended';
     }
 
@@ -24,13 +25,13 @@ export class DocumentOutPMService {
     GetEntityPartners(entityId: string, objectTableName: string, childEntityId: string = "" , childobjectTableName: string = "" ) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/getentitypartners/?' + 'entityId=' + entityId + '&objectTableName=' + objectTableName + '&childEntityId=' + childEntityId + '&childobjectTableName=' + childobjectTableName, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/getentitypartners/?' + 'entityId=' + entityId + '&objectTableName=' + objectTableName + '&childEntityId=' + childEntityId + '&childobjectTableName=' + childobjectTableName,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 
@@ -44,10 +45,10 @@ export class DocumentOutPMService {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/getdocumentoutsbyentityidandobjecttable/?' + 'entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&tenant=' + tenant , { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/getdocumentoutsbyentityidandobjecttable/?' + 'entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&tenant=' + tenant ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
         
             
-                var result = response.json();
+                var result :any = response;
                 var entity: DocumentOutPM;
                 var DocumentOutPMLists: DocumentOutPM[];
                 DocumentOutPMLists = new Array<DocumentOutPM>();
@@ -60,7 +61,7 @@ export class DocumentOutPMService {
 
                 pmresponse.Result = DocumentOutPMLists;
                 return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     getCreateDocumentOut(documentTypeId: string, entityId: string, childEntityId: string, childReference: string, objectTableId: string, tenant: number) {
@@ -69,15 +70,15 @@ export class DocumentOutPMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
 
-        return this._http.get(this._apiUrl + '/getcreatedocumentout/?' +'documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&childEntityId=' + childEntityId + '&childReference=' + childReference + '&objectTableId=' + objectTableId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-                var result = response.json();
+        return this._http.get(this._apiUrl + '/getcreatedocumentout/?' +'documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&childEntityId=' + childEntityId + '&childReference=' + childReference + '&objectTableId=' + objectTableId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result :any = response;
                 var entity: DocumentOutPM;
                 entity = this.MapJsonToEntityPM(result);
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = entity;
                 return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
 
 
 
@@ -85,8 +86,8 @@ export class DocumentOutPMService {
         //authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
 
-        //return this._http.get(logitude_url + 'api/DocumentOutExtended' + '?documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&childEntityId=' + childEntityId + '&childReference=' + childReference + '&objectTableId=' + objectTableId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-        //    var result = response.json();
+        //return this._http.get(logitude_url + 'api/DocumentOutExtended' + '?documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&childEntityId=' + childEntityId + '&childReference=' + childReference + '&objectTableId=' + objectTableId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        //    var result :any = response;
         //    var entity: DocumentOutPM;
         //    entity = this.MapJsonToEntityPM(result);
         //    return entity;
@@ -105,8 +106,8 @@ export class DocumentOutPMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '/getsingledocumentoutpm/?'+ 'id=' + id + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + '/getsingledocumentoutpm/?'+ 'id=' + id + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
                 var entity: DocumentOutPM;
                 entity = this.MapJsonToEntityPM(result);
                 var pmresponse: ServiceResponse;
@@ -114,7 +115,7 @@ export class DocumentOutPMService {
 
                 pmresponse.Result = entity;
                 return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 
@@ -122,15 +123,15 @@ export class DocumentOutPMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '/GetCalculatedFileNameForDocumentOutCopy/?' + 'documentOutId=' + documentOutId + '&documentTypeCopyId=' + documentTypeCopyId, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + '/GetCalculatedFileNameForDocumentOutCopy/?' + 'documentOutId=' + documentOutId + '&documentTypeCopyId=' + documentTypeCopyId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
           
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
             pmresponse.Result = result;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     
@@ -142,12 +143,9 @@ export class DocumentOutPMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
-            return this._http.put(this._apiUrl, JSON.stringify(entityPM), {
-                headers: authHeader,
-
-            }).map(response => {
-               var result = response.json();
+        return defer(() => {
+            return this._http.put(this._apiUrl, JSON.stringify(entityPM),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+               var result :any = response;
                 var entity: DocumentOutPM;
                 entity = this.MapJsonToEntityPM(result);
                 var pmresponse: ServiceResponse;
@@ -155,7 +153,7 @@ export class DocumentOutPMService {
 
                 pmresponse.Result = entity;
                 return pmresponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -167,8 +165,8 @@ export class DocumentOutPMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '/getDocumentOutByDocumentTypeEntityAndChild/?' + 'entityId=' + entityId + '&tenant=' + tenant + '&childEntityId=' + childEntityId + '&documentTypeId=' + documentTypeId, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + '/getDocumentOutByDocumentTypeEntityAndChild/?' + 'entityId=' + entityId + '&tenant=' + tenant + '&childEntityId=' + childEntityId + '&documentTypeId=' + documentTypeId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
             var entity: DocumentOutPM ;
             entity = result;
             if (result) {
@@ -179,7 +177,7 @@ export class DocumentOutPMService {
 
             pmresponse.Result = entity;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     

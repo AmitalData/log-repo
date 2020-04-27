@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+
+<style type="text/css">
     .BoxSection {
         width: 100%;
         border-radius: 4px 4px 4px 4px;
@@ -190,56 +191,68 @@
 
                                 <!-- Code -->
                                 <log-column [width]="'250'" [header]="'Code'">
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                        {{item.Code}}
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="false">
+                                            {{item.Code}}
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <!-- DefaultText -->
                                 <log-column [width]="'150'" [header]="'Default Text'">
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                        {{item.DefaultText}}
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="false">
+                                            {{item.DefaultText}}
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <!-- Display Label -->
                                 <log-column [width]="'600'" [header]="'Display Label'">
-                                    <log-cell-template template="let item" #logcelltemplate >
-                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;" class="TextTrimming">
-                                            {{item.TranslatedText}}
-                                        </div>
-                                        
-                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'TranslatedText'" [NoObjectField]="true" [Text]="item.TranslatedText" [DataContext]="item" [HideColumns]="true"></LogTextBox>
-                                        </div>
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;" class="TextTrimming">
+                                                {{item.TranslatedText}}
+                                            </div>
+
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'TranslatedText'" [NoObjectField]="true" [Text]="item.TranslatedText" [DataContext]="item" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <!-- Is Translated  -->
                                 <log-column [width]="'90'" [header]="'Translated'" [Alignment]="'left'">
-                                    <log-cell-template template="let item" #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
-                                        <div style="width: 100%; text-align: left;" class="TextTrimming">
-                                            <img *ngIf="item.IsTranslated" width="11" height="11" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
-                                        </div>
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
+                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
+                                                <img *ngIf="item.IsTranslated" width="11" height="11" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <!-- Translated By  -->
                                 <log-column [width]="'100'" [header]="'Translated by'" [Alignment]="'left'">
-                                    <log-cell-template template="let item" #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
-                                        <div style="width: 100%; text-align: left;" class="TextTrimming">
-                                            {{item.TranslatedBy}}
-                                        </div>
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
+                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
+                                                {{item.TranslatedBy}}
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <!-- Translated Date  -->
                                 <log-column [width]="'100'" [header]="'Translate Date'" [Alignment]="'left'">
-                                    <log-cell-template template="let item" #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
-                                        <div style="width: 100%; text-align: left;" class="TextTrimming">
-                                            {{item.TranslateDate | DateTimePipe:'D'}}
-                                        </div>
-                                    </log-cell-template>
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [Alignment]="'left'" [CellColor]="item.CellBackgroundColor">
+                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
+                                                {{item.TranslateDate | DateTimePipe:'D'}}
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
                             </logitude-edit-grid>
                         </div>

@@ -12,7 +12,6 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 
 //
 @Component({
-    moduleId: module.id,
     selector: 'CacheLogComponent',
     templateUrl: './CacheLogComponent.html',
     providers: [EntityArgs],

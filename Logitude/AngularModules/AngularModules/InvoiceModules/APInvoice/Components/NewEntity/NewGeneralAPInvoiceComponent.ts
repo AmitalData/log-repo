@@ -33,7 +33,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewGeneralAPInvoiceComponent.html',
 })
 
@@ -229,7 +229,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     }
 
     // Vendor Properties
-    get VendorDependencyProperty1() { return InvoiceTool.GetVendorPartnerTypes(); }
+    get VendorDependencyProperty1() { return InvoiceTool.GetGeneralAPInvoiceVendorPartnerTypes(); }
     get InternalNotes() { return this.EntityPM.InternalNotes; }
     set InternalNotes(value: string) {
         if (this.EntityPM.InternalNotes != value) {

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -11,13 +11,14 @@ import {QuoteChargePM} from '../../../Quote/EntityPMs/QuoteChargePM';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesValidator';
 import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditFCLChargeComponent.html',
 })
 
-export class AddEditFCLChargeComponent {
+export class AddEditFCLChargeComponent implements OnDestroy {
     public QuotePM: QuotePM;
     public EntityPM: QuoteChargePM;
     public DataContext: FCLQuoteChargeItem;
@@ -35,11 +36,29 @@ export class AddEditFCLChargeComponent {
     public HideFCLAllIn: boolean = false;
     private IsHyprid: boolean;
     private ChargesTypeCode: string;
+    private PropertyChangedEvent: any = null;
 
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
         this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
         this.IsHyprid = SessionLocator.TenantPM.IsHybrid;
+    }
+    private propertiesChanges = [];
+    private ListenPropertyChanged() {
+
+        if (this.PropertyChangedEvent) {
+            AppTool.KillEventEmitter(this.PropertyChangedEvent);
+            this.PropertyChangedEvent = null;
+        }
+
+        this.PropertyChangedEvent = this.EntityPM.PropertyChanged.subscribe(s => {
+            if (s) {
+                this.propertiesChanges.push(s.PropertyName);
+            }
+        });
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.PropertyChangedEvent);
     }
 
     SetDataContext(dataContext: FCLQuoteChargeItem) {
@@ -56,6 +75,7 @@ export class AddEditFCLChargeComponent {
         this.BuildItemsSource();
         this.BuildQueryFilters();
         this.Clone();
+        this.ListenPropertyChanged();
     }
  
     BuildItemsSource() {
@@ -213,10 +233,27 @@ export class AddEditFCLChargeComponent {
         this.myCloner.AddField('CostMaxAmount');
         this.myCloner.AddField('SaleMinAmount');
         this.myCloner.AddField('SaleMaxAmount');
+        this.myCloner.AddField('TariffId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);
     }
     private RejectChanges() {
         this.myCloner.RejectChanges();
+    }
+
+    ShowTariffDisconnectionWindow() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Editing this line will unlink it from the tariff it was generated from.");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.DataContext.TariffId = null;
+                this.DataContext.TariffNumber = null;
+                //this.DataContext.SetUIProperties();
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
+            if (confirmWindow.No) {
+                //nothing 
+            }
+        });
     }
 }

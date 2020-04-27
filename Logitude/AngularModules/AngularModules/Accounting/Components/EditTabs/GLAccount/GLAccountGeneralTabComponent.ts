@@ -11,9 +11,12 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { GLAccountExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CardList } from '../../../../Common/EntityLists/CardList';
+import { FullAccountingSettingPM } from '../../../EntityPMs/FullAccountingSettingPM';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GLAccountGeneralTabComponent.html',
     providers: [GLAccountExtendedListService]
 })
@@ -34,14 +37,17 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     private gLAccountExtendedPMService = new GLAccountExtendedPMService();
     public IsVendorChartOfAccount: boolean = false;
     public isRTL: boolean = false;
+    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
+    public TenantPM: TenantPM;
 
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
+    constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         // Set Entity
         this.EntityPM = entityArgs.EntityPM;
         this.oldCurrency = this.EntityPM.CurrencyId;
         this.oldIsMultiCurrency = this.EntityPM.IsMultiCurrency;
+        this.TenantPM = SessionLocator.TenantPM;
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
@@ -68,60 +74,62 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
 
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {// Edit Mode
-            if (this.ChartOfAccountsTypeCode == "4") { this.IsVendorChartOfAccount = true;}
-
-          this.IsEditMode = true;
-
-          this.IsVendor = false;
-            if (this.EntityPM.AccountTypeCode == "5" || this.EntityPM.AccountTypeCode == "4") {
-                this.DisableGLAccount = true;
-                this.SetFieldsEditablility(false);
-            } else if (this.EntityPM.AccountTypeCode == "2" || this.EntityPM.AccountTypeCode == "3")
-            {
-                this.IsCustomerAccount = true;
-                this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
-            }
-             if (this.EntityPM.AccountTypeCode == "3") {
-              this.IsVendor = true;
-
-          }
-
-            //#region initialize query filters for Parent Account
-            this.ParentsFilterItems = new ApiQueryFilters();
-            this.ParentsFilterItems.addAdditionalFilter("Id", this.EntityPM.Id, null, null, "Exclude", false, false, false, "string", false, true);
-            this.ParentsFilterItems.addAdditionalFilter("ChartOfAccountsId", this.EntityPM.ChartOfAccountsId, null, null, "Equals", false, false, false, "string", false, true);
-            this.ParentsFilterItems.addAdditionalFilter("ParentAccountId", "Please Don't Erase Me", null, null, "IsNull", false, false, false, "string", false, true);
-
-
-            if (this.IsVendor) {
-                this.ParentsFilterItems.addAdditionalFilter("AccountTypeCode", "3", null, null, "Equals", false, false, false, "string", false, true);
-            } else if (this.IsCustomerAccount) {
-                this.ParentsFilterItems.addAdditionalFilter("AccountTypeCode", "2", null, null, "Equals", false, false, false, "string", false, true);
-            }
-            //#endregion
-
-            if (this.ChartOfAccountsTypeCode == "1") { // 1-Revenues
-              this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
-
-            } else if (this.ChartOfAccountsTypeCode == "2") { // 2-Expenses
-              this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
-
-            } else {
-              this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
-
-          }
-
-
-
-        }
+        this.SetupFiels();
         this.SetUIProperties();
 
         this.Listen();
     }
+  SetupFiels(){
+    if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {// Edit Mode
+        if (this.ChartOfAccountsTypeCode == "4") { this.IsVendorChartOfAccount = true;}
 
+      this.IsEditMode = true;
+
+      this.IsVendor = false;
+        if (this.EntityPM.AccountTypeCode == "5" || this.EntityPM.AccountTypeCode == "4") {
+            this.DisableGLAccount = true;
+            this.SetFieldsEditablility(false);
+        } else if (this.EntityPM.AccountTypeCode == "2" || this.EntityPM.AccountTypeCode == "3")
+        {
+            this.IsCustomerAccount = true;
+            this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+        }
+         if (this.EntityPM.AccountTypeCode == "3") {
+          this.IsVendor = true;
+
+      }
+
+        //#region initialize query filters for Parent Account
+        this.ParentsFilterItems = new ApiQueryFilters();
+        this.ParentsFilterItems.addAdditionalFilter("Id", this.EntityPM.Id, null, null, "Exclude", false, false, false, "string", false, true);
+        this.ParentsFilterItems.addAdditionalFilter("ChartOfAccountsId", this.EntityPM.ChartOfAccountsId, null, null, "Equals", false, false, false, "string", false, true);
+        this.ParentsFilterItems.addAdditionalFilter("ParentAccountId", "Please Don't Erase Me", null, null, "IsNull", false, false, false, "string", false, true);
+
+
+        if (this.IsVendor) {
+            this.ParentsFilterItems.addAdditionalFilter("AccountTypeCode", "3", null, null, "Equals", false, false, false, "string", false, true);
+        } else if (this.IsCustomerAccount) {
+            this.ParentsFilterItems.addAdditionalFilter("AccountTypeCode", "2", null, null, "Equals", false, false, false, "string", false, true);
+        }
+        //#endregion
+
+        if (this.ChartOfAccountsTypeCode == "1") { // 1-Revenues
+          this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
+
+        } else if (this.ChartOfAccountsTypeCode == "2") { // 2-Expenses
+          this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
+
+        } else {
+          this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
+
+      }
+
+
+
+    }
+  }
   GetConnectedCards(accountId: string)
     {
 
@@ -139,6 +147,25 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         });
     }
 
+    SelectDefaultValues() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.entityListService.getSingle(this.TenantPM.Id.toString(), "FullAccountingSetting").then((res: any) => {
+        this.CurrentSession.StopBusyIndicator();
+            res.subscribe(myResponse => {
+                if (myResponse != null) {
+
+                    var res = myResponse.Result;
+                    this.FullAccountingSetting = res;
+                    if(this.EntityPM.ChartOfAccountsTypeCode=="4")
+                    this.EntityPM.ControlAccountId = this.FullAccountingSetting.VendorControlAccountId;
+                    if(this.EntityPM.ChartOfAccountsTypeCode=="3")
+                    this.EntityPM.ControlAccountId = this.FullAccountingSetting.CustomerControlAccountId;
+                }
+            })
+        });
+
+    }
+
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private TabSelectedEvent: any = null;
@@ -154,6 +181,8 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.SetupFiels();
+                        this.SetUIProperties();
                     }
                 });
             }
@@ -163,6 +192,8 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
                 this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.SetupFiels();
+                        this.SetUIProperties();
                         console.log("Entity Reloaded");
                     }
                 });
@@ -171,7 +202,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
     }
     //DownloadButtonClicked() {
-    //    this._GLAccountExtendedListService.CalculateFututreCheques().subscribe(myResult => {
+    //    this._GLAccountExtendedListService.CalculateFututreCheques().subscribe((myResult:any) => {
 
 
 
@@ -259,9 +290,21 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.ChartOfAccountsId = null;
 
             if (!AppTool.IsNullOrEmpty(value)) {
-                if (value == "4") { this.IsVendorChartOfAccount = true;}
-               else if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
+                if (value == "4") {
+                    this.IsVendorChartOfAccount = true;
+                    this.SelectDefaultValues();
+                    this.EntityPM.RevenueExpenseType = "3";}
+                if (value == "3") {
+                    this.SelectDefaultValues();
+                    this.EntityPM.RevenueExpenseType = "3";}
 
+               else if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
+                    if (value == "1") {
+                        this.EntityPM.RevenueExpenseType = "1";
+                    }
+                    else {
+                        this.EntityPM.RevenueExpenseType = "2";
+                    }
                     // disable fields
                     this.IsMultiCurrency = true;
                     this.CurrencyId = null;
@@ -276,6 +319,9 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
                     this.RevenueExpenseType = value;
                 } else {
                     // enable fields
+                    if (this.EntityPM.RevenueExpenseType == "3") {
+                        this.EntityPM.RevenueExpenseType = "1";
+                    }
                     this.IsMultiCurrency = false;
                     this.IsMultiCurrencyCheckboxEnabled = true;
                     this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);

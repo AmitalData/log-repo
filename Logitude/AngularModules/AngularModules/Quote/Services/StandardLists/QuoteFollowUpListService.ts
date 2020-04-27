@@ -1,8 +1,8 @@
-﻿
+
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Rx';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {QuoteList} from '../../EntityLists/QuoteList';
@@ -15,66 +15,45 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 export class QuoteFollowUpListService {
 
     private _apiUrl: string;
-    private _http: Http;
-    private _serviceArgs: ServiceArgs;
+    private _http: HttpClient;
     constructor() {        
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/QuoteFollowUpsViews';
     }
 
-    setServiceArgs(serviceArgs: ServiceArgs) {
-        this._serviceArgs = serviceArgs;
-        this._http = serviceArgs.http;
-        
-         
-        //this._apiUrl = logitude_url + 'api/FollowUpsViews';
-      
-    }
-
     getCount() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '?tenant=' + SessionLocator.Tenant.toString(), {
-                headers: authHeader
-            }).map(response => {
-                return response.json();
-            });
+        return defer(() => {
+            return this._http.get(this._apiUrl + '?tenant=' + SessionLocator.Tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                return response;
+            }));
         }
 
         );
     }
 
     getSingle(id: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, {
-                headers: authHeader
-            }).map(response => {
-                var list = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var list = response;
 
                 var entity: QuoteList;
                 entity = this.MapJsonToEntityList(list);
 
                 return list;
-            });
+            }));
         }
 
         );
     }
 
     getAll() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getall', {
-                headers: authHeader
-            }).map(response => {
 
-                var allLists = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var allLists = response;
                 var _mappedListsArray: Array<QuoteList> = [];
 
                 for (var key in allLists) {
@@ -86,7 +65,7 @@ export class QuoteFollowUpListService {
                 }
 
                 return _mappedListsArray;
-            });
+            }));
         }
 
         );
@@ -116,16 +95,12 @@ export class QuoteFollowUpListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var callUrl = this._apiUrl.concat(urlparameters);
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var viewResponse: ViewResponse = response.json();
+                var viewResponse: any = response;
                 //viewResponse = response.json();
                 //var allLists = response.json();
                 var _mappedListsArray: Array<QuoteList> = [];
@@ -138,7 +113,7 @@ export class QuoteFollowUpListService {
                 viewResponse.Data = _mappedListsArray;
 
                 return viewResponse;//{Data: _mappedListsArray,DataCount:response.headers };
-            });
+            }));
         }
         );
     }

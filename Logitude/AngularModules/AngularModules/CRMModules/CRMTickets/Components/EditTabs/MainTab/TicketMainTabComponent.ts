@@ -36,7 +36,7 @@ declare var window: any;
 
 @Component({
     selector: 'MainTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './TicketMainTabComponent.html',
 })
 
@@ -666,7 +666,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
         logWindow.TitleIcon = windowTitleIcon;
         logWindow.WindowArgs = windowArgs;
 
-        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
             logWindow.Show('./CRMModules/CRMActivity/Components/NewEntity/NewActivityComponent');
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -822,7 +822,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
 
     ImageUploadedCompleted(event) {
         var contactService: ContactPMService = new ContactPMService();
-        contactService.get(this.entityPM.CreatedByContactId).subscribe(res => {
+        contactService.get(this.entityPM.CreatedByContactId).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 var contactPM: ContactPM = pmResponse.Result;
@@ -833,7 +833,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
 
                         this.UserImageDetailId = event;
                         contactPM.ImageDetailId = event;
-                        contactService.update(contactPM).subscribe(res => {
+                        contactService.update(contactPM).subscribe((res:any) => {
                             var pmResponse: ServiceResponse = res;
 
                             this.CurrentSession.StopBusyIndicator();
@@ -1246,7 +1246,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
     }
 
     EditActivity() {
-        this.trigger._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
+        this.trigger._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -1560,7 +1560,7 @@ export class ActivityItemClass extends BaseComponent {
     }
     ViewEntity(entity) {
         if (!AppTool.IsNullOrEmpty(entity)) {
-            this.father._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
+            this.father._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;

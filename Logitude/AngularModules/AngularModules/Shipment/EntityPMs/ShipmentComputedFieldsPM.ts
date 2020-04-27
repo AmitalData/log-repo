@@ -169,12 +169,12 @@ export class ShipmentComputedFieldsPM {
     public get LastPickupATD() { return this.lastPickupATD; }
     public set LastPickupATD(newValue: Date) { if (this.lastPickupATD != newValue) { this.lastPickupATD = newValue; this.MarkAsDirty("LastPickupATD"); } }
        
-
+	 
     private deliveryToPortId: string;
     public get DeliveryToPortId() { return this.deliveryToPortId; }
     public set DeliveryToPortId(newValue: string) { if (this.deliveryToPortId != newValue) { this.deliveryToPortId = newValue; this.MarkAsDirty("DeliveryToPortId"); } }
        
-	
+	 
     private deliveryFrom: string;
     public get DeliveryFrom() { return this.deliveryFrom; }
     public set DeliveryFrom(newValue: string) { if (this.deliveryFrom != newValue) { this.deliveryFrom = newValue; this.MarkAsDirty("DeliveryFrom"); } }
@@ -194,10 +194,12 @@ export class ShipmentComputedFieldsPM {
     public get PickupTo() { return this.pickupTo; }
     public set PickupTo(newValue: string) { if (this.pickupTo != newValue) { this.pickupTo = newValue; this.MarkAsDirty("PickupTo"); } }
        
+	 
     private operationallyClosedByUserName: string;
     public get OperationallyClosedByUserName() { return this.operationallyClosedByUserName; }
-    public set OperationallyClosedByUserName(newValue: string) { if (this.operationallyClosedByUserName != newValue) { this.operationallyClosedByUserName = newValue; this.MarkAsDirty("operationallyClosedByUserName"); } }
-
+    public set OperationallyClosedByUserName(newValue: string) { if (this.operationallyClosedByUserName != newValue) { this.operationallyClosedByUserName = newValue; this.MarkAsDirty("OperationallyClosedByUserName"); } }
+       
+	 
 
     public OldEntityPM: ShipmentComputedFieldsPM;
 		
@@ -221,4 +223,4 @@ export class ShipmentComputedFieldsPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

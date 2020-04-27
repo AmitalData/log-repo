@@ -36,7 +36,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 }
 
                 entity.BranchId = entityPM.BranchId;
-                entity.PaymentMethodId = entityPM.AccountingPaymentMethodId;
                 entity.AccountingPaymentMethodId = entityPM.AccountingPaymentMethodId;
                 entity.VendorAddressId = entityPM.VendorAddressId;
                 entity.VendorId = entityPM.VendorId;
@@ -82,7 +81,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
             entity.ApprovedDateTime = entityPM.ApprovedDateTime;
             entity.BankAccountId = entityPM.BankAccountId;
-            entity.PaymentMethodId = entityPM.AccountingPaymentMethodId;
             entity.AutomaticPaymentCheque = entityPM.AutomaticPaymentCheque;
             entity.AccountingCancelationDate = entityPM.AccountingCancelationDate;
             entity.DontIncludeInDeductionReport = entityPM.DontIncludeInDeductionReport;
@@ -121,6 +119,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Field8 = entityPM.Field8 != null ? entityPM.Field8.Value : null;
             entity.Field9 = entityPM.Field9 != null ? entityPM.Field9.Value : null;
             entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
+
+            entity.ExternalPaymentAmount = entityPM.ExternalPaymentAmount;
+            entity.ExternalPaymentDate = entityPM.ExternalPaymentDate;
+            entity.ExternalPaymentNotes = entityPM.ExternalPaymentNotes;
 
             entityPM.SetVoided = false;
             entityPM.SetApproved = false;

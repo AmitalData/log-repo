@@ -218,14 +218,17 @@
                                                                                     <table>
                                                                                         <tr>
 
-                                                                                            <td style="width:65px;max-width:65px;min-width:65px;">
+                                                                                            <td style="width:80px;max-width:80px;min-width:80px;">
                                                                                                 <table>
                                                                                                     <tr style="height:50px;vertical-align:top;">
                                                                                                         <td style="width:18px;">
-                                                                                                            <!--<img [title]="item.CorrespondenceCommunicationToolTip" style="width:12px;min-width:12px;height:12px;vertical-align:top;" [attr.src]="item.SourceText" />-->
                                                                                                             <div *ngIf="item.SourceText != null" class="MediaFill" style="vertical-align:top;float:left;">
                                                                                                                 <HelpIcon [IconSize]='12' [Header]="'Email Delivery Status'" [Text]="item.CorrespondenceCommunicationToolTip" [IconPath]="item.SourceText"></HelpIcon>
                                                                                                             </div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width:5px;">
+                                                                                                            <div></div>
                                                                                                         </td>
 
                                                                                                         <td style="width:50px;vertical-align:top">
@@ -374,7 +377,7 @@
                                                                                                         </td>
 
                                                                                                         <td style="width: 20px;height: 25px;">
-                                                                                                            <div class="ToolsButton" [title]="'RTL'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;" (click)="item.AlignRightClicked()">
+                                                                                                            <div class="ToolsButton" [title]="'RTL'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;" (click)="item.AlignLeftClicked()">
                                                                                                                 <!--<i class="fa fa-long-arrow-left"></i>-->
                                                                                                                 <img src="./Images/LTR.png" style="width: 16px;height: 22px;"/>
                                                                                                             </div>
@@ -385,7 +388,7 @@
                                                                                                         </td>
 
                                                                                                         <td style="width: 20px;">
-                                                                                                            <div class="ToolsButton" [title]="'LTR'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;" (click)="item.AlignLeftClicked()">
+                                                                                                            <div class="ToolsButton" [title]="'LTR'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;" (click)="item.AlignRightClicked()">
                                                                                                                 <!--<i class="fa fa-long-arrow-right"></i>-->
                                                                                                                 <img src="./Images/RTL.png" style="width: 16px;height: 22px;"/>
                                                                                                             </div>

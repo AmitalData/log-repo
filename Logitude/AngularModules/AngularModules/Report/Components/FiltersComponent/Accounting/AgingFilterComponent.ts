@@ -10,7 +10,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AgingFilterComponent.html',
 })
 
@@ -29,7 +29,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
         super();
 
         // get requierd resources
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => { this.isReady = true; });
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response:any) => { this.isReady = true; });
 
         // salesman lov field filtera
         this.SalesmanFilterItems = new ApiQueryFilters();

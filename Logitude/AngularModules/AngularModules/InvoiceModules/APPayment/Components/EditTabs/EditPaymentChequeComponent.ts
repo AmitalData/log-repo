@@ -11,7 +11,7 @@ import { PaymentChequePM } from '../../../../Accounting/EntityPMs/PaymentChequeP
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditPaymentChequeComponent.html',
 })
 
@@ -19,6 +19,12 @@ import { PaymentChequePM } from '../../../../Accounting/EntityPMs/PaymentChequeP
 
 
 export class EditPaymentChequeComponent extends BaseComponent{
+  public filterAgrs: any;
+  public BankName: any;
+  public LocalAmountFieldLabel: any;
+  public Account: any;
+  public BankAccount: any;
+  public Currency: any;
 
 
     public EntityPM: PaymentChequePM = null;
@@ -46,7 +52,7 @@ export class EditPaymentChequeComponent extends BaseComponent{
 
     constructor() {
         super();
-        this._entityResourceService.getEntityResourceByTableName("PaymentCheque", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("PaymentCheque", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.SetUIProperties();
         });

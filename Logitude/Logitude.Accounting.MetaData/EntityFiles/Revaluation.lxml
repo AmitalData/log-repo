@@ -62,7 +62,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;8b777f37-21a9-4b60-bc73-059030d8ceac&quot;"
     FieldName="&quot;Id&quot;"
@@ -1647,6 +1649,94 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;General.MC.ACC.Revaluations&quot;"
+      DefaultText="&quot;Revaluations&quot;"
+      LocalDefaultText="&quot;שערוכים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot; Revaluation.Details.O.Details&quot;"
+      DefaultText="&quot;Details&quot;"
+      LocalDefaultText="&quot;פרטי שערוך&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot; Revaluation.General.O.Details&quot;"
+      DefaultText="&quot;General&quot;"
+      LocalDefaultText="&quot;הגדרות שערוך&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluation.Details.B.CancelRevaluation&quot;"
+      DefaultText="&quot;Cancel Revaluation&quot;"
+      LocalDefaultText="&quot;ביטול שערוך&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.CashBooks&quot;"
+      DefaultText="&quot;Cash Books&quot;"
+      LocalDefaultText="&quot;שערוכים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluation.O.GLAccountForRevaluation&quot;"
+      DefaultText="&quot;You must choose GL Accounts for revaluation&quot;"
+      LocalDefaultText="&quot;חובה לבחור כרטיסים לשערוך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluation.O.ChartAccountForRevaluation&quot;"
+      DefaultText="&quot;You must choose Chart of account for revaluation&quot;"
+      LocalDefaultText="&quot;שדה קבוצת מאזן הוא שדה חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluation.O.FutureDateIsNotAllowed&quot;"
+      DefaultText="&quot;Future Date!&quot;"
+      LocalDefaultText="&quot;!תאריך עתידי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluation.CH.Id&quot;"
+      DefaultText="&quot;Revaluation Id&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluation.CH.RevaluationNumber&quot;"
+      DefaultText="&quot;Revaluation Number&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluation.CH.RevaluationDate&quot;"
+      DefaultText="&quot;Revaluation Date&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluation.CH.RevaluationEnabled&quot;"
+      DefaultText="&quot;Revaluation Enabled&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;DETAILS&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Revaluation.Features.Details&quot;"
+      FeatureDefaultText="&quot;Details&quot;" />
+    <Feature
+      Code="&quot;REVALUATIONMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Revaluation.Features.RevaluationMenu&quot;"
+      FeatureDefaultText="&quot;Revaluations&quot;" />
+  </AdditionalFeatures>
 </entity>

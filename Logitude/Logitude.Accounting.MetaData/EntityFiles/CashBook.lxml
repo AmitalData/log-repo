@@ -62,7 +62,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;5baa6857-1bf8-437c-a538-bdb23565003f&quot;"
     FieldName="&quot;Id&quot;"
@@ -1173,7 +1175,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;CashBookType&quot;"
     MinLength="0"
-    MaxLength="3"
+    MaxLength="15"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2349,6 +2351,43 @@
       LocalDefaultText="&quot;שם הקופה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CashBook.B.All&quot;"
+      DefaultText="&quot;All&quot;"
+      LocalDefaultText="&quot;הכל&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CashBook.B.CashCheques&quot;"
+      DefaultText="&quot;Cash Cheques&quot;"
+      LocalDefaultText="&quot;המחאות מזומן&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CashBook.B.PostdatedCheques&quot;"
+      DefaultText="&quot;Postdated Cheques&quot;"
+      LocalDefaultText="&quot;המחאות דחויות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;CashbookMenuFeature&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;CashBook.Features.CashbookMenuFeature&quot;"
+      FeatureDefaultText="&quot;Cashbook&quot;" />
+    <Feature
+      Code="&quot;MORECASHBOOK&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;CashBook.Features.More&quot;"
+      FeatureDefaultText="&quot;More&quot;" />
+  </AdditionalFeatures>
 </entity>

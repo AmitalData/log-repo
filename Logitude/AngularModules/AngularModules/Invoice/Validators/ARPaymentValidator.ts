@@ -4,8 +4,7 @@ import {Validator} from '../../Infrastructure/Validators/Validator';
 import {ARPaymentPM} from '../EntityPMs/ARPaymentPM';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { forEach } from '@angular/router/src/utils/collection';
-import { MessageWindow } from '../../controls/Windows/MessageWindow';
+
 export class ARPaymentValidator {
     public Validate(entityPm: ARPaymentPM) {
 

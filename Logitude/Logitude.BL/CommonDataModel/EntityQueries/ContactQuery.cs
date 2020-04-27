@@ -62,6 +62,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           InActive = a.InActive,
                                           LocalName = a.LocalName,
                                           SearchFields = a.SearchFields,
+                                          DontShowLocalLabels = a.DontShowLocalLabels,
                                           Mobile = a.Mobile,
                                           Notes = a.Notes,
                                           Tenant = a.Tenant,
@@ -191,6 +192,47 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     }
                 }
             }
+
+            return contacts;
+        }
+
+        public List<ContactPM> GetContactPMsWithoutPassWordsByTenant(int tenant)
+        {
+            List<ContactPM> contacts = (from a in repository.context.Contacts
+                                        where a.Tenant == tenant && a.UserType == "R"
+                                        select new ContactPM()
+                                        {
+                                            Anniversary = a.Anniversary,
+                                            Birthday = a.Birthday,
+                                            BusinessPhone = a.BusinessPhone,
+                                            Email = a.Email,
+                                            EnglishName = a.EnglishName,
+                                            FacebookId = a.FacebookId,
+                                            Fax = a.Fax,
+                                            Id = a.Id,
+                                            InActive = a.InActive,
+                                            LocalName = a.LocalName,
+                                            SearchFields = a.SearchFields,
+                                            Mobile = a.Mobile,
+                                            Notes = a.Notes,
+                                            Tenant = a.Tenant,
+                                            Signature = a.Signature,
+                                            SignatureHtml = a.SignatureHtml,
+                                            ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                            DisplayGettingStarted = a.DisplayGettingStarted,
+                                            DontShowLocal = a.DontShowLocalLabels,
+                                            BirthdayReminder = a.BirthdayReminder,
+                                            AnniversaryReminder = a.AnniversaryReminder,
+                                            ImageDetailId = a.ImageDetailId,
+                                            DoneDate = a.DoneDate,
+                                            BirthDayOfYear = a.BirthDayOfYear,
+                                            ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                            Position = a.Position,
+                                            ExternalId = a.ExternalId,
+                                            IndexColor = a.IndexColor,
+                                            CompanyName = a.CompanyName,
+                                            CreateDate = a.CreateDate,
+                                        }).ToList(); 
 
             return contacts;
         }

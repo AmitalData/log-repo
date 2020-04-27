@@ -55,7 +55,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;CreditLimitSetting,CreditLimitSettings,,Id,&quot;">
+  SearchFields="&quot;CreditLimitSetting,CreditLimitSettings,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;3ebd82de-32de-4873-9b72-535be311d2cf&quot;"
     FieldName="&quot;Id&quot;"
@@ -66,7 +68,7 @@
     ObjectTableName="&quot;CreditLimitSetting&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -210,7 +212,7 @@
     ObjectTableName="&quot;CreditLimitSetting&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -283,7 +285,7 @@
     ObjectTableName="&quot;CreditLimitSetting&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -356,7 +358,7 @@
     ObjectTableName="&quot;CreditLimitSetting&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -429,7 +431,7 @@
     ObjectTableName="&quot;CreditLimitSetting&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1907,20 +1909,20 @@
     <Feature
       Code="&quot;Override&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;CreditLimitSetting.Features.Override&quot;"
-      FeatureDefaultText="&quot;Credit limit override&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;CreditLimitSetting.Features.Override&quot;"
+      FeatureDefaultText="&quot;Credit limit override&quot;" />
     <Feature
       Code="&quot;PartnersRestrictions&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;CreditLimitSetting.Features.PartnersRestrictions&quot;"
-      FeatureDefaultText="&quot;Partners Restrictions&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;CreditLimitSetting.Features.PartnersRestrictions&quot;"
+      FeatureDefaultText="&quot;Partners Restrictions&quot;" />
   </AdditionalFeatures>
 </entity>

@@ -4,7 +4,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     selector: "ToggleButton",
-    moduleId: module.id,
+    
     templateUrl: './ToggleButton.html',
     inputs: ['Title', 'IconPath', 'DropDownWidth', 'DropDownHeight', 'Position', 'IsEnabled', 'IsOpened'],
     //changeDetection: ChangeDetectionStrategy.OnPush,

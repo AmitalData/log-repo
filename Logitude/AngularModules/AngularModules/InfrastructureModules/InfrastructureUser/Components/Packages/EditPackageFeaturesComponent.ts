@@ -11,7 +11,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditPackageFeaturesComponent.html',
 })
 

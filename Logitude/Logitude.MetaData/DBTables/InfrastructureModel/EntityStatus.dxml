@@ -2,7 +2,8 @@
 <Table
   Name="EntityStatus"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -18,22 +19,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="ObjectTableId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="StatusWeight"
-    Type="int">
     <Constraints
       Nullable="false" />
   </Column>
@@ -47,6 +35,19 @@
   <Column
     Name="InActive"
     Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StatusWeight"
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>
@@ -65,11 +66,19 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Code,Tenant" />
 </Table>

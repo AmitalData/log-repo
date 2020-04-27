@@ -8,7 +8,7 @@ import {AppTool} from '../../../../../Infrastructure/Tools';
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './AWBDangerousPackageComponent.html',
 })

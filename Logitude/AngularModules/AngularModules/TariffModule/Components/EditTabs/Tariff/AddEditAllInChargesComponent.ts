@@ -8,11 +8,12 @@ import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { DateTool } from '../../../../Infrastructure/Tools';
+import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditAllInChargesComponent.html',
 })
 
@@ -33,7 +34,7 @@ export class AddEditAllInChargesComponent {
     private isVersionDirty: boolean = false;
     private isTariffDirty: boolean = false;
     SetWindowArgs(args: any) {
-        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
             if (args) {
                 this.IsEditingEnabled = args['IsEditingEnabled'];
                 this.EntityPM = args['VersionPM'];
@@ -169,6 +170,28 @@ class AllInChargeItemClass extends BaseComponent {
     public set ChargesTypeId(value: string) {
         if (this.EntityPM.ChargesTypeId != value) {
             this.EntityPM.ChargesTypeId = value;
+        }
+    }
+
+    public get ChargesTypeCode() { return this.EntityPM.ChargesTypeCode; }
+    public set ChargesTypeCode(value: string) {
+        if (this.EntityPM.ChargesTypeCode != value) {
+            this.EntityPM.ChargesTypeCode = value;
+        }
+    }
+
+    chargesType: ChargesTypeList;
+    get ChargesType() { return this.chargesType; }
+    set ChargesType(value: ChargesTypeList) {
+        if (this.chargesType != value) {
+            this.chargesType = value;
+        }
+
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.ChargesTypeCode = value.Code;
+        }
+        else {
+            this.ChargesTypeCode = null;
         }
     }
 

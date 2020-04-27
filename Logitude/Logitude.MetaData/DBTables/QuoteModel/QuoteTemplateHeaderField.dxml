@@ -2,7 +2,8 @@
 <Table
   Name="QuoteTemplateHeaderFields"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Id"
     Type="varchar"
@@ -26,12 +27,14 @@
   </Column>
   <Column
     Name="Column"
+    ShortName="FieldColumn"
     Type="int">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="Row"
+    ShortName="FieldRow"
     Type="int">
     <Constraints
       Nullable="false" />

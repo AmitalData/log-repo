@@ -45,7 +45,9 @@
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
-  ApplyOnPropertyChangedCode="false">
+  ApplyOnPropertyChangedCode="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;43a4024f-6410-4c5e-8463-92412242d8f6&quot;"
     FieldName="&quot;Code&quot;"
@@ -263,4 +265,5 @@
       Name="&quot;Task Extended&quot;" />
   </Records>
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

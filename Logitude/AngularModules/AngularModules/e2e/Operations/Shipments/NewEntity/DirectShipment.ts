@@ -1,7 +1,7 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
 import { ShipmentHelper } from '../ShipmentHelper';
-import { IfObservable } from 'rxjs/observable/IfObservable';
+
 export class DirectShipment {
     private Helper: FieldsHelper;
     private ShipmentModes: ShipmentHelper;

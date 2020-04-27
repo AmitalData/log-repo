@@ -2,7 +2,8 @@
 <Table
   Name="EventTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -12,8 +13,66 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ShortView"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomerRoleId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AgentRoleId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AllowedInAutomation"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EventTypeCategoryCode"
+    Type="nvarchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCustomerView"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsAgentView"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Tenant"
     Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsSharedLogisticsEnabled"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
@@ -21,12 +80,6 @@
     Name="Code"
     Type="varchar"
     Size="4">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="AddedManually"
-    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
@@ -45,8 +98,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsManualEntry"
-    Type="bit">
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="false" />
   </Column>
@@ -56,19 +110,6 @@
     Size="15">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="ObjectTableId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ShortView"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="IsFollowUp"
@@ -91,6 +132,18 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="AddedManually"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsManualEntry"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="ManualActivatedFollowUp"
     Type="bit">
     <Constraints
@@ -102,68 +155,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Column
-    Name="CustomerRoleId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AgentRoleId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsCustomerView"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsAgentView"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsSharedLogisticsEnabled"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="EventTypeCategoryCode"
-    Type="nvarchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AllowedInAutomation"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Relation
-    ForeignKeyColumn="EntityStatusId"
-    ReferencedTable="EntityStatus"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ObjectTableId"
-    ReferencedTable="ObjectTables"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="CustomerRoleId"
     ReferencedTable="Roles"
@@ -178,6 +169,16 @@
     ForeignKeyColumn="EventTypeCategoryCode"
     ReferencedTable="EventTypeCategories"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="EntityStatusId"
+    ReferencedTable="EntityStatus"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,ObjectTableId" />

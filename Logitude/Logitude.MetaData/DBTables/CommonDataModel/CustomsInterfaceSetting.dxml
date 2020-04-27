@@ -2,13 +2,21 @@
 <Table
   Name="CustomsInterfaceSettings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Tenant"
     Type="int"
     DefaultValue="0">
     <Constraints
       PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ActivateCustomsManagementInShipments"
+    ShortName="ActivateCustManagInShipments"
+    Type="bit">
+    <Constraints
       Nullable="false" />
   </Column>
   <Column
@@ -52,12 +60,6 @@
     Size="25">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="ActivateCustomsManagementInShipments"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="ArtemusOutSettingsId"

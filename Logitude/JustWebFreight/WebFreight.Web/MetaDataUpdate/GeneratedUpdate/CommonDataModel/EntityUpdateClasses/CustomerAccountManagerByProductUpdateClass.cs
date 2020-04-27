@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerAccountManagerByProductUpdateClass
-   {  
+   {  		
+		public const string HashString = "4bf0d10d4932f9fc80c8950c9466f1bf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "CustomerAccountManagerByProduct",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CustomerAccountManagerByProducts",
-			      				    OldDBTableName =  "CustomerAccountManagerByProducts",
 			      				    ObjectTableSingular =  "Customer Account Manager By Product",
 			      				    ObjectTablePlural =  "CustomerAccountManagerByProducts",
 			      				    HasCustomFilter =  false,
@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  10,
 			      				    DefaultText =  "Customer Account Manager By Product",
-			      				    Code =  "40d7",
+			      				    Code =  "9fa8",
 			      				    Name =  "CustomerAccountManagerByProduct",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -130,18 +130,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  true,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "CustomerAccountManagerByProduct,CustomerAccountManagerByProducts,,Id,",
+			      				    HashString =  CustomerAccountManagerByProductUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ProductTypeCode",
-					  						OldFieldName =  "ProductTypeCode",
 					  						ObjectTableName =  "CustomerAccountManagerByProduct",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ProductType",
@@ -198,14 +198,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ProductTypeCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AccountManagerId",
-					  						OldFieldName =  "AccountManagerId",
 					  						ObjectTableName =  "CustomerAccountManagerByProduct",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -262,14 +261,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AccountManagerId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "CustomerAccountManagerByProduct",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customer",
@@ -325,16 +323,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CustomerId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CustomerAccountManagerByProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerAccountManagerByProduct" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> CustomerAccountManagerByProductObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerAccountManagerByProduct").ToList();
+		       
+	      
+
+	         Screen CustomerAccountManagerByProductCustomerAccountManagerByProductHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerAccountManagerByProduct.HeaderScreen", Name = "CustomerAccountManagerByProductHeaderScreen", ObjectTableId = CustomerAccountManagerByProductObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CustomerAccountManagerByProductObjectTable.HeaderScreenId = CustomerAccountManagerByProductCustomerAccountManagerByProductHeaderScreenScreen0.Id;
+		    CustomerAccountManagerByProductObjectTable.HeaderScreenCode = CustomerAccountManagerByProductCustomerAccountManagerByProductHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

@@ -2,7 +2,8 @@
 <Table
   Name="ARInvoicePayments"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Invoice">
   <Column
     Name="Id"
     Type="varchar"
@@ -21,13 +22,13 @@
     Name="LocalAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ForeignAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="PaymentAmount"

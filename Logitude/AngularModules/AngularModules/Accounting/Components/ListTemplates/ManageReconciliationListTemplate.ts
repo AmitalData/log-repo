@@ -11,7 +11,7 @@ import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ManageReconciliationListTemplate.html',
 })
 

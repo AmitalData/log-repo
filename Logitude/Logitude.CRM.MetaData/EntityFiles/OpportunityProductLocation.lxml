@@ -27,7 +27,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   ParentTableName="OpportunityProduct"
-  DefaultText="&quot;Opportunity Product Location&quot;">
+  DefaultText="&quot;Opportunity Product Location&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;3b852c1c-6882-4334-8f20-fe77f9cf4c5c&quot;"
     FieldName="&quot;OpportunityId&quot;"
@@ -506,4 +508,5 @@
     GenerateInList="false" />
   <EventTypes />
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

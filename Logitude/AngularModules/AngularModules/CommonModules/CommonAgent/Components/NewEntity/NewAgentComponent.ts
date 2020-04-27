@@ -9,7 +9,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewAgentComponent.html',
 })
 
@@ -21,7 +21,7 @@ export class NewAgentComponent {
     public DomainService: PartnersDomainService;
     private PartnerTamplate: NewPartnerTamplate;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.EntityPM = new AgentPM();
@@ -69,8 +69,8 @@ export class NewAgentComponent {
     } 
 
     LoadChildComponent() {
-        this._entityResourceService.getEntityResourceByTableName("Address").subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("Customer").subscribe(response2 => {
+        this._entityResourceService.getEntityResourceByTableName("Address").subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName("Customer").subscribe((response2: any) => {
                 SessionLocator.DynamicLoader.Load("./CommonModules/CommonPartners/Components/Templates/NewPartnerTamplate", this.viewContainerRef)
                     .then(cmpRef => {
                         this.PartnerTamplate = cmpRef.instance;

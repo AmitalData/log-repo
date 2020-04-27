@@ -15,12 +15,12 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {ScreenLayoutArgs} from '../../../../Infrastructure/DataContracts/ScreenLayoutArgs';
 import {LoginService} from '../../../../Infrastructure/Services/LoginService';
-import {Headers} from '@angular/http';
+
 
 
 declare var window;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ScreenLayoutComponent.html',
 })
 
@@ -78,7 +78,7 @@ export class ScreenLayoutComponent extends BaseComponent {
         //this.OkClicked(false);
         this.SelectedItem = Item;
         this.FillbanckStackFields();
-        this.myGeneralService.GetScreenModificationByScreenCode(Item.ScreenPM.Code).subscribe(myResult => {
+        this.myGeneralService.GetScreenModificationByScreenCode(Item.ScreenPM.Code).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (myResponse.Result != null) {
                 this.GenerateScreen(myResponse.Result);
@@ -208,13 +208,13 @@ export class ScreenLayoutComponent extends BaseComponent {
         this.MyArgs.ScreenId = ScreenId;//this.SelectedItem.ScreenPM.Id;
         this.MyArgs.ScreenCode = ScreenCode;//this.SelectedItem.ScreenPM.Code;
 
-        this.myGeneralService.updateScreenFields(this.MyArgs).subscribe(myResult => {
+        this.myGeneralService.updateScreenFields(this.MyArgs).subscribe((myResult: ServiceResponse) => {
             this.authHeader = new Headers();
             this.authHeader.append('Content-Type', 'application/json');
             this.authHeader.append('Accept', 'application/json');
             this.loginService.AuthHeader = this.authHeader;
             this.loginService.CurrentTenant = SessionLocator.Tenant;
-            this.loginService.GetScreenFields().subscribe(myResult => {
+            this.loginService.GetScreenFields().subscribe((myResult: any) => {
                 if (myResult != null) { 
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (CloseWindow == true) {
@@ -226,7 +226,7 @@ export class ScreenLayoutComponent extends BaseComponent {
                         this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == 0 && sf.ScreenCode == ScreenCode);
                     }
                 }
-                this.loginService.GetScreens().subscribe(myScreensResult => {
+                this.loginService.GetScreens().subscribe((myScreensResult: any) => {
                     window.Screens = myScreensResult;
                 }); 
             }); 

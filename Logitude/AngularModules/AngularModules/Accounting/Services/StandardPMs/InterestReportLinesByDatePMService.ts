@@ -6,8 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -23,24 +24,21 @@ import {InterestReportLinesByDatePM} from '../../EntityPMs/InterestReportLinesBy
 @Injectable()
 
 export class InterestReportLinesByDatePMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/interestreportlinesbydates';      
     }
 
  get(id: string) {
          
          
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+      
         var callTime = new Date();		
-		 return Observable.defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
-                    headers: authHeader
-                }).map(response => {
-                    var pm = response.json();
+		 return defer(() => {
+             return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                    var pm = response.body;
 
                    
 					
@@ -59,19 +57,16 @@ export class InterestReportLinesByDatePMService {
 				 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
             });                    
     }
 
 	 insert(entityPM: InterestReportLinesByDatePM) {
  
         var callTime = new Date();        
-        return Observable.defer(() => {
+        return defer(() => {
 
-                var authHeader = new Headers();
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
-
+            
                 var validator: ClassLevelValidator;
                  
                 validator = new ClassLevelValidator();
@@ -85,10 +80,9 @@ export class InterestReportLinesByDatePMService {
                     var mappedEntity: InterestReportLinesByDatePM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((response) => {
+                     return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                            var pm = response.json();
+                            var pm = response.body;
 							if(pm)
 							{
                                var mappedResult:  InterestReportLinesByDatePM;
@@ -103,14 +97,14 @@ export class InterestReportLinesByDatePMService {
                             
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
                    
                 }
             }
@@ -121,12 +115,9 @@ export class InterestReportLinesByDatePMService {
     update(entityPM: InterestReportLinesByDatePM) {
 
             var callTime = new Date();         
-            return Observable.defer(() => {
+            return defer(() => {
 
-                var authHeader = new Headers();
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
-
+            
                 var validator: ClassLevelValidator;
                  
                 validator = new ClassLevelValidator();
@@ -140,11 +131,10 @@ export class InterestReportLinesByDatePMService {
                     var mappedEntity: InterestReportLinesByDatePM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((response) => {
+                     return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                  
 
-                            var pm = response.json();
+                            var pm = response.body;
 							if(pm)
 							{
                                var mappedResult:  InterestReportLinesByDatePM;
@@ -157,14 +147,14 @@ export class InterestReportLinesByDatePMService {
 					                           
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
                    
                 }
             }

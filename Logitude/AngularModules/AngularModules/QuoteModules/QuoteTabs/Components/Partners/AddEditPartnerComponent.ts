@@ -7,7 +7,7 @@ import {QuoteUtilities} from '../../../../Quote/Utilities/QuoteUtilities';
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AddEditPartnerComponent',
     templateUrl: './AddEditPartnerComponent.html',
 })

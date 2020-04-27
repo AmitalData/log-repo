@@ -265,6 +265,31 @@ export class AccountingSettingPM {
     public set AllowManualARPaymentNumber(newValue: boolean) { if (this.allowManualARPaymentNumber != newValue) { this.allowManualARPaymentNumber = newValue; this.MarkAsDirty("AllowManualARPaymentNumber"); } }
        
 	 
+    private allowRegionalTaxManagement: boolean;
+    public get AllowRegionalTaxManagement() { return this.allowRegionalTaxManagement; }
+    public set AllowRegionalTaxManagement(newValue: boolean) { if (this.allowRegionalTaxManagement != newValue) { this.allowRegionalTaxManagement = newValue; this.MarkAsDirty("AllowRegionalTaxManagement"); } }
+       
+	 
+    private enableAPPaymentExternalPayment: boolean;
+    public get EnableAPPaymentExternalPayment() { return this.enableAPPaymentExternalPayment; }
+    public set EnableAPPaymentExternalPayment(newValue: boolean) { if (this.enableAPPaymentExternalPayment != newValue) { this.enableAPPaymentExternalPayment = newValue; this.MarkAsDirty("EnableAPPaymentExternalPayment"); } }
+       
+	 
+    private transferToFTPActivated: boolean;
+    public get TransferToFTPActivated() { return this.transferToFTPActivated; }
+    public set TransferToFTPActivated(newValue: boolean) { if (this.transferToFTPActivated != newValue) { this.transferToFTPActivated = newValue; this.MarkAsDirty("TransferToFTPActivated"); } }
+       
+	 
+    private transferFTPDetailId: string;
+    public get TransferFTPDetailId() { return this.transferFTPDetailId; }
+    public set TransferFTPDetailId(newValue: string) { if (this.transferFTPDetailId != newValue) { this.transferFTPDetailId = newValue; this.MarkAsDirty("TransferFTPDetailId"); } }
+       
+	 
+    private transferFTPDetailHost: string;
+    public get TransferFTPDetailHost() { return this.transferFTPDetailHost; }
+    public set TransferFTPDetailHost(newValue: string) { if (this.transferFTPDetailHost != newValue) { this.transferFTPDetailHost = newValue; this.MarkAsDirty("TransferFTPDetailHost"); } }
+       
+	 
 
     public OldEntityPM: AccountingSettingPM;
 		

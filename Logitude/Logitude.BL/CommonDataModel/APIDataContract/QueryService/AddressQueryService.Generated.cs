@@ -75,21 +75,15 @@ using Simplog.Data.CommonDataModel;
 					   					   temp.Country = CountryService0.GetCountryById(MyEntityPM.CountryId,Tenant); 
 			       
 					   				   }
-				   			  
-				   if(MyEntityPM.City != null)
-				   {
-					   CityQueryService CityService1 = new CityQueryService(Tenant);
-					   					   temp.City = CityService1.GetCityById(MyEntityPM.City,Tenant); 
-			       
-					   				   }
 				   
+				   temp.City = MyEntityPM.City;
 				   temp.ZipCode = MyEntityPM.ZipCode;
 				   temp.PhoneNumber = MyEntityPM.PhoneNumber;
 				   temp.FaxNumber = MyEntityPM.FaxNumber;			  
 				   if(MyEntityPM.StateId != null)
 				   {
-					   StateQueryService StateService2 = new StateQueryService(Tenant);
-					   					   temp.State = StateService2.GetStateById(MyEntityPM.StateId,Tenant); 
+					   StateQueryService StateService1 = new StateQueryService(Tenant);
+					   					   temp.State = StateService1.GetStateById(MyEntityPM.StateId,Tenant); 
 			       
 					   				   }
 				   
@@ -146,18 +140,7 @@ using Simplog.Data.CommonDataModel;
 					}
 			
 					
-					CityQueryService CityCityService = new CityQueryService(Tenant);
-					if(MyEntity.City != null)
-					{
-						var myCityPM = CityCityService.CityDataMappingAndValidatin(MyEntity.City,Tenant,ComputingPartnerName);
-												if(myCityPM != null)
-						{
-							temp.City = myCityPM.Id;
-						}
-						 
-					}
-			
-					
+					temp.City = MyEntity.City;
 					temp.ZipCode = MyEntity.ZipCode;
 					temp.PhoneNumber = MyEntity.PhoneNumber;
 					temp.FaxNumber = MyEntity.FaxNumber;

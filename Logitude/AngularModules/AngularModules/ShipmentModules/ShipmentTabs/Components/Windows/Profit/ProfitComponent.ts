@@ -10,7 +10,7 @@ import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/Servi
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ProfitComponent.html',
 })
 

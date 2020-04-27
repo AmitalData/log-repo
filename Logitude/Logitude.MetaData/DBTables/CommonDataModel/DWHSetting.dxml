@@ -2,7 +2,14 @@
 <Table
   Name="DWHSettings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
+  <Column
+    Name="IsParentTenant"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Column
     Name="Tenant"
     Type="int">
@@ -24,14 +31,14 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="UserName"
+    Name="Password"
     Type="varchar"
     Size="200">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="Password"
+    Name="UserName"
     Type="varchar"
     Size="200">
     <Constraints
@@ -45,9 +52,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsParentTenant"
-    Type="bit">
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
 </Table>

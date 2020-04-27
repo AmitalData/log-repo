@@ -1,6 +1,5 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -9,28 +8,27 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
 import {ExternalReconciliationPM} from '../../EntityPMs/ExternalReconciliationPM';
-
 import {ExternalReconciliationLinePM} from '../../EntityPMs/ExternalReconciliationLinePM';
+ 
 @Injectable()
 
 export class ExternalReconciliationOpService {
-    private _http: Http;
+ 
     private _apiUrl: string;
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+    
+        this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExternalReconciliationOp';
     }
 
     insert(entityPM: ExternalReconciliationPM) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+     
 
             var validator: ClassLevelValidator;
 
@@ -44,11 +42,9 @@ export class ExternalReconciliationOpService {
             if (errorsArray.length == 0) {
                 var mappedEntity: ExternalReconciliationPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
-
-                        var pm = response.json();
+                return this.httpClient.post(this._apiUrl, JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(
+                    map(response => {
+                        var pm = response;
                         if (pm) {
                             var mappedResult: ExternalReconciliationPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -56,20 +52,19 @@ export class ExternalReconciliationOpService {
                         }
 
                         return serviceResponse;
-
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
+                
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
-        }
-
-        );
+     
     }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ExternalReconciliationPM = null) {

@@ -21,7 +21,7 @@ import { UserArgs} from '../../../../Infrastructure/Args';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GettingStartedComponent.html',
 })
 
@@ -249,7 +249,7 @@ export class GettingStartedComponent extends BaseComponent {
     }
 
     // Data Management 
-    private New(entity: string) {
+    public New(entity: string) {
         switch (entity) {
             case "User": { this.RunNewEntity(entity, "./InfrastructureModules/InfrastructureUser/Components/NewUserComponent"); break; }
             case "Agent": { this.RunNewEntity(entity, "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent"); break; }
@@ -261,7 +261,7 @@ export class GettingStartedComponent extends BaseComponent {
         }
     }
     private RunNewEntity(objectTableName: string, path: string) {
-        this._entityResourceService.getEntityResourceByTableName(objectTableName).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response:any) => {
             var str = TextCodeTranslator.Translate("General.O.NewEntity");
             str = str.replace("%Entity", TextCodeTranslator.TranslateTable(objectTableName));
             var logWindow = new LogitudeWindow();
@@ -275,7 +275,7 @@ export class GettingStartedComponent extends BaseComponent {
         });
     }
     private RunImportEntity(objectTableName: string) {
-        this._entityResourceService.getEntityResourceByTableName(objectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(objectTableName, 0).subscribe((response:any) => {
             var windowTitle = "Add " + objectTableName;
             var logWindow = new LogitudeWindow();
             var args: ImportEntityArgs = new ImportEntityArgs();
@@ -314,7 +314,7 @@ export class GettingStartedComponent extends BaseComponent {
                 objectTabelId = objectTablePM.Id;
             }
             if (!AppTool.IsNullOrEmpty(objectTabelId)) {
-                this._entityResourceService.getEntityResourceByTableName(entity).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(entity).subscribe((response:any) => {
                     this.ViewQuery(objectTabelId, entity);
                 });
             }
@@ -400,7 +400,7 @@ export class GettingStartedComponent extends BaseComponent {
 
     // System Info
     SystemInfoClicked() {
-        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response:any) => {
             this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(tenantResp => {
                 var logitudeWindow = new LogitudeWindow();
                 logitudeWindow.Width = 800;
@@ -421,7 +421,7 @@ export class GettingStartedComponent extends BaseComponent {
         logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/CompanyAddress/CompanyAddressSettingsComponent');
     }
     SystemDefaultsClick() {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
             var windowTitle = "System Defaults ";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 850;
@@ -438,7 +438,7 @@ export class GettingStartedComponent extends BaseComponent {
         logitudeWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/Counters/CountersComponent');
     }
     CompanyLogoClick() {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 740;
         logitudeWindow.Height = 585;
@@ -461,7 +461,7 @@ export class GettingStartedComponent extends BaseComponent {
         logitudeWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingSettingsComponent');
     }
     LocalSettingsClick() {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
             var windowTitle = "Local Settings";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 750;
@@ -472,7 +472,7 @@ export class GettingStartedComponent extends BaseComponent {
         });
     }
     InvoiceSettingsClick() {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
             var windowTitle = "Invoice Settings";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 750;
@@ -483,7 +483,7 @@ export class GettingStartedComponent extends BaseComponent {
         });
     }
     AirlineSettingsClick() {
-        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response:any) => {
             var windowTitle = "Airline Settings";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 650;
@@ -494,7 +494,7 @@ export class GettingStartedComponent extends BaseComponent {
         });
     }
     SignatureClick() {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
             var windowArgs: any = {};
             windowArgs.DataViewModel = this;
             windowArgs.PageType = "Signature";
@@ -515,7 +515,7 @@ export class GettingStartedComponent extends BaseComponent {
         logitudeWindow.Width = 600;
         logitudeWindow.Height = 400;
         logitudeWindow.Title = "Change User Password";
-        this._entityResourceService.getEntityResourceByTableName("User").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("User").subscribe((response:any) => {
             logitudeWindow.DataContext = this;
             logitudeWindow.Show('./InfrastructureModules/InfrastructureUser/Components/PersonalSettings/ChangePasswordComponent');
         });
@@ -552,7 +552,7 @@ export class GettingStartedComponent extends BaseComponent {
         });
     }
 
-    private ViewAllResources() {
+    ViewAllResources() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "View All");
         var uri = 'TrainingResourcesHTML/TrainingResourcesMainPage.aspx?tempId=' + SessionInfo.DocumentDownloadToken;
         var navigate = ServiceHelper.GetLogitudeURL() + uri;

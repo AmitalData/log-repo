@@ -7,7 +7,7 @@ declare var SelectingElement: any;
 
 @Component({
     selector: 'log-cell-template',
-    moduleId: module.id,
+    
     templateUrl: './LogCellTemplateComponent.html',
     inputs: ['TabIndex', 'IsEnabled', 'CellColor', 'Alignment', 'IsFilled', 'DisableColors', 'IgnoreMods', 'RIndex','IsEditMode']
 })

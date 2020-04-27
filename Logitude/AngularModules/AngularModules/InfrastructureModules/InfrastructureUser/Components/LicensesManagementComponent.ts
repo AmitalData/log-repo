@@ -12,14 +12,15 @@ import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {CommonDomainService, UserLicenseUpdateHelper} from '../../../Common/Services/CommonDomainService';
 import {UserExtendedPMService} from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import {TenantManagementLicensePM} from '../../../Infrastructure/EntityPMs/TenantManagementLicensePM';
-import { filter } from 'rxjs/operator/filter';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LicensesManagementComponent.html',
 })
 
 export class LicensesManagementComponent implements OnDestroy {
+  public Items: any[] = [];
+
     @Output() SearchFieldChangeEvent = new EventEmitter();
     public Columns: any[] = [];
     private dirtyItem: UserLicensePM;
@@ -123,7 +124,7 @@ export class LicensesManagementComponent implements OnDestroy {
         this.DataLoaded = false;
 
         var userExtendedPMService: UserExtendedPMService = new UserExtendedPMService();
-        userExtendedPMService.GetUserLicenses().subscribe(myResult => {
+        userExtendedPMService.GetUserLicenses().subscribe((myResult:any) => {
             if (myResult == null) {
                 this.LicensesManagmentsList = [];
             }

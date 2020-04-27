@@ -4,7 +4,8 @@
   ObjectTableName="&quot;SharedLogisticsInvitationStatus&quot;"
   IsNew="false"
   DBTableName="&quot;SharedLogisticsInvitationStatus&quot;"
-  OldDBTableName="&quot;SharedLogisticsInvitationStatus&quot;"
+  DBTableShortName="&quot;SharedLogInvitationStatus&quot;"
+  DBTableOldNames="SharedLogisticsInvitationStatus,SharedLogInvitationStatus"
   ObjectTableSingular="&quot;Shared Logistics Invitation Status&quot;"
   ObjectTablePlural="&quot;Shared Logistics Invitation Status&quot;"
   HasCustomFilter="false"
@@ -38,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Shared Logistics Invitation Status&quot;"
-  Code="&quot;0d41&quot;"
+  Code="&quot;d876&quot;"
   Name="&quot;SharedLogisticsInvitationStatus&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -62,11 +63,13 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;SharedLogisticsInvitationStatus,SharedLogisticsInvitationStatus,,Code,&quot;">
+  SearchFields="&quot;SharedLogisticsInvitationStatus,SharedLogisticsInvitationStatus,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;af5d7c29-3174-48d4-b302-2f3e2448a914&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -114,6 +117,7 @@
     DefaultText="&quot;Code&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -139,7 +143,7 @@
   <field
     Id="&quot;6ea621e8-0b28-4a2d-8d4f-ff8e7370e94c&quot;"
     FieldName="&quot;Name&quot;"
-    OldFieldName="&quot;Name&quot;"
+    OldNames="Name"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -192,6 +196,7 @@
     ListLocalDefaultText="&quot;שם&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -217,12 +222,12 @@
   <field
     Id="&quot;9e510b22-80ca-49c9-9821-2ce90858b82f&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;SharedLogisticsInvitationStatus&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
@@ -266,6 +271,7 @@
     HelpTextDefaultText="&quot;Searching by :&#xA;1: codes &#xA;2: names&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -287,7 +293,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
- 
+  <Screen
+    Name="&quot;SharedLogisticsInvitationStatusHeaderScreen&quot;"
+    ObjectTableName="&quot;SharedLogisticsInvitationStatus&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

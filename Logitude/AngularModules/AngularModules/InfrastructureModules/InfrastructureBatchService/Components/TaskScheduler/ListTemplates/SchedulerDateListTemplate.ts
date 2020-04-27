@@ -10,7 +10,7 @@ import { TaskSchedulerItemClass } from '../../../../../InfrastructureModules/Inf
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'SchedulerDateListTemplate',
     templateUrl: './SchedulerDateListTemplate.html',
@@ -74,7 +74,7 @@ export class SchedulerDateListTemplate {
     }
 
     EditTaskClicked() {
-        this.myTasksSchedulerPMService.get(this.rowData["Id"]).subscribe(myResult => {
+        this.myTasksSchedulerPMService.get(this.rowData["Id"]).subscribe((myResult:any) => {
             if (myResult.Result) {
                 var MyTask = new TaskSchedulerItemClass(myResult.Result, null, false);
                 var logWindow = new LogitudeWindow();

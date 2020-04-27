@@ -10,7 +10,7 @@ import {ShipmentTool} from '../../../../../Shipment/Tools';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
         selector: 'OCITabComponent',
     templateUrl: './OCITabComponent.html',
 })

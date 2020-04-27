@@ -264,6 +264,21 @@ export class JournalPM {
     public set LineCreditAccountTypeCode(newValue: string) { if (this.lineCreditAccountTypeCode != newValue) { this.lineCreditAccountTypeCode = newValue; this.MarkAsDirty("LineCreditAccountTypeCode"); } }
        
 	 
+    private taxReportJournalLineNumber: number;
+    public get TaxReportJournalLineNumber() { return this.taxReportJournalLineNumber; }
+    public set TaxReportJournalLineNumber(newValue: number) { if (this.taxReportJournalLineNumber != newValue) { this.taxReportJournalLineNumber = newValue; this.MarkAsDirty("TaxReportJournalLineNumber"); } }
+       
+	 
+    private documentDate: Date;
+    public get DocumentDate() { return this.documentDate; }
+    public set DocumentDate(newValue: Date) { if (this.documentDate != newValue) { this.documentDate = newValue; this.MarkAsDirty("DocumentDate"); } }
+       
+	 
+    private dueDate: Date;
+    public get DueDate() { return this.dueDate; }
+    public set DueDate(newValue: Date) { if (this.dueDate != newValue) { this.dueDate = newValue; this.MarkAsDirty("DueDate"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		

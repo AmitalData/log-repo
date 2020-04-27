@@ -27,7 +27,7 @@ import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLoc
 
 @Component({
     selector: 'DeclarationSupplierInvoiceTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './DeclarationSupplierInvoiceTabComponent.html',
 })
 
@@ -57,7 +57,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
-       // this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
+       // this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
         this.customsDocumentPointerService = new CustomsDocumentPointerService();
             this.ItemsSource = new ObservableCollection([]);
             this.InvoiceItems = new ObservableCollection([]);
@@ -74,18 +74,18 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     }
 
     ngOnInit() {
-        this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
-        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsMod").subscribe(response => {
-                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemProcesType").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsConDeclar").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsDescript").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsSerialNum").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsProdIdent").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsLevy").subscribe(response => {
-                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe(response => {
-                    this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsMod").subscribe((response:any) => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemProcesType").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsConDeclar").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsDescript").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsSerialNum").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsProdIdent").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsLevy").subscribe((response:any) => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response:any) => {
+                    this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
      
 
                     
@@ -437,7 +437,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         this.CurrentSession.StartBusyIndicator("");
         var supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
 
-        this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, item.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "parent").subscribe(response => {
+        this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, item.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "parent").subscribe((response:any) => {
 
                 var windowArgs: any = {};
                 windowArgs.EntityPM = response.Result;

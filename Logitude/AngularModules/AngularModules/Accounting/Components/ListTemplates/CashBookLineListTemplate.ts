@@ -1,16 +1,15 @@
-﻿
+import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
+
 import {Component,ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 //import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './CashBookLineListTemplate.html',
 })
 
@@ -22,6 +21,7 @@ export class CashBookLineListTemplate {
     public fieldValue: any;
 
     public isRTL: boolean = false;
+    public showLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
 
     private CurrentSession = SessionLocator.SelectedSession;
 

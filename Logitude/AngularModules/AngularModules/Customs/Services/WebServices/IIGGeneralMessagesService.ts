@@ -1,6 +1,7 @@
-﻿import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -24,10 +25,10 @@ import { CargoQueryRequestParams } from '../../DataContract/RequestParams/CargoQ
 @Injectable()
 
 export class IIGGeneralMessagesService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
 
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/IIGGeneralMessages';
 
@@ -35,7 +36,7 @@ export class IIGGeneralMessagesService {
 
     PostMorningMessages(entity: MorningMessageRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -46,13 +47,10 @@ export class IIGGeneralMessagesService {
 
 
             return this._http.post(
-                this._apiUrl + '/PostMorningMessages/',
-                JSON.stringify(entity),
-                { headers: authHeader })
-                .map((res) => {
-                    //               serviceResponse.Result = res.json();
+                this._apiUrl + '/PostMorningMessages/',JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    //               serviceResponse.Result = res;
                     //             return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
             ;
 
         }
@@ -62,7 +60,7 @@ export class IIGGeneralMessagesService {
 
     PostCourierBOLRequest(entity: CourierBOLQueryRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -73,14 +71,13 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCourierBOLRequest/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -89,7 +86,7 @@ export class IIGGeneralMessagesService {
 
     PostMasterBOLRequest(entity: MasterBOLQueryRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -99,11 +96,10 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostMasterBOLRequest/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -111,7 +107,7 @@ export class IIGGeneralMessagesService {
 
     PostCreditQueryRequest(entity: CreditQueryRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -121,11 +117,10 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCreditQueryRequest/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -133,7 +128,7 @@ export class IIGGeneralMessagesService {
 
     PostGoldCreditQueryRequest(entity: CreditQueryRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -143,11 +138,10 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostGoldCreditQueryRequest/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -155,7 +149,7 @@ export class IIGGeneralMessagesService {
 
     PostSpecialActivityRequest(entity: SpecialActivityRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -165,11 +159,10 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostSpecialActivityRequest/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -177,7 +170,7 @@ export class IIGGeneralMessagesService {
 
     PostImporterDeclarationRequest(entity: ImporterDeclarationRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -187,43 +180,34 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostImporterDeclarationRequest/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
     }
 
     GetClientProgressBarIndicatorCurrentStage(tenant: number, CustomsRequestsSheetId: string, BasicResponse: boolean) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
 
 
-
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
-                .get(this._apiUrl + '/GetClientProgressBarIndicatorCurrentStage/?' + '&BasicResponse=' + BasicResponse + '&tenant=' + tenant + '&CustomsRequestsSheetId=' + CustomsRequestsSheetId,
-                { headers: authHeader }).map(response => {
+              .get(this._apiUrl + '/GetClientProgressBarIndicatorCurrentStage/?' + '&BasicResponse=' + BasicResponse + '&tenant=' + tenant + '&CustomsRequestsSheetId=' + CustomsRequestsSheetId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     PostExchangeRatesQuery(entity: ExchangeRatesQueryRequestParams) {
 
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+        return defer(() => {
 
 
 
@@ -232,14 +216,13 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostExchangeRatesQuery/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -248,7 +231,7 @@ export class IIGGeneralMessagesService {
 
     PostCustomItemLegalDemandsQuery(entity: CustomItemLegalDemandsQueryRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -259,17 +242,16 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCustomItemLegalDemandsQuery/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
     }
     PostUpdateClosedTables(entity: SystemTableRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -280,18 +262,17 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostUpdateClosedTables/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
     }
 
     PostFillNotExistedClosedTables(entity: SystemTableRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -302,11 +283,10 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostFillNotExistedClosedTables/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -316,7 +296,7 @@ export class IIGGeneralMessagesService {
 
     PostVehicleRequest(entity: UpdateDeleteVehicleRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -326,11 +306,10 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostVehicleRequest/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -339,7 +318,7 @@ export class IIGGeneralMessagesService {
 
     PostCustomFileCredit(entity: any) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -349,18 +328,17 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCustomFileCredit/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
     }
     GetDefBankForCustomer(customerCode: string, tenant: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -369,18 +347,16 @@ export class IIGGeneralMessagesService {
             serviceResponse = new ServiceResponse();
 
             return this._http.get(
-                this._apiUrl + '/GetDefBankForCustomer/?' + 'customerCode=' + customerCode + '&tenant=' + tenant.toString(),
-                //JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              this._apiUrl + '/GetDefBankForCustomer/?' + 'customerCode=' + customerCode + '&tenant=' + tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
     }
     PostChangingTimeRequestParams(entity: CH_NG_191_MSG2_ChangingTimeRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -390,11 +366,10 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostChangingTimeRequestParams/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -409,18 +384,17 @@ export class IIGGeneralMessagesService {
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
-                .get(this._apiUrl + '/GetResetDeclarationNumber/?' + '&declarationId=' + declarationId + '&tenant=' + tenant,
-                { headers: authHeader }).map(response => {
+              .get(this._apiUrl + '/GetResetDeclarationNumber/?' + '&declarationId=' + declarationId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    //serviceResponse.Result = response.json();
+                    //serviceResponse.Result = response;
                     serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
 
 
@@ -428,7 +402,7 @@ export class IIGGeneralMessagesService {
 
 
     PostCargoQueryRequestParams(entity: CargoQueryRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -438,11 +412,10 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCargoQueryRequestParams/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -450,7 +423,7 @@ export class IIGGeneralMessagesService {
 
 
     PostMessageRestoreRequestParams(entity: any) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -460,17 +433,16 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostMessageRestoreRequestParams/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
     }
     PostBlockListInWarehouseRequestParams(entity: any) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -480,11 +452,10 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostBlockListInWarehouseRequestParams/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -501,23 +472,22 @@ export class IIGGeneralMessagesService {
 
         //GetLOGISUPPACC(string declarationId, int InvoiceCounterKey, int LineNumber, int tenant)
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetLOGISUPPACC/?' +
                 '&declarationId=' + declarationId +
                 '&InvoiceCounterKey=' + InvoiceCounterKey +
                 '&LineNumber=' + LineNumber +
-                '&tenant=' + tenant,
-                { headers: authHeader }).map(response => {
+                  '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var myObj: any = response.json();
+                    var myObj: any = response;
                     serviceResponse.Result =myObj.MyXML;
                     //serviceResponse.Result = (response as any)._body;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
 
 
@@ -526,7 +496,7 @@ export class IIGGeneralMessagesService {
 
 
     PostCustomsBookInRequestParams(entity: any) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -536,17 +506,16 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostCustomsBookInRequestParams/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
     }
     PostDeficitFileFilterRequestParams(entity: any) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -556,18 +525,17 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostDeficitFileFilterRequestParams/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
     }
 
     PostTPG_NG_8244_ClaimFileFilterRequestParams(entity: any) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -577,11 +545,10 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostTPG_NG_8244_ClaimFileFilterRequestParams/',
-                JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
-                    serviceResponse.Result = res.json();
+              JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -597,4 +564,3 @@ export class ResultClientProgressBar {
 
 }
 ////////////////////////////////////////
-   

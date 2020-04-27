@@ -20,7 +20,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {TenantManagementList} from '../../../../Infrastructure/EntityLists/TenantManagementList';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 @Component({
-    moduleId: module.id,
+    
     selector: 'TenantManagementGeneralTabComponent',
     templateUrl: './TenantManagementGeneralTabComponent.html',
 })
@@ -774,7 +774,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
 
         var service: PackageListService = new PackageListService();
-        service.getAllFromCache().subscribe(result => {
+        service.getAllFromCache().subscribe((result:any) => {
             var allPackages = result.Result;
 
             if (this.MainAdditionalPackageApplied) {
@@ -863,7 +863,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
 
         var service: PackageListService = new PackageListService();
-        service.getAllFromCache().subscribe(result => {
+        service.getAllFromCache().subscribe((result:any) => {
             var allPackages = result.Result;
 
             this.EntityPM.AddOns.forEach(item => {
@@ -1441,7 +1441,7 @@ export class PackageItem extends BaseComponent{
     public PackageNameDisplay: string;
     private GetPackageName() {
         var service: PackageListService = new PackageListService();
-        service.getAllFromCache().subscribe(result => {
+        service.getAllFromCache().subscribe((result:any) => {
             var allPackages = result.Result;
 
             var list: PackageList = allPackages.filter(d => d.Code == this.PackageCode)[0];
@@ -1501,7 +1501,7 @@ export class AddOnItem extends BaseComponent {
 
     private GetPackageName() {
         var service: PackageListService = new PackageListService();
-        service.getAllFromCache().subscribe(result => {
+        service.getAllFromCache().subscribe((result:any) => {
             var allPackages = result.Result;
 
             var list: PackageList = allPackages.filter(d => d.Code == this.PackageCode)[0];

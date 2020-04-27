@@ -27,7 +27,7 @@ import {RatesTableListService} from '../../../../Infrastructure/Services/Standar
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GLAccountTransactionsTabComponent.html',
     providers: [LedgerTransactionListService, LedgerTransactionExtendedListService, GLAccountExtendedListService]
 })
@@ -474,7 +474,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
         filters.PageSize = 10000;
         filters.addAdditionalFilter("AccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        this.ledgerTransactionListService.getByFilters(filters).subscribe(myResult => {
+        this.ledgerTransactionListService.getByFilters(filters).subscribe((myResult:any) => {
             console.log("Response: ", myResult);
             if (myResult == null) {
                 this.ItemsSource = [];
@@ -543,15 +543,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
         this.MenuHeaderchangeevent.emit({ Filters: filters, IgnoreFilter: false });
 
-        this.ledgerTransactionListExtendedService.getBalanceByFilters(filters).subscribe(myResult => {
+        this.ledgerTransactionListExtendedService.getBalanceByFilters(filters).subscribe((myResponse: ServiceResponse) => {
                         //console.log("Response: ", myResult);
-                        if (myResult == null) {
-                        }
-                        else {
-                            var myResponse: ServiceResponse = myResult;
-                            if (!myResponse.HasError) {
-                                this.LTBSummery = myResult.Result;
-
+                        //if (myResult == null) {
+                        //}
+                        //else {
+                             if (!myResponse.HasError) {
+                                 this.LTBSummery = myResponse.Result;
                                 // if (this.EntityPM.IsMultiCurrency) {
                                     var text = " &nbsp;";
 
@@ -570,9 +568,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                                     this.OpenAmountHint = text;
                                 // }
 
-                                console.log("Result: ", myResult.Result);
+                                console.log("Result: ", myResponse.Result);
                             }
-                        }
+                        //}
                     });
 
     }
@@ -607,7 +605,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             if (serviceResponse.Result) {
                 var result = serviceResponse.Result;
                 console.log("[GetTransactionsCurrencies]", result);
-                var currenciesIds: string[] = result.Result;
+                var currenciesIds: string[] = result;
 
                 this.CurrencyFilters = new ApiQueryFilters();
                 this.CurrencyFilters.addAdditionalFilter("Id", currenciesIds.join(','), null, null, "InListExact", false, false, false, "string", false, true);
@@ -619,7 +617,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     reconciliationCount: number = 0;
     GetNonReconciledTransactionsCount() {
-        this.glAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe(myResult => {
+        this.glAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe((myResult:number) => {
             this.reconciliationCount = 0;
 
             if (!AppTool.IsNullOrEmpty(myResult)) {
@@ -920,7 +918,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
 
-        this._CurrencyListService.getAll().subscribe(myResult => {
+        this._CurrencyListService.getAll().subscribe((myResult:any) => {
             console.log("Currencies: ", myResult);
             if (myResult == null) {
                 this.Currencies = [];

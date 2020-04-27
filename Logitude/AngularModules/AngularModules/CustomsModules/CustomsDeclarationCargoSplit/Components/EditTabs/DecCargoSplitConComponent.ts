@@ -20,7 +20,7 @@ import { TreatmentWayPM } from  '../../../../Customs/EntityPMs/TreatmentWayPM';
 import { TreatmentWayListService } from  '../../../../Customs/Services/StandardLists/TreatmentWayListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DecCargoSplitConComponent.html',
 })
 export class DecCargoSplitConComponent extends BaseComponent {
@@ -559,7 +559,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
         /*
         var supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
 
-        this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, item.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "parent").subscribe(response => {
+        this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, item.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "parent").subscribe((response:any) => {
 
             var windowArgs: any = {};
             windowArgs.EntityPM = response.Result;
@@ -1024,11 +1024,11 @@ export class DecCargoSplitConComponent extends BaseComponent {
 
     currentScreenCode: string;
     OpenPaymentOrder() {
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe((response:any) => {
 
                             this.EditEntity("Customs.PaymentOrder", this.EntityPM.PaymentOrderId, null, "POGN");
                         });
@@ -1053,7 +1053,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
         editWindow.Width = 1500;
 
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
+        editWindow.WindowClosed.subscribe((res:any) => {
             
 
         });

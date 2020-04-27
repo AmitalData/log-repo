@@ -10,6 +10,5 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
     {
         public string InterestReportId { get; set; }
         public int Tenant { get; set; }
-        public InterestReportCalculationPreparations CalculationPreparations { get; set; }
     }
 }

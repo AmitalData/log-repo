@@ -6,7 +6,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 @Component({
-    moduleId: module.id,
+    
     selector: 'OperationsComponent',
     templateUrl: './OperationsComponent.html',
     providers: [EntityResourceService],
@@ -28,7 +28,7 @@ export class OperationsComponent implements OnInit {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(res1 => {
                     this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe(res2 => {
                         this.IsResourcesReady = true;
@@ -129,7 +129,7 @@ export class OperationsComponent implements OnInit {
 
                         case "BOOK": {
                             if (this.Page_BOOK == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Booking", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("Booking", 0).subscribe((response:any) => {
                                     SessionLocator.DynamicLoader.Load('./Booking/Components/Workspaces/BookingsComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_BOOK = cmpRef.instance;
@@ -156,7 +156,7 @@ export class OperationsComponent implements OnInit {
 
                         case "SHMA": {
                             if (this.Page_SHMA == null) {
-                                this._entityResourceService.getEntityResourceByTableName("AgentSharedManifest", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("AgentSharedManifest", 0).subscribe((response:any) => {
                             
                                     SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestsWorkSpaces', myLocation.viewContainerRef)
                                             .then(cmpRef => {

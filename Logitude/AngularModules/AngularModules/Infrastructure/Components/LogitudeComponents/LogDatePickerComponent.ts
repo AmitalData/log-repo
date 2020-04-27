@@ -3,7 +3,6 @@ declare var SelectingElement: any;
 import {
     Directive,
     ElementRef,
-    Renderer,
     Input,
     Output,
     Component,
@@ -36,7 +35,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
 
 @Component({
     selector: "LogDatePicker",
-    moduleId: module.id,
+    
     templateUrl: "./LogDatePickerComponent.html",
     //directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, HelpIcon, LogCalendarComponent, TimeSelectComponent, FixedPositionDirective],
     inputs: [
@@ -371,7 +370,7 @@ export class LogDatePickerComponent
         //this.LogitudeForm.addControl(this.ObjectFieldName, this.ctrl);
         //if (objectFieldAvailable) {
         if (objectFieldAvailable || this.ForceSubscribe) {
-            //this.ctrl.valueChanges.subscribe(res=> {
+            //this.ctrl.valueChanges.subscribe((res:any)=> {
             //    this.uiProperty.UIPropertyChanged.emit("valuechanges");
             //    this.ValueChanged.emit(res);
 

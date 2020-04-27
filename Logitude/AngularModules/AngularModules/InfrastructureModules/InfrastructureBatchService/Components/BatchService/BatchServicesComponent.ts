@@ -10,7 +10,7 @@ import {BatchServicesDefinitionPM} from '../../../../Infrastructure/EntityPMs/Ba
 import {BatchServicesLogList} from '../../../../Infrastructure/EntityLists/BatchServicesLogList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BatchServicesComponent.html',
 })
 
@@ -82,7 +82,7 @@ export class BatchServicesComponent {
 
         this.IsLogsGridVsisible = false;
         
-        this.globalDomainService.GetAllBatchServicesDefinitionsPMs(this.SelectedBatchFilter.Code).subscribe(myResult => {
+        this.globalDomainService.GetAllBatchServicesDefinitionsPMs(this.SelectedBatchFilter.Code).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.ItemsSource = [];
             }
@@ -124,8 +124,8 @@ export class BatchServicesComponent {
 
     private LoadBatchServicesLogs() {  
         this.CurrentSession.StartBusyIndicatorLoading();
-              
-        this.infraDomainService.GetBatchServicesLogs(this.SelectedRow.Code, this.SelectedBatchFilter.Code).subscribe(myResult => {
+
+        this.infraDomainService.GetBatchServicesLogs(this.SelectedRow.Code, this.SelectedBatchFilter.Code).subscribe((myResult: ServiceResponse) => {
             if (myResult == null) {
                 this.LogsItemsSource = [];
             }

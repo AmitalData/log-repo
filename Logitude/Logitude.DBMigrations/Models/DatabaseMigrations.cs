@@ -401,8 +401,25 @@ namespace Logitude.DBMigrations.Models
 
         protected void BuildAddColumnMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
-            ColumnMigration addMigration = GetColumnMigration(MigrationTypes.ADD, currentTableColumn, dxmlTableColumn);
-            ColumnsMigrations.Add(addMigration);
+            ColumnDefinition droppedColumn = CurrentTable.Columns.Where(c => c.Name.ToLower() == ("drop_" + dxmlTableColumn.Name.ToLower())).FirstOrDefault();
+
+            if (droppedColumn == null)
+            {
+                ColumnMigration addMigration = GetColumnMigration(MigrationTypes.ADD, currentTableColumn, dxmlTableColumn);
+                ColumnsMigrations.Add(addMigration);
+            }
+            else
+            {
+                if (!dxmlTableColumn.Constraints.Nullable)
+                {
+                    ColumnMigration unsetNullableMigration = GetColumnMigration(MigrationTypes.UNSETNULLABLE, droppedColumn, dxmlTableColumn);
+                    ColumnsMigrations.Add(unsetNullableMigration);
+                }
+
+                ColumnMigration addMigration = GetColumnMigration(MigrationTypes.RENAME, droppedColumn, dxmlTableColumn);
+                ColumnsMigrations.Add(addMigration);
+            }
+
             if (dxmlTableColumn.Constraints.PrimaryKey)
             {
                 PrimaryKeyColumnAdded = true;
@@ -415,6 +432,12 @@ namespace Logitude.DBMigrations.Models
             {
                 ColumnMigration dropPrimaryKeyMigration = GetColumnMigration(MigrationTypes.DROPPRIMARYKEY, currentTableColumn, dxmlTableColumn);
                 ColumnsMigrations.Add(dropPrimaryKeyMigration);
+            }
+
+            if (!currentTableColumn.Constraints.Nullable)
+            {
+                ColumnMigration setNullableMigration = GetColumnMigration(MigrationTypes.SETNULLABLE, currentTableColumn, dxmlTableColumn);
+                ColumnsMigrations.Add(setNullableMigration);
             }
 
             ColumnMigration dropMigration = GetColumnMigration(MigrationTypes.DROP, currentTableColumn, dxmlTableColumn);
@@ -659,7 +682,7 @@ namespace Logitude.DBMigrations.Models
 
             if (name.Length <= maxLength)
             {
-                return name;
+                return String.IsNullOrEmpty(shortName) ? name : shortName;
             }
             else
             {
@@ -669,7 +692,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_") || name.ToLower().StartsWith("uq_"))
+                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_") || name.ToLower().StartsWith("uq_") || name.ToLower().StartsWith("fk_"))
                     {
                         return name.Substring(0, maxLength);
                     }

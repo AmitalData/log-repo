@@ -1,8 +1,7 @@
-﻿/// <reference path="../../../infrastructure/datacontracts/automationargs.ts" />
-
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -16,10 +15,10 @@ import {AutomationArgs} from '../../../Infrastructure/DataContracts/AutomationAr
 @Injectable()
 export class AutomationResultEmailRecipientExtendedService {
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AutomationResultEmailRecipientExtended';
     }
 
@@ -27,9 +26,9 @@ export class AutomationResultEmailRecipientExtendedService {
     getAutomationResultEmailRecipientByAutomationId(automationId: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/getAutomationResultEmailRecipientByAutomationId" + '?automationId=' + automationId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/getAutomationResultEmailRecipientByAutomationId" + '?automationId=' + automationId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result :any = response;
             var entity: AutomationResultEmailRecipientPM;
             var resultEmailRecipientPMLists: AutomationResultEmailRecipientPM[];
             resultEmailRecipientPMLists = new Array<AutomationResultEmailRecipientPM>();
@@ -48,7 +47,7 @@ export class AutomationResultEmailRecipientExtendedService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 
@@ -57,7 +56,7 @@ export class AutomationResultEmailRecipientExtendedService {
 
 
     update(items: AutomationArgs[]) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
             authHeader.append('Content-Type', 'application/json');
@@ -70,16 +69,15 @@ export class AutomationResultEmailRecipientExtendedService {
             //        resultEmailRecipientPMLists.push(mappedEntity);
             //    });
             //}
-            return this._http.put(this._apiUrl + '/putautomationresultemailrecipient', JSON.stringify(items),
-                { headers: authHeader }).map((res) => {
-                    var result = res.json();
+            return this._http.put(this._apiUrl + '/putautomationresultemailrecipient', JSON.stringify(items), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var result = res;
 
                     var serviceResponse: ServiceResponse;
                     serviceResponse = new ServiceResponse();
                     serviceResponse.Result = result;
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
 

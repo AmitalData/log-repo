@@ -2,13 +2,20 @@
 <Table
   Name="CreditCardTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Invoice">
   <Column
     Name="Id"
     Type="varchar"
     Size="15">
     <Constraints
       PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
       Nullable="false" />
   </Column>
   <Column
@@ -31,12 +38,6 @@
     Size="1000">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="InActive"

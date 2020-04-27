@@ -48,6 +48,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Status { get; set; }
         public int Retries { get; set; }
         public double Duration { get; set; }
+        public string EntityId { get; set; }
+        public string Recepients { get; set; }
 
         public DateTime? LastRunEndTime { get; set; }
         public DateTime? LastRunEndTimeUTC { get; set; }

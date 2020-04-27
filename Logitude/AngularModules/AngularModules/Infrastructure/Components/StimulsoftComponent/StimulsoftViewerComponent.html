@@ -60,10 +60,10 @@
         <table>
             <tr>
 
-                <td style="width:16px"><div style="width:16px"></div></td>
+                <td [hidden]="IsSchedulerReport" style="width:16px"><div style="width:16px"></div></td>
 
                 <td *ngIf="IsShowExportPrinttoPDF" style="width:68px;vertical-align:middle;">
-                    <button [disabled]="!IsEditingEnabled || IsSchedulerReport" style="width:68px" class="Button" (click)="PrintToPDF()">
+                    <button [disabled]="!IsEditingEnabled" style="width:68px" class="Button" (click)="PrintToPDF()">
                         <table class="LeftCenter">
                             <tr>
                                 <td style="width:5px">
@@ -193,12 +193,12 @@
                                         <img style="margin-left:10px" src="./Images/ToggleIcon.png" />
                                         <div style="float:right;left:-65px;width:120px" class="ToggleButtonMenu">
 
-                                            <button [disabled]="!IsEditingEnabled || IsSchedulerReport" (click)="SendButtonClick('Excel')">
+                                            <button [disabled]="!IsEditingEnabled" (click)="SendButtonClick('Excel')">
                                                 <div>Send as Excel File</div>
                                             </button>
 
 
-                                            <button [disabled]="!IsEditingEnabled || IsSchedulerReport" (click)="SendButtonClick('Pdf')">
+                                            <button [disabled]="!IsEditingEnabled" (click)="SendButtonClick('Pdf')">
                                                 <div>Send as Pdf File</div>
                                             </button>
 
@@ -226,7 +226,7 @@
                     </div>
                 </td>
 
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:40px"><div style="width:40px"></div></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsSchedulerReport" style="width:40px"><div style="width:40px"></div></td>
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:60px"><div style="width:60px">Template:</div></td>
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:7px"><div style="width:7px"></div></td>
 
@@ -298,10 +298,19 @@
     </div>
 
     <div [attr.id]="PreviewStimualDivId" style="text-align:center;background-color:#CBCFD4;" [style.width]="ScreenWidth" [style.height]="ScreenHeight" class="container">
-        <img src={{ImageUrl}}  [style.margin-left]="ImageMargeLeft" style="position:relative;float: left;margin-top:15px;margin-bottom:15px;border:1px solid #FFD700;border-radius:5px" [style.display]="Imagevisibility" [style.min-width]="ImageWidth" [style.min-height]="ImageHeight" [style.width]="ImageWidth" [style.height]="ImageHeight">
-        <div [style.margin-left]="ImageMargeLeft" [style.display]="Imagevisibility" style="margin-top:15px;margin-bottom:15px;" class="topleft" [attr.id]="ViewerContentDivId"></div>
+        <img *ngIf="IsShowStimulImage" src={{ImageUrl}}  [style.margin-left]="ImageMargeLeft" style="position:relative;float: left;margin-top:15px;margin-bottom:15px;border:1px solid #FFD700;border-radius:5px" [style.display]="Imagevisibility" [style.min-width]="ImageWidth" [style.min-height]="ImageHeight" [style.width]="ImageWidth" [style.height]="ImageHeight">
 
-        <div [style.display]="Imagevisibility" style="display:block;height:15px"></div>
+        <div   *ngIf="!IsShowStimulImage" style="width:100%;height:100%;">
+           <div style="height:47%"></div>
+          <div  style="text-align:center;vertical-align:central;font-size:15px">The report is too large to preview. Please use Print/Save buttons to download it. </div>  
+        </div>
+
+
+
+
+        <div *ngIf="IsShowStimulImage" [style.margin-left]="ImageMargeLeft" [style.display]="Imagevisibility" style="margin-top:15px;margin-bottom:15px;" class="topleft" [attr.id]="ViewerContentDivId"></div>
+
+        <div *ngIf="IsShowStimulImage" [style.display]="Imagevisibility" style="display:block;height:15px"></div>
 
     </div>
 

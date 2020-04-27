@@ -13,7 +13,7 @@ import {ObjectsUpdater} from '../../../../Infrastructure/Locators/ObjectsUpdater
 
 @Component({
     selector: 'InvoiceSettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './InvoiceSettingsComponent.html',
 })
 

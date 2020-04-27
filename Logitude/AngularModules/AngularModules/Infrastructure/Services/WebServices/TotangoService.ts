@@ -1,19 +1,18 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers, Response} from '@angular/http';
-import {SessionLocator} from '../../Utilities/SessionLocator';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil'
+import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
+import { SessionLocator } from '../../Utilities/SessionLocator';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
 @Injectable()
-
 export class TotangoService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TotangoService';
     }
-
 
     public SendTotangoUserActivity(module: string, activity: string) {
         try {
@@ -28,9 +27,6 @@ export class TotangoService {
                 AmitalGatewayUtil.Instance.SendTotangoUserActivity(module, activity);
             }
             if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
-
-
-
                 if (module == "Agent" || module == "CustomAgent" || module == "ShippingAgent" || module == "Customer" || module == "PotentialCustomer"
                     || module == "Airline" || module == "Trucker" || module == "Shippingline") {
                     module = "Card";
@@ -53,7 +49,7 @@ export class TotangoService {
                 //}
 
                 //totangoService.Endpoint.Binding = binding;
-             
+
                 //(string organizationId, string orgDisplayName, string userName, string module, string activity, string contactId, int tenant, bool isSharedLogisticsContact, string cardId, string partnerTypeId)
 
 
@@ -71,7 +67,7 @@ export class TotangoService {
                 if (SessionLocator.TenantPM.Id == 65 || SessionLocator.TenantPM.Id == 153) {
                     orgDisplayName = SessionLocator.LoggedUserPM.Notes;
                     data.OrganizationId = SessionLocator.LoggedUserId;
-                    
+
                     //totangoService.SendUserActivityAsync(SessionInfo.LoggedUserId, orgDisplayName, SessionInfo.LoggedUserPM.EnglishName, module, activity, SessionInfo.LoggedUserId, InfraSettings.TenantPM.Id, false, null, null);
 
                 }
@@ -82,17 +78,11 @@ export class TotangoService {
 
                 data.OrgDisplayName = orgDisplayName;
 
-                var authHeader = new Headers();
-                authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-                authHeader.append('Content-Type', 'application/json');
+                this._http.post(this._apiUrl, JSON.stringify(data), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
 
-                this._http.post(this._apiUrl, JSON.stringify(data),
-                    { headers: authHeader }).subscribe((response) =>
-                    {
-                       
-                    }, (error) => {
-                        console.error(error);
-                    });
+                }, (error) => {
+                    console.error(error);
+                }));
             }
         }
         catch (e) {
@@ -100,7 +90,6 @@ export class TotangoService {
         }
 
     }
-
 }
 
 export class TotangoActivityInfo {
@@ -114,5 +103,4 @@ export class TotangoActivityInfo {
     public IsSharedLogisticsContact: boolean;
     public CardId: string;
     public PartnerTypeId: string;
-
 }

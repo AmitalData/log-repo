@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AccountingPeriodUpdateClass
-   {  
+   {  		
+		public const string HashString = "9398d5e14d46f03e0478f66d2b3669c5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות תקופות חשבונאיות",
 			      				    DefaultText =  "Accounting Period",
-			      				    Code =  "3bc2",
+			      				    Code =  "d24c",
 			      				    Name =  "AccountingPeriod Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -132,11 +133,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
+			      				    HashString =  AccountingPeriodUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -194,11 +197,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -256,11 +260,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -318,11 +323,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -380,11 +386,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -442,20 +449,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable AccountingPeriodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPeriod" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> AccountingPeriodObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingPeriod").ToList();
+		       
+	      
+
+	         Screen AccountingPeriodAccountingPeriodHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPeriod.HeaderScreen", Name = "AccountingPeriodHeaderScreen", ObjectTableId = AccountingPeriodObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    AccountingPeriodObjectTable.HeaderScreenId = AccountingPeriodAccountingPeriodHeaderScreenScreen0.Id;
+		    AccountingPeriodObjectTable.HeaderScreenCode = AccountingPeriodAccountingPeriodHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -488,7 +508,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature AccountingPeriodFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature AccountingPeriodFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature AccountingPeriodFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingPeriodFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.PackageFeature", NameTextCodeDefaultText = "AccountingPeriod Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature AccountingPeriodFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.PackageFeature", NameTextCodeDefaultText = "AccountingPeriod Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature AccountingPeriodFeature_ACCOUNTINGPERIODS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGPERIODS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.AccountingPeriods", NameTextCodeDefaultText = @"Accounting Periods" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature AccountingPeriodFeature_ACCOUNTINGPERIODSMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGPERIODSMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.AccountingPeriodsMenu", NameTextCodeDefaultText = @"Accounting Periods" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -665,6 +693,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantOpenInvoiceMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantOpenInvoiceMonth", DefaultText = "Invoice month cannot be opened, The accounting month must first be opened",LocalDefaultText = @"לא ניתן לפתוח חודש חשבונית , יש לפתוח ראשית את החודש החשבונאי", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantCancelInvoiceClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantCancelInvoiceClosedMonth", DefaultText = "Cannot open an invoice's closed month which is less than accounting period's closed month.",LocalDefaultText = @"לא ניתן לפתוח חודש חשבונית לתקופה קודמת לחודש חשבונאי", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantOpenInterestInvoiceMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantOpenInterestInvoiceMonth", DefaultText = "Interest Invoice month cannot be opened, The accounting month must first be opened",LocalDefaultText = @"לא ניתן לפתוח תקופה חשבונאית לחשבוניות ריבית , יש לפתוח תחילה את התקופה החשבונאית לרישום חשבונאי", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantCancelInterestInvoiceClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantCancelInterestInvoiceClosedMonth", DefaultText = "Cannot open an invoice's closed month which is less than accounting period's closed month.",LocalDefaultText = @"לא ניתן לפתוח חודש חשבונית לתקופה קודמת לחודש חשבונאי", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingPeriodTextCode_GeneralMCACCAccountingPeriods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.AccountingPeriods", DefaultText = "Accounting Periods",LocalDefaultText = @"תקופות חשבונאיות", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingPeriodTextCode_AccountingPeriodsQAccountingPeriods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.Q.AccountingPeriods", DefaultText = "Accounting Periods",LocalDefaultText = @"תקופות חשבונאיות", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingPeriodTextCode_AccountingPeriodsQAccountingPeriodMng = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.Q.AccountingPeriodMng", DefaultText = "Accounting Period",LocalDefaultText = @"ניהול תקופה חשבונאית", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingPeriodTextCode_AccountingPeriodsFYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.F.Year", DefaultText = "Year",LocalDefaultText = @"שנה", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingPeriodTextCode_AccountingPeriodsFYearLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.F.YearLabel", DefaultText = "Year: ",LocalDefaultText = @"שנה: ", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingPeriodTextCode_AccountingPeriodTHNew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.TH.New", DefaultText = "New",LocalDefaultText = @"חדש", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

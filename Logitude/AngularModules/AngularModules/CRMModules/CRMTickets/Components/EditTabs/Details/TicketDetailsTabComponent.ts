@@ -30,11 +30,14 @@ declare var window: any;
 
 @Component({
     selector: 'DetailsTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './TicketDetailsTabComponent.html',
 })
 
 export class TicketDetailsTabComponent extends BaseComponent implements AfterViewInit {
+  public Filters: any;
+  public QuickSearchItems: any;
+
     public EntityPM: TicketPM;
     public LabelColumnWidth: number = 153;
     public ControlColumnWidth: number = 180;
@@ -42,7 +45,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     public ObjectTableName: string = "Ticket";
     public IsFromOutSide = false;
     public IsShowConnectContact = false; 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     _entityResourceService: EntityResourceService = new EntityResourceService();
     public EntityList: EntityClass[] = [];
     public EntityNumberTitle = "Shipment Number";
@@ -456,7 +459,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     set SeverityId(newValue: string) {
         if (this.EntityPM.SeverityId != newValue) {
             this.EntityPM.SeverityId = newValue;
-            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe(result => {
+            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe((result:any) => {
                 var severity: TicketSeverityList = result.Result;
                 if (severity != null)
                     this.EntityPM.SeverityName = severity.Name;
@@ -682,7 +685,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     AddButtonClicked() {
         var path = './Quote/ComponentsNewEntity/NewQuoteComponent';
         var windowTitle = "New Quote";
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;

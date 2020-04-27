@@ -2,64 +2,11 @@
 <Table
   Name="APInvoiceLines"
   Schema="dbo"
-  DBType="Main">
-  <Column
-    Name="APInvoiceId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LineNumber"
-    Type="int">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
+  DBType="Main"
+  Module="Invoice">
   <Column
     Name="Tenant"
     Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="InvoiceCurrencyAmount"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LocalCurrencyAmount"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ProfitCurrencyAmount"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ChargesTypeId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="VatTypeId"
-    Type="varchar"
-    Size="15">
     <Constraints
       Nullable="false" />
   </Column>
@@ -84,13 +31,61 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="VatPercentage"
+    Name="APInvoiceId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LineNumber"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InvoiceCurrencyAmount"
     Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LocalCurrencyAmount"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ProfitCurrencyAmount"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="VatAmount"
+    Name="ChargesTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="VatTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="VatPercentage"
     Type="float">
     <Constraints
       Nullable="true" />
@@ -99,12 +94,6 @@
     Name="ForiegnCurrencyId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ForiegnCurrencyAmount"
-    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
@@ -115,9 +104,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DebitAccount"
-    Type="varchar"
-    Size="40">
+    Name="ForiegnCurrencyAmount"
+    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
@@ -132,6 +120,19 @@
     Name="LocalDescription"
     Type="nvarchar"
     Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DebitAccount"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VatAmount"
+    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
@@ -165,6 +166,12 @@
   <Column
     Name="Quantity"
     Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -202,4 +209,6 @@
     Columns="EntityId" />
   <Index
     Columns="Tenant,EntityPayableId" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

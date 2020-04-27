@@ -21,7 +21,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'NewPaymentOrderComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewPaymentOrderComponent.html',
 })
 
@@ -37,7 +37,7 @@ export class NewPaymentOrderComponent
     constructor(private EntityResourceService: EntityResourceService) {
         super();
 
-        EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => { });
+        EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => { });
     }
 
     @ViewChild(CustomMessageWrapperComponent)

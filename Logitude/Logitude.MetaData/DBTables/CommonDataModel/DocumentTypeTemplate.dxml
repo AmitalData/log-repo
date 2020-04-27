@@ -2,7 +2,8 @@
 <Table
   Name="DocumentTypeTemplates"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -46,13 +47,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Description"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Subject"
     Type="nvarchar"
     Size="500">
@@ -91,20 +85,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="TemplateFooterHtml"
-    Type="varbinary"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="TemplateHeaderHtml"
-    Type="varbinary"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="TemplateBodyHtml"
     Type="varbinary"
     Size="-1">
@@ -112,9 +92,37 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="TemplateBodyjson"
-    Type="varbinary"
-    Size="-1">
+    Name="OriginalTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Description"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Language"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InternalRemarks"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CountryCode"
+    Type="char"
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -131,30 +139,16 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CountryCode"
-    Type="char"
-    Size="2">
+    Name="TemplateFooterHtml"
+    Type="varbinary"
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="InternalRemarks"
-    Type="nvarchar"
-    Size="500">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Language"
-    Type="nvarchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OriginalTemplateId"
-    Type="varchar"
-    Size="15">
+    Name="TemplateHeaderHtml"
+    Type="varbinary"
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -180,7 +174,15 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="TemplateBodyjson"
+    Type="varbinary"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="From"
+    ShortName="From1"
     Type="nvarchar"
     Size="500">
     <Constraints

@@ -1,6 +1,6 @@
+import { BankDepositExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/BankDepositExtendedPMService';
 import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
-import { Settings } from './../../Settings';
 declare var window: any;
 import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
@@ -20,11 +20,11 @@ import { TotangoService } from '../../Services/WebServices/TotangoService';
 import { CachedDataManager } from '../../Utilities/CachedDataManager';
 import { LastFilterClass } from '../../Utilities/LastFilterClass';
 import { EditTabComponent } from './EditTabComponent';
-import { Subscription, TeardownLogic } from 'rxjs/Subscription';//itzik
+import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
-@Component({
-    moduleId: module.id,
+
+@Component({    
     templateUrl: './EditComponent.html',
     providers: [EntityArgs],
 })
@@ -70,12 +70,12 @@ export class EditComponent implements OnDestroy {
     WorkEnvironment: string = 'logitude';
     public NavigationIds: string[];
     public CurrentNavigatedIndex: number;
-    @ViewChild('Helper', { read: ViewContainerRef }) HelperViewContainerRef: ViewContainerRef;
-    @ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
-    @ViewChild('MenuButtons', { read: ViewContainerRef }) MenuButtonsViewContainerRef: ViewContainerRef;
-    @ViewChild('SplitComponentLocation', { read: ViewContainerRef }) SplitComponentViewContainerRef: ViewContainerRef;
-    @ViewChild('WindowLocation', { read: ViewContainerRef }) WindowLocationViewContainerRef: ViewContainerRef;
-    @ViewChild('TabControlBody', { read: ViewContainerRef }) TabControlBodyViewContainerRef: ViewContainerRef;
+    @ViewChild('Helper', { read: ViewContainerRef, static: false }) HelperViewContainerRef: ViewContainerRef;
+    @ViewChild('ShortTitle', { read: ViewContainerRef, static: false }) ShortTitleViewContainerRef: ViewContainerRef;
+    @ViewChild('MenuButtons', { read: ViewContainerRef, static: false }) MenuButtonsViewContainerRef: ViewContainerRef;
+    @ViewChild('SplitComponentLocation', { read: ViewContainerRef, static: false }) SplitComponentViewContainerRef: ViewContainerRef;
+    @ViewChild('WindowLocation', { read: ViewContainerRef, static: false }) WindowLocationViewContainerRef: ViewContainerRef;
+    @ViewChild('TabControlBody', { read: ViewContainerRef, static: false }) TabControlBodyViewContainerRef: ViewContainerRef;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
@@ -267,7 +267,7 @@ export class EditComponent implements OnDestroy {
         if (this.EntityPM) {
             this.IsEntityLoaded = true;
 
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
                 this.GetControllerByTableName(this.ObjectTableName).then(EditComponentController => {
                     //this.EditComponentController = EditComponentController as IEditComponentController;
                     this.CurrentSession.AddEditComponent(this);
@@ -409,7 +409,7 @@ export class EditComponent implements OnDestroy {
 
         if (this.ObjectTableName == "Shipment") {
             if (this.EntityPM.ShipmentLevelCode == "C") {
-                this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe((response:any) => {
                     var myObjectTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
                     var myObjectTableId = myObjectTable.Id;
 
@@ -497,7 +497,7 @@ export class EditComponent implements OnDestroy {
 
         //else if (this.ObjectTableName == "Customs.Declaration") {
         //    if (this.EntityPM.IsCourierDeclaration == true) {
-        //        this._entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration", 0).subscribe(response => {
+        //        this._entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration", 0).subscribe((response:any) => {
         //            var myObjectTable = window.ObjectTables.filter(x => x.Name === "Customs.CourierDeclaration")[0];
         //            var myObjectTableId = myObjectTable.Id;
 
@@ -1057,6 +1057,12 @@ export class EditComponent implements OnDestroy {
                         break;
                     }
 
+                    case "Simplog.FreightLib.Views.TariffTranslations": {
+                        myComponentName = "TariffTranslationsTabComponent";
+                        myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/TariffTranslations/TariffTranslationsTabComponent";
+                        break;
+                    }
+
                     default: {
 
                         if (!AppTool.IsNullOrEmpty(mySelectedTab.EntityPM.HtmlComponentUrl)) {
@@ -1412,9 +1418,39 @@ export class EditComponent implements OnDestroy {
                     console.log("[GetSingleWithoutLines] ", response);
 
                     if (!response.HasError) {
-                        var reconciliation = response.Result;
+                        var cashbook = response.Result;
 
-                        this.EntityPM = reconciliation;
+                        this.EntityPM = cashbook;
+                        this.entityArgs.EntityPM = this.EntityPM;
+
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
+                        {
+                            this.StopBusyIndicator();
+                            this.UpdateComponentMembers();
+                            this.LoadCompleted.emit(true);
+                        });
+
+                    }
+                    else {
+                        this.StopBusyIndicator();
+                        this.ValidationErrorsList = response.ErrorsArray;
+                        this.LoadCompleted.emit(false);
+                    }
+                });
+
+
+            }
+            else if (this.ObjectTableName == "BankDeposit")
+            {
+                let service = new BankDepositExtendedPMService();
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
+                {
+                    console.log("[GetSingleWithoutLines] ", response);
+
+                    if (!response.HasError) {
+                        var bankdeposit = response.Result;
+
+                        this.EntityPM = bankdeposit;
                         this.entityArgs.EntityPM = this.EntityPM;
 
                         this.EditComponentController.OnReloadEntityPM().then((isLock) =>

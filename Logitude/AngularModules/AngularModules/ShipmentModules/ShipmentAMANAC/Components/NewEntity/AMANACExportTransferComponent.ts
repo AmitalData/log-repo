@@ -6,7 +6,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AMANACExportTransferComponent.html',
 })
 

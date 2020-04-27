@@ -14,12 +14,13 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 import {WarehouseReleasePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseReleasePMExtendedService';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 @Component({
-    moduleId: module.id,
+    
     selector: 'ChoosePackagesFromWarehousePackageReleasesComponent',
     templateUrl: './ChoosePackagesFromWarehousePackageReleasesComponent.html',
 })
 
 export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseComponent implements OnInit {
+  public SelectedWarehouseEntryPackage: any;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
@@ -55,7 +56,7 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
 
     Shipment: any;
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseReleasePackage").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseReleasePackage").subscribe((response:any) => {
             this.Initialize(args);
         });
 
@@ -135,7 +136,7 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
         if (this.CustomerId && this.WarehouseId) {
 
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.warehouseReleasePMExtendedService.GetWarehouseReleaseByCstomerIdIdAndwarehouseId(this.customerId, this.WarehouseId).subscribe((myResponse: ServiceResponse) => {
+            this.warehouseReleasePMExtendedService.GetWarehouseReleaseByCustomerIdAndwarehouseId(this.customerId, this.WarehouseId).subscribe((myResponse: ServiceResponse) => {
                 this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     if (myResponse.Result && myResponse.Result.length > 0) {
@@ -303,6 +304,15 @@ class WarehouseReleaseGroup {
     constructor(warehouseReleasePMLists: WarehouseReleasePM[], title: string, viewModel: ChoosePackagesFromWarehousePackageReleasesComponent) {
         this.WarehouseReleasePMLists = warehouseReleasePMLists;
         this.Title = title;
+
+        this.WarehouseReleasePMLists.forEach((item) => {
+            if (item.WarehouseReleasePackages) {
+                item.WarehouseReleasePackages.forEach((warehouseReleasePackage) => {
+                    warehouseReleasePackage.ReleaseNumber = item.ReleaseNumber;
+                });
+            }
+        });
+
 
         if (viewModel.IsContainerShipment) {
             this.WarehouseReleasePMLists.forEach((item) => {

@@ -2,18 +2,12 @@
 <Table
   Name="TariffVersions"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="TariffModule">
   <Column
     Name="TariffId"
     Type="varchar"
     Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Version"
-    Type="int">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -54,6 +48,13 @@
     Name="CreateDate"
     Type="datetime">
     <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Version"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column

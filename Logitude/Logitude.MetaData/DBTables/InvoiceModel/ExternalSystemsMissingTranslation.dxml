@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="ExternalSystemsMissingTranslations"
+  ShortName="ExternalSysMissingTranslations"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Invoice">
   <Column
     Name="Id"
     Type="varchar"

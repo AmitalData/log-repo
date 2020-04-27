@@ -2,7 +2,8 @@
 <Table
   Name="MAWBStacks"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -18,8 +19,21 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="IsUsed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Number"
+    ShortName="Number_"
     Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InsertionDate"
+    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
@@ -27,12 +41,6 @@
     Name="AirlineId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="InsertionDate"
-    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
@@ -49,12 +57,6 @@
     Size="15">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="IsUsed"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="AirlineId"

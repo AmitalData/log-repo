@@ -1,4 +1,5 @@
-﻿using Microsoft.ServiceBus.Messaging;
+﻿using Logitude.Server.Tools.QueueService;
+using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -24,23 +25,28 @@ namespace Logitude.Server.Tools.Helpers
 
           if (tenantpm.IsMobileActivated)
          {
-             using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
-             {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("contactunseenentityqueue", tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "Tenant", tenant.ToString() }, { "TenantName", tenantpm.Company }, { "TraceEventId", traceEventId}, { "SourceEventDate", DateTime.UtcNow.ToString() } }, null, null, null, null);
 
-                 QueueClient client = ServiceBusQueueHelper.CreateContactUnseenEntityQueue(tenant);
-                 BrokeredMessage message = new BrokeredMessage();
-              
-                 message.Properties["Tenant"] = tenant;
-                 message.Properties["TenantName"] = tenantpm.Company;
-                 message.Properties["TraceEventId"] = traceEventId;
-                 message.Properties["SourceEventDate"] = DateTime.UtcNow;
-                 client.Send(message);
-          
 
-                 scope.Complete();
-             }
-         }
-            //}
+                //using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
+                //{
+
+                //    QueueClient client = ServiceBusQueueHelper.CreateContactUnseenEntityQueue(tenant);
+                //    BrokeredMessage message = new BrokeredMessage();
+
+                //    message.Properties["Tenant"] = tenant;
+                //    message.Properties["TenantName"] = tenantpm.Company;
+                //    message.Properties["TraceEventId"] = traceEventId;
+                //    message.Properties["SourceEventDate"] = DateTime.UtcNow;
+                //    client.Send(message);
+
+
+                //    scope.Complete();
+                //}
+            }
+           
         }
     }
 }

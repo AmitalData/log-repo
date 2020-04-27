@@ -34,7 +34,9 @@
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;Booking&quot;">
+  ClientModuleName="&quot;Booking&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;9460b7fb-f2c6-4670-97a7-748023acc38f&quot;"
     FieldName="&quot;Code&quot;"
@@ -240,4 +242,6 @@
       Name="&quot;Waiting for Confirmation&quot;"
       SearchFields="&quot;WCF,Waiting for Confirmation,&quot;" />
   </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

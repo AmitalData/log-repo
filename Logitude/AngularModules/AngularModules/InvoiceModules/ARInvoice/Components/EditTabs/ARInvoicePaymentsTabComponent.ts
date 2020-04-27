@@ -17,7 +17,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARInvoicePaymentsTabComponent.html',
 })
 
@@ -39,7 +39,7 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
 
         this.EntityPM = entityArgs.EntityPM;
 
-        entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe(response => {
+        entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response:any) => {
             this.IsResourcesReady = true;
             this.SetUIProperties();
             this.Listen();

@@ -2,7 +2,8 @@
 <Table
   Name="EntityChanges"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -148,6 +149,7 @@
   </Column>
   <Column
     Name="QueuedTaskAutomationSsucceedXml"
+    ShortName="QueuedTaskAutomationSucceedXml"
     Type="nvarchar"
     Size="-1">
     <Constraints

@@ -28,7 +28,7 @@ import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTransla
 import {WarehouseEntryPackagePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseEntryPackagePMExtendedService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'WarehouseReleasePackagesDetailsComponent',
     templateUrl: './WarehouseReleasePackagesDetailsComponent.html',
     providers: [WarehouseEntryPackagePMExtendedService],

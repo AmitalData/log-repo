@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.ShipmentsModel;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -33,6 +34,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         public APInvoice invoice { get; set; }
         private APInvoiceMultipleShortPM entityPM;
         private ICommonDataContext myCommonContext;
+        private IShipmentsContext shipmentsContext;
         private string loggedContactId;
         private AccountingSetting accountingSetting;
         private IInvoiceContext objectContext;
@@ -48,12 +50,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.entityPM = entityPM;
             this.objectContext = objectContext;
             this.myCommonContext = CommonDataContext.GetContext(tenant);
+            this.shipmentsContext = ShipmentsContext.GetContext(tenant);
             this.invoiceRepository = new APInvoiceRepository(objectContext);
             this.invoiceLineRepository = new APInvoiceLineRepository(objectContext);
             this.invoiceTotalVatRepository = new APInvoiceTotalVATRepository(objectContext);
-            this.allPayables = new List<ShipmentPayable>();
-            this.shipmentPayableRepository = new ShipmentPayableRepository(tenant);
+            this.shipmentPayableRepository = new ShipmentPayableRepository(shipmentsContext);
             this.todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+            this.allPayables = new List<ShipmentPayable>();
             this.GetLoggedContact();
 
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
@@ -83,14 +86,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         public void Update(List<APInvoiceLinePM> invoiceLinesChangeSet)
         {
             this.invoiceLinesChangeSet = invoiceLinesChangeSet;
+
             this.invoice = invoiceRepository.GetSingleAPInvoice(entityPM.Id, tenant);
-            
+            this.invoice.UpdateDate = todayDateTime;
+            this.invoice.UpdatedByUserId = loggedContactId;
+
             this.BuildUnexpectedPayables();
             this.GetShipmentsData();
             this.UpdateInvoiceLines();
             this.UpdateTotalVats();
 
-            this.MapEntity();
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
@@ -99,7 +104,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.RunStoredProcedures();
         }
 
-        #region BuildUnexpectedPayables
         private void BuildUnexpectedPayables()
         {
             if (entityPM.InvoiceLines.Where(d => d.EntityPayableId == null).Any())
@@ -135,21 +139,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 shipmentPayableRepository.SubmitChanges();
             }
         }
-        #endregion
 
-        #region GetShipmentsData
         private void GetShipmentsData()
         {
-            this.allPayables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(entityPM.ShipmentId, tenant);
-        }
-        #endregion
+            if (invoiceLinesChangeSet.Count > 0)
+            {
+                List<APInvoiceLinePM> activeLines = invoiceLinesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).ToList();
 
-        private void MapEntity()
-        {
-            invoice.UpdateDate = todayDateTime;
-            invoice.UpdatedByUserId = loggedContactId;
-            invoice.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;
-            invoice.SubTotalInInvoiceCurrency = entityPM.SubTotalInInvoiceCurrency;
+                if (activeLines.Count > 0)
+                {
+                    List<string> allPayablesIds = activeLines.Select(s => s.EntityPayableId).ToList();
+
+                    allPayables = (from d in shipmentsContext.ShipmentPayables
+                                   where allPayablesIds.Contains(d.Id)
+                                   select d).ToList();
+
+                }
+            }
         }
 
         #region InvoiceLines
@@ -362,7 +368,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Tenant = entityPM.Tenant,
                             APInvoiceId = entityPM.Id,
                             VatTypeId = item.Id,
-                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 2),
+                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 3),
                             LocalVatableAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2),
                             InvoiceCurrencyVatableAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2),
                             ProfitVatableAmount = MethodHelper.Round(item.ProfitCurrencyAmount, 2),
@@ -397,6 +403,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 entityPM.SubTotalInInvoiceCurrency = subTotal;
                 entityPM.SubTotalInLocalCurrency = subTotal_Local;
+                invoice.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;
+                invoice.SubTotalInInvoiceCurrency = entityPM.SubTotalInInvoiceCurrency;
             }
         }
         #endregion

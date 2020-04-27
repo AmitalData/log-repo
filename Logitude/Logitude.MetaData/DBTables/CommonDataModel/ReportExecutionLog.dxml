@@ -2,7 +2,8 @@
 <Table
   Name="ReportExecutionLogs"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -90,6 +91,12 @@
     Size="100">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+  Name="ExcelOnly"
+  Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"

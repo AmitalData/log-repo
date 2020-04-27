@@ -102,7 +102,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                             System.Type type1 = typeof(FTPSchedulerDetails);
                             System.Type type2 = "string".GetType();
                             System.Type type3 = typeof(ReportSchedulerDetails);
-                            System.Type type4 = typeof(ReportFilterItem);
+                            System.Type type4 = typeof(ReportSchedulerRecepients);
                             System.Type[] types = new System.Type[4];
                             types[0] = type1;
                             types[1] = type2;
@@ -162,7 +162,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         System.Type type1 = typeof(FTPSchedulerDetails);
                         System.Type type2 = "string".GetType();
                         System.Type type3 = typeof(ReportSchedulerDetails);
-                        System.Type type4 = typeof(ReportFilterItem);
+                        System.Type type4 = typeof(ReportSchedulerRecepients);
                         System.Type[] types = new System.Type[4];
                         types[0] = type1;
                         types[1] = type2;

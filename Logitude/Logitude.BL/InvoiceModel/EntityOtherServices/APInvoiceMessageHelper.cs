@@ -28,6 +28,11 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Reflection;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.StorageService;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.QueueService;
+using System.Web;
+using Logitude.SystemLogs;
 
 namespace Logitude.BL.InvoiceModel.EntityOtherServices
 {
@@ -46,13 +51,16 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private bool isDropBox = false;
         private ChargesTypeRepository chargesTypeRepository;
         private APInvoiceTotalVATRepository totalVATRepository;
-
-        public APInvoiceMessageHelper(List<APInvoice> invoices, string filename, int tenant, bool isDropBox = false)
+        private bool UsingFTP = false;
+        private string FTPDetailId;
+        public APInvoiceMessageHelper(List<APInvoice> invoices, string filename, int tenant, bool isDropBox = false, bool isFTP = false)
         {
             this.tenant = tenant;
             this.filename = filename;
             this.invoices = invoices;
             this.isDropBox = isDropBox;
+            this.UsingFTP = isFTP;
+
             this.invoiceCotnext = InvoiceContext.GetContext(tenant);
             this.commonContext = CommonDataContext.GetContext(tenant);
             this.shipmentsContext = ShipmentsContext.GetContext(tenant);
@@ -67,6 +75,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 myVATableTempCard = accountingSetting.PayableVATableTempCard;
                 myVATExemptTempCard = accountingSetting.PayableVATExemptTempCard;
                 myAccountingSystemCode = accountingSetting.AccountingSystemCode;
+                FTPDetailId = accountingSetting.TransferFTPDetailId;
             }
         }
 
@@ -1605,8 +1614,21 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             if (!string.IsNullOrEmpty(message.TransactionTypeCode)) { str.Append(message.TransactionTypeCode.PadRight(4)); }
             else { str.Append(' ', 4); }
 
-            if (message.Reference1.Length < 9) { str.Append(message.Reference1.PadLeft(8)).Append(' '); }
-            else { str.Append(message.Reference1.Substring(0, 8)).Append(' '); }
+            if (!string.IsNullOrEmpty(message.Reference1))
+            {
+                if (message.Reference1.Length < 9)
+                {
+                    str.Append(message.Reference1.PadLeft(8)).Append(' ');
+                }
+                else
+                {
+                    str.Append(message.Reference1.Substring(0, 8)).Append(' ');
+                }
+            }
+            else
+            {
+                str.Append(' ', 8);
+            }
 
             if (message.Reference2 != null)
             {
@@ -1805,9 +1827,14 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             {
                 this.BulidDropBoxXMLLFile(bytearray);
             }
+
+            else if (this.UsingFTP && !string.IsNullOrEmpty(this.FTPDetailId))
+            {
+                this.BuildFile_ViaFTP(bytearray);
+            }
+
             else
             {
-                Stream blbstr = null;
                 if (bytearray != null)
                 {
                     string[] fileProps = fileName.Split('.');
@@ -1822,19 +1849,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     };
                     Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                     storageservice.Write(bytearray, fileInfo);
-
-                    //CloudBlobContainer blobContainer = null;
-                    //blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
-                    //blobContainer.CreateIfNotExists();
-
-                    //CloudBlockBlob blobfile = blobContainer.GetBlockBlobReference(fileName);
-
-                    //using (blbstr = blobfile.OpenWrite())
-                    //{
-                    //    StringBuilder stringbuilder = new StringBuilder();
-                    //    Encoding encoding = new UTF8Encoding();
-                    //    blbstr.Write(bytearray, 0, bytearray.Length);
-                    //}
                 }
             }
         }
@@ -1851,6 +1865,65 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 entityId = invoice.Id;
             }
             var commLog = helper.CreateDropBoxCommunicationLog(tenant, objectTableId, bytearray, this.filename, "APInvoices","AP Invoice", entityId);
+        }
+
+        private string myDocumentId;
+        private string myDocumentFolder;
+        private string myDocumentExtension;
+        private string myCommunicationLogId;
+        private void BuildFile_ViaFTP(byte[] myByteArray)
+        {
+            ObjectTableRepository repo = new ObjectTableRepository(tenant);
+            string objectTableId = repo.GetObjectTableIdByName("APInvoice");
+            string FTPFileName = "";
+
+            AccountingTranferViaFTPHelper helper = new AccountingTranferViaFTPHelper(tenant, objectTableId, FTPDetailId);
+            var invoice = this.invoices.FirstOrDefault();
+            var entityId = "";
+            if (invoice != null)
+            {
+                entityId = invoice.Id;
+                FTPFileName = invoice.InvoiceNumber;
+            }
+
+            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode, "APInvoice");
+
+            this.myDocumentId = helper.DocumentId;
+            this.myDocumentFolder = helper.DocumentFolder;
+            this.myDocumentExtension = helper.DocumentExtension;
+            this.myCommunicationLogId = commLog.Id;
+
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = myDocumentId,
+                FolderName = myDocumentFolder,
+                Extension = myDocumentExtension,
+                Tenant = tenant,
+                FileSize = myByteArray.Length,
+            };
+
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            storageservice.Write(myByteArray, fileInfo);
+
+            try
+            {
+                //helper.Test(commLog, tenant);
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue(commLog.QueueName, 0);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } });
+            }
+
+            catch (Exception ex)
+            {
+                string ip = "";
+
+                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                {
+                    ip = HttpContext.Current.Request.UserHostAddress;
+                }
+
+                ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "AP Invoice Transfer", null, ip);
+            }
         }
         #endregion
 

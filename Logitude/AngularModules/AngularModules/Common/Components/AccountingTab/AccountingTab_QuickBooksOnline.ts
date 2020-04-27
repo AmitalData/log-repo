@@ -12,7 +12,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {GetAccountingSystemWindowArgs} from '../../Args';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AccountingTab_QuickBooksOnline.html',
 })
 
@@ -174,7 +174,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
     RefreshLoadingDataCustomer(item, index, type) {
         if (type == "R") {
             this.CurrenciesListFilterd[index].ReceivableLoaded = true;
-            this.GlobalDomainService.GetQuickBooksOnlineCustomerById(item.ReceivableCardAPIID).subscribe(result => {
+            this.GlobalDomainService.GetQuickBooksOnlineCustomerById(item.ReceivableCardAPIID).subscribe((result:any) => {
                 if (result.Result != null && result.Result.length > 0) {
                     this.CurrenciesListFilterd[index].RecievableCustomerExternalName = result.Result[0].displayNameField;
                 }
@@ -186,7 +186,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
         }
         else if (type == "P") {
             this.CurrenciesListFilterd[index].PayableLoaded = true;
-            this.GlobalDomainService.GetQuickBooksOnlineCustomerById(item.ReceivableCardAPIID).subscribe(result => {
+            this.GlobalDomainService.GetQuickBooksOnlineCustomerById(item.ReceivableCardAPIID).subscribe((result:any) => {
                 if (result.Result != null && result.Result.length > 0) {
                     this.CurrenciesListFilterd[index].PayableCustomerExternalName = result.Result[0].displayNameField;
                 }
@@ -230,7 +230,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
     }
     FillDataIfCustomerExternalFromApi() {
         this.CurrenciesListFilterd = [];
-        this.currencyService.getAllFromCache().subscribe(result => {
+        this.currencyService.getAllFromCache().subscribe((result:any) => {
             this.CurrenciesList = result.Result;
             this.CurrenciesList.forEach(currency => {
                 var item: CustomerCurrencies = new CustomerCurrencies();
@@ -261,7 +261,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
 
                     if (this.PayableAndRecievableCard) {
                         if (p.ReceivableCardAPIID != null && p.ReceivableCardAPIID != ""){
-                            this.GlobalDomainService.GetQuickBooksOnlineCustomerById(p.ReceivableCardAPIID).subscribe(result => {
+                            this.GlobalDomainService.GetQuickBooksOnlineCustomerById(p.ReceivableCardAPIID).subscribe((result:any) => {
                                 if (result.Result != null && result.Result.length > 0) {
                                     item2.ReceivableLoaded = true;
                                     item2.RecievableCustomerExternalName = result.Result[0].displayNameField;
@@ -274,7 +274,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
                         }
                         if (p.PayableCardAPIID != null && p.PayableCardAPIID != "") {
 
-                            this.GlobalDomainService.GetQuickBooksOnlineVendorById(p.PayableCardAPIID).subscribe(result => {
+                            this.GlobalDomainService.GetQuickBooksOnlineVendorById(p.PayableCardAPIID).subscribe((result:any) => {
                                 if (result.Result != null && result.Result.length > 0) {
                                     item2.PayableLoaded = true;
                                     item2.PayableCustomerExternalName = result.Result[0].displayNameField;
@@ -288,7 +288,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
 
                     }
                     else if (this.PayableCardOnly) {
-                        this.GlobalDomainService.GetQuickBooksOnlineVendorById(p.PayableCardAPIID).subscribe(result => {
+                        this.GlobalDomainService.GetQuickBooksOnlineVendorById(p.PayableCardAPIID).subscribe((result:any) => {
                             if (result.Result != null && result.Result.length > 0) {
                                 item2.PayableLoaded = true;
                                 item2.PayableCustomerExternalName = result.Result[0].displayNameField;
@@ -301,7 +301,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
                     }
 
                     else if (this.RecievableCardOnly) {
-                        this.GlobalDomainService.GetQuickBooksOnlineCustomerById(p.ReceivableCardAPIID).subscribe(result => {
+                        this.GlobalDomainService.GetQuickBooksOnlineCustomerById(p.ReceivableCardAPIID).subscribe((result:any) => {
                             if (result.Result != null && result.Result.length > 0) {
                                 item2.ReceivableLoaded = true;
                                 item2.RecievableCustomerExternalName = result.Result[0].displayNameField;
@@ -324,7 +324,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
         if (this.ObjectTableName == "VatType") {
             if (this.EntityPM.ReceivablesExternalId != null && this.EntityPM.ReceivablesExternalId != "") {
                 this.ExistRecordOtherExternalFromAPi = true;
-                this.GlobalDomainService.GetQuickBooksOnlineVatTypesById(this.EntityPM.ReceivablesExternalId).subscribe(result => {
+                this.GlobalDomainService.GetQuickBooksOnlineVatTypesById(this.EntityPM.ReceivablesExternalId).subscribe((result:any) => {
                     if (result.Result != null && result.Result.length > 0) {
                         this.TextBoxText = result.Result[0].nameField;
                         this.Loading = true;
@@ -344,7 +344,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
             if (this.EntityPM != null)
                 if (this.EntityPM.ExternalId != null && this.EntityPM.ExternalId != "") {
                     this.ExistRecordOtherExternalFromAPi = true;
-                    this.GlobalDomainService.GetQuickBooksOnlinePaymentTermsById(this.EntityPM.ExternalId).subscribe(result => {
+                    this.GlobalDomainService.GetQuickBooksOnlinePaymentTermsById(this.EntityPM.ExternalId).subscribe((result:any) => {
                         if (result.Result != null && result.Result.length > 0) {
                             this.TextBoxText = result.Result[0].nameField;
                             this.Loading = true;
@@ -367,7 +367,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
             if (this.EntityPM != null)
                 if (this.EntityPM.AccountingExternalCode != null && this.EntityPM.AccountingExternalCode != "") {
                     this.ExistRecordOtherExternalFromAPi = true;
-                    this.GlobalDomainService.GetQuickBooksOnlineCurrenciesById(this.EntityPM.AccountingExternalCode).subscribe(result => {
+                    this.GlobalDomainService.GetQuickBooksOnlineCurrenciesById(this.EntityPM.AccountingExternalCode).subscribe((result:any) => {
                         if (result.Result != null && result.Result.length > 0) {
                             this.TextBoxText = result.Result[0].codeField;
                             this.Loading = true;
@@ -388,7 +388,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
             if (this.EntityPM != null)
                 if (this.EntityPM.AccountingExternalId != null && this.EntityPM.AccountingExternalId != "") {
                     this.ExistRecordOtherExternalFromAPi = true;
-                    this.GlobalDomainService.GetQuickBooksOnlinePaymentMethodsById(this.EntityPM.AccountingExternalId).subscribe(result => {
+                    this.GlobalDomainService.GetQuickBooksOnlinePaymentMethodsById(this.EntityPM.AccountingExternalId).subscribe((result:any) => {
                         if (result.Result != null && result.Result.length > 0) {
                             this.TextBoxText = result.Result[0].nameField;
                             this.Loading = true;
@@ -410,7 +410,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
             if (this.EntityPM != null)
                 if (this.EntityPM.AccountingExternalId != null && this.EntityPM.AccountingExternalId != "") {
                     this.ExistRecordOtherExternalFromAPi = true;
-                    this.GlobalDomainService.GetQuickBooksOnlinePayablesChargesTypesById(this.EntityPM.AccountingExternalId).subscribe(result => {
+                    this.GlobalDomainService.GetQuickBooksOnlinePayablesChargesTypesById(this.EntityPM.AccountingExternalId).subscribe((result:any) => {
                         if (result.Result != null && result.Result.length > 0) {
                             this.TextBoxText = result.Result[0].nameField;
                             this.Loading = true;
@@ -432,7 +432,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
                 if (this.EntityPM.ReceivablesChargesTypeExternalCode != null && this.EntityPM.ReceivablesChargesTypeExternalCode != "") {
                     this.ExistRecordOtherExternalFromAPi = true;
                    
-                    this.GlobalDomainService.GetQuickBooksOnlineReceivableChargesTypesById(this.EntityPM.ReceivablesChargesTypeExternalCode).subscribe(result => {
+                    this.GlobalDomainService.GetQuickBooksOnlineReceivableChargesTypesById(this.EntityPM.ReceivablesChargesTypeExternalCode).subscribe((result:any) => {
                         if (result.Result != null && result.Result.length > 0) {
                             this.TextBoxText = result.Result[0].fullyQualifiedNameField;
                             this.Loading = true;
@@ -451,7 +451,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
 
             if (this.EntityPM.PayablesChargesTypeExternalCode != null && this.EntityPM.PayablesChargesTypeExternalCode != ""){
                 this.ExistPayablesRecordOtherExternalFromAPi = true;
-                this.GlobalDomainService.GetQuickBooksOnlinePayablesChargesTypesById(this.EntityPM.PayablesChargesTypeExternalCode).subscribe(result => {
+                this.GlobalDomainService.GetQuickBooksOnlinePayablesChargesTypesById(this.EntityPM.PayablesChargesTypeExternalCode).subscribe((result:any) => {
                     if (result.Result != null && result.Result.length > 0) {
                         this.ChargeTypeTextBoxText = result.Result[0].nameField;
                         this.LoadingSecond = true;
@@ -474,7 +474,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
                 if (this.EntityPM.ARExternalId != null && this.EntityPM.ARExternalId != "") {
                     this.ExistRecordOtherExternalFromAPi = true;
 
-                    this.GlobalDomainService.GetQuickBooksOnlinePaymentMethodsById(this.EntityPM.ARExternalId).subscribe(result => {
+                    this.GlobalDomainService.GetQuickBooksOnlinePaymentMethodsById(this.EntityPM.ARExternalId).subscribe((result:any) => {
                         if (result.Result != null && result.Result.length > 0) {
                             this.TextBoxText = result.Result[0].nameField;
                             this.Loading = true;
@@ -493,7 +493,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
             if (this.EntityPM.APExternalId != null && this.EntityPM.APExternalId != "") {
                 this.ExistPayablesRecordOtherExternalFromAPi = true;
                 
-                this.GlobalDomainService.GetQuickBooksOnlinePayablesChargesTypesById(this.EntityPM.APExternalId).subscribe(result => {
+                this.GlobalDomainService.GetQuickBooksOnlinePayablesChargesTypesById(this.EntityPM.APExternalId).subscribe((result:any) => {
                     if (result.Result != null && result.Result.length > 0) {
                         this.ChargeTypeTextBoxText = result.Result[0].nameField;
                         this.LoadingSecond = true;

@@ -1,6 +1,6 @@
 declare var window: any;
 declare var System: any;
-import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy} from '@angular/core';
+import {Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {EntityListService} from '../../Services/EntityListService';
 import {ServiceArgs} from '../../DataContracts/ServiceArgs';
@@ -10,40 +10,22 @@ import {EntityResourceService} from '../../Services/EntityResourceService';
 import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
 import {ObjectTablePM} from '../../EntityPMs/ObjectTablePM';
 import {SessionLocator} from '../../Utilities/SessionLocator';
-import {AppTool} from '../../Tools';
-import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
-import {FocusMeDirective} from '../../Utilities/FocusMeDirective';
-import {FixedPositionDirective} from '../../Utilities/FixedPositionDirective';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {FieldValidator} from '../../Validators/FieldValidator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import {CustomEntityArgs} from './DWLogSearchWindowComponent';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/throttleTime';
-import 'rxjs/add/observable/fromEvent';
-import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
-//import {PartnerTypeListService} from '../../../Common/Services/StandardLists/PartnerTypeListService';
-//import {PartnerTypeList} from '../../../Common/EntityLists/PartnerTypeList';
-
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {FeatureLocator} from '../../Utilities/FeatureLocator';
 import {InfraSettings} from '../../Utilities/InfraSettings';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import { NewEntityArgs} from '../../Args';
 import {EntityPMService} from '../../Services/EntityPMService';
-import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImportComponent';
-import {CachedDataManager} from '../../Utilities/CachedDataManager';
-declare var logLoveReturnWhich, Selection: any;
-import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
 import {PartnerTypeList} from '../../../Common/EntityLists/PartnerTypeList';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
-import {DWQueryBuilderService} from '../../Services/ExtendedPMs/DWQueryBuilderService';
+import { DWQueryBuilderService } from '../../Services/ExtendedPMs/DWQueryBuilderService';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+declare var logLoveReturnWhich, Selection: any;
 
 @Component({
     selector: 'DWLov',
-    moduleId: module.id,
+    
     templateUrl: './DWLovComponent.html',
     providers: [EntityListService, ServiceArgs, EntityResourceService],
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'DisplayMemberPath', 'SelectedValuePath',
@@ -290,8 +272,8 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.AfterViewInitialized) {
             this._KeyDownSubscribe =
-                Observable.fromEvent(input, 'keydown')
-                    .debounceTime(400)
+                fromEvent(input, 'keydown').pipe(
+                    debounceTime(400))
                     .subscribe(keyboardEvent => {
                         var TABKEY = 9;
                         var ENTERKEY = 13;
@@ -312,7 +294,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
                             /*this.OldSearchInput = this.SearchTextNgModel;
                             this.IsDropDownVisible = true;
                             this.IsOpen = true; 
-                            this._DWQueryBuilderService.GetDWDataForDimTabel(this.ObjectTableName, this.ObjectFieldName, this.SearchTextNgModel).subscribe(myResult => {
+                            this._DWQueryBuilderService.GetDWDataForDimTabel(this.ObjectTableName, this.ObjectFieldName, this.SearchTextNgModel).subscribe((myResult:any) => {
                                 if (!myResult.HasError) {
                                     this.ItemsSource = myResult.Result;
                                 }
@@ -338,7 +320,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() { ////
         //this.entityListService.getAllFromCache(this.LookUpTableName, filters).then((res: any) => {
-        //    res.subscribe(resp => {
+        //    res.subscribe((resp:any) => {
 
         //    });
 
@@ -870,7 +852,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnToggleClicked() {
-        /*this._DWQueryBuilderService.GetDWDataForDimTabel(this.ObjectTableName, this.ObjectFieldName, this.SearchTextNgModel ? this.SearchTextNgModel : "").subscribe(myResult => {
+        /*this._DWQueryBuilderService.GetDWDataForDimTabel(this.ObjectTableName, this.ObjectFieldName, this.SearchTextNgModel ? this.SearchTextNgModel : "").subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.ItemsSource = myResult.Result;
                 this.ToggleOpenDropDown();

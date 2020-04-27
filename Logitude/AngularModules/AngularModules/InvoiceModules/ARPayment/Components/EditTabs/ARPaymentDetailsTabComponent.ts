@@ -34,7 +34,7 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARPaymentDetailsTabComponent.html',
 })
 
@@ -636,7 +636,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 }
                 else {
                     var myService: AddressListService = new AddressListService();
-                    myService.getSingle(this.EntityPM.BillToId).subscribe(myResult => {
+                    myService.getSingle(this.EntityPM.BillToId).subscribe((myResult:any) => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
                             var billingAddress: AddressList = myResponse.Result;
@@ -1814,7 +1814,7 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
             this.isConnected = value;
 
             if (value == true) {
-                this.GetSmallestAmount();
+                this.GetConnectedAmount();
                 this.Connect();
             }
 
@@ -1830,7 +1830,7 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
 
     public ConnectedAmount_INV: number = 0;
     public ConnectedAmount_PAY: number = 0;
-    private GetSmallestAmount() {
+    private GetConnectedAmount() {
 
         var invoiceAmount = this.AmountDue;
         var paymentAmount = this.PaymentPM.OpenAmount;
@@ -1852,26 +1852,57 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
                 paymentAmountInInvoice = paymentAmount / this.Invoice.InvoiceCurrencyExchangeRate;
             }
 
-            if (invoiceAmountInPayment <= paymentAmount) {
-                ConnectedAmountOfInvoice = invoiceAmount;
-                ConnectedAmountOfPayment = invoiceAmountInPayment;
+            if (invoiceAmountInPayment < 0 && paymentAmount < 0) {
+                if (invoiceAmountInPayment >= paymentAmount) {
+                    ConnectedAmountOfInvoice = invoiceAmount;
+                    ConnectedAmountOfPayment = invoiceAmountInPayment;
+                }
+
+                else {
+                    ConnectedAmountOfInvoice = paymentAmountInInvoice;
+                    ConnectedAmountOfPayment = paymentAmount;
+                }
             }
 
             else {
-                ConnectedAmountOfInvoice = paymentAmountInInvoice;
-                ConnectedAmountOfPayment = paymentAmount;
+                if (invoiceAmountInPayment <= paymentAmount) {
+                    ConnectedAmountOfInvoice = invoiceAmount;
+                    ConnectedAmountOfPayment = invoiceAmountInPayment;
+                }
+
+                else {
+                    ConnectedAmountOfInvoice = paymentAmountInInvoice;
+                    ConnectedAmountOfPayment = paymentAmount;
+                }
             }
         }
 
         else {
-            if (invoiceAmount <= paymentAmount) {
-                ConnectedAmountOfInvoice = invoiceAmount;
-                ConnectedAmountOfPayment = invoiceAmount;
+
+            // Get Biggest Amount
+            if (invoiceAmount < 0 && paymentAmount < 0) {
+                if (invoiceAmount >= paymentAmount) {
+                    ConnectedAmountOfInvoice = invoiceAmount;
+                    ConnectedAmountOfPayment = invoiceAmount;
+                }
+
+                else {
+                    ConnectedAmountOfInvoice = paymentAmount;
+                    ConnectedAmountOfPayment = paymentAmount;
+                }
             }
 
+            // Get Smallest Amount
             else {
-                ConnectedAmountOfInvoice = paymentAmount;
-                ConnectedAmountOfPayment = paymentAmount;
+                if (invoiceAmount <= paymentAmount) {
+                    ConnectedAmountOfInvoice = invoiceAmount;
+                    ConnectedAmountOfPayment = invoiceAmount;
+                }
+
+                else {
+                    ConnectedAmountOfInvoice = paymentAmount;
+                    ConnectedAmountOfPayment = paymentAmount;
+                }
             }
         }
 

@@ -2,7 +2,8 @@
 <Table
   Name="ColorIndexs"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="IndexNumber"
     Type="int">
@@ -12,6 +13,7 @@
   </Column>
   <Column
     Name="Color"
+    ShortName="Color_"
     Type="varchar"
     Size="60">
     <Constraints

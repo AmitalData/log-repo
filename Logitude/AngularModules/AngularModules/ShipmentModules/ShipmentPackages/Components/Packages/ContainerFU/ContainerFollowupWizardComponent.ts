@@ -1,4 +1,4 @@
-import {Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ContainerFollowupWizardTemplate} from './ContainerFollowupWizardTemplate';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -17,7 +17,7 @@ import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {RoutingHelper} from '../../../../../Shipment/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContainerFollowupWizardComponent.html',
 })
 
@@ -29,7 +29,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
     public TemplateComponent: ContainerFollowupWizardTemplate;
-    @ViewChild('Child', { read: ViewContainerRef }) ChildViewContainerRef: ViewContainerRef; 
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) ChildViewContainerRef: ViewContainerRef; 
     private entityPMService: ShipmentPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {

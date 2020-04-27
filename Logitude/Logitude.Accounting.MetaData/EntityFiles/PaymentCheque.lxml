@@ -61,7 +61,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7432a5d5-44ae-4d17-b521-d233c64b48ee&quot;"
     FieldName="&quot;Id&quot;"
@@ -1299,7 +1301,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;PaymentCheque&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="true"
@@ -1372,7 +1374,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;PaymentCheque&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -3783,5 +3785,15 @@
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;MOREE&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;PaymentCheque.Features.PCMore&quot;"
+      FeatureDefaultText="&quot;More&quot;" />
+  </AdditionalFeatures>
 </entity>

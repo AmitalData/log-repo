@@ -25,7 +25,7 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 
 @Component({
     selector: 'DeficitFileFilterComponent',
-    moduleId: module.id,
+    
     templateUrl: './DeficitFileFilterComponent.html',
 })
 

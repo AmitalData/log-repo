@@ -62,7 +62,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;c343e469-a7bf-441a-82a9-a692ab0b6188&quot;"
     FieldName="&quot;Id&quot;"
@@ -286,7 +288,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;IntegrityCheckStatus&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="1"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1091,5 +1093,15 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;AccountingIntegrityCheck.Features.Menu&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;AccountingIntegrityCheck.Features.Menu&quot;"
+      FeatureDefaultText="&quot;Accounting Integrity Checks&quot;" />
+  </AdditionalFeatures>
 </entity>

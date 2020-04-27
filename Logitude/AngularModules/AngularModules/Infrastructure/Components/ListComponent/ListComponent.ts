@@ -2,18 +2,10 @@
 declare var System: any;
 declare var window: any;
 import { Component, OnInit, Type, Output, EventEmitter, ComponentRef, ViewChild, QueryList, ViewChildren, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import * as Rx from 'rxjs/Rx';
-import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
-//import {CORE_DIRECTIVES, Control, NgFormControl} from '@angular/common';
-//import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
-//import {IconButton} from '../../../Controls/IconButton';
-//import {LogGridComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent';
-//import {AdvanceSearchComponent} from '../../../Infrastructure/Components/AdvanceSearchComponent/AdvanceSearchComponent';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { Http } from '@angular/http';
 import { ServiceArgs } from '../../DataContracts/ServiceArgs';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { EntityResourceService } from '../../Services/EntityResourceService';
@@ -23,11 +15,9 @@ import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-//import {SearchTextBox} from '../../../Controls/SearchTextBox';
 import { LogEvents } from '../../../Infrastructure/Utilities/LogEvents';
 import { PubSubService } from '../../../Infrastructure/Utilities/events/ApiFiltersEvent';
 import { PubSubService1 } from '../../../Infrastructure/Utilities/events/ApiFiltersEvent1';
-//import {QueryListComponent} from '../../../Infrastructure/Components/LogitudeComponents/QueryListComponent/QueryListComponent';
 import { AppTool, DateTool } from '../../Tools';
 import { ListComponentArgs, NewEntityArgs } from '../../Args';
 import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
@@ -36,7 +26,6 @@ import { EntityPMService } from '../../Services/EntityPMService';
 import { TotangoService } from '../../Services/WebServices/TotangoService';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 import { QueryColumnsPMService } from '../../../Infrastructure/Services/StandardPMs/QueryColumnsPMService';
-import { QueryColumnPM } from '../../../Infrastructure/EntityPMs/QueryColumnPM';
 import { GeneralEntitiesArgs } from '../../../Infrastructure/DataContracts/GeneralEntitiesArgs';
 import { GeneralEntitiesService } from '../../../Infrastructure/Services/StandardPMs/GeneralEntitiesService';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -49,9 +38,12 @@ import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './ListComponent.html',
     //directives: [CORE_DIRECTIVES, IconButton, LogGridComponent, NgFormControl, AdvanceSearchComponent, QueryListComponent, LocationDirective, SearchTextBox],
@@ -262,7 +254,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                     else if (value1 == "NoDate" || value1 == "No Date") {
                         value1 = "NoDate";
-                        filterOperator = "Equals";
+                        filterOperator = "NoDate";
                     }
                 }
               var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -449,7 +441,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private _http: Http, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
+    constructor(private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
 
         if (this.CurrentSession == null) {
             this.ListComponentId = "ListComponentId_-1_-1";
@@ -511,7 +503,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, null, null, null, "Equals", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, null, null, null, "NoDate", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
 
         }
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
@@ -865,44 +857,45 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
     ResourcesLoaded: boolean = false;
-    Run(args: ListComponentArgs) {
-        this.CurrentSession.AddMenuReference(this.ComponentRef);
-        this.CurrentSession.AddListComponent(this);
+  Run(args: ListComponentArgs) {
+    this.CurrentSession.AddMenuReference(this.ComponentRef);
+    this.CurrentSession.AddListComponent(this);
 
-        this.listArgs = args;
-        if (!this.IsDemoTenant) {
-            if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
-                this.Title = this.listArgs.DisplayTitle;
-            }
-            //args.QueryCode=this.ObjectTableName + '.' + args.QueryCode
-            this.QueryCode = args.QueryCode;
-            this.ObjectTableName = args.ObjectTableName;
-            this.SetAddButtonTitle();
-            this.MethodName = args.MethodName;
-            this.BackBtnTitle = args.BackButtonTitle;
-            this.ShowViews = args.ShowViews;
-            this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-            this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
+    this.listArgs = args;
+    if (!this.IsDemoTenant) {
+      if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
+        this.Title = this.listArgs.DisplayTitle;
+      }
+      //args.QueryCode=this.ObjectTableName + '.' + args.QueryCode
+      this.QueryCode = args.QueryCode;
+      this.ObjectTableName = args.ObjectTableName;
+      this.SetAddButtonTitle();
+      this.MethodName = args.MethodName;
+      this.BackBtnTitle = args.BackButtonTitle;
+      this.ShowViews = args.ShowViews;
+      this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+      this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
 
-            this.SearchTextValue = new FormControl();
-            this.NewButtonLable = args.NewButtonLabel;
-            this.SearchTextValue.valueChanges
-                .debounceTime(500)
-                .distinctUntilChanged()
-                .subscribe((search: string): any => {
-                    this.searchFields = (search === "") ? this.searchFields = "" : this.searchFields = search;
-                    this.SearchFieldchangeevent.emit(this.searchFields);
-                });
+      this.SearchTextValue = new FormControl();
+      this.NewButtonLable = args.NewButtonLabel;
 
+      this.SearchTextValue.valueChanges
+        .pipe(
+          debounceTime(500),
+          distinctUntilChanged()
+        ).subscribe((search: string): any => {
+          this.searchFields = (search === "") ? this.searchFields = "" : this.searchFields = search;
+          this.SearchFieldchangeevent.emit(this.searchFields);
+        });
 
-            this.GetQueries();
-            this.RunComponent();
-        }
+      this.GetQueries();
+      this.RunComponent();
     }
+  }
 
     ViewInitCompleted(event) {
         //this.afterViewGridInitCompleted.emit(event);
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
             this.BackBtnTitle = this.listArgs.BackButtonTitle;
             //this.Title = this.listArgs.DisplayTitle;
             this.ResourcesLoaded = true;
@@ -976,7 +969,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         if (this.SelectedQuery != null) {
             this.QueryCode = this.SelectedQuery.UniqueCode;
         }
-        if (AppTool.IsNullOrEmpty(this.Title)) {
+        if (AppTool.IsNullOrEmpty(this.Title) && this.SelectedQuery) {
             this.Title = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
         }
         if (this.SelectedQuery != null) {
@@ -1004,7 +997,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 }
             }
             //console.log("dataSource", this.dataSource);
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
                 this.ResourcesLoaded = true;
                 this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
             });
@@ -1017,8 +1010,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     GetQueryColumns(queryCode, userId) {
         //var queryId = window.Queries.filter(x => x.Code === queryCode)[0].Id;
         this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + queryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId)
-            .subscribe((response) => {
-                this.QueryColumns = response.json();
+            .subscribe((response: any) => {
+                this.QueryColumns = response;
                 this.QueryColumns = this.QueryColumns.sort((a, b) => { return (a.IndexOrder > b.IndexOrder) ? 1 : (a.IndexOrder < b.IndexOrder) ? -1 : 0 });
 
                 this.QueryColumns.forEach((value, key) => {
@@ -1211,7 +1204,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                         else if (value1 == "NoDate" || value1 == "No Date") {
                             value1 = "NoDate";
-                            filterOperator = "Equals";
+                            filterOperator = "NoDate";
                         }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -1427,7 +1420,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                         else if (value1 == "NoDate" || value1 == "No Date") {
                             value1 = "NoDate";
-                            filterOperator = "Equals";
+                            filterOperator = "NoDate";
                         }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -1708,9 +1701,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                         else if (myObjectTableName == "Customs.CourierMaster") {
                             var windowArgs: any = {};
-                            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
-                                this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response:any) => {
+                                this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
 
                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
@@ -1800,7 +1793,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 case 'Customs.Client': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
 
                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
@@ -1834,8 +1827,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 }
                                 case 'Customs.CustomsVendor': {
                                     if (!AppTool.IsNullOrEmpty(selectedEntityId)) {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
-                                            this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe(response => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
+                                            this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response:any) => {
                                                 this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                     res.subscribe((myResponse: any) => {
 
@@ -1889,11 +1882,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 case 'Customs.CustomsCollateral': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe(response => {
-                                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                                                this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe(response => {
-                                                    this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe((response:any) => {
+                                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                                                this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
+                                                    this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
 
 
                                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
@@ -1934,7 +1927,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 }
                                 case 'Customs.ProceduralFault': {
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.ProceduralFault").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.ProceduralFault").subscribe((response:any) => {
 
                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
@@ -2009,8 +2002,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 case 'Customs.DeclarationCargoSplit': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
                                             this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                 res.subscribe((myResponse: any) => {
 
@@ -2420,7 +2413,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             }
             else {
                 var isNewWizard = this.SelectedQuery.ObjectTableIsNewWizard;
-                this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
                     this.ResourcesLoaded = true;
                     if (isNewWizard) {
                         var IsOriginalMaster: boolean = false;
@@ -2986,7 +2979,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         //    this.myQueryColumnsPMService = new QueryColumnsPMService();
         //    this.myQueryColumnsPMService.setServiceArgs(this.serviceArgs);
         //}
-        //this.myQueryColumnsPMService.update(QColumn).subscribe(myResult => {
+        //this.myQueryColumnsPMService.update(QColumn).subscribe((myResult:any) => {
         //});
         this.SaveColNewChanges(Param);
         //console.log("Oh Yea !!");
@@ -2995,8 +2988,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     SaveColNewChanges(Param: any) {
         var QColumns = null;
         this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + Param.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId)
-            .subscribe((response) => {
-                QColumns = response.json();
+            .subscribe((response: any) => {
+                QColumns = response;
                 if (QColumns != null) {
                     if (this.GeneralEntitiesArgs == null) {
                         this.GeneralEntitiesArgs = new GeneralEntitiesArgs();
@@ -3019,7 +3012,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
                         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
                         myGeneralService.setServiceArgs(this.serviceArgs);
-                        myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
+                        myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
                         });
                     }
                     else {
@@ -3038,7 +3031,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
                         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
                         myGeneralService.setServiceArgs(this.serviceArgs);
-                        myGeneralService.insert(this.GeneralEntitiesArgs).subscribe(myResult => {
+                        myGeneralService.insert(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
                         });
                         // });
                     }

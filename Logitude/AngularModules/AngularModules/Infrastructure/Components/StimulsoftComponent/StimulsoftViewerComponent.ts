@@ -26,7 +26,7 @@ import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'StimulsoftViewer',
     templateUrl: './StimulsoftViewerComponent.html',
@@ -75,7 +75,7 @@ export class StimulsoftViewerComponent implements OnInit {
     HeightImg: number = 1;
     MaxScreenwidth: string;
     IsEditingEnabled: boolean;
-    IsSchedulerReport: boolean;
+    IsSchedulerReport: boolean = false;
     IsShowShiftToolbar: boolean = false;
     ShowReportsTemlatesLists: boolean = false;
     PreviewStimualDivId: string;
@@ -140,30 +140,32 @@ export class StimulsoftViewerComponent implements OnInit {
     }
 
 
-
+    IsShowStimulImage: boolean = true;
     SetStimualData() {
 
-        this.BuildStimulImage(this.StimulsoftArgData.BuildStimulReportResult, this);
+        var isExcelOnly = this.StimulsoftArgData.ReportFliter ? this.StimulsoftArgData.ReportFliter.ExcelOnly : false;
 
+        this.IsShowStimulImage = !isExcelOnly;
         if (this.StimulsoftArgData.ShowStimulHeader) this.Headervisibility = "block";
-
         if (this.StimulsoftArgData.ShowStimulFooter) this.Footervisibility = "block";
 
-
+        if (!isExcelOnly) this.BuildStimulImage(this.StimulsoftArgData.BuildStimulReportResult, this);
         this.IsShowExportMicrosoftExcel = this.StimulsoftArgData.IsShowExportMicrosoftExcel;
         this.IsShowExportPrinttoPDF = this.StimulsoftArgData.IsShowExportPrinttoPDF;
+
         this.IsShowSendButton = this.StimulsoftArgData.IsShowSendButton;
-        this.IsSchedulerReport = this.StimulsoftArgData.IsSchedulerReport;
-
+        if (this.StimulsoftArgData.IsSchedulerReport) {
+            this.IsSchedulerReport = true;
+            this.IsShowExportPrinttoPDF = false;
+            this.IsShowSendButton = false;
+            this.IsShowExportMicrosoftExcel = false;
+        }
    
-
-
-    
-
         this.PagesCount = this.StimulsoftArgData.PagesCount;
         if (this.PagesCount == null) this.PagesCount = 0;
         this.NumberOfPage = this.StimulsoftArgData.NumberOfPage;
 
+        if (isExcelOnly) this.IsEditingEnabled = true;
         this.SetEnableButtonPager();
 
 
@@ -598,7 +600,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
         //  var fileName: string = this.StimulsoftArgData.ReportKey + "@" + (this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Name:"");
         var fileName: string = this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription;
-        this.reportService.GetPrepareSendReport(type, fileName , SessionLocator.Tenant).subscribe(res => {
+        this.reportService.GetPrepareSendReport(type, fileName , SessionLocator.Tenant).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
 
             var pmResponse: ServiceResponse = res;
@@ -682,7 +684,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
                 this.CurrentSession.StartBusyIndicatorSaving();
 
-                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res => {
+                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     this.CurrentSession.StopBusyIndicator();
 
@@ -775,7 +777,11 @@ export class StimulsoftViewerComponent implements OnInit {
 
 
     }
-    
+
+
+
+
+
     documenttypetemplatePM: DocumentTypeTemplatePM;
     SaveReport(reportKey: string, tenant: number, processType: string, exportDataOnly: boolean = false,  exportObjectFormatting: boolean = false , useOnePageHeaderAndFooter: boolean = false) {
     
@@ -798,11 +804,21 @@ export class StimulsoftViewerComponent implements OnInit {
         }
 
         if (this.StimulsoftArgData.ReportsPreviewComponent) {
+
+        
             var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + reportKey + "@" + this.StimulsoftArgData.TemplateDescription + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=" + processType + advanceSetting;
             window.open(url);
         }
     }
 
+    DownloadExcelOnly() {
+        //var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=ExcelOnly"
+        //window.open(url);
+
+    }
+
+
+    
     ManagementReport() {
 
         if (this.StimulsoftArgData && this.StimulsoftArgData.ReportsPreviewComponent && this.StimulsoftArgData.ReportsPreviewComponent.Report && this.StimulsoftArgData.ReportsPreviewComponent.Report.Id) {
@@ -906,7 +922,7 @@ export class StimulsoftViewerComponent implements OnInit {
     }
     UpdateDocumentTypeTemplate(item: any, isCloseEditWindow: boolean) {
 
-        this.documentTypeTemplatePMService.update(item).subscribe(myResult=> {
+        this.documentTypeTemplatePMService.update(item).subscribe((myResult:any)=> {
 
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
@@ -940,7 +956,7 @@ export class StimulsoftViewerComponent implements OnInit {
     }
 
     GetDocumentTypeTemplate(Id: any, mode: string, isCloseEditWindow: boolean) {
-        this.documentTypeTemplatePMService.get(Id).subscribe(res=> {
+        this.documentTypeTemplatePMService.get(Id).subscribe((res:any)=> {
             var pmResponse: ServiceResponse = res;
 
             if (!pmResponse.HasError) {
@@ -1011,7 +1027,7 @@ export class StimulsoftViewerComponent implements OnInit {
                     item.HorizontalShift = this.HorizontalShift;
                     item.VerticalShift = this.VerticalShift;
                     if (isChange) {
-                        this.documentTypeTemplatePMService.update(item).subscribe(myResult => {
+                        this.documentTypeTemplatePMService.update(item).subscribe((myResult:any) => {
                             if (this.StimulsoftArgData.EditDocumentComponent && this.StimulsoftArgData.EditDocumentComponent.DataViewModel) {
                                 this.StimulsoftArgData.EditDocumentComponent.DataViewModel.IsRefreshPrintConrol = true;
                             }
@@ -1094,7 +1110,7 @@ export class StimulsoftViewerComponent implements OnInit {
             if (editableFieldLists.length > 0 || this.StimulsoftArgData.IsReset) {
                 if (this.StimulsoftArgData.IsReset) {
 
-                    this.StimulsoftArgData.EditDocumentComponent._exportDocumentService.GetResetEditableFields(this.StimulsoftArgData.EditDocumentComponent.CurrentDocumentOutId).subscribe(res => {
+                    this.StimulsoftArgData.EditDocumentComponent._exportDocumentService.GetResetEditableFields(this.StimulsoftArgData.EditDocumentComponent.CurrentDocumentOutId).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
                             if (this.StimulsoftArgData.EditDocumentComponent.DataViewModel) {
@@ -1141,7 +1157,7 @@ export class StimulsoftViewerComponent implements OnInit {
             }
 
             if (filter.EditableFieldLists && filter.EditableFieldLists.length > 0) {
-                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res => {
+                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         this.EditableField.filter(d => d.Status == "Change").forEach((field) => {

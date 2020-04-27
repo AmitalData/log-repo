@@ -23,7 +23,7 @@ import {CountryListService} from '../../../../Common/Services/StandardLists/Coun
 import {DocumentTypeTemplatePM} from '../../../../Common/EntityPMs/DocumentTypeTemplatePM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentTypeGeneral',
     templateUrl: './DocumentTypeGeneralTabComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService],
@@ -62,7 +62,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate", 0).subscribe((response:any) => {
 
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {
@@ -317,7 +317,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             var table = window.ObjectTables.filter(d => d.Id == this.EntityPM.ObjectTableId)[0];
             if (table) tableId = table.Id;
 
-            this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe((response:any) => {
                 var windowArgs: any = {};
                 windowArgs.ObjectTypeField = "DocuemntFileName";
                windowArgs.HideSystemDataTab = true;

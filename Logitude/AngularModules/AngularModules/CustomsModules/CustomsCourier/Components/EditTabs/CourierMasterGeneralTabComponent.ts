@@ -11,7 +11,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierMasterGeneralTabComponent.html',
 })
 
@@ -170,7 +170,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
 
     AirLineIdLostFocus(value: any) {
 
-        //this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.EntityPM.AirlineId, this.EntityPM.HAWB, this.EntityPM.MAWB).subscribe(Result => {
+        //this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.EntityPM.AirlineId, this.EntityPM.HAWB, this.EntityPM.MAWB).subscribe((Result:any) => {
         //    var mm: ServiceResponse = Result;
         //    if (!mm.HasError) {
         //        if (mm.Result) {

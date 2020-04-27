@@ -17,7 +17,7 @@ import { TapagMessagesService } from '../../../../../../Customs/Services/WebServ
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BankAccountToRefundComponent.html',
     selector: 'BankAccountToRefundComponent',
 })

@@ -81,7 +81,7 @@ namespace CommunicationWorkerRole
         }
 
         string Token;
-        public override async void AsyncRun()
+        public override void Run()
         {
             try
             {
@@ -99,8 +99,9 @@ namespace CommunicationWorkerRole
                     string AuthURI = URI + "APIAuthentication";
                     var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = await client.PostAsync(AuthURI, content);
-                    var tempUser = result.Content.ReadAsStringAsync().Result;
+                    var result = client.PostAsync(AuthURI, content);
+                    result.Wait();
+                    var tempUser = result.Result.Content.ReadAsStringAsync().Result;
                     ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                     Token = User.Token;
                 }
@@ -223,18 +224,19 @@ namespace CommunicationWorkerRole
                                     var msg = "Start Sending Request To Forwarder Tenant " + DateTime.Now;
                                     APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(customerTenantAccessAM), null, null, "");
                                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                    var result = await client.PostAsync(URI + "CustomerTenantAccess", content);
-                                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                                    var result = client.PostAsync(URI + "CustomerTenantAccess", content);
+                                    result.Wait();
+                                    if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                     {
                                         queue.Complete();
                                         LogPM.Status = "D";
-                                        var ResponseData = result.Content.ReadAsStringAsync().Result;
+                                        var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
                                         var Donemsg = "Request Sent To Forwarder Successfully " + DateTime.Now;
                                         APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
                                     }
                                     else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                     {
-                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
+                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
                                         if (EXC != null)
                                         {
                                             var Failmsg = EXC.ErrorType + " Fail To Send Request To Forwarder Tenant " + DateTime.Now;

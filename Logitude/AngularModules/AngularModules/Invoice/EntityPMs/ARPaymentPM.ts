@@ -107,6 +107,21 @@ export class ARPaymentPM {
     public set AmountInProfitCurrency(newValue: number) { if (this.amountInProfitCurrency != newValue) { this.amountInProfitCurrency = newValue; this.MarkAsDirty("AmountInProfitCurrency"); } }
        
 	 
+    private accountingCancelationDate: Date;
+    public get AccountingCancelationDate() { return this.accountingCancelationDate; }
+    public set AccountingCancelationDate(newValue: Date) { if (this.accountingCancelationDate != newValue) { this.accountingCancelationDate = newValue; this.MarkAsDirty("AccountingCancelationDate"); } }
+       
+	 
+    private cancelationNotes: string;
+    public get CancelationNotes() { return this.cancelationNotes; }
+    public set CancelationNotes(newValue: string) { if (this.cancelationNotes != newValue) { this.cancelationNotes = newValue; this.MarkAsDirty("CancelationNotes"); } }
+       
+	 
+    private voidedByJournalNumber: string;
+    public get VoidedByJournalNumber() { return this.voidedByJournalNumber; }
+    public set VoidedByJournalNumber(newValue: string) { if (this.voidedByJournalNumber != newValue) { this.voidedByJournalNumber = newValue; this.MarkAsDirty("VoidedByJournalNumber"); } }
+       
+	 
     private branchId: string;
     public get BranchId() { return this.branchId; }
     public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
@@ -642,6 +657,16 @@ export class ARPaymentPM {
     private field10: CustomFieldClass;
     public get Field10() {if(!this.field10){ this.field10 = new CustomFieldClass(null, "Field10", "ARPayment");} return this.field10; }
     public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
+       
+	 
+    private gLAccountCurrencyCode: string;
+    public get GLAccountCurrencyCode() { return this.gLAccountCurrencyCode; }
+    public set GLAccountCurrencyCode(newValue: string) { if (this.gLAccountCurrencyCode != newValue) { this.gLAccountCurrencyCode = newValue; this.MarkAsDirty("GLAccountCurrencyCode"); } }
+       
+	 
+    private paymentCurrencySign: string;
+    public get PaymentCurrencySign() { return this.paymentCurrencySign; }
+    public set PaymentCurrencySign(newValue: string) { if (this.paymentCurrencySign != newValue) { this.paymentCurrencySign = newValue; this.MarkAsDirty("PaymentCurrencySign"); } }
        
 	 
 

@@ -61,7 +61,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;BluesnapContractType,BluesnapContractTypes,,Code,&quot;">
+  SearchFields="&quot;BluesnapContractType,BluesnapContractTypes,,Code,&quot;"
+  DxmlDatabaseTypeCode="Global"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;8c76b3de-e986-419b-a908-a8dd46740aa2&quot;"
     FieldName="&quot;Code&quot;"
@@ -72,7 +74,7 @@
     ObjectTableName="&quot;BluesnapContractType&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="4"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -220,7 +222,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;BluesnapContractType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

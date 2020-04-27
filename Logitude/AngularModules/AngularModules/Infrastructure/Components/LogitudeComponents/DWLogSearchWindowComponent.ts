@@ -3,7 +3,6 @@ declare var System: any;
 import {Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterViewInit} from '@angular/core';
 //import {NgForm, NgStyle, NgFormControl, CORE_DIRECTIVES, FORM_DIRECTIVES,  FormBuilder, ControlGroup, Validators, Control} from '@angular/common';
 //import {Http, HTTP_PROVIDERS, Response} from '@angular/http';
-import {Http, Response} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -32,15 +31,14 @@ import {MultiSelectedValue, ValueDetails} from '../../../CommonModules/CommonOth
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ComponentArgs} from '../../../Infrastructure/DataContracts/ComponentArgs';
 import {ParameterComponentArgs} from '../../../Infrastructure/DataContracts/ParameterComponentArgs';
-import { filter } from 'rxjs/operators';
-;
+
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'DWLogSearchWindow',
     templateUrl: './DWLogSearchWindowComponent.html',
-    providers: [Http, ServiceArgs, EntityListService, EntityPMService],
+    providers: [ServiceArgs, EntityListService, EntityPMService],
 })
 
 export class DWLogSearchWindowComponent extends BaseComponent implements OnInit, OnDestroy {
@@ -168,7 +166,6 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
    
 
         ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "DWLogSearchWindow", this));
-
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectFieldName = args.DisplayFieldsFromList;
         this.LOVAdditionalColumns = this.BuildAdditionalColumns(args.LOVAdditionalColumns);

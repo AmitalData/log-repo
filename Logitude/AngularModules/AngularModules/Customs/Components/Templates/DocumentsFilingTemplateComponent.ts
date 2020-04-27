@@ -7,7 +7,7 @@ import {DocumentsFilingPM}  from '../../../Common/EntityPMs/DocumentsFilingPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DocumentsFilingTemplateComponent.html',
 })
 
@@ -31,7 +31,7 @@ export class DocumentsFilingTemplateComponent {
     DownloadDocumentFile(documentFiling: DocumentsFilingPM) {
         this.FirePreventSelect();
         this._ImageLibraryService = new ImageLibraryService();
-        this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.FileExtension, documentFiling.Folder, SessionLocator.Tenant).subscribe(res => {
+        this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.FileExtension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res:any) => {
 
 
                 var documentName = documentFiling.DocumentId;

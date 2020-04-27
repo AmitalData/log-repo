@@ -19,10 +19,12 @@ import {CustomPickListListService} from '../../../../Infrastructure/Services/Sta
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditQuestionnaireQuestionComponent.html',
 })
 export class AddEditQuestionnaireQuestionComponent {
+  public IsAddOther: any;
+
     private _customPickListListService = new CustomPickListListService();
     public LabelColumnWidth: number = 170;
     public ControlColumnWidth: number = 220;
@@ -132,7 +134,7 @@ export class AddEditQuestionnaireQuestionComponent {
             filters.SortBy = 'Value';
             filters.GetAll = true;
             filters.addAdditionalFilter("IsMultipleChoice", true, null, null, "Equals", false, false, false, null, false, true);
-            this._customPickListListService.getByFilters(filters).subscribe(response => {
+            this._customPickListListService.getByFilters(filters).subscribe((response:any) => {
                 this.TenantCustomPickLists = response.Result;
                 this.CurrentSession.StopBusyIndicator();
                 if (this.TenantCustomPickLists != null) {

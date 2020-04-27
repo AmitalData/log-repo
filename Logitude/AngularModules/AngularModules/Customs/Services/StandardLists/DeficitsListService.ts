@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -20,11 +20,11 @@ import {DeficitList} from '../../EntityLists/DeficitList';
 @Injectable()
 
 export class DeficitListService {
-	private _http: Http;
+	private _http: HttpClient;
     private _apiUrl: string;   
 	public static CachedData: Array<DeficitList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/deficitviews';  
     }
 
@@ -33,9 +33,9 @@ export class DeficitListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, { headers: authHeader }).map(response => {
-                var list = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var list = response;
                     
                 var entity: DeficitList;
 				if(list)
@@ -47,7 +47,7 @@ export class DeficitListService {
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = entity;  
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -56,10 +56,10 @@ export class DeficitListService {
 	   var authHeader = new Headers();
        authHeader.append('Token', SessionInfo.Token);
 
-       return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
+       return defer(() => {
+            return this._http.get(this._apiUrl+'/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-              var allLists = response.json();
+              var allLists = response;
               var _mappedListsArray: Array< DeficitList> = [];
 		      if(allLists)
 			  {
@@ -74,7 +74,7 @@ export class DeficitListService {
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 	
@@ -112,13 +112,13 @@ export class DeficitListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return Observable.defer(() => {
+	   return defer(() => {
             return this._http.get(callUrl, {
                 headers: authHeader
             }).map(response => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array< DeficitList> = [];
 				if(serviceResponse.Result)
 				{
@@ -133,7 +133,7 @@ export class DeficitListService {
 
                 serviceResponse.Result = _mappedListsArray;                  
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });        
     }
 

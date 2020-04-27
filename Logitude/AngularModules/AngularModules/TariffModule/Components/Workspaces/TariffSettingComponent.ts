@@ -11,7 +11,7 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TariffSettingComponent.html',
 })
 
@@ -76,6 +76,7 @@ export class TariffSettingComponent extends BaseComponent {
     private SetUIPropertiesOfFields() {
         this.UIProperties.SetRequired("AirDefaultStepsId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AirDefaultStepsId));
         this.UIProperties.SetRequired("LCLDefaultStepsId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.LCLDefaultStepsId));
+        this.UIProperties.SetEnabled("ContainerDefaults", this.ObjectTableName, false);
     }
 
     get DefaultWarningPercentage() {
@@ -99,6 +100,17 @@ export class TariffSettingComponent extends BaseComponent {
             this.EntityPM.LCLDefaultStepsId = value;
             this.SetUIPropertiesForEditButtons();
             this.SetUIPropertiesOfFields();
+        }
+    }
+
+    get ContainerDefaults() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.ContainerDefaults;
+        }
+    }
+    set ContainerDefaults(value: string) {
+        if (this.EntityPM.ContainerDefaults != value) {
+            this.EntityPM.ContainerDefaults = value;
         }
     }
 
@@ -282,6 +294,17 @@ export class TariffSettingComponent extends BaseComponent {
         });
     }
 
+    EditContainerDefaultsClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Edit Container Defaults";
+        logWindow.WindowArgs = this.EntityPM;
+        logWindow.Show("./TariffModule/Components/Workspaces/ContainerDefaultsComponent");
+        logWindow.WindowClosed.subscribe(d => {
+            if (d && d != "cancel") {
+                
+            }
+        });
+    }
 }
 
 class TariffSettingStep extends BaseComponent {

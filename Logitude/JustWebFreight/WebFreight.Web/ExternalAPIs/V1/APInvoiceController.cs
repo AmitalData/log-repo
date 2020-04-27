@@ -159,11 +159,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         if (isFullAccounting)
                         {
                             apinvoice.Tenant = tenant;
+
+
                             apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
                             apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
 
                             apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
                             apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
+                            CalculateTotalsIfEmpty(apinvoicePM);
 
                             // VendorGLAccountId
                             apinvoicePM.VendorGLAccountId = GetVendorGLAccountId(tenant, apinvoicePM);
@@ -173,7 +176,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             apinvoicePM.SetApproved = true;
                             apinvoicePM.SetReTransfer = false;
                             apinvoicePM.SetCancelApproval = false;
-
+                            apinvoicePM.CreatedFromAPI = true;
                             if (apinvoicePM.TransferStatusCode == null)
                                 apinvoicePM.TransferStatusCode = "NR";
 
@@ -218,6 +221,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "APInvoice", null, "APInvoice API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
+        }
+
+        private static void CalculateTotalsIfEmpty(APInvoicePM apinvoicePM)
+        {
+            if (apinvoicePM.SubTotalInLocalCurrency == null || apinvoicePM.SubTotalInLocalCurrency == 0)
+                apinvoicePM.SubTotalInLocalCurrency = MethodHelper.Round(apinvoicePM.InvoiceLines.Sum(s => s.LocalCurrencyAmount), 2);
+            if (apinvoicePM.SubTotalInInvoiceCurrency == null || apinvoicePM.SubTotalInInvoiceCurrency == 0)
+                apinvoicePM.SubTotalInInvoiceCurrency = MethodHelper.Round(apinvoicePM.InvoiceLines.Sum(s => s.InvoiceCurrencyAmount), 2);
         }
 
         private string GetVendorGLAccountId(int tenant, APInvoicePM apinvoicePM)
@@ -305,13 +316,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 ChargesTypePM charge = chargesTypeQuery.GetSinglePM(line.ChargesTypeId, tenant);
 
                 if (string.IsNullOrWhiteSpace(line.Description))
-                    line.Description = charge.EnglishName;
+                    line.Description = charge.Description;
                 if (string.IsNullOrWhiteSpace(line.LocalDescription))
                     line.LocalDescription = charge.LocalName ?? charge.EnglishName;
 
                 line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
             }
+
+          
         }
+      
 
         private TenantPM GetTenantPM(int tenant)
         {

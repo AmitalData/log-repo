@@ -16,7 +16,7 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {AddEditDeliveryComponent} from '../AddEditDeliveryComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeliveryPackagesTabComponent.html',
 })
 
@@ -194,8 +194,8 @@ export class DeliveryPackagesTabComponent {
                 var isValid = this.FatherComponent.Validate();
                 if (isValid) {
 
-                    var SavedEntityId = this.EntityPM.Id;
-                    var SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
+                    this.FatherComponent.SavedEntityId = this.EntityPM.Id;
+                    this.FatherComponent.SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
 
                     if (this.FatherComponent.IsNewEntity) {
                         this.ShipmentPM.AddDelivery(this.EntityPM);
@@ -204,7 +204,7 @@ export class DeliveryPackagesTabComponent {
 
                     if (!this.SaveCompletedEvent) {
                         this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                            this.FatherComponent.OnSaveCompleted(isSaveSuccess, false, SavedEntityId, SavedEntityNumber);
+                            this.FatherComponent.OnSaveCompleted(isSaveSuccess, false);
                             
                             AppTool.KillEventEmitter(this.SaveCompletedEvent);
                             this.SaveCompletedEvent = null;

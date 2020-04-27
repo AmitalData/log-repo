@@ -2,7 +2,8 @@
 <Table
   Name="Ranks"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -18,16 +19,16 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
+    Name="Code"
     Type="varchar"
-    Size="40">
+    Size="4">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="Code"
+    Name="Name"
     Type="varchar"
-    Size="4">
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>
@@ -38,6 +39,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Code,Tenant" />
 </Table>

@@ -42,7 +42,9 @@
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
-  ApplyOnPropertyChangedCode="false">
+  ApplyOnPropertyChangedCode="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;098cf6e1-8ce7-4985-ab43-1f9b5f39287d&quot;"
     FieldName="&quot;Id&quot;"
@@ -448,4 +450,5 @@
       IsFollowUp="false" />
   </EventTypes>
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

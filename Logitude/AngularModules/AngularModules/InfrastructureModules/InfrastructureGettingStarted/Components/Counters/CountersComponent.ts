@@ -11,7 +11,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CountersComponent.html',
 })
 

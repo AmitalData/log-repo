@@ -2,7 +2,8 @@
 <Table
   Name="Documents"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -72,6 +73,12 @@
   </Column>
   <Column
     Name="IsEncrypted"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="MarkForDelete"
     Type="bit">
     <Constraints
       Nullable="false" />

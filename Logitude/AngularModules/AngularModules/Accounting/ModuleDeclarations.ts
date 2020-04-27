@@ -113,7 +113,8 @@ import { NewInterestReportComponent } from './Components/NewEntity/NewInterestRe
 import { InterestReportGeneralTabComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent';
 import { InterestReportLineByDateDetailsComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportLineByDateDetails/InterestReportLineByDateDetailsComponent';
 import { InterestReportLinesByDateListTemplate } from './Components/ListTemplates/InterestReportLinesByDateListTemplate';
-
+import { InterestReportShortTitleComponent } from './Components/ShortTiTles/InterestReportShortTitleComponent';
+import { ConnectWithGLAccountComponent } from './Components/EditTabs/GLAccount/ConnectWithGLAccountComponent';
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
 
@@ -142,6 +143,7 @@ export const Components =
         NewRevaluationComponent,
         AddEditRecoExPageComponent,
         NewConnectedGLAccountComponent,
+        ConnectWithGLAccountComponent,
         NewPaymentChequeComponent,
         NewOpenFormatReportComponent,
         LoadRecoExPageComponent,
@@ -232,7 +234,8 @@ export const Components =
         NewInterestReportComponent,
         InterestReportGeneralTabComponent,
         InterestReportLineByDateDetailsComponent,
-        InterestReportLinesByDateListTemplate
+        InterestReportLinesByDateListTemplate,
+        InterestReportShortTitleComponent
     ];
 
 export class ModuleDeclarations {
@@ -262,6 +265,7 @@ export class ModuleDeclarations {
             case "AutoRecoMethodComponent": { myResult = AutoRecoMethodComponent; break; }
             case "NewRevaluationComponent": { myResult = NewRevaluationComponent; break; }
             case "AddEditRecoExPageComponent": { myResult = AddEditRecoExPageComponent; break; }
+            case "ConnectWithGLAccountComponent": { myResult = ConnectWithGLAccountComponent; break; }
             case "NewConnectedGLAccountComponent": { myResult = NewConnectedGLAccountComponent; break; }
             case "NewPaymentChequeComponent": { myResult = NewPaymentChequeComponent; break; }
             case "NewTaxReportComponent": { myResult = NewTaxReportComponent; break; }
@@ -358,6 +362,8 @@ export class ModuleDeclarations {
             case "InterestBasesTypeShortTitleComponent": { myResult = InterestBasesTypeShortTitleComponent; break; }
             case "ExtReconcileAdjustBankFeeComponent": { myResult = ExtReconcileAdjustBankFeeComponent; break; }
             case "ManageExternalReconciliationTabComponent": { myResult = ManageExternalReconciliationTabComponent; break;}
+            case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break;}
+
         }
 
         return myResult;

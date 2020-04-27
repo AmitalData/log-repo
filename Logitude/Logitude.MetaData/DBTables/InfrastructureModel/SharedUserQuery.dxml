@@ -2,7 +2,8 @@
 <Table
   Name="SharedUserQueries"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -47,5 +48,6 @@
     ForeignKeyColumn="QueryId"
     ReferencedTable="Queries"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
 </Table>

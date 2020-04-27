@@ -11,7 +11,7 @@ import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCo
 import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GroupageComponent.html',
 })
 

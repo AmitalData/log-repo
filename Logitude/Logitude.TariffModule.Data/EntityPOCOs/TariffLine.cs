@@ -161,6 +161,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public decimal? Surcharge10MinPrice { get; set; }
         [Column("CurrencyId")]
 	    public string CurrencyId { get; set; }
+        [Column("TransitTime")]
+	    public string TransitTime { get; set; }
     }
 }
 	 

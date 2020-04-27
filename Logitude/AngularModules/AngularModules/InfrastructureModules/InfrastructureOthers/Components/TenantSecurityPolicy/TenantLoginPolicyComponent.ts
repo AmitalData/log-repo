@@ -19,7 +19,7 @@ import {UserExtendedPMService} from '../../../../Common/Services/ExtendedPMs/Use
 
 @Component({
     selector: 'TenantLoginPolicyComponent',
-    moduleId: module.id,
+    
     templateUrl: './TenantLoginPolicyComponent.html',
     providers: [TenantLoginPolicyPMService],
 })
@@ -53,7 +53,7 @@ export class TenantLoginPolicyComponent extends BaseComponent {
 
 
     LoadData() {
-        this.TenantLoginPolicyPMService.get(SessionLocator.Tenant).subscribe(response => {
+        this.TenantLoginPolicyPMService.get(SessionLocator.Tenant).subscribe((response:any) => {
             if (!response.HasError) {
                 if (response.Result) {
                     this.EntityPM = response.Result;
@@ -85,7 +85,7 @@ export class TenantLoginPolicyComponent extends BaseComponent {
     }
 
     public GetEnabledForUsersCount() {
-        this.userExtendedPMService.GetUsersTwoFactorAuthenticationEnabled(SessionLocator.Tenant).subscribe(resp => {
+        this.userExtendedPMService.GetUsersTwoFactorAuthenticationEnabled(SessionLocator.Tenant).subscribe((resp:any) => {
 
             if (resp.Result) {
                 this.EnabledForUsersCount = resp.Result.length;
@@ -426,7 +426,7 @@ export class TenantLoginPolicyComponent extends BaseComponent {
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         if (this.IsNew) {
-            this.TenantLoginPolicyPMService.insert(this.EntityPM).subscribe(response => {
+            this.TenantLoginPolicyPMService.insert(this.EntityPM).subscribe((response:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!response.HasError) {
                     this.CurrentSession.CloseCurrentWindow();
@@ -436,7 +436,7 @@ export class TenantLoginPolicyComponent extends BaseComponent {
             });
         }
         else {
-            this.TenantLoginPolicyPMService.update(this.EntityPM).subscribe(response => {
+            this.TenantLoginPolicyPMService.update(this.EntityPM).subscribe((response:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!response.HasError) {
                     this.CurrentSession.CloseCurrentWindow();

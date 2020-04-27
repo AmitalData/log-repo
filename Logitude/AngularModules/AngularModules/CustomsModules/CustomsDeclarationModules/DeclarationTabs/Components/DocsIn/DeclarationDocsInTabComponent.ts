@@ -6,7 +6,7 @@ import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
 
 @Component({
     selector: 'TicketDocsInTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './DeclarationDocsInTabComponent.html',
 })
 

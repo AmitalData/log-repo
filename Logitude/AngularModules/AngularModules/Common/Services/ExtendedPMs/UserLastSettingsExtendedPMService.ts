@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -16,10 +17,10 @@ import {UserLastSettingsPM} from '../../EntityPMs/UserLastSettingsPM';
 @Injectable()
 
 export class UserLastSettingsExtendedPMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
      this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/userlastsettingsextended';      
     }
 
@@ -30,11 +31,9 @@ export class UserLastSettingsExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getbyuseridfiltername?' + 'userid=' + UserId + '&filtername=' + FilterName, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getbyuseridfiltername?' + 'userid=' + UserId + '&filtername=' + FilterName, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var pm = response;
 
 
 
@@ -47,12 +46,12 @@ export class UserLastSettingsExtendedPMService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
 
-                var servertime = response.headers.get('ServerExecutionTime');
+             //   var servertime = response.headers.get('ServerExecutionTime');
                // PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "UserLastSettings", "GetSinglePM", 'id=' + id);
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -62,14 +61,10 @@ export class UserLastSettingsExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getallByUserIdNameSpace?' + 'userid=' + UserId + '&regionnamespace=' + NameSpace, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response.json();
-
-
-
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getallByUserIdNameSpace?' + 'userid=' + UserId + '&regionnamespace=' + NameSpace, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var pm = response;
+    
                 //var entity: UserLastSettingsPM;
                 //if (pm) {
                 //    entity = this.MapJsonToEntityPM(pm);
@@ -77,14 +72,14 @@ export class UserLastSettingsExtendedPMService {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
-                serviceResponse.Result = pm;
+                serviceResponse.Result = response.body;
 
                 var servertime = response.headers.get('ServerExecutionTime');
                 // PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "UserLastSettings", "GetSinglePM", 'id=' + id);
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
  

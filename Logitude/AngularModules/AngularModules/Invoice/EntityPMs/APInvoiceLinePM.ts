@@ -258,6 +258,11 @@ export class APInvoiceLinePM {
     public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty("Quantity"); } }
        
 	 
+    private foriegnAmountWithRecognizedVat: number;
+    public get ForiegnAmountWithRecognizedVat() { return this.foriegnAmountWithRecognizedVat; }
+    public set ForiegnAmountWithRecognizedVat(newValue: number) { if (this.foriegnAmountWithRecognizedVat != newValue) { this.foriegnAmountWithRecognizedVat = newValue; this.MarkAsDirty("ForiegnAmountWithRecognizedVat"); } }
+       
+	 
 
     public OldEntityPM: APInvoiceLinePM;
 	    

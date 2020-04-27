@@ -46,7 +46,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;02a2a33b-2ce6-4548-add8-7f19de2e9bf0&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -306,7 +308,8 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     HasTemplate="false"
-    IsCustom="false" />
+    IsCustom="false"
+    NumberOfDigits="16" />
   <field
     Id="&quot;09db71b5-1855-4276-9484-2f3cb8d18b01&quot;"
     FieldName="&quot;SequenceNumeric&quot;"
@@ -389,4 +392,6 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

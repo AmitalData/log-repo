@@ -10,7 +10,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
     selector: 'PreviewQuoteTemplateReportComponent',
-    moduleId: module.id,
+    
     templateUrl: './PreviewQuoteTemplateReportComponent.html',
 })
 
@@ -23,7 +23,7 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
     HeightPdf: number;
     isFromLibrary: boolean = false;
     AreaName: string;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
@@ -42,7 +42,7 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
 
     GetQuoteTemplatePdfReport() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
-        this.quoteTemplateSectionExtendedPMService.GetQuoteTemplatePdfReport(this.QuoteId, this.QuoteTemplateId, SessionLocator.LoggedUserId, this.isFromLibrary).subscribe(res => {
+        this.quoteTemplateSectionExtendedPMService.GetQuoteTemplatePdfReport(this.QuoteId, this.QuoteTemplateId, SessionLocator.LoggedUserId, this.isFromLibrary).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {

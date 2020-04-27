@@ -49,7 +49,9 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   CustomFieldsCount="0"
-  SearchFields="&quot;LoginPolicy,LoginPolicies,,Code,&quot;">
+  SearchFields="&quot;LoginPolicy,LoginPolicies,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7a41b03d-277d-471c-a1d5-87da2dc02e85&quot;"
     FieldName="&quot;Code&quot;"
@@ -189,7 +191,7 @@
     Id="&quot;d8fecf40-8719-4dbf-90ed-7ed63abce99a&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;LoginPolicy&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

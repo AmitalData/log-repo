@@ -117,6 +117,11 @@ namespace WarehouseData
                                 stepName = table.DBTableName;
                                 if (table.DBTableName != "WaterMarks")
                                 {
+                                    if(table.TableName == "Shipment")
+                                    {
+
+                                    }
+
                                     mainDataWarehouseService.UpdateDWDataBase(table, sourceConnectionString, destinationConnectionString);
                 
                                     if (table.DispayInScreen)

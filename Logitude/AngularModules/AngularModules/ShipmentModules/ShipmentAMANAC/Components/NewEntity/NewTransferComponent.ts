@@ -14,7 +14,7 @@ import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewTransferComponent.html',
 })
 

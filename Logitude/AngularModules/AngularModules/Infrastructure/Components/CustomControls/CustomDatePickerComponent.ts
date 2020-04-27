@@ -7,7 +7,7 @@ import {FormGroup, FormBuilder} from '@angular/forms';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'CustomDatePicker',
     templateUrl: './CustomDatePickerComponent.html',
@@ -149,6 +149,9 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
             this.SetDisplayText();
         }
         if (this.ObjectField.IsRequiered == true) {
+            this.NoDateVisibile = false;
+        }
+        if (this.ObjectField.FieldName == "CreateDateTime") {
             this.NoDateVisibile = false;
         }
     }

@@ -39,12 +39,14 @@ export class ShipmentView {
     }
 
     EditNewView() {
-      //  browser.sleep(1000)
-
-        this.helper.WaitBusyIndicator()
+     //  browser.sleep(1000)
+      // this.helper.WaitByIdAndClick('Refresh_2');
         this.helper.ItemsVisibility('QueryList_0_0')
         this.helper.ItemsPresentWithOutClick('QueryList_0_0')
         this.helper.WaitByIdAndClick('QueryList_0_0');
+        this.helper.WaitByIdAndClick('SearchFieldsId_0_0');
+        this.helper.WaitByIdAndClick('QueryList_0_0');
+       // this.helper.ItemsVisibility('ViewFiltersButton')
         this.helper.WaitActionButtonAndClick('ActionButtonsParent', true);
         this.helper.ItemsPresentforCSS('.ListBoxItem');
         this.helper.WaitBusyIndicator();

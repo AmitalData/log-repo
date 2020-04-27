@@ -2,11 +2,12 @@
 <Table
   Name="CustomerSizes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -16,13 +17,6 @@
     Type="int">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="Name"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="OrderNumber"
@@ -38,9 +32,22 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="SearchFields"
     Type="nvarchar"
-    Size="-1">
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>

@@ -114,7 +114,7 @@
 
                                                         <div class="SimpleGridViewBody" style="overflow-y:auto">
                                                             <table>
-                                                                <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of DataContext.PortItemsList" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                                                <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of DataContext.PortItemsList">
                                                                     <td class="GridViewCell" style="width:80px; min-width: 80px;max-width:80px">
                                                                         <div>{{item.Code}}</div>
                                                                     </td>

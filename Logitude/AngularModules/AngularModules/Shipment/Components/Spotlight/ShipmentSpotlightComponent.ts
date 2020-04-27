@@ -10,7 +10,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SpotLightDateComponent} from './SpotLightDateComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ShipmentSpotlightComponent.html',
 })
 

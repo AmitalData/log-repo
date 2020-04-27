@@ -3,7 +3,11 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.StorageService;
+using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -24,6 +28,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -42,7 +47,9 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private IShipmentsContext shipmentsContext;
         private MessageTransferHelper Helper;
         private bool isDropBox = false;
-        public ARInvoiceMessageHelper(List<ARInvoice> invoices, string filename, int tenant,  bool isDropBox = false)
+        private bool UsingFTP = false;
+        private string FTPDetailId;
+        public ARInvoiceMessageHelper(List<ARInvoice> invoices, string filename, int tenant,  bool isDropBox = false, bool isFTP = false)
         {
             this.tenant = tenant;
             this.filename = filename;
@@ -52,6 +59,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             this.shipmentsContext = ShipmentsContext.GetContext(tenant);
             this.Helper = new MessageTransferHelper(tenant, this.invoiceCotnext, this.commonContext, this.shipmentsContext);
             this.isDropBox = isDropBox;
+            this.UsingFTP = isFTP;
+
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(commonContext);
             AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
             if (accountingSetting != null)
@@ -59,6 +68,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 myVATableTempCard = accountingSetting.ReceivableVATableTempCard;
                 myVATExemptTempCard = accountingSetting.ReceivableVATExemptTempCard;
                 myAccountingSystemCode = accountingSetting.AccountingSystemCode;
+                FTPDetailId = accountingSetting.TransferFTPDetailId;
             }
         }
         public ARInvoiceMessageHelper(int tenant)
@@ -279,6 +289,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         UnitPrice = myline.UnitPrice == null ? 0 : (decimal)myline.UnitPrice,
                         Quantity = myline.Quantity == null ? 0 : (decimal)myline.Quantity,
                         IsMultiTAX = myline.VatType == null ? false : myline.VatType.IsMultiPercentage,
+                        AppliesRegionalTax = myline.IsRegionalTax,
                     };
                     
                     if (string.IsNullOrEmpty(lineElement.OriginalCurrency))
@@ -1038,6 +1049,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         TaxCode = myline.VatType == null ? null : myline.VatType.Code,
                         TaxPercentage = myline.VatPercent == null ? 0 : (decimal)myline.VatPercent.Value,
                         TaxAmount = myline.InvoiceCurrencyVATAmount == null ? 0 : (decimal)myline.InvoiceCurrencyVATAmount.Value,
+                        IsRegionalTax = myline.IsRegionalTax,
                     };
 
                     invoiceElement.TaxTotalsInInvoiceCurrency.Add(invoiceTaxElement);
@@ -1937,9 +1949,14 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             {
                 this.BulidDropBoxXMLLFile(bytearray);
             }
+
+            else if(this.UsingFTP && !string.IsNullOrEmpty(this.FTPDetailId))
+            {
+                this.BuildFile_ViaFTP(bytearray);
+            }
+
             else
             {
-                Stream blbstr = null;
                 if (bytearray != null)
                 {
                     string[] fileProps = fileName.Split('.');
@@ -1954,22 +1971,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     };
                     Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                     storageservice.Write(bytearray, fileInfo);
-
-
-
-
-                    //CloudBlobContainer blobContainer = null;
-                    //blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
-                    //blobContainer.CreateIfNotExists();
-
-                    //CloudBlockBlob blobfile = blobContainer.GetBlockBlobReference(fileName);
-
-                    //using (blbstr = blobfile.OpenWrite())
-                    //{
-                    //    StringBuilder stringbuilder = new StringBuilder();
-                    //    Encoding encoding = new UTF8Encoding();
-                    //    blbstr.Write(bytearray, 0, bytearray.Length);
-                    //}
                 }
             }
         }
@@ -1986,6 +1987,65 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 entityId = invoice.Id;
             }
             var commLog = helper.CreateDropBoxCommunicationLog(tenant, objectTableId, bytearray, this.filename, "ARInvoices", "AR Invoice", entityId);
+        }
+
+        private string myDocumentId;
+        private string myDocumentFolder;
+        private string myDocumentExtension;
+        private string myCommunicationLogId;
+        private void BuildFile_ViaFTP(byte[] myByteArray)
+        {
+            ObjectTableRepository repo = new ObjectTableRepository(tenant);
+            string  objectTableId = repo.GetObjectTableIdByName("ARInvoice");
+            string FTPFileName = "";
+
+            AccountingTranferViaFTPHelper helper = new AccountingTranferViaFTPHelper(tenant, objectTableId, FTPDetailId);           
+            var invoice = this.invoices.FirstOrDefault();
+            var entityId = "";
+            if (invoice != null)
+            {
+                entityId = invoice.Id;
+                FTPFileName = invoice.InvoiceNumber;
+            }
+            
+            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode, "ARInvoice");
+
+            this.myDocumentId = helper.DocumentId;
+            this.myDocumentFolder = helper.DocumentFolder;
+            this.myDocumentExtension = helper.DocumentExtension;
+            this.myCommunicationLogId = commLog.Id;
+
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = myDocumentId,
+                FolderName = myDocumentFolder,
+                Extension = myDocumentExtension,
+                Tenant = tenant,
+                FileSize = myByteArray.Length,
+            };
+
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            storageservice.Write(myByteArray, fileInfo);
+
+            try
+            {
+                //helper.Test(commLog, tenant);
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue(commLog.QueueName, 0);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } });
+            }
+
+            catch (Exception ex)
+            {
+                string ip = "";
+
+                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                {
+                    ip = HttpContext.Current.Request.UserHostAddress;
+                }
+
+                ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "AR Invoice Transfer", null, ip);
+            }
         }
         #endregion
 
@@ -2074,5 +2134,5 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 }
             }
         }
-    }
+    } 
 }

@@ -6,7 +6,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 
 @Component({
     selector: 'TariffComponent',
-    moduleId: module.id,
+    
     templateUrl: './TariffWorkspaceComponent.html',
     providers: [EntityResourceService],
 })
@@ -75,7 +75,7 @@ export class TariffWorkspaceComponent implements OnInit {
 
                         case "COST": {
                             if (this.Page_TW == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe((response:any) => {
                                     SessionLocator.DynamicLoader.Load('./TariffModule/Components/Workspaces/CostWorkspaceComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_TW = cmpRef.instance;
@@ -92,7 +92,7 @@ export class TariffWorkspaceComponent implements OnInit {
 
                         case "SETG": {
                             if (this.Page_DW == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe((response:any) => {
                                     SessionLocator.DynamicLoader.Load('./TariffModule/Components/Workspaces/SettingsWorkspaceComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_DW = cmpRef.instance;

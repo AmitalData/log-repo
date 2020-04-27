@@ -34,7 +34,9 @@
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;Booking&quot;">
+  ClientModuleName="&quot;Booking&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;d43e64f6-dc08-4be5-ba9a-f1bddf67b664&quot;"
     FieldName="&quot;Code&quot;"
@@ -225,4 +227,6 @@
       Name="&quot;Direct&quot;"
       SearchFields="&quot;D,Direct,&quot;" />
   </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

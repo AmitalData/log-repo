@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				VatMandatoryTypeRepository  vatMandatoryTypeRepository = new VatMandatoryTypeRepository(MyContext);
-				IQueryable<VatMandatoryType> entityPocos = vatMandatoryTypeRepository.GetVatMandatoryTypes();
+				IQueryable<VatMandatoryType> entityPocos = vatMandatoryTypeRepository.GetVatMandatoryType();
 
 				VatMandatoryTypeQuery vatMandatoryTypeQuery = new VatMandatoryTypeQuery(vatMandatoryTypeRepository);
 			    IQueryable<VatMandatoryTypeList> entityLists = vatMandatoryTypeQuery.GetIQueryableEntityList(entityPocos);
@@ -130,7 +130,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     ObjectTableName = "VatMandatoryType",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "VatMandatoryTypes",
+                    QuerySection = "VatMandatoryType",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -213,7 +213,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 VatMandatoryTypeRepository  vatMandatoryTypeRepository = new VatMandatoryTypeRepository(MyContext);
-                IQueryable<VatMandatoryType> entityPocos = vatMandatoryTypeRepository.GetVatMandatoryTypes();
+                IQueryable<VatMandatoryType> entityPocos = vatMandatoryTypeRepository.GetVatMandatoryType();
 
                 VatMandatoryTypeQuery vatMandatoryTypeQuery = new VatMandatoryTypeQuery(vatMandatoryTypeRepository);
                 

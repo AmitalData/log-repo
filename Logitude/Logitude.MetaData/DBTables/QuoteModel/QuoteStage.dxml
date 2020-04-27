@@ -2,7 +2,8 @@
 <Table
   Name="QuoteStages"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Id"
     Type="varchar"
@@ -38,6 +39,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="UpdateDate"
     Type="datetime">
     <Constraints
@@ -47,13 +55,6 @@
     Name="UpdatedByUserId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>

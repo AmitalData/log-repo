@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="SharedLogisticsInvitationStatus"
+  ShortName="SharedLogInvitationStatus"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Code"
     Type="int">

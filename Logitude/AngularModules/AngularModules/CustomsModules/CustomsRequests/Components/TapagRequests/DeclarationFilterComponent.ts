@@ -20,7 +20,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 @Component({
     selector: 'DeclarationFilterComponent',
-    moduleId: module.id,
+    
     templateUrl: './DeclarationFilterComponent.html',
 })
 

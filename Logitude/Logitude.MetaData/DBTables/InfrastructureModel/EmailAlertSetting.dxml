@@ -2,7 +2,8 @@
 <Table
   Name="EmailAlertSettings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -39,12 +40,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="InActive"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="SettingLevelCode"
     Type="varchar"
     Size="4">
@@ -53,6 +48,7 @@
   </Column>
   <Column
     Name="To"
+    ShortName="To_"
     Type="varchar"
     Size="1000">
     <Constraints
@@ -61,6 +57,12 @@
   <Column
     Name="IndexOrder"
     Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>

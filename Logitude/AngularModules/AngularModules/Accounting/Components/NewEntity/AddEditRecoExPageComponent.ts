@@ -27,7 +27,7 @@ import { reject } from 'q';
 
 @Component({
     selector: 'AddEditRecoExPageComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './AddEditRecoExPageComponent.html',
 })
@@ -123,7 +123,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
         return new Promise(resolve =>
         {
             this._ExternalPageAdditionalDataPMService.get(objectTableId, entityId)
-            .subscribe(response =>
+            .subscribe((response:any) =>
             {
                 console.log("[GetAdditionalData]", response);
 
@@ -459,7 +459,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
             });
         } else {
 
-            this._ReconcileExternalPagePMService.update(this.ReconcileExternalPagePM).subscribe(myResult =>
+            this._ReconcileExternalPagePMService.update(this.ReconcileExternalPagePM).subscribe((myResult:any) =>
             {
 
                 var mm: ServiceResponse = myResult;
@@ -470,7 +470,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
                 else {
                     if (!this.closeScreen) {
                         this.CurrentSession.StartBusyIndicatorSaving();
-                        this._ReconcileExternalPagePMService.get(mm.Result.Id).subscribe(myResult =>
+                        this._ReconcileExternalPagePMService.get(mm.Result.Id).subscribe((myResult:any) =>
                         {
 
                             var result: ServiceResponse = myResult;
@@ -531,7 +531,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
 
     private GetCurrency(currencyId: any)
     {
-        this._CurrencyPMService.get(currencyId).subscribe((myResult) =>
+        this._CurrencyPMService.get(currencyId).subscribe((myResult:any) =>
         {
             var currency = myResult.Result;
             if (!AppTool.IsNullOrEmpty(currency)) {
@@ -586,7 +586,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
 
         if (previousPageNo) {
             //get last page
-            this._ReconcileExternalPageExtendedPMService.GetPageByNumber(previousPageNo, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult) =>
+            this._ReconcileExternalPageExtendedPMService.GetPageByNumber(previousPageNo, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult:ServiceResponse) =>
             {
                 var bankPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(bankPage)) {
@@ -607,7 +607,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
 
         if (extPageNumber) {
             //get last page
-            this._ReconcileExternalPageExtendedPMService.GetPreviousPageByNumber(extPageNumber, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult) =>
+            this._ReconcileExternalPageExtendedPMService.GetPreviousPageByNumber(extPageNumber, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult:ServiceResponse) =>
             {
                 var bankPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(bankPage)) {

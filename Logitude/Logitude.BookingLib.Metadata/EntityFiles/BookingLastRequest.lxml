@@ -32,7 +32,9 @@
   Code="&quot;3a92&quot;"
   Name="&quot;BookingLastRequest Query Group&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;Booking&quot;">
+  ClientModuleName="&quot;Booking&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;ab45224e-d9bf-4c0c-9162-d738ad9c389c&quot;"
     FieldName="&quot;Id&quot;"
@@ -510,4 +512,6 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

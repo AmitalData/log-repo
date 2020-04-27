@@ -25,11 +25,16 @@ import { PackageTypeListService } from '../../../../Common/Services/StandardList
 import { TariffLinesContainersPricePM } from '../../../EntityPMs/TariffLinesContainersPricePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VersionHistoryTabComponent.html',
 })
 
 export class VersionHistoryTabComponent implements OnDestroy {
+  public IsDraftVersion: any;
+  public EditTariffButtonClicked(item: any) { }
+  public DeleteTariffButtonClicked(item: any) { }
+
+
     public EntityPM: TariffPM;
     public VersionPM: TariffVersionPM;
     public VersionLinesSource: ObservableCollection;
@@ -539,12 +544,15 @@ export class VersionHistoryTabComponent implements OnDestroy {
             tariffLine.Version = copiedVersion.Version;
             tariffLine.OriginPortId = item.OriginPortId;
             tariffLine.OriginPortCode = item.OriginPortCode;
+            tariffLine.OriginPortCombinedCode = item.OriginPortCombinedCode;
             tariffLine.OriginPortName = item.OriginPortName;
             tariffLine.DestinationPortId = item.DestinationPortId;
             tariffLine.DestinationPortCode = item.DestinationPortCode;
+            tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
+            tariffLine.TransitTime = item.TransitTime;
             tariffLine.IsFromAllOtherPorts = item.IsFromAllOtherPorts;
             tariffLine.IsToAllOtherPorts = item.IsToAllOtherPorts;
 
@@ -647,12 +655,15 @@ export class VersionHistoryTabComponent implements OnDestroy {
 export class VersionHistoryTariffLine {
     public OriginPortCode: string;
     public DestinationPortCode: string;
+    public OriginPortCombinedCode: string;
+    public DestinationPortCombinedCode: string;
     public Notes: string;
     public ExpirationDate: Date;
     public IsFromAllOtherPorts: boolean;
     public IsToAllOtherPorts: boolean;
     public CurrencyCode: string;
     public StartDate: Date;
+    public TransitTime: string;
 
     //AFC || OLC
     public MinPrice: number;
@@ -722,12 +733,15 @@ export class VersionHistoryTariffLine {
     private AssignCommonData() {
         this.OriginPortCode = this.myTariffLine.OriginPortCode;
         this.DestinationPortCode = this.myTariffLine.DestinationPortCode;
+        this.OriginPortCombinedCode = this.myTariffLine.OriginPortCombinedCode;
+        this.DestinationPortCombinedCode = this.myTariffLine.DestinationPortCombinedCode;
         this.Notes = this.myTariffLine.Notes;
         this.ExpirationDate = this.myTariffLine.ExpirationDate;
         this.IsFromAllOtherPorts = this.myTariffLine.IsFromAllOtherPorts;
         this.IsToAllOtherPorts = this.myTariffLine.IsToAllOtherPorts;
         this.CurrencyCode = this.myTariffLine.CurrencyCode;
         this.StartDate = this.myTariffLine.StartDate;
+        this.TransitTime = this.myTariffLine.TransitTime;
     }
 
     private AssignData_FreightCost() {

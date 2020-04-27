@@ -14,7 +14,7 @@ import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'NewInterestReportComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './NewInterestReportComponent.html',
 })
@@ -113,7 +113,7 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
 
     SubmitChanges() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.myService.insert(this.EntityPM).subscribe(myResult => {
+        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
             var iServiceResponse: ServiceResponse = myResult;
             if (!iServiceResponse.HasError) {

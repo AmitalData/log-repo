@@ -62,7 +62,9 @@
   DescriptionDefaultText="&quot;Manage the unit of measurement names to be printed in documents.&quot;"
   DescriptionTextCodeId="&quot;1-69447&quot;"
   CodeField="&quot;Code&quot;"
-  NameField="&quot;Name&quot;">
+  NameField="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;aaa9f1de-3799-4ff9-ab52-83163b36fc71&quot;"
     FieldName="&quot;Id&quot;"
@@ -73,7 +75,7 @@
     ObjectTableName="&quot;Measurement&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="false"
@@ -211,7 +213,7 @@
     ObjectTableName="&quot;Measurement&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="false"
@@ -279,7 +281,7 @@
     ObjectTableName="&quot;Measurement&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="false"
@@ -632,7 +634,7 @@
     ObjectTableName="&quot;Measurement&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="true"
     DisplayOnLookUp="false"
     CanFilter="true"
@@ -1028,4 +1030,15 @@
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;Measurement.M.Measurements&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Measurement.Features.Measurements&quot;"
+      FeatureDefaultText="&quot;Measurements&quot;" />
+  </AdditionalFeatures>
 </entity>

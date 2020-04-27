@@ -42,6 +42,7 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data;
 using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.EntityOtherServices;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -109,6 +110,7 @@ namespace WebFreight.Web.InfrastructureModel
         static AccountingPaymentMethodRepository PaymentMethodRepository;
         // Tariff 
         static PriceStepRepository priceStepRepository;
+        static TariffProductRepository tariffProductRepository;
 
         //Tickets 
         static TicketTypeRepository ticketTypeRepository;
@@ -255,6 +257,7 @@ namespace WebFreight.Web.InfrastructureModel
 
             //Tariff 
             priceStepRepository = new PriceStepRepository(theTenant);
+            tariffProductRepository = new TariffProductRepository(theTenant);
 
             //Tickets 
             ticketTypeRepository = new TicketTypeRepository(theTenant);
@@ -412,6 +415,7 @@ namespace WebFreight.Web.InfrastructureModel
                     {
                         tenantZeroCustomsRequiredFields = CustomsRequiredFieldRepository.GetAll(0).ToList();
                     }
+
                     #endregion
                     scope.Complete();
                 }
@@ -420,7 +424,7 @@ namespace WebFreight.Web.InfrastructureModel
                 InitializeRepositories(tenant);
                 AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
                 AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
-
+                AddDefaultTariffProducts(tenant);
                 AddDefaultAccountingSettings(tenant, accountingSettingsRepository, zeroAccountingSettings);
                 AddDefaultCustomsInterfaceSettings(tenant, customsInterfaceSettingRepository, zeroCustomsInterfaceSetting);
                 AddDefaultSharedLogisticsSettings(tenant, sharedLogisticsSettingRepository, zeroSharedLogisticsSetting);
@@ -443,7 +447,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddEntityStatus(tenant, entityStatusRepository, tenantZeroEntityStatus, tenantZeroObjectTables);
                 List<EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToList();
 
-                AddEventTypes(tenant, eventTypeRepository, tenantZeroEventTypes, /*CurrentTenantObjectTables*/null, tenantZeroObjectTables, currentTenantEntityStatus);
+                AddEventTypes(tenant, eventTypeRepository, tenantZeroEventTypes, /*CurrentTenantObjectTables*/null, tenantZeroObjectTables, currentTenantEntityStatus, tenantZeroEntityStatus);
 
                 AddMeasurements(tenant, measurementRepository, tenantZeroMeasurements);
                 List<Measurement> currentTenantMeasurement = measurementRepository.GetMeasurementsByTenant(tenant).ToList();
@@ -666,6 +670,12 @@ namespace WebFreight.Web.InfrastructureModel
 
                                         documentTypeRepository.SubmitChanges();
                                     }
+                                }
+
+                                if(countryCode == "MX")
+                                {
+                                    MexicanCountryCities mexicanCountryCities = new MexicanCountryCities();
+                                    mexicanCountryCities.AddMexicanCountryCities(tenant, countryId);     
                                 }
                             }                                                      
                         }
@@ -991,12 +1001,42 @@ namespace WebFreight.Web.InfrastructureModel
                     Id = IdCounter.GetNumber("TariffSetting", theTenant).ToString(),
                     Tenant = theTenant,
                     DefaultPriceSteps = zeroEntity.DefaultPriceSteps,
+                    ContainerDefaults = "20GP, 40GP, 20HC",
                 };
 
                 iRepository.Add(settings);
                 iRepository.SubmitChanges();
                 AddPriceSteps(settings);
             }   
+        }
+
+        private static void AddDefaultTariffProducts(int tenant)
+        {
+            TariffProduct GENTariffProduct = new TariffProduct()
+            {
+                Id = IdCounter.GetNumber("TariffProduct", tenant).ToString(),
+                Tenant = tenant,
+                Code = "GEN",
+                Name = "General",
+                LocalName = "General",
+                Inactive = false,
+                SearchFields = "GEN, General"
+            };
+            
+            TariffProduct DNGTariffProduct = new TariffProduct()
+            {
+                Id = IdCounter.GetNumber("TariffProduct", tenant).ToString(),
+                Tenant = tenant,
+                Code = "DNG",
+                Name = "Dangerous Goods",
+                LocalName = "Dangerous Goods",
+                Inactive = false,
+                SearchFields = "DNG, Dangerous Goods"
+            };
+
+            tariffProductRepository.Add(GENTariffProduct);
+            tariffProductRepository.Add(DNGTariffProduct);
+            tariffProductRepository.SubmitChanges();
         }
 
         private static void AddDefaultAccountingSettings(int theTenant, AccountingSettingRepository theAccountingSettingsRepository, AccountingSetting tenantZeroAccoutingSettings)
@@ -1966,11 +2006,12 @@ namespace WebFreight.Web.InfrastructureModel
             theEntityStatusRepository.SubmitChanges();
         }
 
-        public static void AddEventTypes(int theTenant, EventTypeRepository theEventTypeRepository, List<EventTypePM> tenantZeroEventTypes, List<ObjectTable> currentTenantObjectTables, List<ObjectTable> tenantZeroObjectTables, List<EntityStatus> currentTenantEntityStatus)
+        public static void AddEventTypes(int theTenant, EventTypeRepository theEventTypeRepository, List<EventTypePM> tenantZeroEventTypes, List<ObjectTable> currentTenantObjectTables, List<ObjectTable> tenantZeroObjectTables, List<EntityStatus> currentTenantEntityStatus, List<EntityStatusPM> tenantZeroEntityStatus)
         {
             foreach (EventTypePM eventType in tenantZeroEventTypes)
             {
                 ObjectTable tenantZeroObject = tenantZeroObjectTables.Where(d => d.Id == eventType.ObjectTableId).FirstOrDefault();
+
                 if (tenantZeroObject != null)
                 {
                     EventType newEventType = new EventType()
@@ -1980,7 +2021,6 @@ namespace WebFreight.Web.InfrastructureModel
                         AddedManually = eventType.AddedManually,
                         Code = eventType.Code,
                         EnglishName = eventType.EnglishName,
-                        EntityStatusId = currentTenantEntityStatus.Where(d => d.Name == eventType.EntityStatusName).FirstOrDefault() != null ? currentTenantEntityStatus.Where(d => d.Name == eventType.EntityStatusName).FirstOrDefault().Id : null,
                         FollowUpEnglishName = eventType.FollowUpEnglishName,
                         FollowUpLocalName = eventType.FollowUpLocalName,
                         ManualActivatedFollowUp = eventType.ManualActivatedFollowUp,
@@ -1990,8 +2030,21 @@ namespace WebFreight.Web.InfrastructureModel
                         LocalName = eventType.LocalName,
                         ShortView = eventType.ShortView,
                         SearchFields = eventType.SearchFields,
-                        IsCustomerView = eventType.IsCustomerView,
+                        IsCustomerView = eventType.IsCustomerView,                         
                     };
+
+                    if (eventType.EntityStatusId != null)
+                    {
+                        EntityStatusPM tenantZeroStatus = tenantZeroEntityStatus.Where(d => d.Id == eventType.EntityStatusId).FirstOrDefault();
+                        if (tenantZeroStatus != null)
+                        {
+                            EntityStatus tenantStatus = currentTenantEntityStatus.Where(d => d.Code == tenantZeroStatus.Code && d.ObjectTableId == tenantZeroStatus.ObjectTableId).FirstOrDefault();
+                            if (tenantStatus != null)
+                            {
+                                newEventType.EntityStatusId = tenantStatus.Id;
+                            }
+                        }
+                    }
 
                     theEventTypeRepository.Add(newEventType);
                 }

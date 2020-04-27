@@ -62,7 +62,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;238c4978-19dc-48e1-bcb6-df0baf619feb&quot;"
     FieldName="&quot;Id&quot;"
@@ -1810,7 +1812,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;BankAccount&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -3191,11 +3193,51 @@
   <DataContracts />
   <AdditionalTextCodes>
     <TextCode
+      Code="&quot;General.MC.ACC.BankAccounts&quot;"
+      DefaultText="&quot;Bank Accounts&quot;"
+      LocalDefaultText="&quot;חשבונות בנק&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankAccounts.O.CurrencyGLAccountAndDefferredMustSame&quot;"
+      DefaultText="&quot;The currency of the GL Account and the defferred GL Account must be the same&quot;"
+      LocalDefaultText="&quot;המטבע של הכרטיס צריך להיות זהה למטבע של כרטיס הדחויים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankAccounts.O.CancelPage&quot;"
+      DefaultText="&quot;Cancel Page&quot;"
+      LocalDefaultText="&quot;ביטול דף בנק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankAccounts.O.CantCancelItsNotLastApproved&quot;"
+      DefaultText="&quot;Can’t cancel the bank page. It’s not the last approved page&quot;"
+      LocalDefaultText="&quot;לא ניתן לבטל דף בנק זה משום שהוא אינו הדף המאושר האחרו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankAccounts.O.CanCancelItsTransactionsReconciled&quot;"
+      DefaultText="&quot;Can’t cancel the bank page. It’s transactions have been reconciled&quot;"
+      LocalDefaultText="&quot;לא ניתן לבטל דף בנק זה משום שהתנועות שלו הותאמו כבר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;BankAccount.O.Bank_and_GL_Account_must_be_same_currency&quot;"
       DefaultText="&quot;Bank currency and GL Account currency must be the same&quot;"
       LocalDefaultText="&quot;מטבע הבנק ומטבע הכרטיס חייב להיות זהים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;BANKACCOUNTMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;BankAccount.Features.BankAccountMenu&quot;"
+      FeatureDefaultText="&quot;Bank Accounts&quot;" />
+  </AdditionalFeatures>
 </entity>

@@ -10,7 +10,7 @@ import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesV
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditMultipleAPInvoiceLineComponent.html',
 })
 

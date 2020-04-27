@@ -61,7 +61,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;PrepaidCollect,PrepaidCollects,,Id,&quot;">
+  SearchFields="&quot;PrepaidCollect,PrepaidCollects,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;beff139c-7e64-4ebb-b61e-01a88afe1ccb&quot;"
     FieldName="&quot;Id&quot;"
@@ -222,7 +224,7 @@
     ObjectTableName="&quot;PrepaidCollect&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="40"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -293,7 +295,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;PrepaidCollect&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

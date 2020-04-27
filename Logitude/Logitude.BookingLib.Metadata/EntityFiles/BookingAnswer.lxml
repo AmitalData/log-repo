@@ -33,7 +33,9 @@
   Code="&quot;f245&quot;"
   Name="&quot;BookingAnswer Query Group&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;Booking&quot;">
+  ClientModuleName="&quot;Booking&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;f93687bc-fe84-4ab4-a537-c4589ae2b7dd&quot;"
     FieldName="&quot;Id&quot;"
@@ -1192,4 +1194,6 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

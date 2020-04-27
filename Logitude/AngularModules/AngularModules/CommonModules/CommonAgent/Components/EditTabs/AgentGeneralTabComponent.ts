@@ -7,7 +7,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AgentGeneralTabComponent.html',
 })
 
@@ -19,7 +19,7 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
     public ControlColumnWidth: number = 200;
     public DataContext: AgentGeneralTabComponent = this;
     private ScreenCode: string = "Agent.AdditionalFields";
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;

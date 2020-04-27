@@ -22,7 +22,7 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 
 @Component({
     selector: 'MasavPaymentsToAgentComponent',
-    moduleId: module.id,
+    
     templateUrl: './MasavPaymentsToAgentComponent.html',
 })
 

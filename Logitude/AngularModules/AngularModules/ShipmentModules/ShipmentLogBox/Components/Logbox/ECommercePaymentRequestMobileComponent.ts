@@ -6,7 +6,6 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { SearchTextBox } from '../../../../Controls/SearchTextBox';
 import { IconButton } from '../../../../Controls/IconButton';
 import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import { Http, Response } from '@angular/http';
 import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -34,14 +33,17 @@ import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocat
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ECommercePaymentRequestMobileComponent.html'
 })
 
 export class ECommercePaymentRequestMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
+  public DimDenyButton: boolean = false;
+  public DimApproveButton: boolean = false;
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
     //private messageWindow: MessageWindow = new MessageWindow();
@@ -57,6 +59,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     public _ShipmentPMService: ShipmentPMService;
     RefreshTimer: any;
+    private datePipe: DatePipe;
     _ImageLibraryService: ImageLibraryService;
     constructor(private cd: ChangeDetectorRef) {
         super();
@@ -65,6 +68,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         this._ImageLibraryService = new ImageLibraryService();
         this._DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
         this._ShipmentPMService = new ShipmentPMService();
+        this.datePipe = new DatePipe("en-US");
         //this.AdditionalData.RequestPaymentData = {};
         //this.AdditionalData.PaymentData = {};
 
@@ -75,10 +79,15 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get IsAccepted() { return this.isAccepted }
     public set IsAccepted(newValue: boolean) { this.isAccepted = newValue; }
 
+    ScreenWidth: number;
+    private MaxScreenWidth: number = 600;
+
     IsAcceptedChanged($event) {
         this.IsAccepted = $event;
     }
     ngOnInit() {
+
+        this.ScreenWidth = window.innerWidth > this.MaxScreenWidth ? this.MaxScreenWidth : window.innerWidth;;
 
     }
     ngAfterViewInit() {
@@ -110,15 +119,16 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 }
             }
         }
-        this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
+        this.StartBusyIndicator("Loading ...");
+        this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
             if (MyResult.Result) {
                 //this.EntityPm = MyResult.Result;
-                //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe(AdditionalResult => {
+                //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {
 
                 this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                 if (this.AdditionalData.IsPaymentRequired) {
                     if (this.EntityPm) {
-
+                        
                         var ammount = 0;
 
                         this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
@@ -129,7 +139,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
                 }
                 else {
-                    this.FinalMessage = "קובץ זה םינו נדרש לתשלום";
+                    var myMessage = "משלוח זה כבר שולם בתאריך";
+                    if (this.AdditionalData.PaymentDateTime != null) {
+                        var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
+                        myMessage = myMessage + " " + formatedPaymentDateTime;
+                    }
+                    this.FinalMessage = myMessage;
                     this.ShowFinalMessage = true;
                 }
 
@@ -139,6 +154,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
 
                     this.CompanyLogo = myLogoResult.Result;
+                    this.StopBusyIndicator();
 
                 });
                 //GetTenantEcommerceSupportEmail
@@ -150,7 +166,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 if (this.RefreshTimer) {
                     clearTimeout(this.RefreshTimer);
                 }
-
+                //this.StopBusyIndicator();
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
@@ -166,10 +182,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
             if (this.RefreshTimer) {
                 clearTimeout(this.RefreshTimer);
             }
-            this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
+            this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
                 if (MyResult.Result) {
                     //this.EntityPm = MyResult.Result;
-                    //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe(AdditionalResult => {
+                    //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {
 
                     this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                     if (this.AdditionalData.IsPaymentRequired) {
@@ -180,12 +196,17 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                             this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
                                 ammount += +(item.AmountInNIS);
                             });
-
+                            
                             this.TotalAmount = ammount;
                         }
                     }
                     else {
-                        this.FinalMessage = "קובץ זה םינו נדרש לתשלום";
+                        var myMessage = "משלוח זה כבר שולם בתאריך";
+                        if (this.AdditionalData.PaymentDateTime != null) {
+                            var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
+                            myMessage = myMessage + " " + formatedPaymentDateTime;
+                        }
+                        this.FinalMessage = myMessage;
                         this.ShowFinalMessage = true;
                     }
 
@@ -228,6 +249,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     public get ShipmentValueInNIS() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ShipmentValueInNIS, 0) }
     public set ShipmentValueInNIS(newValue: string) { this.AdditionalData.RequestPaymentData.ShipmentValueInNIS = newValue; }
+
+    public get ForeignCurrencyValue() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ForeignCurrencyValue, 0) }
+    public set ForeignCurrencyValue(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrencyValue = newValue; }
+
+    public get ForeignCurrency() { return this.AdditionalData.RequestPaymentData.ForeignCurrency }
+    public set ForeignCurrency(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrency = newValue; }
 
     public get SenderDetails() { return this.AdditionalData.RequestPaymentData.SenderDetails }
     public set SenderDetails(newValue: string) { this.AdditionalData.RequestPaymentData.SenderDetails = newValue; }
@@ -274,6 +301,20 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
     public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
 
+    public get u71() { return this.AdditionalData.PaymentData.u71 }
+    public set u71(newValue: string) { this.AdditionalData.PaymentData.u71 = newValue; }
+
+    public BusyIndicatorText: string = null;
+    public ShowBusyIndicator: boolean = false;
+    public StartBusyIndicator(myText: string) {
+        this.BusyIndicatorText = myText;
+        this.ShowBusyIndicator = true;
+    }
+
+    public StopBusyIndicator() {
+        this.BusyIndicatorText = null;
+        this.ShowBusyIndicator = false;
+    }
 
 
     ShowPaymentDetailsScreen: boolean = false;
@@ -301,7 +342,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     }
 
     ViewAggreement() {
-        //this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
+        //this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe((myResult:any) => {
 
         //if (myResult.Result) { 
         //var securityId = myResult.Result.SecurityId;

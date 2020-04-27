@@ -56,7 +56,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;1f3d72d8-8b73-464f-a21b-db0eeb68556b&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -266,7 +268,7 @@
     ObjectTableName="&quot;JournalAdditionalData&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="3"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="false"
@@ -352,4 +354,6 @@
   </EventTypes>
   <Records />
   <DataContracts />
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

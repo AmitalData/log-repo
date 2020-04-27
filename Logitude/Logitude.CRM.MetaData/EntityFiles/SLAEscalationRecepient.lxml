@@ -37,7 +37,9 @@
   NoViewController="false"
   NoPMController="false"
   HasCompactSearch="false"
-  ApplyDefaultValues="false">
+  ApplyDefaultValues="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;374ef9ba-c385-4eb2-9b5a-6ae0b6225037&quot;"
     FieldName="&quot;Id&quot;"
@@ -495,4 +497,5 @@
       IsFollowUp="false" />
   </EventTypes>
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

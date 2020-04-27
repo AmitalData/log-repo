@@ -39,7 +39,9 @@
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
   NoViewController="false"
-  NoPMController="false">
+  NoPMController="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;6ff98adf-a4b2-472c-bd37-df1e2b54e865&quot;"
     FieldName="&quot;Code&quot;"
@@ -190,4 +192,6 @@
       Code="&quot;3&quot;"
       Name="&quot;Document Date&quot;" />
   </Records>
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

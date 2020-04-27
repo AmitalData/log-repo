@@ -20,7 +20,7 @@ import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
 import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AttachExternal',
     templateUrl: './AttachmentUploaderComponent.html',
     providers: [DocumentsFilingExtendedPMService, ImageLibraryService, DocumentsFilingPMService],
@@ -112,7 +112,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
 
     LoadDocumentsFiling() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-        this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTable(this.EntityId, this.childEntityId, this.ObjectTableId, "I", this.Tenant, false).subscribe(res => {
+        this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTable(this.EntityId, this.childEntityId, this.ObjectTableId, "I", this.Tenant, false).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
 
@@ -143,7 +143,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                 this.CurrentDocument = this.externalDocs.filter(d=> d.DocumentTypeId == this.DocumentTypeId)[0];
                 if (this.CurrentDocument == null) {
                     this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-                    this._documentsFilingExtendedPMService.CreateDocumentsFiling(this.DocumentTypeId, this.EntityId, this.childEntityId, "", this.ObjectTableId, "I", this.Tenant).subscribe(res => {
+                    this._documentsFilingExtendedPMService.CreateDocumentsFiling(this.DocumentTypeId, this.EntityId, this.childEntityId, "", this.ObjectTableId, "I", this.Tenant).subscribe((res:any) => {
 
                         var pmResponse: ServiceResponse = res;
 
@@ -196,7 +196,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
         else {
             if (this.IsUploadInProgress) {
                 this.IsUploadCanceled = true;
-                this._imageLibraryService.CancelUpload(this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe(result => {
+                this._imageLibraryService.CancelUpload(this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe((result:any) => {
                     this.IsUploadInProgress = false;
                     this.IsUploadDone = false;
                     this.IsUploadCanceled = true;
@@ -235,7 +235,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
             }
             
 
-            this._documentsFilingExtendedPMService.GetFileSizeAndUnit(file.size).subscribe(res => {
+            this._documentsFilingExtendedPMService.GetFileSizeAndUnit(file.size).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
 
@@ -326,7 +326,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     SendBlockToServer(filter: ImageParameter) {
 
 
-        this._imageLibraryService.UploadFile(filter).subscribe(res => {
+        this._imageLibraryService.UploadFile(filter).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             var result= null;

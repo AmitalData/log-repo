@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'NewCashBookComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './NewCashBookComponent.html',
 })
@@ -150,7 +150,7 @@ export class NewCashBookComponent extends BaseComponent implements OnInit {
     }
 
     SubmitChanges() {
-        this.myService.insert(this.EntityPM).subscribe(myResult => {
+        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

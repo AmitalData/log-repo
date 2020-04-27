@@ -22,7 +22,7 @@ export class TarrifFromToPM {
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
           this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
 
@@ -73,6 +73,9 @@ export class TarrifFromToPM {
     public set ChangeOp(newValue: string) { if (this.changeOp != newValue) { this.changeOp = newValue; this.MarkAsDirty("ChangeOp"); } }
        
 	 
+  private changeSetOp: string;
+  public get ChangeSetOp() { return this.changeSetOp; }
+  public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
 
     public OldEntityPM: TarrifFromToPM;
 	    

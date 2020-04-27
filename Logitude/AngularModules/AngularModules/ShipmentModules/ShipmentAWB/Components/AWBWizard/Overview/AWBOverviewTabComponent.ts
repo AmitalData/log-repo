@@ -16,7 +16,7 @@ import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/Servi
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'OverviewTabComponent',
     templateUrl: './AWBOverviewTabComponent.html',
 })

@@ -26,7 +26,9 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
-  DefaultText="&quot;Questionnaire Answer&quot;">
+  DefaultText="&quot;Questionnaire Answer&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;3e41a14d-0146-4634-a179-d4f9aa7e1280&quot;"
     FieldName="&quot;Id&quot;"
@@ -489,4 +491,5 @@
     GenerateInList="true" />
   <EventTypes />
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

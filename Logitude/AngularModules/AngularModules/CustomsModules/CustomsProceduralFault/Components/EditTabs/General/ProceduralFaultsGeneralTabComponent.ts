@@ -16,7 +16,7 @@ import { ProceduralFaultPMService } from '../../../../../Customs/Services/Standa
 import { ProceduralFaultPM } from '../../../../../Customs/EntityPMs/ProceduralFaultPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ProceduralFaultsGeneralTabComponent.html',
     providers: [EntityArgs],
 }) 
@@ -128,7 +128,7 @@ export class ProceduralFaultsGeneralTabComponent extends BaseComponent {
 
 
     OkButtonClicked() {
-        this.proceduralFaultPMService.update(this.EntityPM).subscribe(response => {
+        this.proceduralFaultPMService.update(this.EntityPM).subscribe((response:any) => {
             var result = response.Result;
             this.CurrentSession.CloseCurrentWindow();
 

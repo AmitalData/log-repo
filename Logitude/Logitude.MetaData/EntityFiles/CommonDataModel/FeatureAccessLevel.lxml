@@ -37,7 +37,9 @@
   NoPMController="true"
   NoViewsController="true"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;8a383796-c329-46ce-a8a7-1a21fbafa8c0&quot;"
     FieldName="&quot;Code&quot;"
@@ -143,7 +145,7 @@
     DisplayInDocumentReferences="false"
     CopyToDW="false"
     HasTemplate="false"
-    IsRequired="false"
+    IsRequired="true"
     FullFieldLable="&quot;Name&quot;"
     DefaultText="&quot;Name&quot;"
     IsSpellCheckedFullFieldLable="false"
@@ -152,7 +154,8 @@
     HasDataBaseField="true"
     HasPMField="false"
     NoMetaDataField="false"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;a2f1f360-37d3-4961-8073-772b9c123f59&quot;"
     FieldName="&quot;SearchFields&quot;"

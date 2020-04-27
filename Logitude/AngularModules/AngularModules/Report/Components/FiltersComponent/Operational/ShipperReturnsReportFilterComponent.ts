@@ -7,7 +7,6 @@ import { ReportsPreviewComponent } from '../../../Components/ReportsPreviewCompo
 import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './ShipperReturnsReportFilterComponent.html',
 })
 

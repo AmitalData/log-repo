@@ -11,7 +11,7 @@ import { WarehouseReleasePMExtendedService } from '../../../Services/ExtendedPMs
 
 @Component({
     selector: 'WarehouseConnectionsTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './WarehouseConnectionsTabComponent.html',
 })
 

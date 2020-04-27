@@ -2,7 +2,8 @@
 <Table
   Name="TasksScheduler"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -26,7 +27,7 @@
   <Column
     Name="CreatedBy"
     Type="varchar"
-    Size="15">
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>
@@ -39,26 +40,32 @@
   <Column
     Name="UpdatedBy"
     Type="varchar"
-    Size="15">
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="Name"
-    Type="varchar"
+    Type="nvarchar"
     Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Description"
-    Type="varchar"
+    Type="nvarchar"
     Size="200">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="NextRunTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastRunStartTime"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -157,13 +164,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SchedulerDetailsXML"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="Type"
     Type="varchar"
     Size="15">
@@ -171,25 +171,14 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="SchedulerDetailsXML"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="NextRunTimeUTC"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="StartDateTimeUTC"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastRunEndTime"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastRunEndTimeUTC"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -201,7 +190,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LastRunStartTime"
+    Name="StartDateTimeUTC"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -221,15 +210,34 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Retries"
-    Type="int"
+    Name="LastRunEndTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AverageRunTime"
+    Type="float"
     DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="AverageRunTime"
-    Type="float"
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastRunEndTimeUTC"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Retries"
+    Type="int"
     DefaultValue="0">
     <Constraints
       Nullable="false" />

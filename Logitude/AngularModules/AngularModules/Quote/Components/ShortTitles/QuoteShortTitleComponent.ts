@@ -8,11 +8,13 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {CardList} from '../../../Common/EntityLists/CardList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./QuoteShortTitleComponent.html",
 })
 
 export class QuoteShortTitleComponent {
+  public CustomerRankName: any;
+
     public EntityPM: QuotePM;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {

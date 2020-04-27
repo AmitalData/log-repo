@@ -8,7 +8,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {AppTool} from '../../../Infrastructure/Tools';
 @Component({
 
-    moduleId: module.id,
+    
     selector: 'ParticipantsUsersActivitiesFilterComponent',
     templateUrl: './ParticipantsUsersActivitiesFilterComponent.html',
     inputs: ['ReportsPreview']

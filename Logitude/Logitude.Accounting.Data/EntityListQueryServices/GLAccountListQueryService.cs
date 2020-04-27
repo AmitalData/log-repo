@@ -355,7 +355,5 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
 
     }
-
-
 }
 	

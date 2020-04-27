@@ -8,7 +8,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './QuoteSettingsComponent.html',
 })
 

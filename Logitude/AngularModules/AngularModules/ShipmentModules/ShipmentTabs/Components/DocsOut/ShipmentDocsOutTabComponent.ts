@@ -8,7 +8,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ShipmentDocsOutTabComponent.html',
     providers: [DocumentTypeListService]
 })
@@ -44,7 +44,7 @@ export class ShipmentDocsOutTabComponent implements OnInit {
             var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
             apiQueryFilters.GetAll = true;
             apiQueryFilters.Tenant = this.EntityPM.Tenant;
-            this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
+            this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {

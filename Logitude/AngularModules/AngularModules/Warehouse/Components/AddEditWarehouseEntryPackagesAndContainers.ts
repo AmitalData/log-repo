@@ -18,13 +18,16 @@ import { PackageTypeListService } from '../../Common/Services/StandardLists/Pack
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AddEditWarehouseEntryPackagesAndContainers',
     templateUrl: './AddEditWarehouseEntryPackagesAndContainers.html',
     providers: [WarehouseEntryPackagePMExtendedService],
 })
 
 export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
+  public IsDependencyFilter2Value: any;
+  public WarehouseEntryPackage: any;
+
     private _entityResourceService: EntityResourceService = new EntityResourceService();
    
     public ValidationErrorsList: string[];
@@ -57,7 +60,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
     }
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe((response:any) => {
             this.Start(args);
         });
     }

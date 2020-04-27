@@ -55,7 +55,38 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityPM;
         }
 
+        public ARInvoicePM GetSinglePMForInterest(string id, int tenant)
+        {
+            ARInvoicePM entityPM =
+               (from a in repository.context.ARInvoices
+                where a.Id == id && a.Tenant == tenant
+                select new ARInvoicePM()
+                {
+                    Id = a.Id,
+                    InvoiceNumber = a.InvoiceNumber,
+                    Tenant = a.Tenant,
+                }).FirstOrDefault();
+            if (entityPM!=null)
+            {
+                entityPM = SetJournalFields(entityPM);
 
+            }
+
+            return entityPM;
+        }
+
+        private ARInvoicePM SetJournalFields(ARInvoicePM entityPM)
+        {
+            JournalRepository rep = new JournalRepository(entityPM.Tenant);
+            JournalEntity journal = rep.GetJournalByARInvoiceEntity(entityPM.Id, entityPM.Tenant);
+            if (journal != null)
+            {
+                entityPM.JournalId = journal.JournalId;
+                entityPM.JournalNumber = journal.JournalNumber;
+            }
+
+            return entityPM;
+        }
 
 
         public ARInvoice GetSingleARInvoice(string id, int tenant)
@@ -1380,6 +1411,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ARInvoiceStockId = a.ARInvoiceStockId,
                             BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                             CreatedByPartner = a.CreatedByPartner,
+                            RegionalTaxId = a.RegionalTaxId,
+                            RegionalTaxPercentage = a.RegionalTaxPercentage,
                         };
 
             return query;
@@ -1517,6 +1550,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
                              BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                              CreatedByPartner = entity.CreatedByPartner,
+                             RegionalTaxId = entity.RegionalTaxId,
+                             RegionalTaxPercentage = entity.RegionalTaxPercentage,
                          };
 
             return result;
@@ -1629,6 +1664,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               IsInvoiceNumberFromStock = a.IsInvoiceNumberFromStock,
                                               BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                               CreatedByPartner = a.CreatedByPartner,
+                                              RegionalTaxId = a.RegionalTaxId,
+                                              RegionalTaxPercentage = a.RegionalTaxPercentage,
                                           }).ToList();
             return invoices;
         }
@@ -1744,6 +1781,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     DocumentFilingId = entityPOCO.DocumentFilingId,
                     BranchName = entityPOCO.Branch == null ? null : entityPOCO.Branch.EnglishName,
                     CreatedByPartner = entityPOCO.CreatedByPartner,
+                    RegionalTaxId = entityPOCO.RegionalTaxId,
+                    RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2068,6 +2107,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                              CreatedByPartner = entity.CreatedByPartner,
                              SATXML = entity.SATXML,
+                             RegionalTaxId = entity.RegionalTaxId,
+                             RegionalTaxPercentage = entity.RegionalTaxPercentage,
                          };
 
             return result;

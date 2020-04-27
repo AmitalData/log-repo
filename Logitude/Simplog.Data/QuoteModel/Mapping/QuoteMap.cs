@@ -76,7 +76,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.CustomerReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CustomerReference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.QuoteCustomerTypeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.CustomerName).IsRequired().HasMaxLength(100).IsUnicode(true);
+            this.Property(t => t.CustomerName).HasMaxLength(100).IsUnicode(true);
             this.Property(t => t.SaleCurrencyId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipperName).HasMaxLength(100).IsUnicode(true);
             this.Property(t => t.ConsigneeName).HasMaxLength(100).IsUnicode(true);
@@ -221,7 +221,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.QuoteCustomerTypeCode).HasColumnName("QuoteCustomerTypeCode");
             this.Property(t => t.CustomerName).HasColumnName("CustomerName");
             this.Property(t => t.SaleCurrencyId).HasColumnName("SaleCurrencyId");
-            this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate");
+            this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate").IsRequired();
             this.Property(t => t.ShipperName).HasColumnName("ShipperName");
             this.Property(t => t.ConsigneeName).HasColumnName("ConsigneeName");
             this.Property(t => t.PickUpAddress).HasColumnName("PickUpAddress");

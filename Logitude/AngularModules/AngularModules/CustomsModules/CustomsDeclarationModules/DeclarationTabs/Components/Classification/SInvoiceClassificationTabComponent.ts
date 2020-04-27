@@ -56,7 +56,7 @@ import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITI
 
 @Component({
     selector: 'SInvoiceClassificationTabContent',
-    moduleId: module.id,
+    
     templateUrl: './SInvoiceClassificationTabComponent.html',
 })
 
@@ -240,7 +240,7 @@ export class SInvoiceClassificationTabComponent
     }
     public supplierInvoiceService: SupplierInvoiceService = new SupplierInvoiceService();
     GetFreightTotals() {
-        this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe(response => {
+        this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe((response:any) => {
 
 
 
@@ -276,7 +276,7 @@ export class SInvoiceClassificationTabComponent
         this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_CTRY", "NON", "NON", this.declarationPM.Tenant)
-            .subscribe(response => {
+            .subscribe((response:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
                     this.IsCountryPURForItems = true;
@@ -447,7 +447,7 @@ export class SInvoiceClassificationTabComponent
         
         var supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
         var decPM: DeclarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;// this component 
-        supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(decPM/*this.EntityPM*/.Id, this.EntityPM.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "parent").subscribe(response => {
+        supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(decPM/*this.EntityPM*/.Id, this.EntityPM.InvoiceCounterKey, 0, this.NumberOfLoadedItems, "parent").subscribe((response:any) => {
 
             var windowArgs: any = {};
             windowArgs.EntityPM = response.Result;

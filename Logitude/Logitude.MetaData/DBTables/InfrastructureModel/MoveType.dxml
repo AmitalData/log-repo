@@ -2,7 +2,8 @@
 <Table
   Name="MoveTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -32,13 +33,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="TransportModeId"
-    Type="char"
-    Size="1">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="AddedManually"
     Type="bit">
     <Constraints
@@ -47,6 +41,13 @@
   <Column
     Name="InActive"
     Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TransportModeId"
+    Type="char"
+    Size="1">
     <Constraints
       Nullable="false" />
   </Column>
@@ -61,6 +62,12 @@
     Name="SearchFields"
     Type="nvarchar"
     Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>

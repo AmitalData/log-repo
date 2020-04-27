@@ -56,7 +56,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;08955832-a997-407a-a315-7b2a4a3ac6d6&quot;"
     FieldName="&quot;Id&quot;"
@@ -8465,29 +8467,29 @@
     <Feature
       Code="&quot;OUTLOOKCONNETION&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Activity.Features.OutlookConnection&quot;"
-      FeatureDefaultText="&quot;Outlook Connection&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Activity.Features.OutlookConnection&quot;"
+      FeatureDefaultText="&quot;Outlook Connection&quot;" />
     <Feature
       Code="&quot;Activity.Feature.EXCEL&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Activity.Features.EXCEL&quot;"
-      FeatureDefaultText="&quot;Download to Excel&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Activity.Features.EXCEL&quot;"
+      FeatureDefaultText="&quot;Download to Excel&quot;" />
     <Feature
       Code="&quot;More&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Activity.Features.More&quot;"
-      FeatureDefaultText="&quot;More&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Activity.Features.More&quot;"
+      FeatureDefaultText="&quot;More&quot;" />
   </AdditionalFeatures>
 </entity>

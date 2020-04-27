@@ -15,9 +15,11 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ComponentArgs} from '../../../../Infrastructure/DataContracts/ComponentArgs';
 import {ParameterComponentArgs} from '../../../../Infrastructure/DataContracts/ParameterComponentArgs';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { isNullOrUndefined } from 'util';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'SendToContacts',
     templateUrl: './SendToContactsComponent.html',
@@ -42,6 +44,7 @@ export class SendToContactsComponent implements OnInit {
     ComponentArgs: ComponentArgs;
     myPartnerId: string;
     public IsSearchIconVisible: boolean = true;
+    public IsSchedulerReport: boolean = false;
 
     @Output() SearchFieldchangeevent = new EventEmitter();
     ToEmailLists: string[];
@@ -60,9 +63,12 @@ export class SendToContactsComponent implements OnInit {
 
     public ShowBCC: boolean = true;
     public ShowCC: boolean = true;
+
+    public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _entityListService: EntityListService, public _documentOutPMService: DocumentOutPMService, private cd: ChangeDetectorRef) {
 
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.ToEmailLists = [];
         this.CcEmailLists = [];
@@ -95,6 +101,9 @@ export class SendToContactsComponent implements OnInit {
             this.CurrentSession.Sessionkey = Guid.newGuid();
         }
 
+        if (args.IsSchedulerReport) {
+            this.IsSchedulerReport = true;
+        }
 
         this.PartnersObslist = args.PartnersObslist;
         this.OnCloseSendToContactsEvent = args.OnCloseSendToContactsEvent;
@@ -111,7 +120,7 @@ export class SendToContactsComponent implements OnInit {
 
         if (this.PartnersObslist) {
 
-            if (!this.PartnersObslist.filter(d => d.PartnerType == "All")[0]) {
+            if (!this.PartnersObslist.filter(d => d.PartnerType == "All")[0] && !this.IsSchedulerReport) {
                 this.PartnersObslist.push(new EntityPartner("All", "", false));
             }
 
@@ -177,8 +186,9 @@ export class SendToContactsComponent implements OnInit {
             window.BccEmailLists = this.BccEmailLists;
         }
 
-
-        this.BuildColumns();
+        if (!args.isReloaded) {
+            this.BuildColumns();
+        }
 
     }
 
@@ -325,8 +335,8 @@ export class SendToContactsComponent implements OnInit {
         if (!AppTool.IsNullOrEmpty(searchfields)) {
             filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, false, false, "string");
         }
-
-        filters.addAdditionalFilter("CardId", this.myPartnerId, null, null, "Equals", true, true, true, "Text");
+        
+        filters.addAdditionalFilter("CardId", this.myPartnerId, null, null, "InListExact", true, true, true, "string");
         filters.addAdditionalFilter("HasEmail", "", null, null, "NotEqual", true, false, false, "String");
         filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
 

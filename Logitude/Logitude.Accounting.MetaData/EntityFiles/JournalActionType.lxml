@@ -57,7 +57,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;1ad4eb1c-9ff9-4eaa-8699-183a7a3f44a5&quot;"
     FieldName="&quot;Id&quot;"
@@ -733,6 +735,31 @@
         IsCompositKey="false" />
     </DataContract>
   </DataContracts>
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;JournalActionType.TH.New&quot;"
+      DefaultText="&quot;New&quot;"
+      LocalDefaultText="&quot;חדש&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.AccountingTables&quot;"
+      DefaultText="&quot;Accounting Tables&quot;"
+      LocalDefaultText="&quot;טבלאות הנהלת חשבונות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.JournalActionTypes&quot;"
+      DefaultText="&quot;Journal Actions&quot;"
+      LocalDefaultText="&quot;סוגי פעולה של פקודות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;JournalActionType.O.CodeAlreadyExists&quot;"
+      DefaultText="&quot;Existing code&quot;"
+      LocalDefaultText="&quot;הקוד קיים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

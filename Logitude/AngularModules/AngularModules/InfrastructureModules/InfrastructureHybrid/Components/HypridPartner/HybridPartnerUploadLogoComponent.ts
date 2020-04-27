@@ -14,7 +14,7 @@ declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'HybridPartnerUploadLogo',
     templateUrl: './HybridPartnerUploadLogoComponent.html',
@@ -43,7 +43,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _imageLibraryService: ImageLibraryService, private CD: ChangeDetectorRef) {
         this._HybridPartnerPMService = new HybridPartnerPMService();
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
 
         });
 
@@ -94,7 +94,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
 
         }
         //var myService: WebFreightDomainService = new WebFreightDomainService();
-        //myService.getHypridPartnerLogo(this.EntityPM.LogoId).subscribe(myResult => {
+        //myService.getHypridPartnerLogo(this.EntityPM.LogoId).subscribe((myResult:any) => {
         //    if (myResult) {
         //        this.Source = "data:image/JPEG;base64," + myResult;
 
@@ -104,7 +104,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
         //        }
         //    }
         //});
-        this._imageLibraryService.DownloadFile(this.EntityPM.LogoId, "jpg", "images", SessionInfo.LoggedUserTenant, "Base64").subscribe(res => {
+        this._imageLibraryService.DownloadFile(this.EntityPM.LogoId, "jpg", "images", SessionInfo.LoggedUserTenant, "Base64").subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -165,7 +165,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
         if (isload) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         }
-        this._imageLibraryService.DownloadFile("verysmalllogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._imageLibraryService.DownloadFile("verysmalllogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -190,7 +190,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
         if (isload) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         }
-        this._imageLibraryService.DownloadFile("sharedLogtsitcslogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._imageLibraryService.DownloadFile("sharedLogtsitcslogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -273,7 +273,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
         filter.Height = height;
         filter.Extension = extension;
         filter.UploadMode = "Image";
-        this._imageLibraryService.UploadFile(filter).subscribe(res => {
+        this._imageLibraryService.UploadFile(filter).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             var result: any;
@@ -293,13 +293,13 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
                         filter.Height = 35;
                         filter.Extension = extension;
                         filter.UploadMode = "Image";
-                        this._imageLibraryService.UploadFile(filter).subscribe(myres => {
+                        this._imageLibraryService.UploadFile(filter).subscribe((myres:any) => {
                             var mypmResponse: ServiceResponse = myres;
                             var myresult: any;
                             if (!mypmResponse.HasError) {
                                 myresult = mypmResponse.Result;
                                 this.EntityPM.SmallLogoId = myresult;
-                                this._HybridPartnerPMService.update(this.EntityPM).subscribe(myResult => {
+                                this._HybridPartnerPMService.update(this.EntityPM).subscribe((myResult:any) => {
                                     if (!myResult.HasError) {
                                         this.IsShowMessageComplate = true;
                                         this.IsShowProgressLoading = false;

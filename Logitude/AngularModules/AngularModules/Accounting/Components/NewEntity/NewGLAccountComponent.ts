@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'NewGLAccountComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './NewGLAccountComponent.html',
 })
@@ -400,7 +400,7 @@ export class NewGLAccountComponent extends BaseComponent {
         }
          this.EntityPM.Inactive = false;
         this.EntityPM.IsControlAccount = false;
-        this.myService.insert(this.EntityPM).subscribe(myResult => {
+        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;

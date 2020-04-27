@@ -23,7 +23,7 @@ import {ContactList} from '../../../../Common/EntityLists/ContactList';
 import {ContactListService} from '../../../../Common/Services/StandardLists/ContactListService';
 @Component({
     selector: 'OpportunityGeneralTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OpportunityGeneralTabComponent.html',
 })
 
@@ -35,7 +35,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
     public SalesNotesObsList: Array<CustomerSalesNotePM> = [];
     public ValidationErrorsList: Array<String> = [];
     public ResetOpportunitiy: boolean = true;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
 
     public ScreenCode: string = "Opportunity.AdditionalFields";
@@ -76,7 +76,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
                 this.EntityPM.BusinessUnitId = null;
             else {
                 var listService: UserListService = new UserListService();
-                listService.getAllFromCache().subscribe(result => {
+                listService.getAllFromCache().subscribe((result:any) => {
                     var list: UserList = result.Result.filter(p => p.Id == value)[0];
                     if (list != null) {
                         this.EntityPM.BusinessUnitId = list.BusinessUnitId;
@@ -145,7 +145,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
         if (!AppTool.IsNullOrEmpty(this.CustomerId)) {
 
             var cardService: CardListService = new CardListService();
-            cardService.getAll().subscribe(result => {
+            cardService.getAll().subscribe((result:any) => {
                 var list: CardList = result.Result.filter(p => p.Id == this.CustomerId)[0];
                 if (list != null) {
                     myContactId = list.PrimaryContactId;
@@ -167,7 +167,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
         var isConfirmNeeded: boolean = false;
         this.newOpportunityTypeId = newValue;
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe(result => {
+        oppTypeListService.getAllFromCache().subscribe((result:any) => {
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == newValue)[0];
             if (typeList != null) {
                 this.newOpportunityTypeCode = typeList.Code;
@@ -253,7 +253,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
     SetSubject() {
 
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe(result => {
+        oppTypeListService.getAllFromCache().subscribe((result:any) => {
 
             var type: OpportunityTypeList = result.Result.filter(d => d.Name == this.Subject)[0];
             if (type != null) {
@@ -271,8 +271,8 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
             this.EntityPM.ContactId = value;
 
             var cardService: ContactListService = new ContactListService();
-            cardService.getAll().subscribe(contactResult => {
-                var contact: ContactList = contactResult.Result.filter(p => p.Id == this.ContactId)[0];
+            cardService.getAll().subscribe((response: ServiceResponse) => {
+                var contact: ContactList = response.Result.filter(p => p.Id == this.ContactId)[0];
                 if (contact != null)
                     this.EntityPM.ContactName = contact.EnglishName;
                 else
@@ -310,7 +310,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
 
     SetUIProperties() {
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe(result => {
+        oppTypeListService.getAllFromCache().subscribe((result:any) => {
 
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == this.EntityPM.OpportunityTypeId)[0];
             var typeCode: string = typeList == null ? null : typeList.Code;
@@ -384,7 +384,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
 
     constructor(private _entityResourceService: EntityResourceService, private entityArgs: EntityArgs) {
         super();
-        this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe((response:any) => {
         });
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();

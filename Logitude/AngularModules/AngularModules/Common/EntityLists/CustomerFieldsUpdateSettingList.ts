@@ -13,5 +13,6 @@ export class CustomerFieldsUpdateSettingList {
 		UpdateDirection: string;
 		ObjectFieldName: string;
 		ObjectFieldCode: string;
+		SearchFields: string;
 	
 }

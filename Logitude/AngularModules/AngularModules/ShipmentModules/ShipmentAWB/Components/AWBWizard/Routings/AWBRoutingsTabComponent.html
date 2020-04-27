@@ -22,6 +22,10 @@
         color: black;
         font-size: 12px;
     }
+
+    .PaddingLeft{
+      padding-left: 3px;
+    }
 </style>
 
 <table>
@@ -163,13 +167,13 @@
                                                                     <td colspan="2">
                                                                         <div class="MediaFill" style="overflow: hidden;">
                                                                             <span class="BlueTitle">{{MainCarriageTextCode | TextCodeTranslationPipe}}:</span>
-                                                                            <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.MainCarriageFromPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.MainCarriageFromPortCountryName" />
-                                                                            <span class="Value">{{EntityPM.MainCarriageFromPortCode}}</span>
-                                                                            <span class="Label">{{EntityPM.MainCarriageFromPortName}}</span>
+                                                                            <img class="PaddingLeft" style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.MainCarriageFromPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.MainCarriageFromPortCountryName" />
+                                                                            <span class="Value PaddingLeft">{{EntityPM.MainCarriageFromPortCode}}</span>
+                                                                            <span class="Label PaddingLeft">{{EntityPM.MainCarriageFromPortName}}</span>
                                                                             <span class="ToTextStyle">{{'Shipment.O.Routings.To' | TextCodeTranslationPipe}}</span>
                                                                             <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.MainCarriageToPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.MainCarriageToPortCountryName" />
-                                                                            <span class="Value">{{EntityPM.MainCarriageToPortCode}}</span>
-                                                                            <span class="Label">{{EntityPM.MainCarriageToPortName}}</span>
+                                                                            <span class="Value PaddingLeft">{{EntityPM.MainCarriageToPortCode}}</span>
+                                                                            <span class="Label PaddingLeft">{{EntityPM.MainCarriageToPortName}}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -438,13 +442,13 @@
                                                                     <td colspan="2">
                                                                         <div class="MediaFill" style="overflow: hidden;">
                                                                             <span class="BlueTitle">{{Transshipment1TextCode | TextCodeTranslationPipe}}:</span>
-                                                                            <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment1FromPortCountryCode | CountryFlagPipe" />
-                                                                            <span class="Value">{{EntityPM.Transshipment1FromPortCode}}</span>
-                                                                            <span class="Label">{{EntityPM.Transshipment1FromPortName}}</span>
+                                                                            <img class="PaddingLeft" style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment1FromPortCountryCode | CountryFlagPipe" />
+                                                                            <span class="Value PaddingLeft">{{EntityPM.Transshipment1FromPortCode}}</span>
+                                                                            <span class="Label PaddingLeft">{{EntityPM.Transshipment1FromPortName}}</span>
                                                                             <span class="ToTextStyle">{{'Shipment.O.Routings.To' | TextCodeTranslationPipe}}</span>
                                                                             <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment1ToPortCountryCode  | CountryFlagPipe" />
-                                                                            <span class="Value">{{EntityPM.Transshipment1ToPortCode}}</span>
-                                                                            <span class="Label">{{EntityPM.Transshipment1ToPortName}}</span>
+                                                                            <span class="Value PaddingLeft">{{EntityPM.Transshipment1ToPortCode}}</span>
+                                                                            <span class="Label PaddingLeft">{{EntityPM.Transshipment1ToPortName}}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -608,13 +612,13 @@
                                                                     <td colspan="2">
                                                                         <div class="MediaFill" style="overflow: hidden;">
                                                                             <span class="BlueTitle">{{Transshipment2TextCode | TextCodeTranslationPipe}}:</span>
-                                                                            <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment2FromPortCountryCode | CountryFlagPipe" />
-                                                                            <span class="Value">{{EntityPM.Transshipment2FromPortCode}}</span>
-                                                                            <span class="Label">{{EntityPM.Transshipment2FromPortName}}</span>
+                                                                            <img class="PaddingLeft" style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment2FromPortCountryCode | CountryFlagPipe" />
+                                                                            <span class="Value PaddingLeft">{{EntityPM.Transshipment2FromPortCode}}</span>
+                                                                            <span class="Label PaddingLeft">{{EntityPM.Transshipment2FromPortName}}</span>
                                                                             <span class="ToTextStyle">{{'Shipment.O.Routings.To' | TextCodeTranslationPipe}}</span>
                                                                             <img style="vertical-align:middle; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment2ToPortCountryCode  | CountryFlagPipe" />
-                                                                            <span class="Value">{{EntityPM.Transshipment2ToPortCode}}</span>
-                                                                            <span class="Label">{{EntityPM.Transshipment2ToPortName}}</span>
+                                                                            <span class="Value PaddingLeft">{{EntityPM.Transshipment2ToPortCode}}</span>
+                                                                            <span class="Label PaddingLeft">{{EntityPM.Transshipment2ToPortName}}</span>
                                                                         </div>
                                                                     </td>
                                                                 </tr>

@@ -14,7 +14,7 @@ import {MultiCertificatesService} from '../../../../../../Customs/Services/Other
 import {MessageWindow} from '../../../../../../Controls/Windows/MessageWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MultiCertificateUpdateComponent.html',
 })
 

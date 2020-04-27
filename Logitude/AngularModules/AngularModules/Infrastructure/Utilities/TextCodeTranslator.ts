@@ -1,7 +1,6 @@
 declare var window: any;
 import {SessionLocator} from '../Utilities/SessionLocator';
 import { AppTool } from '../Tools';
-import { retry } from 'rxjs/operator/retry';
 import { isNullOrUndefined } from 'util';
 import { ObjectsLocator } from '../Locators/ObjectsLocator';
 

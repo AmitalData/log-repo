@@ -10,7 +10,7 @@ declare var makeAMLineChartMultiple: any;
 
 @Component({
     selector: 'top-five-salesman-profit',
-    moduleId: module.id,
+    
     templateUrl: './TopFiveSalesmanProfitComponent.html',
 })
 
@@ -32,7 +32,7 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
     }
 
     ngOnInit() {                
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             this.FillChartArgs();
             this.LoadChartData();
         });
@@ -164,9 +164,9 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
             });
         }
 
-        document.getElementById(this.LegendDiv).innerHTML = "";
+        //document.getElementById(this.LegendDiv).innerHTML = "";
 
-        makeAMLineChartMultiple(this.PerformanceChartId, dataProvider, null, graphs, true, this.LegendDiv, "Profit");
+        makeAMLineChartMultiple(this.PerformanceChartId, dataProvider, null, graphs, true, null, "Profit");
     }   
 }
 

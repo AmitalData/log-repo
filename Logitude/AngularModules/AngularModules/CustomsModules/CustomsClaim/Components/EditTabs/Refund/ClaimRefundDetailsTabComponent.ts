@@ -18,7 +18,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimRefundDetailsTabComponent.html',
 })
 
@@ -42,8 +42,8 @@ export class ClaimRefundDetailsTabComponent extends BaseComponent {
         super();
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe((response:any) => {
                    if (this.entityArgs.EntityPM != null) {
                        this.EntityPM = this.entityArgs.EntityPM;
                        this.SetBankFieldsEnabled();

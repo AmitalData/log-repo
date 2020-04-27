@@ -17,7 +17,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditAirlineMessagingRuleComponent.html',
 })
 
@@ -93,7 +93,7 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
         }
 
         var service: EntityResourceService = new EntityResourceService();
-        service.getEntityResourceByTableName(tableName).subscribe(response => {
+        service.getEntityResourceByTableName(tableName).subscribe((response:any) => {
             var objectTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name == tableName)[0];
             var objectFields: ObjectFieldPM[] = window.ObjectFields.filter(d => d.ObjectTableId == objectTable.Id && d.AllowedInAirlineMessaging);
 
@@ -187,7 +187,7 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
 
             if (this.IsNew) {
                 this.CurrentSession.StartBusyIndicatorSaving();
-                myService.insert(this.EntityPM).subscribe(Result => {
+                myService.insert(this.EntityPM).subscribe((Result:any) => {
 
                     var mm: ServiceResponse = Result;
                     if (!mm.HasError) {
@@ -206,7 +206,7 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
 
             else {
                 this.CurrentSession.StartBusyIndicatorSaving();
-                myService.update(this.EntityPM).subscribe(Result => {
+                myService.update(this.EntityPM).subscribe((Result:any) => {
 
                     var mm: ServiceResponse = Result;
                     if (!mm.HasError) {

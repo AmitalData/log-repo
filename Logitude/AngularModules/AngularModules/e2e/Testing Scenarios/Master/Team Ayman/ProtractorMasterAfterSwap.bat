@@ -11,29 +11,29 @@ cd C:\Program Files (x86)\Jenkins\workspace\LogitudeTestDevOps\Logitude\AngularM
 FOR /L %%A IN (1,1,1) DO (  
     --------------------------------------------------Direct-------------------------------------------------------------------------------------------------
 
-    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --suite=login,NewShipment >D:\E2ETeamAyman\prot.log 2>&1
+    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --suite=login,NewShipment 
     CALL :CheckError "Export-Air-Direct"
 
     --------------------------------------------------Houses-------------------------------------------------------------------------------------------------
-    cmd /c call npm run e2e -- --params.Env="test"  --params.Team="ayman" --params.ShipParams.ShipmentLevelCode="H" --params.ShipParams.Direction="Import" --params.ShipParams.TransportMode="O" --params.ShipParams.ShipmentType="FCL" --suite=login,NewShipment> D:\E2ETeamAyman\prot.log 2>&1
+    cmd /c call npm run e2e -- --params.Env="test"  --params.Team="ayman" --params.ShipParams.ShipmentLevelCode="H" --params.ShipParams.Direction="Import" --params.ShipParams.TransportMode="O" --params.ShipParams.ShipmentType="FCL" --suite=login,NewShipment
     CALL :CheckError "Import-Ocean-FCL-House"
 
     --------------------------------------------------Master-------------------------------------------------------------------------------------------------
-    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman" --params.ShipParams.ShipmentLevelCode="M" --params.ShipParams.Direction="Domestic" --params.ShipParams.TransportMode="O" --params.ShipParams.ShipmentType="LCL" --suite=login,NewShipment> D:\E2ETeamAyman\prot.log 2>&1
+    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman" --params.ShipParams.ShipmentLevelCode="M" --params.ShipParams.Direction="Domestic" --params.ShipParams.TransportMode="O" --params.ShipParams.ShipmentType="LCL" --suite=login,NewShipment
     CALL :CheckError "Domestic-Ocean-LCL-Master"
 
     --------------------------------------------------SpotRate-------------------------------------------------------------------------------------------------
-    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman"  --params.QuoteParams.Direction="Export" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote > D:\E2ETeamAyman\prot.log 2>&1
+    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman"  --params.QuoteParams.Direction="Export" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote 
     CALL :CheckError "Export-Air-SpotRate"
 
-    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman" --params.QuoteParams.Direction="Domestic" --params.QuoteParams.TransportMode="I"  --params.QuoteParams.ShipmentType="LTL" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote > D:\E2ETeamAyman\prot.log 2>&1
+    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman" --params.QuoteParams.Direction="Domestic" --params.QuoteParams.TransportMode="I"  --params.QuoteParams.ShipmentType="LTL" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote 
     CALL :CheckError "Domestic-Inland-LTL-SpotRate"
 
     --------------------------------------------------RoutingRate-------------------------------------------------------------------------------------------------
-    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman" --params.QuoteParams.Direction="Domestic" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote > D:\E2ETeamAyman\prot.log 2>&1
+    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman" --params.QuoteParams.Direction="Domestic" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote 
     CALL :CheckError "Domestic-Air-RoutingRate" 
   
-    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman" --params.QuoteParams.Direction="Drop" --params.QuoteParams.TransportMode="O"  --params.QuoteParams.ShipmentType="FCL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote > D:\E2ETeamAyman\prot.log 2>&1
+    cmd /c call npm run e2e -- --params.Env="test" --params.Team="ayman" --params.QuoteParams.Direction="Drop" --params.QuoteParams.TransportMode="O"  --params.QuoteParams.ShipmentType="FCL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote
     CALL :CheckError "Drop-Ocean-FCL-RoutingRate" 
 
     --------------------------------------------------Activities-------------------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ IF %NumberErrors% NEQ 0 (
    XCOPY  "C:\Automation e2e\TeamAyman\Test\screenshots\screenshots.rar" "C:\Program Files (x86)\Jenkins\workspace\TeamAymanMasterCollectionAfterSwap"  /S /I /Q /Y /F
    exit 1
 )
-Pause
+
 
 SETLOCAL
 :CheckError

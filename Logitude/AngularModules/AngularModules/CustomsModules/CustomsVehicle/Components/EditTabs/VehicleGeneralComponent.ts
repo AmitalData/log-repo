@@ -24,7 +24,7 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VehicleGeneralComponent.html',
 })
 
@@ -46,8 +46,8 @@ export class VehicleGeneralComponent extends BaseComponent {
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
         
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.Listen();
@@ -322,7 +322,7 @@ export class VehicleGeneralComponent extends BaseComponent {
     OnVehicleChassisNumberLostFocus(vehicleChassisNumberTextBox: any) {
 
         if (!AppTool.IsNullOrEmpty(this.VehicleChassisNumber)) {
-            this._VehicleExtendedPMService.CheckIfVehicleExistByChassisNumber(this.VehicleChassisNumber).subscribe(response => {
+            this._VehicleExtendedPMService.CheckIfVehicleExistByChassisNumber(this.VehicleChassisNumber).subscribe((response:any) => {
                 if (response != null) {
                     if (!AppTool.IsNullOrEmpty(response.Result)) {
                         if (this.EntityPM.Id != response.Result) {

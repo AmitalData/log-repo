@@ -14,6 +14,9 @@ namespace WebFreight.Web.DataProviders
         public string CustomerFilterValue { get; set; }
         public DateTime? Month { get; set; }
         public string PrintedByUser { get; set; }
+        public string TenantCurrencyCode { get; set; }
+        public string TenantCurrencySign { get; set; }
+        public decimal ReportLocalBalanceTotal { get; set; }
 
         public List<AgingPeriod> AgingPeriods { get; set; }
     }
@@ -22,7 +25,7 @@ namespace WebFreight.Web.DataProviders
     {
         public string PeriodName { get; set; }
         public string CreditOrDebit { get; set; } // contains credit/debit labels 
-        public decimal Total { get; set; } // contains credit/debit total 
+        public decimal? Total { get; set; } = 0; // contains credit/debit total 
         public decimal GrandTotal { get; set; } // used to calculate credit total and debit total from two records
         public int OrderIndex { get; set; }
         public List<AgingPeriodTotal> Totals { get; set; }
@@ -31,6 +34,9 @@ namespace WebFreight.Web.DataProviders
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
         public string AccountName { get; set; }
+        public string AccountDisplayNumber { get; set; }
+        public string AccountCurrencyCode { get; set; }
+        public string CurrencyCode { get; set; }
 
     }
 

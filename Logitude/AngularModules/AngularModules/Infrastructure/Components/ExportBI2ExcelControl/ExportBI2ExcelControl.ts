@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
-import { Http } from '@angular/http';
 import { WebFreightDomainService } from '../../../Infrastructure/Services/WebFreightDomainService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
@@ -12,11 +11,12 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { BIReportXMLData } from '../../../Infrastructure/Services/InfrastructureDomainService';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { Observable } from 'rxjs/Rx';
-import { DateTool } from '../../Tools';
+import { HttpClient } from '@angular/common/http';
+import { interval } from 'rxjs';
+import { timeInterval } from 'rxjs/operators';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ExportBI2ExcelControl.html',
 })
 
@@ -30,9 +30,8 @@ export class ExportBI2ExcelControl {
     private CurrentSession = SessionLocator.SelectedSession;
     private WebFreightDomainService: WebFreightDomainService;
 
-    constructor(private http: Http) {
-        this.WebFreightDomainService = new WebFreightDomainService();
-        ServiceHelper.Http = http;
+  constructor(private http: HttpClient) {
+        this.WebFreightDomainService = new WebFreightDomainService();        
     }
     ObjectTableName: string;
     FileName: string;
@@ -78,12 +77,12 @@ export class ExportBI2ExcelControl {
 
     //BI Report Timer
     initializeStartCheckBIReportBliudViaWorkerRoleTimer() {
-        return Observable.interval(2000).timeInterval();
+        return interval(2000).pipe(timeInterval());
     }
 
     IsStartTimerWaitingFirstStimulReportBuildRunning: boolean = false;
     initializeStartTimerWaitingFirstStimulReportBuild() {
-        return Observable.interval(50000).timeInterval();
+        return interval(50000).pipe(timeInterval());
     }
     private StartTimerWaitingFirstStimulReportBuildsub: any = null;
     StartTimerWaitingFirststimulReportBuild() {
@@ -91,7 +90,7 @@ export class ExportBI2ExcelControl {
             this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
         }
         this.IsStartTimerWaitingFirstStimulReportBuildRunning = true;
-        this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe(res => {
+        this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe((res:any) => {
             if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
                 this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
                 this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
@@ -126,26 +125,23 @@ export class ExportBI2ExcelControl {
                     this.WebFreightDomainService = new WebFreightDomainService();
                 }
 
-                this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe(res => {
+                this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe((res: ServiceResponse) => {
                     var pmResponse: ServiceResponse = res;
                     if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
-                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
+                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.ExceptionMessage) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
                             this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
                             this.IsStartCheckBIReportBliudViaWorkerRoleTimer = false;
                             this.StopBusyIndicator();
+                            this.btnRetryVisibile = false;
+                            this.busyExportingVisibile = false;
+                            this.btnSaveToFileVisibile = true;
                         }
                         if (!pmResponse.HasError) {
                             var result = pmResponse.Result;
                             if (result) {
-                                if (result.HasError) {
+                                if (result.ExceptionMessage) {
                                     var messageWindow = new MessageWindow();
                                     messageWindow.Show(result.ExceptionMessage);
-                                }
-                                else if (result.StatusCode == "D") {
-                                    // Work
-                                    this.btnRetryVisibile = false;
-                                    this.busyExportingVisibile = false;
-                                    this.btnSaveToFileVisibile = true;
                                 }
                             }
                         }
@@ -163,8 +159,8 @@ export class ExportBI2ExcelControl {
 
     //Wait Result Stimul Timer
     IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning: boolean = false;
-    initializeStartTimerChangeBusyIndicatorMessageAfter50Sec() {
-        return Observable.interval(50000).timeInterval();
+  initializeStartTimerChangeBusyIndicatorMessageAfter50Sec() {
+    return interval(50000).pipe(timeInterval());
     }
     private StartTimerChangeBusyIndicatorMessageAfter50Secsub: any = null;
     StartTimerChangeBusyIndicatorMessageAfter50Sec() {
@@ -174,7 +170,7 @@ export class ExportBI2ExcelControl {
         }
 
         this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = true;
-        this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe(res => {
+        this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe((res:any) => {
             if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
                 this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
                 this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;

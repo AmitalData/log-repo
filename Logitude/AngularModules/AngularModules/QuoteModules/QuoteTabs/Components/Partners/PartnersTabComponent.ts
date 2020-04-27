@@ -19,7 +19,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'PartnersTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './PartnersTabComponent.html',
 })
 

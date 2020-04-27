@@ -6,8 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -22,23 +23,22 @@ import {InterestBasesPeriodList} from '../../EntityLists/InterestBasesPeriodList
 @Injectable()
 
 export class InterestBasesPeriodListService {
-	private _http: Http;
+	private _http: HttpClient;
     private _apiUrl: string;   
 	public static CachedData: Array<InterestBasesPeriodList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/interestbasesperiodviews';  
     }
 
     getSingle(interestbasetypeid: string, linenumber: number) {
 	   
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+       
         var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'interestbasetypeid=' + interestbasetypeid+'&'+'linenumber=' + linenumber, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'interestbasetypeid=' + interestbasetypeid + '&' + 'linenumber=' + linenumber, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var list = response.json();
+                var list = response.body;
                     
                 var entity: InterestBasesPeriodList;
 				if(list)
@@ -54,19 +54,18 @@ export class InterestBasesPeriodListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "InterestBasesPeriod", "GetSingleList", 'interestbasetypeid=' + interestbasetypeid+'&'+'linenumber=' + linenumber); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));;
         });
     }
 
     getAll() {
         
-	   var authHeader = new Headers();
-       authHeader.append('Token', SessionInfo.Token);
+	  
         var callTime = new Date();
-       return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
+       return defer(() => {
+           return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-              var allLists = response.json();
+               var allLists = response.body;
               var _mappedListsArray: Array< InterestBasesPeriodList> = [];
 		      if(allLists)
 			  {
@@ -85,7 +84,7 @@ export class InterestBasesPeriodListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "InterestBasesPeriod", "GetAllLists", ""); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));;
         });
     }
 	
@@ -120,18 +119,15 @@ export class InterestBasesPeriodListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+         
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+	   return defer(() => {
+           return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+               var serviceResponse: ServiceResponse;
+               serviceResponse = response.body;
                 var _mappedListsArray: Array< InterestBasesPeriodList> = [];
 				if(serviceResponse.Result)
 				{
@@ -150,7 +146,7 @@ export class InterestBasesPeriodListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "InterestBasesPeriod", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));;
         });        
     }
 

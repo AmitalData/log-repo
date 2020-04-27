@@ -25,7 +25,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'SpecialActivityRequestComponent',
-    moduleId: module.id,
+    
     templateUrl: './SpecialActivityRequestComponent.html',
 })
 
@@ -61,7 +61,7 @@ export class SpecialActivityRequestComponent
         this.RepackingDesiredList = new ObservableCollection([]);
         this.SampleRequestList = new ObservableCollection([]);
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
         });
     }
 

@@ -45,7 +45,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;13d2a983-cc56-4920-b087-4292d3c51249&quot;"
     FieldName="&quot;JournalId&quot;"
@@ -346,4 +348,6 @@
   </EventTypes>
   <Records />
   <DataContracts />
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

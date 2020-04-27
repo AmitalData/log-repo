@@ -2,7 +2,8 @@
 <Table
   Name="Customers"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -16,61 +17,6 @@
     Type="int">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="RankId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="BillToId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AccountManagerUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SalesmanUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="StartWorkingManuallySet"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Field1"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field2"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Field3"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="Field4"
@@ -122,23 +68,74 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ClassifierId"
+    Name="BeforeDeactiveStatusCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FreelancerId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="CollectorId"
+    Name="LogBoxActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LastShipmentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RankId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="CustomerSizeId"
+    Name="StartWorkingManuallySet"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StartWorkingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field1"
     Type="nvarchar"
-    Size="128">
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field2"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field3"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreditLimit"
+    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
@@ -157,8 +154,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CreditLimit"
-    Type="float">
+    Name="CollectorId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ClassifierId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -166,6 +171,47 @@
     Name="LeadDescription"
     Type="varchar"
     Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsAgentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ForwarderId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MediatorId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrimaryContactName"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrimaryContactPhone"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReadyForActivationDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -183,19 +229,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="BeforeDeactiveStatusCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ReadyForActivationDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="RegionId"
     Type="varchar"
     Size="15">
@@ -203,81 +236,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ActivationDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="InactiveDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ActivationRequestDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ActivatedByUserId"
+    Name="CustomerSizeId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SetAsInactiveByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ActivationRequestedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="FreelancerId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ForwarderId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CustomsAgentId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MediatorId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastShipmentDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="StartWorkingDate"
-    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -296,20 +257,6 @@
   <Column
     Name="LastOpportunityDate"
     Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastOpportunitySubject"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastOpportunityStatus"
-    Type="varchar"
-    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
@@ -344,6 +291,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="PrimaryContactEmail"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="KnownConsignor"
     Type="varchar"
     Size="9">
@@ -357,13 +311,61 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LogBoxActivated"
+    Name="AccountManagerUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SalesmanUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BillToId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ActivatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SetAsInactiveByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ActivationRequestedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsPrivateLabelCustomer"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="IsPrivateLabelCustomer"
+    Name="BlockNewInvoiceCreation"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="BlockNewShipmentCreation"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -400,35 +402,40 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="BlockNewInvoiceCreation"
-    Type="bit">
+    Name="ActivationDate"
+    Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
-    Name="BlockNewShipmentCreation"
-    Type="bit">
+    Name="InactiveDate"
+    Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
-    Name="PrimaryContactName"
+    Name="ActivationRequestDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastOpportunitySubject"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastOpportunityStatus"
     Type="varchar"
     Size="60">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="PrimaryContactEmail"
-    Type="varchar"
-    Size="70">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PrimaryContactPhone"
-    Type="varchar"
-    Size="25">
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -438,38 +445,18 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="BeforeDeactiveStatusCode"
+    ReferencedTable="CustomerStatus"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FreelancerId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="RankId"
     ReferencedTable="Ranks"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="BillToId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="AccountManagerUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="SalesmanUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ClassifierId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CollectorId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CustomerSizeId"
-    ReferencedTable="CustomerSizes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -483,18 +470,58 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="CustomerStatusCode"
-    ReferencedTable="CustomerStatus"
-    ReferencedColumn="Code"
+    ForeignKeyColumn="CollectorId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="BeforeDeactiveStatusCode"
+    ForeignKeyColumn="ClassifierId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomsAgentId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ForwarderId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MediatorId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomerStatusCode"
     ReferencedTable="CustomerStatus"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="RegionId"
     ReferencedTable="Regions"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomerSizeId"
+    ReferencedTable="CustomerSizes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AccountManagerUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SalesmanUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BillToId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -512,28 +539,10 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="FreelancerId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ForwarderId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CustomsAgentId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="MediatorId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />
   <Index
     Columns="Tenant,LastShipmentDate" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

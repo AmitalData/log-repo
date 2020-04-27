@@ -2,7 +2,8 @@
 <Table
   Name="States"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -39,11 +40,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
+    Name="CountryId"
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="InActive"
@@ -56,6 +57,13 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="SearchFields"
@@ -72,17 +80,18 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CountryId"
-    Type="varchar"
-    Size="15">
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CountryId"
     ReferencedTable="Countries"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Tenant,Code,CountryId" />
 </Table>

@@ -16,7 +16,7 @@ declare var ResultAsArray: any;
 
 @Component({
     selector: 'SettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './SettingsWorkspaceComponent.html',
     providers: [EntityResourceService, TariffDomainService],
 })
@@ -31,7 +31,7 @@ export class SettingsWorkspaceComponent implements OnInit, OnDestroy {
         //SSthis.RunComponent();
     }
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe((response:any) => {
             if (this.CurrentSession == null)
                 this.CurrentSession = SessionLocator.SelectedSession;
         });
@@ -56,7 +56,7 @@ export class SettingsWorkspaceComponent implements OnInit, OnDestroy {
     }
 
     TariffSettingsClicked() {
-        this._entityResourceService.getEntityResourceByTableName("TariffSetting", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TariffSetting", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 600;
             logWindow.Height = 400;

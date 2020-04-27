@@ -2,7 +2,6 @@ import {Component, OnInit}  from '@angular/core';
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SignUpService} from '../../../../Infrastructure/Services/ExtendedPMs/SignUpService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,7 +10,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'CreateTenantPackageSelectionComponent',
     templateUrl: './CreateTenantPackageSelectionComponent.html',
@@ -46,7 +45,7 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
 
 
     ) {
-        this._entityResourceService.getEntityResourceByTableName("Package").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Package").subscribe((response:any) => {
             this.IsStardLoadPage = true;
       
         });

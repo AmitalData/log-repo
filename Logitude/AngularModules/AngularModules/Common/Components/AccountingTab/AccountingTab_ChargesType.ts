@@ -12,7 +12,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AccountingTab_ChargesType.html',
 })
 

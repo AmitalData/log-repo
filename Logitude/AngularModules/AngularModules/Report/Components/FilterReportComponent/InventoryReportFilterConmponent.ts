@@ -14,7 +14,7 @@ import {CodeNameClass} from './CodeNameClass';
 import {AppTool} from '../../../Infrastructure/Tools';
 import { isNullOrUndefined } from 'util';
 @Component({
-    moduleId: module.id,
+    
     selector: 'InventoryReportFilterConmponent',
     templateUrl: './InventoryReportFilterConmponent.html',
     inputs: ['ReportsPreview']

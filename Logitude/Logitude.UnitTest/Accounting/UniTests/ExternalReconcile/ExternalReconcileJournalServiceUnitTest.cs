@@ -178,6 +178,9 @@ namespace Logitude.UnitTest.Accounting.UniTests
                    fakeExternalReconcileDataProvider.GetReconcileExternalPageLinePM(_Tenant, myReconcileExternalPageLinePM.Id))
                    .Returns(myReconcileExternalPageLinePM);
 
+            A.CallTo(() =>
+                  fakeExternalReconcileDataProvider.GetaccountingCurrencyId(_Tenant))
+                  .Returns("NIS");
 
             A.CallTo(() =>
        fakeExternalReconcileDataProvider.GetBankAccountFromTransferAccount(myLedgerTransactionTransferInCredit.AccountId, _Tenant))
@@ -558,7 +561,9 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
             A.CallTo(() =>
                    fakeExternalReconcileDataProvider.GetReconcileExternalPageLinePM(_Tenant, myReconcileExternalPageLinePM.Id))
                    .Returns(myReconcileExternalPageLinePM);
-
+            A.CallTo(() =>
+                   fakeExternalReconcileDataProvider.GetaccountingCurrencyId(_Tenant))
+                   .Returns("NIS");
 
             A.CallTo(() =>
        fakeExternalReconcileDataProvider.GetBankAccountFromTransferAccount(myLedgerTransactionTransferInCredit.AccountId, _Tenant))
@@ -582,6 +587,73 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
             Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.CreditAccountId == myBankAccountPM.GLAccountId));
 
             Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.LocalAmount== myOrginalJournalTransaction.First().LocalAmountCredit));
+
+            Assert.IsNotNull(theCreatedJournal.JournalExternalReconciles);
+            Assert.AreEqual(1, theCreatedJournal.JournalExternalReconciles.Count);
+
+            Assert.AreEqual(myReconcileExternalPageLinePM.Id, theCreatedJournal.JournalExternalReconciles[0].ReconcileExternalPageLineId);
+            Assert.AreEqual(myOrginalJournalTransaction.First().Id, theCreatedJournal.JournalExternalReconciles[0].LedgerTransactionId);
+        }
+
+
+
+        [TestMethod]
+        public void MoveBankCheckFromTransfer2GLAccount_foreign_GoodExample_CheckSuccess()
+        {
+            BankAccountPM myBankAccountPM;
+            ReconcileExternalPageLinePM myReconcileExternalPageLinePM;
+            List<LedgerTransactionPM> myOrginalJournalTransaction, myNewLedgerTransactionList;
+            LedgerTransactionPM myLedgerTransactionTransferInCredit;
+            JournalPM newJournal;
+            CreateAutoExternalReconcileWhileStreamingServiceUnitTest
+                .Example4AutoExternalReconcile(out myBankAccountPM, out myReconcileExternalPageLinePM, out myOrginalJournalTransaction, out myLedgerTransactionTransferInCredit, out newJournal, out myNewLedgerTransactionList);
+            myOrginalJournalTransaction.ForEach(r => r.InProgressExternalReconcile = false);
+
+            myBankAccountPM.CurrencyId = "USD";
+            myOrginalJournalTransaction.First().CurrencyId = "USD";
+            myOrginalJournalTransaction.First().ForeignAmountCredit = myOrginalJournalTransaction.First().LocalAmountCredit;
+            myOrginalJournalTransaction.First().LocalAmountCredit = 122;
+
+
+            IAccountingContext fakeIAccountingContext;
+            fakeIAccountingContext = A.Fake<IAccountingContext>();
+
+            var fakeExternalReconcileDataProvider = A.Fake<ExternalReconcileDataProvider>();
+
+
+            A.CallTo(() =>
+                   fakeExternalReconcileDataProvider.GetLedgerTransactionList(A<List<string>>.Ignored, newJournal.Tenant))
+                   .Returns(myOrginalJournalTransaction);
+            A.CallTo(() =>
+                   fakeExternalReconcileDataProvider.GetReconcileExternalPageLinePM(_Tenant, myReconcileExternalPageLinePM.Id))
+                   .Returns(myReconcileExternalPageLinePM);
+            A.CallTo(() =>
+                   fakeExternalReconcileDataProvider.GetaccountingCurrencyId(_Tenant))
+                   .Returns("NIS");
+
+            A.CallTo(() =>
+       fakeExternalReconcileDataProvider.GetBankAccountFromTransferAccount(myLedgerTransactionTransferInCredit.AccountId, _Tenant))
+       .Returns(myBankAccountPM);
+
+
+
+
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
+            myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
+            myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+
+            Assert.IsNotNull(myExternalReconcileJournalService.TheJournalPM);
+            var theCreatedJournal = myExternalReconcileJournalService.TheJournalPM;
+            Assert.IsNotNull(theCreatedJournal.JournalLines);
+            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count);
+            Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit));
+            Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit));
+
+            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.DebitAccountId == myBankAccountPM.TransferGLAcccountId));
+            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.CreditAccountId == myBankAccountPM.GLAccountId));
+
+            Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.LocalAmount == myOrginalJournalTransaction.First().LocalAmountCredit));
+
 
             Assert.IsNotNull(theCreatedJournal.JournalExternalReconciles);
             Assert.AreEqual(1, theCreatedJournal.JournalExternalReconciles.Count);

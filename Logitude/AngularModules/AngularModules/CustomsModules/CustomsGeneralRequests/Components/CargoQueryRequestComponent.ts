@@ -24,7 +24,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'CargoQueryRequestComponent',
-    moduleId: module.id,
+    
     templateUrl: './CargoQueryRequestComponent.html',
 })
 
@@ -58,8 +58,8 @@ export class CargoQueryRequestComponent
         this.DeliveryOrderResultList = new ObservableCollection([]);
         this.CargosVersionResultList = new ObservableCollection([]);
         this.CargoItemResultList = new ObservableCollection([]);
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
                 this._IsReady = true;
             });
         });

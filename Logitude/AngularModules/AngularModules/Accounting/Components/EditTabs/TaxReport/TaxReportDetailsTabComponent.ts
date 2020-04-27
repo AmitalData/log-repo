@@ -20,11 +20,13 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import {TaxReportExtendedPMService} from '../../../Services/ExtendedPMs/TaxReportExtendedPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TaxReportDetailsTabComponent.html',
 })
 
 export class TaxReportDetailsTabComponent extends BaseComponent implements OnInit {
+  public Export2ExcelClicked() { }
+
 
     public EntityPM: TaxReportPM = null;
     public ObjectTableName = "TaxReport";
@@ -356,7 +358,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     StatusItems = [];
     SelectedStatusItems = [];
     GetStatuses() {
-        this._TaxReportLineStatusListService.getAll().subscribe((myResult) => {
+        this._TaxReportLineStatusListService.getAll().subscribe((myResult:any) => {
             this.StatusItems = myResult.Result;
         });
     }
@@ -371,7 +373,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.FilterLines();
     }
     GetLinesWithErrorsCount(){
-        this._TaxReportExtendedPMService.getErrorsCount(this.EntityPM.Id).subscribe((myResult) => {
+        this._TaxReportExtendedPMService.getErrorsCount(this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
             var __errorsCount = myResult.Result;
             this.ShowErrorMsg = __errorsCount >= 1;
             this.errorsCount = __errorsCount;
@@ -548,7 +550,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     }
     reportCounters: TaxReportLinesCounter;
     GetReportCounter(){
-        this._TaxReportExtendedPMService.GetReportLinesCounter(this.EntityPM.Id).subscribe(myResult => {
+        this._TaxReportExtendedPMService.GetReportLinesCounter(this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError)

@@ -14,7 +14,7 @@ import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
 import {WarehouseEntryPackagePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseEntryPackagePMExtendedService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'WarehouseReleaseChoosePackagesComponent',
     templateUrl: './WarehouseReleaseChoosePackagesComponent.html',
     providers: [WarehouseEntryPackagePMExtendedService],
@@ -57,7 +57,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     }
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe((response:any) => {
 
             this.Start(args);
         });
@@ -79,14 +79,14 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             this.OldCustomerId = this.warehouseReleasePM.CustomerId;
         }
 
-        this.transportModeId = this.ViewModelTrigger.TransportModeId ? this.ViewModelTrigger.TransportModeId : "All";
-        this.DirectionId = this.ViewModelTrigger.DirectionId ? this.ViewModelTrigger.DirectionId : "All";
+        //this.transportModeId = this.ViewModelTrigger.TransportModeId ? this.ViewModelTrigger.TransportModeId : "All";
+        //this.DirectionId = this.ViewModelTrigger.DirectionId ? this.ViewModelTrigger.DirectionId : "All";
 
 
 
         this.CustomerId = this.ViewModelTrigger.CustomerId;
-        this.FromPortId = this.ViewModelTrigger.FromPortId;
-        this.ToPortId = this.ViewModelTrigger.ToPortId;
+        //this.FromPortId = this.ViewModelTrigger.FromPortId;
+        //this.ToPortId = this.ViewModelTrigger.ToPortId;
   
         this.PackageType = args.PackageType;
 
@@ -358,14 +358,19 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         }
     }
 
+    EditWarehouseReleases(EntryId: any) {
 
+        var myBackButtonLabel = "Choose Cross Dock Package";
 
-
-
-
-
-
-
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: EntryId, ObjectTableName: "WarehouseEntry", BackButtonLabel: myBackButtonLabel });
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    this.LoadWarehouseEntryPackageListsByCustomerId();
+                });
+            });
+    }
 
     LoadWarehouseEntryPackageListsByCustomerId() {
         var shipmentId = this.warehouseReleasePM.ShipmentId ? this.warehouseReleasePM.ShipmentId : "";
@@ -412,6 +417,7 @@ export class WarehouseEntryPackageClass extends BaseComponent {
     FromPortId: string;
     ToPortId: string;
     CustomerId: string;
+    WarehouseEntryNumber: string;
 
     IsSelectedKeyId: string = Guid.newGuid();
     get ReleaseQTY() {
@@ -499,6 +505,7 @@ export class WarehouseEntryPackageClass extends BaseComponent {
         this.Height = entityPM.Height;
         this.Width = entityPM.Width;
         this.Length = entityPM.Length;
+        this.WarehouseEntryNumber = entityPM.WarehouseEntryNumber;
 
         this.Description = entityPM.Description;
         this.Instock = entityPM.Instock;

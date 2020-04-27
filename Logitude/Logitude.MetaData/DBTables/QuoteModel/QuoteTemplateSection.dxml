@@ -2,7 +2,8 @@
 <Table
   Name="QuoteTemplateSections"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Id"
     Type="varchar"
@@ -14,6 +15,27 @@
   <Column
     Name="Tenant"
     Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="60"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCancel"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
@@ -32,29 +54,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Name"
-    Type="nvarchar"
-    Size="60"
-    DefaultValue="''">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Order"
+    ShortName="ColumnOrder"
     Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Description"
-    Type="nvarchar"
-    Size="500">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsCancel"
-    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>

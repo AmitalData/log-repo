@@ -4,7 +4,7 @@
   ObjectTableName="&quot;BankDeposit&quot;"
   IsNew="false"
   DBTableName="&quot;BankDeposits&quot;"
-  OldDBTableName="&quot;BankDeposits&quot;"
+  DBTableOldNames="BankDeposits"
   ObjectTableSingular="&quot;BankDeposit&quot;"
   ObjectTablePlural="&quot;BankDeposits&quot;"
   HasCustomFilter="false"
@@ -61,11 +61,13 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;c343e469-a7bf-441a-82a9-a692ab0b6188&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -112,6 +114,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -136,7 +139,7 @@
   <field
     Id="&quot;f8104bc5-dbd8-47d0-8e98-f1a651586213&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -183,6 +186,7 @@
     ListLableDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -207,7 +211,7 @@
   <field
     Id="&quot;4fb42823-6bbe-4448-af11-00e7f736a74d&quot;"
     FieldName="&quot;CreateDate&quot;"
-    OldFieldName="&quot;CreateDate&quot;"
+    OldNames="CreateDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -256,6 +260,7 @@
     ListLocalDefaultText="&quot;תאריך יצירה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -280,7 +285,7 @@
   <field
     Id="&quot;bf9d3e54-285b-418a-b163-7e4e9edae1e1&quot;"
     FieldName="&quot;CreatedByUserId&quot;"
-    OldFieldName="&quot;CreatedByUserId&quot;"
+    OldNames="CreatedByUserId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -331,6 +336,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CreatedByUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -356,7 +362,7 @@
   <field
     Id="&quot;7ecb4e63-8d1c-4cc3-aaed-db06a05fe76e&quot;"
     FieldName="&quot;UpdateDate&quot;"
-    OldFieldName="&quot;UpdateDate&quot;"
+    OldNames="UpdateDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -405,6 +411,7 @@
     ListLocalDefaultText="&quot;תאריך עדכון&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -429,7 +436,7 @@
   <field
     Id="&quot;6a861edb-daf4-440b-a23e-3401531d9ceb&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
-    OldFieldName="&quot;UpdatedByUserId&quot;"
+    OldNames="UpdatedByUserId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -479,6 +486,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="UpdatedByUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -504,7 +512,7 @@
   <field
     Id="&quot;ca96160a-057b-4532-9d64-12095b5eb5ec&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -553,6 +561,7 @@
     ListLocalDefaultText="&quot;מספר הפקדה / המחאה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -577,7 +586,7 @@
   <field
     Id="&quot;a8db2567-7dcf-4d2c-960b-90dada4a03a9&quot;"
     FieldName="&quot;DepositNumber&quot;"
-    OldFieldName="&quot;DepositNumber&quot;"
+    OldNames="DepositNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -627,6 +636,7 @@
     ListLocalDefaultText="&quot;מספר הפקדה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -651,7 +661,7 @@
   <field
     Id="&quot;64c041f9-95df-4557-a5f0-11bce5011c97&quot;"
     FieldName="&quot;DepositDate&quot;"
-    OldFieldName="&quot;DepositDate&quot;"
+    OldNames="DepositDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -701,6 +711,7 @@
     ListLocalDefaultText="&quot;תאריך חשבונאי&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -725,7 +736,7 @@
   <field
     Id="&quot;3c0437c1-8a3f-4b6b-b8a6-010c82e229de&quot;"
     FieldName="&quot;DepositCurrencyId&quot;"
-    OldFieldName="&quot;DepositCurrencyId&quot;"
+    OldNames="DepositCurrencyId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -733,7 +744,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Currency&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="15"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -777,6 +788,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="Currency"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="Currency"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -785,7 +797,7 @@
     IsMaxLength="false"
     NoMetaDataField="false"
     GenerateInList="true"
-    IsFixedLength="true"
+    IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
@@ -802,7 +814,7 @@
   <field
     Id="&quot;d68ec648-01b7-431c-83e4-f6df5724ef25&quot;"
     FieldName="&quot;LocalDepositAmount&quot;"
-    OldFieldName="&quot;LocalDepositAmount&quot;"
+    OldNames="LocalDepositAmount"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -854,6 +866,7 @@
     ListLocalDefaultText="&quot;סכום הפקדה במטבע מקומי&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -878,7 +891,7 @@
   <field
     Id="&quot;b3eed799-b5e1-40a7-89b5-ce62387cda41&quot;"
     FieldName="&quot;ForeignAmount&quot;"
-    OldFieldName="&quot;ForeignAmount&quot;"
+    OldNames="ForeignAmount"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -930,6 +943,7 @@
     ListLocalDefaultText="&quot;סכום הפקדה במטבע זר&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -954,7 +968,7 @@
   <field
     Id="&quot;9e347372-480e-4bc6-90fe-cd41835c6a2c&quot;"
     FieldName="&quot;DepositBankAccountId&quot;"
-    OldFieldName="&quot;DepositBankAccountId&quot;"
+    OldNames="DepositBankAccountId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1006,6 +1020,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="BankAccount"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="BankAccount"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1031,7 +1046,7 @@
   <field
     Id="&quot;cd5c012d-1d9e-4dcc-b3d2-470a1051e7e0&quot;"
     FieldName="&quot;CashBookId&quot;"
-    OldFieldName="&quot;CashBookId&quot;"
+    OldNames="CashBookId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1083,6 +1098,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="CashBook"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CashBook"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1108,12 +1124,12 @@
   <field
     Id="&quot;7aa63f61-beb0-4a86-a13e-de83f225c55c&quot;"
     FieldName="&quot;AccountingDate&quot;"
-    OldFieldName="&quot;AccountingDate&quot;"
+    OldNames="AccountingDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;BankDeposit&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="true"
@@ -1158,6 +1174,7 @@
     ListLocalDefaultText="&quot;תאריך חשבונאי&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1182,7 +1199,7 @@
   <field
     Id="&quot;f55920a3-f275-499f-a7e1-5dd4be0a2021&quot;"
     FieldName="&quot;BankDepositLines&quot;"
-    OldFieldName="&quot;BankDepositLines&quot;"
+    OldNames="BankDepositLines"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1227,6 +1244,7 @@
     DefaultText="&quot;Deposit Lines&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1254,7 +1272,7 @@
   <field
     Id="&quot;f321dd46-104d-4a7d-9878-79c58aad5f4c&quot;"
     FieldName="&quot;CashBookGLAccountId&quot;"
-    OldFieldName="&quot;CashBookGLAccountId&quot;"
+    OldNames="CashBookGLAccountId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1303,6 +1321,7 @@
     ListLocalDefaultText="&quot;כרטיס קופה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1327,7 +1346,7 @@
   <field
     Id="&quot;7a97a586-d871-48d7-b843-0a8086fae0af&quot;"
     FieldName="&quot;IsCashDeposit&quot;"
-    OldFieldName="&quot;IsCashDeposit&quot;"
+    OldNames="IsCashDeposit"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1376,6 +1395,7 @@
     ListLocalDefaultText="&quot; הפקדת מזומן&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1400,7 +1420,7 @@
   <field
     Id="&quot;83f1e446-168b-4854-bb6c-31d85db29a7e&quot;"
     FieldName="&quot;DeferredGLAccountId&quot;"
-    OldFieldName="&quot;DeferredGLAccountId&quot;"
+    OldNames="DeferredGLAccountId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1447,6 +1467,7 @@
     ListLableDefaultText="&quot;Deferred GL Account&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1471,7 +1492,7 @@
   <field
     Id="&quot;e6514efe-6e98-4a76-a233-216bee5d9f5c&quot;"
     FieldName="&quot;CashGLAccountId&quot;"
-    OldFieldName="&quot;CashGLAccountId&quot;"
+    OldNames="CashGLAccountId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1518,6 +1539,7 @@
     ListLableDefaultText="&quot;Cash GL Account&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1542,7 +1564,7 @@
   <field
     Id="&quot;b606915d-4ee2-4ddd-9a6c-9ca1d5ce1055&quot;"
     FieldName="&quot;IsCanceled&quot;"
-    OldFieldName="&quot;IsCanceled&quot;"
+    OldNames="IsCanceled"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1591,6 +1613,7 @@
     ListLocalDefaultText="&quot;מבוטלת&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1615,7 +1638,7 @@
   <field
     Id="&quot;2ba4a8e3-8471-4747-92ee-ec3a0242bb5c&quot;"
     FieldName="&quot;DepositCurrencyCode&quot;"
-    OldFieldName="&quot;DepositCurrencyCode&quot;"
+    OldNames="DepositCurrencyCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1664,6 +1687,7 @@
     ListLocalDefaultText="&quot;מטבע&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1688,7 +1712,7 @@
   <field
     Id="&quot;129bdea4-caef-4baf-a3c7-6854ae57a456&quot;"
     FieldName="&quot;JournalNumber&quot;"
-    OldFieldName="&quot;JournalNumber&quot;"
+    OldNames="JournalNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1737,6 +1761,7 @@
     ListLocalDefaultText="&quot;מספר פקודת יומן&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1761,7 +1786,7 @@
   <field
     Id="&quot;50eb3bff-8521-49ef-89cd-04d907523dad&quot;"
     FieldName="&quot;JournalId&quot;"
-    OldFieldName="&quot;JournalId&quot;"
+    OldNames="JournalId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1809,6 +1834,7 @@
     ListLocalDefaultText="&quot;פקודת יומן&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1833,7 +1859,7 @@
   <field
     Id="&quot;56cbbe6e-5164-456e-ae6f-38da0c7800f6&quot;"
     FieldName="&quot;CashBookName&quot;"
-    OldFieldName="&quot;CashBookName&quot;"
+    OldNames="CashBookName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1882,6 +1908,7 @@
     ListLocalDefaultText="&quot;קופה&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1906,7 +1933,7 @@
   <field
     Id="&quot;7133b567-7d9a-4615-b8d4-247768ee6596&quot;"
     FieldName="&quot;LastActivityDate&quot;"
-    OldFieldName="&quot;LastActivityDate&quot;"
+    OldNames="LastActivityDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1955,6 +1982,7 @@
     ListLocalDefaultText="&quot;תאריך אחרון&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1979,7 +2007,7 @@
   <field
     Id="&quot;62fb90b9-ad81-4a14-ae38-ddcd2ba388be&quot;"
     FieldName="&quot;LastActivityTypeName&quot;"
-    OldFieldName="&quot;LastActivityTypeName&quot;"
+    OldNames="LastActivityTypeName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2028,6 +2056,7 @@
     ListLocalDefaultText="&quot;סוג ישות&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2052,7 +2081,7 @@
   <field
     Id="&quot;bca13557-0d12-4642-bee3-398da5e49399&quot;"
     FieldName="&quot;LastActivityByUserName&quot;"
-    OldFieldName="&quot;LastActivityByUserName&quot;"
+    OldNames="LastActivityByUserName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2101,6 +2130,7 @@
     ListLocalDefaultText="&quot;מעדכן אחרון&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2125,7 +2155,7 @@
   <field
     Id="&quot;cb5a395d-aedf-4a3d-979b-45c806066300&quot;"
     FieldName="&quot;CreatedByUserName&quot;"
-    OldFieldName="&quot;CreatedByUserName&quot;"
+    OldNames="CreatedByUserName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2174,6 +2204,7 @@
     ListLocalDefaultText="&quot;יוצר&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2198,7 +2229,7 @@
   <field
     Id="&quot;cc810d42-d660-4471-ac16-135d2726f6c4&quot;"
     FieldName="&quot;BankAccountNumber&quot;"
-    OldFieldName="&quot;BankAccountNumber&quot;"
+    OldNames="BankAccountNumber"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2248,6 +2279,7 @@
     ListLocalDefaultText="&quot;מספר חשבון בנק&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2272,7 +2304,7 @@
   <field
     Id="&quot;54e16ef6-7b0f-4275-a6a8-feb88796293e&quot;"
     FieldName="&quot;JournalQueueId&quot;"
-    OldFieldName="&quot;JournalQueueId&quot;"
+    OldNames="JournalQueueId"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -2316,6 +2348,7 @@
     DefaultText="&quot;Journal Queue Id&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2806,6 +2839,146 @@
     </MenuButton>
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;General.MC.ACC.BankDeposits&quot;"
+      DefaultText="&quot;Bank Deposits&quot;"
+      LocalDefaultText="&quot;הפקדות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot; Deposit.Details.O.Details&quot;"
+      DefaultText="&quot;Details&quot;"
+      LocalDefaultText="&quot;פרטי הפקדה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot; Deposit.General.O.Details&quot;"
+      DefaultText="&quot;General&quot;"
+      LocalDefaultText="&quot;הגדרות הפקדה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Deposit.Details.B.CancelDeposit&quot;"
+      DefaultText="&quot;Cancel Deposit&quot;"
+      LocalDefaultText="&quot;ביטול הפקדה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.Line&quot;"
+      DefaultText="&quot;Line&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.DepositId&quot;"
+      DefaultText="&quot;Deposit&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.ARPaymentChequeId&quot;"
+      DefaultText="&quot;ARPayment Cheque&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.DueDate&quot;"
+      DefaultText="&quot;Due Date&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.IsOutOfDeposit&quot;"
+      DefaultText="&quot;Out Of Deposit&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.OutOfDepositeDate&quot;"
+      DefaultText="&quot;Out Of Deposite Date&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.Currency&quot;"
+      DefaultText="&quot;Currency&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.LocalAmount&quot;"
+      DefaultText="&quot;Amount (%InvoiceCurrencyCode)&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.ForeignAmount&quot;"
+      DefaultText="&quot;Foreign Amount&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.ChequeNumber&quot;"
+      DefaultText="&quot;Cheque No.&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.Bank&quot;"
+      DefaultText="&quot;Bank&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.BankAccountNumber&quot;"
+      DefaultText="&quot;Bank Account&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.Notes&quot;"
+      DefaultText="&quot;Notes&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.Branch&quot;"
+      DefaultText="&quot;Branch&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.CH.ARPayment&quot;"
+      DefaultText="&quot;ARPayment&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.O.DepositAmountmustbelessthanCashbook&quot;"
+      DefaultText="&quot;Deposit amount should be less than or equal cashbook total&quot;"
+      LocalDefaultText="&quot;סכום ההפקדה צריך להיות קטן או שווה לסכום בקופה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankDeposit.O.DepositCancelChequeMSG&quot;"
+      DefaultText="&quot;The deposit can’t be cancelled, at least one one cheques have been redeemed, you should cancel the external reconciliation in order to return the cheque to the cashbook&quot;"
+      LocalDefaultText="&quot;לא ניתן לבטל את ההפקדה, משום שהיא מכילה לפחות המחאה אחת שנפרעה, יש לבטל את ההתאמה החיצונית ע”מ להחזיר את ההמחאה לקופה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;DETAILS&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;BankDeposit.Features.Details&quot;"
+      FeatureDefaultText="&quot;Details Tab&quot;" />
+    <Feature
+      Code="&quot;BANKDEPOSITMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;BankDeposit.Features.BankDepositMenu&quot;"
+      FeatureDefaultText="&quot;Bank Deposit&quot;" />
+    <Feature
+      Code="&quot;MOREBNKDPST&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;BankDeposit.Features.More&quot;"
+      FeatureDefaultText="&quot;More Buttons&quot;" />
+  </AdditionalFeatures>
 </entity>

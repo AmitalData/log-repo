@@ -19,6 +19,10 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using System.Data.Entity.SqlServer;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Simplog.Data.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityQueries;
+
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
     public class AgingReportService
@@ -36,6 +40,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         private GLAccountRepository _myGLAccountRepository;
         private List<GLAccount> _GLAccountChildren_UseToAggregateAsLocalAmount;
         private bool _TESTIT;
+        private List<string> _AccountListRelatedCurrenciesAccount_List2Discard;
 
         //private bool _TryGetAllThenAggregate = true;
 
@@ -107,6 +112,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
             {
                 _AccountingContext = AccountingContext.GetContext(_Param.Tenant);
+                (_AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout = 300;
+
                 //var qsGLAccountTotalByMonth = new GLAccountTotalByMonthQueryService(_AccountingContext);
                 var repoGLAccountTotalByMonth = new GLAccountTotalByMonthRepository(_AccountingContext);
                 var repoLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
@@ -309,6 +316,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      
                      CurrencyId = left_TotDB.CurrencyId,
                      Total = left_TotDB.Total,
+                     OpenCredit = left_TotDB.OpenCredit,
+                     OpenDebit = left_TotDB.OpenDebit,
 
                  }).ToList();
 
@@ -331,6 +340,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      OrderDateB4 = left_TotDB.OrderDateB4,
                      AccountId = (accRelatedCurrency != null) ? accRelatedCurrency.ParentAccountId : left_TotDB.AccountId,
 
+                     OpenCredit = left_TotDB.OpenCredit,
+                     OpenDebit = left_TotDB.OpenDebit,
                      CurrencyId = left_TotDB.CurrencyId,
                      Total = left_TotDB.Total
                  }).ToList();
@@ -388,6 +399,17 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 var DBAndDummies = //dummiesWithoutDBRecord.Union(dbList);
                     dummiesPeriodsList.Union(theDBList);
 
+
+                if (_AccountListRelatedCurrenciesAccount_List2Discard != null)
+                {
+                    DBAndDummies = DBAndDummies.Where(r => !_AccountListRelatedCurrenciesAccount_List2Discard.Contains(r.AccountId));
+                    
+                }
+                if (_Param.AggregateByGLAccountCurrencies)
+                {
+                    DBAndDummies = DBAndDummies.Where(r => !string.IsNullOrEmpty(r.CurrencyId));
+                }
+
                 var reportList = (from rec in /*dummiesPeriodsList.Union(dbList)*/ DBAndDummies
                                   group rec by new { rec.OrderDate, rec.OrderDateB4, rec.AccountId, rec.CurrencyId }
                                       into groupby
@@ -411,18 +433,29 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                               ).ToList();
 
                 // Adding accounts names
-                List<string> accountsIds = qTotalByMonthAcc.Select(d => d.AccountId).ToList();
+                // List<string> accountsIds = qTotalByMonthAcc.Select(d => d.AccountId).ToList();
+                List<string> accountsIds = reportList.Select(d => d.AccountId).Distinct().ToList();
 
                 GLAccountListQueryService accountQS = new GLAccountListQueryService(_AccountingContext);
                 
                 IQueryable<GLAccountList> accountsList = accountQS.GetByIds(accountsIds,_Param.Tenant);
+                if (_AccountListRelatedCurrenciesAccount_List2Discard != null)
+                {
+                    accountsList = accountsList.Where(r => !_AccountListRelatedCurrenciesAccount_List2Discard.Contains(r.Id));
+
+                }
+
+                TenantQuery tenantQuery = new TenantQuery(_Param.Tenant);
+                var tenant = tenantQuery.GetSinglePM(_Param.Tenant);
+
                 IQueryable<PeriodMExtended> periodMExtendeds =
-                    (from a in accountsList
+                    (from acc in accountsList
                      join moredata in _AccountingContext.GLAccountMoreDatas.Where(r => r.Tenant == _Param.Tenant)
-                     on a.Id equals moredata.AccountId
+                     on acc.Id equals moredata.AccountId into moredataJoinT
+                     from moredata in moredataJoinT.DefaultIfEmpty()
 
                      join card in _AccountingContext.Cards.Where(r => r.Tenant == _Param.Tenant)
-                      on a.Id equals card.GLAccountId into cardJoinT
+                      on acc.Id equals card.GLAccountId into cardJoinT
                      from card in cardJoinT.DefaultIfEmpty()
 
                      join cust in _AccountingContext.Customers.Where(r => r.Tenant == _Param.Tenant)
@@ -435,16 +468,23 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                      select new PeriodMExtended()
                      {
-                         AccountId = a.Id,
-                         AccountDisplayNumber = a.DisplayNumber,
+                         AccountId = acc.Id,
+                         AccountDisplayNumber = acc.DisplayNumber,
                          AccountTermName = card.PaymentTerm.EnglishName,
+                         
+                         AccountPhone = card.Phone,
+                         AccountEnglishName = acc.EnglishName,
+                         AccountLocalName = acc.LocalName,
+                         CurrencyCode = acc.CurrencyCode,
+                         
+                         
 
                          CreditLimitAmount =
                          //cust!=null?(double)cust.CreditLimitAmount:0,
                          cust != null ? (cust.CreditLimitAmount != null ? (double)cust.CreditLimitAmount : 0) : 0,
 
                          CreditStatusAmount_AsIs = cust != null ? (cust.CreditLimitAmount!=null ?(double)cust.CreditLimitAmount:0):0,
-                         BalanceInLocalCurrency= moredata!=null ?(decimal)moredata.BalanceInLocalCurrency:0,
+                         BalanceInLocalCurrency= moredata!=null ?(decimal)moredata.BalanceInLocalCurrency:0.00m,
                          //CreditStatusAmount= 
                          //((decimal)(cust.CreditLimitAmount.GetValueOrDefault())
                          //- (
@@ -457,28 +497,59 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                          TotalOpenShipments= custOFiles != null ?  custOFiles.TotalOpenFilesAmount:0,
                          TotalFutureOpenCheques = moredata !=null ?(decimal)moredata.TotalOpenChequesInLocalCur:0,
-                         TotalOpenCheques = moredata!=null? (decimal)moredata.TotFutureOpenChequesInLocalCur:0
+                         TotalOpenCheques = moredata!=null? (decimal)moredata.TotFutureOpenChequesInLocalCur:0,
+
+                         //AccountEnglishName = acc.EnglishName,
+                        // AccountLocalName = acc.LocalName,
+                         AccountCurrencyCode = acc.ReconcileMethodCode == "0" ? tenant.CurrencyCode : acc.CurrencyCode,
                      }
 
                  );
 
                 ///var list1=periodMExtendeds.ToList();
+                bool checkIt = false;
+                if (checkIt)
+                {
+                    var A = reportList.GroupBy(r=>r.AccountId).Count();
+                    var b = periodMExtendeds.GroupBy(r => r.AccountId).Count();
+                    if (A != b)
+                    {
 
-
+                    }
+                }
+                CurrencyQuery _CurrencyQuery = new CurrencyQuery(_Param.Tenant);
+                var currencies = _CurrencyQuery.GetCurrenciesByTenantPM(_Param.Tenant);
                 List<PeriodMExtended> namedPeriods = (from line in reportList
                                                           //join account in accountsList on line.AccountId equals account.Id
-                                                      join account in periodMExtendeds on line.AccountId equals account.AccountId
+                                                          
+                                                      join account in periodMExtendeds
+                                                        on line.AccountId equals account.AccountId into accJoin
+                                                        from account in accJoin.DefaultIfEmpty()
+
+                                                      join currency in currencies
+                                                        on line.CurrencyId equals currency.Id into currencyJoin
+                                                        from currency in currencyJoin.DefaultIfEmpty()
+                                                        
+
                                                       select new PeriodMExtended()
                                                       {
                                                           OrderDate = line.OrderDate,
                                                           OrderDateB4 = line.OrderDateB4,
                                                           AccountId = line.AccountId,
                                                           CurrencyId = line.CurrencyId,
+                                                          CurrencyCode = currency == null ? null : currency.Code,
                                                           Total = line.Total,
                                                           AccountEnglishName = account.AccountEnglishName,
                                                           AccountLocalName = account.AccountLocalName,
                                                           AccountDisplayNumber = account.AccountDisplayNumber,
+                                                          AccountCurrencyCode = account.AccountCurrencyCode,
                                                           AccountTermName = account.AccountTermName,
+                                                          OpenCredit = line.OpenCredit,
+                                                          OpenDebit = line.OpenDebit,
+                                                          AccountPhone = account.AccountPhone,
+
+
+
                                                           CreditLimitAmount = account.CreditLimitAmount,
                                                           CreditStatusAmount_AsIs = account.CreditStatusAmount_AsIs,
                                                           BalanceInLocalCurrency= account.BalanceInLocalCurrency,
@@ -496,11 +567,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         OrderDateB4 = r.OrderDateB4,
                         AccountId = r.AccountId,
                         CurrencyId = r.CurrencyId,
+                        CurrencyCode = r.CurrencyCode,
                         Total = r.Total,
                         AccountEnglishName = r.AccountEnglishName,
                         AccountLocalName = r.AccountLocalName,
                         AccountDisplayNumber = r.AccountDisplayNumber,
+                        AccountCurrencyCode = r.AccountCurrencyCode,
                         AccountTermName = r.AccountTermName,
+                        AccountPhone = r.AccountPhone,
                         CreditLimitAmount = r.CreditLimitAmount,
                         CreditStatusAmount_AsIs = r.CreditStatusAmount_AsIs,
                         CreditStatusAmount= 
@@ -512,6 +586,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         + r.TotalOpenShipments
                         )
                         ),
+                        OpenCredit = r.OpenCredit,
+                        OpenDebit = r.OpenDebit,
 
 
                         BalanceInLocalCurrency = r.BalanceInLocalCurrency,
@@ -526,7 +602,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 DataTable _PivotTable = namedPeriods.ToPivotTable(
                     rec => rec.PeriodName,
                     rec => rec.AccountAndCurr, //new { rec.AccountId, rec.CurrencyId }, //rec.AccountId, //
-                    recs => recs.Any() ? recs.Sum(rec => rec.Total) : 0);
+                    recs => recs.Any() ? recs.Sum(rec => rec.Total) : 0.00m);
                 var xml = _PivotTable.ToJsonString();
                 _PivotTable.TableName = "sss";
                 xml = _PivotTable.ToXml();
@@ -830,7 +906,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 .GetQRelatedCurrenciesAccountIdByCustomerGLAccount(_Param.Tenant, _MainAccountIdList_ToFetchThenAggragrate)
                 //.Select(rec => rec.GLAccountId).ToList();
                 ;
+            _AccountListRelatedCurrenciesAccount_List2Discard = _AccountListRelatedCurrenciesAccount_UseToAggregateAsLocalAmount
+          .Select(r => r.GLAccountId)
+          .ToList();
         }
+
 
         private void FilterGLAccountByParams()
         {
@@ -1172,8 +1252,13 @@ Period	Acc	Currency	Total
 
 
         public string AccountDisplayNumber { get; set; }
+        public string AccountCurrencyCode { get; set; }
         //accountCardlist.Payment Term: //PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
         public string AccountTermName { get; set; }
+        
+        public string AccountPhone { get; set; }
+        public string CurrencyCode { get; set; }
+        
 
         /*
         var percentage = 0;
@@ -1202,18 +1287,19 @@ Period	Acc	Currency	Total
 
 
         //ccountCardlist?accountCardlist.CreditLimitAmount:0>>entityList.CreditLimitAmount = entityPOCO.Customer.CreditLimitAmount;
-        public double CreditLimitAmount  { get; set; }
+        
+        public double? CreditLimitAmount { get; set; }= 0;
 
         //this.creditStatusAmount = (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0) - this.accountTotal;
-        public decimal CreditStatusAmount { get; set; }
+        public decimal? CreditStatusAmount { get; set; } = 0;
         //this.accountCardlist.OpenShipments? this.accountCardlist.OpenShipments:0 
-        public decimal TotalOpenShipments { get; set; }
+        public decimal? TotalOpenShipments { get; set; } = 0;
         //+   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
-        public decimal TotalFutureOpenCheques { get; set; }
+        public decimal? TotalFutureOpenCheques { get; set; } = 0;
         //+   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
-        public decimal TotalOpenCheques { get; set; }
-        public double CreditStatusAmount_AsIs { get;  set; }
-        public decimal BalanceInLocalCurrency { get;  set; }
+        public decimal? TotalOpenCheques { get; set; } = 0;
+        public double? CreditStatusAmount_AsIs { get;  set; } = 0;
+        public decimal? BalanceInLocalCurrency { get;  set; } = 0;
     }
 
     public class AgingReportParam

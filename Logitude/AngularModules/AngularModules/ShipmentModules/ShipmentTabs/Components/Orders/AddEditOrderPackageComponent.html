@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -32,7 +32,7 @@
 
                                 <td style="width: 230px;">
                                     <LogLov [ObjectFieldName]="'PackageTypeId'"
-                                            [SelectedValue]="PackageTypeId"
+                                            [SelectedValue]="DataContext.PackageTypeId"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'PackageType'"

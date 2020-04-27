@@ -6,7 +6,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {SearchTextBox} from '../../../../Controls/SearchTextBox';
 import {IconButton} from '../../../../Controls/IconButton';
 import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import {Http, Response} from '@angular/http';
+
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -34,7 +34,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PrivateLabelApprovebyMobileComponent.html'
 })
 
@@ -97,10 +97,10 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
                 }
             }
         }
-        this._ShipmentPMService.getSingleByForwarderShipmentNumber(ForwarderShipmentNumber).subscribe(MyResult => {
+        this._ShipmentPMService.getSingleByForwarderShipmentNumber(ForwarderShipmentNumber).subscribe((MyResult:any) => {
             if (MyResult.Result) {
                 this.EntityPm = MyResult.Result;
-                this._ShipmentAdditionalCloudDataService.get(this.EntityPm.Id).subscribe(AdditionalResult => {
+                this._ShipmentAdditionalCloudDataService.get(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
                     
                         this.AdditionalData = AdditionalResult.Result
                         if (this.AdditionalData.IsImporterApprovalRequried){
@@ -136,7 +136,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
                                 }
                                 var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
                                 //this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-                                this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
+                                this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res:any) => {
                                     var Result = [];//DocumentTypeMetaDataExtendedService
 
                                     Result = res.Result.filter(a => a.IsDeleted == false);
@@ -149,7 +149,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
                                     var tempSupplierInvoice = [];
                                     var tempOthers = [];
                                     var DRELID = "";
-                                    this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe(myResult => {
+                                    this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe((myResult:any) => {
                                         if (myResult.Result) {
                                             DRELID = myResult.Result.Id;
                                             if (!AppTool.IsNullOrEmpty(DRELID)) {
@@ -224,7 +224,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
     ApproveButtonClicked() {
         //this.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
         this.ValidationWarningsList = null;
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
             var entity = AdditionalResult.Result
             if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName) || !AppTool.IsNullOrEmpty(entity.DenyReason)) {
                 //this.messageWindow.RTL = true;
@@ -239,7 +239,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
             }
             else {
                 entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                this._ShipmentAdditionalCloudDataService.update(entity).subscribe(AdditionalResult => {
+                this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult:any) => {
                     ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
                     this.DimApproveButton = true;
                     var today = new Date();
@@ -281,7 +281,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
     public set DenyReason(newValue: string) { this.AdditionalData.DenyReason = newValue; }
 
     DownloadDocumentFile(item) {
-        //this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe(res => {
+        //this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe((res:any) => {
             var EntityNumber = "";
             if (this.EntityPm != null) {
                 EntityNumber = this.EntityPm.ShipmentNumber;
@@ -428,7 +428,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
         //newWindow.Height = 220;
         //newWindow.RTL = true;
 
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
             var entity = AdditionalResult.Result
             this.MyAdditionalData = AdditionalResult.Result;
             if (!AppTool.IsNullOrEmpty(entity.DenyReason) || !AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {
@@ -477,7 +477,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
             //this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.MyAdditionalData.IsImporterApprovalRequried = false;
             this.MyAdditionalData.DenyReason = SessionLocator.LoggedUserPM.EnglishName + ", " + SessionLocator.LoggedUserPM.LocalName + ", " + SessionLocator.LoggedUserPM.Email + ", " + this.DenyReason + ", " + this.MyAdditionalData.VersionApproved;
-            this._ShipmentAdditionalCloudDataService.update(this.MyAdditionalData).subscribe(AdditionalResult => {
+            this._ShipmentAdditionalCloudDataService.update(this.MyAdditionalData).subscribe((AdditionalResult:any) => {
                 //this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 //this.CurrentSession.CloseCurrentWindowEmit("Denied");
                 this.FinalMessage = "דחיית הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;

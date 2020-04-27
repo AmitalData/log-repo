@@ -12,7 +12,7 @@ import {AddEditBranchAddressComponent} from './AddEditBranchAddressComponent';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BranchGeneralTabComponent.html',
 })
 

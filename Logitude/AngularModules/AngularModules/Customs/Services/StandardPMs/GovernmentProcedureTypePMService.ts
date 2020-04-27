@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -23,10 +23,10 @@ import {GovernmentProcedureTypePM} from '../../EntityPMs/GovernmentProcedureType
 @Injectable()
 
 export class GovernmentProcedureTypePMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/governmentproceduretypes';      
     }
 
@@ -36,11 +36,11 @@ export class GovernmentProcedureTypePMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
-		 return Observable.defer(() => {
+		 return defer(() => {
                 return this._http.get(this._apiUrl+'/getsingle?'+'code=' + code, {
                     headers: authHeader
                 }).map(response => {
-                    var pm = response.json();
+                    var pm = response;
 
                    
 					
@@ -59,14 +59,14 @@ export class GovernmentProcedureTypePMService {
 				 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
             });                    
     }
 
 	 insert(entityPM: GovernmentProcedureTypePM) {
  
         var callTime = new Date();        
-        return Observable.defer(() => {
+        return defer(() => {
 
                 var authHeader = new Headers();
                 authHeader.append('Token', SessionInfo.Token);
@@ -88,7 +88,7 @@ export class GovernmentProcedureTypePMService {
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
                         { headers: authHeader }).map((response) => {
 
-                            var pm = response.json();
+                            var pm = response;
 							if(pm)
 							{
                                var mappedResult:  GovernmentProcedureTypePM;
@@ -103,14 +103,14 @@ export class GovernmentProcedureTypePMService {
                             
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
                    
                 }
             }
@@ -121,7 +121,7 @@ export class GovernmentProcedureTypePMService {
     update(entityPM: GovernmentProcedureTypePM) {
 
             var callTime = new Date();         
-            return Observable.defer(() => {
+            return defer(() => {
 
                 var authHeader = new Headers();
                 authHeader.append('Token', SessionInfo.Token);
@@ -144,7 +144,7 @@ export class GovernmentProcedureTypePMService {
                         { headers: authHeader }).map((response) => {
                  
 
-                            var pm = response.json();
+                            var pm = response;
 							if(pm)
 							{
                                var mappedResult:  GovernmentProcedureTypePM;
@@ -157,14 +157,14 @@ export class GovernmentProcedureTypePMService {
 					                           
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
                    
                 }
             }

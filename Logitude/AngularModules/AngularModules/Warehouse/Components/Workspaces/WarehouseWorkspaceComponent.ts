@@ -21,7 +21,7 @@ import {WarehouseReleaseListExtendedService} from '../../Services/ExtendedLists/
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'WarehouseWorkspaceComponent',
     templateUrl: './WarehouseWorkspaceComponent.html',
 
@@ -44,7 +44,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
         this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
         this.warehouseReleaseListExtendedService = new WarehouseReleaseListExtendedService();
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe((response:any) => {
         });
     }
 
@@ -185,7 +185,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
     LoadDataSummary() {
 
         // this.CurrentSession.StartBusyIndicatorLoading();
-        this.warehouseReleasePMExtendedService.GetCrossDockWorkspaceSummary(this.SelectedTransportFilter, this.SelectedDirectionFilter).subscribe(res => {
+        this.warehouseReleasePMExtendedService.GetCrossDockWorkspaceSummary(this.SelectedTransportFilter, this.SelectedDirectionFilter).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
 
             //  this.CurrentSession.StopBusyIndicator();
@@ -292,7 +292,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
             case "Created":
                 {
                     queryCode = "CreatedEntriesQuery";
-                    displayTitle = "Created Entries";
+                    displayTitle = "Expected Arrival Entries";
 
 
                     break;
@@ -333,7 +333,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         listArgs.ObjectTableName = "WarehouseEntry";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Cross Docks";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
 
@@ -390,7 +390,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
             case "Created":
                 {
                     queryCode = "CreatedReleasesQuery";
-                    displayTitle = "Created Releases";
+                    displayTitle = "Expected Delivery Releases";
                     break;
                 }
 
@@ -416,7 +416,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         listArgs.ObjectTableName = "WarehouseRelease";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Cross Docks";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     var filtersBar: any = null;

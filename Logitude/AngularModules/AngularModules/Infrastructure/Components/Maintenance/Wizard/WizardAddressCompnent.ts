@@ -16,7 +16,7 @@ import {TextCodeTranslator} from '../../../Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './WizardAddressCompnent.html',
 })
 

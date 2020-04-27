@@ -38,14 +38,14 @@ import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirectiv
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewWarehouseReleaseComponent',
     templateUrl: './NewWarehouseReleaseComponent.html',
     providers: [WarehouseReleasePMExtendedService, WarehouseEntryPackagePMExtendedService],
 
 })
 export class NewWarehouseReleaseComponent extends BaseComponent implements OnInit {
-
+  public ExpectedReleaseDate: any;
 
     public WarehouseReleasePackagesLists: WarehouseReleasePackagePM[] = [];
     ObjectTableName: string = "WarehouseRelease";
@@ -121,7 +121,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
     IsLoadPage: boolean = false;
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease").subscribe((response:any) => {
             this.Start(args);
 
         });
@@ -165,54 +165,49 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
             }
 
 
-            if (this.warehouseReleasePM.ShipmentId) {
-                this.UIProperties.SetEnabled("ShipmentId", "WarehouseRelease", false);
-            }
-            
+            this.SetDefultCustomerValue(args);
+            this.SetDefultWarehouseValue(args);
+
+
+            this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseReleasePM.TransportModeId, this.warehouseReleasePM.ShipmentTypeId);
+            if (this.warehouseReleasePM.ShipmentId) this.UIProperties.SetEnabled("ShipmentId", "WarehouseRelease", false);
             this.WarehouseEntryId = args.WarehouseEntryId;
             this.FromPortId = args.FromPortId;
             this.ToPortId = args.ToPortId;
-            this.warehouseReleasePM.CustomerId = args.CustomerId ? args.CustomerId : this.warehouseReleasePM.CustomerId;
             this.ConnectedTo = this.warehouseReleasePM.ConnectedTo;
-
-
             if (this.FromType == "WarehouseEntry") {
                 this.warehouseReleasePM.UIProperties.SetEnabled("CustomerId", "WarehouseRelease", false);
                 this.warehouseReleasePM.UIProperties.SetEnabled("WarehouseId", "WarehouseRelease", false);
             }
-
-
-            this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseReleasePM.TransportModeId, this.warehouseReleasePM.ShipmentTypeId);
-
-            var myCommonDomain = new CommonDomainService();
-            myCommonDomain.GetDeafaultMyWarehouse().subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var warehouseId = myResponse.Result;
-                    if (!AppTool.IsNullOrEmpty(warehouseId) && AppTool.IsNullOrEmpty(args.WarehouseId)) {
-                        this.warehouseReleasePM.WarehouseId = warehouseId;
-                    }
-                    else {
-                        this.warehouseReleasePM.WarehouseId = args.WarehouseId;
-                    }
-                } else {
-                    this.warehouseReleasePM.WarehouseId = args.WarehouseId;
-
-                }
-
-
-
-            });
-
-
             this.warehouseReleasePM.ExpectedReleaseDate = args.ExpectedReleaseDate;
             this.warehouseReleasePM.ActualReleaseDate = args.ActualReleaseDate;
             this.ActualReleaseDateOldValue = this.warehouseReleasePM.ActualReleaseDate;
             this.ExpectedReleaseDateOldValue = this.warehouseReleasePM.ExpectedReleaseDate;
+  
 
         }
     }
 
    
+    SetDefultWarehouseValue(args: any) {
+        if (!AppTool.IsNullOrEmpty(args.WarehouseId)) this.warehouseReleasePM.WarehouseId = args.WarehouseId;
+        else if (this.ShipmentPM && this.ShipmentPM.WarehouseLegWarehouseId) this.warehouseReleasePM.WarehouseId = this.ShipmentPM.WarehouseLegWarehouseId;
+        else {
+            var myCommonDomain = new CommonDomainService();
+            myCommonDomain.GetDeafaultMyWarehouse().subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.warehouseReleasePM.WarehouseId = myResponse.Result;
+                }
+            });
+        }
+
+    }
+
+
+    SetDefultCustomerValue(args: any) {
+        if (!AppTool.IsNullOrEmpty(args.CustomerId)) this.warehouseReleasePM.CustomerId = args.CustomerId;
+        else if (this.ShipmentPM && this.ShipmentPM.CustomerId) this.warehouseReleasePM.CustomerId = this.ShipmentPM.CustomerId;
+    }
 
 
     CustomerValueChange(item) {
@@ -381,7 +376,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     }
 
 
-    SetActualDateClicked(fieldName: string) {
+    SetActualDateClicked() {
         this.ActualReleaseDate = DateTool.GetDateParts(this.warehouseReleasePM.ExpectedReleaseDate).DateObject;
     }
 

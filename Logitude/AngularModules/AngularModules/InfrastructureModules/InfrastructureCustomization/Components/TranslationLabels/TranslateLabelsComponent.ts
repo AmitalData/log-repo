@@ -14,7 +14,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TranslateLabelsComponent.html',
 })
 
@@ -334,7 +334,7 @@ export class TranslateLabelsComponent extends BaseComponent {
                 }
 
                 else {
-                    CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
+                    CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindow();
                     });

@@ -6,7 +6,7 @@ export class PortValidator {
     public Validate(entityPM: PortPM) {
         var errors = [];
         var countryService = new CountryListService();
-        countryService.getSingleFromCache(entityPM.CountryId).subscribe(response => {
+        countryService.getSingleFromCache(entityPM.CountryId).subscribe((response:any) => {
             if (response.Result) {
                 var country = response.Result;
                 if (country != null) {

@@ -59,7 +59,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;8786c377-6cb2-4af3-a337-75bb541aa143&quot;"
     FieldName="&quot;Id&quot;"
@@ -386,7 +388,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="true"
+    IsMaxLength="false"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -683,4 +685,23 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;Category2.Features.Category2&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Category2.Features.Category2&quot;"
+      FeatureDefaultText="&quot;Category 2&quot;" />
+  </AdditionalFeatures>
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;General.MC.ACC.Category2&quot;"
+      DefaultText="&quot;Category 1&quot;"
+      LocalDefaultText="&quot;Category 1&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
 </entity>

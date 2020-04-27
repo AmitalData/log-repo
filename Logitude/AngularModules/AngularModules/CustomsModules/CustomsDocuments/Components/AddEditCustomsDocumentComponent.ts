@@ -27,7 +27,7 @@ import {CustomsSettingListService} from '../../../Customs/Services/StandardLists
 import {CustomDocumentTypeListService} from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
 
 @Component({ 
-    moduleId: module.id,
+    
     templateUrl: './AddEditCustomsDocumentComponent.html',
 })
 

@@ -34,7 +34,7 @@ declare var window: any;
 
 @Component({
     selector: 'NewTicketComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewTicketComponent.html',
 })
 
@@ -52,7 +52,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
     public EntityList: EntityClass[] = [];
     public EntityNumberTitle = "Shipment Number";
 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
@@ -108,7 +108,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
 
     public WindowArgs: NewTicketArgs;
     SetWindowArgs(args: NewTicketArgs) {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
             this.WindowArgs = args;
         });
     }
@@ -740,7 +740,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
     AddButtonClicked() {
         var path = './Quote/ComponentsNewEntity/NewQuoteComponent';
         var windowTitle = "New Quote";
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;

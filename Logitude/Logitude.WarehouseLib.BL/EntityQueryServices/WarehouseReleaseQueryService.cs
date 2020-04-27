@@ -261,7 +261,18 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             return englishName;
         }
 
+        public int GetNumberofConnectedWarehouseReleasesByEntryId(string entryId, int tenant)
+        {
+            int numberofConnectedWarehouseReleasePackages = 0;
+            List<WarehouseReleaseList> warehouseReleaseLists = null;
+            List<string> warehouseEntryPackagesIds = (from a in context.WarehouseEntryPackages where a.Tenant == tenant && a.WarehouseEntryId == entryId select a.Id).ToList();
+            if (warehouseEntryPackagesIds.Count > 0)
+            {
+                numberofConnectedWarehouseReleasePackages = (from a in context.WarehouseEntryPackagesReleases where a.Tenant == tenant && a.IsCanceled == false && warehouseEntryPackagesIds.Contains(a.EntryPackageId) select a.ReleasePackageId).Count();
+            }
 
+            return numberofConnectedWarehouseReleasePackages;
+        }
 
         public List<WarehouseReleaseList> GetWarehouseReleasesByEntryId(string entityId, int tenant)
         {

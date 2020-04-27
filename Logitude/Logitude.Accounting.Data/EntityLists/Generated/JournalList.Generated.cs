@@ -72,6 +72,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string TypeLocalName  { get; set; }
        [DataMember]
        public bool IsLedgerCreated  { get; set; }
+       [DataMember]
+       public DateTime? DocumentDate  { get; set; }
+       [DataMember]
+       public DateTime? DueDate  { get; set; }
    }
 
 }

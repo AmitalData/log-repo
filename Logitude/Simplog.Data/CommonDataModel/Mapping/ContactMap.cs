@@ -27,6 +27,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Position).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.ComputedKey).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.CompanyName).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.ExternalId).HasMaxLength(20).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Contacts");
@@ -61,6 +62,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ComputedKey).HasColumnName("ComputedKey");
             this.Property(t => t.CompanyName).HasColumnName("CompanyName");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+            this.Property(t => t.ExternalId).HasColumnName("ExternalId");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
 
             // Relationships
             this.HasOptional(t => t.ColorIndex).WithMany().HasForeignKey(d => d.IndexColor);

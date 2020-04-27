@@ -14,7 +14,7 @@ import {LogitudeListBoxComponent} from '../../../Infrastructure/Components/Logit
 
 @Component({
 
-    moduleId: module.id,
+    
     selector: 'ActivityStatusDashboardFilterComponent',
     templateUrl: './ActivityStatusDashboardFilterComponent.html',
     inputs: ['ReportsPreview'],

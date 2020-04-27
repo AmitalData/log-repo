@@ -233,6 +233,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         {
                             item.VatTypeName = vatType.EnglishName;
                             item.VatIsMultiPercentage = vatType.IsMultiPercentage;
+                            item.VatRecognizedPercentage = (vatType.RecognizedPercentage != null  && vatType.RecognizedPercentage != 0 )? vatType.RecognizedPercentage / 100: vatType.RecognizedPercentage ;
                         }
                     }
 

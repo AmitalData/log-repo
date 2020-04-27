@@ -6,7 +6,7 @@ import { TextCodeTranslator } from              '../../../Infrastructure/Utiliti
 
 @Component({
     selector: 'dropdown-button',
-    moduleId: module.id,
+    
     host: {
         '(document:click)': 'handleClick($event)',
     },

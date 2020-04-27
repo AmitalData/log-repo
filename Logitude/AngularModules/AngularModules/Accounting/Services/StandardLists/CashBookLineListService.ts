@@ -6,8 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -21,10 +22,10 @@ import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorag
 @Injectable()
 
 export class CashBookLineListService {
-	private _http: Http;
+	private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CashBookLineViews';
     }
 
@@ -58,19 +59,15 @@ export class CashBookLineListService {
         if (addtionalFiltersValues) {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
-
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+ 
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-	   return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+	   return defer(() => {
+           return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response.body;
 
                 // var _mappedListsArray: Array< CashBookLineList> = [];
                 // if (serviceResponse.Result) {
@@ -90,7 +87,7 @@ export class CashBookLineListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CashBookLine", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));;
         });
     }
 

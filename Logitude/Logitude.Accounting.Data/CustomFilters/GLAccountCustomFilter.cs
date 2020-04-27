@@ -47,6 +47,8 @@ namespace Logitude.Accounting.Data.CustomFilters
 
                     queryableData = FilterByPayableDebit(queryableData, item);
 
+                    queryableData = FilterByGLAccountCurrency(queryableData, item);
+
                     if (item.FieldName == "BalanceInLocalCurrencyNotNull")
                     {
                         string tString = item.FieldValue as string;
@@ -104,6 +106,18 @@ namespace Logitude.Accounting.Data.CustomFilters
             {
 
                 queryableData = queryableData.Where(c => (c.RevenueExpenseType == "3" && c.ChartOfAccountsTypeCode == "7") || c.RevenueExpenseType == "1");
+
+            }
+            return queryableData;
+
+        }
+        private IQueryable<GLAccount> FilterByGLAccountCurrency(IQueryable<GLAccount> queryableData, QueryFilterItem queryFilterItem)
+        {
+            if (queryFilterItem.FieldName == "GLAccountCurrencyFilter")
+            {
+                GLAccountCurrencyRepository gLAccountCurrencyRepository = new GLAccountCurrencyRepository(tenant);
+                List<String> GLAccountCurrencyIds = gLAccountCurrencyRepository.GetAll(tenant).Select(s=>s.GLAccountId).ToList();
+                queryableData = queryableData.Where(c => GLAccountCurrencyIds.Contains(c.Id) == false  && c.IsMultiCurrency ==false && c.CurrencyId !=(string)queryFilterItem.FieldValue);
 
             }
             return queryableData;

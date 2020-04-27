@@ -2,7 +2,22 @@
 <Table
   Name="AnalyzeQueues"
   Schema="dbo"
-  DBType="Global">
+  DBType="Global"
+  Module="Infrastructure">
+  <Column
+    Name="MessageBody"
+    Type="varbinary"
+    Size="-1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StackTrace"
+    Type="varchar"
+    Size="8000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Column
     Name="Id"
     Type="varchar"
@@ -12,20 +27,29 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="MessageBody"
-    Type="varbinary"
-    Size="-1">
+    Name="CommunicationLogId"
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int">
+    Name="EntityReference"
+    Type="varchar"
+    Size="20">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ObjectTableName"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="From"
+    ShortName="From_"
     Type="varchar"
     Size="40">
     <Constraints
@@ -58,11 +82,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CommunicationLogId"
-    Type="varchar"
-    Size="15">
+    Name="Tenant"
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Subject"
@@ -70,6 +93,12 @@
     Size="40">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="Retries"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="ConnectedToTenant"
@@ -84,36 +113,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Retries"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="EntityReference"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="SearchFields"
     Type="nvarchar"
     Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ObjectTableName"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="StackTrace"
-    Type="varchar"
-    Size="8000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -152,14 +154,14 @@
       Nullable="true" />
   </Column>
   <Relation
-    ForeignKeyColumn="Tenant"
-    ReferencedTable="TenantManagements"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="Status"
     ReferencedTable="AnalyzeQueueStatus"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Tenant"
+    ReferencedTable="TenantManagements"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="CreateDate" />

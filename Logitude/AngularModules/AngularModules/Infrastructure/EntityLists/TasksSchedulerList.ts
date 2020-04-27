@@ -42,5 +42,7 @@ export class TasksSchedulerList {
 		Status: string;
 		Retries: number;
 		AverageRunTime: number;
+		EntityId: string;
+		Recepients: string;
 	
 }

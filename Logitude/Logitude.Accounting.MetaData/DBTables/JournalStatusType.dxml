@@ -2,7 +2,8 @@
 <Table
   Name="JournalStatusTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Accounting">
   <Column
     Name="JournalStatusID"
     Type="varchar"

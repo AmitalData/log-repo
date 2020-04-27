@@ -2,7 +2,8 @@
 <Table
   Name="Addresses"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -14,6 +15,34 @@
   <Column
     Name="Tenant"
     Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AddressTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExternalId"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="70">
     <Constraints
       Nullable="false" />
   </Column>
@@ -32,48 +61,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="StateId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ZipCode"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="FaxNumber"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PhoneNumber"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ATTN"
-    Type="nvarchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AddressTypeId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Address1"
     Type="nvarchar"
     Size="65">
@@ -88,16 +75,44 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Name"
-    Type="nvarchar"
-    Size="70">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="CountryId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ZipCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PhoneNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FaxNumber"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ATTN"
+    Type="nvarchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -109,36 +124,23 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="InActive"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="IsLocalLanguage"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
+    Name="InActive"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
-    Name="ExternalId"
-    Type="varchar"
-    Size="10">
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="StateId"
-    ReferencedTable="States"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="AddressTypeId"
     ReferencedTable="AddressTypes"
@@ -150,8 +152,15 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="StateId"
+    ReferencedTable="States"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="CardId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

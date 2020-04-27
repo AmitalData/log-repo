@@ -8,7 +8,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'EmployeeTimeSheetFilterComponent',
     templateUrl: './EmployeeTimeSheetFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -31,7 +31,7 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
 
     constructor() {
         super();
-        this.DateOfWorkMinutes = 540;
+        this.DateOfWorkMinutes = 525;
     }
 
 

@@ -19,7 +19,7 @@ import {CouriersVatPMService} from '../../../../Customs/Services/StandardPMs/Cou
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditCouriersVatComponent.html',
 })
 
@@ -82,7 +82,7 @@ export class AddEditCouriersVatComponent extends BaseComponent {
             this.ValidationErrorsList = [];
             this.ValidationErrorsList = errors;
         } else {
-            this._CouriersVatPMService.insert(this.EntityPM).subscribe(myResult => {
+            this._CouriersVatPMService.insert(this.EntityPM).subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {

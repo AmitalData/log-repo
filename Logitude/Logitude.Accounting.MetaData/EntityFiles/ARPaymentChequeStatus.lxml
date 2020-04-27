@@ -58,7 +58,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;d35af5c6-f63e-462b-ac30-c71dd1f64902&quot;"
     FieldName="&quot;Code&quot;"
@@ -474,4 +476,6 @@
       Inactive="false" />
   </Records>
   <DataContracts />
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

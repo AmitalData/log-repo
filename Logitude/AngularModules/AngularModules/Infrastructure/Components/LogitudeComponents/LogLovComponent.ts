@@ -1,6 +1,6 @@
 declare var window: any;
 declare var System: any;
-import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, Injector,  EventEmitter} from '@angular/core';
+import {Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, Injector,  EventEmitter} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties} from './UIProperties';
 import {EntityListService} from '../../Services/EntityListService';
@@ -19,9 +19,10 @@ import {FieldValidator} from '../../Validators/FieldValidator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { CustomEntityArgs } from './LogSearchWindowComponent';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'LogLov_Old',
     templateUrl: './LogLovComponent.html',
@@ -54,7 +55,7 @@ export class LogLovComponent implements OnInit {
     public DataList: any[];
     
     private dataContext: BaseComponent;
-    private uiProperty: UIProperty;
+    uiProperty: UIProperty;
     private show: boolean;
     private LookUp1: string;
     private LookUp2: string;
@@ -91,7 +92,7 @@ export class LogLovComponent implements OnInit {
     ClosedByBlur: boolean;
     DisplayValue: string;
     MouseInArea: boolean;
-    private headerColumns: any[];
+    headerColumns: any[];
     private dataColumns: any[];
     DivLogLovId: string;
     LogLOVControlClass: string;
@@ -227,7 +228,7 @@ export class LogLovComponent implements OnInit {
         //this.ctrl = new FormControl(this.DataContext[this.ObjectFieldName]);
         //this.LogitudeForm.addControl(this.ObjectFieldName, this.ctrl);
 
-        this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe(res => {
+        this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res:any) => {
 
             var lookupFields: any[] = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == lookup.Id);
             var dropdownWidth = lookupFields.length * 120 + 20;
@@ -348,7 +349,7 @@ export class LogLovComponent implements OnInit {
             }
 
 
-            //this.ctrl.valueChanges.subscribe(res=> {
+            //this.ctrl.valueChanges.subscribe((res:any)=> {
             //    this.uiProperty.UIPropertyChanged.emit("valuechanges");
             //    this.ValueChanged.emit(res);
 
@@ -360,10 +361,10 @@ export class LogLovComponent implements OnInit {
             //    this.isSelectedFromList = false;
             //});
 
-            this.SearchTextValue = new FormControl();
-            this.SearchTextValue.valueChanges
-                .debounceTime(400)
-                .distinctUntilChanged()
+          this.SearchTextValue = new FormControl();
+          this.SearchTextValue.valueChanges.pipe(
+                debounceTime(400),
+                distinctUntilChanged())
                 .subscribe((search): any => {
                     if (search != undefined) {
                         this.Populate(search);

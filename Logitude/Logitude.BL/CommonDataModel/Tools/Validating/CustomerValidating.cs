@@ -25,7 +25,7 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                 AddressValidating.Validate(itemPM);
             }
 
-            if (entityPM.IsCustomer)
+            if (entityPM.IsCustomer && !entityPM.IsLogBox)// to allow batches for logbox
             {
                 ValidateVAT_Required(entityPM, myContext, myTenant);
                 ValidateVAT_Unique(entityPM, myContext, myTenant, isNewEntity);

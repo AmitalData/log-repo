@@ -1,7 +1,8 @@
-﻿
+
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -16,20 +17,20 @@ import {WarehouseEntryPackagePM} from '../../EntityPMs/WarehouseEntryPackagePM';
 @Injectable()
 export class WarehouseEntryPackagePMExtendedService {
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/WarehouseEntryPackageExtended';
     }
 
 
     GetwarehouseEntryPackagePMListByCustomerIdAndWarehouseId(customerId: string , warehouseId: string  , tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/getwarehouseentrypackagepmlistbycustomeridandwarehouseid" + '?customerId=' + customerId + '&warehouseId=' + warehouseId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        
+        
+        return this._http.get(this._apiUrl + "/getwarehouseentrypackagepmlistbycustomeridandwarehouseid" + '?customerId=' + customerId + '&warehouseId=' + warehouseId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result:any = response;
             var entity: WarehouseEntryPackagePM;
             var warehouseEntryPackagePMLists: WarehouseEntryPackagePM[];
             warehouseEntryPackagePMLists = new Array<WarehouseEntryPackagePM>();
@@ -44,19 +45,20 @@ export class WarehouseEntryPackagePMExtendedService {
             return pmresponse;
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
    // string customerId, string warehouseId , string shipmentId
     GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(shipmentId: string, customerId: string, warehouseId: string,  tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId" + '?shipmentId=' + shipmentId + '&customerId=' + customerId + '&warehouseId=' + warehouseId+  '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        
+        
+        return this._http.get(this._apiUrl + "/GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId" + '?shipmentId=' + shipmentId + '&customerId=' + customerId + '&warehouseId=' + warehouseId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result:any = response;
             var entity: WarehouseEntryPackagePM;
             var warehouseEntryPackagePMLists: WarehouseEntryPackagePM[];
             warehouseEntryPackagePMLists = new Array<WarehouseEntryPackagePM>();
+
             result.forEach((item) => {
                 entity = this.MapJsonToEntityPM(item);
                 warehouseEntryPackagePMLists.push(entity);
@@ -68,7 +70,7 @@ export class WarehouseEntryPackagePMExtendedService {
             return pmresponse;
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     

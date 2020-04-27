@@ -3,7 +3,7 @@ declare var window: any;
 import {Component, ViewContainerRef, OnInit, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import {LogitudeListBoxComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogitudeListBox/LogitudeListBoxComponent';
-import {Http} from '@angular/http';
+
 //import {ObjectFieldPM} from '../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import {QueryColumnPM} from '../../../Infrastructure/EntityPMs/QueryColumnPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
@@ -13,15 +13,16 @@ import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'QueryColumnEdit',
     templateUrl: './QueryColumnsEditComponent.html',
     //pipes: [TextCodeTranslationPipe],
     //inputs: ['ObjectTableName', 'event', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'Filterchangeevent', 'rabaia'],
-    providers: [Http, ServiceArgs],
+    providers: [HttpClient, ServiceArgs],
     //directives: [LogitudeListBoxComponent]
 })
 
@@ -52,13 +53,13 @@ export class QueryColumnsEditComponent {
     HasChanges: boolean = false;
     needsRebuildList: boolean = false;
     private myQueryColumnsPMService: QueryColumnsPMService;
-    private _http: Http;
+    private _http: HttpClient;
     public serviceArgs: ServiceArgs;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this._http = ServiceHelper.Http;
-        this.serviceArgs.http = ServiceHelper.Http;;
+        this._http = ServiceHelper.HttpClient;
+        this.serviceArgs.http = ServiceHelper.HttpClient;
         if (this.CurrentSession == null) {
             this.SearchFieldsId = "SearchFields_-1_-1";
         }
@@ -102,8 +103,8 @@ export class QueryColumnsEditComponent {
         this.removedQueryColumnList = [];
         //queriesByUser = TenantContext.Current.Queries.Where(d => d.UserId == TenantContext.Current.LoggedContactId).ToList();
         this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
-            .subscribe((response) => {
-                this.queryColumnsList = response.json();
+            .subscribe((response: any) => {
+                this.queryColumnsList = response;
                 // this.queryColumnsList = TenantContext.Current.GeneralContext.QueryColumnPMs.Where(d => d.QueryId == QueryId && ((d.UserId == TenantContext.Current.LoggedContactId && d.Tenant == TenantContext.Current.Id)) && d.DisplayInList).OrderBy(d => d.IndexOrder).ToList();
                 this.queryColumnsList = this.queryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
 
@@ -111,8 +112,8 @@ export class QueryColumnsEditComponent {
                 {
                     var zeroColumnsList = [];
                     this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=null")
-                        .subscribe((response) => {
-                            zeroColumnsList = response.json();
+                        .subscribe((response: any) => {
+                            zeroColumnsList = response;
                             zeroColumnsList = zeroColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
                             zeroColumnsList.forEach((querycolumn, key) => {
                                 var newcolumn = new QueryColumnPM();
@@ -475,7 +476,7 @@ export class QueryColumnsEditComponent {
         //            this.myQueryColumnsPMService = new QueryColumnsPMService();
         //            this.myQueryColumnsPMService.setServiceArgs(this.serviceArgs);
         //        }
-        //        this.myQueryColumnsPMService.insert(queryColumn).subscribe(myResult => {
+        //        this.myQueryColumnsPMService.insert(queryColumn).subscribe((myResult:any) => {
         //            this.CurrentSession.CloseCurrentWindow();
         //        });
         //    }
@@ -503,7 +504,7 @@ export class QueryColumnsEditComponent {
                     qc.Tenant = SessionInfo.LoggedUserTenant;
                     qc.IndexOrder = queryColumn.IndexOrder;
                     qc.UserId = SessionInfo.LoggedUserId;
-                    this.myQueryColumnsPMService.update(qc).subscribe(myResult => {
+                    this.myQueryColumnsPMService.update(qc).subscribe((myResult:any) => {
                         Length++;
                         if (Length == this.OrderedQueryColumnsList.length && this.removedQueryColumnList.length == 0) {
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -527,7 +528,7 @@ export class QueryColumnsEditComponent {
                     this.myQueryColumnsPMService = new QueryColumnsPMService();
                     this.myQueryColumnsPMService.setServiceArgs(this.serviceArgs);
                 }
-                this.myQueryColumnsPMService.delete(queryColumn).subscribe(myResult => {
+                this.myQueryColumnsPMService.delete(queryColumn).subscribe((myResult:any) => {
                     removedQueryLength = removedQueryLength + 1;
                     if (removedQueryLength == this.removedQueryColumnList.length) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();

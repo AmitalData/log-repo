@@ -76,5 +76,8 @@ export class APPaymentList {
 		Field8: string;
 		Field9: string;
 		Field10: string;
+		ExternalPaymentAmount: number;
+		ExternalPaymentDate: Date;
+		ExternalPaymentNotes: string;
 	
 }

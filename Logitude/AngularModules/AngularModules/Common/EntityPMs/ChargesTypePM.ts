@@ -353,6 +353,11 @@ export class ChargesTypePM {
     public set ReceivableCreditGLAcountNumber(newValue: string) { if (this.receivableCreditGLAcountNumber != newValue) { this.receivableCreditGLAcountNumber = newValue; this.MarkAsDirty("ReceivableCreditGLAcountNumber"); } }
        
 	 
+    private applyRegionalTax: boolean;
+    public get ApplyRegionalTax() { return this.applyRegionalTax; }
+    public set ApplyRegionalTax(newValue: boolean) { if (this.applyRegionalTax != newValue) { this.applyRegionalTax = newValue; this.MarkAsDirty("ApplyRegionalTax"); } }
+       
+	 
 
     public OldEntityPM: ChargesTypePM;
 		

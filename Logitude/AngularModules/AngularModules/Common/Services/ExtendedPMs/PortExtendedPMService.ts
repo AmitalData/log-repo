@@ -1,7 +1,8 @@
 
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -16,10 +17,10 @@ import {PortValidator} from '../../Validators/PortValidator';
 @Injectable()
 
 export class PortExtendedPMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PortExtended';      
     }
 
@@ -29,11 +30,9 @@ export class PortExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 		
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSinglePortPMByCodeCountryCode?' + 'Code=' + Code + '&CountryCode=' + CountryCode + '&tenant=' + Tenant, {
-                    headers: authHeader
-                }).map(response => {
-                    var pm = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSinglePortPMByCodeCountryCode?' + 'Code=' + Code + '&CountryCode=' + CountryCode + '&tenant=' + Tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    var pm = response;
                     
 					
                     var entity: PortPM;
@@ -47,7 +46,7 @@ export class PortExtendedPMService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
             });                    
     }
 

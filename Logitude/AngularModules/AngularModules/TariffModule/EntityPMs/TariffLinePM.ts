@@ -432,7 +432,22 @@ export class TariffLinePM {
         }
     }
     //public ContainersPrices: Array<TariffLinesContainersPricePM>= [];
- 
+     private originPortCombinedCode: string;
+    public get OriginPortCombinedCode() { return this.originPortCombinedCode; }
+    public set OriginPortCombinedCode(newValue: string) { if (this.originPortCombinedCode != newValue) { this.originPortCombinedCode = newValue; this.MarkAsDirty("OriginPortCombinedCode"); } }
+       
+	 
+    private destinationPortCombinedCode: string;
+    public get DestinationPortCombinedCode() { return this.destinationPortCombinedCode; }
+    public set DestinationPortCombinedCode(newValue: string) { if (this.destinationPortCombinedCode != newValue) { this.destinationPortCombinedCode = newValue; this.MarkAsDirty("DestinationPortCombinedCode"); } }
+       
+	 
+    private transitTime: string;
+    public get TransitTime() { return this.transitTime; }
+    public set TransitTime(newValue: string) { if (this.transitTime != newValue) { this.transitTime = newValue; this.MarkAsDirty("TransitTime"); } }
+       
+	 
+
     public OldEntityPM: TariffLinePM;
 	
     private entityParentPM: any;

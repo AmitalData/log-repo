@@ -18,12 +18,15 @@ import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceRespo
 import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'EditWarehouseReleaseComponent',
     templateUrl: './EditWarehouseReleaseComponent.html',
 
 })
 export class EditWarehouseReleaseComponent extends BaseComponent implements OnInit {
+  public ExpectedReleaseDate: any;
+  public SpecialInstruction: any;
+  public Notes: any;
 
     DataContext: any = this;
     public ValidationErrorsList: string[];
@@ -71,7 +74,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
     ) {
 
-        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease", 0).subscribe((response:any) => {
 
             if (this.entityArgs.EntityPM) {
                 this.InitializeEditWarehouseRelease();
@@ -145,7 +148,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
             else if (!AppTool.IsNullOrEmpty(this.warehouseReleasePM.ShipmentId)) {
                 this.CurrentSession.StartBusyIndicatorLoading();
-                this.myShipmentPMService.get(this.warehouseReleasePM.ShipmentId).subscribe(res => {
+                this.myShipmentPMService.get(this.warehouseReleasePM.ShipmentId).subscribe((res:any) => {
                     var shipResponse: ServiceResponse = res;
                     this.CurrentSession.StopBusyIndicator();
                     if (!shipResponse.HasError) {
@@ -255,7 +258,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
 
 
-    SetActualDateClicked(fieldName: string) {
+    SetActualDateClicked() {
         this.ActualReleaseDate = DateTool.GetDateParts(this.warehouseReleasePM.ExpectedReleaseDate).DateObject;
     }
 

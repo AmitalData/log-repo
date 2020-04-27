@@ -17,7 +17,6 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMService';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './ManageExternalReconciliationTabComponent.html'
 })
 
@@ -40,6 +39,7 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
     private TabSelectedEvent: any = null;
     Title: string;
 
+    showLocals:boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -216,6 +216,17 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
         });
 
         this.columns.push({
+            FieldName: this.showLocals ? 'AccountLocalName' :  'AccountName',
+            DataTypeCode: 'String',
+            //Display: 'Created By',
+            Display: TextCodeTranslator.Translate("ExternalReconciliation.F.AccountLocalName"),
+            Styles: { width: '200px' },
+            IsCustomTemplate: true
+        });
+
+
+
+        this.columns.push({
             FieldName: 'IsCancelled',
             DataTypeCode: 'boolean',
             Display: TextCodeTranslator.Translate("ExternalReconciliation.F.IsCancelled"),
@@ -258,7 +269,12 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
         filters.SortDirection = "Descending";
         var glaccountId = this.getGLAccountId();
 
-        filters.addAdditionalFilter("GLAccountId", glaccountId, null, null, "Equals", false, false, false, "string");
+        var bankTransferGLAccountId = "";
+        if (this.entityArgs.ObjectTableName == "BankAccount")
+            bankTransferGLAccountId = this.EntityPM.TransferGLAcccountId;
+
+        filters.addAdditionalFilter("GLAccountId", glaccountId + "," + bankTransferGLAccountId, null, null, "InListExact", false, false, false, "string");
+        // filters.addAdditionalFilter("GLAccountId", glaccountId, null, null, "Equals", false, false, false, "string");
         //filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
 
         //#endregion

@@ -1979,6 +1979,8 @@ namespace Logitude.BL.InvoiceModel.Tools
             int number = 1;
             paymentARInvoices.ForEach(invoice =>
             {
+                Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
+
                 List<ARInvoicePayment> allInvoicePayments = (from a in invoiceContext.ARInvoicePayments.Include("ARPayment")
                                                              where a.ARInvoiceId == invoice.Id && a.Tenant == invoice.Tenant
                                                              select a).ToList();
@@ -1991,7 +1993,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                 ARInvoicePayment currentARInvoicePayment = allInvoicePayments.FirstOrDefault(p => p.ARPaymentId == entityPM.Id);
                 decimal previouslySentPaymentsTotal = 0;
-                decimal invoiceAmount = (decimal)invoice.AmountInInvoiceCurrency.Value;
+                decimal invoiceAmount = (decimal)invoiceComprobante.Total;//invoice.AmountInInvoiceCurrency.Value; // 
                 decimal currentPaymentAmount = (decimal)currentARInvoicePayment.ForeignAmount;
 
                 if (entityPM.AmountInPaymentCurrency == invoice.AmountInInvoiceCurrency) // one payment
@@ -2021,7 +2023,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                 }
 
-
+                 
                 decimal imSaldoAnt = (invoiceAmount - previouslySentPaymentsTotal);
                 doctoItem.ImpSaldoAnt = GetDecimalWith2DigitsAfterPoint((invoiceAmount - previouslySentPaymentsTotal)); // previous amount (not sent to profact amount)
                 doctoItem.ImpSaldoAntSpecified = true;
@@ -2047,7 +2049,6 @@ namespace Logitude.BL.InvoiceModel.Tools
                     doctoItem.TipoCambioDRSpecified = true;
                 }
 
-                Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
 
                 if (invoiceComprobante.Complemento.Any != null)
                 {

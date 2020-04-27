@@ -12,7 +12,7 @@ import {ObjectsUpdater} from '../../../Infrastructure/Locators/ObjectsUpdater';
 
 @Component({
     selector: 'AccountingTransferComponent',
-    moduleId: module.id,
+    
     templateUrl: './ExternalAccountingSystemComponent.html',
 })
 
@@ -26,7 +26,7 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
     constructor(entityResourceService: EntityResourceService) {
         super();
 
-        entityResourceService.getEntityResourceByTableName("AccountingSetting").subscribe(res => {
+        entityResourceService.getEntityResourceByTableName("AccountingSetting").subscribe((res:any) => {
             this.InitializeServices();
             this.LoadData();
         });

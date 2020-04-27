@@ -27,7 +27,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   ParentTableName="QuestionnaireAnswer"
-  DefaultText="&quot;Questionnaire Answer Line&quot;">
+  DefaultText="&quot;Questionnaire Answer Line&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;e919d80d-9a0a-4c40-87f8-997aa7cbfc39&quot;"
     FieldName="&quot;QuestionnaireAnswerId&quot;"
@@ -216,4 +218,5 @@
     GenerateInList="true" />
   <EventTypes />
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

@@ -3,6 +3,7 @@ import { CacheLogComponent } from './Components/Maintenance/CacheLogComponent';
 import {FocusMeDirective} from './Utilities/FocusMeDirective';
 import {LocationDirective} from './Utilities/LocationDirective';
 import {FixedPositionDirective} from './Utilities/FixedPositionDirective';
+import { ChildDirective } from './Directives/ChildDirective';
 
 //rtl directives
 import {FloatStartDirective} from './Utilities/RTLDirectives/FloatStartDirective';
@@ -168,13 +169,14 @@ import {DocsInTabComponent} from './Components/Documents/DocsInTabComponent';
 import { BTEGeneralTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEGeneralTabComponent';
 import { BTELogTabComponent } from './Components/Maintenance/BatchTaskExecution/BTELogTabComponent';
 import { BTEParameterTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent';
+import { TaskSchedulerHistoryComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerHistoryComponent';
 
 export const Directives =
     [
         FocusMeDirective,
         LocationDirective,
         FixedPositionDirective,
-
+    ChildDirective,
         FloatStartDirective,
         FloatEndDirective,
         TextAlignStart,
@@ -270,6 +272,7 @@ export const ControlsComponents =
         LastSuccessfulLoginComponent,
         LogTextBoxComponentV3,
         ImageLibraryComponent,
+        TaskSchedulerHistoryComponent
     ];
 export const Components =
     [
@@ -442,6 +445,7 @@ export class ModuleDeclarations {
             case 'LastSuccessfulLoginComponent': { myResult = LastSuccessfulLoginComponent; break; }
             case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
             case 'ImageLibraryComponent': { myResult = ImageLibraryComponent; break; }
+
 
         }
 

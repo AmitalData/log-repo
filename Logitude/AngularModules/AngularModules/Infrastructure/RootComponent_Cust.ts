@@ -24,7 +24,7 @@ declare var IsMobileDetected;
 export class RootComponent_Cust implements OnInit {
   private isComponentBooted: boolean = false;
   private isComponentInited: boolean = false;
-  @ViewChild("Child", { read: ViewContainerRef }) location: ViewContainerRef;
+  @ViewChild("Child", { read: ViewContainerRef, static: false }) location: ViewContainerRef;
   constructor() {
 
     var data = window.sessionStorage.getItem('userdata');
@@ -35,7 +35,6 @@ export class RootComponent_Cust implements OnInit {
   }
 
   Boot(args: any) {
-    ServiceHelper.Http = args["Http"];
     ServiceHelper.HttpClient = args["HttpClient"];
     DynamicLoader_Cust.Compiler = args["Compiler"];
     DynamicLoader_Cust.Resolver = args["Resolver"];
@@ -251,7 +250,7 @@ export class RootComponent_Cust implements OnInit {
 
     VieUserIdNumberMobileComponent() {
         this.ClearLocation();
-        SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent", this.location)
+      SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent", this.location)
             .then(cmpRef => {
                 cmpRef.instance.RunComponent();
             });
@@ -269,8 +268,8 @@ export class RootComponent_Cust implements OnInit {
           return;
       }
     this._FinishLogin = true;
-    var termsofUseService = new TermsofUseService();
-    termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe(res => {
+      var termsofUseService = new TermsofUseService();
+      termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
       var pmResponse: ServiceResponse = res;
       if (!pmResponse.HasError) {
         var myResult: TermsofUseArgs = pmResponse.Result;
@@ -334,7 +333,7 @@ export class RootComponent_Cust implements OnInit {
   SignOutCompleted() {
 
     var loginService = new LoginService();
-    loginService.GetSignOut().subscribe(res => {
+    loginService.GetSignOut().subscribe((res:any) => {
 
     });
 

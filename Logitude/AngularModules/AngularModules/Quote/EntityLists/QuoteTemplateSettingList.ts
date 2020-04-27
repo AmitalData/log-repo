@@ -180,5 +180,9 @@ export class QuoteTemplateSettingList {
 		ShowIncludedChargesPerContainers: boolean;
 		ShowIncludedChargesPackages: boolean;
 		ShowIncludedChargesContainers: boolean;
+		ShowVATTypePackages: boolean;
+		ShowVATTypeContainers: boolean;
+		ShowVATPercentagePackages: boolean;
+		ShowVATPercentageContainers: boolean;
 	
 }

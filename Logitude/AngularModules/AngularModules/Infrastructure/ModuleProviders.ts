@@ -80,6 +80,8 @@ import { BIReportListService } from './Services/StandardLists/BIReportListServic
 import { BIReportPMService } from './Services/StandardPMs/BIReportPMService';
 import { BIReportsTypeListService } from './Services/StandardLists/BIReportsTypeListService';
 import { BIReportExtendedListService } from './Services/ExtendedLists/BIReportExtendedListService';
+import { LastRunDetailExtendedPMService } from './Services/ExtendedPMs/LastRunDetailExtendedPMService';
+import { DWObjectTableExtendedListService } from './Services/ExtendedLists/DWObjectTableExtendedListService';
 import { WebhookKeysListService } from './Services/StandardLists/WebhookKeysListService';
 
 import { ToggleListService } from './Services/StandardLists/ToggleListService';
@@ -172,7 +174,9 @@ export class ModuleProviders {
             case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }  
             case "BusinessProcessQueuePMService": { myResult = new BusinessProcessQueuePMService(); break; }  
             case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }
-            case "BIReportExtendedListService": { myResult = new BIReportExtendedListService(); break; }  
+            case "BIReportExtendedListService": { myResult = new BIReportExtendedListService(); break; }
+            case "LastRunDetailExtendedPMService": { myResult = new LastRunDetailExtendedPMService(); break; }
+            case "DWObjectTableExtendedListService": { myResult = new DWObjectTableExtendedListService(); break; }  
             case "BusinessRolePMService": { myResult = new BusinessRolePMService(); break; }  
             case "TeamListService": { myResult = new TeamListService(); break; }   
             case "TeamPMService": { myResult = new TeamPMService(); break; }   

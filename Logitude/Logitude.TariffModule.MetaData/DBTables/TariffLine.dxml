@@ -2,7 +2,8 @@
 <Table
   Name="TariffLines"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="TariffModule">
   <Column
     Name="Id"
     Type="varchar"
@@ -499,6 +500,13 @@
     Name="CurrencyId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransitTime"
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

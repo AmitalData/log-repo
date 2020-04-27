@@ -1,7 +1,5 @@
 import {Component, ViewChildren, QueryList, OnDestroy} from '@angular/core';
-import {RoutingHelper} from '../../../../Shipment/Tools';
-import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
-import {Validator} from '../../../../Infrastructure/Validators/Validator';
+import {AppTool} from '../../../../Infrastructure/Tools';
 import {ShipmentValidator} from '../../../../Shipment/Validators/ShipmentValidator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -21,13 +19,16 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {WarehouseHelper} from '../../../../Warehouse/Helpers/WarehouseHelper';
+import { ShipmentPickupValidator } from '../../../../Shipment/Validators/ShipmentPickupValidator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditPickupComponent.html',
 })
 
 export class AddEditPickupComponent implements OnDestroy {
+  public SelectedTab: any;
+
     public EntityPM: ShipmentPickUpPM;
     public ShipmentPM: ShipmentPM;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
@@ -43,10 +44,15 @@ export class AddEditPickupComponent implements OnDestroy {
         this.myCardListService = new CardListService();         
     }
 
+    SavedEntityId: string;
+    SavedEntityNumber: string;
     SetWindowArgs(args: any) {
         this.IsNewEntity = args['IsNewEntity'];
         this.ShipmentPM = args['ShipmentPM'];
         this.EntityPM = args['EntityPM'];
+
+        this.SavedEntityId = this.EntityPM.Id;
+        this.SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
 
         if (!this.EntityPM.TransportModeCode) {
             this.EntityPM.TransportModeCode = "BYTR";
@@ -67,14 +73,31 @@ export class AddEditPickupComponent implements OnDestroy {
                 this.IsResourcesReady = true;
                 this.BuildTabs();
                 this.RunComponent();
+                this.Listen();
             });
         });
     }
 
     private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
         this.SaveCompletedEvent = null;
+        this.LoadCompletedEvent = null;
+    }
+
+    Listen() {
+        if (this.CurrentSession.CurrentEditComponent) {
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.ShipmentPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.ResetEntityPM();
+                    }
+                });
+            }
+        }
     }
 
     BuildTabs() {
@@ -172,7 +195,7 @@ export class AddEditPickupComponent implements OnDestroy {
 
                     case "PACG": {
                         if (this.PageChild_PACG == null) {
-                            this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDeliveryPackage").subscribe(response => {
+                            this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDeliveryPackage").subscribe((response:any) => {
                                 SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupPackagesTabComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.PageChild_PACG = cmpRef.instance;
@@ -245,161 +268,13 @@ export class AddEditPickupComponent implements OnDestroy {
         this.Save(false);
     }
     Save(isClosingWindow: boolean) {
-        var errors: string[] = [];        
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        // From
-        switch (this.EntityPM.PickUpDeliveryFromTypeCode) {
-            case "PART": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.FromPartnerCardId)) {
-                    errors.push(msg.replace("%FieldName", "From Partner"));
-                }
-                break;
-            }
+        var isValid = this.Validate();
 
-            case "PORT": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.FromPortId)) {
-                    errors.push(msg.replace("%FieldName", "From Port"));
-                }
-                break;
-            }
+        if (isValid) {
 
-            case "CASL": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.FromAddressCity) && AppTool.IsNullOrEmpty(this.EntityPM.FromAddressZipCode)) {
-                    errors.push("From City or from Zip Code is required");
-                }
-
-                if (AppTool.IsNullOrEmpty(this.EntityPM.FromAddressCountryId)) {
-                    errors.push(msg.replace("%FieldName", "From Country"));
-                }
-                break;
-            }
-        }
-
-        // To
-        switch (this.EntityPM.PickUpDeliveryToTypeCode) {
-            case "PART": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ToPartnerCardId)) {
-                    errors.push(msg.replace("%FieldName", "To Partner"));
-                }
-                break;
-            }
-
-            case "PORT": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ToPortId)) {
-                    errors.push(msg.replace("%FieldName", "To Port"));
-                }
-                break;
-            }
-
-            case "CASL": {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ToAddressCity) && AppTool.IsNullOrEmpty(this.EntityPM.ToAddressZipCode)) {
-                    errors.push("To City or to Zip Code is required");
-                }
-
-                if (AppTool.IsNullOrEmpty(this.EntityPM.ToAddressCountryId)) {
-                    errors.push(msg.replace("%FieldName", "To Country"));
-                }
-                break;
-            }
-        }
-
-        // Actual Dates
-        if (!DateTool.IsActualDateValid(this.EntityPM.ATD)) {
-            errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("ShipmentPickUpDelivery.F.ATD")));
-        }
-
-        if (!DateTool.IsActualDateValid(this.EntityPM.ATA)) {
-            errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("ShipmentPickUpDelivery.F.ATA")));
-        }
-
-        // Series Dates
-        var ETD: number = DateTool.GetDateParts(this.EntityPM.ETD).DateTicks;
-        var ETA: number = DateTool.GetDateParts(this.EntityPM.ETA).DateTicks;
-        var ATD: number = DateTool.GetDateParts(this.EntityPM.ATD).DateTicks;
-        var ATA: number = DateTool.GetDateParts(this.EntityPM.ATA).DateTicks;
-
-        var isWarehouseLegExists: boolean = (this.ShipmentPM.WarehouseLegWarehouseId != null && this.ShipmentPM.DirectionId != "I") ? true : false;
-        var WarehouseLegEED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedEntryDate).DateTicks : 0;
-        var WarehouseLegERD: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedReleaseDate).DateTicks : 0;
-        var WarehouseLegAED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegActualEntryDate).DateTicks : 0;
-        var WarehouseLegARD: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegActualReleaseDate).DateTicks : 0;
-
-        var isPreCarriageExists: boolean = (this.ShipmentPM.PreCarriageFromPortId != null && this.ShipmentPM.PreCarriageToPortId != null) ? true : false;
-        var PreCarriageETD: number = isPreCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.PreCarriageETD).DateTicks : 0;
-        var PreCarriageETA: number = isPreCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.PreCarriageETA).DateTicks : 0;
-        var PreCarriageATD: number = isPreCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.PreCarriageATD).DateTicks : 0;
-        var PreCarriageATA: number = isPreCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.PreCarriageATA).DateTicks : 0;
-
-        var isMainCarriageExists: boolean = true;
-        var MainCarriageETD: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageETD).DateTicks;
-        var MainCarriageETA: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageETA).DateTicks;
-        var MainCarriageATD: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageATD).DateTicks;
-        var MainCarriageATA: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageATA).DateTicks;
-
-        // Self
-        if (!RoutingHelper.IsRoutingLegDatesValid(ETD, ETA)) {
-            errors.push("Expected departure must be less than Expected arrival");
-        }
-
-        if (!RoutingHelper.IsRoutingLegDatesValid(ATD, ATA)) {
-            errors.push("Actual departure must be less than Actual arrival");
-        }
-
-        //if (RoutingHelper.CompairDateSeries(ETD, ETA, ">")) {
-        //    errors.push("Expected departure must be less than Expected arrival");
-        //}
-
-        //if (RoutingHelper.CompairDateSeries(ATD, ATA, ">")) {
-        //    errors.push("Actual departure must be less than Actual arrival");
-        //}
-
-        // Next
-        if (isWarehouseLegExists) {
-            if (RoutingHelper.IsDateSeriesBiggerNotEqual(ETA, WarehouseLegEED)) {
-                errors.push("Expected arrival must be equal or less than Warehouse expected entry");
-            }
-
-            if (RoutingHelper.IsDateSeriesBiggerNotEqual(ATA, WarehouseLegAED)) {
-                errors.push("Actual arrival must be equal or less than Warehouse actual entry");
-            }
-        }
-
-        else if (isPreCarriageExists) {
-            if (RoutingHelper.IsDateSeriesBigger(ETA, PreCarriageETD)) {
-                errors.push("Expected arrival must be less than pre carriage expected departure");
-            }
-
-            if (RoutingHelper.IsDateSeriesBigger(ATA, PreCarriageATD)) {
-                errors.push("Actual arrival must be less than pre carriage actual departure");
-            }
-        }
-
-        else if (isMainCarriageExists) {
-            if (RoutingHelper.IsDateSeriesBigger(ETA, MainCarriageETD)) {
-                errors.push("Expected arrival must be less than main carriage expected departure");
-            }
-
-            if (RoutingHelper.IsDateSeriesBigger(ATA, MainCarriageATD)) {
-                errors.push("Actual arrival must be less than main carriage actual departure");
-            }
-        }
-
-        if (errors.length == 0) {
-            var myShipmentValidator = new ShipmentValidator();
-            var myShipmentErrors = myShipmentValidator.Validate(this.ShipmentPM);
-            if (myShipmentErrors.length > 0) {
-                errors.push(TextCodeTranslator.Translate("Shipment.M.Routings.CantProceedAddingPickUp"));
-            }
-        }
-
-        this.ValidationErrorsList = errors;
-
-        if (errors.length == 0) {
-
-            var SavedEntityId = this.EntityPM.Id;
-            var SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
+            this.SavedEntityId = this.EntityPM.Id;
+            this.SavedEntityNumber = this.EntityPM.PickUpDeliveryNumber;
 
             if (this.IsNewEntity) {
                 this.ShipmentPM.AddPickUp(this.EntityPM);
@@ -410,58 +285,7 @@ export class AddEditPickupComponent implements OnDestroy {
                 if (!this.SaveCompletedEvent) {
 
                     this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                        if (isSaveSuccess) {
-
-                            if (this.IsNewEntity) {
-                                ServiceLocator.SendTotangoUserActivity("Shipment", "PickUpOpen");
-                                this.IsNewEntity = false;
-
-                                this.TabsItemsSource.forEach(item => {
-                                    item.IsDisabled = false;
-                                });
-                            }
-
-                            if (isClosingWindow) {
-                                this.CurrentSession.CloseCurrentWindow();
-                            }
-
-                            else {
-                                this.ShipmentPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-
-                                if (SavedEntityId) {
-                                    this.EntityPM = this.ShipmentPM.ShipmentPickUps.filter(f => f.Id == SavedEntityId)[0];
-                                }
-
-                                else if (SavedEntityNumber) {
-                                    this.EntityPM = this.ShipmentPM.ShipmentPickUps.filter(f => f.PickUpDeliveryNumber == SavedEntityNumber)[0];
-                                }
-
-                                if (this.PageChild_MAIN) {
-                                    this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
-                                }
-
-                                if (this.PageChild_PACG) {
-                                    this.PageChild_PACG.InitTab(this.EntityPM, this.ShipmentPM);
-                                }
-
-                                if (this.PageChild_DCSO) {
-                                    this.PageChild_DCSO.InitTab(this.EntityPM, this.ShipmentPM);
-                                }
-
-                                if (this.PageChild_DCSI) {
-                                    this.PageChild_DCSI.InitTab(this.EntityPM, this.ShipmentPM);
-                                }
-
-                                this.Clone();
-                            }
-                        }
-
-                        else {
-                            this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
-                        }
-
-                        AppTool.KillEventEmitter(this.SaveCompletedEvent);
-                        this.SaveCompletedEvent = null;
+                        this.OnSaveCompleted(isSaveSuccess, isClosingWindow);
                     });
 
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
@@ -470,6 +294,89 @@ export class AddEditPickupComponent implements OnDestroy {
         }
     }
 
+    Validate() {
+        var validator = new ShipmentPickupValidator();
+        var errors: string[] = validator.Validate(this.EntityPM, this.ShipmentPM);
+
+        if (errors.length == 0) {
+            var myShipmentValidator = new ShipmentValidator();
+            var myShipmentErrors = myShipmentValidator.Validate(this.ShipmentPM);
+            if (myShipmentErrors.length > 0) {
+                errors.push(TextCodeTranslator.Translate("Shipment.M.Routings.CantProceedAddingDelivery"));
+            }
+        }
+
+        this.ValidationErrorsList = errors;
+
+        var isValid: boolean = errors.length == 0 ? true : false;
+
+        return isValid;
+    }
+
+    OnSaveCompleted(isSaveSuccess: boolean, isClosingWindow: boolean) {
+        if (isSaveSuccess) {
+
+            if (this.IsNewEntity) {
+                ServiceLocator.SendTotangoUserActivity("Shipment", "PickUpOpen");
+                this.IsNewEntity = false;
+
+                this.TabsItemsSource.forEach(item => {
+                    item.IsDisabled = false;
+                });
+            }
+
+            if (isClosingWindow) {
+                this.CurrentSession.CloseCurrentWindow();
+            }
+
+            else {
+                this.ResetEntityPM();
+            }
+        }
+
+        else {
+            this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+        }
+
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        this.SaveCompletedEvent = null;     
+    }
+
+    ResetEntityPM() {
+        if (this.CurrentSession.CurrentEditComponent) {
+            this.ShipmentPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+
+            if (this.SavedEntityId) {
+                this.EntityPM = this.ShipmentPM.ShipmentPickUps.filter(f => f.Id == this.SavedEntityId)[0];
+            }
+
+            else if (this.SavedEntityNumber) {
+                this.EntityPM = this.ShipmentPM.ShipmentPickUps.filter(f => f.PickUpDeliveryNumber == this.SavedEntityNumber)[0];
+
+                if (this.EntityPM) {
+                    this.SavedEntityId = this.EntityPM.Id;
+                }
+            }
+
+            if (this.PageChild_MAIN) {
+                this.PageChild_MAIN.InitTab(this.EntityPM, this.ShipmentPM);
+            }
+
+            if (this.PageChild_PACG) {
+                this.PageChild_PACG.InitTab(this.EntityPM, this.ShipmentPM);
+            }
+
+            if (this.PageChild_DCSO) {
+                this.PageChild_DCSO.InitTab(this.EntityPM, this.ShipmentPM);
+            }
+
+            if (this.PageChild_DCSI) {
+                this.PageChild_DCSI.InitTab(this.EntityPM, this.ShipmentPM);
+            }
+
+            this.Clone();
+        }
+    }
     NewWarehouseEntryButtonClicked() {
 
         if (this.ShipmentPM.IsDirty) {

@@ -66,6 +66,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CustomerId  { get; set; }
        [DataMember]
        public string CustomerName  { get; set; }
+       [DataMember]
+       public int? GLAccountMinimumInterest  { get; set; }
+       [DataMember]
+       public string CustomerLocalName  { get; set; }
    }
 
 }

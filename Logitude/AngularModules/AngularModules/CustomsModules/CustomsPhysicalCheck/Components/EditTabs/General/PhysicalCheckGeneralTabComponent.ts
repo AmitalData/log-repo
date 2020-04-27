@@ -26,7 +26,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 @Component({
     selector:'PhysicalCheckAvailableTimes',
-    moduleId: module.id,
+    
     templateUrl: './PhysicalCheckGeneralTabComponent.html',
 })
 
@@ -96,8 +96,8 @@ export class PhysicalCheckGeneralTabComponent
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
                 this.Init();
                 //this.EntityPM = this.entityArgs.EntityPM;
                 //this.ObjectTableName = this.entityArgs.ObjectTableName;

@@ -23,7 +23,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'BrandingTabComponent',
     templateUrl: './BrandingTabComponent.html',
@@ -43,7 +43,7 @@ export class BrandingTabComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {

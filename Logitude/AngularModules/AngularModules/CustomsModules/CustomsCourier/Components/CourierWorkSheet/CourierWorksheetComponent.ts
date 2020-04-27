@@ -31,7 +31,7 @@ import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/De
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierWorksheetComponent.html',
     providers: [CourierWorksheetSharedDataService],
 })
@@ -248,7 +248,7 @@ implements OnDestroy
             currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
@@ -270,7 +270,7 @@ implements OnDestroy
                 currRequestParams.HAWB = this.entityPM.HAWB;
                 currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
                 this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
-                    .subscribe(res => {
+                    .subscribe((res:any) => {
                         this.CurrentSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
                         myMessageWindow.Show(res.Result);
@@ -282,7 +282,7 @@ implements OnDestroy
         }
         else {
             this._CourierMasterService.GetSendALLCorrectManifest(this.entityPM.Id, this.entityPM.HAWB, courierDeclarationStatusCode)
-                .subscribe(res => {
+                .subscribe((res:any) => {
                     this.CurrentSession.StopBusyIndicator();
                     var myMessageWindow = new MessageWindow();
                     myMessageWindow.Show(res.Result);
@@ -306,7 +306,7 @@ implements OnDestroy
         }
 
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.CurrentSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe(response => {
+        this.CurrentSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe((response:any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
             logitudeWindow.Height = 300;
@@ -330,7 +330,7 @@ implements OnDestroy
                         currRequestParams.InternalBankId = InternalBankId;
                         currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
                         this._CourierMasterService.PostSendPayReadyLow2755(currRequestParams)
-                            .subscribe(res => {
+                            .subscribe((res:any) => {
                                 this.CurrentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
                                 myMessageWindow.Show(res.Result);
@@ -341,7 +341,7 @@ implements OnDestroy
                     }
                     else {
                         this._CourierMasterService.GetSendPayReadyLow2755(this.entityPM.Id, this.entityPM.HAWB, InternalBankId)
-                            .subscribe(res => {
+                            .subscribe((res:any) => {
                                 this.CurrentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
                                 myMessageWindow.Show(res.Result);
@@ -398,7 +398,7 @@ implements OnDestroy
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
@@ -427,7 +427,7 @@ implements OnDestroy
                 currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
 
                 this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
-                    .subscribe(res => {
+                    .subscribe((res:any) => {
                         this.CurrentSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
                         myMessageWindow.Show(res.Result);
@@ -439,7 +439,7 @@ implements OnDestroy
         }
         else {
             this._CourierMasterService.GetSendALLCorrectDec(this.entityPM.Id, this.entityPM.HAWB, courierDeclarationStatusCode)
-                .subscribe(res => {
+                .subscribe((res:any) => {
                     this.CurrentSession.StopBusyIndicator();
                     var myMessageWindow = new MessageWindow();
                     myMessageWindow.Show(res.Result);
@@ -568,7 +568,7 @@ implements OnDestroy
     RefreshStatistic() {
         this.CurrentSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetStatistic(this.entityPM.Id)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 var list: KeyValuePair[];
                 
@@ -1367,7 +1367,7 @@ implements OnDestroy
                                 });
                                 if (this._SelectedTabFilter.Code == "MNF" && this._SelectedMNFValue == 'W') {
                                     cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
-                                        .subscribe(myResult => {
+                                        .subscribe((myResult:any) => {
                                             var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
                                             myDeclarationEditComponentController.CustomsAnswersShowManifest = true;
                                             console.log("myDeclarationEditComponentController.CustomsAnswersShowManifest = true;");
@@ -1375,7 +1375,7 @@ implements OnDestroy
                                 }
                                 if (currentScreenCode = "DCCF") {
                                     cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
-                                        .subscribe(myResult => {
+                                        .subscribe((myResult:any) => {
                                             var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
                                             myDeclarationEditComponentController.ShowDeclarationClassificationComponentTAB = true;
                                             console.log("myDeclarationEditComponentController.DeclarationClassificationComponent = true;");
@@ -1439,7 +1439,7 @@ implements OnDestroy
 
         this.CurrentSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
@@ -1451,7 +1451,7 @@ implements OnDestroy
 
         this.CurrentSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendFTPMamanRequest(this.entityPM.Id)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
@@ -1461,13 +1461,13 @@ implements OnDestroy
     private GetMamanPUR() {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", SessionLocator.Tenant)
-            .subscribe(response => {
+            .subscribe((response:any) => {
                 this.IsMamanEnabled = false;
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
                     this.IsMamanEnabled = true;
                 }
                 myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_HWBBMMN", "NON", "NON", SessionLocator.Tenant)
-                    .subscribe(res => {
+                    .subscribe((res:any) => {
                         if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
                             this._CourierWorksheetSharedDataService.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
                         }

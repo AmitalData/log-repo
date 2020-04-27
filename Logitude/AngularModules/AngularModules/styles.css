@@ -1,9 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import url("_Resources/css/css.css");
 @import url("_Resources/js/Charts/export.css");
-
-
 @import url("_Resources/Froala/css/font-awesome.min.css");
 @import url("_Resources/Froala/css/froala_editor.css");
 @import url("_Resources/Froala/css/froala_style.css");
@@ -20,6 +17,5 @@
 @import url("_Resources/Froala/css/plugins/quick_insert.css");
 @import url("_Resources/Froala/css/plugins/file.css");
 @import url("_Resources/Froala/css/codemirror.min.css");
-
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";

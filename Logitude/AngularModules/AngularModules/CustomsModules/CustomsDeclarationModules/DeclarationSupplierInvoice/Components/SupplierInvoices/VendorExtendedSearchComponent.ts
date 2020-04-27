@@ -30,7 +30,7 @@ import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import { CustomsVendorPMService } from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VendorExtendedSearchComponent.html',
 })
 
@@ -248,8 +248,8 @@ export class VendorExtendedSearchComponent extends BaseComponent {
     }
 
     NewVendorButtonClicked() {
-        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response:any) => {
                 var vendor = new CustomsVendorPM();
                 vendor.Tenant = SessionLocator.Tenant;
                 vendor.VendorTypeCode = "1";
@@ -463,7 +463,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
             }
 
             // Call service to add vendor
-            this.customsVendorPMService.insert(newVendor).subscribe(myResult => {
+            this.customsVendorPMService.insert(newVendor).subscribe((myResult:any) => {
 
                 var res: ServiceResponse = myResult;
                 if (!res.HasError) {

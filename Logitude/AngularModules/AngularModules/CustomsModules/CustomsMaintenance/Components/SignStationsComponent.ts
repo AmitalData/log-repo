@@ -22,7 +22,7 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SignStationsComponent.html',
 })
 
@@ -63,7 +63,7 @@ export class SignStationsComponent
     }
     Loaded: boolean = false;
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
 
 
             this._TranslationLoaded = true;
