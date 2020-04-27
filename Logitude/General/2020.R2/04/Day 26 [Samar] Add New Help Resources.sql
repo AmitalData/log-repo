@@ -6,10 +6,10 @@ insert into HelpResources(Code, Name, CreateDate, UpdateDate, [Language], [Type]
 values('REL023', 'May 2020 - Version R2.20', GETDATE(), GETDATE(), 'EN', 'REL', 'OPE', null, null, 'may_2020_release.pdf', 'May 2020 - Version R2.20', 1)
 
 insert into HelpResources(Code, Name, CreateDate, UpdateDate, [Language], [Type], Category, VideoURL, Duration, [FileName], SearchFields, IsNew)
-values('76', 'Warehouse Invoicing', GETDATE(), GETDATE(), 'EN', 'HOW', 'OPE', null, null, 'warehouse_invoicing.pdf', 'Warehouse Invoicing', 1)
+values('76', 'Warehouse Invoicing', GETDATE(), GETDATE(), 'EN', 'HOW', 'ACC', null, null, 'warehouse_invoicing.pdf', 'Warehouse Invoicing', 1)
 
 insert into HelpResources(Code, Name, CreateDate, UpdateDate, [Language], [Type], Category, VideoURL, Duration, [FileName], SearchFields, IsNew)
-values('77', 'Regional Tax', GETDATE(), GETDATE(), 'EN', 'TUT', 'OPE', null, null, 'regional_tax.pdf', 'Regional Tax', 1)
+values('77', 'Regional Tax', GETDATE(), GETDATE(), 'EN', 'TUT', 'ACC', null, null, 'regional_tax.pdf', 'Regional Tax', 1)
 
 insert into HelpResources(Code, Name, CreateDate, UpdateDate, [Language], [Type], Category, VideoURL, Duration, [FileName], SearchFields, IsNew)
 values('78', 'INTTRA E-booking', GETDATE(), GETDATE(), 'EN', 'TUT', 'OPE', null, null, 'inttra_e_booking.pdf', 'INTTRA E-booking', 1)
