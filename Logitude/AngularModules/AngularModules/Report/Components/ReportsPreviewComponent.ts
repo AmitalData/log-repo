@@ -94,7 +94,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     QueryFilterItems: Array<QueryFilterItem>;
     SetReportFilterItems(reportFilterItems: Array<QueryFilterItem>) {
-        this.IsSchedulerReport = true;
+      this.IsSchedulerReport = true;
         if (reportFilterItems && reportFilterItems.length!=0) {
             this.QueryFilterItems = reportFilterItems;
         }
@@ -166,7 +166,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
             .then(cmpRef => {
                 this.ReportFilterConmponent = cmpRef.instance;
                 if (this.IsSchedulerReport) {
-                    this.ReportFilterConmponent.SetQueryFilterItems(this.QueryFilterItems);
+                  this.ReportFilterConmponent.SetQueryFilterItems(this.QueryFilterItems);
+                  this.ReportFilterConmponent.SetRunReportTitle();
                 }
 
                 if (this.ReportFilterConmponent['InitializeComponent']) {
