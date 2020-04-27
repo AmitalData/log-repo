@@ -56,7 +56,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
                                                     where f.Tenant == tenant 
                                                     && myShipment.Tenant == tenant
-                                                    && myShipmentMasterData.Tenant == tenant
                                                     && f.Id == myPackageId
                                                     select new ContainerFollowUpList()
                                                     {
@@ -150,11 +149,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 SecurityUtility.CheckContactFeature("ContainerFollowUp", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-
-                if (filters.Tenant != null)
-                {
-                    tenant = tenant;
-                }
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -258,13 +252,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                                                                  on f.ShipmentId equals db_Shipments.Id into PackagesShipments
                                                                  from myShipment in PackagesShipments
 
-                                                                 join db_MasterData in MyContext.ShipmentMasterDatas.Include("MainCarriageCarrierCard").Include("MainCarriageVessel")
-                                                                 on myShipment.MasterShipmentDataId equals db_MasterData.Id into MastersShipments
+                                                                 join db_MasterData in MyContext.ShipmentMasterDatas.Include("MainCarriageCarrierCard").Include("MainCarriageVessel")                                                                                                                            
+                                                                 on myShipment equals db_MasterData.Shipment into MastersShipments
                                                                  from myShipmentMasterData in MastersShipments.DefaultIfEmpty()
 
                                                                  where f.Tenant == tenant
                                                                  && myShipment.Tenant == tenant
-                                                                 && myShipmentMasterData.Tenant == tenant
                                                                  && myShipment.IsCancelled == false
                                                                  select new ContainerFollowUpList()
                                                                  {
