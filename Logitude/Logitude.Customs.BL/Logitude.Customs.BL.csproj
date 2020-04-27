@@ -1919,6 +1919,7 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0021_TenantNone.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0023_AutonomyKeywords.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0022_AutonomyKeywords.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0024_DocIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityUpdateServices\ClientUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentUpdateService.cs" />
