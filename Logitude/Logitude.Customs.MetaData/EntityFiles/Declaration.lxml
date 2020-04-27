@@ -223,5 +223,7 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature Code="&quot;BTPA&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Customs.Declaration.Features.BTPA&quot;" FeatureDefaultText="&quot;Auto Filling Payment Filing Screen for BTL Disability Statement&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

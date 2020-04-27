@@ -582,8 +582,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
 
     FillConnectedToItems() {
         var connectedItems: ConnectedToItem[] = [];
-        var entity = this.CurrentSession.CurrentEditComponent.EntityPM;
-        var connectedItem1 = new ConnectedToItem();
+         var connectedItem1 = new ConnectedToItem();
         connectedItem1.Id = 0;
         connectedItem1.Name = TextCodeTranslator.Translate("Customs.Declaration");
 
@@ -599,14 +598,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         connectedItems.push(connectedItem1);
         connectedItems.push(connectedItem2);
         connectedItems.push(connectedItem3);
-
-        if (entity.IsAmendment) {
-            var connectedItem4 = new ConnectedToItem();
-            connectedItem4.Id = 3;
-            connectedItem4.Name = TextCodeTranslator.Translate("Customs.Declaration.O.CorrectionGeneral");
-            connectedItems.push(connectedItem4);
-        }
-
+ 
 
         return connectedItems;
     }
@@ -634,11 +626,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                     };
                 }
                 break;
-            case "DeclarationAmendment":
-                connectedDocumentPointer = {
-                    "SelectedIndex": 3,
-                };
-                break;
+           
             default:
                 connectedDocumentPointer = {
                     "SelectedIndex": 0,
@@ -755,7 +743,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         return true;
     }
 
-    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean, customParam2: boolean) {
+    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean ) {
         var selectInvoicesOnly = customParam;
         var windowArgs: any = {};
         var certificates: any[] = [];
@@ -772,7 +760,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    this.SelectionInvoicesCompleted(comp, customsDocumentsTicket, customParam2);
+                    this.SelectionInvoicesCompleted(comp, customsDocumentsTicket);
                 }
             });
         });
@@ -780,7 +768,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/Documents/PointersFromInvoicesSelectionComponent');
     }
 
-    SelectionInvoicesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM, newChooseIsAmendment) {
+    SelectionInvoicesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM,) {
         if (args.SelectedInvoices != null) {
             customsDocumentsTicket.ConnectedInvoicesSequences = args.ConnectedInvoices;
             customsDocumentsTicket.ConnectedInvoiceItemsSequences = args.ConnectedInvoiceItems;
@@ -798,15 +786,10 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                 customsDocumentsTicket.RemoveCustomsDocumentPointer(editedPointer);
                             }
                             else {
-                                 if (newChooseIsAmendment) {
-                                    editedPointer.Child1EntityCode = "DeclarationAmendment";
-                                    editedPointer.Child1EntityId = "3";
-                                }
-                                else {
+                             
                                 editedPointer.Child1EntityCode = null;
                                 editedPointer.Child1EntityId = null;
-                                }
-                               
+                              
                             }
                         }
                     }
@@ -821,20 +804,14 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                             }
                             else {
 
-                                if (newChooseIsAmendment) {
-                                    editedPointer.Child1EntityCode = "DeclarationAmendment";
-                                    editedPointer.Child1EntityId = "3";
-                                    editedPointer.Child2EntityCode = null;
-                                    editedPointer.Child2EntityId = null;
-                                }
-                                else {
+                           
                                 //var deletedInvoice = args.SupplierInvoicesList.Collection.filter(d => d.InvoiceCounterKey + "" == editedPointer.Child1EntityId)[0];
                                 //args.SupplierInvoicesList.Remove(deletedInvoice);
                                 editedPointer.Child1EntityCode = null;
                                 editedPointer.Child1EntityId = null;
                                 editedPointer.Child2EntityCode = null;
                                     editedPointer.Child2EntityId = null;
-                                }
+                                
                             }
                         }
                     }

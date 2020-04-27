@@ -84,10 +84,7 @@ export class CustomsDocumentTicketViewModel {
         }
     }
 
-
-
-    get Child1EntityCode() { return this.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child1EntityCode; }
-
+ 
     public FromCompanyDocumentType2Add: boolean = false;
 
     private customDocumentTypeMetaDataLists: CustomDocumentTypeMetaDataList[];
