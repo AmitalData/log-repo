@@ -264,6 +264,23 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 if (shipment != null)
                 {
                     crossDockEntryDataProvider.ProjectNumber = shipment.ProjectNumber;
+
+                    if(shipment.ShipmentLevelCode == "H")
+                    {
+                        if(!string.IsNullOrEmpty(shipment.MasterShipmentDataId))
+                        {
+                            Shipment masterShipment = shipmentRepository.GetSingleShipment(shipment.MasterShipmentDataId, tenant);
+                            if(masterShipment!= null)
+                            {
+                                crossDockEntryDataProvider.MasterProjectNumber = masterShipment.ProjectNumber;
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        crossDockEntryDataProvider.MasterProjectNumber = shipment.ProjectNumber;
+                    }
                 }
             }            
         }
