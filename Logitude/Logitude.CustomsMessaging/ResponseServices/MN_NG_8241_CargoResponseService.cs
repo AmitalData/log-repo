@@ -38,6 +38,10 @@ using Unifreight.BL.EntityUpdateServices;
 using Logitude.Server.Tools.Models;
 using Logitude.AmitalMessaging.Infrastructure.Transmission;
 using Logitude.Customs.Def.Messaging.Customs;
+using System.Globalization;
+using Logitude.Customs.BL.Messaging.L2U.CustomFile;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Customs.BL.Messaging.Customs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -211,6 +215,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         OpenUnifreighTask();
                         myDeclarationUpdateService.SuppressNewConcurrencyGUID = true;
                         myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                        if (_status == "SST" || _status == "SMG")
+                            SendPayment(_MyDeclarationPM, context, requestParams);
+
                         //Yuval Chalup 13.03.2016 TASK-20524 --->
 
                         return;
@@ -339,6 +346,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     };
                     _MyDeclarationPM.CurrentContextTag = cargoContext;
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                    if(status=="SST" || status=="SMG")
+                        SendPayment(_MyDeclarationPM, context, requestParams);
+
                 }
             }
 
@@ -368,6 +378,196 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             return (myGDFDATAPM.DEFDATA);
         }
+
+
+        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, CargoQueryRequestParams requestParams)
+        {
+            var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+            var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
+
+            if (declarationPaymentPM != null)
+            {
+                if (declarationPaymentPM.AutomaticPayment == 1)
+                {
+                    if (!CheckFileCredit(declarationPM, declarationPaymentPM, requestParams.LoggingUserId))
+                    {
+
+                        var MyUnifreightEventParam = new UnifreightEventParam()
+                        {
+                            Code = "APAYF",
+                            Mode = UnifreightEventMode.@new,
+                            EventDateTime = DateTime.Now,
+                            Entname = "CFIFILEM",
+                            PrimaryNum = declarationPM.CustomFileNo,
+                            EventRemarks = "",
+                        };
+                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                        var myOpenUnifreighTask = new UnifreightEventTaskService();
+                        myOpenUnifreighTask.UpsertEventLE2U(
+                            declarationPM.Tenant,
+                           requestParams.LoggingUserId,
+                            MyUnifreightEventParam);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
+
+                            using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                            {
+                                var requestParams2755 = new GenericRequestParams()
+                                {
+                                    Tenant = requestParams.Tenant,
+                                    LoggingEnabled = true,
+                                    LoggingObjectTableId = requestParams.LoggingObjectTableId,
+                                    LoggingEntityId = declarationPM.Id,
+                                    AppicationId = declarationPM.Id,
+                                    InterfaceTypeCode = "2755",
+                                    LoggingUserId = requestParams.LoggingUserId,
+                                    RequestVIA = SendRequestVIA.WebServiceBatch,
+
+                                };
+                                if (requestDate != DateTime.MinValue)
+                                {
+                                    requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
+
+                                    requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
+                                    requestParams2755.FutureSendDateTime = requestDate;
+                                }
+                                SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+
+                                scopeNewCRS.Complete();
+                            }
+
+                        }
+                        catch (System.Exception)
+                        {
+                            var MyUnifreightEventParam = new UnifreightEventParam()
+                            {
+                                Code = "APAYF",
+                                Mode = UnifreightEventMode.@new,
+                                EventDateTime = DateTime.Now,
+                                Entname = "CFIFILEM",
+                                PrimaryNum = declarationPM.CustomFileNo,
+                                EventRemarks = "",
+                            };
+                            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                            var myOpenUnifreighTask = new UnifreightEventTaskService();
+                            myOpenUnifreighTask.UpsertEventLE2U(
+                                declarationPM.Tenant,
+                               requestParams.LoggingUserId,
+                                MyUnifreightEventParam);
+                            throw;
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+        private DateTime CheckIfBlockTime(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM)
+        {
+            var declarationQS = new DeclarationQueryService(declarationPaymentPM.Tenant);
+            string timesCompany = declarationQS.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", declarationPaymentPM.Tenant);
+            TimeSpan toTimeCurrent = new TimeSpan();
+            TimeSpan toTime2Current = new TimeSpan();
+            TimeSpan toTime = new TimeSpan();
+            if (timesCompany != null && timesCompany != "")
+            {
+                List<string> times = GetTimesFromDefault(timesCompany);
+
+                TimeSpan fromTime = DateTime.ParseExact(times[0], "HH:mm",
+                                        CultureInfo.InvariantCulture).TimeOfDay;
+
+
+                toTime = DateTime.ParseExact(times[1], "HH:mm",
+                                  CultureInfo.InvariantCulture).TimeOfDay;
+
+                if (DateTime.Now.TimeOfDay > fromTime && DateTime.Now.TimeOfDay < toTime)
+                {
+                    toTimeCurrent = toTime;
+                    //    return new DateTime(toTime.Ticks).AddMinutes(5);
+                }
+
+            }
+            string timesCustomer = declarationQS.GetDefault("ISRAEL", "CIM_PAY_BLK_RNG", "NON", declarationPM.CustomerCode, declarationPaymentPM.Tenant);
+
+            if (timesCustomer != null && timesCustomer != "")
+            {
+                List<string> times = GetTimesFromDefault(timesCustomer);
+
+                TimeSpan fromTime = DateTime.ParseExact(times[0], "HH:mm",
+                                        CultureInfo.InvariantCulture).TimeOfDay;
+
+
+                toTime = DateTime.ParseExact(times[1], "HH:mm",
+                                  CultureInfo.InvariantCulture).TimeOfDay;
+
+                if (DateTime.Now.TimeOfDay > fromTime && DateTime.Now.TimeOfDay < toTime)
+                {
+                    toTime2Current = toTime;
+                    // return new DateTime(toTime.Ticks).AddMinutes(5);
+                }
+
+            }
+
+            if (toTimeCurrent > toTime2Current)
+            {
+                return new DateTime(toTimeCurrent.Ticks).AddMinutes(5);
+            }
+            else if (toTime2Current > toTimeCurrent)
+            {
+                return new DateTime(toTime2Current.Ticks).AddMinutes(5);
+
+            }
+            //else if(toTime!= new TimeSpan())
+            //{
+            //    return new DateTime(toTime.Ticks).AddMinutes(5);
+
+            //}
+
+            return DateTime.MinValue;
+
+        }
+
+        private List<string> GetTimesFromDefault(string times)
+        {
+            var arr = times.Split('-');
+            return new List<string>()
+            {
+                 arr[0].TrimEnd() ,  arr[1].TrimStart()
+            };
+        }
+
+        private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user)
+        {
+            CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
+            {
+                Tenant = declarationPM.Tenant,
+                AppicationId = declarationPaymentPM.DeclarationId,
+                LoggingEnabled = true,
+                LoggingEntityId = declarationPM.Id,
+                InterfaceTypeCode = "2755",
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingEntityReference = declarationPM.DeclarationNumber,
+                LoggingUserId = user,
+                RequestName = "Send to check credit request",
+                ResponseName = "Get check credit Response",
+                Mode = "GetCredit",
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+            };
+            var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
+            CUSTOMCREDIT_UL creditResponseData = myCustomFileCreditService.CheckFileCredit();
+            if (!string.IsNullOrEmpty(creditResponseData.CustomFileCredit[0].ErrorMessage))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
 
         private void GetResponseDetails(MN_NG_8241_Cargo_Message customResponse)
         {
