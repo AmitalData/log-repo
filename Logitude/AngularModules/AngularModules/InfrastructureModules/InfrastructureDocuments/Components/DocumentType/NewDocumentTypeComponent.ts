@@ -54,6 +54,10 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
         }
 
+        if (SessionLocator.Tenant != 0) {
+            this.NewDocumentTypePM.AddedManually = true;
+        }
+
         this.myForm = fb.group({});
         this.validator = new ClassLevelValidator();
     }
@@ -79,6 +83,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
         this.NewDocumentTypePM.DocumentTypeCategoryCode = "O";
         this.NewDocumentTypePM.Tenant = InfraSettings.TenantPM.Id;
+
         //this.NewDocumentTypePM.TemplateFormatCode = "P";
         var tempList: ObjectTablePM[] = [];
 
