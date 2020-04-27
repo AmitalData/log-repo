@@ -178,8 +178,8 @@ namespace Logitude.Accounting.BL.DataContract
                         IsInternationalPartner = a.IsInternationalPartner,
                         EnglishName = a.EnglishName,
                         VatNumber = a.VatNumber,
-                        LocalName = a.LocalName
-
+                        LocalName = a.LocalName,
+                        Code = a.Code
                     }).ToList();
             gLAccounts = gLAccounts.Concat(GetVendorsGLAccounts(vendors)).ToList();
             return vendors;
@@ -201,8 +201,8 @@ namespace Logitude.Accounting.BL.DataContract
                                           IsInternationalPartner = a.IsInternationalPartner,
                                           EnglishName = a.EnglishName,
                                           VatNumber = a.VatNumber,
-                                          LocalName = a.LocalName
-
+                                          LocalName = a.LocalName,
+                                          Code = a.Code
                                       }).ToList();
             List<string> vendorIds = vendors.Select(d => d.Id).ToList();
             addresses =addresses.Concat(GetVendorsAddresses(vendorIds)).ToList();
@@ -385,7 +385,7 @@ namespace Logitude.Accounting.BL.DataContract
                     
                         groupedbyVendor = SetGLAccountFields(gLAccount, groupedbyVendor);
 
-                        groupedbyVendor.VATNumber = selectedVendors[0].VatNumber!= null? selectedVendors[0].VatNumber : throw new Exception(TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber"+" "+ selectedVendors[0].Code, Tenant));
+                        groupedbyVendor.VATNumber = selectedVendors[0].VatNumber!= null? selectedVendors[0].VatNumber : throw new Exception(TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant)+", "+ TextCodesTranslator.TranslateText("Card.F.Code", Tenant) +":"+  selectedVendors[0].Code);
                         groupedbyVendor.VendorName = selectedVendors[0].EnglishName;
                         Address address = addresses.Where(d => d.CardId == selectedVendors[0].Id).FirstOrDefault();
                         if (address != null)
