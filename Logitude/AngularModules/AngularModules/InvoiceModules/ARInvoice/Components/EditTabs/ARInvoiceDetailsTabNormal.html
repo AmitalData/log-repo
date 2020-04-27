@@ -585,7 +585,7 @@
                                     <log-column [width]="'25'" [Editable]="false">
                                         <log-cell-template #logcelltemplate>
                                             <ng-template let-item>
-                                                <div style="width: 100%; height: 100%; position: relative;">
+                                                <div style="width: 100%; height: 25px; position: relative;">
                                                     <div class="CenterCenter">
                                                         <img *ngIf="!item.IsMatched" src="./Images/Buttons/NotMatched.png" />
                                                         <CheckBox *ngIf="item.IsMatched" [IsChecked]="item.Exists" (Checked)="item.Exists = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
@@ -628,7 +628,7 @@
                                     <log-column [header]="'ARInvoiceLine.CH.PrepaidCollectIdListLable' | TextCodeTranslationPipe" [width]="'35'" [Editable]="false" [Alignment]="'center'">
                                         <log-cell-template #logcelltemplate [TabIndex]="-1">
                                             <ng-template let-item>
-                                                <div style="width: 100%; height: 100%; text-align: center; position: relative;">
+                                                <div style="width: 100%; height: 25px; text-align: center; position: relative;">
                                                     <div class="CenterCenter" style="width: 25px; height: 20px; line-height: 20px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{background: item.IsMatchedPrepaidCollect ? 'transparent' : 'rgba(255, 171, 3, 0.6)', color: item.IsMatchedPrepaidCollect ? '#282E30' : 'rgba(255, 94, 0, 1)'}">
                                                         {{item.PrepaidCollectId}}
                                                     </div>
@@ -762,7 +762,7 @@
                                     <log-column [width]="'25'" [Alignment]="isRTL ? 'right' : 'left'">
                                         <log-cell-template>
                                             <ng-template let-item>
-                                                <div style="width: 100%; height: 100%; position: relative;">
+                                                <div style="width: 100%; height: 25px; position: relative;">
                                                     <div class="CenterCenter" style="height: 20px;">
                                                         <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditLineClicked(item)"></IconButton>
                                                     </div>
