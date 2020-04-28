@@ -38,6 +38,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     interestReportPM.OpenBalance = GetInterestReportOpenBalance();
                     List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = CreateInterestReportLinesByDate();
                     interestReportPM.CloseBalance = GetInterestReportCloseBalance(interestReportLinesByDatePMs);
+                    interestReportPM.TotalAmount = GetInterestReportTotalAmount(interestReportLinesByDatePMs);
                     SetInterestReportStatusDraft();
                     SubmitInterestReportLinesByDate(interestReportLinesByDatePMs);
                     SubmitChangesToInterestReport();
@@ -50,6 +51,16 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 throw;
             }
         }
+
+        private decimal? GetInterestReportTotalAmount(List<InterestReportLinesByDatePM> interestReportLinesByDatePMs)
+        {
+            decimal? totalAmount = (from a in interestReportLinesByDatePMs
+                                    select a).Sum(d => (d.CalculatedStandInterestAmount 
+                                    + d.CalculatedExcepInterestAmount 
+                                    + d.CalculatedCreditInterestAmount));
+            return totalAmount;
+        }
+
         private void SetInterestReportStatusDraft()
         {
             interestReportPM.InterestReportStatusCode = "1";

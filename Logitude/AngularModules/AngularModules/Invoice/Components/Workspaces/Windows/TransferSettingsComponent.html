@@ -434,7 +434,7 @@
                                         </tr>
 
                                         <!--FTP-->
-                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_AI_GI">
+                                        <tr class="FormFieldRow" *ngIf="IsFTPSettingsVisible">
                                             <td style="width:185px;">
                                                 <LogLabel [ObjectFieldName]="'TransferToFTPActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -449,7 +449,7 @@
                                         </tr>
 
                                         <!-- Out Settings -->
-                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_AI_GI">
+                                        <tr class="FormFieldRow" *ngIf="IsFTPSettingsVisible">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'TransferFTPDetailHost'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
