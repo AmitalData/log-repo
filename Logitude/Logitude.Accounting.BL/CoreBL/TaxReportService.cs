@@ -59,7 +59,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private static List<TaxReportData> ledgerTransactons;
         private static List<LedgerTransaction> journalsTransactions;
         private static  List<Simplog.Data.CommonDataModel.EntityPOCOs.Card> cards;
-        private static List<GLAccountPM> glAccounts;
+        private static List<GLAccountPM> oppositeAccounts;
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
 
@@ -182,7 +182,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 APInvoicePM aPInvoice = null;
 
                 List<string> glAccountIds = ledgerTransactons.Select(d => d.OppositGLAccount).ToList();
-                glAccounts = gLAccountQueryService.GetByGLAccountsIdList(glAccountIds, tenant);
+                oppositeAccounts = gLAccountQueryService.GetByGLAccountsIdList(glAccountIds, tenant);
+                List<GLAccountPM> gLAccounts = gLAccountQueryService.GetByGLAccountsIdList(glAccountIds, tenant);
                 cards = cardRepository.GetCardsByGLAccountIds(glAccountIds, tenant).ToList();
 
                 List<string> apInvoiceIds = ledgerTransactons.Where(d => d.AccountingEntity == "4").Select(d => d.AccountingEntityId).ToList();
@@ -203,54 +204,31 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 VatNumber = null;
                 InputVatAmount = 0;
-                InputInvoiceAmount = 0;
-                card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();             
+                InputInvoiceAmount = 0;                             
                 if (a.AccountingEntity == AccountingEntityValues.APInvoice)
                 {
                     aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
                     if (aPInvoice == null)
                     {
                         continue;
-                    }                   
-                }
-
-                if (card != null && card.PartnerTypeId == PartnerTypeValues.Customer)
-                {
-                    if (card.VatNumber == tenantPM.VatNumber)
-                    {
-                        VatNumber = card.VatNumber;
                     }
-                    else
-                    {
-                        SetVatAmounts(a);
-                    }
-
-
                 }
-                else
-                {
-                    SetVatNumber(card);
-                    SetVatAmounts(a);
-                }
-
-                if (VatNumber == null)
-                    VatNumber = "000000000";
-               
-                GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();
-
-                if (gLAccountPM != null)
-                {
-                   
-                    if(gLAccountPM.AccountTypeCode=="3" || gLAccountPM.AccountTypeCode == "1")
+               GLAccountPM account = GetAccountByLedgerTransaction(a);
+                card = account != null ? cards.Where(d => d.GLAccountId == account.Id).FirstOrDefault() : null;
+                if (account != null)
+                {                   
+                    if(account.AccountTypeCode=="3" || account.AccountTypeCode == "1")
                     {
                         VatNumber = card != null ? card.VatNumber : null;
                     }
-                    if (gLAccountPM.IsEquipmentVendor)
+                    if (account.IsEquipmentVendor)
                     {
                         isEquipment = true;
                     }
 
-                }
+                }               
+                VatNumber = VatNumber == null? "000000000": VatNumber;
+                SetVatAmounts(a);
                 SetReferenceFields(a.Reference);
                 string transmitStatusCode = SetTransmitStatusByDocumentDate(a.ReferenceDate);
                 TaxReportLinePM taxReportLine = new TaxReportLinePM()
@@ -293,7 +271,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         taxReportLine.LineTypeCode = "P";
                     }
 
-                    else if ((journal.LineCreditAccountTypeCode == "3" && (gLAccountPM!= null && gLAccountPM.Smallcashbook==true)))
+                    else if ((journal.LineCreditAccountTypeCode == "3" && (account!= null && account.Smallcashbook==true)))
                     {
                         taxReportLine.LineTypeCode = "K";
                     }
@@ -357,7 +335,18 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
+        private static GLAccountPM  GetAccountByLedgerTransaction(TaxReportData transaction)
+        {
+            if (transaction.OppositGLAccount != null)
+            {
+               return oppositeAccounts.Where(d => d.Id == transaction.OppositGLAccount).FirstOrDefault();
+            }
+            else {
+                LedgerTransaction ledgerTransaction = journalsTransactions.Where(d => d.JournalId == transaction.JournalId && d.Reference1 == transaction.Reference && d.LocalAmountCredit != 0 && d.Account.ChartOfAccountsTypeCode !="5").FirstOrDefault();
+                return oppositeAccounts.Where(d => d.Id == ledgerTransaction.AccountId).FirstOrDefault();
+            }
 
+        }
         static void SetVatFieldsForAPInvoiceTransaction(APInvoicePM aPInvoice)
         {
             aPInvoice.TotalVATs = totalvats.Where(d => d.APInvoiceId == aPInvoice.Id).ToList();
@@ -432,7 +421,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (card != null)
             {
-                GLAccountPM account = glAccounts.Where(d => d.Id == card.GLAccountId && d.AccountTypeCode == "3").FirstOrDefault();
+                GLAccountPM account = oppositeAccounts.Where(d => d.Id == card.GLAccountId && d.AccountTypeCode == "3").FirstOrDefault();
                 VatNumber = account != null ? card.VatNumber : null;
             }
         }
