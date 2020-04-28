@@ -72,6 +72,10 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.QueueId).HasColumnName("QueueId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsLedgerCreated).HasColumnName("IsLedgerCreated");
+
+            this.Property(t => t.DocumentDate).HasColumnName("DocumentDate");
+
+            this.Property(t => t.DueDate).HasColumnName("DueDate");
         }
     }
 }

@@ -444,6 +444,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     accountsList = accountsList.Where(r => !_AccountListRelatedCurrenciesAccount_List2Discard.Contains(r.Id));
 
                 }
+
+                TenantQuery tenantQuery = new TenantQuery(_Param.Tenant);
+                var tenant = tenantQuery.GetSinglePM(_Param.Tenant);
+
                 IQueryable<PeriodMExtended> periodMExtendeds =
                     (from acc in accountsList
                      join moredata in _AccountingContext.GLAccountMoreDatas.Where(r => r.Tenant == _Param.Tenant)
@@ -495,6 +499,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          TotalFutureOpenCheques = moredata !=null ?(decimal)moredata.TotalOpenChequesInLocalCur:0,
                          TotalOpenCheques = moredata!=null? (decimal)moredata.TotFutureOpenChequesInLocalCur:0,
 
+                         //AccountEnglishName = acc.EnglishName,
+                        // AccountLocalName = acc.LocalName,
+                         AccountCurrencyCode = acc.ReconcileMethodCode == "0" ? tenant.CurrencyCode : acc.CurrencyCode,
                      }
 
                  );
@@ -535,6 +542,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                           AccountEnglishName = account.AccountEnglishName,
                                                           AccountLocalName = account.AccountLocalName,
                                                           AccountDisplayNumber = account.AccountDisplayNumber,
+                                                          AccountCurrencyCode = account.AccountCurrencyCode,
                                                           AccountTermName = account.AccountTermName,
                                                           OpenCredit = line.OpenCredit,
                                                           OpenDebit = line.OpenDebit,
@@ -564,6 +572,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         AccountEnglishName = r.AccountEnglishName,
                         AccountLocalName = r.AccountLocalName,
                         AccountDisplayNumber = r.AccountDisplayNumber,
+                        AccountCurrencyCode = r.AccountCurrencyCode,
                         AccountTermName = r.AccountTermName,
                         AccountPhone = r.AccountPhone,
                         CreditLimitAmount = r.CreditLimitAmount,
@@ -1243,6 +1252,7 @@ Period	Acc	Currency	Total
 
 
         public string AccountDisplayNumber { get; set; }
+        public string AccountCurrencyCode { get; set; }
         //accountCardlist.Payment Term: //PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
         public string AccountTermName { get; set; }
         

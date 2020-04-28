@@ -105,7 +105,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                            VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
                             InvoiceAmount = invoice.TotalAmountForTaxReport != null ? invoice.TotalAmountForTaxReport : 0;
-                            if (invoice.InvoiceNumber.Length == 9)
+                            if (invoice.InvoiceNumber.Length > 9)
                             {
                                 outputreference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
                             }
@@ -113,7 +113,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 outputreference = invoice.InvoiceNumber;
                             }
-
+                           SetReferenceFields(outputreference);
                             if (!string.IsNullOrEmpty(invoice.VatNumber))
                             {
                                 vatNumber = invoice.VatNumber;
@@ -122,8 +122,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         TaxReportLinePM line = new TaxReportLinePM()
                             {
                                 VatNumber = vatNumber,
-                                Reference = outputreference,
-                                ReferecneGroup = "0000",
+                                Reference = reference ,
+                                ReferecneGroup = referenceGroup,
                                 ReferenceDate = invoice.InvoiceDate,
                                 JournalId = a.Id,
                                 OutputOrInput = "O",
@@ -204,22 +204,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 VatNumber = null;
                 InputVatAmount = 0;
                 InputInvoiceAmount = 0;
-                card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
-                //if (a.AccountingEntity == AccountingEntityValues.APInvoice)
-                //{
-                //  //  aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
+                card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();             
+                if (a.AccountingEntity == AccountingEntityValues.APInvoice)
+                {
+                    aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
+                    if (aPInvoice == null)
+                    {
+                        continue;
+                    }                   
+                }
 
-                //    //if (aPInvoice != null)
-                //    //{
-                //    //    SetVatFieldsForAPInvoiceTransaction(aPInvoice);
-                //    //}
-                //    //else
-                //    //{
-                //    //    continue;
-                //    //}
-                //}
-
-                 if (card != null && card.PartnerTypeId == PartnerTypeValues.Customer)
+                if (card != null && card.PartnerTypeId == PartnerTypeValues.Customer)
                 {
                     if (card.VatNumber == tenantPM.VatNumber)
                     {
@@ -240,10 +235,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (VatNumber == null)
                     VatNumber = "000000000";
-
+               
                 GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();
+
                 if (gLAccountPM != null)
                 {
+                   
+                    if(gLAccountPM.AccountTypeCode=="3" || gLAccountPM.AccountTypeCode == "1")
+                    {
+                        VatNumber = card != null ? card.VatNumber : null;
+                    }
                     if (gLAccountPM.IsEquipmentVendor)
                     {
                         isEquipment = true;
@@ -389,9 +390,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     Reference = Reference.Replace("-", "");
                 }
-                if (Reference.Length > 20)
+                if (Reference.Length > 9)
                 {
-                    Reference = Reference.Substring(0, 19);
+                    Reference = Reference.Substring(Reference.Length -9);
                 }
             
                 Regex isMatche = new Regex("([A-Za-z])");

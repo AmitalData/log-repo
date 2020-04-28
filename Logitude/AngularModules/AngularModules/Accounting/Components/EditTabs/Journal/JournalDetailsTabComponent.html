@@ -115,6 +115,28 @@
                                                         </td>
                                                         <td><div></div></td>
                                                     </tr>
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Journal.F.DocumentDate' | TextCodeTranslationPipe}}</td>
+
+                                                        <td style="width: 180px;">
+                                                            <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName"
+                                                                           [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
+                                                        </td>
+                                                        <td><div></div></td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Journal.F.DueDate' | TextCodeTranslationPipe}}</td>
+
+                                                        <td style="width: 180px;">
+                                                            <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName"
+                                                                           [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
+                                                        </td>
+                                                        <td><div></div></td>
+                                                    </tr>
+
+
+
                                                     <tr><td><div></div></td></tr>
 
                                                 </table>

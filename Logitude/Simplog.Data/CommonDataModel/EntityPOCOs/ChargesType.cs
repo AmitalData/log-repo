@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -89,5 +90,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual Currency PayablesDefaultCurrency { get; set; }
         public string PayablesDefaultCurrencyId { get; set; }
         public bool ApplyRegionalTax { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
     }
 }

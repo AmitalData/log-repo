@@ -27,6 +27,7 @@
   </Column>
   <Column
     Name="Size"
+    ShortName="ImageSize"
     Type="float">
     <Constraints
       Nullable="false" />

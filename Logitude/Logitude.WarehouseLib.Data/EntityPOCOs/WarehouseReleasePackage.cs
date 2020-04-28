@@ -86,10 +86,7 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
         [ForeignKey("Country")]
         [Column("CountryId")]
 	    public string CountryId { get; set; }
-
-        public bool IsCanceled { get; set; }
-
-        
+	      
         public virtual Country Country { get; set; }
     }
 }

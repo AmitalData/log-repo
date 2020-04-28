@@ -3,7 +3,7 @@
   Name="BluesnapContracts"
   Schema="dbo"
   DBType="Global"
-  Module="Global">
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"

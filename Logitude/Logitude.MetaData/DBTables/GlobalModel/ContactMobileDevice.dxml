@@ -3,7 +3,7 @@
   Name="ContactMobileDevices"
   Schema="dbo"
   DBType="Global"
-  Module="Global">
+  Module="Infrastructure">
   <Column
     Name="DeviceId"
     Type="varchar"

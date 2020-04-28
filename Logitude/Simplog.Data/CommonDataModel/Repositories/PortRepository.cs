@@ -288,8 +288,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return null;
         }
-
-
+        
         public IQueryable<Port> GetSinglePortByCode(string input, bool byCode, int tenant)
         {
             if (byCode)

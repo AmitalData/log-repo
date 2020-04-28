@@ -60,6 +60,9 @@ using System.Data;
 using System.Text.RegularExpressions;
 using Logitude.BL.ShipmentsModel.Tools.Behaviour;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data;
+using Logitude.TariffModule.Data.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -5920,6 +5923,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Id = itemPM.Id,
             };
 
+            if(!string.IsNullOrEmpty(itemPM.TariffId))
+            {
+                this.UpdateTariffUsedDate(itemPM.TariffId);
+            }
+
             ShipmentMapping.MapPayable(itemPM, itemPoco, loggedContact.Id, loggedTenant, true);
             shipmentPayableRepository.Add(itemPoco);
 
@@ -5939,6 +5947,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentPayable itemPoco = shipmentPayableRepository.GetSingleShipmentPayable(itemPM.Id);
             if (itemPoco != null)
             {
+                if (!string.IsNullOrEmpty(itemPM.TariffId) && string.IsNullOrEmpty(itemPoco.TariffId))
+                {
+                    this.UpdateTariffUsedDate(itemPM.TariffId);
+                }
+
                 ShipmentMapping.MapPayable(itemPM, itemPoco, loggedContact.Id, loggedTenant, false);
 
                 if (itemPM.ChildShipmentPayablesChangeSet != null)
@@ -5974,7 +5987,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 calculateProfit = true;
                 calculatePayables = true;
             }
-        }
+        }        
         private void DeleteShipmentPayable(ShipmentPayablePM itemPM)
         {
             ShipmentPayable itemPoco = shipmentPayableRepository.GetSingleShipmentPayable(itemPM.Id);
@@ -6932,9 +6945,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
-
-
+        
         private void CountryForStatisticsId(ShipmentDeliveryPM myLastDelivery)
         {
             string fromPortId = entityPM.MainCarriageFromPortId;
@@ -7277,6 +7288,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         this.entityPM.Origin = myPort.EnglishName;
                     }
                 }
+            }
+        }
+
+        private void UpdateTariffUsedDate(string tariffId)
+        {
+            TariffRepository tariffRepository = new TariffRepository(tenant);
+            Tariff tariff = tariffRepository.GetSingle(tariffId, tenant);
+            if(tariff!= null)
+            {
+                tariff.LastUsedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                tariffRepository.Update(tariff);
+                tariffRepository.SubmitChanges();
+
             }
         }
     }

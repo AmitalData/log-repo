@@ -645,7 +645,7 @@ export class QuoteUtilities {
     public static IsPriceCheckVisible(entityPM: QuotePM) {
         var myResult = false;
 
-        if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && (entityPM.TransportModeId.toUpperCase() == "A") && (entityPM.QuoteTypeCode != null && entityPM.QuoteTypeCode.toUpperCase() == "A")) {
+        if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && (entityPM.TransportModeId.toUpperCase() == "A" || this.IsLCLQuote(entityPM)) && (entityPM.QuoteTypeCode != null && entityPM.QuoteTypeCode.toUpperCase() == "A")) {
             myResult = true;
         }
         return myResult;

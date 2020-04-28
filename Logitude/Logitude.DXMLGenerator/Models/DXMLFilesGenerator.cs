@@ -332,7 +332,7 @@ namespace Logitude.DXMLGenerator.Models
 
                         XmlSerializerNamespaces emptyNamespace = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(TableDefinition));
-                        FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
+                        FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
                         XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
                         XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
 

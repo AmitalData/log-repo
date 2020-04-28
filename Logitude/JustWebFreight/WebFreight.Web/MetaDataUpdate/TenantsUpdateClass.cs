@@ -476,9 +476,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             WarehouseLibUpdateClass warehouseLibUpdateClass = new WarehouseLibUpdateClass();
                             warehouseLibUpdateClass.LoadObjectTablesMetadata(context,false);
                             WarehouseUpdate warehouseUpdate = new WarehouseUpdate();
-                            warehouseUpdate.LoadRolesAndFeatures(0);
+                            //warehouseUpdate.LoadRolesAndFeatures(0);
                             warehouseUpdate.CreateTableCounters();
-                            warehouseUpdate.LoadOtherFields(context);
+                           // warehouseUpdate.LoadOtherFields(context);
 
 
                             //accounting
@@ -919,14 +919,14 @@ namespace WebFreight.Web.MetaDataUpdate
             performanceTimerLogger.LogMessage("Generated" + ",WarehouseLibUpdateClass");
 
             WarehouseUpdate updateClass = new WarehouseUpdate();
-            updateClass.LoadRolesAndFeatures(0);
-            performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.LoadRolesAndFeatures");
+            //updateClass.LoadRolesAndFeatures(0);
+            //performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.LoadRolesAndFeatures");
 
             updateClass.CreateTableCounters();
             performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.CreateTableCounters");
 
-            updateClass.LoadOtherFields(context);
-            performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.LoadOtherFields");
+            //updateClass.LoadOtherFields(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.LoadOtherFields");
         }
 
         private static void UpdateSocialModule(IWebFreightContext context, bool runPostDeleteProcedure)

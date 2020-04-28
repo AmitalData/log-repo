@@ -92,6 +92,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+  Name="ExcelOnly"
+  Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

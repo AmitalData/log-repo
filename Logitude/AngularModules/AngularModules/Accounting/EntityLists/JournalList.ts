@@ -37,6 +37,8 @@ export class JournalList {
 	StatusLocalName: string;
 	TypeLocalName: string;
 	IsLedgerCreated: boolean;
+	DocumentDate: Date;
+	DueDate: Date;
 	
 }
  

@@ -3,7 +3,7 @@
   Name="ErrorLogs"
   Schema="dbo"
   DBType="SystemLogs"
-  Module="SystemLogs">
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
