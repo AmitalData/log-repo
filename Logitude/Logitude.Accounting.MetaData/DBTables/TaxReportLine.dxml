@@ -170,5 +170,5 @@
     ForeignKeyColumn="JournalId"
     ReferencedTable="Journals"
     ReferencedColumn="Id"
-    ReferencedTableSchema="" />
+    ReferencedTableSchema="dbo" />
 </Table>
