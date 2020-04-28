@@ -1,5 +1,8 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -21,12 +24,222 @@ namespace Logitude.Accounting.BL.CoreBL
 {
     public class ARPaymentInvoicesTransactionFetcher
     {
-        public ARPaymentInvoicesTransactionFetcher(int tenant)
-        {
+        int tenant;
+        string paymentId;
+        string glaccountId;
 
+        LedgerTransaction paymentTransaction;
+        List<LedgerTransactionPM> transactions;
+
+        public ARPaymentInvoicesTransactionFetcher(string arpaymentId, string glaccountId, int tenant)
+        {
+            this.tenant = tenant;
+            paymentId = arpaymentId;
+            this.glaccountId = glaccountId;
+
+            paymentTransaction = GetPaymentTransaction();
+
+            transactions = new List<LedgerTransactionPM>();
+        }
+
+        public List<LedgerTransactionPM> Fetch()
+        {
+            transactions.AddRange(GetReconciledTransactions());
+            transactions.AddRange(GetOpenTransactions());
+
+            SortTransactions();
+
+            return transactions;
         }
 
 
+
+
+
+        private List<LedgerTransactionPM> GetReconciledTransactions()
+        {
+            var reconciledTransactions = new List<LedgerTransactionPM>();
+            if (paymentTransaction != null)
+            {
+                reconciledTransactions = GetReconciledInvoicesTransactions();
+
+                reconciledTransactions = FillReconciliationNumbersOnTransactions(reconciledTransactions);
+            }
+
+            return reconciledTransactions;
+        }
+
+        private List<LedgerTransactionPM> FillReconciliationNumbersOnTransactions(List<LedgerTransactionPM> transactions)
+        {
+            List<ReconciliationLinePM> reconciliationLines = GetReconciliationLinesForTransactions(transactions);
+
+            List<ReconciliationPM> reconciliations = GetReconciliationsByReconcileLines(tenant, reconciliationLines);
+
+            foreach (LedgerTransactionPM transaction in transactions)
+            {
+                string recoNumbers = GetReconciliationNumbersForTransaction(reconciliationLines, reconciliations, transaction);
+                transaction.RecoNumber = recoNumbers;
+            }
+
+            return transactions;
+        }
+        private string GetReconciliationNumbersForTransaction(List<ReconciliationLinePM> reconciliationLines, List<ReconciliationPM> reconciliations, LedgerTransactionPM transactions)
+        {
+            List<ReconciliationLinePM> transactionRecoLines = reconciliationLines
+                                .Where(d => d.TransactionId == transactions.Id).ToList();
+
+            List<string> reconciliationsId = transactionRecoLines.Select(a => a.ReconciliationId).ToList();
+            List<ReconciliationPM> reconciliationsForTransaction = reconciliations.Where(d => reconciliationsId.Contains(d.Id)).ToList();
+
+            string[] reconciliationsNumbersForTransaction = reconciliationsForTransaction
+                .Where(d => d.IsCancelled == false).Select(d => d.Number).ToArray();
+
+            string numbersString = string.Join(",", reconciliationsNumbersForTransaction);
+            return numbersString;
+        }
+        private List<ReconciliationPM> GetReconciliationsByReconcileLines(int tenant, List<ReconciliationLinePM> recoLines)
+        {
+            List<string> recosIds = recoLines.Select(d => d.ReconciliationId).ToList();
+            ReconciliationQueryService recoQuery = new ReconciliationQueryService(tenant);
+            List<ReconciliationPM> recos = recoQuery.GetLightReconciliationsByIds(recosIds, tenant);
+
+            return recos;
+        }
+
+        private List<ReconciliationLinePM> GetReconciliationLinesForTransactions(List<LedgerTransactionPM> invoicesTransactions)
+        {
+            List<string> transactionsIds = invoicesTransactions.Select(d => d.Id).ToList();
+
+            ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(tenant);
+            List<ReconciliationLinePM> recoLines = recoLineQuery.GetLinesByTransactionIdsWithoutMapping(transactionsIds, tenant).ToList();
+            return recoLines;
+        }
+
+        private List<LedgerTransactionPM> GetReconciledInvoicesTransactions()
+        {
+            List<LedgerTransactionPM> reconciledTransactions;
+            List<ReconciliationLinePM> recoLinesOfPayment = GetPaymentReconciliationLines();
+
+            reconciledTransactions = GetReconciledInvoicesTransactionsConnectedToReconciliationLines(recoLinesOfPayment);
+            return reconciledTransactions;
+        }
+
+        private List<LedgerTransactionPM> GetReconciledInvoicesTransactionsConnectedToReconciliationLines(List<ReconciliationLinePM> recoLinesOfPayment)
+        {
+            List<LedgerTransactionPM> reconciledTransactions;
+            List<string> recoLinesTransactionsId = recoLinesOfPayment.Select(d => d.TransactionId).ToList();
+
+            reconciledTransactions = GetTransactionsById(recoLinesTransactionsId);
+
+            // exclude partially reconcile transactions
+            reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == AccountingEntityValues.ARInvoice).ToList();
+
+
+            return reconciledTransactions;
+        }
+
+        private List<LedgerTransactionPM> GetTransactionsById(List<string> ids)
+        {
+            List<LedgerTransactionPM> reconciledTransactions;
+            LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
+            reconciledTransactions = transactionsQuery.GetLedgerTransactionPMsByIdList(ids, tenant);
+            return reconciledTransactions;
+        }
+
+        private List<ReconciliationLinePM> GetPaymentReconciliationLines()
+        {
+            ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(tenant);
+            List<ReconciliationLinePM> recoLines = recoLineQuery.GetLinesByReconciledWithTransactionIdWithoutMapping(paymentTransaction.Id, tenant);
+            return recoLines;
+        }
+
+
+
+
+
+
+        private List<LedgerTransactionPM> GetOpenTransactions()
+        {
+            List<LedgerTransactionPM> openTransactions = GetInvoicesTransactions();
+
+            openTransactions = FillReconciliationNumbersOnTransactions(openTransactions);
+
+            openTransactions = FillReconciledPaymentAmountOnTransaction(openTransactions);
+
+
+            return openTransactions;
+        }
+
+        private List<LedgerTransactionPM> FillReconciledPaymentAmountOnTransaction(List<LedgerTransactionPM> transactions)
+        {
+            List<ReconciliationLinePM> reconciliationLines = GetReconciliationLinesForTransactions(transactions);
+
+            foreach (LedgerTransactionPM transaction in transactions)
+            {
+                List<ReconciliationLinePM> transactionRecoLines = reconciliationLines.Where(d => d.TransactionId == transaction.Id).ToList();
+
+                decimal reconciledAmount = 0;
+                transactionRecoLines.ForEach(recoLine =>
+                {
+                    if (recoLine.ReconciledWithTransactionId == paymentTransaction.Id && paymentTransaction.Id != null && recoLine.IsRecoCancelled == false)
+                        reconciledAmount += recoLine.ReconciliationAmount;
+                });
+
+                transaction.PaymentReconciledAmount = reconciledAmount;
+
+            }
+
+            return transactions;
+        }
+
+        private List<LedgerTransactionPM> GetInvoicesTransactions()
+        {
+            LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(tenant);
+            IQueryable<LedgerTransactionPM> invoicesTransactions = transactionQueryService.GetInvoicesTransactions(tenant);
+            invoicesTransactions = invoicesTransactions
+                    .Where(d =>
+                        d.AccountId == glaccountId
+                        && d.Tenant == tenant
+                        && d.IsReconciled == false
+                        && d.SourceTypeCode == AccountingEntityValues.ARInvoice)
+                    .OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
+
+            var transactionsList = invoicesTransactions.ToList();
+            return transactionsList;
+        }
+
+        private LedgerTransaction GetPaymentTransaction()
+        {
+            JournalPM paymentJournal = GetPaymentJournal(paymentId);
+
+            LedgerTransaction paymentCreditTransaction = GetCreditTransactionByJournalId(paymentJournal.Id);
+
+            if (paymentCreditTransaction == null)
+                throw new ApplicationException("[ARPaymentInvoicesTransactionFetcher] Couldn't found payment transaction!");
+
+            return paymentCreditTransaction;
+        }
+
+        private JournalPM GetPaymentJournal(string arpaymentId)
+        {
+            JournalQueryService journalQueryService = new JournalQueryService(tenant);
+            JournalPM paymentJournal = journalQueryService.GetJournalsByAccountingEntityIdAndCode(arpaymentId, AccountingEntities.ARPayment, tenant).FirstOrDefault();
+            return paymentJournal;
+        }
+
+        public LedgerTransaction GetCreditTransactionByJournalId(string journalId)
+        {
+            LedgerTransactionRepository transactionRepository = new LedgerTransactionRepository(tenant);
+            IQueryable<LedgerTransaction> ledgerTransactionPOCOs = transactionRepository.GetByJournalId(journalId, tenant);
+
+            LedgerTransaction poco = ledgerTransactionPOCOs.Where(d => d.LocalAmountCredit != 0).FirstOrDefault();
+            return poco;
+        }
+
+        private void SortTransactions()
+        {
+            transactions = transactions.OrderByDescending(d => d.IsReconciled).ThenByDescending(d => d.PaymentReconciledAmount).ToList();
+        }
     }   
 
 }

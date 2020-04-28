@@ -847,7 +847,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return query;
         }
-        private IQueryable<LedgerTransactionPM> GetInvoicesTransactions(int tenant)
+        public IQueryable<LedgerTransactionPM> GetInvoicesTransactions(int tenant)
         {
 
             IQueryable<LedgerTransactionPM> query =
