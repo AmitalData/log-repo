@@ -52,9 +52,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.SetLabels();
             this.SetUIProperties();
             this.BuildItemsSource();
-            if (this.EntityPM.QuoteTypeCode == "P") {
-                this.SetUIPropertiesToRoutingRatesType();
-            }
+            //if (this.EntityPM.QuoteTypeCode == "P") {
+            //    this.SetUIPropertiesToRoutingRatesType();
+            //}
         }
     }
 
@@ -287,10 +287,19 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
 
+      if (this.EntityPM.QuoteTypeCode == "P") {
+        this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("Volume", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ChargeableWeight", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("NumberOfPackages", this.ObjectTableName, false);
+      }
+
+      else {
         this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isTotalsFieldEnabled);
         this.UIProperties.SetEnabled("NumberOfPackages", this.ObjectTableName, isTotalsFieldEnabled);
         this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, isTotalsEditedFieldEnabled);
         this.UIProperties.SetEnabled("ChargeableWeight", this.ObjectTableName, isTotalsEditedFieldEnabled);
+      }
     }
     private SetUIProperties_DimFactor() {
         var isDimFactorVisibile = false;
