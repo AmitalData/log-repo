@@ -73,6 +73,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 }
                 HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(Shipment.Tenant);
                 HybridPartnerPM CurrentHybridPartner = HybridPartnerQuery.GetSinglePMByPartnerTenant(Shipment.Tenant);
+                CommunicationLog commLog = new CommunicationLog();
                 if (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner)
                 {
                     List<QueueTask> tasks = new List<QueueTask>();
@@ -97,7 +98,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     };
                     documentrepository.Add(document);
                     documentrepository.SubmitChanges();
-                    var commLog = new CommunicationLog()
+                    commLog = new CommunicationLog()
                     {
                         Id = IdCounter.GetNumber("CommunicationLog", Shipment.Tenant),
                         LastStatusDate = TenantServerConfigration.GetCurrentDateTime(Shipment.Tenant),
