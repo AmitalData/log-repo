@@ -2344,15 +2344,17 @@
     <Compile Include="Migrations\202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.Designer.cs">
       <DependentUpon>202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs</DependentUpon>
     </Compile>
-
-    <Compile Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs" />
-    <Compile Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.Designer.cs">
-      <DependentUpon>202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs</DependentUpon>
-    </Compile>
-
     <Compile Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.cs" />
     <Compile Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.Designer.cs">
       <DependentUpon>202004231311231_JournalIsExternalLineFieldMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.cs" />
+    <Compile Include="Migrations\202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.Designer.cs">
+      <DependentUpon>202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs" />
+    <Compile Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.Designer.cs">
+      <DependentUpon>202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs</DependentUpon>
     </Compile>
 
     <Compile Include="Migrations\Configuration.cs" />
@@ -4258,6 +4260,9 @@
       <DependentUpon>202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs</DependentUpon>
     </EmbeddedResource>
 
+    <EmbeddedResource Include="Migrations\202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.resx">
+      <DependentUpon>202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
