@@ -52,7 +52,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                        VatAmount = a.VatAmount,
 
                                                        VatableInvoiceAmount = a.VatableInvoiceAmount,
-
+                                                       IsExternalLine= a.IsExternalLine,
                                                        StatusCode = a.StatusCode,
                                                        StatusEnglishName = a.TaxReportLineStatus != null ? a.TaxReportLineStatus.EnglishName : null,
                                                        StatusLocalName = a.TaxReportLineStatus != null ? a.TaxReportLineStatus.LocalName : null,
