@@ -325,6 +325,7 @@
     <Content Include="Images\ArrowLeft.png" />
     <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
+    <Content Include="Images\External.png" />
     <Content Include="Images\HideFilters.png" />
     <Content Include="Images\Icons\BlueChecked.png" />
     <Content Include="Images\Icons\Folder_B.png" />
@@ -2598,6 +2599,7 @@
     <Content Include="_Resources\Images\Icons\All\ArrowForward.png" />
     <Content Include="_Resources\Images\Icons\All\CheckBoxIcon.png" />
     <Content Include="_Resources\Images\Icons\All\copy.png" />
+    <Content Include="_Resources\Images\Icons\All\ExternalIcon.png" />
     <Content Include="_Resources\Images\Icons\All\Help.png" />
     <Content Include="_Resources\Images\Icons\All\RadioButtonChecked.png" />
     <Content Include="_Resources\Images\Icons\All\SidebarLeft.png" />

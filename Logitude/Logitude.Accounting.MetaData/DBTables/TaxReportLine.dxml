@@ -5,21 +5,6 @@
   DBType="Main"
   Module="Accounting">
   <Column
-    Name="TaxReportId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Line"
-    Type="int">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
     <Constraints
@@ -44,6 +29,21 @@
     Size="-1">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="TaxReportId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Line"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Column
     Name="OutputOrInput"
@@ -135,14 +135,20 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Relation
-    ForeignKeyColumn="TaxReportId"
-    ReferencedTable="TaxReports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+  <Column
+    Name="IsExternalLine"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TaxReportId"
+    ReferencedTable="TaxReports"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -164,5 +170,5 @@
     ForeignKeyColumn="JournalId"
     ReferencedTable="Journals"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="" />
 </Table>

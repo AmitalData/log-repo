@@ -139,6 +139,11 @@ export class TaxReportLinePM {
     public set TaxReportDate(newValue: Date) { if (this.taxReportDate != newValue) { this.taxReportDate = newValue; this.MarkAsDirty("TaxReportDate"); } }
        
 	 
+    private isExternalLine: boolean;
+    public get IsExternalLine() { return this.isExternalLine; }
+    public set IsExternalLine(newValue: boolean) { if (this.isExternalLine != newValue) { this.isExternalLine = newValue; this.MarkAsDirty("IsExternalLine"); } }
+       
+	 
 
     public OldEntityPM: TaxReportLinePM;
 		

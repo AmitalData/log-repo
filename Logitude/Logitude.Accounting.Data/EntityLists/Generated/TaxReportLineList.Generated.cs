@@ -60,6 +60,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string StatusEnglishName  { get; set; }
        [DataMember]
        public string JournalNumber  { get; set; }
+       [DataMember]
+       public bool IsExternalLine  { get; set; }
    }
 
 }
