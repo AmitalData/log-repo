@@ -955,7 +955,7 @@ namespace Logitude.DBMigrations.Models
             string tableName = FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper();
 
             string addDefaultScript = "-- Add Default Value For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
-            addDefaultScript += "ALTER TABLE " + "\"" + tableName + "\"" + " MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " DEFAULT " + (defaultValue.ToLower() == "CurrentDate".ToLower() ? "SYSDATE" : defaultValue);
+            addDefaultScript += "ALTER TABLE " + "\"" + tableName + "\"" + " MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " DEFAULT " + (defaultValue.ToLower() == "CurrentDate".ToLower() ? "SYSDATE" : ((columnMigration.NewColumn.Type == "datetime" || columnMigration.NewColumn.Type == "date") ? ((columnMigration.NewColumn.Type == "datetime" ? "TIMESTAMP " : "DATE ") + defaultValue) : defaultValue));
             addDefaultScript += ";\n\n";
 
             string addDefaultWithHistoryScript = addDefaultScript + GetInsertScriptForMigrationsHistory("Add Default Value", tableName, columnMigration.CurrentColumn.Name.ToUpper(), addDefaultScript);
