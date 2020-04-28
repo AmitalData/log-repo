@@ -145,9 +145,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
-                TaxReportService.CalculateReportTotals(entityPM, lines);
-                entityPM.ChangeSetOp = ChangeSetOperation.Update;
+                //List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
+                //TaxReportService.CalculateReportTotals(entityPM, lines);
+                //entityPM.ChangeSetOp = ChangeSetOperation.Update;
                 //taxReportUpdateService.Update(entityPM, true);
             }
 
