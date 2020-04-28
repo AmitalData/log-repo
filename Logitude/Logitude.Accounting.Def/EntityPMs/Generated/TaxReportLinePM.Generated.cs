@@ -551,6 +551,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isExternalLine ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsExternalLine  
+	   {
+	    
+	     get
+		{
+		   return isExternalLine;
+		 }
+		 set
+		 {
+		   if(isExternalLine != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExternalLine",OldValue=isExternalLine,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isExternalLine=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

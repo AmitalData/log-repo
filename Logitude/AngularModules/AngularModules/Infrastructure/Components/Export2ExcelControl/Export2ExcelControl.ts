@@ -49,13 +49,13 @@ export class Export2ExcelControl {
         this.userid = args.userid;
         this.Filters = args.Filters;
         myService.getExcelData(this.Filters, this.queryCode, args.tenant, args.userid, args.currentObjectTable).subscribe((myResult: any) => {
-            if (myResult == "Faild") {
+          if (myResult.body == "Faild") {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;
                 this.btnSaveToFileVisibile = false;
             }
             else {
-                this.FileName = myResult;
+              this.FileName = myResult.body;
                 //var tempDate = new Date();
                 //var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
                 //this.url = logitude_url + "WebPages/DawnLoadExcelPage.aspx?fileName=" + this.FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() +  "&qname=" + this.queryName + "_" + MyDate;

@@ -236,7 +236,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         linesPM.Add(item);
                     });
                     TaxReportService.CalculateReportTotals(entityPM, linesPM);
-
+                   
                 }
                 entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
 
