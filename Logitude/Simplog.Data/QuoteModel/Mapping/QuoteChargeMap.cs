@@ -16,7 +16,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.SaleCurrencyId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SaleMeasurementId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.CostMeasurementId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CostMeasurementId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ContainerType1MarkUpTypeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ContainerType2MarkUpTypeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ContainerType3MarkUpTypeCode).HasMaxLength(4).IsUnicode(false);
@@ -109,7 +109,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.ContainerType4MarkUpType).WithMany().HasForeignKey(d => d.ContainerType4MarkUpTypeCode);
             this.HasOptional(t => t.ContainerType5MarkUpType).WithMany().HasForeignKey(d => d.ContainerType5MarkUpTypeCode);
             this.HasOptional(t => t.MarkUpType).WithMany().HasForeignKey(d => d.MarkUpTypeCode);
-            this.HasOptional(t => t.CostMeasurement).WithMany().HasForeignKey(d => d.CostMeasurementId);
+            this.HasRequired(t => t.CostMeasurement).WithMany().HasForeignKey(d => d.CostMeasurementId);
             this.HasRequired(t => t.SaleMeasurement).WithMany().HasForeignKey(d => d.SaleMeasurementId).WillCascadeOnDelete(false);
             this.HasRequired(t => t.Quote).WithMany().HasForeignKey(d => d.QuoteId).WillCascadeOnDelete(false);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId).WillCascadeOnDelete(false);
