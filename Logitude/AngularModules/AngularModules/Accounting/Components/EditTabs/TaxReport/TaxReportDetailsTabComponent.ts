@@ -99,11 +99,11 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
   NewLineButtonClicked() {
     this.CurrentSession.StartBusyIndicator("Loading...");
     this._TaxReportExtendedPMService.CreateNewTaxReportLine(this.EntityPM).subscribe((myResult: ServiceResponse) => {
-
+      this.CurrentSession.StopBusyIndicator();
       this.EntityPM = myResult.Result;
       
       this.ReloadScreen();
-      this.CurrentSession.StopBusyIndicator();
+   
     });
 
 

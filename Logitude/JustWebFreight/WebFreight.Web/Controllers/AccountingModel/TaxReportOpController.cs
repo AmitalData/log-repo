@@ -300,9 +300,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
-                int tenant = authToken.Tenant;
-                CheckWithoutTransmitLines(authToken, entityPM);
-
+                int tenant = authToken.Tenant;             
                 entityPM = TaxReportService.CreatetTaxReportLine(entityPM);
 
 
