@@ -333,7 +333,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         if (!this.CheckDocumentTemplate() && this.CurrentDocumentOut.DocumentTemplateEditorTool == "S") {
             return;
         }
-
+         
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DocumentTypeload.Name + " Building");
 
