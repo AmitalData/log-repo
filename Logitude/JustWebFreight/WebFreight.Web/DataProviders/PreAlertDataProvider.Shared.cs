@@ -178,6 +178,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNotes { get; set; }
         public string InvoicesNumbers { get; set; } //It should show the number of the invoices connected to receivables separated by commas like 10001, 1002. If there is only one invoice, it should display as 1000
         public string CustomerPrimaryContactName { get; set; }
+        public string CustomerName { get; set; }
         public string AgentName { get; set; }
         public string AgentPrimaryContactName { get; set; }        
         public int? TotalQuantity { get; set; } //  It must display the total number of packages in a certain shipment.
@@ -199,6 +200,7 @@ namespace WebFreight.Web.DataProviders
         public string BranchAddress { get; set; }
         public string PlaceOfDelivery { get; set; }
         public string PickUpAddress { get; set; }
+        public string PlaceOfReceiptCountryName { get; set; }
 
         public DateTime? OBLDate { get; set; }
         public DateTime? CutOffDate_DateTime { get; set; }
@@ -218,6 +220,8 @@ namespace WebFreight.Web.DataProviders
         public TimeSpan? DocumentsClosingTime { get; set; }
 
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
+
+        public string OriginCountryName { get; set; }
 
         // Warehouse Fields 
         public string WarehouseLegTerminalName { get; set; }
