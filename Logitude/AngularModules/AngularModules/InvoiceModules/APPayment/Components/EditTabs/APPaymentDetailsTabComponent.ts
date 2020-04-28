@@ -35,7 +35,7 @@ import { GLAccountListService } from '../../../../Accounting/Services/StandardLi
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './APPaymentDetailsTabComponent.html',
 })
 

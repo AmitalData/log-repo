@@ -38,7 +38,7 @@ import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManag
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsDocumentsComponent.html',
 })
 

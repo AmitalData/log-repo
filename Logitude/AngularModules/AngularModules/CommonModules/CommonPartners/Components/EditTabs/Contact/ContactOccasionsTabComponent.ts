@@ -7,7 +7,7 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContactOccasionsTabComponent.html',
 })
 

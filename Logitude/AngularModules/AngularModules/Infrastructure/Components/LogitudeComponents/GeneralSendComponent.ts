@@ -32,7 +32,7 @@ import {ReportsTemplatePMService} from '../../../Common/Services/StandardPMs/Rep
 import {ReportsTemplatePMExtendedService} from '../../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'GeneralSendControl',
     templateUrl: './GeneralSendComponent.html',
     providers: [ DocumentOutPMService, DocumentTypeListExtendedService, HtmlEditorService, DocumentsFilingExtendedPMService, DocumentExtendedService],

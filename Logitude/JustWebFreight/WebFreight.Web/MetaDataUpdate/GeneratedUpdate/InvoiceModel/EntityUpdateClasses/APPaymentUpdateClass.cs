@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-		public const string HashString = "8f888d7a64ce1dcbf4de18b9f67bc494";
+		public const string HashString = "720ec500df365d5427298d8d01eead14";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5031,6 +5031,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		   Feature APPaymentFeature_APPaymentConnectInvoices = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentConnectInvoices", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.APPaymentConnectInvoices", NameTextCodeDefaultText = @"Connect AP invoices" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature APPaymentFeature_APPaymentDissconectInvoices = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentDissconectInvoices", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.APPaymentDissconectInvoices", NameTextCodeDefaultText = @"Disconnect AP invoices" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature APPaymentFeature_DETAILS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.Details", NameTextCodeDefaultText = @"Details" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature APPaymentFeature_DOCSOUT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.DocsOut", NameTextCodeDefaultText = @"Docs Out" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature APPaymentFeature_DOCSIN = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.DocsIn", NameTextCodeDefaultText = @"Docs In" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature APPaymentFeature_EVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

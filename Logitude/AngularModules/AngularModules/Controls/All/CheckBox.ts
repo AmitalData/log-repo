@@ -1,7 +1,7 @@
 
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { IdGeneratorPipe } from '../pipes/idgeneratorpipe';
+import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
 
 
 

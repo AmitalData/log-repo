@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AccountingSystemUpdateClass
    {  		
-		public const string HashString = "2333cefdf039666f9cf0689fc88e7b90";
+		public const string HashString = "d31c963ebdb029e47d5f2ea673a58423";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "AccountingSystem",
 			      				    IsNew =  false,
 			      				    DBTableName =  "AccountingSystems",
-			      				    OldDBTableName =  "AccountingSystems",
 			      				    ObjectTableSingular =  "Accounting System",
 			      				    ObjectTablePlural =  "Accounting Systems",
 			      				    HasCustomFilter =  false,
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -209,7 +207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -274,7 +271,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -336,7 +332,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsExternalCodesFromTable",
-					  						OldFieldName =  "IsExternalCodesFromTable",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -401,7 +396,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsExternalCodesSyncEnabled",
-					  						OldFieldName =  "IsExternalCodesSyncEnabled",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -466,7 +460,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsSingleTaxPerInvoice",
-					  						OldFieldName =  "IsSingleTaxPerInvoice",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -531,7 +524,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsSingleCurrencyAccount",
-					  						OldFieldName =  "IsSingleCurrencyAccount",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -596,7 +588,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowManuallyDueDate",
-					  						OldFieldName =  "AllowManuallyDueDate",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -661,7 +652,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsJournalMode",
-					  						OldFieldName =  "IsJournalMode",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -726,7 +716,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsTaxItemManaged",
-					  						OldFieldName =  "IsTaxItemManaged",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -791,7 +780,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowMinusInvoiceLines",
-					  						OldFieldName =  "AllowMinusInvoiceLines",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -856,7 +844,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShowDownloadScreen",
-					  						OldFieldName =  "ShowDownloadScreen",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -921,7 +908,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowARInvoicesTransfer",
-					  						OldFieldName =  "AllowARInvoicesTransfer",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -986,7 +972,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowAPInvoicesTransfer",
-					  						OldFieldName =  "AllowAPInvoicesTransfer",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1051,7 +1036,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowPositiveAmountsInTheCreditNote",
-					  						OldFieldName =  "AllowPositiveAmountsInTheCreditNote",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1116,7 +1100,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1181,7 +1164,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsExternalCodesFromAPI",
-					  						OldFieldName =  "IsExternalCodesFromAPI",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1246,7 +1228,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowARPaymentsTransfer",
-					  						OldFieldName =  "AllowARPaymentsTransfer",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1311,7 +1292,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CanTransferToDropbox",
-					  						OldFieldName =  "CanTransferToDropbox",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1374,7 +1354,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowAPPaymentsTransfer",
-					  						OldFieldName =  "AllowAPPaymentsTransfer",
 					  						ObjectTableName =  "AccountingSystem",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1458,6 +1437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CanTransferToFTP",
 					  						ListPropertyPath =  "CanTransferToFTP",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

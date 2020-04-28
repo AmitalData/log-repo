@@ -8,7 +8,7 @@ import {AWBWizardOtherChargeItem} from './OtherChargesTabComponent';
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './AddEditOtherChargeComponent.html',
 })

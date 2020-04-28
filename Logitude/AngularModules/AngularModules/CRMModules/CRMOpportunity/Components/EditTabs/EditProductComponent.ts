@@ -15,11 +15,14 @@ import {ClassLevelValidator} from '../../../../Infrastructure/Validators/ClassLe
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditProductComponent.html',
 })
 
 export class EditProductComponent extends BaseComponent {
+  public setToggleButtonMenu() { }
+  public setToggleButtonMenuTemp() { }
+
     private myCurrencyCode: string = "";
     public ObjectTableName = "OpportunityProduct";
     public EntityPM: ProductData = null;

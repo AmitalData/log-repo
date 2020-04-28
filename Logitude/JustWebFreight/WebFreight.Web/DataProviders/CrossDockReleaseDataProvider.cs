@@ -80,8 +80,10 @@ namespace WebFreight.Web.DataProviders
         public string ActualEntryDate { get; set; }
         public string EntryTruckerName { get; set; }
         public string EntryTruckerReference { get; set; }
+        public string TerminalCode { get; set; }
         
         public string ImportManifest { get; set; }
+        public string MasterImportManifest { get; set; }
     }
     
 

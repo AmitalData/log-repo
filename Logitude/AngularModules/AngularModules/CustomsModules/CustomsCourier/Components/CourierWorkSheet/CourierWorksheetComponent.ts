@@ -36,7 +36,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierWorksheetComponent.html',
     providers: [CourierWorksheetSharedDataService],
 })

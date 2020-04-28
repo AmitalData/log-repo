@@ -4,10 +4,9 @@ import { TasksSchedulerPMService } from '../../../../Infrastructure/Services/Sta
 import { ReportGroupList } from '../../../../Report/EntityLists/ReportGroupList';
 import { ReportList } from '../../../../Report/EntityLists/ReportList';
 import { TaskReportSchedulerItemClass } from '../TaskReportSchedulerComponent';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ReportSchedulerDateListTemplate',
     templateUrl: './ReportSchedulerDateListTemplate.html',
 })

@@ -21,7 +21,7 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationTapagTabComponent.html',
 })
 

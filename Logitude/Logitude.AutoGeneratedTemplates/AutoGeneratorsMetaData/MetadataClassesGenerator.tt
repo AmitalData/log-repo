@@ -1707,12 +1707,7 @@ public void GenerateAllTableMethods(string sourceFilePath)
    
       	 
 	     
-    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs.") && IsMetadataOnlyTable == "false")
-    {
-#>
-					<#=classname #>.Fill<#= tableName.Trim('"') #>();
-<#+
-    }
+
     
 			if(tableName == "General")
 				{
@@ -1725,6 +1720,17 @@ public void GenerateAllTableMethods(string sourceFilePath)
 #>
 					scope.Complete();
 				}
+<#+
+			    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs.") && IsMetadataOnlyTable == "false")
+    {
+#>
+ 
+				<#=classname #>.Fill<#= tableName.Trim('"') #>();
+
+ 
+<#+
+    }
+#>
 			}
 <#+
     }

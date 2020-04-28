@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator'; 
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {HybridPartnerPM} from '../../../../Common/EntityPMs/HybridPartnerPM';
- import {Headers} from '@angular/http';
+ 
  import {AppTool} from '../../../../Infrastructure/Tools';
  import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
  import {HybridPartnerPMService} from '../../../../Common/Services/StandardPMs/HybridPartnerPMService';
@@ -10,7 +10,7 @@ import {HybridPartnerPM} from '../../../../Common/EntityPMs/HybridPartnerPM';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewHybridPartnerComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })

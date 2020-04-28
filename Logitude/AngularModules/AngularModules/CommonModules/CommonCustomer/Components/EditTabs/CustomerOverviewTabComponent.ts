@@ -38,12 +38,13 @@ import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64, makeAMLineChart,window: any;  
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerOverviewTabComponent.html',
     providers: [ImageLibraryService]
 })
 
 export class CustomerOverviewTabComponent extends BaseComponent implements OnInit {
+    public RankName: any;
     public EntityPM: CustomerPM;
     public ObjectTableName: string = "Customer";
     private CD: ChangeDetectorRef;

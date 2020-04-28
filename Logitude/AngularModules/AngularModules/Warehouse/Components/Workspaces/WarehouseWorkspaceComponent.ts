@@ -21,7 +21,7 @@ import {WarehouseReleaseListExtendedService} from '../../Services/ExtendedLists/
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'WarehouseWorkspaceComponent',
     templateUrl: './WarehouseWorkspaceComponent.html',
 
@@ -292,7 +292,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
             case "Created":
                 {
                     queryCode = "CreatedEntriesQuery";
-                    displayTitle = "Created Entries";
+                    displayTitle = "Expected Arrival Entries";
 
 
                     break;
@@ -390,7 +390,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
             case "Created":
                 {
                     queryCode = "CreatedReleasesQuery";
-                    displayTitle = "Created Releases";
+                    displayTitle = "Expected Delivery Releases";
                     break;
                 }
 

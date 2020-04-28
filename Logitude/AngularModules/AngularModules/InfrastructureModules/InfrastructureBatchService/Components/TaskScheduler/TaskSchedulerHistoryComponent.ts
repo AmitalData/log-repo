@@ -9,7 +9,7 @@ import { EntityListService } from '../../../../Infrastructure/Services/EntityLis
 
 @Component({
     selector: 'Scheduler-History',
-    moduleId: module.id,
+    
     templateUrl: './TaskSchedulerHistoryComponent.html',
     inputs: ['SelectedRowChanged', 'ShowUTCTimes']
 })

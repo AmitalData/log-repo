@@ -30,7 +30,7 @@ import { CustomsCollateralAnswerSharedDataService } from '../../../Customs/Servi
 import { subscribeOn } from 'rxjs/operator/subscribeOn';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsCollateralAnswerComponent.html',
     providers: [CustomsCollateralPMService, DeclarationExtendedListService, CustomsCollateralAnswerSharedDataService]
 })

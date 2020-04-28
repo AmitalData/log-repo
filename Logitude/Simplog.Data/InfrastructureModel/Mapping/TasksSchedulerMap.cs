@@ -24,21 +24,21 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.CreatedBy)
                 .IsRequired()
-                .HasMaxLength(15)
+                .HasMaxLength(40)
                 .IsUnicode(false);
 
             this.Property(t => t.UpdatedBy)
                 .IsRequired()
-                .HasMaxLength(15)
+                .HasMaxLength(40)
                 .IsUnicode(false);
 
             this.Property(t => t.Name)
                 .HasMaxLength(100)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             this.Property(t => t.Description)
                 .HasMaxLength(200)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             this.Property(t => t.LastRunResult)
                 .HasMaxLength(150)

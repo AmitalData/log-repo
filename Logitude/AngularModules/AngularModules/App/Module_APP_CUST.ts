@@ -1,12 +1,11 @@
 import { NgModule, SystemJsNgModuleLoader } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { provideRoutes } from '@angular/router';
 import { AppComponent_Cust } from './AppComponent_Cust';
 
 @NgModule({
-    imports: [BrowserModule, HttpModule, HttpClientModule],
+    imports: [BrowserModule, HttpClientModule],
     declarations: [AppComponent_Cust],
 
     providers: [
@@ -15,71 +14,32 @@ import { AppComponent_Cust } from './AppComponent_Cust';
       provideRoutes([
 
         // controls
-        { loadChildren: 'Controls/Module_CTRL#ControlsModule' },
+        //{ loadChildren: 'Controls/Module_CTRL#ControlsModule' },
 
         // Infrastructure
-        { loadChildren: 'Infrastructure/Module_INFR#InfrastructureModule' },
-        { loadChildren: 'InfrastructureModules/InfrastructureAutomation/ModuleInfrastructureAutomation#ModuleInfrastructureAutomation' },
-        { loadChildren: 'InfrastructureModules/InfrastructureBatchService/ModuleInfrastructureBatchService#ModuleInfrastructureBatchService' },
-        { loadChildren: 'InfrastructureModules/InfrastructureCommunications/ModuleInfrastructureCommunications#ModuleInfrastructureCommunications' },
-        { loadChildren: 'InfrastructureModules/InfrastructureCustomization/ModuleInfrastructureCustomization#ModuleInfrastructureCustomization' },
-        { loadChildren: 'InfrastructureModules/InfrastructureDocuments/ModuleInfrastructureDocuments#ModuleInfrastructureDocuments' },
-        { loadChildren: 'InfrastructureModules/InfrastructureGettingStarted/ModuleInfrastructureGettingStarted#ModuleInfrastructureGettingStarted' },
-        { loadChildren: 'InfrastructureModules/InfrastructureHybrid/ModuleInfrastructureHybrid#ModuleInfrastructureHybrid' },
-        { loadChildren: 'InfrastructureModules/InfrastructureOthers/ModuleInfrastructureOthers#ModuleInfrastructureOthers' },
-        { loadChildren: 'InfrastructureModules/InfrastructureStimulsoft/ModuleInfrastructureStimulsoft#ModuleInfrastructureStimulsoft' },
-        { loadChildren: 'InfrastructureModules/InfrastructureTenantManagement/ModuleInfrastructureTenantManagement#ModuleInfrastructureTenantManagement' },
-        { loadChildren: 'InfrastructureModules/InfrastructureUser/ModuleInfrastructureUser#ModuleInfrastructureUser' },
-        { loadChildren: 'InfrastructureModules/InfrastructureComputingPartner/ModuleInfrastructureComputingPartner#ModuleInfrastructureComputingPartner' },
+        //{ loadChildren: 'Infrastructure/Module_INFR#InfrastructureModule' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureAutomation/ModuleInfrastructureAutomation#ModuleInfrastructureAutomation' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureBatchService/ModuleInfrastructureBatchService#ModuleInfrastructureBatchService' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureCommunications/ModuleInfrastructureCommunications#ModuleInfrastructureCommunications' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureCustomization/ModuleInfrastructureCustomization#ModuleInfrastructureCustomization' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureDocuments/ModuleInfrastructureDocuments#ModuleInfrastructureDocuments' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureGettingStarted/ModuleInfrastructureGettingStarted#ModuleInfrastructureGettingStarted' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureHybrid/ModuleInfrastructureHybrid#ModuleInfrastructureHybrid' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureOthers/ModuleInfrastructureOthers#ModuleInfrastructureOthers' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureStimulsoft/ModuleInfrastructureStimulsoft#ModuleInfrastructureStimulsoft' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureTenantManagement/ModuleInfrastructureTenantManagement#ModuleInfrastructureTenantManagement' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureUser/ModuleInfrastructureUser#ModuleInfrastructureUser' },
+        //{ loadChildren: 'InfrastructureModules/InfrastructureComputingPartner/ModuleInfrastructureComputingPartner#ModuleInfrastructureComputingPartner' },
 
         //Common Modules
-        { loadChildren: 'Common/Module_COMN#LogitudeCommonModule' },
-        { loadChildren: 'CommonModules/CommonAgent/ModuleCommonAgent#ModuleCommonAgent' },
-        { loadChildren: 'CommonModules/CommonAirline/ModuleCommonAirline#ModuleCommonAirline' },
-        { loadChildren: 'CommonModules/CommonCustomer/ModuleCommonCustomer#ModuleCommonCustomer' },
-        { loadChildren: 'CommonModules/CommonFilingInbox/ModuleCommonFilingInbox#ModuleCommonFilingInbox' },
-        { loadChildren: 'CommonModules/CommonFlightsSchedules/ModuleCommonFlightsSchedules#ModuleCommonFlightsSchedules' },
-        { loadChildren: 'CommonModules/CommonOthers/ModuleCommonOthers#ModuleCommonOthers' },
-        { loadChildren: 'CommonModules/CommonPartners/ModuleCommonPartners#ModuleCommonPartners' },
-
-        //{ loadChildren: 'Accounting/Module_ACCT#AccountingModule' },
-        //{ loadChildren: 'Booking/Module_BOOK#BookingModule' },
-        //{ loadChildren: 'CRM/Module_CRM#CRMModule' },
-        //{ loadChildren: 'Dashboard/Module_DASH#DashboardModule' },
-
-        //// Invoice Modules
-        //{ loadChildren: 'Invoice/Module_INVC#InvoiceModule' },
-        //{ loadChildren: 'InvoiceModules/APInvoice/ModuleAPInvoice#ModuleAPInvoice' },
-        //{ loadChildren: 'InvoiceModules/APPayment/ModuleAPPayment#ModuleAPPayment' },
-        //{ loadChildren: 'InvoiceModules/ARInvoice/ModuleARInvoice#ModuleARInvoice' },
-        //{ loadChildren: 'InvoiceModules/ARPayment/ModuleARPayment#ModuleARPayment' },
-        //{ loadChildren: 'InvoiceModules/Transfer/ModuleTransfer#ModuleTransfer' },
-
-        ////Quote Modules
-        //{ loadChildren: 'Quote/Module_QUOT#QuoteModule' },
-        //{ loadChildren: 'QuoteModules/QuoteCharges/ModuleQuoteCharges#ModuleQuoteCharges' },
-        //{ loadChildren: 'QuoteModules/QuoteOthers/ModuleQuoteOthers#ModuleQuoteOthers' },
-        //{ loadChildren: 'QuoteModules/QuoteTabs/ModuleQuoteTabs#ModuleQuoteTabs' },
-        //{ loadChildren: 'QuoteModules/QuoteTemplates/ModuleQuoteTemplates#ModuleQuoteTemplates' },
-
-        //{ loadChildren: 'Report/Module_REPO#ReportModule' },
-        //{ loadChildren: 'SharedLogistics/Module_SHRD#SharedLogisticsModule' },
-
-        ////Shipment Modules
-        //{ loadChildren: 'Shipment/Module_SHIP#Shipment_Module' },
-        //{ loadChildren: 'ShipmentModules/ShipmentAWB/ModuleShipmentAWB#ModuleShipmentAWB' },
-        //{ loadChildren: 'ShipmentModules/ShipmentINTTRA/ModuleShipmentINTTRA#ModuleShipmentINTTRA' },
-        //{ loadChildren: 'ShipmentModules/ShipmentOthers/ModuleShipmentOthers#ModuleShipmentOthers' },
-        //{ loadChildren: 'ShipmentModules/ShipmentStock/ModuleShipmentStock#ModuleShipmentStock' },
-        //{ loadChildren: 'ShipmentModules/ShipmentTabs/ModuleShipmentTabs#ModuleShipmentTabs' },
-        //{ loadChildren: 'ShipmentModules/ShipmentPackages/ModuleShipmentPackages#ModuleShipmentPackages' },
-        //{ loadChildren: 'ShipmentModules/ShipmentRouting/ModuleShipmentRouting#ModuleShipmentRouting' },
-        //{ loadChildren: 'ShipmentModules/ShipmentLogBox/ModuleShipmentLogBox#ModuleShipmentLogBox' },
-        //{ loadChildren: 'ShipmentModules/ShipmentSharedManifest/ModuleShipmentSharedManifest#ModuleShipmentSharedManifest' },
-
-        //{ loadChildren: 'Social/Module_SOCL#SocialModule' },
-        //{ loadChildren: 'TimeManagement/Module_TIME#TimeManagementModule' },
-        //{ loadChildren: 'Warehouse/Module_WARH#WarehouseModule' },
+        //{ loadChildren: 'Common/Module_COMN#LogitudeCommonModule' },
+        //{ loadChildren: 'CommonModules/CommonAgent/ModuleCommonAgent#ModuleCommonAgent' },
+        //{ loadChildren: 'CommonModules/CommonAirline/ModuleCommonAirline#ModuleCommonAirline' },
+        //{ loadChildren: 'CommonModules/CommonCustomer/ModuleCommonCustomer#ModuleCommonCustomer' },
+        //{ loadChildren: 'CommonModules/CommonFilingInbox/ModuleCommonFilingInbox#ModuleCommonFilingInbox' },
+        //{ loadChildren: 'CommonModules/CommonFlightsSchedules/ModuleCommonFlightsSchedules#ModuleCommonFlightsSchedules' },
+        //{ loadChildren: 'CommonModules/CommonOthers/ModuleCommonOthers#ModuleCommonOthers' },
+        //{ loadChildren: 'CommonModules/CommonPartners/ModuleCommonPartners#ModuleCommonPartners' },
 
         // Customs Module
         { loadChildren: 'Customs/Module_CUST#CustomsModule' }, //this should be only on customs.

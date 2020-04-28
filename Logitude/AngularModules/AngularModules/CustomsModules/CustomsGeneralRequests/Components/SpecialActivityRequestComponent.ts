@@ -25,7 +25,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'SpecialActivityRequestComponent',
-    moduleId: module.id,
+    
     templateUrl: './SpecialActivityRequestComponent.html',
 })
 

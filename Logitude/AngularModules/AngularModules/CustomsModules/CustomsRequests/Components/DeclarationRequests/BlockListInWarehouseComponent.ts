@@ -21,7 +21,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 
 @Component({
     selector: 'BlockListInWarehouseComponent',
-    moduleId: module.id,
+    
     templateUrl: './BlockListInWarehouseComponent.html',
 })
 

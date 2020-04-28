@@ -55,7 +55,7 @@ import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITI
 import { DecimalPipe } from '@angular/common';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SupplierInvoiceGeneralTabComponent.html',
 })
 

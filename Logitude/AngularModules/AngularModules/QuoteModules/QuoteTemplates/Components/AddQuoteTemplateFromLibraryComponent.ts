@@ -14,7 +14,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'AddQuoteTemplateFromLibraryComponent',
-    moduleId: module.id,
+    
     templateUrl: './AddQuoteTemplateFromLibraryComponent.html',
 })
 

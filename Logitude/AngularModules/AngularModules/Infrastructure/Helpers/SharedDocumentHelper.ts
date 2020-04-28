@@ -1,5 +1,3 @@
-/// <reference path="../../common/datacontracts/shipmentsharedocumentsdata.ts" />
-
 declare var System: any;
 declare var window: any;
 import {ServiceResponse} from '../DataContracts/ServiceResponse';

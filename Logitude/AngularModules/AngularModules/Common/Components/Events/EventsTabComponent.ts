@@ -15,7 +15,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EventsTabComponent.html',
 })
 

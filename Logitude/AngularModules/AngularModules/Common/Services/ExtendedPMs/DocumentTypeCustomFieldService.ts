@@ -2,7 +2,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {DocumentsFilingPM} from '../../EntityPMs/DocumentsFilingPM';
 import {DocumentTypeCustomFieldPM} from '../../EntityPMs/DocumentTypeCustomFieldPM';
 import {FormCustomFieldPM} from '../../EntityPMs/FormCustomFieldPM';
@@ -82,7 +82,7 @@ export class DocumentTypeCustomFieldService {
     update(entityPM: DocumentTypeCustomFieldPM) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -111,7 +111,7 @@ export class DocumentTypeCustomFieldService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         }
@@ -123,7 +123,7 @@ export class DocumentTypeCustomFieldService {
 
     Insert(entityPM: DocumentTypeCustomFieldPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -155,7 +155,7 @@ export class DocumentTypeCustomFieldService {
                 response.HasError = true;
                 response.ErrorsArray = errorsArray;
 
-                return Observable.of(response);
+                return of(response);
 
             }
         }
@@ -167,7 +167,7 @@ export class DocumentTypeCustomFieldService {
     UpdateFormCustomField(entityPM: FormCustomFieldPM) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -196,7 +196,7 @@ export class DocumentTypeCustomFieldService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         }

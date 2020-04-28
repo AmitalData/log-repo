@@ -6,8 +6,6 @@ import {WebWorkerService} from '../WebWorker/web-worker.service';
 import {EntityListService} from '../Services/EntityListService';
 import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
 import {SessionInfo} from '../Utilities/SessionInfo';
-import {Observable}     from 'rxjs/Rx';
-import {Http, Headers} from '@angular/http';
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
 import {MetaDataLastUpdateDates} from '../Others/MetaDataLastUpdateDates';
 import { ObjectTableLastUpdatePM } from '../Others/ObjectTableLastUpdatePM';
@@ -18,7 +16,8 @@ import {ObjectsLocator} from '../Locators/ObjectsLocator';
 import {EntityResourceService} from '../Services/EntityResourceService';;
 import {CachedDataManagerServices} from './CachedDataManagerServices';
 import { GeneralDomainService } from '../Services/GeneralDomainService';
-import { map, catchError, flatMap } from 'rxjs/operators';
+import { Observable, defer, of}     from 'rxjs';
+import { map, catchError, share, flatMap } from 'rxjs/operators';
 
 export class CachedDataManager {  
 
@@ -29,7 +28,7 @@ export class CachedDataManager {
         if (CachedDataManager.TablesLoadQueue[objectTableName]) {
 
             // if already exists in the load stack return the same obs
-            return CachedDataManager.TablesLoadQueue[objectTableName].share();
+            return CachedDataManager.TablesLoadQueue[objectTableName].pipe(share());
         }
         var observable: any;
         console.time("Unzipping ClosedTable Data from local cache for: " + objectTableName);
@@ -37,103 +36,103 @@ export class CachedDataManager {
         var fileString = LocalStorageManager.GetItem(storagefileName);
         if (fileString == null || fileString == undefined)
             fileString = EntityResourceService.ClosedTablesDataZipFilesDictionary[storagefileName];
-        if (fileString != null) {
-            observable = Observable.create(observer => {
+      if (fileString != null) {
+        observable = Observable.create(observer => {
+          if (fileString != null) {
+            var fileData = ServiceHelper.base64ToBufferConvertor(fileString);
+
+            var data = new ZipWorkerMessage();
+            data.FileData = fileData;
+            data.FileType = "string";
+
+            var worker = new WebWorkerService();
+            //const promises = [];
+            //promises.push(worker.runUrl('Infrastructure/WebWorker/JSZipWebWorker.js', data));
+            var promise = worker.runUrl('Js/jszip-web-worker.js', data);
+            promise.then(unzippedFiles => {
+
+
+              var file = JSON.parse(unzippedFiles)[0];// only one file in the result
+              var list = JSON.parse(file.FileData);
+
+              console.timeEnd("Unzipping ClosedTable Data from local cache for: " + objectTableName);
+
+              CachedDataManager.TablesLoadQueue[objectTableName] = null;
+
+              worker.terminate(promise);
+              observer.next(list);
+            }
+            )
+              .catch(error => {
+                console.error(error);
+              });
+          }
+          else {
+
+            CachedDataManager.TablesLoadQueue[objectTableName] = null;
+            console.error("couldn't find closed table data for " + objectTableName + ".zip file in the cache!");
+            observer.next(0);
+          }
+
+        }).pipe(share());
+      } else {
+        console.log("couldn't find closed table data for " + objectTableName + ".zip file in the cache!");
+        //observable = defer(() => {
+          console.log("Calling Server For " + objectTableName + " Closed Data & MetaData");
+          var entityResourceService: EntityResourceService = new EntityResourceService();
+          EntityResourceService.TablesLoadQueue[objectTableName] = null;
+          return entityResourceService.getEntityResourceByTableName(objectTableName, 0).pipe(flatMap((response: any) => {
+            //return CachedDataManager.GetClosedTableData(objectTableName);
+            var storagefileName: string = objectTableName + "_ClosedData.zip";
+            var fileString = LocalStorageManager.GetItem(storagefileName);
+            if (fileString == null || fileString == undefined)
+              fileString = EntityResourceService.ClosedTablesDataZipFilesDictionary[storagefileName];
+            if (fileString != null) {
+              return Observable.create(observer => {
                 if (fileString != null) {
-                    var fileData = ServiceHelper.base64ToBufferConvertor(fileString);
+                  var fileData = ServiceHelper.base64ToBufferConvertor(fileString);
 
-                    var data = new ZipWorkerMessage();
-                    data.FileData = fileData;
-                    data.FileType = "string";
+                  var data = new ZipWorkerMessage();
+                  data.FileData = fileData;
+                  data.FileType = "string";
 
-                    var worker = new WebWorkerService();
-                    //const promises = [];
-                    //promises.push(worker.runUrl('Infrastructure/WebWorker/JSZipWebWorker.js', data));
-                    var promise = worker.runUrl('Js/jszip-web-worker.js', data);
-                    promise.then(unzippedFiles => {
+                  var worker = new WebWorkerService();
+                  //const promises = [];
+                  //promises.push(worker.runUrl('Infrastructure/WebWorker/JSZipWebWorker.js', data));
+                  var promise = worker.runUrl('Js/jszip-web-worker.js', data);
+                  promise.then(unzippedFiles => {
 
 
-                        var file = JSON.parse(unzippedFiles)[0];// only one file in the result
-                        var list = JSON.parse(file.FileData);
+                    var file = JSON.parse(unzippedFiles)[0];// only one file in the result
+                    var list = JSON.parse(file.FileData);
 
-                        console.timeEnd("Unzipping ClosedTable Data from local cache for: " + objectTableName);
+                    console.timeEnd("Unzipping ClosedTable Data from local cache for: " + objectTableName);
 
-                        CachedDataManager.TablesLoadQueue[objectTableName] = null;
+                    CachedDataManager.TablesLoadQueue[objectTableName] = null;
 
-                        worker.terminate(promise);
-                        observer.next(list);
-                    }
-                    )
-                        .catch(error => {
-                            console.error(error);
-                        });
+                    worker.terminate(promise);
+                    observer.next(list);
+                  }
+                  )
+                    .catch(error => {
+                      console.error(error);
+                    });
                 }
                 else {
 
-                    CachedDataManager.TablesLoadQueue[objectTableName] = null;
-                    console.error("couldn't find closed table data for " + objectTableName + ".zip file in the cache!");
-                    observer.next(0);
+                  CachedDataManager.TablesLoadQueue[objectTableName] = null;
+                  console.error("couldn't find closed table data for " + objectTableName + ".zip file in the cache!");
+                  observer.next(0);
                 }
 
-            }).share();
-        } else {
-            console.log("couldn't find closed table data for " + objectTableName + ".zip file in the cache!");
-            observable = Observable.defer(() => {
-                console.log("Calling Server For " + objectTableName + " Closed Data & MetaData");
-                var entityResourceService: EntityResourceService = new EntityResourceService();
-                EntityResourceService.TablesLoadQueue[objectTableName] = null;
-                return entityResourceService.getEntityResourceByTableName(objectTableName, 0).flatMap(response => {
-                    //return CachedDataManager.GetClosedTableData(objectTableName);
-                    var storagefileName: string = objectTableName + "_ClosedData.zip";
-                    var fileString = LocalStorageManager.GetItem(storagefileName);
-                    if (fileString == null || fileString == undefined)
-                        fileString = EntityResourceService.ClosedTablesDataZipFilesDictionary[storagefileName];
-                    if (fileString != null) {
-                        return Observable.create(observer => {
-                            if (fileString != null) {
-                                var fileData = ServiceHelper.base64ToBufferConvertor(fileString);
-
-                                var data = new ZipWorkerMessage();
-                                data.FileData = fileData;
-                                data.FileType = "string";
-
-                                var worker = new WebWorkerService();
-                                //const promises = [];
-                                //promises.push(worker.runUrl('Infrastructure/WebWorker/JSZipWebWorker.js', data));
-                                var promise = worker.runUrl('Js/jszip-web-worker.js', data);
-                                promise.then(unzippedFiles => {
-
-
-                                    var file = JSON.parse(unzippedFiles)[0];// only one file in the result
-                                    var list = JSON.parse(file.FileData);
-
-                                    console.timeEnd("Unzipping ClosedTable Data from local cache for: " + objectTableName);
-
-                                    CachedDataManager.TablesLoadQueue[objectTableName] = null;
-
-                                    worker.terminate(promise);
-                                    observer.next(list);
-                                }
-                                )
-                                    .catch(error => {
-                                        console.error(error);
-                                    });
-                            }
-                            else {
-
-                                CachedDataManager.TablesLoadQueue[objectTableName] = null;
-                                console.error("couldn't find closed table data for " + objectTableName + ".zip file in the cache!");
-                                observer.next(0);
-                            }
-
-                        });
-                    }
-                    else {
-                        return Observable.of(0);
-                    }
-                });
-            }).share();
-        }
+              });
+            }
+            else {
+              return of(0);
+            }
+          }), share());
+       // }).pipe(share());
+      }
 
         /*
 
@@ -293,7 +292,7 @@ export class CachedDataManager {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + 'api/SystemMetadataLastUpdate/GetSystemMetadataLastUpdates/?' + 'tenant=' + 0, ServiceHelper.GetHttpHeaders()).pipe(flatMap(response => {
                 return Observable.create(observer => {
 
@@ -367,7 +366,7 @@ export class CachedDataManager {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             var cacheKey = "CachedTableLastUpdateDate" + SessionInfo.LoggedUserTenant;
             var storedDate = LocalStorageManager.GetItem(cacheKey);
             if (storedDate) {
@@ -483,7 +482,7 @@ export class CachedDataManager {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = ServiceHelper.GetLogitudeURL() + 'api/ngMetaData/GetTenantTextCodes?tenant=' + SessionInfo.LoggedUserTenant;
-        return Observable.defer(() => {
+        return defer(() => {
             return ServiceHelper.HttpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var newList = response;
                 for (var k in newList) {
@@ -531,7 +530,7 @@ export class CachedDataManager {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = ServiceHelper.GetLogitudeURL() + 'api/ngMetaData/GetTenantObjectFields?loggedTenant=' + SessionInfo.LoggedUserTenant;
-        return Observable.defer(() => {
+        return defer(() => {
             return ServiceHelper.HttpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var newList = response;
                 for (var k in newList) {

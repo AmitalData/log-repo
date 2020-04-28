@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -9,7 +8,7 @@ import { TenantPM } from '../EntityPMs/TenantPM';
 import { RatesTablePM } from '../../Infrastructure/EntityPMs/RatesTablePM';
 import { TenantPMService } from './StandardPMs/TenantPMService';
 
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 
@@ -27,7 +26,7 @@ export class CurrencyRatesService {
 
         var url = this._apiUrl + '/getall?baseCurrencyId=' + baseCurrencyId + '&dateString=' + ServiceHelper.GetDateString(date);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -52,7 +51,7 @@ export class CurrencyRatesService {
 
         var url = this._apiUrl + '/GetCurrenciesExchangeRateByValueDate?currencyId=' + currencyId + '&dateString=' + ServiceHelper.GetDateString(loadingDate);
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -82,7 +81,7 @@ export class CurrencyRatesService {
 
         var url = this._apiUrl + '/GetRatesByValueDate?currencyId=' + currencyId + '&dateString=' + ServiceHelper.GetDateString(date);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -106,7 +105,7 @@ export class CurrencyRatesService {
     }
 
     UpdateAccountingCurrency(entityPM: AccountingCurrencyHelper) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -138,7 +137,7 @@ export class CurrencyRatesService {
 
     //    var url = this._apiUrl + '/GetInsertListOfRatesTable?ratesTables=' + ratesTables;
 
-    //    return Observable.defer(() => {
+    //    return defer(() => {
     //        return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
     //            return response;
     //        }),catchError(ServiceHelper.HandleServiceError));

@@ -1016,11 +1016,11 @@
     <Feature
       Code="&quot;DOCUMENTFILINGBACKUPBATCH&quot;"
       FeatureTypeCode="&quot;MODL&quot;"
-      FeatureTextCodeCode="&quot;DocumentFilingBackupBatch.Features.DocumentFilingBackupBatch&quot;"
-      FeatureDefaultText="&quot;DocumentFilingBackupBatch&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentFilingBackupBatch.Features.DocumentFilingBackupBatch&quot;"
+      FeatureDefaultText="&quot;DocumentFilingBackupBatch&quot;" />
   </AdditionalFeatures>
 </entity>

@@ -2371,7 +2371,6 @@
     <Compile Include="Migrations\202004160804388_JournalFieldsMigration.Designer.cs">
       <DependentUpon>202004160804388_JournalFieldsMigration.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.cs" />
     <Compile Include="Migrations\202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.Designer.cs">
       <DependentUpon>202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.cs</DependentUpon>
@@ -2395,6 +2394,18 @@
     <Compile Include="Migrations\202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.cs" />
     <Compile Include="Migrations\202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.Designer.cs">
       <DependentUpon>202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004211002165_Update_DueDate_Nullable.cs" />
+    <Compile Include="Migrations\202004211002165_Update_DueDate_Nullable.Designer.cs">
+      <DependentUpon>202004211002165_Update_DueDate_Nullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.cs" />
+    <Compile Include="Migrations\202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.Designer.cs">
+      <DependentUpon>202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs" />
+    <Compile Include="Migrations\202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.Designer.cs">
+      <DependentUpon>202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
@@ -4342,6 +4353,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.resx">
       <DependentUpon>202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004211002165_Update_DueDate_Nullable.resx">
+      <DependentUpon>202004211002165_Update_DueDate_Nullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.resx">
+      <DependentUpon>202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.resx">
+      <DependentUpon>202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

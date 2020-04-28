@@ -22,7 +22,7 @@ declare var  makeAmBarChart, makePieChart;
 
 @Component({
     selector: 'ActivityStatusDetailsComponent',
-    moduleId: module.id,
+    
     templateUrl: './ActivityStatusDetailsComponent.html',
     encapsulation: ViewEncapsulation.None,
 

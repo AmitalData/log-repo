@@ -8,7 +8,7 @@ import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/T
 import { DateTool } from '../../../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditInterestBasesPeriodComponent.html',
 })
 

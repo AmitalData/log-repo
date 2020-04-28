@@ -330,9 +330,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					MarkUpTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					MarkUpTypeUpdateClass.FillMarkUpType();
 					scope.Complete();
 				}
+ 
+				MarkUpTypeUpdateClass.FillMarkUpType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Quote", ObjectTables, QuoteUpdateClass.HashString))
@@ -412,9 +415,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteClosingReasonUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					QuoteClosingReasonUpdateClass.FillQuoteClosingReason();
 					scope.Complete();
 				}
+ 
+				QuoteClosingReasonUpdateClass.FillQuoteClosingReason();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteCostCharge", ObjectTables, QuoteCostChargeUpdateClass.HashString))
@@ -467,9 +473,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteCustomerTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					QuoteCustomerTypeUpdateClass.FillQuoteCustomerType();
 					scope.Complete();
 				}
+ 
+				QuoteCustomerTypeUpdateClass.FillQuoteCustomerType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuotePackage", ObjectTables, QuotePackageUpdateClass.HashString))
@@ -549,9 +558,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteRatingUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					QuoteRatingUpdateClass.FillQuoteRating();
 					scope.Complete();
 				}
+ 
+				QuoteRatingUpdateClass.FillQuoteRating();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteSaleCharge", ObjectTables, QuoteSaleChargeUpdateClass.HashString))
@@ -901,9 +913,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					QuoteTypeUpdateClass.FillQuoteType();
 					scope.Complete();
 				}
+ 
+				QuoteTypeUpdateClass.FillQuoteType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteVATsTotal", ObjectTables, QuoteVATsTotalUpdateClass.HashString))

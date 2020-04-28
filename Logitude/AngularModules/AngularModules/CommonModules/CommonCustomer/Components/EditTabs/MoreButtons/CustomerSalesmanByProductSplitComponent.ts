@@ -10,7 +10,7 @@ import {CustomerSalesmanByProductPM} from '../../../../../Common/EntityPMs/Custo
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerSalesmanByProductSplitComponent.html',
 })
 

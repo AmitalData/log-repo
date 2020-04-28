@@ -16,7 +16,7 @@ import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityAr
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClientDrivingLicenseTabComponent.html',
 })
 

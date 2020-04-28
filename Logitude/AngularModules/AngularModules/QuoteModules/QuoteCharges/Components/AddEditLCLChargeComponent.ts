@@ -20,7 +20,7 @@ import { PriceStepList } from '../../../Infrastructure/EntityLists/PriceStepList
 import { MeasurementList } from '../../../Common/EntityLists/MeasurementList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditLCLChargeComponent.html',
 })
 

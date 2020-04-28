@@ -16,7 +16,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'custom-send-options',
-    moduleId: module.id,
+    
     //templateUrl: 'CustomsRequestsComponent.html',
     host: {
         '(document:click)': 'handleClick($event)',

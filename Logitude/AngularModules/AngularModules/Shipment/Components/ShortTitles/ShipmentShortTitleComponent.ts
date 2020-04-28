@@ -4,11 +4,13 @@ import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "ShipmentShortTitleComponent.html",
 })
 
 export class ShipmentShortTitleComponent {
+  public CustomerRankName: string = null;
+
     public EntityPM: ShipmentPM;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;

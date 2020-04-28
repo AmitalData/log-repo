@@ -13,7 +13,7 @@ import { AppTool, ArrayTool, DateTool } from '../../../../../Infrastructure/Tool
 import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SupplierInvoiceSelectionComponent.html',
 })
 

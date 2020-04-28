@@ -1,9 +1,7 @@
 import {EventEmitter, Output} from '@angular/core';
 import {TextCodeTranslator} from './Utilities/TextCodeTranslator';
-import {NumbersPipe} from './Pipes/NumbersPipe';
-import { forEach } from '@angular/router/src/utils/collection';
-import { DatePipe } from '@angular/common';
 import { SessionLocator } from './Utilities/SessionLocator';
+
 export class AppTool {
 
     public static GetCounterPrefixLength(prefix: string) {

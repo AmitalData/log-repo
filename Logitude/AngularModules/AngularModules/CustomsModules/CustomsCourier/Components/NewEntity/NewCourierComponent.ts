@@ -11,7 +11,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {CourierMasterService} from '../../../../Customs/Services/Others/CourierMasterService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewCourierComponent.html',
 })
      

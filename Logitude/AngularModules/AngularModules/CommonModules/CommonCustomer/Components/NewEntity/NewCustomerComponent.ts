@@ -11,7 +11,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewCustomerComponent.html',
 })
 
@@ -22,7 +22,7 @@ export class NewCustomerComponent {
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
     private PartnerTamplate: NewPartnerTamplate;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private args: NewEntityArgs;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {

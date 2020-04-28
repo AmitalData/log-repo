@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FlightsSchedulesRequestUpdateClass
    {  		
-		public const string HashString = "aac7bebd4a7731903889b13a56ed8406";
+		public const string HashString = "c20abeb6aaea8233e667fcfa1fb5f48d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1010,7 +1010,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature FlightsSchedulesRequestFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = FlightsSchedulesRequestObjectTable.Id, Tenant = 0, NameTextCodeCode = "FlightsSchedulesRequest.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature FlightsSchedulesRequestFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = FlightsSchedulesRequestObjectTable.Id, Tenant = 0, NameTextCodeCode = "FlightsSchedulesRequest.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature FlightsSchedulesRequestFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = FlightsSchedulesRequestObjectTable.Id, Tenant = 0, NameTextCodeCode = "FlightsSchedulesRequest.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature FlightsSchedulesRequestFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = FlightsSchedulesRequestObjectTable.Id, Tenant = 0, NameTextCodeCode = "FlightsSchedulesRequest.Features.PackageFeature", NameTextCodeDefaultText = "FlightsSchedulesRequest Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature FlightsSchedulesRequestFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = FlightsSchedulesRequestObjectTable.Id, Tenant = 0, NameTextCodeCode = "FlightsSchedulesRequest.Features.PackageFeature", NameTextCodeDefaultText = "FlightsSchedulesRequest Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature FlightsSchedulesRequestFeature_FlightsSchedules_Simulator = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FlightsSchedules.Simulator", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FlightsSchedulesRequestObjectTable.Id, Tenant = 0, NameTextCodeCode = "FlightsSchedulesRequest.Features.SendResponse", NameTextCodeDefaultText = @"Send Response" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 

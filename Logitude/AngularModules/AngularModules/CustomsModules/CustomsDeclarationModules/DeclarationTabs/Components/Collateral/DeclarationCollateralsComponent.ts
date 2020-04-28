@@ -24,9 +24,10 @@ import { CustomsCollateralList } from '../../../../../Customs/EntityLists/Custom
 import { CustomsCollateralAnswerSharedDataService } from '../../../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
 
 @Component({
-    moduleId: module.id,
+  
     templateUrl: './DeclarationCollateralsComponent.html',
     providers: [CustomsCollateralAnswerSharedDataService]
+
 })
 
 export class DeclarationCollateralsComponent extends BaseComponent implements OnInit, OnDestroy {

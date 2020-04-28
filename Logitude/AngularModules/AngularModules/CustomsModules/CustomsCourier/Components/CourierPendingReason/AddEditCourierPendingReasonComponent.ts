@@ -21,7 +21,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
  
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditCourierPendingReasonComponent.html',
 })
 

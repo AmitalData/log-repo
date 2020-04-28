@@ -12,7 +12,7 @@ import { EntityListService } from '../../../../../Infrastructure/Services/Entity
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './InterestReportGeneralTabComponent.html',
 })
 

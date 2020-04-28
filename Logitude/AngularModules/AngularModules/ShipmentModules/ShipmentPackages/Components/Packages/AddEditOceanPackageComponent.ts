@@ -13,7 +13,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { PickUpDeliveryPackageHarmonizePM } from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditOceanPackageComponent.html',
 })
 

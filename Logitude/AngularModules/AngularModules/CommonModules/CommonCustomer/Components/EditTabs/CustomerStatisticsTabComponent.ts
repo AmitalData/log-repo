@@ -41,7 +41,7 @@ import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 declare var window, UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64, makeAmBarChart, BarClick, ResetItem, makeAMLineChart: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerStatisticsTabComponent.html',
 })
 

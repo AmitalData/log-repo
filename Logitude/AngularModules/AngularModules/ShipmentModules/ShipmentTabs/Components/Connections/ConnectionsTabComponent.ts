@@ -15,7 +15,7 @@ import { WarehouseHelper } from '../../../../Warehouse/Helpers/WarehouseHelper';
 import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ConnectionsTabComponent.html',
 })
 

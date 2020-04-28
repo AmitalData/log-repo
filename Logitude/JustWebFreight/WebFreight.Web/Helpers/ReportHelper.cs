@@ -829,7 +829,7 @@ namespace WebFreight.Web.Helpers
 
                 case "SHEL":
                     {
-                        LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
+                        dataProvider=  LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
                         break;
                     }
 
@@ -1935,7 +1935,11 @@ namespace WebFreight.Web.Helpers
         private void SaveStimulReport(ReportFliter reportFliter, StiReport report)
         {
             SaveStimulReportUsingFileStreamByFileType(reportFliter, report, "mdc");
-            SaveStimulReportUsingFileStreamByFileType(reportFliter, report, reportFliter.ExcelOnly ? "xlsx" : "tiff");
+
+            if (!reportFliter.ExcelOnly)
+            {
+                SaveStimulReportUsingFileStreamByFileType(reportFliter, report,"tiff");
+            }
         }
 
 

@@ -8,7 +8,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ShipmentDocsOutTabComponent.html',
     providers: [DocumentTypeListService]
 })

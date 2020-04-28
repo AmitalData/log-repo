@@ -1,6 +1,6 @@
 declare var System: any, window: any;
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef} from '@angular/core';
-import {Http, Response} from '@angular/http';
+
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {HybridPartnerExtendedListService} from '../../../../Common/Services/ExtendedLists/HybridPartnerExtendedListService';
@@ -17,7 +17,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'DropBoxConnection',
-    moduleId: module.id,
+    
     templateUrl: './DropBoxConnectionComponent.html',
 })
 

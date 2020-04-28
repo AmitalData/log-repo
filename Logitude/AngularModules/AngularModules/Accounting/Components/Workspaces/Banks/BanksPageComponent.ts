@@ -31,7 +31,7 @@ import { CashBookSummary } from '../../../DataContracts/AccountingSummery';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BanksPageComponent.html',
 })
 

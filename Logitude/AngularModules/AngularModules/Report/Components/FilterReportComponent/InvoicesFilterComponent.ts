@@ -12,7 +12,7 @@ import {CodeNameClass} from './CodeNameClass';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'InvoicesFilterComponent',
     templateUrl: './InvoicesFilterComponent.html',
     inputs: ['ReportsPreview']

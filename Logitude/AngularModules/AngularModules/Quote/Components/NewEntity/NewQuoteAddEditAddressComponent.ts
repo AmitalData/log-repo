@@ -16,7 +16,7 @@ import {CardListService} from '../../../Common/Services/StandardLists/CardListSe
 import {CardList} from '../../../Common/EntityLists/CardList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewQuoteAddEditAddressComponent.html',
 })
 

@@ -27,7 +27,7 @@ declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
     selector: 'RecallSuppliersFromFileComponent',
-    moduleId: module.id,
+    
     templateUrl: './RecallSuppliersFromFileComponent.html',
 })
 

@@ -20,7 +20,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {TenantManagementList} from '../../../../Infrastructure/EntityLists/TenantManagementList';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 @Component({
-    moduleId: module.id,
+    
     selector: 'TenantManagementGeneralTabComponent',
     templateUrl: './TenantManagementGeneralTabComponent.html',
 })

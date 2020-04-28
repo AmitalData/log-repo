@@ -1020,11 +1020,11 @@
     <Feature
       Code="&quot;CUSTOMERTENANTACCESSESCARDBATCH&quot;"
       FeatureTypeCode="&quot;MODL&quot;"
-      FeatureTextCodeCode="&quot;CustomerTenantAccessCardsBatch.Features.CustomerTenantAccessCardsBatch&quot;"
-      FeatureDefaultText="&quot;CustomerTenantAccessCardsBatch&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;CustomerTenantAccessCardsBatch.Features.CustomerTenantAccessCardsBatch&quot;"
+      FeatureDefaultText="&quot;CustomerTenantAccessCardsBatch&quot;" />
   </AdditionalFeatures>
 </entity>

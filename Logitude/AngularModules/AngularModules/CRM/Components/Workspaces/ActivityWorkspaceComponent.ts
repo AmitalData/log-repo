@@ -24,7 +24,7 @@ import {CRMTool} from '../../Tools';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ActivityWorkspaceComponent.html',
 })
 

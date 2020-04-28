@@ -6,7 +6,6 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { SearchTextBox } from '../../../../Controls/SearchTextBox';
 import { IconButton } from '../../../../Controls/IconButton';
 import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import { Http, Response } from '@angular/http';
 import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -38,11 +37,13 @@ import { DatePipe } from '@angular/common';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ECommercePaymentRequestMobileComponent.html'
 })
 
 export class ECommercePaymentRequestMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
+  public DimDenyButton: boolean = false;
+  public DimApproveButton: boolean = false;
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
     //private messageWindow: MessageWindow = new MessageWindow();
@@ -78,7 +79,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get IsAccepted() { return this.isAccepted }
     public set IsAccepted(newValue: boolean) { this.isAccepted = newValue; }
 
-    private ScreenWidth: number;
+    ScreenWidth: number;
     private MaxScreenWidth: number = 600;
 
     IsAcceptedChanged($event) {
@@ -248,6 +249,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     public get ShipmentValueInNIS() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ShipmentValueInNIS, 0) }
     public set ShipmentValueInNIS(newValue: string) { this.AdditionalData.RequestPaymentData.ShipmentValueInNIS = newValue; }
+
+    public get ForeignCurrencyValue() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ForeignCurrencyValue, 0) }
+    public set ForeignCurrencyValue(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrencyValue = newValue; }
+
+    public get ForeignCurrency() { return this.AdditionalData.RequestPaymentData.ForeignCurrency }
+    public set ForeignCurrency(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrency = newValue; }
 
     public get SenderDetails() { return this.AdditionalData.RequestPaymentData.SenderDetails }
     public set SenderDetails(newValue: string) { this.AdditionalData.RequestPaymentData.SenderDetails = newValue; }

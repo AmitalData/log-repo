@@ -15,7 +15,7 @@ import {LastRate} from '../../../../../Common/Services/CurrencyRatesService';
 import {ShipmentTool, ShipmentGenerator} from '../../../../../Shipment/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './QuotesComponent.html',
 })
 

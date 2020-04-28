@@ -36,7 +36,7 @@ import { CardListService } from '../../../../Common/Services/StandardLists/CardL
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PayablesTabComponent.html',
 })
 
@@ -1225,6 +1225,8 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     }
 }
 export class ShipmentPayableItem extends BaseComponent {
+  public IsMinFromQuoteIconVisible: boolean = false; // fix angular 9
+
     public EntityPM: ShipmentPayablePM;
     public ShipmentPM: ShipmentPM;
     public ObjectTableName: string = "ShipmentPayable";

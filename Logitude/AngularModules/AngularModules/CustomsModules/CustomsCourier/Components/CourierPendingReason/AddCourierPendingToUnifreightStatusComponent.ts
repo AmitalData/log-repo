@@ -16,7 +16,7 @@ import { CourierPendingReasonPMService } from '../../../../Customs/Services/Stan
 import { CourierPendingReasonExtendedListService } from '../../../../Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddCourierPendingToUnifreightStatusComponent.html',
 })
 

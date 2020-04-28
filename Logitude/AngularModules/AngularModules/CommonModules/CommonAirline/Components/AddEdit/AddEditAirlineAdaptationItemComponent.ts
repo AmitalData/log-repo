@@ -13,7 +13,7 @@ import {BookingProductExtendedPMService} from '../../../../Booking/Services/Exte
 import {CommodityPMService} from '../../../../Common/Services/StandardPMs/CommodityPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditAirlineAdaptationItemComponent.html',
 })
 

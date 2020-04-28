@@ -6,7 +6,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { PriceStepList } from '../../../Infrastructure/EntityLists/PriceStepList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SelectBreaksComponent.html',
 })
 

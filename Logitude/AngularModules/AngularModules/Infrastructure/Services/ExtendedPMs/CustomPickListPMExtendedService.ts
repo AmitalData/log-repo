@@ -4,7 +4,7 @@ import { CustomPickListPM } from '../../EntityPMs/CustomPickListPM';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class CustomPickListPMExtendedService {
@@ -40,7 +40,7 @@ export class CustomPickListPMExtendedService {
     InsertupdateCustomPickLists(CustomPickLists: any) {
         var url = this._apiUrl + '/PutCreateUpdateCustomPickListPMs';
 
-        return Observable.defer(() => {
+        return defer(() => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 

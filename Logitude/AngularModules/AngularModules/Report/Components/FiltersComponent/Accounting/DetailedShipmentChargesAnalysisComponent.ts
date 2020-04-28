@@ -7,7 +7,7 @@ import { QueryFilterItem } from '../../../Components/Filters/QueryFilterItem';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DetailedShipmentChargesAnalysisComponent.html',
 })
 

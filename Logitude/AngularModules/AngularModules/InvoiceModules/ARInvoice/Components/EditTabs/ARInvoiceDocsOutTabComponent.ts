@@ -7,7 +7,7 @@ import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
 import {ARInvoiceEntityPM} from '../../../../Invoice/EntityPMs/ARInvoiceEntityPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARInvoiceDocsOutTabComponent.html',
 })
 

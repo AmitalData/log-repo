@@ -39,7 +39,7 @@ import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITI
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationClassificationComponent.html',
 })
 //

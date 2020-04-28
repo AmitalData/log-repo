@@ -19,7 +19,7 @@ import { LuhnAlgorithm } from '../../../Customs/Utilities/LuhnAlgorithm';
 
 @Component({
     selector: 'CustomItemLegalDemands',
-    moduleId: module.id,
+    
     templateUrl: './CustomItemLegalDemandsQueryComponent.html',
 })
 

@@ -11,7 +11,7 @@ declare var UploadLogoFile, HideImage , SetImage, ArrayBufferToBase64: any;
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'UploadLogo',
     templateUrl: './UploadLogoComponent.html',
     providers: [ImageLibraryService]

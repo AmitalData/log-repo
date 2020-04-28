@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {AppTool, DateTool} from '../../Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'LogCalendar',
     templateUrl: './LogCalendarComponent.html',
     inputs: ['SelectedDate'],

@@ -16,7 +16,7 @@ import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDa
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditPickListComponent.html',
     providers: [CustomPickListPMExtendedService],
 })

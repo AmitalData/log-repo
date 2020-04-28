@@ -11,7 +11,7 @@ import {ShipmentDeliveryPM} from '../../../../../Shipment/EntityPMs/ShipmentDeli
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContainerFollowupWindowTemplate.html',
 })
 

@@ -8,7 +8,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { InvoiceTool } from '../../../../Invoice/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ExternalPaymentComponent.html',
 })
 

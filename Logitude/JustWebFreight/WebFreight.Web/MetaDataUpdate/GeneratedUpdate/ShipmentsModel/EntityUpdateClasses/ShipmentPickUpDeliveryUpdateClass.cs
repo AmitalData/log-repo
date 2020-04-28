@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPickUpDeliveryUpdateClass
    {  		
-		public const string HashString = "74602ef6d34c84586778cbc20c930b1b";
+		public const string HashString = "a08c1148beef72cda9e5545c815c0b63";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	             				    ObjectTableName =  "ShipmentPickUpDelivery",
 			      				    IsNew =  false,
 			      				    DBTableName =  "ShipmentPickUpDeliveries",
-			      				    OldDBTableName =  "ShipmentPickUpDeliveries",
 			      				    ObjectTableSingular =  "Shipment Pickup Delivery",
 			      				    ObjectTablePlural =  "ShipmentPickUpDeliveries",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Pickup Delivery",
-			      				    Code =  "363d",
+			      				    Code =  "aede",
 			      				    Name =  "ShipmentPickUpDelivery",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -140,7 +139,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FromLocation",
-					  						OldFieldName =  "FromLocation",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -204,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ToLocation",
-					  						OldFieldName =  "ToLocation",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -268,7 +265,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ATD",
-					  						OldFieldName =  "ATD",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -335,7 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ATA",
-					  						OldFieldName =  "ATA",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -402,7 +397,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ETD",
-					  						OldFieldName =  "ETD",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -469,7 +463,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ETA",
-					  						OldFieldName =  "ETA",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -536,7 +529,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CarrierNumber",
-					  						OldFieldName =  "CarrierNumber",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -598,7 +590,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -661,7 +652,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ToAddressId",
-					  						OldFieldName =  "ToAddressId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -726,7 +716,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentId",
-					  						OldFieldName =  "ShipmentId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -790,7 +779,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PickUpDeliveryNumber",
-					  						OldFieldName =  "PickUpDeliveryNumber",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -852,7 +840,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FromPartnerCardId",
-					  						OldFieldName =  "FromPartnerCardId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -915,7 +902,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FromPortId",
-					  						OldFieldName =  "FromPortId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -978,7 +964,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Driver",
-					  						OldFieldName =  "Driver",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1040,7 +1025,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ToPartnerCardId",
-					  						OldFieldName =  "ToPartnerCardId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -1103,7 +1087,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ToPortId",
-					  						OldFieldName =  "ToPortId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -1166,7 +1149,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FromAddressId",
-					  						OldFieldName =  "FromAddressId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -1231,7 +1213,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FullResponsibility",
-					  						OldFieldName =  "FullResponsibility",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1293,7 +1274,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CarrierId",
-					  						OldFieldName =  "CarrierId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Carrier",
@@ -1356,7 +1336,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TruckNumber",
-					  						OldFieldName =  "TruckNumber",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1418,7 +1397,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TrailerNumber",
-					  						OldFieldName =  "TrailerNumber",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1480,7 +1458,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FromAddress",
-					  						OldFieldName =  "FromAddress",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1542,7 +1519,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ToAddress",
-					  						OldFieldName =  "ToAddress",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1604,7 +1580,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PickUpDeliveryTypeCode",
-					  						OldFieldName =  "PickUpDeliveryTypeCode",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1666,7 +1641,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PickUpDeliveryFromTypeCode",
-					  						OldFieldName =  "PickUpDeliveryFromTypeCode",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PickUpDeliveryFromToType",
@@ -1729,7 +1703,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PickUpDeliveryToTypeCode",
-					  						OldFieldName =  "PickUpDeliveryToTypeCode",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PickUpDeliveryFromToType",
@@ -1792,7 +1765,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Vehicle",
-					  						OldFieldName =  "Vehicle",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1854,7 +1826,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FromAddressCity",
-					  						OldFieldName =  "FromAddressCity",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1918,7 +1889,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FromAddressZipCode",
-					  						OldFieldName =  "FromAddressZipCode",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1982,7 +1952,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FromAddressCountryId",
-					  						OldFieldName =  "FromAddressCountryId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -2047,7 +2016,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ToAddressCity",
-					  						OldFieldName =  "ToAddressCity",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2111,7 +2079,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ToAddressZipCode",
-					  						OldFieldName =  "ToAddressZipCode",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2175,7 +2142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ToAddressCountryId",
-					  						OldFieldName =  "ToAddressCountryId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -2240,7 +2206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentNumber",
-					  						OldFieldName =  "ShipmentNumber",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2302,7 +2267,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "EmptyPickupContainerPartnerId",
-					  						OldFieldName =  "EmptyPickupContainerPartnerId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -2366,7 +2330,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "EmptyDeliveryContainerPartnerId",
-					  						OldFieldName =  "EmptyDeliveryContainerPartnerId",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -2430,7 +2393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "EmptyPickupDepotReference",
-					  						OldFieldName =  "EmptyPickupDepotReference",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2493,7 +2455,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "EmptyDeliveryDepotReference",
-					  						OldFieldName =  "EmptyDeliveryDepotReference",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2556,7 +2517,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TransportModeCode",
-					  						OldFieldName =  "TransportModeCode",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PickUpDeliveryTransportMode",
@@ -2619,7 +2579,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentPickUpDeliveryPackages",
-					  						OldFieldName =  "ShipmentPickUpDeliveryPackages",
 					  						ObjectTableName =  "ShipmentPickUpDelivery",
 					  						MinLength =  0,
 					  						MaxLength =  15,

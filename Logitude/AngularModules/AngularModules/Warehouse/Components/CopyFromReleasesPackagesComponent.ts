@@ -25,7 +25,7 @@ import {ShipmentDeliveryPM} from '../../Shipment/EntityPMs/ShipmentDeliveryPM';
 import {ShipmentPickUpDeliveryPackagePM} from '../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
 @Component({
-    moduleId: module.id,
+    
     selector: 'CopyFromReleasesPackagesComponent',
     templateUrl: './CopyFromReleasesPackagesComponent.html',
     providers: [WarehouseReleaseListExtendedService, WarehouseReleasePackagePMExtendedService],

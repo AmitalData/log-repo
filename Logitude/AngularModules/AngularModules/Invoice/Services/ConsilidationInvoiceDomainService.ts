@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { Guid } from '../../Infrastructure/Utilities/Guid';
 import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
@@ -34,7 +32,7 @@ export class ConsilidationInvoiceDomainService {
     post(entityPM: ARInvoicePM) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
 
             var validator: ClassLevelValidator;
 
@@ -75,7 +73,7 @@ export class ConsilidationInvoiceDomainService {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });

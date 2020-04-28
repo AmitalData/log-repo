@@ -3,6 +3,7 @@ import { CacheLogComponent } from './Components/Maintenance/CacheLogComponent';
 import {FocusMeDirective} from './Utilities/FocusMeDirective';
 import {LocationDirective} from './Utilities/LocationDirective';
 import {FixedPositionDirective} from './Utilities/FixedPositionDirective';
+import { ChildDirective } from './Directives/ChildDirective';
 
 //rtl directives
 import {FloatStartDirective} from './Utilities/RTLDirectives/FloatStartDirective';
@@ -177,7 +178,7 @@ export const Directives =
         FocusMeDirective,
         LocationDirective,
         FixedPositionDirective,
-
+    ChildDirective,
         FloatStartDirective,
         FloatEndDirective,
         TextAlignStart,

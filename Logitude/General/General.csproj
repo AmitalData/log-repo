@@ -244,6 +244,7 @@
     <Content Include="2020.R1\03 - 2020\Day 09 [Samar] update DaysFromLastShipment objectfeild.sql" />
     <Content Include="2020.R1\03 - 2020\Day 11 [Samar] update main carriage ATA query columns.sql" />
     <Content Include="2020.R1\04 - 2020\Day 13 [Maheera] Add QuoteAutomaticallyClosingDataHistory Table.sql" />
+    <Content Include="2020.R2\04\Day 26 [Samar] Add New Help Resources.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
     <Content Include="Customs2019\to execute problem of chronological dates.sql" />
@@ -722,6 +723,7 @@
     <Content Include="Main Branch\2020\03 - 2020\Day 23 [Bisan] Fill default product values in AFC Tariff.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 19 [Bisan] Fill default values in TariffProducts table.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 26 [Ayman] Delete Airline Logo ObjectField.sql" />
+    <Content Include="Main Branch\2020\04 - 2020\Day 22 [Wesam] AddColumnAutomaticLastUpdateDate.sql" />
     <Content Include="Main Branch\2020\04 - 2020\Day 16 [Wesam] DeleteOldCommunicationLogs Procedure.sql" />
     <Content Include="Main Branch\2020\04 - 2020\Day 14 [Wesam] Enable Report Scheduleing For GLAccount Report.sql" />
     <Content Include="Main Branch\2020\04 - 2020\Day 07 [Wesam] Remove QRR Feature Toggle.sql" />

@@ -16,7 +16,7 @@ import { UserListService } from '../../../../Common/Services/StandardLists/UserL
 import { CRMUtilities } from '../../../CRMUtilities';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './QuoteDashboardComponent.html',
 })
 

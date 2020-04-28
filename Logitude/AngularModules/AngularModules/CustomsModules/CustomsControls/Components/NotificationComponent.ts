@@ -30,7 +30,7 @@ import { EntityPMService } from '../../../Infrastructure/Services/EntityPMServic
 
 @Component({
     selector: 'NotificationComponent',
-    moduleId: module.id,
+    
     templateUrl: './NotificationComponent.html',
 })
 

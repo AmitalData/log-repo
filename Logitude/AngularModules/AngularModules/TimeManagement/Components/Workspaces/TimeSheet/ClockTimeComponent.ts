@@ -11,11 +11,16 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 
 @Component({
     selector: 'ClockTimeComponent',
-    moduleId: module.id,
+    
     templateUrl: './ClockTimeComponent.html',
 })
 
 export class ClockTimeComponent extends BaseComponent {
+  public LeftCenter: any;
+  public EntryTime: any;
+  public ExitTime: any;
+  public Description: any;
+
     public DataContext = this;
     public ItemSource: ItemSourceItem[];
     public ItemSourceCollection: ObservableCollection;

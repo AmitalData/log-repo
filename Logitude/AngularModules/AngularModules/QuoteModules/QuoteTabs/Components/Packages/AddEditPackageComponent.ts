@@ -8,7 +8,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditPackageComponent.html',
 })
 

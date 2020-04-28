@@ -12,7 +12,7 @@ declare var UploadLogoFile, ArrayBufferToBase64;
 
 @Component({
     selector: 'SettingsWorkspaceComponent',
-    moduleId: module.id,
+    
     templateUrl: './SettingsWorkspaceComponent.html',
     providers: [EntityResourceService],
 })

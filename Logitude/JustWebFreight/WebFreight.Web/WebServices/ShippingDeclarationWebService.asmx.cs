@@ -397,12 +397,17 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.PreCarriageETD = shipment.PreCarriageETD;
                 myDataProvider.PreCarriageETA = shipment.PreCarriageETA;
                 myDataProvider.MainCarriageATA = shipment.MainCarriageATA != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageATA) : "";
+                myDataProvider.MainCarriageATADateTime= shipment.MainCarriageATA;
                 myDataProvider.OnCarriageETA = shipment.OnCarriageETA != null ? String.Format("{0:dd MMM yyyy}", shipment.OnCarriageETA) : "";
                 myDataProvider.OnCarriageETA_DateTime = shipment.OnCarriageETA;
                 myDataProvider.TenantCountryCode = shipment.House != null ? shipment.House : "";
                 myDataProvider.TransportationType = shipment.TransportModeName;
                 myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
 
+                myDataProvider.TrailerNumber = shipment.TrailerNumber;
+                myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
+                myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
+                myDataProvider.OriginCountryName = shipment.FromCountryId;
                 if (shipment.ShipmentLevelCode == "C")
                 {
                     myDataProvider.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
@@ -2866,6 +2871,7 @@ namespace WebFreight.Web.WebServices
                     packageline.Notes = package.Notes;
                     packageline.PackageTare = package.Tare != null ? String.Format("{0:0,0.00}", package.Tare.Value) : null;
                     packageline.MarksAndNumbersOnly = package.MarksAndNumbers;
+                    packageline.Temperature = package.Temperature;
 
                     #region Car Details
                     packageline.Make = package.Make;
@@ -3260,7 +3266,6 @@ namespace WebFreight.Web.WebServices
                             newPackage.PackageTypeName = package.PackageTypeName;
                             newPackage.PackageVolume_Double = package.Volume;
                             newPackage.PackageGrossWeight = String.Format("{0:0,0.00}", package.Weight);
-
                             if (package.Length != null && package.Width != null && package.Height != null)
                             {
                                 newPackage.Dimensions = package.Length + "x" + package.Width + "x" + package.Height;

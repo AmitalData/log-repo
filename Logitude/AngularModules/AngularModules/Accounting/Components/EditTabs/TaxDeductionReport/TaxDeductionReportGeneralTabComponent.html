@@ -53,7 +53,7 @@
 
 
                                                 <td *ngIf="Faild" [style.text-align]="isRTL ? 'right' : 'left'" >
-                                                    <button style="display: inline-block;width:100px;" class="Button" [disabled]="Building" (click)="RunService(true)">{{'Accounting.O.Rebuild' | TextCodeTranslationPipe}}</button>
+                                                    <button style="display: inline-block;width:100px;" class="Button" [disabled]="Building" (click)="RunService()">{{'Accounting.O.Rebuild' | TextCodeTranslationPipe}}</button>
                                                 </td>
                                                 <td></td>
                                             </tr>

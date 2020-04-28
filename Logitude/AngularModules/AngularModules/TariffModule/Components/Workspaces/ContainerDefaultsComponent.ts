@@ -12,7 +12,7 @@ import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     selector: 'ContainerDefaultsComponent',
-    moduleId: module.id,
+    
     templateUrl: './ContainerDefaultsComponent.html',
 })
 

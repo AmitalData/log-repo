@@ -1222,7 +1222,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

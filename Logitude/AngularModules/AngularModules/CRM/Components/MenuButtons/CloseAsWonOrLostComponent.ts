@@ -10,7 +10,7 @@ import {StageListService} from '../../Services/StandardLists/StageListService';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CloseAsWonOrLostComponent.html',
 })
 

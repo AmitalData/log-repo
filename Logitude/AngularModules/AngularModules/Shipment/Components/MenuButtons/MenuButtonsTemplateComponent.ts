@@ -7,7 +7,7 @@ import {EntityPMService} from '../../../Infrastructure/Services/EntityPMService'
 import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MenuButtonsTemplateComponent.html',
 })
 

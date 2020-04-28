@@ -6,12 +6,9 @@ import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map'
-import { max } from 'rxjs/operator/max';
+
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TariffTabsContentComponent.html',
 })
 
@@ -27,7 +24,7 @@ export class TariffTabsContentComponent implements OnDestroy {
     public Tabs: TariffDetailsTab[] = [];   
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private EditTabTariffType = "VR";
-    constructor(public entityArgs: EntityArgs, private http: Http) {
+    constructor(public entityArgs: EntityArgs) {
         this.Listen();
         this.pageService = new PagerService();
     }

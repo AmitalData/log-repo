@@ -16,7 +16,7 @@ import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImagePara
 declare var UploadLogoFile, ArrayBufferToBase64;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ProjectsWorkspaceComponent.html',
 })
 

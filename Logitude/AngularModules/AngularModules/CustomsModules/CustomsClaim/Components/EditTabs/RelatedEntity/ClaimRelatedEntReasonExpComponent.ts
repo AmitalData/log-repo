@@ -15,7 +15,7 @@ import { ClaimExplanationCodeListService } from '../../../../../Customs/Services
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimRelatedEntReasonExpComponent.html',
 })
 

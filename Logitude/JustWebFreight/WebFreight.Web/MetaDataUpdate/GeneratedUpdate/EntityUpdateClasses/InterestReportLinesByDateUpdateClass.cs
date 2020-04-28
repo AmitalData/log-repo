@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportLinesByDateUpdateClass
    {  		
-		public const string HashString = "64b60583c671ed1fb5d7890f6c5319aa";
+		public const string HashString = "b6029e2cd0cced01a6ca18f127afbaa6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1290,7 +1290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportLinesByDateTextCode_InterestReportLinesByDateOPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReportLinesByDate.O.Percentage", DefaultText = "Percentage",LocalDefaultText = @"אחוז ריבית", ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode InterestReportLinesByDateTextCode_InterestReportLinesByDateOTotal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReportLinesByDate.O.Total", DefaultText = "Total",LocalDefaultText = "סה''כ", ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode InterestReportLinesByDateTextCode_InterestReportLinesByDateOTotal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReportLinesByDate.O.Total", DefaultText = "Total",LocalDefaultText = @"סה''כ", ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportLinesByDateTextCode_InterestReportLinesByDateOInterestDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReportLinesByDate.O.InterestDetails", DefaultText = "Interest Details",LocalDefaultText = @"פירוט ריבית", ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

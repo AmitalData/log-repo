@@ -10,7 +10,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
     selector: 'PreviewQuoteTemplateReportComponent',
-    moduleId: module.id,
+    
     templateUrl: './PreviewQuoteTemplateReportComponent.html',
 })
 
@@ -23,7 +23,7 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
     HeightPdf: number;
     isFromLibrary: boolean = false;
     AreaName: string;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();

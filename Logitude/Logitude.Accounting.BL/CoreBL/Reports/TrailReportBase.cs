@@ -407,6 +407,21 @@ into groupBy_currency
                 myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
                     .Where(a => a.Category1Id == _TrailReportParam.Category1);
             }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category2))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category2Id == _TrailReportParam.Category2);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category3))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category3Id == _TrailReportParam.Category3);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category4))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category4Id == _TrailReportParam.Category4);
+            }
             if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category5))
             {
                 myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
@@ -576,7 +591,12 @@ into groupBy_currency
                 }
                 if (!string.IsNullOrWhiteSpace(trailReportParam.Category1)
                     ||
-
+                    !string.IsNullOrWhiteSpace(trailReportParam.Category2)
+                    ||
+                    !string.IsNullOrWhiteSpace(trailReportParam.Category3)
+                    ||
+                    !string.IsNullOrWhiteSpace(trailReportParam.Category4)
+                    ||
                     !string.IsNullOrWhiteSpace(trailReportParam.Category5)
 
                     )

@@ -6,7 +6,7 @@ import { AccountingSettingPM } from '../../../../Common/EntityPMs/AccountingSett
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AccountingAdvancedAPSettingsComponent.html',
 })
 

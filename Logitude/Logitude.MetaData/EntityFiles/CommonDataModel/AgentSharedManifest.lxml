@@ -1823,10 +1823,10 @@
     FieldName="&quot;GrossWeight&quot;"
     OldNames="GrossWeight"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;AgentSharedManifest&quot;"
-    FieldsDataType="&quot;Double&quot;"
+    FieldsDataType="&quot;SigDouble&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -2882,11 +2882,11 @@
     <Feature
       Code="&quot;UPDATESHAREDAGENT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;AgentSharedManifest.Features.UpdateSharedAgent&quot;"
-      FeatureDefaultText="&quot;Update Shared Agent&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;AgentSharedManifest.Features.UpdateSharedAgent&quot;"
+      FeatureDefaultText="&quot;Update Shared Agent&quot;" />
   </AdditionalFeatures>
 </entity>

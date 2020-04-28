@@ -10,7 +10,7 @@ import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMSer
 
 declare var window: any;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './InterestPageComponent.html',
     providers: [EntityPMService],
 

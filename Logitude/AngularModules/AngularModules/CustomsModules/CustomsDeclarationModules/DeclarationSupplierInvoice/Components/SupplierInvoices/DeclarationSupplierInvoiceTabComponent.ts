@@ -28,7 +28,7 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 
 @Component({
     selector: 'DeclarationSupplierInvoiceTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './DeclarationSupplierInvoiceTabComponent.html',
     providers: [DeclarationExtendedListService]
  })

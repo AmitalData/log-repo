@@ -16,7 +16,7 @@ import {ContactPM} from '../../Common/EntityPMs/ContactPM';
 
 import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
 @Component({
-    moduleId: module.id,
+    
     selector: 'InviteCustomersComponent',
     templateUrl: './InviteCustomersComponent.html',
     //inputs: ['PartnerTypeId', , 'DateParameter', 'DataContext', 'OnCloseWindowEvent'],

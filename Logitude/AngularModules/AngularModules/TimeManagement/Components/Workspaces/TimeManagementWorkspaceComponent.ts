@@ -6,7 +6,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'TimeManagementWorkspaceComponent',
-    moduleId: module.id,
+    
     templateUrl: './TimeManagementWorkspaceComponent.html',
     providers: [EntityResourceService],
 })

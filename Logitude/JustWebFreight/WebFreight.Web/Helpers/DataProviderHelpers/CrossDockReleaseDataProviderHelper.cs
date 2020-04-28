@@ -89,6 +89,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     {
                         dataProvider.WarehouseCode = card.Code;
                         dataProvider.WarehouseName = card.EnglishName;
+                        dataProvider.TerminalCode = card.FirmCode;
                     }
 
                     AddressQuery addressQuery = new AddressQuery(tenant);
@@ -113,7 +114,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 }
 
                 dataProvider.TenantLogo = DataProviders.General.GetLogo(tenant);
-
+                
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
 
@@ -132,9 +133,23 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 {
                     CrossDockReleaseShipmentService crossDockReleaseShipmentService = new CrossDockReleaseShipmentService();
                     dataProvider = crossDockReleaseShipmentService.FullCrossDockReleaseProviderFromShipment(warehouseReleasePM.ShipmentId, dataProvider, warehouseReleasePM.Tenant);
+
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                    Shipment shipment = shipmentRepository.GetSingleShipment(warehouseReleasePM.ShipmentId, tenant);
+
+                    if (!string.IsNullOrEmpty(shipment.MasterShipmentDataId))
+                    {
+                        ShipmentMasterData masterData = (from a in shipmentRepository.context.ShipmentMasterDatas
+                                                         where a.Id == shipment.MasterShipmentDataId
+                                                         select a).FirstOrDefault();
+
+                        if (masterData != null)
+                        {
+                            dataProvider.ImportManifest = masterData.ImportManifest;
+                            dataProvider.MasterImportManifest = masterData.ImportManifest;
+                        }
+                    }
                 }
-
-
             }
 
             return dataProvider;
@@ -388,8 +403,26 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                             if(masterData != null)
                             {
                                 dataProvider.ImportManifest = masterData.ImportManifest;
+                                dataProvider.MasterImportManifest = masterData.ImportManifest;
                             }
                         }
+
+                        //if (shipment.ShipmentLevelCode == "H")
+                        //{
+                        //    if (!string.IsNullOrEmpty(shipment.MasterShipmentDataId))
+                        //    {
+                        //        Shipment masterShipment = shipmentRepository.GetSingleShipment(shipment.MasterShipmentDataId, tenant);
+                        //        if (masterShipment != null)
+                        //        {
+                        //            dataProvider.MasterImportManifest = masterShipment.ProjectNumber;
+                        //        }
+                        //    }
+                        //}
+
+                        //else
+                        //{
+                        //    dataProvider.MasterImportManifest = shipment.ProjectNumber;
+                        //}
                     }
                 }
 

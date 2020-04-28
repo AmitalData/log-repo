@@ -347,9 +347,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 					this.ObjectContext.SaveChanges();
 					AWBMessagesCCSTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					AWBMessagesCCSTypeUpdateClass.FillAWBMessagesCCSType();
 					scope.Complete();
 				}
+ 
+				AWBMessagesCCSTypeUpdateClass.FillAWBMessagesCCSType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BatchServicesDefinition", ObjectTables, BatchServicesDefinitionUpdateClass.HashString))
@@ -429,9 +432,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 					this.ObjectContext.SaveChanges();
 					BluesnapContractTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					BluesnapContractTypeUpdateClass.FillBluesnapContractType();
 					scope.Complete();
 				}
+ 
+				BluesnapContractTypeUpdateClass.FillBluesnapContractType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BluesnapTransaction", ObjectTables, BluesnapTransactionUpdateClass.HashString))
@@ -538,9 +544,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 					this.ObjectContext.SaveChanges();
 					PaymentChannelUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					PaymentChannelUpdateClass.FillPaymentChannel();
 					scope.Complete();
 				}
+ 
+				PaymentChannelUpdateClass.FillPaymentChannel();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentCurrency", ObjectTables, PaymentCurrencyUpdateClass.HashString))
@@ -566,9 +575,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 					this.ObjectContext.SaveChanges();
 					PaymentCurrencyUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					PaymentCurrencyUpdateClass.FillPaymentCurrency();
 					scope.Complete();
 				}
+ 
+				PaymentCurrencyUpdateClass.FillPaymentCurrency();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentMethod", ObjectTables, PaymentMethodUpdateClass.HashString))
@@ -594,9 +606,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 					this.ObjectContext.SaveChanges();
 					PaymentMethodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					PaymentMethodUpdateClass.FillPaymentMethod();
 					scope.Complete();
 				}
+ 
+				PaymentMethodUpdateClass.FillPaymentMethod();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("RecurringPeriod", ObjectTables, RecurringPeriodUpdateClass.HashString))
@@ -622,9 +637,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 					this.ObjectContext.SaveChanges();
 					RecurringPeriodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					RecurringPeriodUpdateClass.FillRecurringPeriod();
 					scope.Complete();
 				}
+ 
+				RecurringPeriodUpdateClass.FillRecurringPeriod();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TenantAddOn", ObjectTables, TenantAddOnUpdateClass.HashString))
@@ -758,9 +776,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 					this.ObjectContext.SaveChanges();
 					TenantTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					TenantTypeUpdateClass.FillTenantType();
 					scope.Complete();
 				}
+ 
+				TenantTypeUpdateClass.FillTenantType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("WebhookKeys", ObjectTables, WebhookKeysUpdateClass.HashString))

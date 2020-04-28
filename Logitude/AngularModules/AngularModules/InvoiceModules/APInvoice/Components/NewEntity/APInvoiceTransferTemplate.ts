@@ -28,7 +28,7 @@ import {APInvoicePMService} from '../../../../Invoice/Services/StandardPMs/APInv
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './APInvoiceTransferTemplate.html',
 })
 

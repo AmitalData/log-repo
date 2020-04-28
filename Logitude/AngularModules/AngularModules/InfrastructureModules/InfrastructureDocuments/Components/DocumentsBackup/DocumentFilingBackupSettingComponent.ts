@@ -1,5 +1,4 @@
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -11,12 +10,13 @@ import {DocumentFilingBackupSettingPMService} from '../../../../Common/Services/
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentFilingBackupSettingComponent',
     templateUrl: './DocumentFilingBackupSettingComponent.html',
 })
 
 export class DocumentFilingBackupSettingComponent extends BaseComponent implements OnInit {
+    public ObjectTableName: string = null;
     IsLoad: boolean = false;
     documentFilingBackupSettingPMService: DocumentFilingBackupSettingPMService;
     DataContext: any = this;

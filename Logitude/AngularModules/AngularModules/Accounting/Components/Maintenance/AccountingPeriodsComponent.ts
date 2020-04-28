@@ -25,7 +25,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AccountingPeriodsComponent',
     templateUrl: './AccountingPeriodsComponent.html',
     providers: [EntityArgs],

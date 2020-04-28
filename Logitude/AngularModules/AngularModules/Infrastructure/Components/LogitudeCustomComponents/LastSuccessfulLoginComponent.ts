@@ -1,4 +1,3 @@
-/// <reference path="../../../common/services/standardpms/userlastloginpmservice.ts" />
 declare var System: any;
 declare var window: any;
 import {AppTool} from '../../../Infrastructure/Tools';
@@ -9,7 +8,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import { Component, Input, ViewContainerRef, OnInit, ChangeDetectorRef, EventEmitter, Output, ViewChild} from '@angular/core';
 import {UserLastLoginPMService} from '../../../Common/Services/StandardPMs/UserLastLoginPMService';
 @Component({
-    moduleId: module.id,
+    
     selector: 'LastSuccessfulLoginComponent',
     templateUrl: './LastSuccessfulLoginComponent.html', 
     providers: [UserLastLoginPMService]

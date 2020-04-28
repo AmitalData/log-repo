@@ -1615,4 +1615,12 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;BookingPackage.M.ValueEditedByUser&quot;"
+      DefaultText="&quot;Value Edited by User, Double Click to Reset Calculated value&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
+  <AdditionalFeatures />
 </entity>

@@ -1742,6 +1742,94 @@
       LocalDefaultText="&quot;בשורה #lineNo לא ניתן להזין סכום גם בצד הזכות וגם בצד החובה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.PreviuosBankPage&quot;"
+      DefaultText="&quot;Previuos page&quot;"
+      LocalDefaultText="&quot;דף קודם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.CantNewBankPageDraft&quot;"
+      DefaultText="&quot;Can’t create new bank page, The previous page is not approved&quot;"
+      LocalDefaultText="&quot;לא ניתן ליצור דף בנק חדש, הדף הקודם עדיין בסטטוס טיוטה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.FromDateShouldBiggerPrevToDate&quot;"
+      DefaultText="&quot;From date should be bigger than the previous bank page to date&quot;"
+      LocalDefaultText="&quot;שדה מתאריך חייב להיות גדול מתאריך סגירה של דף קודם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.ToDateShouldBiggerFromDate&quot;"
+      DefaultText="&quot;To date should bigger/equal to from date&quot;"
+      LocalDefaultText="&quot; עד תאריך חייב להיות גדול/שווה מ-תאריך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.PageApprovedCantCancel&quot;"
+      DefaultText="&quot;The bank page is approved and can’t be cancelled&quot;"
+      LocalDefaultText="&quot;דף הבנק בסטטוס מאושר ולא ניתן לבטל אותו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.StartBalanceShouldEqualCloseBalance&quot;"
+      DefaultText="&quot;The start balance of the bank page should be equal the close balance of the pervious page&quot;"
+      LocalDefaultText="&quot;יתרת פתיחה של הדף חייבת להיות שווה ליתרת סגירה של דף קודם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.RefDateShouldBiggerOrSmaller&quot;"
+      DefaultText="&quot;The reference date should be bigger or equal than start date and smaller or equal than end date&quot;"
+      LocalDefaultText="&quot;תאריך האסמכתא חייב להיות גדול/שווה לתאריך התחלה של הדף וקטן/שווה לתאריך סיום של הדף&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.StartBalanceNotEqualEndBalance&quot;"
+      DefaultText="&quot;Start balance + lines doesn't equal to End Balance&quot;"
+      LocalDefaultText="&quot;סכום יתרת פתיחה + שורות לא תואם ליתרת סגירה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.Transactions&quot;"
+      DefaultText="&quot;Transactions&quot;"
+      LocalDefaultText="&quot;תנועות הכרטיס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.BankAccountTransactions&quot;"
+      DefaultText="&quot;Bank Account Transactions&quot;"
+      LocalDefaultText="&quot;תנועות הבנק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.SumOfXRowsSelected&quot;"
+      DefaultText="&quot;Total of %Number rows selected&quot;"
+      LocalDefaultText="&quot;סה”כ %Number שורות נבחרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.Difference&quot;"
+      DefaultText="&quot;Difference&quot;"
+      LocalDefaultText="&quot;הפרש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ReconcileExternalPage.O.Sum&quot;"
+      DefaultText="&quot;Sum&quot;"
+      LocalDefaultText="&quot;סכום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;LOADBANKPAGEMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;YearTransfer.Features.LoadBankPageMENU&quot;"
+      FeatureDefaultText="&quot;Load Bank Page&quot;" />
+  </AdditionalFeatures>
 </entity>

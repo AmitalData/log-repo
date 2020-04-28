@@ -7,7 +7,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ARInvoiceStockListService } from '../../../Invoice/Services/StandardLists/ARInvoiceStockListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ManageStocksComponent.html',
 })
 

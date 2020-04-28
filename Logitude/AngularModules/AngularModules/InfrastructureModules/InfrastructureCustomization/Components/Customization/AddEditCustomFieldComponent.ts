@@ -15,12 +15,12 @@ import {ObjectFieldPMService} from '../../../../Infrastructure/Services/Standard
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 import {LoginService} from '../../../../Infrastructure/Services/LoginService';
-import {Headers} from '@angular/http';
+
 
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditCustomFieldComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })

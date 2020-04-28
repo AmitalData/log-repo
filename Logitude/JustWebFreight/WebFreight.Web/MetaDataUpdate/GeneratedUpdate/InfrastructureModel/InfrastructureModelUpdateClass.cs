@@ -541,9 +541,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 					this.ObjectContext.SaveChanges();
 					DWCategoriesUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					DWCategoriesUpdateClass.FillDWCategories();
 					scope.Complete();
 				}
+ 
+				DWCategoriesUpdateClass.FillDWCategories();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("DWObjectField", ObjectTables, DWObjectFieldUpdateClass.HashString))
@@ -704,9 +707,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 					this.ObjectContext.SaveChanges();
 					EventTypeCategoryUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					EventTypeCategoryUpdateClass.FillEventTypeCategory();
 					scope.Complete();
 				}
+ 
+				EventTypeCategoryUpdateClass.FillEventTypeCategory();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("FollowUp", ObjectTables, FollowUpUpdateClass.HashString))
@@ -953,9 +959,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 					this.ObjectContext.SaveChanges();
 					PrepaidCollectUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					PrepaidCollectUpdateClass.FillPrepaidCollect();
 					scope.Complete();
 				}
+ 
+				PrepaidCollectUpdateClass.FillPrepaidCollect();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QueueMessageMoreDetails", ObjectTables, QueueMessageMoreDetailsUpdateClass.HashString))
@@ -1062,9 +1071,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 					this.ObjectContext.SaveChanges();
 					SchedulerProcedureUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					SchedulerProcedureUpdateClass.FillSchedulerProcedure();
 					scope.Complete();
 				}
+ 
+				SchedulerProcedureUpdateClass.FillSchedulerProcedure();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("SharedLogisticsInvitationStatus", ObjectTables, SharedLogisticsInvitationStatusUpdateClass.HashString))
@@ -1252,9 +1264,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 					this.ObjectContext.SaveChanges();
 					VolumeUnitUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					VolumeUnitUpdateClass.FillVolumeUnit();
 					scope.Complete();
 				}
+ 
+				VolumeUnitUpdateClass.FillVolumeUnit();
+
+ 
 			}
 
         }

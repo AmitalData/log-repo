@@ -14,7 +14,7 @@ import { PriceStepPMService } from '../../../../Infrastructure/Services/Standard
 
 @Component({
     selector: 'PriceStepsGeneralTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './PriceStepsGeneralTabComponent.html',
 })
 

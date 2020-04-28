@@ -18,7 +18,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 @Component({
     selector: 'NewDeclarationComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewDeclarationComponent.html',
 })
 

@@ -14,7 +14,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TranslateLabelsComponent.html',
 })
 

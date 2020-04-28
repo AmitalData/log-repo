@@ -667,4 +667,6 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

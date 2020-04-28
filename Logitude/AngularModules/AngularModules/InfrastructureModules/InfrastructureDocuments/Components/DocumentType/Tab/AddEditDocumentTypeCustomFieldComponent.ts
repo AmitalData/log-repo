@@ -15,7 +15,7 @@ import {DocumentTypeCustomFieldsViewModel} from '../ViewModel/DocumentTypeCustom
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AddEditDocumentTypeCustomField',
     templateUrl: './AddEditDocumentTypeCustomFieldComponent.html',
     providers: [DocumentTypeCustomFieldService],

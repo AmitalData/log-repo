@@ -58,7 +58,7 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 
 @Component({
     selector: 'SInvoiceClassificationTabContent',
-    moduleId: module.id,
+    
     templateUrl: './SInvoiceClassificationTabComponent.html',
     providers: [DeclarationExtendedListService]
 })

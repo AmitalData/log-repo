@@ -19,7 +19,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewPartnerTamplate.html',    
 })
 
@@ -43,7 +43,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
     public IsWarehouseTypeCodeVisible: boolean = false;
     public IsWarehouseFirmCodeVisible: boolean = false;
     public DomainService: PartnersDomainService;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         super();

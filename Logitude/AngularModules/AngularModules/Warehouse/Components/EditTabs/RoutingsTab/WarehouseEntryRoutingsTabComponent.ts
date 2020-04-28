@@ -1,4 +1,3 @@
-/// <reference path="../../../tools.ts" />
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -17,11 +16,12 @@ import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
 
 @Component({
     selector: 'WarehouseEntryRoutingsTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './WarehouseEntryRoutingsTabComponent.html',
 })
 
 export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
+  public CarrierDependencyProperty1: any;
 
     public EntityPM: WarehouseEntryPM;
     public ObjectTableName: string = null;

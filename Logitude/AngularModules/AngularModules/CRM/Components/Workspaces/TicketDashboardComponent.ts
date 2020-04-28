@@ -5,7 +5,7 @@ import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponen
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TicketDashboardComponent.html',
 })
 

@@ -10,12 +10,17 @@ import {AWBOverviewTabComponent} from '../AWBWizard/Overview/AWBOverviewTabCompo
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './SendFSRComponent.html',
 })
 
 export class SendFSRComponent {
+  public SendingCount: number = 0;
+  public StockRemainingBefore: number = 0;
+  public StockRemainingAfter: number = 0;
+  public StockResultIsVisible: boolean = false;
+
     private entityPM: ShipmentPM;
     private Tenant: number;
     private tenantZeroAirlineField: string;

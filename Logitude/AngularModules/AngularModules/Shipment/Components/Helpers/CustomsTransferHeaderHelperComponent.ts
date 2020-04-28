@@ -3,7 +3,6 @@ import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { CustomsTransferHeaderPM } from '../../EntityPMs/CustomsTransferHeaderPM';
 
 @Component({
-    moduleId: module.id,
     templateUrl: "./CustomsTransferHeaderHelperComponent.html",
 })
 

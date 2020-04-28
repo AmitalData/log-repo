@@ -13,7 +13,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'PageAreaHeaderFooterComponent',
-    moduleId: module.id,
+    
     templateUrl: './PageAreaHeaderFooterComponent.html',
 })
 

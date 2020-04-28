@@ -12,7 +12,7 @@ import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/U
 import { ResourceLoader } from '@angular/compiler';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FieldTemplateComponent.html',
 })
 
@@ -25,8 +25,8 @@ export class FieldTemplateComponent {
     public IsSpotLightTemplate: boolean = false;
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
-    @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
-    constructor(private _ListComponentArgs: ListComponentArgs) {
+    @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
+    constructor() {
 
     }
 

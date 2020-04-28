@@ -6,7 +6,7 @@ import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import {PhysicalCheckPMService} from '../../Services/StandardPMs/PhysicalCheckPMService'
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsSpotlightComponent.html',
 })
 

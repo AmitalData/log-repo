@@ -5,7 +5,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'TimeSheetWorkspaceComponent',
-    moduleId: module.id,
+    
     templateUrl: './TimeSheetWorkspaceComponent.html',
     providers: [EntityResourceService],
 

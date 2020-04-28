@@ -14,15 +14,12 @@ import {ReportsTemplateList} from '../../Common/EntityLists/ReportsTemplateList'
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {ReportBuildResult} from '../DataContracts/ReportBuildResult';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
-
-import {Observable}     from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
 import { ReportsTemplateListExtendedService } from '../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
-import { List } from '../../Infrastructure/DataContracts/Dashboard/List';
 import { QueryFilterItem } from './Filters/QueryFilterItem';
+import { interval } from 'rxjs';
+import { timeInterval } from 'rxjs/operators';
 
 @Component({
-    moduleId: './Report/Components/',
     selector: 'ReportsPreviewComponent',
     templateUrl: 'ReportsPreviewComponent.html',
     providers: [ReportService],
@@ -52,8 +49,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     ReportsTemplateLists: ReportsTemplateList[];
     ReportFilterConmponent: any;
     FilterConrolHeight: number = null;
-    @ViewChild('FiltersLocation', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
-    @ViewChild('CustomerChild', { read: ViewContainerRef }) customerViewContainerRef: ViewContainerRef;
+    @ViewChild('FiltersLocation', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('CustomerChild', { read: ViewContainerRef, static: false }) customerViewContainerRef: ViewContainerRef;
     ReportsRunUsingWR: boolean = false;
     IsUsedReportsRunUsingWR: boolean = false;
 
@@ -97,7 +94,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     QueryFilterItems: Array<QueryFilterItem>;
     SetReportFilterItems(reportFilterItems: Array<QueryFilterItem>) {
-        this.IsSchedulerReport = true;
+      this.IsSchedulerReport = true;
         if (reportFilterItems && reportFilterItems.length!=0) {
             this.QueryFilterItems = reportFilterItems;
         }
@@ -169,7 +166,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
             .then(cmpRef => {
                 this.ReportFilterConmponent = cmpRef.instance;
                 if (this.IsSchedulerReport) {
-                    this.ReportFilterConmponent.SetQueryFilterItems(this.QueryFilterItems);
+                  this.ReportFilterConmponent.SetQueryFilterItems(this.QueryFilterItems);
+                  this.ReportFilterConmponent.SetRunReportTitle();
                 }
 
                 if (this.ReportFilterConmponent['InitializeComponent']) {
@@ -481,8 +479,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     //Stimul Soft Report Timer
 
-    initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
-        return Observable.interval(2000).timeInterval();
+  initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
+    return interval(2000).pipe(timeInterval());
     }
 
 
@@ -556,7 +554,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     //Wait Result Stimul Timer
     IsStartTimerWaitingFirstStimulReportBuildRunning: boolean = false;
     initializeStartTimerWaitingFirstStimulReportBuild() {
-        return Observable.interval(50000).timeInterval();
+      return interval(50000).pipe(timeInterval());
+
     }
     private StartTimerWaitingFirstStimulReportBuildsub: any = null;
     StartTimerWaitingFirststimulReportBuild() {
@@ -590,7 +589,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     //Wait Result Stimul Timer
     IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning: boolean = false;
     initializeStartTimerChangeBusyIndicatorMessageAfter50Sec() {
-        return Observable.interval(50000).timeInterval();
+      return interval(50000).pipe(timeInterval());
+
     }
     private StartTimerChangeBusyIndicatorMessageAfter50Secsub: any = null;
     StartTimerChangeBusyIndicatorMessageAfter50Sec() {

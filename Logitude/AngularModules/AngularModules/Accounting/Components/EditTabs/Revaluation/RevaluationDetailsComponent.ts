@@ -12,11 +12,13 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './RevaluationDetailsComponent.html',
 })
 
 export class RevaluationDetailsComponent extends BaseComponent {
+  public IsJournalLinesVisibile: boolean = false;
+
 
     DataContext: any = this;
     ObjectTableName: string = "Revaluation";

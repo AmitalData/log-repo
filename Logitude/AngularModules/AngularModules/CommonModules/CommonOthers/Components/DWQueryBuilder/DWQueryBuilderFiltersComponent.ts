@@ -11,13 +11,13 @@ declare var window: any;
 
 @Component({
     selector: 'DWQueryBuilderFilters',
-    moduleId: module.id,
+    
     templateUrl: './DWQueryBuilderFiltersComponent.html',
     inputs: ['SelectedFiltersDataSource', 'DataContext', 'SelectedFiltersDataSourceChanged']
 })
 
 export class DWQueryBuilderFiltersComponent implements OnInit {
-
+  public Types: any[] = [];
     SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
     //allFieldsWithChildrenDataSource: DWObjectFieldsDetails[] = [];
     public AndOrOps = ["And", "Or"];

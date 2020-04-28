@@ -17,7 +17,7 @@ import {GroupByClass} from '../../../Infrastructure/DataContracts/Dashboard/Grou
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedManifestsWork',
     templateUrl: './SharedManifestsWorkSpaces.html',
     providers: [SharedAgentManifestService],

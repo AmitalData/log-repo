@@ -51,7 +51,7 @@ import { AmitalGatewayUtil } from "../../../Infrastructure/Utilities/AmitalGatew
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierWorksheetListTemplate.html',
 })
 
@@ -108,7 +108,7 @@ export class CourierWorksheetListTemplate {
     }
 
     //  @ViewChild( SplitButtonComponent)  public MySplitButtonComponent: SplitButtonComponent = new SplitButtonComponent(null,null);
-    //@ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
+    //@ViewChild('ShortTitle', { read: ViewContainerRef, static: false }) ShortTitleViewContainerRef: ViewContainerRef;
     //@ViewChild('MySplitButtonComponent', { read: SplitButtonComponent }) MySplitButtonComponent: SplitButtonComponent;
 
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private CD: ChangeDetectorRef) {

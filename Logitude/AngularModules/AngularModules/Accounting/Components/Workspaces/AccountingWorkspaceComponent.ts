@@ -8,7 +8,7 @@ declare var window: any;
 
 @Component({
     selector: 'FullAccountingComponent',
-    moduleId: module.id,
+    
     templateUrl: './AccountingWorkspaceComponent.html',
 })
 

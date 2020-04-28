@@ -14,7 +14,7 @@ import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsReq
 import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CMConnectedDeclarationTabComponent.html',
     providers: [CourierMasterService]
 })

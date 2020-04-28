@@ -1,33 +1,17 @@
-
-
 import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {GLAccountExtendedListService} from '../../../Services/ExtendedLists/GLAccountExtendedListService';
-import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {GLAccountPM} from '../../../EntityPMs/GLAccountPM';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {GLAccountList} from '../../../EntityLists/GLAccountList';
 import {GLAccountExtendedPMService}  from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';
-import {GLAccountPMService}  from '../../../Services/StandardPMs/GLAccountPMService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {GLAccountAdditionalDataTabComponent} from './GLAccountAdditionalDataTabComponent';
-import {CurrencyPM} from '../../../../Common/EntityPMs/CurrencyPM';
-import {AppTool} from '../../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {GLAccountCurrencyExtendedPMService} from '../../../Services/ExtendedPMs/GLAccountCurrencyExtendedPMService';
 import {GLAccountCurrencyPM} from '../../../EntityPMs/GLAccountCurrencyPM';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CardList } from '../../../../Common/EntityLists/CardList';
-import { NullAstVisitor } from '@angular/compiler';
-
 
 @Component({
-    moduleId: module.id,
     templateUrl: './ConnectWithGLAccountComponent.html',
-
 })
 
 

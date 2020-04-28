@@ -36,7 +36,7 @@ declare var window: any;
 
 @Component({
     selector: 'MainTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './TicketMainTabComponent.html',
 })
 

@@ -11,7 +11,7 @@ import {RatesTableListService} from '../../../Infrastructure/Services/StandardLi
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './RatesHistoryComponent.html',
 })
 

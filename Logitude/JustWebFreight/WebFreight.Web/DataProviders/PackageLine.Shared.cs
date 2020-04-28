@@ -151,6 +151,9 @@ namespace WebFreight.Web.DataProviders
         public string ChassisNumber { get; set; }
         public string RegistrationNumber { get; set; }
         public string CountryName { get; set; }
+        public string Temperature { get; set; }
+
+
     }
 
     public class InsidePackageLine

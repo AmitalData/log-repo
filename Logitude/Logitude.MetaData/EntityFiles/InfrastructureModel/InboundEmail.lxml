@@ -4,9 +4,10 @@
   ObjectTableName="&quot;InboundEmail&quot;"
   IsNew="false"
   DBTableName="&quot;InboundEmails&quot;"
-  OldDBTableName="&quot;InboundEmails&quot;"
+  DBTableOldNames="InboundEmails"
   ObjectTableSingular="&quot;Inbound Email&quot;"
   ObjectTablePlural="&quot;InboundEmails&quot;"
+  DescriptionDefaultText="&quot;Inbound Email For Testing!.&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
   HasHelper="false"
@@ -64,7 +65,7 @@
   <field
     Id="&quot;07215e85-386b-4c1a-94e2-b851d3020e5a&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -112,6 +113,7 @@
     ListLocalDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -136,7 +138,7 @@
   <field
     Id="&quot;31f8d284-782e-4a33-8894-9ba8283d8b82&quot;"
     FieldName="&quot;IsRejected&quot;"
-    OldFieldName="&quot;IsRejected&quot;"
+    OldNames="IsRejected"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -184,6 +186,7 @@
     ListLocalDefaultText="&quot;IsRejected&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -208,7 +211,7 @@
   <field
     Id="&quot;38f40682-6365-4d32-96b6-64239166ce3b&quot;"
     FieldName="&quot;AnalyzeQueueId&quot;"
-    OldFieldName="&quot;AnalyzeQueueId&quot;"
+    OldNames="AnalyzeQueueId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -256,6 +259,7 @@
     ListLocalDefaultText="&quot;AnalyzeQueueId&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -280,7 +284,7 @@
   <field
     Id="&quot;d70f3301-d52c-4435-8fec-8b9282d3e8d7&quot;"
     FieldName="&quot;EntityId&quot;"
-    OldFieldName="&quot;EntityId&quot;"
+    OldNames="EntityId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -328,6 +332,7 @@
     DefaultText="&quot;Entity&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -353,7 +358,7 @@
   <field
     Id="&quot;32e2bf4a-b42b-43a7-9a25-880f335d69a7&quot;"
     FieldName="&quot;Uniquekey&quot;"
-    OldFieldName="&quot;Uniquekey&quot;"
+    OldNames="Uniquekey"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -402,6 +407,7 @@
     DefaultText="&quot;Unique key&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -427,7 +433,7 @@
   <field
     Id="&quot;dab89cd4-584c-4aaa-8acf-7d93981ca506&quot;"
     FieldName="&quot;CreateDate&quot;"
-    OldFieldName="&quot;CreateDate&quot;"
+    OldNames="CreateDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -479,6 +485,7 @@
     ListLableDefaultText="&quot;Create Date&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -504,7 +511,7 @@
   <field
     Id="&quot;0f1ab551-5c17-48c1-b7e5-74da632ea99b&quot;"
     FieldName="&quot;UpdateDate&quot;"
-    OldFieldName="&quot;UpdateDate&quot;"
+    OldNames="UpdateDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -556,6 +563,7 @@
     ListLableDefaultText="&quot;Update Date&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -581,7 +589,7 @@
   <field
     Id="&quot;44123709-c5bd-4f8d-8e78-c8ab1353adfd&quot;"
     FieldName="&quot;ObjectTableId&quot;"
-    OldFieldName="&quot;ObjectTableId&quot;"
+    OldNames="ObjectTableId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -631,6 +639,9 @@
     DefaultText="&quot;Object Table&quot;"
     IsNullable="false"
     IsForeignKey="true"
+    ForeignEntity="ObjectTable"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="ObjectTable"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -652,13 +663,11 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false"
-    ForeignEntity="ObjectTable"
-    NavigationPropertyName="ObjectTable" />
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;e9cfe8e1-ed73-4233-b578-a19cf9f35257&quot;"
     FieldName="&quot;CreatedByContactId&quot;"
-    OldFieldName="&quot;CreatedByContactId&quot;"
+    OldNames="CreatedByContactId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -708,6 +717,9 @@
     DefaultText="&quot;Created by&quot;"
     IsNullable="false"
     IsForeignKey="true"
+    ForeignEntity="Contact"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="CreatedByContact"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -729,13 +741,11 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false"
-    ForeignEntity="Contact"
-    NavigationPropertyName="CreatedByContact" />
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;e19d2d53-5c31-4e46-b773-2845b95f4178&quot;"
     FieldName="&quot;ObjectTableName&quot;"
-    OldFieldName="&quot;ObjectTableName&quot;"
+    OldNames="ObjectTableName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -786,6 +796,7 @@
     ListLableDefaultText="&quot;ObjectTableName&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -811,7 +822,7 @@
   <field
     Id="&quot;5963fd2a-b1d0-49e8-8564-dba4705f7ffa&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -862,6 +873,7 @@
     ListLableDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -887,7 +899,7 @@
   <field
     Id="&quot;e563a506-9b0c-4245-b5b8-7e66c9a317d3&quot;"
     FieldName="&quot;InboundEmailLines&quot;"
-    OldFieldName="&quot;InboundEmailLines&quot;"
+    OldNames="InboundEmailLines"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -936,6 +948,7 @@
     ListLocalDefaultText="&quot;InboundEmailLines&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -963,7 +976,7 @@
   <field
     Id="&quot;d575cffb-09ad-4d7d-b2e9-fe5c5112d7e5&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="true"
     IsChecked="false"
     IsDeleted="false"
@@ -1007,6 +1020,7 @@
     DefaultText="&quot;Search&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1118,12 +1132,6 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;InboundEmail.O.TableDescription&quot;"
-      DefaultText="&quot;Inbound Email For Testing!.&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

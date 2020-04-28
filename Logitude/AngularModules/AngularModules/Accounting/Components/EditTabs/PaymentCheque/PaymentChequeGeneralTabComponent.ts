@@ -22,7 +22,7 @@ import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMS
 
 @Component({
     selector: 'PaymentChequeGeneralTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './PaymentChequeGeneralTabComponent.html',
 })
 

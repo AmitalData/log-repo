@@ -35,7 +35,7 @@ import { DeclarationEventManager } from '../../../../Customs/Utilities/Declarati
 import {ControlsIdCounter} from '../../../../Infrastructure/Utilities/ControlsIdCounter';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationSplitComponent.html',
 })
 

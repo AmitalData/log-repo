@@ -1590,4 +1590,6 @@
         IsCloseField="false" />
     </DataContract>
   </DataContracts>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

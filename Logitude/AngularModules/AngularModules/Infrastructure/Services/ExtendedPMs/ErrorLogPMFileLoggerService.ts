@@ -11,7 +11,7 @@ import { SessionInfo } from '../../Utilities/SessionInfo';
 import { ErrorLogPM } from '../../EntityPMs/ErrorLogPM';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class ErrorLogPMFileLoggerService {
@@ -25,7 +25,7 @@ export class ErrorLogPMFileLoggerService {
     get(id: string) {
         var url = this._apiUrl + '/GetSingle?' + 'appSettingKeyValueIsLogUntilDateyyyyMMdd=' + id;
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
                 if (response instanceof HttpResponse) {
                     var pm = response;
@@ -45,7 +45,7 @@ export class ErrorLogPMFileLoggerService {
     insert(entityPM: ErrorLogPM) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
             var errorsArray = validator.Validate("ErrorLog", entityPM);
@@ -75,7 +75,7 @@ export class ErrorLogPMFileLoggerService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }

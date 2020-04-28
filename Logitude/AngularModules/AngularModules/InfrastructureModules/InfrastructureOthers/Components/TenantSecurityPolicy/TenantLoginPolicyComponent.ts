@@ -19,7 +19,7 @@ import {UserExtendedPMService} from '../../../../Common/Services/ExtendedPMs/Use
 
 @Component({
     selector: 'TenantLoginPolicyComponent',
-    moduleId: module.id,
+    
     templateUrl: './TenantLoginPolicyComponent.html',
     providers: [TenantLoginPolicyPMService],
 })

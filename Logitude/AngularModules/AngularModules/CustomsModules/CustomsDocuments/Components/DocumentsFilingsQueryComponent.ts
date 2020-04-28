@@ -17,7 +17,7 @@ import {DocumentsFilingViewsExtService} from '../../../Common/Services/ExtendedL
 import {DocumentsFilingList}  from '../../../Common/EntityLists/DocumentsFilingList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DocumentsFilingsQueryComponent.html',
 })
 

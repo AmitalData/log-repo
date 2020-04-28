@@ -25,7 +25,7 @@ import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDa
 declare var insertAtSubject: any;
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewDocumentType',
     templateUrl: './NewDocumentTypeComponent.html',
     providers: [DocumentTypePMService, DocumentTypePMExtendedService]

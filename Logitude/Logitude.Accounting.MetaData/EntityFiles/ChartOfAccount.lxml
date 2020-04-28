@@ -1193,6 +1193,71 @@
         IsCompositKey="false" />
     </DataContract>
   </DataContracts>
-  <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;General.MC.ACC.ChartOfAccounts&quot;"
+      DefaultText="&quot;Chart of Accounts&quot;"
+      LocalDefaultText="&quot;לוח חשבונות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ChartOfAccounts.O.CodeAlreadyExists&quot;"
+      DefaultText="&quot;The Code is used by another Chart Of Account&quot;"
+      LocalDefaultText="&quot;הקוד קיים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ChartOfAccounts.O.CannotBeItself&quot;"
+      DefaultText="&quot;Cannot be a parent of itself&quot;"
+      LocalDefaultText="&quot;קבוצת מאזן לא יכולה לשמש קוד אב של עצמה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ChartOfAccounts.O.ParentDoesNotExist&quot;"
+      DefaultText="&quot;Parent does not exist&quot;"
+      LocalDefaultText="&quot;קוד אב לא קיים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ChartOfAccounts.O.WrongParentType&quot;"
+      DefaultText="&quot;The type of parent chart of account differs from this chart of account&quot;"
+      LocalDefaultText="&quot;סוג קבוצת מאזן שונה מסוג של קוד אב&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ChartOfAccounts.O.ParentIsChild&quot;"
+      DefaultText="&quot;Can't connect to this account since it's already defined as a  child for the current account&quot;"
+      LocalDefaultText="&quot;לא ניתן לקשר כרטיס זה כאב מכיוון שהוא מוגדר כבר כבן לכרטיס&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;GENERAL&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;ChartOfAccount.Features.General&quot;"
+      FeatureDefaultText="&quot;General&quot;" />
+    <Feature
+      Code="&quot;EVENTS&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;ChartOfAccount.Features.Events&quot;"
+      FeatureDefaultText="&quot;Events&quot;" />
+    <Feature
+      Code="&quot;CHARTOFACCOUNTSMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;ChartOfAccount.Features.ChartOfAccountsMenu&quot;"
+      FeatureDefaultText="&quot;Chart of Accounts&quot;" />
+  </AdditionalFeatures>
 </entity>

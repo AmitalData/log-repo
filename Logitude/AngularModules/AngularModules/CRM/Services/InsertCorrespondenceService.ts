@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {CorrespondencePM} from '../EntityPMs/CorrespondencePM';
 import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
 import {EntityPMServiceResponse} from '../../Infrastructure/DataContracts/EntityPMServiceResponse';
@@ -20,7 +20,7 @@ export class InsertCorrespondenceService {
 
     insert(entityPM: CorrespondencePM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var validator: ClassLevelValidator;
 
@@ -51,7 +51,7 @@ export class InsertCorrespondenceService {
                 response.HasError = true;
                 response.ErrorsArray = errorsArray;
 
-                return Observable.of(response);
+                return of(response);
             }
         });
     }

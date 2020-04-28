@@ -39,7 +39,7 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendDeclarationComponent',
     templateUrl: "SendDeclarationComponent.html",
 })

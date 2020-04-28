@@ -26,7 +26,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'QuoteTemplateTotalPerContainerSetting',
-    moduleId: module.id,
+    
     templateUrl: 'QuoteTemplateTotalPerContainerSetting.html',
 })
 

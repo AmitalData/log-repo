@@ -6,7 +6,7 @@ import { QueryPM } from '../../EntityPMs/QueryPM';
 import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ChooseUserComponent.html',
 })
 

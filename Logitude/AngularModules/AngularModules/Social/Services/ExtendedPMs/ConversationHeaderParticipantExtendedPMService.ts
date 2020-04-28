@@ -2,7 +2,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ConversationHeaderParticipantPM} from '../../EntityPMs/ConversationHeaderParticipantPM';
@@ -160,7 +160,7 @@ export class ConversationHeaderParticipantExtendedPMService {
 
 
     SaveConversationHeaderParticipantPMLists(conversationHeaderParticipantPMLists: any) {
-        return Observable.defer(() => {
+        return defer(() => {
 
 
             return this._http.post(this._apiUrl + '/PostSaveConversationHeaderParticipantPMLists', JSON.stringify(conversationHeaderParticipantPMLists), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {

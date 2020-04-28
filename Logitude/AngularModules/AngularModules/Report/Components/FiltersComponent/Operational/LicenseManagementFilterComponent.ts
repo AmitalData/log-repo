@@ -7,7 +7,7 @@ import {QueryFilterItem} from '../../../Components/Filters/QueryFilterItem';
 import {ReportsPreviewComponent} from '../../../Components/ReportsPreviewComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LicenseManagementFilterComponent.html',
 })
 

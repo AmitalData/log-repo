@@ -26,7 +26,7 @@ import {CountryFlagPipe} from '../../../../Controls/Pipes/CountryFlagPipe';
 
 @Component({
     selector: 'OpportunityProductsTabComponent', 
-    moduleId: module.id,
+    
     templateUrl: './OpportunityProductsTabComponent.html',
 })
 

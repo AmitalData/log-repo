@@ -21,7 +21,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsCollateralComponent.html',
 })
 

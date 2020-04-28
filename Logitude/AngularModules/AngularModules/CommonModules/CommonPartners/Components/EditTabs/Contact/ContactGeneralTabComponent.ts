@@ -5,14 +5,14 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {ContactInputTemplate, ContactInputTemplateArgs} from '../../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContactGeneralTabComponent.html',
 })
 
 export class ContactGeneralTabComponent {
     public EntityPM: ContactPM;
     public ObjectTableName: string = "Contact";
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.RunComponent();

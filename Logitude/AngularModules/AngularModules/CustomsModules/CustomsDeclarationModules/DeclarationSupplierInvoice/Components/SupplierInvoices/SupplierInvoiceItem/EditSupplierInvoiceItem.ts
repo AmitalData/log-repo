@@ -30,7 +30,7 @@ import {ObjectsLocator} from '../../../../../../Infrastructure/Locators/ObjectsL
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditSupplierInvoiceItem.html',
 })
 export class EditSupplierInvoiceItem extends BaseComponent{

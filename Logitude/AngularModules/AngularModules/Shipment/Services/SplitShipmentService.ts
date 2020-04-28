@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ShipmentPM} from '../EntityPMs/ShipmentPM';
@@ -18,7 +18,7 @@ export class SplitShipmentService {
     }
 
     Split(entityPM: SplitShipmentHelper) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var mappedEntity: SplitShipmentHelper = this.MapSplitShipmentHelper(entityPM, false);
 

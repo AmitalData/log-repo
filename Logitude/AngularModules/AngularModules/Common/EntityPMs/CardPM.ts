@@ -239,6 +239,16 @@ export class CardPM {
     public set StateName(newValue: string) { if (this.stateName != newValue) { this.stateName = newValue; this.MarkAsDirty("StateName"); } }
        
 	 
+    private rankId: string;
+    public get RankId() { return this.rankId; }
+    public set RankId(newValue: string) { if (this.rankId != newValue) { this.rankId = newValue; this.MarkAsDirty("RankId"); } }
+       
+	 
+    private industryId: string;
+    public get IndustryId() { return this.industryId; }
+    public set IndustryId(newValue: string) { if (this.industryId != newValue) { this.industryId = newValue; this.MarkAsDirty("IndustryId"); } }
+       
+	 
     private customAgent: any;
     public get CustomAgent() { return this.customAgent; }
     public set CustomAgent(newValue: any) { if (this.customAgent != newValue) { this.customAgent = newValue; this.MarkAsDirty("CustomAgent"); } }

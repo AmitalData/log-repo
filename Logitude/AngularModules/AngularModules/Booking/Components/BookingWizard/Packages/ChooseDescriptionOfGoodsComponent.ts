@@ -10,7 +10,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 
 @Component({
     selector: 'ChooseDescriptionOfGoodsComponent',
-    moduleId: module.id,
+    
     templateUrl: './ChooseDescriptionOfGoodsComponent.html',
 })
 

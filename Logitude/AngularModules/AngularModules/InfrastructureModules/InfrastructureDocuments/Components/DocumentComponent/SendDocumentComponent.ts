@@ -48,7 +48,7 @@ declare var htmlComponentProparitiesTrue, GetPlainTextFromHtml, htmlComponentPro
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendDocument',
     templateUrl: './SendControl.html',
     providers: [CommunicationLogExtendedPMService, CommunicationAttachmentExtendedPMService, DocumentOutPMService, ServiceArgs, DocumentTypeTemplatePMService, DocumentTypeTemplateListExtendedService, HtmlEditorService, DocumentsFilingExtendedPMService, DocumentExtendedService, DocumentTypePMExtendedService, DocumentTypeListService],

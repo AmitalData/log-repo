@@ -18,7 +18,7 @@ import {ComputingPartnerTranslationPM} from '../../../Common/EntityPMs/Computing
 declare var window: any;
 @Component({
     selector: 'ComputingPartnerTranslateComponent',
-    moduleId: module.id,
+    
     templateUrl: './ComputingPartnerTranslateComponent.html',
 })
 

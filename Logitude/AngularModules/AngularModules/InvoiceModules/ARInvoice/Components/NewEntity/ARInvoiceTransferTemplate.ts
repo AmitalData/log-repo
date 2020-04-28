@@ -27,7 +27,7 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ARInvoicePMService} from '../../../../Invoice/Services/StandardPMs/ARInvoicePMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARInvoiceTransferTemplate.html',
 })
 

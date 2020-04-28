@@ -26,7 +26,7 @@ import {FilterClass} from '../../../Shipment/Components/NewEntity/NewShipmentCom
 import {PortListService} from '../../../Common/Services/StandardLists/PortListService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewFullWarehouseEntryComponent',
     templateUrl: './NewFullWarehouseEntryComponent.html',
 

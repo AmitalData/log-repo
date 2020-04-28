@@ -492,4 +492,5 @@
     IsFixedLength="false" />
   <EventTypes />
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

@@ -13,7 +13,7 @@ import {VatTypeList} from '../../../EntityLists/VatTypeList';
 import {VatTypeListService} from '../../../Services/StandardLists/VatTypeListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewChargesTypeComponent.html',
 })
 

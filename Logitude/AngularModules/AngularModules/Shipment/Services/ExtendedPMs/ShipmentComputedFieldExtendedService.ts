@@ -1,6 +1,6 @@
 
 import {Injectable} from '@angular/core';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -27,7 +27,7 @@ export class ShipmentComputedFieldExtendedService {
 
         var url = this._apiUrl + '/GetMarkCompleteDepositionRequest?id=' + id + "&directionId=" + directionId  + "&forwardershipmentNumber=" + forwardershipmentNumber + "&forwarderPartnerId=" + forwarderPartnerId ;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var result = response;

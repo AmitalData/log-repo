@@ -20,7 +20,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 
 @Component({
     selector: 'OverviewTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OverviewTabComponent.html',
 })
 

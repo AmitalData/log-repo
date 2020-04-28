@@ -3,8 +3,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class CCSWebService {
@@ -18,7 +17,7 @@ export class CCSWebService {
     Send(myShipmentId: string, myRecipient: string, isSendingCargonaut: boolean, isSendingDEXX: boolean) {
         var url = this._apiUrl + '/GetMessageResult?myShipmentId=' + myShipmentId + '&myRecipient=' + myRecipient + '&isSendingCargonaut=' + isSendingCargonaut + '&isSendingDEXX=' + isSendingDEXX;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var mappedResult: CCSResult = new CCSResult();
@@ -41,7 +40,7 @@ export class CCSWebService {
     GetFHLsValidation(myMasterId: string) {
         var url = this._apiUrl + '/GetFHLsValidation?myMasterId=' + myMasterId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -64,7 +63,7 @@ export class CCSWebService {
     GetSendingValidations(myShipmentId: string, myRecipient: string, isSendingFHLs: boolean, isSendingCargonaut: boolean, isSendingDEXX: boolean, mainCarriageCarrierId: string) {
         var url = this._apiUrl + '/GetSendingValidations?myShipmentId=' + myShipmentId + '&myRecipient=' + myRecipient + '&isSendingFHLs=' + isSendingFHLs + '&isSendingCargonaut=' + isSendingCargonaut + '&isSendingDEXX=' + isSendingDEXX + '&mainCarriageCarrierId=' + mainCarriageCarrierId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var mappedResult: AWBResultClass = new AWBResultClass();
@@ -88,7 +87,7 @@ export class CCSWebService {
     GetAWBPrintingStock(myShipmentId: string, isCargonautSending: boolean, isDEXXSending: boolean, isConfirmedByUser: boolean) {
         var url = this._apiUrl + '/GetAWBPrintingStock?myShipmentId=' + myShipmentId + '&isCargonautSending=' + isCargonautSending + '&isDEXXSending=' + isDEXXSending + '&isConfirmedByUser=' + isConfirmedByUser;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;

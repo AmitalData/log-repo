@@ -13,7 +13,7 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImageParameter';
 declare var UploadLogoFile, base64ToArrayBuffer, saveByteArray, ArrayBufferToBase64: any;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './UserPackagesComponent.html',
 })
 

@@ -16,7 +16,7 @@ import { InterestBasesPeriodPM } from '../../Accounting/EntityPMs/InterestBasesP
 import { InterestBasesTypePMService } from '../../Accounting/Services/StandardPMs/InterestBasesTypePMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewEntityComponent.html',
     providers: [EntityArgs]
 })

@@ -20,7 +20,7 @@ import {AddressListService} from '../../../../Common/Services/StandardLists/Addr
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './RoutingsTabComponent.html',
 })
 

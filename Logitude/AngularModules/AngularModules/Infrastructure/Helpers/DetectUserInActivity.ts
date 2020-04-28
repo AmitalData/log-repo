@@ -1,13 +1,6 @@
-
-
-
-declare var System: any;
 declare var window: any;
-
-import {Observable}     from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
-
+import { interval } from 'rxjs';
+import { timeInterval } from 'rxjs/operators';
 import { SessionLocator } from '../Utilities/SessionLocator';
 import { MessageWindow } from '../../Controls/Windows/MessageWindow';
 
@@ -166,8 +159,7 @@ export class DetectUserInActivity {
 
 
     WarningTimeTimer() {
-        return Observable.interval(60000).timeInterval();
-       
+      return interval(60000).pipe(timeInterval());       
     }
 
     WarningTimeInMinute: number;

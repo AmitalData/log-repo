@@ -20,7 +20,7 @@ import { InterfaceManagementList } from '../../../Customs/EntityLists/InterfaceM
 
 @Component({
     selector: 'CustomsRestoreMessagesComponent',
-    moduleId: module.id,
+    
     templateUrl: './CustomsRestoreMessagesComponent.html',
 })
 

@@ -2560,7 +2560,7 @@
     MinLength="0"
     MaxLength="20"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
@@ -3185,7 +3185,7 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -4114,7 +4114,7 @@
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -4660,7 +4660,7 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="true"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -4971,7 +4971,7 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="true"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -17624,7 +17624,7 @@
     <TextCode
       Code="&quot;ARInvoice.S.ShortTitle.ByInvoiceAutoCredited&quot;"
       DefaultText="&quot;By Invoice&quot;"
-      LocalDefaultText="&quot; ע&quot;י חשבונית&quot;"
+      LocalDefaultText="&quot; ע''י חשבונית&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -17676,74 +17676,74 @@
     <Feature
       Code="&quot;TRANSFER&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;ARInvoice.Features.Transfer&quot;"
-      FeatureDefaultText="&quot;Transfer&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ARInvoice.Features.Transfer&quot;"
+      FeatureDefaultText="&quot;Transfer&quot;" />
     <Feature
       Code="&quot;Consolidation.Constituent&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;ARInvoice.Features.ConsolidationAndConstituent&quot;"
-      FeatureDefaultText="&quot;Consolidation &amp; Constituent&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ARInvoice.Features.ConsolidationAndConstituent&quot;"
+      FeatureDefaultText="&quot;Consolidation &amp; Constituent&quot;" />
     <Feature
       Code="&quot;RecalculateExternals&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;ARInvoice.Features.RecalculateExternals&quot;"
-      FeatureDefaultText="&quot;Recalculate External IDs&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ARInvoice.Features.RecalculateExternals&quot;"
+      FeatureDefaultText="&quot;Recalculate External IDs&quot;" />
     <Feature
       Code="&quot;Intercompany&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;ARInvoice.Features.Intercompany&quot;"
-      FeatureDefaultText="&quot;Intercompany&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ARInvoice.Features.Intercompany&quot;"
+      FeatureDefaultText="&quot;Intercompany&quot;" />
     <Feature
       Code="&quot;ARInvoiceEditExchangeRate&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;ARInvoice.Features.EditExchangeRate&quot;"
-      FeatureDefaultText="&quot;Edit Exchange Rate&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ARInvoice.Features.EditExchangeRate&quot;"
+      FeatureDefaultText="&quot;Edit Exchange Rate&quot;" />
     <Feature
       Code="&quot;ManageStocks&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;ARInvoice.Features.ManageStocks&quot;"
-      FeatureDefaultText="&quot;Manage Stocks&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ARInvoice.Features.ManageStocks&quot;"
+      FeatureDefaultText="&quot;Manage Stocks&quot;" />
     <Feature
       Code="&quot;SSPV&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;ARInvoice.Features.SSPV&quot;"
-      FeatureDefaultText="&quot;Show in spotlight mode&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ARInvoice.Features.SSPV&quot;"
+      FeatureDefaultText="&quot;Show in spotlight mode&quot;" />
     <Feature
       Code="&quot;NEWCREDITNOTE&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;ARInvoice.Features.NEWCREDITNOTE&quot;"
-      FeatureDefaultText="&quot;New Credit Note&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ARInvoice.Features.NEWCREDITNOTE&quot;"
+      FeatureDefaultText="&quot;New Credit Note&quot;" />
   </AdditionalFeatures>
 </entity>

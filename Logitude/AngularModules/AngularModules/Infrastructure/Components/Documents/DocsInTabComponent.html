@@ -187,28 +187,19 @@ width: 60px; position: relative;">
                                     <tr>
 
 
-                                        <td class="CellStretched" style="width: 190px; min-width: 190px; max-
-
-width: 190px; position: relative;">
-                                            <button id="{{'SetReceivedDocumentbtn' | IdGeneratorPipe}}"
-                                                    *ngIf="item.SetReceivedButtonVisibility" style="display:inline;width:75px;height:20px;font-size:10px;vertical-
-
-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.SetReceivedButtonClicked()">
+                                        <td class="CellStretched" style="width: 190px; min-width: 190px; max-width: 190px; position: relative;">
+                                            <button id="{{'SetReceivedDocumentbtn' | IdGeneratorPipe}}" *ngIf="item.SetReceivedButtonVisibility" style="display:inline;width:75px;height:20px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.SetReceivedButtonClicked()">
 
                                                 {{'DocsIn.B.SetReceived' | TextCodeTranslationPipe}}
                                             </button>
-                                            <button id="{{'UploadDocumentdbtn' | IdGeneratorPipe}}" [disabled]="IsClickToUpload" *ngIf="item.SetAttachedButtonVisibility" style="display:inline;height:20px;width:50px;font-
 
-size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.UploadButtonClicked
-
-()">
+                                            <button [style.margin-left]="item.SetReceivedButtonVisibility? '5px':'0px'" id="{{'UploadDocumentdbtn' | IdGeneratorPipe}}" [disabled]="IsClickToUpload" *ngIf="item.SetAttachedButtonVisibility" style="display:inline;height:20px;width:50px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px;" class="Button" (click)="item.UploadButtonClicked()">
                                                 {{'DocsIn.B.Upload' | TextCodeTranslationPipe}}
                                             </button>
 
 
 
-                                            <button *ngIf="item.DownloadButtonVisibility"
-                                                    style="display:inline;height:20px;width:35px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px"
+                                            <button [style.margin-left]="item.SetReceivedButtonVisibility || item.SetAttachedButtonVisibility ? '5px':'0px'" *ngIf="item.DownloadButtonVisibility" style="display:inline;height:20px;width:35px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px;"
                                                     class="Button" (click)="item.VeiwDocumentButtonClicked(item)">
                                                 {{'DocsIn.B.View' | TextCodeTranslationPipe}}
 
@@ -216,13 +207,10 @@ size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (cli
 
 
                                             <button *ngIf="item.DownloadButtonVisibility"
-                                                    style="display:inline;width:64px;vertical-align:top;height:20px;text-align:left;margin-top:2px" class="Button"
+                                                    style="display:inline;width:64px;vertical-align:top;height:20px;text-align:left;margin-top:2px;margin-left:5px" class="Button"
                                                     (click)="item.AdditionalButtonClicked()">
                                                 <span style="margin-left:-0px;font-size:11px">
-                                                    {{
-'DocsIn.B.Additional' |
-TextCodeTranslationPipe
-                                                    }}
+                                                    {{'DocsIn.B.Additional' |TextCodeTranslationPipe}}
                                                 </span>
                                             </button>
                                         </td>

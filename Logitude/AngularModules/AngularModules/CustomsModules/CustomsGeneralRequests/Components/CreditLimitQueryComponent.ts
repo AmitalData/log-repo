@@ -25,7 +25,7 @@ import { CustomsSettingListService } from '../../../Customs/Services/StandardLis
 
 @Component({ 
     selector: 'CreditLimitQueryComponent',
-    moduleId: module.id,
+    
     templateUrl: './CreditLimitQueryComponent.html',
 })
 

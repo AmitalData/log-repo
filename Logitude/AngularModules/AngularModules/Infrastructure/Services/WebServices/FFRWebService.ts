@@ -2,9 +2,7 @@ import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
+import { defer, of } from 'rxjs';
 
 export class FFRWebService {
     private _apiUrl: string;
@@ -17,7 +15,7 @@ export class FFRWebService {
     Send(myBookingId: string, myTenant: number, myRecipient: string, isCancellationSent: boolean) {
         var url = this._apiUrl + '/GetMessageResult?myBookingId=' + myBookingId + '&myTenant=' + myTenant + '&myRecipient=' + myRecipient + '&isCancellationSent=' + isCancellationSent;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var mappedResult: FFRResult = new FFRResult();

@@ -4677,11 +4677,11 @@
     <Feature
       Code="&quot;ACCOUNTINGPARTNERSMENU&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;AccountingPartner.Features.ACCOUNTINGPARTNERSMENU&quot;"
-      FeatureDefaultText="&quot;Accounting Partners &quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;AccountingPartner.Features.ACCOUNTINGPARTNERSMENU&quot;"
+      FeatureDefaultText="&quot;Accounting Partners &quot;" />
   </AdditionalFeatures>
 </entity>

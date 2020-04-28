@@ -2840,11 +2840,11 @@
     <Feature
       Code="&quot;AUTOMATION&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;LogitudeMessagesTransmissionLog.Features.Automation&quot;"
-      FeatureDefaultText="&quot;Automation&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;LogitudeMessagesTransmissionLog.Features.Automation&quot;"
+      FeatureDefaultText="&quot;Automation&quot;" />
   </AdditionalFeatures>
 </entity>

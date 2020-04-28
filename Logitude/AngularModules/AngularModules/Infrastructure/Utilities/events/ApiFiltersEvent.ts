@@ -1,4 +1,4 @@
-﻿import {Subject } from 'rxjs/Subject';
+import {Subject } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 export class ApiFiltersEvent extends Subject<ApiQueryFilters>

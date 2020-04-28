@@ -6,7 +6,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'SettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './SettingsComponent.html',
 })
 

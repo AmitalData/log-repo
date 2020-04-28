@@ -22,7 +22,7 @@ import {AddEditPartnerArgs} from '../../../../Shipment/Args';
 import {ShipmentTool} from '../../../../Shipment/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PartnersTabComponent.html',
 })
 

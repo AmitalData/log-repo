@@ -36,7 +36,7 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsAnswersComponent.html',
     providers: [DeclarationExtendedListService]
 

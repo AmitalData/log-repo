@@ -55,6 +55,11 @@ export class CustomerFieldsUpdateSettingPM {
     public set ObjectFieldCode(newValue: string) { if (this.objectFieldCode != newValue) { this.objectFieldCode = newValue; this.MarkAsDirty("ObjectFieldCode"); } }
        
 	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
 
     public OldEntityPM: CustomerFieldsUpdateSettingPM;
 		

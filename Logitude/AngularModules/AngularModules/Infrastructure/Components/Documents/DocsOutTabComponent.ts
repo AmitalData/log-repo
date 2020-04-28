@@ -36,7 +36,7 @@ import { CardPMService } from '"../../../Common/Services/StandardPMs/CardPMServi
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 
 @Component({
-    moduleId: module.id,
+    
     selector: "DocsOutControl",
     templateUrl: './DocsOutTabComponent.html',
     inputs: ['EntityPM', 'EntityId', 'ObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference', 'ChildObjectTableId', 'ChildEntityId', 'EntityReference', 'ChildrenObjectTableIds', 'InitializeDocsOutForAnotherObjectTable', 'IsCustomFilter', 'CustomFilterValue', 'CustomFilterOperation'],

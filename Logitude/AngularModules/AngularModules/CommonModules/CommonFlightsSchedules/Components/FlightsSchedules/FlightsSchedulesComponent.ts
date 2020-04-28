@@ -24,7 +24,7 @@ import {BookingWizardArgs} from '../../../../Booking/Args';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FlightsSchedulesComponent.html',
 })
 

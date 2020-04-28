@@ -26,7 +26,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
     selector: 'EditQuoteTemplateComponent',
-    moduleId: module.id,
+    
     templateUrl: './EditQuoteTemplateComponent.html',
 })
 
@@ -64,7 +64,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     IsShowFroalaEditor: boolean = false;
     froalaEditorSetting: FroalaEditorSetting;
     quoteTemplatePMService: QuoteTemplatePMService;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     IsDisableEditButton: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;

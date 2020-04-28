@@ -1,4 +1,4 @@
-﻿
+
 
 <table *ngIf="Entity">
     <tr>
@@ -109,7 +109,7 @@
                                 </div>
                             </td>
                             <td style="min-width:10px;width:10px;max-width:50px">
-                                <img *ngIf="isPotentialCustomer" style="vertical-align:middle;float:left; margin: auto;margin-top:-2px" [attr.src]="'./Images/PotentialCustomer.png'" [title]="Entity[CustomerStatusName]" />
+                                <img *ngIf="isPotentialCustomer" style="vertical-align:middle;float:left; margin: auto;margin-top:-2px" [attr.src]="'./Images/PotentialCustomer.png'" [title]="Entity['CustomerStatusName']" />
 
                             </td>
                         </tr>

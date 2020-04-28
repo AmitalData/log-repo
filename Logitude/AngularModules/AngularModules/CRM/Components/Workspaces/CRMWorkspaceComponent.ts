@@ -7,7 +7,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'CRMComponent',
-    moduleId: module.id,
+    
     templateUrl: './CRMWorkspaceComponent.html',
     providers: [EntityResourceService],
 })

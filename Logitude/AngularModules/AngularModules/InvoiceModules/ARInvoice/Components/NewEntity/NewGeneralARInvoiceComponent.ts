@@ -38,11 +38,13 @@ import { reject } from 'q';
 
 @Component({
     selector: 'NewGeneralARInvoiceComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewGeneralARInvoiceComponent.html',
 })
 
 export class NewGeneralARInvoiceComponent extends BaseComponent {
+  public BillToDependencyValue1IsList: any;
+
     public EntityPM: ARInvoicePM;
     public ObjectTableName: string = "ARInvoice";
     public DataContext = this;

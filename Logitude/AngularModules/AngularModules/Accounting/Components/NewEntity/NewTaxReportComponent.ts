@@ -19,7 +19,7 @@ import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/Batc
 
 @Component({
     selector: 'NewTaxReportComponent',
-    moduleId: module.id,
+    
 
     templateUrl: './NewTaxReportComponent.html',
 })

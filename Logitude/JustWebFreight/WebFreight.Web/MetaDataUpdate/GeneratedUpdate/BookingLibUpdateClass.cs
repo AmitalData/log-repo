@@ -335,9 +335,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					BookingAnswerStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					BookingAnswerStatusUpdateClass.FillBookingAnswerStatus();
 					scope.Complete();
 				}
+ 
+				BookingAnswerStatusUpdateClass.FillBookingAnswerStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BookingLastRequest", ObjectTables, BookingLastRequestUpdateClass.HashString))
@@ -390,9 +393,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					BookingLevelUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					BookingLevelUpdateClass.FillBookingLevel();
 					scope.Complete();
 				}
+ 
+				BookingLevelUpdateClass.FillBookingLevel();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BookingPackage", ObjectTables, BookingPackageUpdateClass.HashString))
@@ -472,9 +478,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					BookingSpaceAllocationUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					BookingSpaceAllocationUpdateClass.FillBookingSpaceAllocation();
 					scope.Complete();
 				}
+ 
+				BookingSpaceAllocationUpdateClass.FillBookingSpaceAllocation();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BookingStatus", ObjectTables, BookingStatusUpdateClass.HashString))
@@ -500,9 +509,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					BookingStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					BookingStatusUpdateClass.FillBookingStatus();
 					scope.Complete();
 				}
+ 
+				BookingStatusUpdateClass.FillBookingStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("FFRStatus", ObjectTables, FFRStatusUpdateClass.HashString))
@@ -528,9 +540,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					FFRStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					FFRStatusUpdateClass.FillFFRStatus();
 					scope.Complete();
 				}
+ 
+				FFRStatusUpdateClass.FillFFRStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("FlightsSchedulesRequest", ObjectTables, FlightsSchedulesRequestUpdateClass.HashString))
@@ -583,9 +598,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					FlightsSchedulesRequestStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					FlightsSchedulesRequestStatusUpdateClass.FillFlightsSchedulesRequestStatus();
 					scope.Complete();
 				}
+ 
+				FlightsSchedulesRequestStatusUpdateClass.FillFlightsSchedulesRequestStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("FlightsSchedulesResponse", ObjectTables, FlightsSchedulesResponseUpdateClass.HashString))

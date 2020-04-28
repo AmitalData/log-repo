@@ -13,7 +13,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {UserExtendedListService} from '../../../../Common/Services/ExtendedLists/UserExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './UserGeneralTabComponent.html',
     providers: [TenantLoginPolicyListService],
 })

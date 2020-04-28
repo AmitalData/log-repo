@@ -23,7 +23,7 @@ import {CountryListService} from '../../../../Common/Services/StandardLists/Coun
 import {DocumentTypeTemplatePM} from '../../../../Common/EntityPMs/DocumentTypeTemplatePM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentTypeGeneral',
     templateUrl: './DocumentTypeGeneralTabComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService],

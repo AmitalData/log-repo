@@ -8,7 +8,7 @@ import {StageListService} from '../../Services/StandardLists/StageListService';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {StageList} from '../../EntityLists/StageList';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ReOpen_StageComponent.html',
 })
 

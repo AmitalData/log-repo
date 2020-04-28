@@ -10,7 +10,7 @@ import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCo
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './UpdateProcessCodeComponent.html',
 })
 

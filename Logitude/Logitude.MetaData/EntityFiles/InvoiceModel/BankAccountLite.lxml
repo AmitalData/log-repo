@@ -1574,11 +1574,11 @@
     <Feature
       Code="&quot;BANKACCOUNTLITE&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;BankAccount.Features.BankAccountLiteMenu&quot;"
-      FeatureDefaultText="&quot;Bank Accounts Lite&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;BankAccount.Features.BankAccountLiteMenu&quot;"
+      FeatureDefaultText="&quot;Bank Accounts Lite&quot;" />
   </AdditionalFeatures>
 </entity>

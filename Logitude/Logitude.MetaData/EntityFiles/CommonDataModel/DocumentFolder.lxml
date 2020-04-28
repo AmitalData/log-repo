@@ -801,20 +801,20 @@
     <Feature
       Code="&quot;GENERAL&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;DocumentFolder.Features.General&quot;"
-      FeatureDefaultText="&quot;General&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentFolder.Features.General&quot;"
+      FeatureDefaultText="&quot;General&quot;" />
     <Feature
       Code="&quot;DOCUMENTTYPE&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;DocumentFolder.Features.DocumentFolder&quot;"
-      FeatureDefaultText="&quot;Document Folder&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentFolder.Features.DocumentFolder&quot;"
+      FeatureDefaultText="&quot;Document Folder&quot;" />
   </AdditionalFeatures>
 </entity>

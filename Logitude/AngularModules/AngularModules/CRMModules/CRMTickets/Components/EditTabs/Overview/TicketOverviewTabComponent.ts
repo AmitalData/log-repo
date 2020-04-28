@@ -11,7 +11,7 @@ import {AppTool} from '../../../../../Infrastructure/Tools';
 declare var makeAMLineChartMultiple: any;
 @Component({
     selector: 'TicketOverviewTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './TicketOverviewTabComponent.html',
 })
 

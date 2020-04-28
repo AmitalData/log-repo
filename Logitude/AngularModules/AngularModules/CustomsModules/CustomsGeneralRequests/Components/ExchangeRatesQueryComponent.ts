@@ -18,7 +18,7 @@ import { CustomMessageProgressComponent } from '../../../CustomsModules/CustomsC
 
 @Component({
     selector: 'ExchangeRatesQueryComponent',
-    moduleId: module.id,
+    
     templateUrl: './ExchangeRatesQueryComponent.html',
 })
 

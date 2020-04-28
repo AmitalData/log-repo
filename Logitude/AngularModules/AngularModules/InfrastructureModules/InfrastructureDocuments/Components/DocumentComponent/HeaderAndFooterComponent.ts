@@ -24,7 +24,7 @@ declare var StringToBase64, Base64ToString: any;
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'HeaderAndFooter',
     templateUrl: './HeaderAndFooterComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService, DocumentTypeTemplatePMService, HtmlEditorService]

@@ -13,7 +13,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 
 @Component({
     selector: 'RequestDetailsComponent',
-    moduleId: module.id,
+    
     templateUrl: './RequestDetailsComponent.html',
 })
 

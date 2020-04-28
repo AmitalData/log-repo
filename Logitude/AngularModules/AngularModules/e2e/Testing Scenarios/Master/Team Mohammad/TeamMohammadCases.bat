@@ -12,19 +12,19 @@ FOR /L %%A IN (1,1,1) DO (
 rem call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,RevGLAccount
 rem CALL :CheckError "Create RevGLAccount"
 
-   cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,NewChartOfAccount
+   cmd /c call npm run do-e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,NewChartOfAccount
    CALL :CheckError "Create NewChartOfAccount"
 
-  cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,BankAccount
+  cmd /c call npm run do-e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,BankAccount
   CALL :CheckError "Create BankAccount"
 
-  cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,VendorGLAccount
+  cmd /c call npm run do-e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,VendorGLAccount
   CALL :CheckError "Create VendorGLAccount"
 
-  cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,CustomerGLAccount
+  cmd /c call npm run do-e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,CustomerGLAccount
   CALL :CheckError "Create CustomerGLAccount"
 
- cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,ARPayment
+ cmd /c call npm run do-e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,ARPayment
  CALL :CheckError "Create ARPayment"
 
 rem call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,PaymentCheque

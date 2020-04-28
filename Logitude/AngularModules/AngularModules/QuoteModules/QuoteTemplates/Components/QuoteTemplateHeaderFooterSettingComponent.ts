@@ -20,7 +20,7 @@ import {QuoteTemplateSectionExtendedPMService} from '../../../Quote/Services/Ext
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'QuoteTemplateHeaderFooterSettingComponent',
-    moduleId: module.id,
+    
     templateUrl: './QuoteTemplateHeaderFooterSettingComponent.html',
 })
 
@@ -39,7 +39,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     public ValidationErrorsList: string[];
     QuoteTemplateSectionTypeName: string = "Packages";
     EditQuoteTemplateComponent: any;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
 
 

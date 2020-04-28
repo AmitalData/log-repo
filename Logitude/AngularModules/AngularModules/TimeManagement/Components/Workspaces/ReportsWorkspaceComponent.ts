@@ -13,7 +13,7 @@ import {ReportsTemplateListExtendedService} from '../../../Common/Services/Exten
 
 @Component({
     selector: 'ReportsWorkspaceComponent',
-    moduleId: module.id,
+    
     templateUrl: './ReportsWorkspaceComponent.html',
 })
 
