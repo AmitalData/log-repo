@@ -468,9 +468,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<LedgerTransactionPM> GetByJournalId(string journalId, int tenant)
         {
             List<LedgerTransaction> ledgerTransactionPOCOs = null;
-            ledgerTransactionPOCOs = repository.GetByJournalId(journalId, tenant);
+            ledgerTransactionPOCOs = repository.GetByJournalId(journalId, tenant).ToList();
             List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
             return pms;
+        }
+
+        public LedgerTransaction GetCreditTransactionByJournalId(string journalId, int tenant)
+        {
+            IQueryable<LedgerTransaction> ledgerTransactionPOCOs = repository.GetByJournalId(journalId, tenant);
+            LedgerTransaction poco = ledgerTransactionPOCOs.Where(d => d.LocalAmountCredit != 0).FirstOrDefault();
+            return poco;
         }
 
         public List<LedgerTransactionPM> GetByJournalLineIdAndLine(string journalId, int line, int tenant)
@@ -602,11 +609,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
             ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(tenant);
 
-            IQueryable<LedgerTransactionPM> transactions = GetTransactionsJoinedWithJounrals();
+            //IQueryable<LedgerTransactionPM> transactions = GetTransactionsJoinedWithJounrals();
 
             // get payment transaction
-            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId && t.SourceTypeCode == AccountingEntityValues.ARPayment).FirstOrDefault();
-            List<LedgerTransactionPM> paymentTransactions = transactions.Where(t => t.SourceId == arpaymentId).ToList();
+            //LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId && t.SourceTypeCode == AccountingEntityValues.ARPayment).FirstOrDefault();
+            //List<LedgerTransactionPM> paymentTransactions = transactions.Where(t => t.SourceId == arpaymentId).ToList();
+
+            LedgerTransaction paymentTransaction = GetPaymentTransaction(arpaymentId, tenant);
+
             if (paymentTransaction != null)
             {
                 string paymentTransactionId = paymentTransaction.Id;
@@ -628,16 +638,32 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return reconciledTransactions;
 
         }
+
+        public LedgerTransaction GetPaymentTransaction(string arpaymentId, int tenant)
+        {
+            JournalQueryService journalQueryService = new JournalQueryService(tenant);
+            JournalPM paymentJournal = journalQueryService.GetJournalsByAccountingEntityIdAndCode(arpaymentId, AccountingEntities.ARPayment, tenant).FirstOrDefault();
+
+            LedgerTransaction paymentCreditTransaction = GetCreditTransactionByJournalId(paymentJournal.Id, tenant);
+
+            return paymentCreditTransaction;
+
+        }
+
         public List<LedgerTransactionPM> GetOpenInvoicesTransactionsForAccount(string billToGLAccountId, string arpaymentId, int tenant)
        {
             IQueryable<LedgerTransactionPM> transactions = GetTransactionsJoinedWithJounrals();
 
+            LedgerTransaction paymentTransaction = GetPaymentTransaction(arpaymentId, tenant);
 
-            // get payment transaction
-            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId && t.SourceTypeCode == "3").FirstOrDefault();
+            //IQueryable<LedgerTransactionPM> paymentTransactionIQ = transactions.Where(t => t.SourceId == arpaymentId && t.SourceTypeCode == "3");
+            //List<LedgerTransactionPM> paymentTransactions = paymentTransactionIQ.ToList();
+            //LedgerTransactionPM paymentTransaction = paymentTransactionIQ.FirstOrDefault();
+
+            var invoicesTransactions = GetInvoicesTransactions(tenant);
 
             // filter transactions by account and source type
-            transactions = transactions
+            invoicesTransactions = invoicesTransactions
                     .Where(d =>
                         d.AccountId == billToGLAccountId
                         && d.Tenant == tenant
@@ -645,7 +671,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         && d.SourceTypeCode == AccountingEntityValues.ARInvoice)
                     .OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
 
-            var transactionsList = transactions.ToList();
+            var transactionsList = invoicesTransactions.ToList();
 
             List<LedgerTransactionPM> openInvoicesTransactions = FillTransactionsReconciliationNumbers(transactionsList, tenant);
             openInvoicesTransactions = FillReconciledPaymentTransactionAmount(openInvoicesTransactions.ToList(), paymentTransaction != null ? paymentTransaction.Id : null, tenant);
@@ -763,6 +789,75 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                 join _journal in context.Journals
                 on _transaction.JournalId equals _journal.Id
+
+                select new LedgerTransactionPM()
+                {
+                    IsReconciled = _transaction.IsReconciled,
+
+                    Id = _transaction.Id,
+                    Tenant = _transaction.Tenant,
+                    JournalId = _transaction.JournalId,
+                    JournalLineNumber = _transaction.JournalLineNumber,
+                    CreateDate = _transaction.CreateDate,
+                    ControlAccountId = _transaction.ControlAccountId,
+                    AccountId = _transaction.AccountId,
+                    AccountingDate = _transaction.AccountingDate,
+                    DocumentDate = _transaction.DocumentDate,
+                    DueDate = _transaction.DueDate,
+                    LocalAmountDebit = _transaction.LocalAmountDebit,
+                    LocalAmountCredit = _transaction.LocalAmountCredit,
+                    CurrencyId = _transaction.CurrencyId,
+                    ForeignAmountDebit = _transaction.ForeignAmountDebit,
+                    ForeignAmountCredit = _transaction.ForeignAmountCredit,
+                    ExchangeRate = _transaction.ExchangeRate,
+                    Reference1 = _transaction.Reference1,
+                    Reference2 = _transaction.Reference2,
+                    Reference3 = _transaction.Reference3,
+                    OpenAmount = _transaction.OpenAmount,
+                    OppositeAccountId = _transaction.OppositeAccountId,
+                    SearchFields = _transaction.SearchFields,
+                    JournalNumber = _journal.JournalNumber,
+                    CurrencyCode = _transaction.Currency.Code,
+                    //Source = _transaction.Source,
+                    //SourceType = _journal.accounting,
+                    OpenAmountCurrencyId = _transaction.OpenAmountCurrencyId,
+                    Notes = _transaction.Notes,
+                    //CumulativeLocalAmount = _transaction.CumulativeLocalAmount,
+                    //CumulativeForeignAmount = _transaction.CumulativeForeignAmount,
+                    AmountToReconcile = _transaction.AmountToReconcile,
+                    Mark = _transaction.Mark,
+                    //OpenAmountCurrencyCode = _transaction.OpenAmountCurrencyCode,
+                    SourceId = _journal.AccountingEntityId,
+                    SourceNumber = _journal.AccountingEntityReference,
+                    SourceTypeCode = _journal.AccountingEntityCode,
+                    //CurrencySign = _transaction.CurrencySign,
+                    //OpenAmountCurrencySign = _transaction.OpenAmountCurrencySign,
+                    //GroupHash = _transaction.GroupHash,
+                    IsExternalReconcile = _transaction.IsExternalReconcile,
+                    InReconcileProgress = _transaction.InReconcileProgress,
+                    //ForeignAmount = _journalLine.ForeignAmount,
+                    ReconcileRemarks = _transaction.ReconcileRemarks,
+                    //OriginalJournalId = jl.JournalId,
+                    //OppositeAccountEnglishName = _transaction.OppositeAccountEnglishName,
+                    //OppositeAccountLocalName = _transaction.OppositeAccountLocalName,
+                    //OppositeAccountDisplayNumber = _transaction.OppositeAccountDisplayNumber,
+                    //RecoNumber = _journal,
+                    //ReconciliationId = _journal,
+                };
+
+            return query;
+        }
+        private IQueryable<LedgerTransactionPM> GetInvoicesTransactions(int tenant)
+        {
+
+            IQueryable<LedgerTransactionPM> query =
+                from _transaction in context.LedgerTransactions
+
+                join _journal in context.Journals
+                on _transaction.JournalId equals _journal.Id
+
+                where _journal.AccountingEntityCode == AccountingEntities.ARInvoice
+                    && _journal.Tenant == tenant
 
                 select new LedgerTransactionPM()
                 {

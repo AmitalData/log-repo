@@ -91,12 +91,12 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             }
             return currencyId;
         }
-        public List<LedgerTransaction> GetByJournalId(string journalId, int tenant)
+        public IQueryable<LedgerTransaction> GetByJournalId(string journalId, int tenant)
         {
 
             return (from a in context.LedgerTransactions
                     where a.JournalId == journalId && a.Tenant == tenant
-                    select a).ToList();
+                    select a);
 
         }
         public IQueryable<LedgerTransaction> GetByJournalAndReference1(string journalId, string reference1, int tenant)
