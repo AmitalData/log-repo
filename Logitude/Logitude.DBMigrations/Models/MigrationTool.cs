@@ -635,7 +635,7 @@ namespace Logitude.DBMigrations.Models
                 catch (Exception exception)
                 {
                     oracleConnection.Close();
-                    return "Error: " + exception.Message + "\n\nError While Executing:\n" + currentCommandText;
+                    return "Error: " + exception.Message + (!String.IsNullOrEmpty(currentCommandText) ? ("\nError While Executing:\n" + currentCommandText) : null);
                 }
             }
             else
@@ -669,7 +669,7 @@ namespace Logitude.DBMigrations.Models
                 catch (Exception exception)
                 {
                     sqlConnection.Close();
-                    return "Error: " + exception.Message + "\n\nError While Executing:\n" + currentCommandText;
+                    return "Error: " + exception.Message + (!String.IsNullOrEmpty(currentCommandText) ? ("\nError While Executing:\n" + currentCommandText) : null);
                 }
             }
         }
