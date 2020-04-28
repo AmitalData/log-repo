@@ -826,27 +826,33 @@ class JournalLineModel extends BaseComponent {
             this.parent.CalculateTotals();
 
             // convert amount
-            if (!AppTool.IsNullOrEmpty(value) && this.CurrencyId && this.currencyRate) {
+            // if (!AppTool.IsNullOrEmpty(value) && this.CurrencyId && this.currencyRate) {
+            //     this.isForeignEntered = true;
 
-                if (!this.isRateCoverted) {
-                    if (this.isForeignEntered) this.isRateManualy = true;
-                    this.isLocalEntered = true;
-                }
+            //     if (1 || !this.isRateCoverted) {
+            //         if (this.isForeignEntered) this.isRateManualy = true;
+            //         this.isLocalEntered = true;
+            //     }
 
-                if (!this.isForeignEntered) {
-                    this.isRateCoverted = true;
-                    this.ForeignAmount = (value / this.currencyRate);
-                } else {
-                    this.isRateCoverted = false;
-                }
+            //     if (!this.isForeignEntered) {
+            //         this.isRateCoverted = true;
+            //         this.ForeignAmount = (value / this.currencyRate);
+            //     } else {
+            //         this.isRateCoverted = false;
+            //     }
 
-            } else {
-                this.isLocalEntered = false;
-                this.isForeignEntered = false;
-                this.ForeignAmount = null;
-                this.isRateManualy = false;
-            }
+            // } else {
+            //     this.isLocalEntered = false;
+            //     this.isForeignEntered = false;
+            //     this.ForeignAmount = null;
+            //     this.isRateManualy = false;
+            // }
 
+            // if(!this.isForeignEntered && !AppTool.IsNullOrEmpty(value) && this.CurrencyId && this.currencyRate)
+            // {
+            //     this.isRateCoverted = true;
+            //     this.ForeignAmount = (value / this.currencyRate);
+            // }
 
         }
     }
@@ -861,24 +867,70 @@ class JournalLineModel extends BaseComponent {
             this.parent.CalculateTotals();
 
             // convert amount
-            if (value != null && this.CurrencyId && this.currencyRate) {
-                if (!this.isRateCoverted)
-                {
-                    if (this.isLocalEntered) this.isRateManualy = true;
-                    this.isForeignEntered = true;
-                }
-                if (!this.isLocalEntered) {
-                    this.isRateCoverted = true;
-                    this.LocalAmount = (value * this.currencyRate);
-                } else {
-                    this.isRateCoverted = false;
-                }
-            } else {
-                this.isLocalEntered = false;
-                this.isForeignEntered = false;
-                this.LocalAmount = null;
-                this.isRateManualy = false;
-            }
+            // if (value != null && this.CurrencyId && this.currencyRate) {
+            //     if (1 || !this.isRateCoverted)
+            //     {
+            //         if (this.isLocalEntered) this.isRateManualy = true;
+            //         this.isForeignEntered = true;
+            //     }
+            //     if (!this.isLocalEntered) {
+            //         this.isRateCoverted = true;
+            //         this.LocalAmount = (value * this.currencyRate);
+            //     } else {
+            //         this.isRateCoverted = false;
+            //     }
+            // } else {
+            //     this.isLocalEntered = false;
+            //     this.isForeignEntered = false;
+            //     this.LocalAmount = null;
+            //     this.isRateManualy = false;
+            // }
+
+            // if(!this.isForeignEntered && !AppTool.IsNullOrEmpty(value) && this.CurrencyId && this.currencyRate)
+            // {
+            //     this.isRateCoverted = true;
+            //     this.ForeignAmount = (value / this.currencyRate);
+            // }
+        }
+
+    }
+
+
+    AmountChanged(type,localAmount,foreignAmount){
+        console.log("[AmountChanged] local: ", localAmount, ", foreign: ", foreignAmount);
+
+        if (type == 'local')
+            this.isLocalEntered = !AppTool.IsNullOrEmpty(localAmount);
+
+        if (type == 'foreign')
+            this.isForeignEntered = !AppTool.IsNullOrEmpty(foreignAmount);
+
+        // local amount entered
+        if (type == 'local' && AppTool.IsNullOrEmpty(localAmount)){
+            this.LocalAmount = AppTool.IsNullOrEmpty(localAmount) ? null : localAmount;
+        }
+
+        // foreign amount entered
+        if (type == 'foreign' && AppTool.IsNullOrEmpty(foreignAmount)){
+            this.ForeignAmount = AppTool.IsNullOrEmpty(foreignAmount) ? null : foreignAmount;
+        }
+
+        // local amount entered and foreign is null
+        if (type == 'local'  && !this.isForeignEntered && this.currencyRate){
+            this.LocalAmount = localAmount;
+            this.ForeignAmount = localAmount / this.currencyRate;
+        }
+
+        // foreign amount entered and local is null
+        if (type == 'foreign' && !this.isLocalEntered && this.currencyRate){
+            this.ForeignAmount = foreignAmount;
+            this.LocalAmount = foreignAmount * this.currencyRate;
+        }
+
+        // if two amounts are entered, recalculate rate
+        if(!AppTool.IsNullOrEmpty(this.ForeignAmount) && !AppTool.IsNullOrEmpty(this.LocalAmount)){
+            this.currencyRate = this.LocalAmount / this.ForeignAmount;
+            this.isRateManualy = true;
         }
 
     }

@@ -67,7 +67,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);           
             string vatNumber = tenantQuery.GetTenantVatNumber(entityPM.Tenant);         
             entityPM.StatusCode = "6";
-            entityPM.VatNumber = entityPM.VatNumber != null ? entityPM.VatNumber.Trim() : null;
+            entityPM.VatNumber = VatNumberModifications(entityPM.VatNumber);
             string trimmedZeros = entityPM.VatNumber != null ? entityPM.VatNumber.Trim('0') : null;
             bool zerosVatNumber;
             if (entityPM.OutputOrInput == "O")
@@ -97,9 +97,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                     else
                     {
-                        if (entityPM.LineTypeCode == "K" && entityPM.VatNumber == "000000000")
+                        if ( entityPM.VatNumber == "000000000")
                         {
-                            entityPM.StatusCode = "6";
+                            entityPM.StatusCode  =entityPM.LineTypeCode =="K"? "6" :"2";
                             return;
                         }
                         else
@@ -167,12 +167,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                     else
                     {
-
-                        if (entityPM.LineTypeCode == "K" && entityPM.VatNumber == "000000000")
+                        if(entityPM.VatNumber == "000000000")
                         {
-                            entityPM.StatusCode = "6";
+                            entityPM.StatusCode = entityPM.LineTypeCode == "K" ? "6" : "2";
                             return;
                         }
+                       
                         else
                         {
                             var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
@@ -218,6 +218,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
             }
+        private string VatNumberModifications(string vatnumber)
+        {
+            string vatNumber = null;
+            if (vatnumber != null ) {
+                vatNumber= vatnumber.Trim();
+                if(vatNumber.Length > 9)
+                {
+                    vatNumber = vatNumber.Substring(1, 9);
+                }
+
+            }
+
+            return vatNumber;
+        }
+
+
         protected override void Validate(TaxReportLinePM entityPM)
         {
             

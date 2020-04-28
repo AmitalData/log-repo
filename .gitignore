@@ -407,11 +407,4 @@ __pycache__/
 /Logitude/AngularModules/AngularModules/--protractor-html-reporter-2
 /Logitude/AngularModules/AngularModules/webpack.config-prod.js
 /Logitude/Logitude.HybridTest/Properties/DataSources
-/Logitude/Simplog.Global.Data/Migrations
-/Logitude/Logitude.MetaData/EntityFiles/CommonDataModel
-/Logitude/Logitude.DatabaseMigration/Migrations
-/Logitude/Logitude.BL/QuoteModel/EntityQueries/Charts
-/Logitude/Logitude.Accounting.BL
-/Logitude/JustWebFreight/WebFreight.Web
-/Logitude/General
-/Logitude/AngularModules/AngularModules/Accounting/Services/StandardLists
+/Logitude/AngularModules/AngularModules/node_modules.rar

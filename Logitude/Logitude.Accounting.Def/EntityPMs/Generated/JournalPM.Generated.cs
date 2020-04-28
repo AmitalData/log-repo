@@ -926,6 +926,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private int taxReportJournalLineNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int TaxReportJournalLineNumber  
+	   {
+	    
+	     get
+		{
+		   return taxReportJournalLineNumber;
+		 }
+		 set
+		 {
+		   if(taxReportJournalLineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportJournalLineNumber",OldValue=taxReportJournalLineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   taxReportJournalLineNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

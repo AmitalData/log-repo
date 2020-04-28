@@ -466,7 +466,7 @@
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'LocalAmount'" [InputType]="'sigdouble'" [DataContext]="item"
-                                                                [Text]="item.LocalAmount" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                                                                (ValueChanged)="item.AmountChanged('local',$event,null)" [Text]="item.LocalAmount" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </div>
                                         </log-cell-template>
@@ -514,7 +514,7 @@
                                             <div *ngIf="logcelltemplate.IsEditMode">
 
                                                 <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [InputType]="'sigdouble'" [DataContext]="item"
-                                                            [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                                                (ValueChanged)="item.AmountChanged('foreign',null,$event)" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
 
                                             </div>
 
