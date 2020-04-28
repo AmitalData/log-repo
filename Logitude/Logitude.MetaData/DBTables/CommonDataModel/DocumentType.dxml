@@ -301,6 +301,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AddedManually"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerRoleId"
     ReferencedTable="Roles"

@@ -2345,6 +2345,11 @@
       <DependentUpon>202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs</DependentUpon>
     </Compile>
 
+    <Compile Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs" />
+    <Compile Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.Designer.cs">
+      <DependentUpon>202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.cs" />
     <Compile Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.Designer.cs">
       <DependentUpon>202004231311231_JournalIsExternalLineFieldMigration.cs</DependentUpon>
@@ -4243,8 +4248,14 @@
       <DependentUpon>202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs</DependentUpon>
     </EmbeddedResource>
 
+
     <EmbeddedResource Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.resx">
       <DependentUpon>202004231311231_JournalIsExternalLineFieldMigration.cs</DependentUpon>
+    </EmbeddedResource>
+
+
+    <EmbeddedResource Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.resx">
+      <DependentUpon>202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs</DependentUpon>
     </EmbeddedResource>
 
   </ItemGroup>
