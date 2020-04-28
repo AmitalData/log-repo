@@ -477,7 +477,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string accountId = GetGLAccountIdForReconciledTransactions(billToGLAccountId, tenant, paymentCurrencyId);
 
                 ARPaymentInvoicesTransactionFetcher invoiceTransactionsFetcher = new ARPaymentInvoicesTransactionFetcher(arpaymentId, accountId, tenant);
-                var transactions = invoiceTransactionsFetcher.Fetch();
+                var transactions = invoiceTransactionsFetcher.FetchSorted();
 
                 HttpResponseMessage reponseMessage = BuildResponseMessage(transactions);
 

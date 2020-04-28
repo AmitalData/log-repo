@@ -42,7 +42,7 @@ namespace Logitude.Accounting.BL.CoreBL
             transactions = new List<LedgerTransactionPM>();
         }
 
-        public List<LedgerTransactionPM> Fetch()
+        public List<LedgerTransactionPM> FetchSorted()
         {
             transactions.AddRange(GetReconciledTransactions());
             transactions.AddRange(GetOpenTransactions());
