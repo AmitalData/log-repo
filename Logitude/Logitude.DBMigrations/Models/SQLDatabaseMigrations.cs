@@ -1097,48 +1097,30 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateIndexScript(IndexDefinition index)
         {
-            if (CurrentTable == null || (CurrentTable != null && !CurrentTable.AllIndexes.Where(i => i.Columns == index.Columns).Any()))
+            string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
+            string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));
+            string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
+            string createIndexScript = "-- Create Index On " + DXMLTable.Name + " Table\n";
+            string indexName = "IX_" + DXMLTable.Name + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
+            if (indexName.Length > 128)
             {
-                bool createIndex = true;
-                if (CurrentTable == null && DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
-                {
-                    string dxmlPrimaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => FormatNameLength(c.Name, c.ShortName)).ToArray());
-                    if (dxmlPrimaryKeyColumns == index.Columns)
-                    {
-                        createIndex = false;
-                    }
-                }
-
-                if (createIndex)
-                {
-                    string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
-                    string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));
-                    string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
-                    string createIndexScript = "-- Create Index On " + DXMLTable.Name + " Table\n";
-                    string indexName = "IX_" + DXMLTable.Name + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
-                    if (indexName.Length > 128)
-                    {
-                        indexName = indexName.Substring(0, 128);
-                    }
-
-                    if (includeColumns != null)
-                    {
-                        createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")')";
-                    }
-                    else
-                    {
-                        createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")')";
-                    }
-
-                    createIndexScript += ";\n\n";
-
-                    string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", DXMLTable.Name, indexColumns.Replace("[", String.Empty).Replace("]", String.Empty), createIndexScript);
-
-                    return addIndexWithHistoryScript;
-                }
+                indexName = indexName.Substring(0, 128);
             }
 
-            return null;
+            if (includeColumns != null)
+            {
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")')";
+            }
+            else
+            {
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")')";
+            }
+
+            createIndexScript += ";\n\n";
+
+            string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", DXMLTable.Name, indexColumns.Replace("[", String.Empty).Replace("]", String.Empty), createIndexScript);
+
+            return addIndexWithHistoryScript;
         }
 
         protected override string GetCreateUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint)

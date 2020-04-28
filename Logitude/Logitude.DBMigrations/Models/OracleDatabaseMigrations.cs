@@ -979,32 +979,29 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateIndexScript(IndexDefinition index)
         {
-            if (CurrentTable == null || (CurrentTable != null && !CurrentTable.AllIndexes.Where(i => i.Columns == (!index.Columns.Contains(",") ? FormatNameLength(index.Columns, DXMLTable.Columns.Where(c => c.Name == index.Columns).First().ShortName) : string.Join(",", index.Columns.Split(',').Select(ic => FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName)).ToArray())).ToLower()).Any()))
+            bool createIndex = true;
+            if (CurrentTable == null && DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
             {
-                bool createIndex = true;
-                if (CurrentTable == null && DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
+                string dxmlPrimaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => FormatNameLength(c.Name, c.ShortName)).ToArray());
+                if (dxmlPrimaryKeyColumns == index.Columns)
                 {
-                    string dxmlPrimaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => FormatNameLength(c.Name, c.ShortName)).ToArray());
-                    if (dxmlPrimaryKeyColumns == index.Columns)
-                    {
-                        createIndex = false;
-                    }
+                    createIndex = false;
                 }
+            }
 
-                if (createIndex)
-                {
-                    string tableName = FormatNameLength(DXMLTable.Name, DXMLTable.ShortName).ToUpper();
-                    string indexColumns = (!index.Columns.Contains(",") ? "\"" + FormatNameLength(index.Columns, DXMLTable.Columns.Where(c => c.Name == index.Columns).First().ShortName) + "\"" : string.Join(",", index.Columns.Split(',').Select(ic => "\"" + FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName) + "\"").ToArray())).ToUpper();
-                    string createIndexScript = "-- Create Index On " + tableName + " Table\n";
-                    string indexName = FormatNameLength("IX_" + tableName + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("\"", String.Empty), null).ToUpper();
+            if (createIndex)
+            {
+                string tableName = FormatNameLength(DXMLTable.Name, DXMLTable.ShortName).ToUpper();
+                string indexColumns = (!index.Columns.Contains(",") ? "\"" + FormatNameLength(index.Columns, DXMLTable.Columns.Where(c => c.Name == index.Columns).First().ShortName) + "\"" : string.Join(",", index.Columns.Split(',').Select(ic => "\"" + FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName) + "\"").ToArray())).ToUpper();
+                string createIndexScript = "-- Create Index On " + tableName + " Table\n";
+                string indexName = FormatNameLength("IX_" + tableName + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("\"", String.Empty), null).ToUpper();
 
-                    createIndexScript += "CREATE INDEX " + "\"" + indexName + "\"" + " ON " + "\"" + tableName + "\"" + "(" + indexColumns + ")";
-                    createIndexScript += ";\n\n";
+                createIndexScript += "CREATE INDEX " + "\"" + indexName + "\"" + " ON " + "\"" + tableName + "\"" + "(" + indexColumns + ")";
+                createIndexScript += ";\n\n";
 
-                    string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", tableName, indexColumns.Replace("\"", String.Empty), createIndexScript);
+                string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", tableName, indexColumns.Replace("\"", String.Empty), createIndexScript);
 
-                    return addIndexWithHistoryScript;
-                }
+                return addIndexWithHistoryScript;
             }
 
             return null;
