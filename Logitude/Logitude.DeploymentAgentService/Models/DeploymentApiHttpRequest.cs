@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.DeploymentAgentService.Models
 {
-    public class DeploymentApiHttpRequest<T>
+    public class DeploymentApiHttpRequest
     {
         protected string DeploymentWebApiUrl = ConfigurationManager.AppSettings["DeploymentWebApiUrl"];
         protected string RequestType;
@@ -32,13 +32,26 @@ namespace Logitude.DeploymentAgentService.Models
             RequestType = requestContentType == HttpRequestType.BodyRequestType.Post ? "Post" : "Put";
         }
 
-        public T GetResponse()
+        public void GetResponse()
         {
             using (HttpClient httpClient = new HttpClient())
             {
                 Task<HttpResponseMessage> httpResponse = GetHttpResponse(httpClient);
                 httpResponse.Wait();
-                if(httpResponse.Result.StatusCode == HttpStatusCode.OK)
+                if(httpResponse.Result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(RequestType + " Request To " + RequestUrl + " Faild With Status Code " + httpResponse.Result.StatusCode.ToString());
+                }
+            }
+        }
+        
+        public T GetResponse<T>()
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                Task<HttpResponseMessage> httpResponse = GetHttpResponse(httpClient);
+                httpResponse.Wait();
+                if (httpResponse.Result.StatusCode == HttpStatusCode.OK)
                 {
                     string httpResponseString = httpResponse.Result.Content.ReadAsStringAsync().Result;
                     T response = JsonConvert.DeserializeObject<T>(httpResponseString);
@@ -50,7 +63,6 @@ namespace Logitude.DeploymentAgentService.Models
                 }
             }
         }
-
 
         protected string GetRequestUrl(string url)
         {

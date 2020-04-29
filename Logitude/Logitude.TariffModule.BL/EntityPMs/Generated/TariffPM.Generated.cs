@@ -1636,6 +1636,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? lastUsedDate ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastUsedDate  
+	   {
+	    
+	     get
+		{
+		   return lastUsedDate;
+		 }
+		 set
+		 {
+		   if(lastUsedDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastUsedDate",OldValue=lastUsedDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   lastUsedDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -44,7 +44,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-
   <Column
     Name="StatusCode"
     Type="varchar"
@@ -59,7 +58,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-
   <Column
     Name="AccountingEntityCode"
     Type="varchar"
@@ -174,7 +172,20 @@
     <Constraints
       Nullable="false" />
   </Column>
-
+  <Column
+    Name="DocumentDate"
+    Type="datetime"
+    DefaultValue="'1900-01-01T00:00:00.000'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DueDate"
+    Type="datetime"
+    DefaultValue="'1900-01-01T00:00:00.000'">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="TypeCode"
     ReferencedTable="JournalTypes"
@@ -216,5 +227,5 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="IsLedgerCreated" /> 
+    Columns="IsLedgerCreated" />
 </Table>

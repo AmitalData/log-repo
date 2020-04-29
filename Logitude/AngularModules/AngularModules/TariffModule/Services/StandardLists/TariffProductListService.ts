@@ -226,14 +226,14 @@ export class TariffProductListService {
 
     getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true)) {
 
-        var callTime = new Date();
+		var callTime = new Date();
 
-        if (!SessionLocator.UseCachedData) {
-            return this.getByFilters(filters);
-        }
+		if (!SessionLocator.UseCachedData) {
+			return this.getByFilters(filters);
+		}
 
-        var exists = TariffProductListService.CachedData.length;
-        var urlparameters = '/getbyfilters?';
+		var exists = TariffProductListService.CachedData.length;
+		var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
 
@@ -247,24 +247,24 @@ export class TariffProductListService {
             }
 
             if (!ignoreFilter) {
-                if (exists === 0 || filters.ForceCacheRefresh) {
-                    propValue = encodeURIComponent(propValue);
-                }
+				if (exists === 0 || filters.ForceCacheRefresh) {
+					propValue = encodeURIComponent(propValue);
+				}
 
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
+			}
 
             if (propName == "AdditionalFilters" && propValue.length > 0) {
                 addtionalFiltersValues = JSON.stringify(propValue);
-            }
+			}
         }
 
         if (addtionalFiltersValues) {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var callUrl = this._apiUrl.concat(urlparameters);
-
+        var callUrl = this._apiUrl.concat(urlparameters);       
+       
         if (exists === 0 || filters.ForceCacheRefresh) {
             var cacheKey = "TariffProduct_CachedData_" + filters.Tenant;
             var _mappedListsArray: Array<TariffProductList> = [];
@@ -283,14 +283,14 @@ export class TariffProductListService {
                     TariffProductListService.CachedData = _mappedListsArray;
                     serviceResponse = new ServiceResponse();
 
-                    if (!filters.GetAll) {
+                     if (!filters.GetAll) {
                         _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
                     }
 
                     serviceResponse.Result = _mappedListsArray;
-                    serviceResponse.CallTime = callTime;
-
-                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "TariffProduct", "GetAllFromCache", "");
+					serviceResponse.CallTime = callTime;
+                    
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "TariffProduct", "GetAllFromCache", "");                     
                 }
             }
 
@@ -301,39 +301,39 @@ export class TariffProductListService {
             else {
                 return Observable.defer(() => {
                     return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
-                        .pipe(
-                            map((response: HttpResponse<any>) => {
+						.pipe(
+							map((response: HttpResponse<any>) => {
 
-                                var serviceResponse: ServiceResponse;
-                                serviceResponse = response.body;
+								var serviceResponse: ServiceResponse;
+								serviceResponse = response.body;
+                        
+								if (serviceResponse.Result) {
+									for (var key in serviceResponse.Result) {
+										var entity: TariffProductList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+										_mappedListsArray.push(entity);
+									}
+								}
 
-                                if (serviceResponse.Result) {
-                                    for (var key in serviceResponse.Result) {
-                                        var entity: TariffProductList = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                                        _mappedListsArray.push(entity);
-                                    }
-                                }
+								if (filters.GetAll) {
+									LocalStorageManager.SetItem(cacheKey, JSON.stringify(_mappedListsArray))
+									TariffProductListService.CachedData = _mappedListsArray;
+								}
 
-                                if (filters.GetAll) {
-                                    LocalStorageManager.SetItem(cacheKey, JSON.stringify(_mappedListsArray))
-                                    TariffProductListService.CachedData = _mappedListsArray;
-                                }
+								else {
+							
+									_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+								}
 
-                                else {
+								serviceResponse.Result = _mappedListsArray;
+								serviceResponse.CallTime = callTime;
+						
+								var servertime = response.headers.get('ServerExecutionTime');
+								PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TariffProduct", "GetAll", ""); 
 
-                                    _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
-                                }
-
-                                serviceResponse.Result = _mappedListsArray;
-                                serviceResponse.CallTime = callTime;
-
-                                var servertime = response.headers.get('ServerExecutionTime');
-                                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TariffProduct", "GetAll", "");
-
-                                return serviceResponse;
-                            }),
-
-                            catchError(ServiceHelper.HandleServiceError));
+								return serviceResponse;
+							}),
+							
+							catchError(ServiceHelper.HandleServiceError));
                 });
             }
         }
@@ -341,13 +341,13 @@ export class TariffProductListService {
         else {
             var filteredData = TariffProductListService.CachedData;
             if (!filters.GetAll) {
-
+	
                 filteredData = InfraGenericFilter.GetFilteredArray(filteredData, filters);
             }
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
             serviceResponse.Result = filteredData;
-            serviceResponse.CallTime = callTime;
+			serviceResponse.CallTime = callTime;
             return Observable.of(serviceResponse);
         }
     }

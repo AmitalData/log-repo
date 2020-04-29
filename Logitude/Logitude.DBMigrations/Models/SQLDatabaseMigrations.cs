@@ -998,16 +998,12 @@ namespace Logitude.DBMigrations.Models
 
             string createRelationWithHistoryScript = createRelationScript + GetInsertScriptForMigrationsHistory("Create Relation", DXMLTable.Name, relation.ForeignKeyColumn, createRelationScript);
 
-            string createIndexScript = null;
-            if (CurrentTable == null || (CurrentTable != null && CurrentTable.AllIndexes.Where(i => i.Columns == relation.ForeignKeyColumn).FirstOrDefault() == null))
+            IndexDefinition relationIndex = new IndexDefinition
             {
-                IndexDefinition relationIndex = new IndexDefinition
-                {
-                    Columns = relation.ForeignKeyColumn
-                };
+                Columns = relation.ForeignKeyColumn
+            };
 
-                createIndexScript = GetCreateIndexScript(relationIndex);
-            }
+            string createIndexScript = GetCreateIndexScript(relationIndex);
 
             return createRelationWithHistoryScript + createIndexScript;
         }
@@ -1025,7 +1021,8 @@ namespace Logitude.DBMigrations.Models
             if (relation.ParentTable == CurrentTable.Name)
             {
                 IndexDefinition relationIndex = CurrentTable.AllIndexes.Where(i => i.Columns == relation.ForeignKeyColumn).FirstOrDefault();
-                if (relationIndex != null)
+                IndexDefinition dxmlIndex = DXMLTable.Indexes.Where(i => i.Columns == relation.ForeignKeyColumn).FirstOrDefault();
+                if (relationIndex != null && dxmlIndex == null)
                 {
                     dropIndexScript = GetDropIndexScript(relationIndex);
                 }
@@ -1038,7 +1035,7 @@ namespace Logitude.DBMigrations.Models
         {
             if (!String.IsNullOrEmpty(script))
             {
-                string insertScript = "INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', GETDATE(), '" + script.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "');" + "\n\n";
+                string insertScript = "INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('" + Guid.NewGuid().ToString() + "', '" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', GETDATE(), '" + script.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "');" + "\n\n";
                 return insertScript;
             }
 
@@ -1059,7 +1056,7 @@ namespace Logitude.DBMigrations.Models
 
             if (!String.IsNullOrEmpty(defaultValue))
             {
-                if (defaultValue.ToLower() == "CurrentDate".ToLower())
+                if ((type == "datetime" || type == "date") && defaultValue.ToLower() == "CurrentDate".ToLower())
                 {
                     return " DEFAULT(GETDATE())";
                 }
@@ -1068,6 +1065,11 @@ namespace Logitude.DBMigrations.Models
             }
 
             return null;
+        }
+
+        protected override string FormatDateTimeDefaultValue(string defaultValue, bool isDateTime)
+        {
+            return defaultValue;
         }
 
         protected override string GetAddDefaultScript(ColumnMigration columnMigration)
@@ -1095,30 +1097,48 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateIndexScript(IndexDefinition index)
         {
-            string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
-            string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));
-            string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
-            string createIndexScript = "-- Create Index On " + DXMLTable.Name + " Table\n";
-            string indexName = "IX_" + DXMLTable.Name + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
-            if (indexName.Length > 128)
+            if (CurrentTable == null || (CurrentTable != null && !CurrentTable.AllIndexes.Where(i => i.Columns == index.Columns).Any()))
             {
-                indexName = indexName.Substring(0, 128);
+                bool createIndex = true;
+                if (CurrentTable == null && DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
+                {
+                    string dxmlPrimaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => FormatNameLength(c.Name, c.ShortName)).ToArray());
+                    if (dxmlPrimaryKeyColumns == index.Columns)
+                    {
+                        createIndex = false;
+                    }
+                }
+
+                if (createIndex)
+                {
+                    string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
+                    string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));
+                    string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
+                    string createIndexScript = "-- Create Index On " + DXMLTable.Name + " Table\n";
+                    string indexName = "IX_" + DXMLTable.Name + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
+                    if (indexName.Length > 128)
+                    {
+                        indexName = indexName.Substring(0, 128);
+                    }
+
+                    if (includeColumns != null)
+                    {
+                        createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")')";
+                    }
+                    else
+                    {
+                        createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")')";
+                    }
+
+                    createIndexScript += ";\n\n";
+
+                    string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", DXMLTable.Name, indexColumns.Replace("[", String.Empty).Replace("]", String.Empty), createIndexScript);
+
+                    return addIndexWithHistoryScript;
+                }
             }
 
-            if (includeColumns != null)
-            {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")')";
-            }
-            else
-            {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")')";
-            }
-
-            createIndexScript += ";\n\n";
-
-            string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", DXMLTable.Name, indexColumns.Replace("[", String.Empty).Replace("]", String.Empty), createIndexScript);
-
-            return addIndexWithHistoryScript;
+            return null;
         }
 
         protected override string GetCreateUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint)

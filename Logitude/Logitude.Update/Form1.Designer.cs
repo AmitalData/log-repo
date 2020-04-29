@@ -194,6 +194,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
+            this.uploadMexicoCitiesBtn = new System.Windows.Forms.Button();
             this.AirlineLogosCheckBox = new System.Windows.Forms.CheckBox();
             this.LoadClosedTablesLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
@@ -1683,6 +1684,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.uploadMexicoCitiesBtn);
             this.tabPage2.Controls.Add(this.button47);
             this.tabPage2.Controls.Add(this.button44);
             this.tabPage2.Controls.Add(this.button43);
@@ -1848,6 +1850,16 @@
             this.tabPage3.Text = "Airline Logos";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // AirlineLogosCheckBox
+            // 
+            this.AirlineLogosCheckBox.AutoSize = true;
+            this.AirlineLogosCheckBox.Location = new System.Drawing.Point(73, 83);
+            this.AirlineLogosCheckBox.Name = "AirlineLogosCheckBox";
+            this.AirlineLogosCheckBox.Size = new System.Drawing.Size(118, 17);
+            this.AirlineLogosCheckBox.TabIndex = 106;
+            this.AirlineLogosCheckBox.Text = "Apply for all tenants";
+            this.AirlineLogosCheckBox.UseVisualStyleBackColor = true;
+            // 
             // UpdateLogosLabel
             // 
             this.UpdateLogosLabel.AutoSize = true;
@@ -1911,13 +1923,13 @@
             // AirlineLogosCheckBox
             // LoadClosedTablesLabel
             // 
-            this.AirlineLogosCheckBox.AutoSize = true;
-            this.AirlineLogosCheckBox.Location = new System.Drawing.Point(73, 83);
-            this.AirlineLogosCheckBox.Name = "AirlineLogosCheckBox";
-            this.AirlineLogosCheckBox.Size = new System.Drawing.Size(118, 17);
-            this.AirlineLogosCheckBox.TabIndex = 106;
-            this.AirlineLogosCheckBox.Text = "Apply for all tenants";
-            this.AirlineLogosCheckBox.UseVisualStyleBackColor = true;
+            this.uploadMexicoCitiesBtn.Location = new System.Drawing.Point(10, 400);
+            this.uploadMexicoCitiesBtn.Name = "uploadMexicoCitiesBtn";
+            this.uploadMexicoCitiesBtn.Size = new System.Drawing.Size(182, 23);
+            this.uploadMexicoCitiesBtn.TabIndex = 98;
+            this.uploadMexicoCitiesBtn.Text = "Upload Mexico Cities";
+            this.uploadMexicoCitiesBtn.UseVisualStyleBackColor = true;
+            this.uploadMexicoCitiesBtn.Click += new System.EventHandler(this.uploadMexicoCitiesBtn_Click);
             this.LoadClosedTablesLabel.AutoSize = true;
             this.LoadClosedTablesLabel.Location = new System.Drawing.Point(518, 325);
             this.LoadClosedTablesLabel.Name = "LoadClosedTablesLabel";
@@ -2140,6 +2152,7 @@
         private System.Windows.Forms.Button button50;
 
         private System.Windows.Forms.CheckBox AirlineLogosCheckBox;
+        private System.Windows.Forms.Button uploadMexicoCitiesBtn;
         private System.Windows.Forms.Label LoadClosedTablesLabel;
 
     }

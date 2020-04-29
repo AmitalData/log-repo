@@ -37,6 +37,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public bool IsBackToBack { get; set; }
         public bool IsExpense { get; set; }
         public string PrepaidCollectId { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         [ForeignKey("LineActionCode")]
         public virtual ARInvoiceLineAction ARInvoiceLineAction { get; set; }

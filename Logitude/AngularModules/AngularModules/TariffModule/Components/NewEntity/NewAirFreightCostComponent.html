@@ -104,6 +104,31 @@
                                     </td>
                                 </tr>
 
+                                <!-- All in charges  -->
+                                <tr *ngIf="EntityPM.TypeCode == 'AFC' || EntityPM.TypeCode == 'OLC' || EntityPM.TypeCode == 'OFC'" class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [NoObjectField]="true" [Text]="'All-In Charges'" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td colspan="2">
+                                        <table>
+                                            <tr>
+                                                <td style="width:1px; text-align:left;" title="{{AllInChargesText}}">
+                                                    {{AllInChargesText}}
+                                                </td>
+                                                <td style="width:20px;">
+                                                    <IconButton [Left]="5" [Name]="'Edit'" [IsSmall]="true" (click)="EditAllInCharges()"></IconButton>
+                                                </td>
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+                                                <td>
+                                                    <HelpIcon [Header]="'All-In Charges'" [Text]="'Surcharges defined as all-in for the first version only'"></HelpIcon>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
                                 <!-- StartDate -->
                                 <tr *ngIf="!VisibileSurchargesArea" class="FormFieldRow">
                                     <td>

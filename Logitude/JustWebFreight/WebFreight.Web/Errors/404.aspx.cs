@@ -16,7 +16,7 @@ namespace WebFreight.Web
         {
             if (!IsPostBack)
             {
-                var IsAngularURL = Request.RawUrl.Contains("/Angular");//.QueryString["Menu"];
+                var IsAngularURL = Request.RawUrl.Contains("/index.html");//.QueryString["Menu"];
                 if (IsAngularURL)
                 {
                     //IGlobalContext objectContext = GlobalContext.GetContext();

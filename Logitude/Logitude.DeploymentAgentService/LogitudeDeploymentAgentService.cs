@@ -39,7 +39,7 @@ namespace Logitude.DeploymentAgentService
         
         protected override void OnStart(string[] args)
         {
-            AddAgentLog("Deployment Agent Service Started");
+            //AddAgentLog("Deployment Agent Service Started");
             ServiceTimer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             ServiceTimer.Interval = ServiceIntervalInSeconds * 1000;
             ServiceTimer.Enabled = true;
@@ -52,17 +52,19 @@ namespace Logitude.DeploymentAgentService
 
         protected void OnElapsedTime(object source, ElapsedEventArgs e)
         {
+            DisableAgentServiceTimer();
             GetAgentInfo();
             GetInstanceFolderPath();
             StartDeploymentProcess();
+            EnableAgentServiceTimer();
         }
 
         protected void GetAgentInfo()
         {
             try
             {
-                DeploymentApiHttpRequest<Agent> httpRequest = new DeploymentApiHttpRequest<Agent>("/Agents/" + AgentServiceId, HttpRequestType.NoBodyRequestType.Get);
-                AgentInfo = httpRequest.GetResponse();
+                DeploymentApiHttpRequest httpRequest = new DeploymentApiHttpRequest("/Agents/GetAgentDetails/" + AgentServiceId, HttpRequestType.NoBodyRequestType.Get);
+                AgentInfo = httpRequest.GetResponse<Agent>();
             }
             catch (Exception exception)
             {
@@ -104,8 +106,6 @@ namespace Logitude.DeploymentAgentService
             {
                 if (!IsAgentCurrentVersionLatest())
                 {
-                    DisableAgentServiceTimer();
-
                     string agentServiceType = AgentInfo.ServiceType.Code.ToLower();
 
                     if (agentServiceType == "web")
@@ -116,21 +116,19 @@ namespace Logitude.DeploymentAgentService
                     {
                         DeployPackageForWorkerRole();
                     }
-
-                    EnableAgentServiceTimer();
                 }
             }
         }
 
         protected bool IsAgentCurrentVersionLatest()
         {
-            return (AgentInfo.CurrentVersion == AgentInfo.NewVersion);
+            return (AgentInfo.CurrentVersion == AgentInfo.NewVersion) || AgentInfo.LastReleaseId == null;
         }
 
         protected void DeployPackage()
         {
             int packageVersion = AgentInfo.NewVersion;
-            string packageUrl = AgentInfo.NewVersionArtifact.FolderName + "/" + AgentInfo.NewVersionArtifact.FileName;
+            string packageUrl = AgentInfo.Artifact.FolderName + "/" + AgentInfo.Artifact.FileName;
 
             AddAgentLog("Deployment Process For Version " + packageVersion + " Started");
             UpdateDeploymentStatus(InProgressDeploymentStatusCode);
@@ -219,8 +217,8 @@ namespace Logitude.DeploymentAgentService
             try
             {
                 WebClient webClient = new WebClient();
-                string packageFileFtpUrl = AgentInfo.NewVersionArtifact.FtpUrl.TrimEnd('/') + "/" + packageUrl;
-                webClient.Credentials = new NetworkCredential(AgentInfo.NewVersionArtifact.FtpUsername, AgentInfo.NewVersionArtifact.FtpPassword);
+                string packageFileFtpUrl = AgentInfo.Artifact.FtpUrl.TrimEnd('/') + "/" + packageUrl;
+                webClient.Credentials = new NetworkCredential(AgentInfo.Artifact.FtpUsername, AgentInfo.Artifact.FtpPassword);
 
                 webClient.DownloadFileCompleted += (sender, e) => {
                     isDownloadPackageFromFTPCompleted = true;
@@ -255,7 +253,7 @@ namespace Logitude.DeploymentAgentService
 
             try
             {
-                string packageFileFtpUrl = AgentInfo.NewVersionArtifact.FtpUrl.TrimEnd('/') + "/" + packageUrl;
+                string packageFileFtpUrl = AgentInfo.Artifact.FtpUrl.TrimEnd('/') + "/" + packageUrl;
                 ZipFile.ExtractToDirectory(InstanceFolderPath + @".Temp\" + Path.GetFileName(packageFileFtpUrl), InstanceFolderPath + ".Temp");
 
                 result = true;
@@ -329,7 +327,7 @@ namespace Logitude.DeploymentAgentService
                 {
                     CurrentVersion = AgentInfo.NewVersion
                 };
-                DeploymentApiHttpRequest<Agent> httpRequest = new DeploymentApiHttpRequest<Agent>("/Agents/UpdateCurrentVersion/" + AgentInfo.Id, updateAgentCurrentVersion, HttpRequestType.BodyRequestType.Put);
+                DeploymentApiHttpRequest httpRequest = new DeploymentApiHttpRequest("/Agents/UpdateCurrentVersion/" + AgentServiceId, updateAgentCurrentVersion, HttpRequestType.BodyRequestType.Put);
                 httpRequest.GetResponse();
 
                 AddAgentLog("Agent Current Version Was Updated To " + AgentInfo.NewVersion);
@@ -350,8 +348,8 @@ namespace Logitude.DeploymentAgentService
                 {
                     DeploymentStatusCode = deploymentStatusCode
                 };
-                DeploymentApiHttpRequest<Agent> httpRequest = new DeploymentApiHttpRequest<Agent>("/Agents/UpdateDeploymentStatus/" + AgentInfo.Id, updateAgentDeploymentStatus, HttpRequestType.BodyRequestType.Put);
-                Agent updatedAgent = httpRequest.GetResponse();
+                DeploymentApiHttpRequest httpRequest = new DeploymentApiHttpRequest("/Agents/UpdateDeploymentStatus/" + AgentServiceId, updateAgentDeploymentStatus, HttpRequestType.BodyRequestType.Put);
+                Agent updatedAgent = httpRequest.GetResponse<Agent>();
 
                 AddAgentLog("Agent Deployment Status Was Updated To " + updatedAgent.DeploymentStatus.Name);
             }
@@ -514,26 +512,34 @@ namespace Logitude.DeploymentAgentService
 
         protected void AddAgentLog(string logMessage, bool isException = false)
         {
-            try
+            if(AgentInfo != null)
             {
-                SaveAgentLog saveAgentLog = new SaveAgentLog()
+                try
                 {
-                    AgentId = (AgentInfo != null ? AgentInfo.Id : AgentServiceId),
-                    LogMessage = logMessage,
-                    IsException = isException,
-                    LogDatetime = DateTime.Now
-                };
-                DeploymentApiHttpRequest<AgentLog> httpRequest = new DeploymentApiHttpRequest<AgentLog>("/AgentLogs", saveAgentLog, HttpRequestType.BodyRequestType.Post);
-                httpRequest.GetResponse();
+                    SaveAgentLog saveAgentLog = new SaveAgentLog()
+                    {
+                        AgentId = AgentInfo.Id,
+                        LogMessage = logMessage,
+                        IsException = isException,
+                        LogDatetime = DateTime.Now,
+                        ReleaseId = AgentInfo.LastReleaseId
+                    };
+                    DeploymentApiHttpRequest httpRequest = new DeploymentApiHttpRequest("/AgentLogs", saveAgentLog, HttpRequestType.BodyRequestType.Post);
+                    httpRequest.GetResponse();
 
-                if (isException)
+                    if (isException)
+                    {
+                        UpdateDeploymentStatus(ErrorDeploymentStatusCode);
+                    }
+                }
+                catch (Exception exception)
                 {
-                    UpdateDeploymentStatus(ErrorDeploymentStatusCode);
+                    WriteToLogsFile(exception.ToString());
                 }
             }
-            catch (Exception exception)
+            else
             {
-                WriteToLogsFile(exception.ToString());
+                WriteToLogsFile(logMessage);
             }
         }
 

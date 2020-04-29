@@ -41,6 +41,7 @@
   </Column>
   <Column
     Name="Size"
+    ShortName="Size_"
     Type="int">
     <Constraints
       Nullable="false" />

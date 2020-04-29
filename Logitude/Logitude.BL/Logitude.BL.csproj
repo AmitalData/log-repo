@@ -338,6 +338,7 @@
     <Compile Include="CommonDataModel\EntityLists\TariffCarrierTranslationList.cs" />
     <Compile Include="CommonDataModel\EntityLists\TenantAdditionalDataList.cs" />
     <Compile Include="CommonDataModel\EntityLists\AccountingPartnerList.cs" />
+    <Compile Include="CommonDataModel\EntityOtherServices\MexicanCountryCities.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreasPortPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreaPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CardContactAdditionalServicePM.cs" />
@@ -2733,6 +2734,10 @@
     <ProjectReference Include="..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
       <Project>{9ffc5b97-f09a-4eed-a66e-d4160374ae6e}</Project>
       <Name>Logitude.SystemLogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
+      <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
+      <Name>Logitude.TariffModule.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.WarehouseLib.Data\Logitude.WarehouseLib.Data.csproj">
       <Project>{54A12A5C-659C-4410-A5E7-949ACD43F3A5}</Project>

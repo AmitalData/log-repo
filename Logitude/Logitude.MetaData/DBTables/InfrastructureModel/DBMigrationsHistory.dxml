@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DBMigrationsHistory" Schema="dbo">
+<Table Name="DBMigrationsHistory" Schema="dbo" Module="Infrastructure">
 
-  <Column Name="Id" Type="bigint" Identity="true">
+  <Column Name="Id" Type="nvarchar" Size="128">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
 

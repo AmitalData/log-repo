@@ -1979,6 +1979,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else return gLAccount.Id;
                 }
+                else
+                    return gLAccount.Id;
 
             }
             return null;

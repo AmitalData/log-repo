@@ -3,7 +3,7 @@
   Name="Tariffs"
   Schema="dbo"
   DBType="Main"
-  Module="Tariff">
+  Module="TariffModule">
   <Column
     Name="Id"
     Type="varchar"
@@ -329,6 +329,12 @@
     Name="TariffProductId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastUsedDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>

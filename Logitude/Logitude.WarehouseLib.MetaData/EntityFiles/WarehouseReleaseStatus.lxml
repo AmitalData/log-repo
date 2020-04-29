@@ -256,4 +256,6 @@
       SearchFields="&quot;RELE,Released,&quot;"
       Name="&quot;Released&quot;" />
   </Records>
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>
