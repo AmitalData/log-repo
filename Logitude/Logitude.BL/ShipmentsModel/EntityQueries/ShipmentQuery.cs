@@ -11984,6 +11984,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CreatedByPartner= f.CreatedByPartner,
                     MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
                     MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
+                    CreatedFromDigital = f.CreatedFromDigital
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

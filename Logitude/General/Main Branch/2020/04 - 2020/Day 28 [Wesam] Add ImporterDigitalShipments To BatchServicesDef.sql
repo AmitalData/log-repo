@@ -1,5 +1,7 @@
 --> run this script at Global db 
 
+update BatchServicesDefinitions set Parameter2 = 'Low' where code='ImporterShipments'
+
 delete BatchServicesDefinitionMods where Code = 'ImporterDigitalShipments'
 delete BatchServicesDefinitions where Code = 'ImporterDigitalShipments'
 

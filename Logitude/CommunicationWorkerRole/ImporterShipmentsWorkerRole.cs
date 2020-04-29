@@ -60,14 +60,14 @@ namespace CommunicationWorkerRole
             URI = SettingQuery.GetSinglePM().CustomerTenantsURL.TrimEnd('/') + "/api/";
             switch (priority)
             {
+                case "Low":
+                    {
+                        queueName = "ImportersShipmentQueue";
+                        break;
+                    }
                 case "Digital":
                     {
                         queueName = "ImportersDigitalShipmentQueue";
-                        break;
-                    }
-                default:
-                    {
-                        queueName = "ImportersShipmentQueue";
                         break;
                     }
             }

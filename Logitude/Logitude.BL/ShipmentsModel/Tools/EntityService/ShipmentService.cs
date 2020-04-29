@@ -1160,7 +1160,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
-                            if (entityPM.CreatedFromDigital)
+                            if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
                             {
                                 queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
                             }
@@ -1203,7 +1203,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
-                            if (entityPM.CreatedFromDigital)
+                            if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
                             {
                                 queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
                             }
@@ -1219,7 +1219,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             if (IsImporterTenantHasExportFeatureForExportShipments((int)entityPoco.CustomerTenantNumber, entityPM))
                             {
                                 IQueueService queueservice = new DbQueueService();
-                                if (entityPM.CreatedFromDigital)
+                                if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
                                 {
                                     queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
                                 }
@@ -1235,7 +1235,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             var ImporterTenant = entityPM.CustomerTenantNumber;
                             IQueueService queueservice = new DbQueueService();
-                            if (entityPM.CreatedFromDigital)
+                            if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
                             {
                                 queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
                             }
