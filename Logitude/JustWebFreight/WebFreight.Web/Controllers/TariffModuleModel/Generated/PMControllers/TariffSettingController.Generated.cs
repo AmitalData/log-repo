@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("TariffSetting", "READ", authToken.Tenant);
+	                
                 ITariffModuleContext MyContext = TariffModuleContext.GetContext(authToken.Tenant);
                 TariffSettingQueryService tariffSettingQuery = new TariffSettingQueryService(MyContext);
 				tariffSettingQuery.InitializeSettings();
@@ -91,7 +92,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    
+                        SecurityUtility.CheckContactFeature("TariffSetting", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TariffSetting", entityPM.Tenant, authToken.Tenant);
+	                    
                         ITariffModuleContext MyContext = TariffModuleContext.GetContext(entityPM.Tenant);
                         TariffSettingUpdateService service = new TariffSettingUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -137,7 +140,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                        SecurityUtility.CheckContactFeature("TariffSetting", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TariffSetting", entityPM.Tenant, authToken.Tenant);
+	
                         ITariffModuleContext MyContext = TariffModuleContext.GetContext(entityPM.Tenant);
                         TariffSettingUpdateService service = new TariffSettingUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);

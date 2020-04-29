@@ -3,7 +3,7 @@
   Name="TariffSettings"
   Schema="dbo"
   DBType="Main"
-  Module="Tariff">
+  Module="TariffModule">
   <Column
     Name="Id"
     Type="varchar"
