@@ -844,7 +844,7 @@ namespace Logitude.DBMigrations.Models
             bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
             bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
             string columnDataType = GetDataTypeScript((isAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (isAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Precision : columnMigration.CurrentColumn.Precision), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Scale : columnMigration.CurrentColumn.Scale));
-            if(columnDataType.ToLower() == "timestamp")
+            if (columnDataType.ToLower() == "timestamp")
             {
                 return null;
             }
@@ -998,16 +998,12 @@ namespace Logitude.DBMigrations.Models
 
             string createRelationWithHistoryScript = createRelationScript + GetInsertScriptForMigrationsHistory("Create Relation", DXMLTable.Name, relation.ForeignKeyColumn, createRelationScript);
 
-            string createIndexScript = null;
-            if (CurrentTable == null || (CurrentTable != null && CurrentTable.AllIndexes.Where(i => i.Columns == relation.ForeignKeyColumn).FirstOrDefault() == null))
+            IndexDefinition relationIndex = new IndexDefinition
             {
-                IndexDefinition relationIndex = new IndexDefinition
-                {
-                    Columns = relation.ForeignKeyColumn
-                };
+                Columns = relation.ForeignKeyColumn
+            };
 
-                createIndexScript = GetCreateIndexScript(relationIndex);
-            }
+            string createIndexScript = GetCreateIndexScript(relationIndex);
 
             return createRelationWithHistoryScript + createIndexScript;
         }
@@ -1025,7 +1021,8 @@ namespace Logitude.DBMigrations.Models
             if (relation.ParentTable == CurrentTable.Name)
             {
                 IndexDefinition relationIndex = CurrentTable.AllIndexes.Where(i => i.Columns == relation.ForeignKeyColumn).FirstOrDefault();
-                if (relationIndex != null)
+                IndexDefinition dxmlIndex = DXMLTable.Indexes.Where(i => i.Columns == relation.ForeignKeyColumn).FirstOrDefault();
+                if (relationIndex != null && dxmlIndex == null)
                 {
                     dropIndexScript = GetDropIndexScript(relationIndex);
                 }
@@ -1038,7 +1035,7 @@ namespace Logitude.DBMigrations.Models
         {
             if (!String.IsNullOrEmpty(script))
             {
-                string insertScript = "INSERT INTO [dbo].[DBMigrationsHistory]([DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', GETDATE(), '" + script.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "');" + "\n\n";
+                string insertScript = "INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('" + Guid.NewGuid().ToString() + "', '" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', GETDATE(), '" + script.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "');" + "\n\n";
                 return insertScript;
             }
 
@@ -1059,7 +1056,7 @@ namespace Logitude.DBMigrations.Models
 
             if (!String.IsNullOrEmpty(defaultValue))
             {
-                if (defaultValue.ToLower() == "CurrentDate".ToLower())
+                if ((type == "datetime" || type == "date") && defaultValue.ToLower() == "CurrentDate".ToLower())
                 {
                     return " DEFAULT(GETDATE())";
                 }
@@ -1068,6 +1065,11 @@ namespace Logitude.DBMigrations.Models
             }
 
             return null;
+        }
+
+        protected override string FormatDateTimeDefaultValue(string defaultValue, bool isDateTime)
+        {
+            return defaultValue;
         }
 
         protected override string GetAddDefaultScript(ColumnMigration columnMigration)
