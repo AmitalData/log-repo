@@ -12,7 +12,7 @@
 </style>
 
 <table>
-    <tr style="height:1px;">
+    <tr style="height:1px;" *ngIf="HasSettingMenu">
         <td>
             <table>
                 <tr>
@@ -28,7 +28,7 @@
         </td>
     </tr>
 
-    <tr style="height:15px;">
+    <tr style="height:15px;" *ngIf="HasSettingMenu">
         <td>
             <div></div>
         </td>
