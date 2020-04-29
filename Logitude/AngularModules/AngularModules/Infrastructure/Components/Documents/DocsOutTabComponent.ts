@@ -39,7 +39,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
     
     selector: "DocsOutControl",
     templateUrl: './DocsOutTabComponent.html',
-    inputs: ['EntityPM', 'EntityId', 'ObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference', 'ChildObjectTableId', 'ChildEntityId', 'EntityReference', 'ChildrenObjectTableIds', 'InitializeDocsOutForAnotherObjectTable', 'IsCustomFilter', 'CustomFilterValue', 'CustomFilterOperation'],
+    inputs: ['EntityPM', 'EntityId', 'ObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference', 'ChildObjectTableId', 'ChildEntityId', 'EntityReference', 'ChildrenObjectTableIds', 'InitializeDocsOutForAnotherObjectTable', 'IsCustomFilter', 'CustomFilterValue', 'CustomFilterOperation' , 'ShowMessageDocument'],
     providers: [ DocumentOutPMService, DocumentsFilingExtendedPMService, CommunicationLogExtendedPMService, EventTypeExtendedPMService, DocumentTypeListService],   
 })
 
@@ -58,7 +58,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     public ObjectTableName: string = "";
     public DownloadAllVisibile: boolean = false;
     public HasDocuments: boolean = false;
-
+    public ShowMessageDocument: boolean = false;
     //test
     EntityPM: any;
     public CustomFilterOperation: string = "";
@@ -600,7 +600,13 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
                     if (this.CustomFilterOperation) {
 
                         if (this.CustomFilterOperation == "Equal") {
-                            this.DocumentTypes = this.DocumentTypes.filter(d => d.Code == this.CustomFilterValue);
+
+
+                            if (this.ShowMessageDocument) {
+                                this.DocumentTypes = this.DocumentTypes.filter(d => d.Code == this.CustomFilterValue || d.TemplateFormatCode == 'M');
+
+                            }
+
                         }
                         else if (this.CustomFilterOperation == "NotEqual") {
                             this.DocumentTypes = this.DocumentTypes.filter(d => d.Code != this.CustomFilterValue);
