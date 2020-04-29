@@ -7,17 +7,17 @@ import { ChildDirective } from './Directives/ChildDirective';
 import { AppComponent } from './AppComponent';
 
 @NgModule({
-    imports: [BrowserModule, HttpClientModule],
+  imports: [BrowserModule, HttpClientModule],
   declarations: [ChildDirective, AppComponent],
 
-    providers: [
-      SystemJsNgModuleLoader,
+  providers: [
+    SystemJsNgModuleLoader,
 
-      { provide: LAZY_WIDGETS, useFactory: LazyArrayToObjects }
-       
-    ],
+    { provide: LAZY_WIDGETS, useFactory: LazyArrayToObjects }
 
-    bootstrap: [AppComponent]
+  ],
+
+  bootstrap: [AppComponent]
 })
 
 export class AppModule { }

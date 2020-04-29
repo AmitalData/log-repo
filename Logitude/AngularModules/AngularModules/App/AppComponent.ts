@@ -29,7 +29,6 @@ export class AppComponent implements AfterViewInit {
   }
   
   ngAfterViewInit() {
-
     DynamicLoader.Load("./Infrastructure/RootComponent", this.Child.Location)
       .then(cmpRef => {
         this.IsLoginScreenLoaded = true;

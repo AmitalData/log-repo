@@ -1,4 +1,3 @@
-
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { DynamicLoader } from '../App/DynamicLoader/DynamicLoader';
 import {ServiceHelper} from './Utilities/ServiceHelper';
@@ -9,10 +8,9 @@ import {SessionInfo} from './Utilities/SessionInfo'
 import {ServiceResponse} from './DataContracts/ServiceResponse';
 import {TermsofUseArgs} from './DataContracts/TermsofUseArgs';
 import { environment } from '../environments/environment';
-import {LoginService} from './Services/LoginService';
+import { LoginService } from './Services/LoginService';
 import { AppTool } from './Tools'
 import { ChildDirective } from './Directives/ChildDirective';
-
 declare var IsMobileDetected;
 
 @Component({
@@ -39,24 +37,15 @@ export class RootComponent implements AfterViewInit {
 
   Boot(args: any) {
     ServiceHelper.HttpClient = args["Http"];
-
-    //DynamicLoader.Compiler = args["Compiler"];
-    //DynamicLoader.Resolver = args["Resolver"];
-    //DynamicLoader.Injector = args["Injector"];
-    //DynamicLoader.ModuleLoader = args["ModuleLoader"];
     SessionLocator.DynamicLoader = DynamicLoader;
     SessionLocator.RootComponent = this;
 
     if (environment.production) {
       SessionLocator.IsProduction = true;
     }
-
-    //this.isComponentBooted = true;
-    //this.RunComponent();
   }
 
   ngAfterViewInit() {
-    //this.isComponentInited = true;
     this.RunComponent();
   }
 

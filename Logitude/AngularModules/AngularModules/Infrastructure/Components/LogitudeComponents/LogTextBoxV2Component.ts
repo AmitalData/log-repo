@@ -12,11 +12,10 @@ import {FieldValidator} from '../../Validators/FieldValidator';
 import {FormGroup} from '@angular/forms';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
-import { timer } from 'rxjs/observable/timer';
-import { timeInterval, pluck, take } from 'rxjs/operators';
+//import { timeInterval, pluck, take } from 'rxjs/operators';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
-import { fromEvent, timer } from 'rxjs';
-import { debounceTime, take } from 'rxjs/operators';
+//import { fromEvent, timer } from 'rxjs';
+//import { debounceTime, take } from 'rxjs/operators';
 
 interface BeforeOnDestroy {
     ngxBeforeOnDestroy();
