@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PriceStepUpdateClass
    {  		
-		public const string HashString = "80af9152c75e26236776b5172145c369";
+		public const string HashString = "1380d455ec240af4d1eec3c371866a4c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "PriceStep",
 			      				    IsNew =  true,
 			      				    DBTableName =  "PriceSteps",
-			      				    OldDBTableName =  "PricesSteps",
 			      				    ObjectTableSingular =  "Price Steps",
 			      				    ObjectTablePlural =  "Prices Steps",
 			      				    HasCustomFilter =  false,
@@ -148,7 +147,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "PriceStep",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -209,7 +207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "PriceStep",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -271,7 +268,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "PriceStep",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -332,7 +328,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "PriceStep",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -394,7 +389,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "PriceStep",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -454,12 +448,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "PriceStep",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  80,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
@@ -515,7 +508,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						OldFieldName =  "Inactive",
 					  						ObjectTableName =  "PriceStep",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -576,12 +568,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Steps",
-					  						OldFieldName =  "Steps",
 					  						ObjectTableName =  "PriceStep",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
@@ -637,7 +628,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "PriceStep",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -698,7 +688,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserName",
-					  						OldFieldName =  "UpdatedByUserName",
 					  						ObjectTableName =  "PriceStep",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
