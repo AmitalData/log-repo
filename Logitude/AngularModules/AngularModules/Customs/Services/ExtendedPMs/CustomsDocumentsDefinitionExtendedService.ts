@@ -22,7 +22,7 @@ export class CustomsDocumentsDefinitionExtendedService {
 
     delete(Id: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -52,7 +52,7 @@ export class CustomsDocumentsDefinitionExtendedService {
 
     GetCustomsDocumentsDefinitionsForDeclaration(declarationId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);

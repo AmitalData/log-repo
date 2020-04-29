@@ -174,7 +174,7 @@ export class TreatmentWayListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.TreatmentWay").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TreatmentWayList> = [];
 
@@ -240,7 +240,7 @@ export class TreatmentWayListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.TreatmentWay").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TreatmentWayList> = [];
 					if (cachedJson) {

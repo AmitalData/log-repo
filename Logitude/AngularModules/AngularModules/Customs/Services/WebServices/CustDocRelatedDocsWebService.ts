@@ -22,7 +22,7 @@ export class CustDocRelatedDocsWebService {
     GetDocumentsFilingsForRelatedDocuments(entityId: string, childEntityId: string, objectTableId: string, directionCode: string, referenceNumber:string, filterVlaue:string ){
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDocumentsFilingsForRelatedDocuments?' + 'entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&referenceNumber=' + referenceNumber + '&filterVlaue=' + filterVlaue, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -52,7 +52,7 @@ export class CustDocRelatedDocsWebService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         id = encodeURIComponent(id);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleDocumentsFilingPM?' + 'id=' + id ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();

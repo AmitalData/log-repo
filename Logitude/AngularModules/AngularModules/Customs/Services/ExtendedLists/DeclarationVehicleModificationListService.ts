@@ -32,7 +32,7 @@ export class DeclarationVehicleModificationListService{
 
         var url = this._apiUrl + '/GetDeclarationVehicleModification';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDeclarationVehicleModification/?'
                 + '&declarationId=' + declarationId
                 + '&chassisNumber=' + chassisNumber

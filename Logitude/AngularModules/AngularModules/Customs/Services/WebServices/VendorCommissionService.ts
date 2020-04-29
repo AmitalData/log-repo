@@ -21,7 +21,7 @@ export class VendorCommissionService {
 
     GetCommissionsForCustomer(customerId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);

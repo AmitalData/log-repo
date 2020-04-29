@@ -35,7 +35,7 @@ export class CustomsAutonomyKeywordExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getByKeywordtypeCode?' + 'KeywordtypeCode=' + KeywordtypeCode + '&tenant=' + tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
                     var pm = response.body;
 

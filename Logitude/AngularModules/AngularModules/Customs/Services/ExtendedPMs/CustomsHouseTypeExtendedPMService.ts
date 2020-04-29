@@ -23,7 +23,7 @@ export class CustomsHouseTypeExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetHouseTypewithAdditional?declarationOfficeCode=' + declarationOfficeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 

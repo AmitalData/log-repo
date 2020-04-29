@@ -21,7 +21,7 @@ export class CustomDocumentViewerService {
 
     GetDocumentPage(documentId: string, currPage: number, isConnectedToUni: boolean,angle: number=0) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);

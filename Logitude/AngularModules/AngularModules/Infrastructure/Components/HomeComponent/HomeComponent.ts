@@ -32,7 +32,6 @@ import { timeInterval } from 'rxjs/operators';
 })
 
 export class HomeComponent implements OnDestroy{
-    public ProductInfo: string = null;
     public Tenant: number;
     public DataContext = this;
     public Tabs: Array<SessionTabItem>;

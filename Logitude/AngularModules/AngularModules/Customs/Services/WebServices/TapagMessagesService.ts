@@ -35,7 +35,7 @@ export class TapagMessagesService {
 
     PostGuaranteeCertificateRequest(entity: GuaranteeCertificateRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -61,7 +61,7 @@ export class TapagMessagesService {
 
     PostFaultQueryRequest(entity: FaultProceduralRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -87,7 +87,7 @@ export class TapagMessagesService {
 
     PostGuaranteeFileFilterQueryRequest(entity: GuaranteeFileFilterRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -112,7 +112,7 @@ export class TapagMessagesService {
     }
 
     GetDeclarationTapagsLists(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -131,7 +131,7 @@ export class TapagMessagesService {
     }
 
     GetDepositPMByPaymentOrderNumberOrTapagId(paymentNumber: string, tapagId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -159,7 +159,7 @@ export class TapagMessagesService {
     }
 
     GetDeficitPMByPaymentOrderNumberOrTapagId(paymentNumber: string, tapagId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -187,7 +187,7 @@ export class TapagMessagesService {
     }
 
     GetSingleTapagList(tapagId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -206,7 +206,7 @@ export class TapagMessagesService {
     }
 
     GetGuaranteeByTapagId(tapagId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -234,7 +234,7 @@ export class TapagMessagesService {
     }
 
     GetDeficitConnectedFileParagraphTypeList(declarationId: string, deficitId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -265,7 +265,7 @@ export class TapagMessagesService {
 
     PostDeclarationFilterRequestParams(entity: DeclarationFilterRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -291,7 +291,7 @@ export class TapagMessagesService {
 
     PostBankAccountToRefundQueryRequest(entity: BankAccountToRefundRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);

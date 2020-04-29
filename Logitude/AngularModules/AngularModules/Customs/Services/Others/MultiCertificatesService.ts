@@ -25,7 +25,7 @@ export class MultiCertificatesService {
         authHeader.append('Token', SessionInfo.Token);
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCertificateConnectedItems?' + 'declarationId=' + declarationId + '&attachmentTypeCode=' + attachmentTypeCode + '&reqConfirmationTypeCode=' + reqConfirmationTypeCode + '&CertificateExemptionTypeCode=' + CertificateExemptionTypeCode + '&CertificateNumber=' + CertificateNumber + '&ResConfirmationTypeCode=' + ResConfirmationTypeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -56,7 +56,7 @@ export class MultiCertificatesService {
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -107,7 +107,7 @@ export class MultiCertificatesService {
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetUpdateCertificatesBySearchFields?'
                 + 'declarationId=' + declarationId
                 + '&invoiceCounterKey=' + invoiceCounterKey
@@ -216,7 +216,7 @@ export class MultiCertificatesService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             callUrl = callUrl + '&declarationId=' + declarationId + '&attachmentTypeCode=' + attachmentTypeCode + '&reqConfirmationTypeCode=' + reqConfirmationTypeCode + '&CertificateExemptionTypeCode=' + CertificateExemptionTypeCode + '&CertificateNumber=' + CertificateNumber + '&ResConfirmationTypeCode=' + ResConfirmationTypeCode;
             return this._http.get(callUrl , ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
@@ -272,7 +272,7 @@ export class MultiCertificatesService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             callUrl = callUrl + '&declarationId=' + declarationId + '&attachmentTypeCode=' + attachmentTypeCode + '&reqConfirmationTypeCode=' + reqConfirmationTypeCode + '&CertificateExemptionTypeCode=' + CertificateExemptionTypeCode + '&CertificateNumber=' + CertificateNumber + '&ResConfirmationTypeCode=' + ResConfirmationTypeCode;
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -299,7 +299,7 @@ export class MultiCertificatesService {
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -341,7 +341,7 @@ export class MultiCertificatesService {
 
     
 
-        return Observable.defer(() => {
+        return defer(() => {
             var callURL = this._apiUrl + '/GetDeclarationHasInvoices?' + 'declarationId=' + declarationId;
          
             return this._http.get(callURL , ServiceHelper.GetHttpHeaders()).pipe(map(response => {

@@ -23,7 +23,7 @@ export class CustomsRequierdFieldsWebService {
 
     GetSomeObjectTables() {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -49,7 +49,7 @@ export class CustomsRequierdFieldsWebService {
 
     GetCustomsRequiredFieldListsByObjectTable(objectTableId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -89,7 +89,7 @@ export class CustomsRequierdFieldsWebService {
     }
 
     PostRequiredFields(fields: RequierdFieldObject[]) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);

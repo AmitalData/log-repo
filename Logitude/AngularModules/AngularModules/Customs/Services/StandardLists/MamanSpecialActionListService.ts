@@ -240,7 +240,7 @@ export class MamanSpecialActionListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.MamanSpecialAction").pipe(
-              map((cachedJson: any) => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MamanSpecialActionList> = [];
 					if (cachedJson) {

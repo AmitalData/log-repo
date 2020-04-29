@@ -3,7 +3,6 @@ import { AppTool } from '../../Tools';
 
 @Component({
     selector: 'log-dropdown-menu',
-    moduleId: module.id,
     host: { '(document:click)': 'handleClick($event)', },
     templateUrl: 'DropdownMenuComponent.html',
 })

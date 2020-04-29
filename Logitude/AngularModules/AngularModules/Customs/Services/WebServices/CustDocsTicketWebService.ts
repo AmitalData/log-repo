@@ -26,7 +26,7 @@ export class CustDocsTicketWebService {
     GetCustomsDocumentsTicketsByEntityIdAndChilds(entityId: string, childEntityId1: string, childEntityId2: string, childEntityId3: string, parentEntityCode:string ) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCustomsDocumentsTicketsByEntityIdAndChilds?' + 'entityId=' + entityId + '&childEntityId1=' + childEntityId1 + '&childEntityId2=' + childEntityId2 + '&childEntityId3=' + childEntityId3 + '&parentEntityCode=' + parentEntityCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();

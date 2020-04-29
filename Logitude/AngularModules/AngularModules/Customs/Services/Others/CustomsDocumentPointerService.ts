@@ -25,7 +25,7 @@ export class CustomsDocumentPointerService {
 
       //  var url = this._apiUrl + '/CheckForPointers';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCheckForPointers?' + 'declarationId=' + declarationId + '&invoiceCounterKey=' + counterKey, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();

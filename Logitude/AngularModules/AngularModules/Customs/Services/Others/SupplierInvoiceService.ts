@@ -24,7 +24,7 @@ export class SupplierInvoiceService {
         authHeader.append('Token', SessionInfo.Token);
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTotalForeignCurrencyForInvoice?' + 'declarationId=' + declarationId + '&invoiceCounterKey=' + invoiceCounterKey, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -43,7 +43,7 @@ export class SupplierInvoiceService {
         authHeader.append('Token', SessionInfo.Token);
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCheckIfInvoiceNumberExists?' + 'declarationId=' + declarationId + '&invoiceNumber=' + invoiceNumber+ '&invoiceCounterKey=' + invoiceCounterKey, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();

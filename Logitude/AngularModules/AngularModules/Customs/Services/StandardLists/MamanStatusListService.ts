@@ -174,7 +174,7 @@ export class MamanStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.MamanStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MamanStatusList> = [];
 
@@ -240,7 +240,7 @@ export class MamanStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.MamanStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MamanStatusList> = [];
 					if (cachedJson) {

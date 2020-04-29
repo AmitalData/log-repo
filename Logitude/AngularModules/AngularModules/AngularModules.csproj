@@ -336,6 +336,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierDeclarationWorkspaceListTemplate.html" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsCustoms.ts" />
+    <TypeScriptCompile Include="Common\Services\ExtendedPMs\ChargesTypeByProductsService.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\DeclarationListTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
@@ -1236,6 +1237,7 @@
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\ExceptionReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsCollateralExtendedListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedLists\SupplierInvoiceItemsTaxExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAutonomyKeywordExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />
@@ -4899,7 +4901,6 @@
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\NotificationExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\SupplierInvoiceExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\SupplierInvoiceItemExtendedListService.ts" />
-    <TypeScriptCompile Include="Customs\Services\ExtendedLists\SupplierInvoiceItemTaxExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\VehicleExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\ClaimsRelatedEntityExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CouriersVatExtendedPMService.ts" />

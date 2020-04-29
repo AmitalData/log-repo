@@ -174,7 +174,7 @@ export class ManifestCargoStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ManifestCargoStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ManifestCargoStatusList> = [];
 
@@ -240,7 +240,7 @@ export class ManifestCargoStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ManifestCargoStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ManifestCargoStatusList> = [];
 					if (cachedJson) {

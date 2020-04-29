@@ -24,7 +24,7 @@ export class CustDocTypeMetaDataWebService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var params = encodeURIComponent(customDocumentTypeCode);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCustomDocumentTypeMetaDataByType?' + 'customDocumentTypeCode=' + params, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();

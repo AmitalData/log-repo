@@ -38,7 +38,7 @@ export class DeclarationMessagesService {
 
     PostDeclarationRequest(entity: DeclarationRestoreRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -67,7 +67,7 @@ export class DeclarationMessagesService {
 
     PostDeclarationStatusRequest(entity: DeclarationStatusRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -93,7 +93,7 @@ export class DeclarationMessagesService {
 
     PostWarehouseBlockBalanceRequest(entity: WarehouseBlockBalanceRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -119,7 +119,7 @@ export class DeclarationMessagesService {
 
     PostPrintRequestRequest(entity: PrintRequestRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -145,7 +145,7 @@ export class DeclarationMessagesService {
 
     PostSendDeclarationConstraint(params: ConstraintApprovalRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -173,7 +173,7 @@ export class DeclarationMessagesService {
 
     PostSendCollateralAnswers(params: CollateralRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -201,7 +201,7 @@ export class DeclarationMessagesService {
 
     PostSendDeclarationConstraintAgentObjection(params: ConstraintAgentObjectionRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -229,7 +229,7 @@ export class DeclarationMessagesService {
 
     PostSendPaymentWithCheckCustomFileCredit(params: CustomFileCreditRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -257,7 +257,7 @@ export class DeclarationMessagesService {
 
     PostSendTransferRequest(params: CustomFileCreditRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -285,7 +285,7 @@ export class DeclarationMessagesService {
 
     PostCheckCustomFileCreditOnly(params: CustomFileCreditRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -313,7 +313,7 @@ export class DeclarationMessagesService {
 
     PostSendPaymentOnly(params: CustomFileCreditRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -341,7 +341,7 @@ export class DeclarationMessagesService {
 
     PostExportDeclarationDataRequest(entity: ExportDeclarationDataRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -363,7 +363,7 @@ export class DeclarationMessagesService {
 
     PostStorageEntranceUnloadingRequest(params: StorageEntranceUnloadingRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -385,7 +385,7 @@ export class DeclarationMessagesService {
 
     PostSendCargoSplit(params: CargoSplitRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);

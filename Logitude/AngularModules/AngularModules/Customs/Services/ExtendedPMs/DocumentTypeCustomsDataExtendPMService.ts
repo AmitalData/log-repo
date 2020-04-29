@@ -41,7 +41,7 @@ export class DocumentTypeCustomsDataExtendPMService {
         serviceResponse = new ServiceResponse();
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.delete(this._apiUrl + '/DeleteRecord?' + 'documenttypeid=' + documenttypeid, ServiceHelper.GetHttpHeaders()).pipe(map(res => {
                 serviceResponse.Result = res;
                 return serviceResponse;

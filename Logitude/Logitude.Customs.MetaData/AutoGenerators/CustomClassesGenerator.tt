@@ -67,8 +67,8 @@ GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../Logitude.Customs
 //GenerateAllPMTS("../EntityFiles","../../AngularModules/AngularModules/Customs/EntityPMs");
 //GenerateAllListTS("../EntityFiles","../../AngularModules/AngularModules/Customs/EntityLists");
 //
-//GenerateAllServices("../EntityFiles","../../AngularModules/AngularModules/Customs/Services/StandardPMs","Customs");
-//GenerateAllListServices("../EntityFiles","../../AngularModules/AngularModules/Customs/Services/StandardLists","Customs");
+GenerateAllServices("../EntityFiles","../../AngularModules/AngularModules/Customs/Services/StandardPMs","Customs");
+GenerateAllListServices("../EntityFiles","../../AngularModules/AngularModules/Customs/Services/StandardLists","Customs");
 
  #>
 

@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -22,11 +23,11 @@ import {HazardousSubstanceList} from '../../EntityLists/HazardousSubstanceList';
 @Injectable()
 
 export class HazardousSubstanceListService {
-	private _http: Http;
+	private _http: HttpClient;
     private _apiUrl: string;   
 	public static CachedData: Array<HazardousSubstanceList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/hazardoussubstanceviews';  
     }
 
@@ -35,7 +36,7 @@ export class HazardousSubstanceListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, {
                 headers: authHeader
             }).map(response => {
@@ -54,7 +55,7 @@ export class HazardousSubstanceListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "HazardousSubstance", "GetSingleList", 'code=' + code); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -65,7 +66,7 @@ export class HazardousSubstanceListService {
 	   var callTime = new Date();
 	   var authHeader = new Headers();
        authHeader.append('Token', SessionInfo.Token);
-       return Observable.defer(() => {
+       return defer(() => {
             return this._http.get(this._apiUrl+'/getall', {
                 headers: authHeader
             }).map(response => {
@@ -90,7 +91,7 @@ export class HazardousSubstanceListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "HazardousSubstance", "GetAll", ""); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -132,7 +133,7 @@ export class HazardousSubstanceListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return Observable.defer(() => {
+	   return defer(() => {
             return this._http.get(callUrl, {
                 headers: authHeader
             }).map(response => {
@@ -158,7 +159,7 @@ export class HazardousSubstanceListService {
                  				
 				            
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });        
     }
 
@@ -174,12 +175,12 @@ export class HazardousSubstanceListService {
 
         if (HazardousSubstanceListService.CachedData.length > 0) {
 
-            return Observable.defer(() => {
+            return defer(() => {
 
                 var filteredData = HazardousSubstanceListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             });
         }
@@ -208,7 +209,7 @@ export class HazardousSubstanceListService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -235,7 +236,7 @@ export class HazardousSubstanceListService {
 
         if (HazardousSubstanceListService.CachedData.length > 0) {
 
-            return Observable.defer(() => {
+            return defer(() => {
                 if(filters.GetAll)
 				{
 					serviceResponse.Result = HazardousSubstanceListService.CachedData; 
@@ -246,7 +247,7 @@ export class HazardousSubstanceListService {
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 				}
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             });
         }
@@ -286,7 +287,7 @@ export class HazardousSubstanceListService {
 				}
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }		 
     }

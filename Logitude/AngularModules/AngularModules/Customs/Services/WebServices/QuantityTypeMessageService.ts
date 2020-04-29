@@ -25,7 +25,7 @@ export class QuantityTypeMessageService {
         authHeader.append('Token', SessionInfo.Token);
 
     
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetQuantityType?' + 'classificationCode=' + classificationCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();

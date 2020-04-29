@@ -5,7 +5,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -51,7 +51,7 @@ export class DeclarationWebService {
     //customs answers
     GetDeclarationConstraintsByDeclrationId(declarationId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -76,7 +76,7 @@ export class DeclarationWebService {
     }
     GetDeclarationErrors(declarationId: string, listVersionId: string,courierFilter:string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -114,7 +114,7 @@ export class DeclarationWebService {
     }
     GetSingleCustomsCollateral(id: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -146,7 +146,7 @@ export class DeclarationWebService {
     }
     CheckIfDocumentPointerExistsForConstraint(constraintNumber: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -175,7 +175,7 @@ export class DeclarationWebService {
     //customs ansewers -> supplier invoices
     GetSupplierInvoiceBySequenceNumber(declarationId: string, invoiceSequence: number, skip: number, take: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -209,7 +209,7 @@ export class DeclarationWebService {
     }
     GetSupplierInvoiceWithItemBySequenceNumber(declarationId: string, invoiceSequence: number, itemSequence: number, skip: number, take: number, type:string = null) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -248,7 +248,7 @@ export class DeclarationWebService {
 
     GetSupplierInvoiceWithSpecificItemByCounterKey(declarationId: string, counterKey: number, itemSequence: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -284,7 +284,7 @@ export class DeclarationWebService {
     //Certificates
     GetCertificateTickets(declarationId: string, reqConfirmationType: string, invoiceNumber: string, invoiceCounterKey: number, demandState: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -326,7 +326,7 @@ export class DeclarationWebService {
     }
     GetDeclarationInvoicesNumbers(declarationId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -354,7 +354,7 @@ export class DeclarationWebService {
     //supplier invoice -> ItemCode double click logic
     GetCustomsPartnersItemsForSelection(vendorId: string, CustomerId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -381,7 +381,7 @@ export class DeclarationWebService {
     }
     GetGTBITEMPartnersItemList(vendorId: string, customerCode: string, search: string, top: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -410,7 +410,7 @@ export class DeclarationWebService {
     }
     GetGITITEMPartnersItemList(vendorId: string, customerCode: string, search: string, top: number, isSearchNULLVendor: boolean) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -435,7 +435,7 @@ export class DeclarationWebService {
 
     GetGITITEMPartnersItemListByItemCode(vendorId: string, customerCode: string, itemCode: string, top: number, isSearchNULLVendor: boolean) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -460,7 +460,7 @@ export class DeclarationWebService {
 
     GetGITITEMPartnersItemListByName(vendorId: string, customerCode: string, name: string, top: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -484,7 +484,7 @@ export class DeclarationWebService {
 
     //Send declaration
     PostSendDeclaration(genericRequestParams: GenericRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -510,7 +510,7 @@ export class DeclarationWebService {
 
 
     PostSendDeclarationAmendment(genericRequestParams: GenericRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -535,7 +535,7 @@ export class DeclarationWebService {
     }
 
     GetNewAmendmentDeclaration(genericRequestParams: GenericRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -561,7 +561,7 @@ export class DeclarationWebService {
 
     }
     PostSendManifest(genericRequestParams: GenericRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -586,7 +586,7 @@ export class DeclarationWebService {
     }
 
     PostSendDeclarationChecksAndPrecalculations(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -612,7 +612,7 @@ export class DeclarationWebService {
     }
 
     GetRequiredFieldsForDeclaration(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -638,7 +638,7 @@ export class DeclarationWebService {
     }
 
     GetRequiredFieldsForCourierDeclaration(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -664,7 +664,7 @@ export class DeclarationWebService {
     }
 
     CheckCertificateStatus(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -690,7 +690,7 @@ export class DeclarationWebService {
     }
 
     GetMAWBCourierMasterByDeclaration(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -712,7 +712,7 @@ export class DeclarationWebService {
     }
 
     GetDocumentDeclarationId(declarationId: string) {
-    return Observable.defer(() => {
+    return defer(() => {
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
@@ -734,7 +734,7 @@ export class DeclarationWebService {
 }
     
     GetDeclarationDocumentList(parentEntityId: string, parentEntityCode: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -756,7 +756,7 @@ export class DeclarationWebService {
     }
 
     GetDeclarationMandatoryTicketList(parentEntityId: string, parentEntityCode: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -778,7 +778,7 @@ export class DeclarationWebService {
     }
 
     CheckFreightAmountsByIncoterm(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -802,7 +802,7 @@ export class DeclarationWebService {
     }
 
     CheckFreightAmountsByIncotermWithDefault(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -823,7 +823,7 @@ export class DeclarationWebService {
     }
 
     DeclarationClosureMethod(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -842,7 +842,7 @@ export class DeclarationWebService {
     }
 
     CancelDeclarationClosureMethod(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -863,7 +863,7 @@ export class DeclarationWebService {
     //Payment Orders
     GetSingleDeclarationPaymentPMandDefaultExplain(id: string, CustomerCode: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -899,7 +899,7 @@ export class DeclarationWebService {
 
     GetCustomBanksForCard(cardId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -924,7 +924,7 @@ export class DeclarationWebService {
 
     GetAllRequiredFieldsForDeclarationPayment(declarationId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -950,7 +950,7 @@ export class DeclarationWebService {
     // Amendments
     GetDeclarationCorrection(declarationId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -981,7 +981,7 @@ export class DeclarationWebService {
     // Tapag
     GetDeclarationByTapagConnectionConnection(tapagId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -1000,7 +1000,7 @@ export class DeclarationWebService {
     }
 
     GetDeclarationCollateralsList(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -1019,7 +1019,7 @@ export class DeclarationWebService {
     }
 
     GetDeclarationCargoSealLists(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -1038,7 +1038,7 @@ export class DeclarationWebService {
     }
 
     GetAcceptDeclarationAmendment(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -1057,7 +1057,7 @@ export class DeclarationWebService {
     }
 
     GetDeclarationCargoSplitByDeclarationIdList(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -1076,7 +1076,7 @@ export class DeclarationWebService {
     }
 
     GetDeclarationMamanSpecialAction(declarationId: string, tenant: number, actionCode: string, mamanSpecialActionCode: string) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -1093,7 +1093,7 @@ export class DeclarationWebService {
     }
 
     PostSendCargoSealsRequest(requestParams: CargoSealsRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);

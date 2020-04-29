@@ -23,7 +23,7 @@ export class CustomsDocumentPointersExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCustomDocumentPointersForItems/?' + 'parentEntityId=' + parentEntityId + '&invCounterKey=' + invCounterKey + '&itemsLineNumbers=' + itemsLineNumbers, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;

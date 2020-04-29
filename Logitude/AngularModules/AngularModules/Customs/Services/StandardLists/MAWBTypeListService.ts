@@ -174,7 +174,7 @@ export class MAWBTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.MAWBType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MAWBTypeList> = [];
 
@@ -240,7 +240,7 @@ export class MAWBTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.MAWBType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MAWBTypeList> = [];
 					if (cachedJson) {

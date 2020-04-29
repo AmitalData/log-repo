@@ -29,7 +29,7 @@ export class ClientMessagesService {
 
     PostUpdateDeleteClientAddressContactRequest(entity: AddAddressContactForClientRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -58,7 +58,7 @@ export class ClientMessagesService {
 
     PostClientRequest(entity: ClientSearchRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -89,7 +89,7 @@ export class ClientMessagesService {
 
     PostClientSearchByIDRequest(entity: ClientSearchRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -112,7 +112,7 @@ export class ClientMessagesService {
 
     CreateClientRequest(entity: CreateClientRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -140,7 +140,7 @@ export class ClientMessagesService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         code = encodeURIComponent(code);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleClientPMByCode?' + 'code=' + code + "&isIncludeAll=" + isIncludeAll,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -166,7 +166,7 @@ export class ClientMessagesService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         //code = encodeURIComponent(code);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleClientPMByPassportNumberOrCountry?' + 'passportNumber=' + passportNumber + "&passportCountryCode=" + passportCountryCode,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var pm = response;
@@ -188,7 +188,7 @@ export class ClientMessagesService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl + '/PutRecallClientsForCutomsRequest', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var pmresponse: ServiceResponse;

@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -23,7 +23,7 @@ export class SupplierInvoiceExtendedListService {
 
         var url = this._apiUrl + '/GetSupplierInvoiceItemsForInvoice';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemsForInvoice/?' + 'declarationId=' + declarationId + '&counterkey=' + counterkey, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
@@ -52,7 +52,7 @@ export class SupplierInvoiceExtendedListService {
 
         var url = this._apiUrl + '/GetSupplierInvoiceItemsForInvoices';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemsForInvoices/?' + 'declarationId=' + declarationId + '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys + '&skip=' + skip + '&take=' + take + '&getCount=' + getCount , ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
 
@@ -81,7 +81,7 @@ export class SupplierInvoiceExtendedListService {
 
         var url = this._apiUrl + '/GetSelectedSupplierInvoiceItems';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSelectedSupplierInvoiceItems/?' + 'declarationId=' + declarationId + '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys + '&lineNubmers=' + lineNumbers, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
 

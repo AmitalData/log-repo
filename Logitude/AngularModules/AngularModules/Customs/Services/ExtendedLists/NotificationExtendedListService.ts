@@ -1,7 +1,7 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -57,7 +57,7 @@ export class NotificationExtendedListService{
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;
@@ -113,7 +113,7 @@ export class NotificationExtendedListService{
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -131,7 +131,7 @@ export class NotificationExtendedListService{
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -168,7 +168,7 @@ export class NotificationExtendedListService{
     PutNotificationBadjCount(notification: NotificationPM) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -206,7 +206,7 @@ export class NotificationExtendedListService{
 
         var url = this._apiUrl + '/GetTopTenNotifications';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTopTenNotifications/?' + 'userId=' + userId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
@@ -235,7 +235,7 @@ export class NotificationExtendedListService{
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             var callURL = this._apiUrl + '/GetOpenNotificationsCount?' + 'userId=' + userId;
 
             return this._http.get(callURL, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -257,7 +257,7 @@ export class NotificationExtendedListService{
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             var callURL = this._apiUrl + '/GetNotificationsBadjCount?' + 'userId=' + userId;
 
             return this._http.get(callURL, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -274,7 +274,7 @@ export class NotificationExtendedListService{
     }
 
     PutNotificationStatus(selectedNotifications: SelectedNotifications) {
-    return Observable.defer(() => {
+    return defer(() => {
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
