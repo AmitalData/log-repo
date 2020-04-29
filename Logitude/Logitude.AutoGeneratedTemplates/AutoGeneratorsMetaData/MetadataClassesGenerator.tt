@@ -1652,7 +1652,8 @@ public void GenerateAllTableMethods(string sourceFilePath)
 	 
 	 var path= Host.ResolvePath(file);
      XElement entity = XDocument.Load(path).Root;
-	 string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	 string FulltableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	 string tableName = FulltableName;
 	string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
 	if(tableName.Contains("."))
     {
@@ -1665,11 +1666,11 @@ public void GenerateAllTableMethods(string sourceFilePath)
 		 #><#=""#>
 <#+
 #>
-			if(MetadataUpdateUtility.IsChangedMetadataTable("<#=tableName #>", ObjectTables, <#=classname #>.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("<#=FulltableName #>", ObjectTables, <#=classname #>.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("<#=tableName #>");
+					MetadataUpdateUtility.DeleteAllTableMetadata("<#=FulltableName #>");
 <#+
 			if(tableName == "General")
 				{

@@ -172,8 +172,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         LabelTextCodeId = newTextCode.Id,
                         LabelTextCodeCode = newTextCode.Code,
                         Style = menuButtonDetails.Style,
-                        FeatureUniqeCode = menuButtonDetails.FeatureUniqeCode
-
+                        FeatureUniqeCode = menuButtonDetails.FeatureUniqeCode,
+                        Width = menuButtonDetails.Width,
                     };
                     menuButtonRepository.Add(newMenuButton);
 

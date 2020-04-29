@@ -860,11 +860,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         public void CreateAllObjectTablesMetadata()
         {
    
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AcceptanceStatus", ObjectTables, AcceptanceStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AcceptanceStatus", ObjectTables, AcceptanceStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AcceptanceStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AcceptanceStatus");
 					AcceptanceStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AcceptanceStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -887,11 +887,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AccumalationState", ObjectTables, AccumalationStateUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AccumalationState", ObjectTables, AccumalationStateUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AccumalationState");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AccumalationState");
 					AccumalationStateUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AccumalationStateUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -914,11 +914,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ActionCode", ObjectTables, ActionCodeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ActionCode", ObjectTables, ActionCodeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ActionCode");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ActionCode");
 					ActionCodeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ActionCodeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -941,11 +941,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AddressContactState", ObjectTables, AddressContactStateUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AddressContactState", ObjectTables, AddressContactStateUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AddressContactState");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AddressContactState");
 					AddressContactStateUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AddressContactStateUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -968,11 +968,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AddressPurpose", ObjectTables, AddressPurposeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AddressPurpose", ObjectTables, AddressPurposeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AddressPurpose");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AddressPurpose");
 					AddressPurposeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AddressPurposeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -995,11 +995,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AgentTalkBackType", ObjectTables, AgentTalkBackTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AgentTalkBackType", ObjectTables, AgentTalkBackTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AgentTalkBackType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AgentTalkBackType");
 					AgentTalkBackTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AgentTalkBackTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1022,11 +1022,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AmendmentFieldReasonType", ObjectTables, AmendmentFieldReasonTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AmendmentFieldReasonType", ObjectTables, AmendmentFieldReasonTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AmendmentFieldReasonType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AmendmentFieldReasonType");
 					AmendmentFieldReasonTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AmendmentFieldReasonTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1049,11 +1049,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AmendmentRequestStatus", ObjectTables, AmendmentRequestStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AmendmentRequestStatus", ObjectTables, AmendmentRequestStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AmendmentRequestStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AmendmentRequestStatus");
 					AmendmentRequestStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AmendmentRequestStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1076,11 +1076,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AmendmentStatus", ObjectTables, AmendmentStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AmendmentStatus", ObjectTables, AmendmentStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AmendmentStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AmendmentStatus");
 					AmendmentStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AmendmentStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1103,11 +1103,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AmendmentType", ObjectTables, AmendmentTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AmendmentType", ObjectTables, AmendmentTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AmendmentType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AmendmentType");
 					AmendmentTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AmendmentTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1130,11 +1130,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ApprovedProfession", ObjectTables, ApprovedProfessionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ApprovedProfession", ObjectTables, ApprovedProfessionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ApprovedProfession");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ApprovedProfession");
 					ApprovedProfessionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ApprovedProfessionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1157,11 +1157,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AssigneeNotificationType", ObjectTables, AssigneeNotificationTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AssigneeNotificationType", ObjectTables, AssigneeNotificationTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AssigneeNotificationType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AssigneeNotificationType");
 					AssigneeNotificationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AssigneeNotificationTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1184,11 +1184,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AttachmentType", ObjectTables, AttachmentTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AttachmentType", ObjectTables, AttachmentTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AttachmentType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AttachmentType");
 					AttachmentTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AttachmentTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1211,11 +1211,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Authority", ObjectTables, AuthorityUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Authority", ObjectTables, AuthorityUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Authority");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Authority");
 					AuthorityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AuthorityUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1238,11 +1238,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AuthorizedSignerPermit", ObjectTables, AuthorizedSignerPermitUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AuthorizedSignerPermit", ObjectTables, AuthorizedSignerPermitUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AuthorizedSignerPermit");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AuthorizedSignerPermit");
 					AuthorizedSignerPermitUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AuthorizedSignerPermitUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1265,11 +1265,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AutonomyType", ObjectTables, AutonomyTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.AutonomyType", ObjectTables, AutonomyTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("AutonomyType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.AutonomyType");
 					AutonomyTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AutonomyTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1292,11 +1292,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Bank", ObjectTables, BankUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Bank", ObjectTables, BankUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Bank");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Bank");
 					BankUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					BankUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1319,11 +1319,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CargoIdentifireType", ObjectTables, CargoIdentifireTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CargoIdentifireType", ObjectTables, CargoIdentifireTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CargoIdentifireType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CargoIdentifireType");
 					CargoIdentifireTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CargoIdentifireTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1346,11 +1346,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CargoIdentityQualifier", ObjectTables, CargoIdentityQualifierUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CargoIdentityQualifier", ObjectTables, CargoIdentityQualifierUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CargoIdentityQualifier");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CargoIdentityQualifier");
 					CargoIdentityQualifierUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CargoIdentityQualifierUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1373,11 +1373,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CargoSeal", ObjectTables, CargoSealUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CargoSeal", ObjectTables, CargoSealUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CargoSeal");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CargoSeal");
 					CargoSealUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CargoSealUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1400,11 +1400,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CargoSealIdentifier", ObjectTables, CargoSealIdentifierUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CargoSealIdentifier", ObjectTables, CargoSealIdentifierUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CargoSealIdentifier");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CargoSealIdentifier");
 					CargoSealIdentifierUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CargoSealIdentifierUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1427,11 +1427,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CargoSplitRequestStatus", ObjectTables, CargoSplitRequestStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CargoSplitRequestStatus", ObjectTables, CargoSplitRequestStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CargoSplitRequestStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CargoSplitRequestStatus");
 					CargoSplitRequestStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CargoSplitRequestStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1454,11 +1454,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CargoStatus", ObjectTables, CargoStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CargoStatus", ObjectTables, CargoStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CargoStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CargoStatus");
 					CargoStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CargoStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1481,11 +1481,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CertificateExemptionType", ObjectTables, CertificateExemptionTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CertificateExemptionType", ObjectTables, CertificateExemptionTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CertificateExemptionType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CertificateExemptionType");
 					CertificateExemptionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CertificateExemptionTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1508,11 +1508,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CertificatesStatus", ObjectTables, CertificatesStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CertificatesStatus", ObjectTables, CertificatesStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CertificatesStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CertificatesStatus");
 					CertificatesStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CertificatesStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1535,11 +1535,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CheckEntityType", ObjectTables, CheckEntityTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CheckEntityType", ObjectTables, CheckEntityTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CheckEntityType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CheckEntityType");
 					CheckEntityTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CheckEntityTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1562,11 +1562,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CheckEssenceLookup", ObjectTables, CheckEssenceLookupUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CheckEssenceLookup", ObjectTables, CheckEssenceLookupUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CheckEssenceLookup");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CheckEssenceLookup");
 					CheckEssenceLookupUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CheckEssenceLookupUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1589,11 +1589,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CheckQueueType", ObjectTables, CheckQueueTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CheckQueueType", ObjectTables, CheckQueueTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CheckQueueType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CheckQueueType");
 					CheckQueueTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CheckQueueTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1616,11 +1616,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CheckRepresentativeType", ObjectTables, CheckRepresentativeTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CheckRepresentativeType", ObjectTables, CheckRepresentativeTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CheckRepresentativeType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CheckRepresentativeType");
 					CheckRepresentativeTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CheckRepresentativeTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1643,11 +1643,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CheckTypeLookup", ObjectTables, CheckTypeLookupUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CheckTypeLookup", ObjectTables, CheckTypeLookupUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CheckTypeLookup");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CheckTypeLookup");
 					CheckTypeLookupUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CheckTypeLookupUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1670,11 +1670,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("City", ObjectTables, CityUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.City", ObjectTables, CityUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("City");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.City");
 					CityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CityUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1697,11 +1697,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Claim", ObjectTables, ClaimUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Claim", ObjectTables, ClaimUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Claim");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Claim");
 					ClaimUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1724,11 +1724,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimEntity", ObjectTables, ClaimEntityUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimEntity", ObjectTables, ClaimEntityUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimEntity");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimEntity");
 					ClaimEntityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimEntityUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1751,11 +1751,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimExplanationCode", ObjectTables, ClaimExplanationCodeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimExplanationCode", ObjectTables, ClaimExplanationCodeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimExplanationCode");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimExplanationCode");
 					ClaimExplanationCodeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimExplanationCodeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1778,11 +1778,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimImporterDeclarsP3Loi", ObjectTables, ClaimImporterDeclarsP3LoiUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimImporterDeclarsP3Loi", ObjectTables, ClaimImporterDeclarsP3LoiUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimImporterDeclarsP3Loi");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimImporterDeclarsP3Loi");
 					ClaimImporterDeclarsP3LoiUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimImporterDeclarsP3LoiUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1805,11 +1805,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimImporterDeclarsPage3", ObjectTables, ClaimImporterDeclarsPage3UpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimImporterDeclarsPage3", ObjectTables, ClaimImporterDeclarsPage3UpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimImporterDeclarsPage3");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimImporterDeclarsPage3");
 					ClaimImporterDeclarsPage3UpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimImporterDeclarsPage3UpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1832,11 +1832,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimImporterDeclarsPage3A", ObjectTables, ClaimImporterDeclarsPage3AUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimImporterDeclarsPage3A", ObjectTables, ClaimImporterDeclarsPage3AUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimImporterDeclarsPage3A");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimImporterDeclarsPage3A");
 					ClaimImporterDeclarsPage3AUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimImporterDeclarsPage3AUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1859,11 +1859,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimImporterDeclarsPage3B", ObjectTables, ClaimImporterDeclarsPage3BUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimImporterDeclarsPage3B", ObjectTables, ClaimImporterDeclarsPage3BUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimImporterDeclarsPage3B");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimImporterDeclarsPage3B");
 					ClaimImporterDeclarsPage3BUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimImporterDeclarsPage3BUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1886,11 +1886,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimsRelatedEntitiesAmount", ObjectTables, ClaimsRelatedEntitiesAmountUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimsRelatedEntitiesAmount", ObjectTables, ClaimsRelatedEntitiesAmountUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimsRelatedEntitiesAmount");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimsRelatedEntitiesAmount");
 					ClaimsRelatedEntitiesAmountUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimsRelatedEntitiesAmountUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1913,11 +1913,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimsRelatedEntitiesReason", ObjectTables, ClaimsRelatedEntitiesReasonUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimsRelatedEntitiesReason", ObjectTables, ClaimsRelatedEntitiesReasonUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimsRelatedEntitiesReason");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimsRelatedEntitiesReason");
 					ClaimsRelatedEntitiesReasonUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimsRelatedEntitiesReasonUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1940,11 +1940,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimsRelatedEntitiesRefund", ObjectTables, ClaimsRelatedEntitiesRefundUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimsRelatedEntitiesRefund", ObjectTables, ClaimsRelatedEntitiesRefundUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimsRelatedEntitiesRefund");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimsRelatedEntitiesRefund");
 					ClaimsRelatedEntitiesRefundUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimsRelatedEntitiesRefundUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1967,11 +1967,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimsRelatedEntitiesSeizure", ObjectTables, ClaimsRelatedEntitiesSeizureUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimsRelatedEntitiesSeizure", ObjectTables, ClaimsRelatedEntitiesSeizureUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimsRelatedEntitiesSeizure");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimsRelatedEntitiesSeizure");
 					ClaimsRelatedEntitiesSeizureUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimsRelatedEntitiesSeizureUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -1994,11 +1994,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimsRelatedEntity", ObjectTables, ClaimsRelatedEntityUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimsRelatedEntity", ObjectTables, ClaimsRelatedEntityUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimsRelatedEntity");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimsRelatedEntity");
 					ClaimsRelatedEntityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimsRelatedEntityUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2021,11 +2021,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimsRelatedEntsExpDeclar", ObjectTables, ClaimsRelatedEntsExpDeclarUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimsRelatedEntsExpDeclar", ObjectTables, ClaimsRelatedEntsExpDeclarUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimsRelatedEntsExpDeclar");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimsRelatedEntsExpDeclar");
 					ClaimsRelatedEntsExpDeclarUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimsRelatedEntsExpDeclarUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2048,11 +2048,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClaimsRelatedEntsReasonsExp", ObjectTables, ClaimsRelatedEntsReasonsExpUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClaimsRelatedEntsReasonsExp", ObjectTables, ClaimsRelatedEntsReasonsExpUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClaimsRelatedEntsReasonsExp");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClaimsRelatedEntsReasonsExp");
 					ClaimsRelatedEntsReasonsExpUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClaimsRelatedEntsReasonsExpUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2075,11 +2075,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Client", ObjectTables, ClientUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Client", ObjectTables, ClientUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Client");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Client");
 					ClientUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClientUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2102,11 +2102,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClientAddress", ObjectTables, ClientAddressUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClientAddress", ObjectTables, ClientAddressUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClientAddress");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClientAddress");
 					ClientAddressUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClientAddressUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2129,11 +2129,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClientDrivingLicense", ObjectTables, ClientDrivingLicenseUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClientDrivingLicense", ObjectTables, ClientDrivingLicenseUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClientDrivingLicense");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClientDrivingLicense");
 					ClientDrivingLicenseUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClientDrivingLicenseUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2156,11 +2156,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClientDrivingLicenseType", ObjectTables, ClientDrivingLicenseTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClientDrivingLicenseType", ObjectTables, ClientDrivingLicenseTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClientDrivingLicenseType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClientDrivingLicenseType");
 					ClientDrivingLicenseTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClientDrivingLicenseTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2183,11 +2183,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClientsAddressCommType", ObjectTables, ClientsAddressCommTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClientsAddressCommType", ObjectTables, ClientsAddressCommTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClientsAddressCommType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClientsAddressCommType");
 					ClientsAddressCommTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClientsAddressCommTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2210,11 +2210,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ClosedTableStatus", ObjectTables, ClosedTableStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ClosedTableStatus", ObjectTables, ClosedTableStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ClosedTableStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ClosedTableStatus");
 					ClosedTableStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ClosedTableStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2237,11 +2237,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CollateralAnswerStatus", ObjectTables, CollateralAnswerStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CollateralAnswerStatus", ObjectTables, CollateralAnswerStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CollateralAnswerStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CollateralAnswerStatus");
 					CollateralAnswerStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CollateralAnswerStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2264,11 +2264,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CollateralAnswerType", ObjectTables, CollateralAnswerTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CollateralAnswerType", ObjectTables, CollateralAnswerTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CollateralAnswerType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CollateralAnswerType");
 					CollateralAnswerTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CollateralAnswerTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2291,11 +2291,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CollateralRequestStatus", ObjectTables, CollateralRequestStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CollateralRequestStatus", ObjectTables, CollateralRequestStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CollateralRequestStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CollateralRequestStatus");
 					CollateralRequestStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CollateralRequestStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2318,11 +2318,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CollateralsRequestFileCond", ObjectTables, CollateralsRequestFileCondUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CollateralsRequestFileCond", ObjectTables, CollateralsRequestFileCondUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CollateralsRequestFileCond");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CollateralsRequestFileCond");
 					CollateralsRequestFileCondUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CollateralsRequestFileCondUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2345,11 +2345,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CollateralType", ObjectTables, CollateralTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CollateralType", ObjectTables, CollateralTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CollateralType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CollateralType");
 					CollateralTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CollateralTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2372,11 +2372,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CommercialSale", ObjectTables, CommercialSaleUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CommercialSale", ObjectTables, CommercialSaleUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CommercialSale");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CommercialSale");
 					CommercialSaleUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CommercialSaleUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2399,11 +2399,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CommunicationType", ObjectTables, CommunicationTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CommunicationType", ObjectTables, CommunicationTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CommunicationType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CommunicationType");
 					CommunicationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CommunicationTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2426,11 +2426,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ConfirmationType", ObjectTables, ConfirmationTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ConfirmationType", ObjectTables, ConfirmationTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ConfirmationType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ConfirmationType");
 					ConfirmationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ConfirmationTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2453,11 +2453,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Consignment", ObjectTables, ConsignmentUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Consignment", ObjectTables, ConsignmentUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Consignment");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Consignment");
 					ConsignmentUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ConsignmentUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2480,11 +2480,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ConsignmentInternalTransition", ObjectTables, ConsignmentInternalTransitionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ConsignmentInternalTransition", ObjectTables, ConsignmentInternalTransitionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ConsignmentInternalTransition");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ConsignmentInternalTransition");
 					ConsignmentInternalTransitionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ConsignmentInternalTransitionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2507,11 +2507,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ConsignmentPackage", ObjectTables, ConsignmentPackageUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ConsignmentPackage", ObjectTables, ConsignmentPackageUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ConsignmentPackage");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ConsignmentPackage");
 					ConsignmentPackageUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ConsignmentPackageUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2534,11 +2534,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ConsignmentPackDanger", ObjectTables, ConsignmentPackDangerUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ConsignmentPackDanger", ObjectTables, ConsignmentPackDangerUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ConsignmentPackDanger");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ConsignmentPackDanger");
 					ConsignmentPackDangerUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ConsignmentPackDangerUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2561,11 +2561,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ConstraintApprovalDecision", ObjectTables, ConstraintApprovalDecisionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ConstraintApprovalDecision", ObjectTables, ConstraintApprovalDecisionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ConstraintApprovalDecision");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ConstraintApprovalDecision");
 					ConstraintApprovalDecisionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ConstraintApprovalDecisionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2588,11 +2588,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ConstraintProcessType", ObjectTables, ConstraintProcessTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ConstraintProcessType", ObjectTables, ConstraintProcessTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ConstraintProcessType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ConstraintProcessType");
 					ConstraintProcessTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ConstraintProcessTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2615,11 +2615,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ConstraintStatus", ObjectTables, ConstraintStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ConstraintStatus", ObjectTables, ConstraintStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ConstraintStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ConstraintStatus");
 					ConstraintStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ConstraintStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2642,11 +2642,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ConstraintType", ObjectTables, ConstraintTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ConstraintType", ObjectTables, ConstraintTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ConstraintType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ConstraintType");
 					ConstraintTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ConstraintTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2669,11 +2669,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ContactRoleType", ObjectTables, ContactRoleTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ContactRoleType", ObjectTables, ContactRoleTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ContactRoleType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ContactRoleType");
 					ContactRoleTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ContactRoleTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2696,11 +2696,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ContinuousMessagesTypeCode", ObjectTables, ContinuousMessagesTypeCodeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ContinuousMessagesTypeCode", ObjectTables, ContinuousMessagesTypeCodeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ContinuousMessagesTypeCode");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ContinuousMessagesTypeCode");
 					ContinuousMessagesTypeCodeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ContinuousMessagesTypeCodeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2723,11 +2723,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ContinuousRequestType", ObjectTables, ContinuousRequestTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ContinuousRequestType", ObjectTables, ContinuousRequestTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ContinuousRequestType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ContinuousRequestType");
 					ContinuousRequestTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ContinuousRequestTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2750,11 +2750,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ConverterType", ObjectTables, ConverterTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ConverterType", ObjectTables, ConverterTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ConverterType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ConverterType");
 					ConverterTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ConverterTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2777,11 +2777,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CountryGroup", ObjectTables, CountryGroupUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CountryGroup", ObjectTables, CountryGroupUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CountryGroup");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CountryGroup");
 					CountryGroupUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CountryGroupUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2804,11 +2804,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CourierCustomStatus", ObjectTables, CourierCustomStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CourierCustomStatus", ObjectTables, CourierCustomStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CourierCustomStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CourierCustomStatus");
 					CourierCustomStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CourierCustomStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2831,11 +2831,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CourierDeclaration", ObjectTables, CourierDeclarationUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CourierDeclaration", ObjectTables, CourierDeclarationUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CourierDeclaration");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CourierDeclaration");
 					CourierDeclarationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CourierDeclarationUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2858,11 +2858,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CourierDeclarationStatus", ObjectTables, CourierDeclarationStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CourierDeclarationStatus", ObjectTables, CourierDeclarationStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CourierDeclarationStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CourierDeclarationStatus");
 					CourierDeclarationStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CourierDeclarationStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2885,11 +2885,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CourierManifestStatus", ObjectTables, CourierManifestStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CourierManifestStatus", ObjectTables, CourierManifestStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CourierManifestStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CourierManifestStatus");
 					CourierManifestStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CourierManifestStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2912,11 +2912,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CourierMaster", ObjectTables, CourierMasterUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CourierMaster", ObjectTables, CourierMasterUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CourierMaster");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CourierMaster");
 					CourierMasterUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CourierMasterUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2939,11 +2939,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CourierPaymentStatus", ObjectTables, CourierPaymentStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CourierPaymentStatus", ObjectTables, CourierPaymentStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CourierPaymentStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CourierPaymentStatus");
 					CourierPaymentStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CourierPaymentStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2966,11 +2966,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CourierPendingReason", ObjectTables, CourierPendingReasonUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CourierPendingReason", ObjectTables, CourierPendingReasonUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CourierPendingReason");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CourierPendingReason");
 					CourierPendingReasonUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CourierPendingReasonUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -2993,11 +2993,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CourierStatus", ObjectTables, CourierStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CourierStatus", ObjectTables, CourierStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CourierStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CourierStatus");
 					CourierStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CourierStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3020,11 +3020,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CouriersVat", ObjectTables, CouriersVatUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CouriersVat", ObjectTables, CouriersVatUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CouriersVat");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CouriersVat");
 					CouriersVatUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CouriersVatUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3047,11 +3047,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CourtInstance", ObjectTables, CourtInstanceUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CourtInstance", ObjectTables, CourtInstanceUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CourtInstance");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CourtInstance");
 					CourtInstanceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CourtInstanceUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3074,11 +3074,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CurrencyType", ObjectTables, CurrencyTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CurrencyType", ObjectTables, CurrencyTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CurrencyType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CurrencyType");
 					CurrencyTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CurrencyTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3101,11 +3101,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CurrencyTypeTenant", ObjectTables, CurrencyTypeTenantUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CurrencyTypeTenant", ObjectTables, CurrencyTypeTenantUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CurrencyTypeTenant");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CurrencyTypeTenant");
 					CurrencyTypeTenantUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CurrencyTypeTenantUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3128,11 +3128,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomBank", ObjectTables, CustomBankUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomBank", ObjectTables, CustomBankUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomBank");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomBank");
 					CustomBankUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomBankUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3155,11 +3155,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomBanksCard", ObjectTables, CustomBanksCardUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomBanksCard", ObjectTables, CustomBanksCardUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomBanksCard");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomBanksCard");
 					CustomBanksCardUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomBanksCardUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3182,11 +3182,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomDocumentType", ObjectTables, CustomDocumentTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomDocumentType", ObjectTables, CustomDocumentTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomDocumentType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomDocumentType");
 					CustomDocumentTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomDocumentTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3209,11 +3209,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomDocumentTypeMetaData", ObjectTables, CustomDocumentTypeMetaDataUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomDocumentTypeMetaData", ObjectTables, CustomDocumentTypeMetaDataUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomDocumentTypeMetaData");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomDocumentTypeMetaData");
 					CustomDocumentTypeMetaDataUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomDocumentTypeMetaDataUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3236,11 +3236,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomerActivityType", ObjectTables, CustomerActivityTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomerActivityType", ObjectTables, CustomerActivityTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomerActivityType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomerActivityType");
 					CustomerActivityTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomerActivityTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3263,11 +3263,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomerIdentifyType", ObjectTables, CustomerIdentifyTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomerIdentifyType", ObjectTables, CustomerIdentifyTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomerIdentifyType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomerIdentifyType");
 					CustomerIdentifyTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomerIdentifyTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3290,11 +3290,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomerRoleType", ObjectTables, CustomerRoleTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomerRoleType", ObjectTables, CustomerRoleTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomerRoleType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomerRoleType");
 					CustomerRoleTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomerRoleTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3317,11 +3317,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomerTypeGeneral", ObjectTables, CustomerTypeGeneralUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomerTypeGeneral", ObjectTables, CustomerTypeGeneralUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomerTypeGeneral");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomerTypeGeneral");
 					CustomerTypeGeneralUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomerTypeGeneralUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3344,11 +3344,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomMetaDataType", ObjectTables, CustomMetaDataTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomMetaDataType", ObjectTables, CustomMetaDataTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomMetaDataType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomMetaDataType");
 					CustomMetaDataTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomMetaDataTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3371,11 +3371,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsAddressType", ObjectTables, CustomsAddressTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsAddressType", ObjectTables, CustomsAddressTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsAddressType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsAddressType");
 					CustomsAddressTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsAddressTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3398,11 +3398,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsAirline", ObjectTables, CustomsAirlineUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsAirline", ObjectTables, CustomsAirlineUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsAirline");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsAirline");
 					CustomsAirlineUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsAirlineUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3425,11 +3425,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsAutonomyKeyword", ObjectTables, CustomsAutonomyKeywordUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsAutonomyKeyword", ObjectTables, CustomsAutonomyKeywordUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsAutonomyKeyword");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsAutonomyKeyword");
 					CustomsAutonomyKeywordUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsAutonomyKeywordUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3452,11 +3452,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsBook", ObjectTables, CustomsBookUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsBook", ObjectTables, CustomsBookUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsBook");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsBook");
 					CustomsBookUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsBookUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3479,11 +3479,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsBookType", ObjectTables, CustomsBookTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsBookType", ObjectTables, CustomsBookTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsBookType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsBookType");
 					CustomsBookTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsBookTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3506,11 +3506,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsBranch", ObjectTables, CustomsBranchUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsBranch", ObjectTables, CustomsBranchUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsBranch");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsBranch");
 					CustomsBranchUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsBranchUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3533,11 +3533,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsClosedTable", ObjectTables, CustomsClosedTableUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsClosedTable", ObjectTables, CustomsClosedTableUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsClosedTable");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsClosedTable");
 					CustomsClosedTableUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsClosedTableUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3560,11 +3560,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsCollateral", ObjectTables, CustomsCollateralUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsCollateral", ObjectTables, CustomsCollateralUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsCollateral");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsCollateral");
 					CustomsCollateralUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsCollateralUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3587,11 +3587,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsCollateralsAnswer", ObjectTables, CustomsCollateralsAnswerUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsCollateralsAnswer", ObjectTables, CustomsCollateralsAnswerUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsCollateralsAnswer");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsCollateralsAnswer");
 					CustomsCollateralsAnswerUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsCollateralsAnswerUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3614,11 +3614,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsCollateralsCondition", ObjectTables, CustomsCollateralsConditionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsCollateralsCondition", ObjectTables, CustomsCollateralsConditionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsCollateralsCondition");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsCollateralsCondition");
 					CustomsCollateralsConditionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsCollateralsConditionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3641,11 +3641,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsCountry", ObjectTables, CustomsCountryUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsCountry", ObjectTables, CustomsCountryUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsCountry");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsCountry");
 					CustomsCountryUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsCountryUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3668,11 +3668,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsDocument", ObjectTables, CustomsDocumentUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsDocument", ObjectTables, CustomsDocumentUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsDocument");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsDocument");
 					CustomsDocumentUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsDocumentUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3695,11 +3695,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsDocumentMetaDataValue", ObjectTables, CustomsDocumentMetaDataValueUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsDocumentMetaDataValue", ObjectTables, CustomsDocumentMetaDataValueUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsDocumentMetaDataValue");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsDocumentMetaDataValue");
 					CustomsDocumentMetaDataValueUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsDocumentMetaDataValueUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3722,11 +3722,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsDocumentPointer", ObjectTables, CustomsDocumentPointerUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsDocumentPointer", ObjectTables, CustomsDocumentPointerUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsDocumentPointer");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsDocumentPointer");
 					CustomsDocumentPointerUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsDocumentPointerUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3749,11 +3749,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsDocumentsDefinition", ObjectTables, CustomsDocumentsDefinitionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsDocumentsDefinition", ObjectTables, CustomsDocumentsDefinitionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsDocumentsDefinition");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsDocumentsDefinition");
 					CustomsDocumentsDefinitionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsDocumentsDefinitionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3776,11 +3776,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsDocumentStatusType", ObjectTables, CustomsDocumentStatusTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsDocumentStatusType", ObjectTables, CustomsDocumentStatusTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsDocumentStatusType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsDocumentStatusType");
 					CustomsDocumentStatusTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsDocumentStatusTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3803,11 +3803,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsDocumentsTicket", ObjectTables, CustomsDocumentsTicketUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsDocumentsTicket", ObjectTables, CustomsDocumentsTicketUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsDocumentsTicket");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsDocumentsTicket");
 					CustomsDocumentsTicketUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsDocumentsTicketUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3830,11 +3830,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsEnvoirmentType", ObjectTables, CustomsEnvoirmentTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsEnvoirmentType", ObjectTables, CustomsEnvoirmentTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsEnvoirmentType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsEnvoirmentType");
 					CustomsEnvoirmentTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsEnvoirmentTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3857,11 +3857,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsExchangeRate", ObjectTables, CustomsExchangeRateUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsExchangeRate", ObjectTables, CustomsExchangeRateUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsExchangeRate");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsExchangeRate");
 					CustomsExchangeRateUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsExchangeRateUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3911,11 +3911,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsHouseType", ObjectTables, CustomsHouseTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsHouseType", ObjectTables, CustomsHouseTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsHouseType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsHouseType");
 					CustomsHouseTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsHouseTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3938,11 +3938,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsHouseTypeAdditional", ObjectTables, CustomsHouseTypeAdditionalUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsHouseTypeAdditional", ObjectTables, CustomsHouseTypeAdditionalUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsHouseTypeAdditional");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsHouseTypeAdditional");
 					CustomsHouseTypeAdditionalUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsHouseTypeAdditionalUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3965,11 +3965,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsInsuranceCompany", ObjectTables, CustomsInsuranceCompanyUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsInsuranceCompany", ObjectTables, CustomsInsuranceCompanyUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsInsuranceCompany");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsInsuranceCompany");
 					CustomsInsuranceCompanyUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsInsuranceCompanyUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -3992,11 +3992,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsItem", ObjectTables, CustomsItemUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsItem", ObjectTables, CustomsItemUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsItem");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsItem");
 					CustomsItemUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsItemUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4019,11 +4019,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsItemDetailsHistory", ObjectTables, CustomsItemDetailsHistoryUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsItemDetailsHistory", ObjectTables, CustomsItemDetailsHistoryUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsItemDetailsHistory");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsItemDetailsHistory");
 					CustomsItemDetailsHistoryUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsItemDetailsHistoryUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4046,11 +4046,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsPartnerFtp", ObjectTables, CustomsPartnerFtpUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsPartnerFtp", ObjectTables, CustomsPartnerFtpUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsPartnerFtp");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsPartnerFtp");
 					CustomsPartnerFtpUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsPartnerFtpUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4073,11 +4073,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsPartnersItem", ObjectTables, CustomsPartnersItemUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsPartnersItem", ObjectTables, CustomsPartnersItemUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsPartnersItem");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsPartnersItem");
 					CustomsPartnersItemUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsPartnersItemUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4100,11 +4100,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsPaymentTerm", ObjectTables, CustomsPaymentTermUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsPaymentTerm", ObjectTables, CustomsPaymentTermUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsPaymentTerm");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsPaymentTerm");
 					CustomsPaymentTermUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsPaymentTermUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4127,11 +4127,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsRequestsSheet", ObjectTables, CustomsRequestsSheetUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsRequestsSheet", ObjectTables, CustomsRequestsSheetUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsRequestsSheet");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsRequestsSheet");
 					CustomsRequestsSheetUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsRequestsSheetUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4154,11 +4154,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsRequestsSheetStatus", ObjectTables, CustomsRequestsSheetStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsRequestsSheetStatus", ObjectTables, CustomsRequestsSheetStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsRequestsSheetStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsRequestsSheetStatus");
 					CustomsRequestsSheetStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsRequestsSheetStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4181,11 +4181,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsRequiredField", ObjectTables, CustomsRequiredFieldUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsRequiredField", ObjectTables, CustomsRequiredFieldUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsRequiredField");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsRequiredField");
 					CustomsRequiredFieldUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsRequiredFieldUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4208,11 +4208,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsSetting", ObjectTables, CustomsSettingUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsSetting", ObjectTables, CustomsSettingUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsSetting");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsSetting");
 					CustomsSettingUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsSettingUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4235,11 +4235,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsTransportMode", ObjectTables, CustomsTransportModeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsTransportMode", ObjectTables, CustomsTransportModeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsTransportMode");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsTransportMode");
 					CustomsTransportModeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsTransportModeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4262,11 +4262,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsVendor", ObjectTables, CustomsVendorUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsVendor", ObjectTables, CustomsVendorUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsVendor");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsVendor");
 					CustomsVendorUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsVendorUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4289,11 +4289,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsVerificationStatusType", ObjectTables, CustomsVerificationStatusTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.CustomsVerificationStatusType", ObjectTables, CustomsVerificationStatusTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("CustomsVerificationStatusType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.CustomsVerificationStatusType");
 					CustomsVerificationStatusTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					CustomsVerificationStatusTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4316,11 +4316,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DangerousGoodsPackingReq", ObjectTables, DangerousGoodsPackingReqUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DangerousGoodsPackingReq", ObjectTables, DangerousGoodsPackingReqUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DangerousGoodsPackingReq");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DangerousGoodsPackingReq");
 					DangerousGoodsPackingReqUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DangerousGoodsPackingReqUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4343,11 +4343,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DBMigration", ObjectTables, DBMigrationUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DBMigration", ObjectTables, DBMigrationUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DBMigration");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DBMigration");
 					DBMigrationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DBMigrationUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4370,11 +4370,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DBMigrationLine", ObjectTables, DBMigrationLineUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DBMigrationLine", ObjectTables, DBMigrationLineUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DBMigrationLine");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DBMigrationLine");
 					DBMigrationLineUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DBMigrationLineUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4397,11 +4397,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DebtNotificationType", ObjectTables, DebtNotificationTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DebtNotificationType", ObjectTables, DebtNotificationTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DebtNotificationType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DebtNotificationType");
 					DebtNotificationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DebtNotificationTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4424,11 +4424,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DecCargoSplitCargoIdentifier", ObjectTables, DecCargoSplitCargoIdentifierUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DecCargoSplitCargoIdentifier", ObjectTables, DecCargoSplitCargoIdentifierUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DecCargoSplitCargoIdentifier");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DecCargoSplitCargoIdentifier");
 					DecCargoSplitCargoIdentifierUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DecCargoSplitCargoIdentifierUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4451,11 +4451,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DecCargoSplitCon", ObjectTables, DecCargoSplitConUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DecCargoSplitCon", ObjectTables, DecCargoSplitConUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DecCargoSplitCon");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DecCargoSplitCon");
 					DecCargoSplitConUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DecCargoSplitConUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4478,11 +4478,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DecCargoSplitConsItem", ObjectTables, DecCargoSplitConsItemUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DecCargoSplitConsItem", ObjectTables, DecCargoSplitConsItemUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DecCargoSplitConsItem");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DecCargoSplitConsItem");
 					DecCargoSplitConsItemUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DecCargoSplitConsItemUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4505,11 +4505,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DecCargoSplitConsPackDet", ObjectTables, DecCargoSplitConsPackDetUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DecCargoSplitConsPackDet", ObjectTables, DecCargoSplitConsPackDetUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DecCargoSplitConsPackDet");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DecCargoSplitConsPackDet");
 					DecCargoSplitConsPackDetUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DecCargoSplitConsPackDetUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4532,11 +4532,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DecDangersContact", ObjectTables, DecDangersContactUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DecDangersContact", ObjectTables, DecDangersContactUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DecDangersContact");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DecDangersContact");
 					DecDangersContactUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DecDangersContactUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4559,11 +4559,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DecisionType", ObjectTables, DecisionTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DecisionType", ObjectTables, DecisionTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DecisionType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DecisionType");
 					DecisionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DecisionTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4586,11 +4586,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Declaration", ObjectTables, DeclarationUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Declaration", ObjectTables, DeclarationUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Declaration");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Declaration");
 					DeclarationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4613,11 +4613,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationCargoSplit", ObjectTables, DeclarationCargoSplitUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationCargoSplit", ObjectTables, DeclarationCargoSplitUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationCargoSplit");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationCargoSplit");
 					DeclarationCargoSplitUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationCargoSplitUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4640,11 +4640,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationConsAcceptance", ObjectTables, DeclarationConsAcceptanceUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationConsAcceptance", ObjectTables, DeclarationConsAcceptanceUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationConsAcceptance");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationConsAcceptance");
 					DeclarationConsAcceptanceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationConsAcceptanceUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4667,11 +4667,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationConstraint", ObjectTables, DeclarationConstraintUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationConstraint", ObjectTables, DeclarationConstraintUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationConstraint");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationConstraint");
 					DeclarationConstraintUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationConstraintUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4694,11 +4694,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationCourierStatus", ObjectTables, DeclarationCourierStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationCourierStatus", ObjectTables, DeclarationCourierStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationCourierStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationCourierStatus");
 					DeclarationCourierStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationCourierStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4721,11 +4721,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationErrorMapping", ObjectTables, DeclarationErrorMappingUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationErrorMapping", ObjectTables, DeclarationErrorMappingUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationErrorMapping");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationErrorMapping");
 					DeclarationErrorMappingUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationErrorMappingUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4748,11 +4748,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationMamanSpecialAction", ObjectTables, DeclarationMamanSpecialActionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationMamanSpecialAction", ObjectTables, DeclarationMamanSpecialActionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationMamanSpecialAction");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationMamanSpecialAction");
 					DeclarationMamanSpecialActionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationMamanSpecialActionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4775,11 +4775,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationPayment", ObjectTables, DeclarationPaymentUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationPayment", ObjectTables, DeclarationPaymentUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationPayment");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationPayment");
 					DeclarationPaymentUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationPaymentUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4802,11 +4802,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationPaymentMethod", ObjectTables, DeclarationPaymentMethodUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationPaymentMethod", ObjectTables, DeclarationPaymentMethodUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationPaymentMethod");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationPaymentMethod");
 					DeclarationPaymentMethodUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationPaymentMethodUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4829,11 +4829,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationPaymentProtest", ObjectTables, DeclarationPaymentProtestUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationPaymentProtest", ObjectTables, DeclarationPaymentProtestUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationPaymentProtest");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationPaymentProtest");
 					DeclarationPaymentProtestUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationPaymentProtestUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4856,11 +4856,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationPending", ObjectTables, DeclarationPendingUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationPending", ObjectTables, DeclarationPendingUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationPending");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationPending");
 					DeclarationPendingUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationPendingUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4883,11 +4883,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationReferantData", ObjectTables, DeclarationReferantDataUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationReferantData", ObjectTables, DeclarationReferantDataUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationReferantData");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationReferantData");
 					DeclarationReferantDataUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationReferantDataUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4910,11 +4910,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationStatementType", ObjectTables, DeclarationStatementTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationStatementType", ObjectTables, DeclarationStatementTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationStatementType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationStatementType");
 					DeclarationStatementTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationStatementTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4937,11 +4937,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationStatusType", ObjectTables, DeclarationStatusTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationStatusType", ObjectTables, DeclarationStatusTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationStatusType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationStatusType");
 					DeclarationStatusTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationStatusTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4964,11 +4964,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeclarationTax", ObjectTables, DeclarationTaxUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeclarationTax", ObjectTables, DeclarationTaxUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeclarationTax");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeclarationTax");
 					DeclarationTaxUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeclarationTaxUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -4991,11 +4991,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Deficit", ObjectTables, DeficitUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Deficit", ObjectTables, DeficitUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Deficit");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Deficit");
 					DeficitUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeficitUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5018,11 +5018,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeficitConnFileParagraphType", ObjectTables, DeficitConnFileParagraphTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeficitConnFileParagraphType", ObjectTables, DeficitConnFileParagraphTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeficitConnFileParagraphType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeficitConnFileParagraphType");
 					DeficitConnFileParagraphTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeficitConnFileParagraphTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5045,11 +5045,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeficitDecision", ObjectTables, DeficitDecisionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeficitDecision", ObjectTables, DeficitDecisionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeficitDecision");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeficitDecision");
 					DeficitDecisionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeficitDecisionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5072,11 +5072,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DeliverySiteType", ObjectTables, DeliverySiteTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DeliverySiteType", ObjectTables, DeliverySiteTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DeliverySiteType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DeliverySiteType");
 					DeliverySiteTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DeliverySiteTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5099,11 +5099,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DemanderType", ObjectTables, DemanderTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DemanderType", ObjectTables, DemanderTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DemanderType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DemanderType");
 					DemanderTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DemanderTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5126,11 +5126,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Deposit", ObjectTables, DepositUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Deposit", ObjectTables, DepositUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Deposit");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Deposit");
 					DepositUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DepositUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5153,11 +5153,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DepositCondition", ObjectTables, DepositConditionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DepositCondition", ObjectTables, DepositConditionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DepositCondition");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DepositCondition");
 					DepositConditionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DepositConditionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5180,11 +5180,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DepositCustomerActivity", ObjectTables, DepositCustomerActivityUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DepositCustomerActivity", ObjectTables, DepositCustomerActivityUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DepositCustomerActivity");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DepositCustomerActivity");
 					DepositCustomerActivityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DepositCustomerActivityUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5207,11 +5207,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DepositEssenceType", ObjectTables, DepositEssenceTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DepositEssenceType", ObjectTables, DepositEssenceTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DepositEssenceType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DepositEssenceType");
 					DepositEssenceTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DepositEssenceTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5234,11 +5234,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DepositFileType", ObjectTables, DepositFileTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DepositFileType", ObjectTables, DepositFileTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DepositFileType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DepositFileType");
 					DepositFileTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DepositFileTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5261,11 +5261,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("DocumentTypeCustomsData", ObjectTables, DocumentTypeCustomsDataUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.DocumentTypeCustomsData", ObjectTables, DocumentTypeCustomsDataUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("DocumentTypeCustomsData");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.DocumentTypeCustomsData");
 					DocumentTypeCustomsDataUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					DocumentTypeCustomsDataUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5288,11 +5288,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("EntitlementType", ObjectTables, EntitlementTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.EntitlementType", ObjectTables, EntitlementTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("EntitlementType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.EntitlementType");
 					EntitlementTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					EntitlementTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5315,11 +5315,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("EntityTypeLookup", ObjectTables, EntityTypeLookupUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.EntityTypeLookup", ObjectTables, EntityTypeLookupUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("EntityTypeLookup");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.EntityTypeLookup");
 					EntityTypeLookupUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					EntityTypeLookupUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5342,11 +5342,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ExceptionReason", ObjectTables, ExceptionReasonUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ExceptionReason", ObjectTables, ExceptionReasonUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ExceptionReason");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ExceptionReason");
 					ExceptionReasonUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ExceptionReasonUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5369,11 +5369,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("FacilitationType", ObjectTables, FacilitationTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.FacilitationType", ObjectTables, FacilitationTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("FacilitationType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.FacilitationType");
 					FacilitationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					FacilitationTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5396,11 +5396,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("FaultInspectionType", ObjectTables, FaultInspectionTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.FaultInspectionType", ObjectTables, FaultInspectionTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("FaultInspectionType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.FaultInspectionType");
 					FaultInspectionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					FaultInspectionTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5423,11 +5423,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("FreightPaymentMethod", ObjectTables, FreightPaymentMethodUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.FreightPaymentMethod", ObjectTables, FreightPaymentMethodUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("FreightPaymentMethod");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.FreightPaymentMethod");
 					FreightPaymentMethodUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					FreightPaymentMethodUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5450,11 +5450,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("FuelType", ObjectTables, FuelTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.FuelType", ObjectTables, FuelTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("FuelType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.FuelType");
 					FuelTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					FuelTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5477,11 +5477,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("GatepassRequest", ObjectTables, GatepassRequestUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.GatepassRequest", ObjectTables, GatepassRequestUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("GatepassRequest");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.GatepassRequest");
 					GatepassRequestUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					GatepassRequestUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5504,11 +5504,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("GatepassReturnCode", ObjectTables, GatepassReturnCodeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.GatepassReturnCode", ObjectTables, GatepassReturnCodeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("GatepassReturnCode");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.GatepassReturnCode");
 					GatepassReturnCodeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					GatepassReturnCodeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5531,11 +5531,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Gender", ObjectTables, GenderUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Gender", ObjectTables, GenderUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Gender");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Gender");
 					GenderUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					GenderUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5558,11 +5558,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("GovernmentProcedureType", ObjectTables, GovernmentProcedureTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.GovernmentProcedureType", ObjectTables, GovernmentProcedureTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("GovernmentProcedureType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.GovernmentProcedureType");
 					GovernmentProcedureTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					GovernmentProcedureTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5585,11 +5585,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Guarantee", ObjectTables, GuaranteeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Guarantee", ObjectTables, GuaranteeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Guarantee");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Guarantee");
 					GuaranteeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					GuaranteeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5612,11 +5612,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("GuaranteeCertificateType", ObjectTables, GuaranteeCertificateTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.GuaranteeCertificateType", ObjectTables, GuaranteeCertificateTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("GuaranteeCertificateType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.GuaranteeCertificateType");
 					GuaranteeCertificateTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					GuaranteeCertificateTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5639,11 +5639,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("GuaranteeCondition", ObjectTables, GuaranteeConditionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.GuaranteeCondition", ObjectTables, GuaranteeConditionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("GuaranteeCondition");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.GuaranteeCondition");
 					GuaranteeConditionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					GuaranteeConditionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5666,11 +5666,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("GuaranteeCustomerActivity", ObjectTables, GuaranteeCustomerActivityUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.GuaranteeCustomerActivity", ObjectTables, GuaranteeCustomerActivityUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("GuaranteeCustomerActivity");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.GuaranteeCustomerActivity");
 					GuaranteeCustomerActivityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					GuaranteeCustomerActivityUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5693,11 +5693,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("HazardousSubstance", ObjectTables, HazardousSubstanceUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.HazardousSubstance", ObjectTables, HazardousSubstanceUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("HazardousSubstance");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.HazardousSubstance");
 					HazardousSubstanceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					HazardousSubstanceUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5720,11 +5720,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ImporterDeclarationType", ObjectTables, ImporterDeclarationTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ImporterDeclarationType", ObjectTables, ImporterDeclarationTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ImporterDeclarationType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ImporterDeclarationType");
 					ImporterDeclarationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ImporterDeclarationTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5747,11 +5747,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ImporterDesposition", ObjectTables, ImporterDespositionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ImporterDesposition", ObjectTables, ImporterDespositionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ImporterDesposition");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ImporterDesposition");
 					ImporterDespositionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ImporterDespositionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5774,11 +5774,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ImporterPeriodicDeclarStatus", ObjectTables, ImporterPeriodicDeclarStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ImporterPeriodicDeclarStatus", ObjectTables, ImporterPeriodicDeclarStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ImporterPeriodicDeclarStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ImporterPeriodicDeclarStatus");
 					ImporterPeriodicDeclarStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ImporterPeriodicDeclarStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5801,11 +5801,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ImporterTypeForClaim", ObjectTables, ImporterTypeForClaimUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ImporterTypeForClaim", ObjectTables, ImporterTypeForClaimUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ImporterTypeForClaim");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ImporterTypeForClaim");
 					ImporterTypeForClaimUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ImporterTypeForClaimUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5828,11 +5828,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("InterfaceManagement", ObjectTables, InterfaceManagementUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.InterfaceManagement", ObjectTables, InterfaceManagementUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("InterfaceManagement");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.InterfaceManagement");
 					InterfaceManagementUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					InterfaceManagementUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5855,11 +5855,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("InterfaceSendOption", ObjectTables, InterfaceSendOptionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.InterfaceSendOption", ObjectTables, InterfaceSendOptionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("InterfaceSendOption");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.InterfaceSendOption");
 					InterfaceSendOptionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					InterfaceSendOptionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5882,11 +5882,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("InterfaceTenantDefinition", ObjectTables, InterfaceTenantDefinitionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.InterfaceTenantDefinition", ObjectTables, InterfaceTenantDefinitionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("InterfaceTenantDefinition");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.InterfaceTenantDefinition");
 					InterfaceTenantDefinitionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					InterfaceTenantDefinitionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5909,11 +5909,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("InternalBorderSiteType", ObjectTables, InternalBorderSiteTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.InternalBorderSiteType", ObjectTables, InternalBorderSiteTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("InternalBorderSiteType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.InternalBorderSiteType");
 					InternalBorderSiteTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					InternalBorderSiteTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5936,11 +5936,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("InternationalSite", ObjectTables, InternationalSiteUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.InternationalSite", ObjectTables, InternationalSiteUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("InternationalSite");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.InternationalSite");
 					InternationalSiteUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					InternationalSiteUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5963,11 +5963,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("InvoiceType", ObjectTables, InvoiceTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.InvoiceType", ObjectTables, InvoiceTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("InvoiceType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.InvoiceType");
 					InvoiceTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					InvoiceTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -5990,11 +5990,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ItemGovernmentProcedureType", ObjectTables, ItemGovernmentProcedureTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ItemGovernmentProcedureType", ObjectTables, ItemGovernmentProcedureTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ItemGovernmentProcedureType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ItemGovernmentProcedureType");
 					ItemGovernmentProcedureTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ItemGovernmentProcedureTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6017,11 +6017,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("LastReleaseFromWarehouse", ObjectTables, LastReleaseFromWarehouseUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.LastReleaseFromWarehouse", ObjectTables, LastReleaseFromWarehouseUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("LastReleaseFromWarehouse");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.LastReleaseFromWarehouse");
 					LastReleaseFromWarehouseUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					LastReleaseFromWarehouseUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6044,11 +6044,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("LeadDocumentExceptionType", ObjectTables, LeadDocumentExceptionTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.LeadDocumentExceptionType", ObjectTables, LeadDocumentExceptionTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("LeadDocumentExceptionType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.LeadDocumentExceptionType");
 					LeadDocumentExceptionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					LeadDocumentExceptionTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6071,11 +6071,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("LeadDocumentType", ObjectTables, LeadDocumentTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.LeadDocumentType", ObjectTables, LeadDocumentTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("LeadDocumentType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.LeadDocumentType");
 					LeadDocumentTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					LeadDocumentTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6098,11 +6098,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("MamanSpecialAction", ObjectTables, MamanSpecialActionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.MamanSpecialAction", ObjectTables, MamanSpecialActionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("MamanSpecialAction");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.MamanSpecialAction");
 					MamanSpecialActionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					MamanSpecialActionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6125,11 +6125,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("MamanSpecialActionStatus", ObjectTables, MamanSpecialActionStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.MamanSpecialActionStatus", ObjectTables, MamanSpecialActionStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("MamanSpecialActionStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.MamanSpecialActionStatus");
 					MamanSpecialActionStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					MamanSpecialActionStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6152,11 +6152,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("MamanStatus", ObjectTables, MamanStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.MamanStatus", ObjectTables, MamanStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("MamanStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.MamanStatus");
 					MamanStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					MamanStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6179,11 +6179,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ManifestCargoStatus", ObjectTables, ManifestCargoStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ManifestCargoStatus", ObjectTables, ManifestCargoStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ManifestCargoStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ManifestCargoStatus");
 					ManifestCargoStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ManifestCargoStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6206,11 +6206,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("MAWBType", ObjectTables, MAWBTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.MAWBType", ObjectTables, MAWBTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("MAWBType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.MAWBType");
 					MAWBTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					MAWBTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6233,11 +6233,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("MeasureQualifier", ObjectTables, MeasureQualifierUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.MeasureQualifier", ObjectTables, MeasureQualifierUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("MeasureQualifier");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.MeasureQualifier");
 					MeasureQualifierUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					MeasureQualifierUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6260,11 +6260,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("MeasurmentUnit", ObjectTables, MeasurmentUnitUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.MeasurmentUnit", ObjectTables, MeasurmentUnitUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("MeasurmentUnit");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.MeasurmentUnit");
 					MeasurmentUnitUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					MeasurmentUnitUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6287,11 +6287,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ModificationAndDiscountType", ObjectTables, ModificationAndDiscountTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ModificationAndDiscountType", ObjectTables, ModificationAndDiscountTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ModificationAndDiscountType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ModificationAndDiscountType");
 					ModificationAndDiscountTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ModificationAndDiscountTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6314,11 +6314,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("MorningMessageType", ObjectTables, MorningMessageTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.MorningMessageType", ObjectTables, MorningMessageTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("MorningMessageType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.MorningMessageType");
 					MorningMessageTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					MorningMessageTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6341,11 +6341,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Notification", ObjectTables, NotificationUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Notification", ObjectTables, NotificationUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Notification");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Notification");
 					NotificationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					NotificationUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6368,11 +6368,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("NotificationDefinition", ObjectTables, NotificationDefinitionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.NotificationDefinition", ObjectTables, NotificationDefinitionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("NotificationDefinition");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.NotificationDefinition");
 					NotificationDefinitionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					NotificationDefinitionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6395,11 +6395,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("NotificationReply", ObjectTables, NotificationReplyUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.NotificationReply", ObjectTables, NotificationReplyUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("NotificationReply");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.NotificationReply");
 					NotificationReplyUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					NotificationReplyUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6422,11 +6422,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("NotificationTenantDefinition", ObjectTables, NotificationTenantDefinitionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.NotificationTenantDefinition", ObjectTables, NotificationTenantDefinitionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("NotificationTenantDefinition");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.NotificationTenantDefinition");
 					NotificationTenantDefinitionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					NotificationTenantDefinitionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6449,11 +6449,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("NotificationType", ObjectTables, NotificationTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.NotificationType", ObjectTables, NotificationTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("NotificationType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.NotificationType");
 					NotificationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					NotificationTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6476,11 +6476,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("OrganizationUnitType", ObjectTables, OrganizationUnitTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.OrganizationUnitType", ObjectTables, OrganizationUnitTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("OrganizationUnitType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.OrganizationUnitType");
 					OrganizationUnitTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					OrganizationUnitTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6503,11 +6503,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PackageMeasureQualifier", ObjectTables, PackageMeasureQualifierUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PackageMeasureQualifier", ObjectTables, PackageMeasureQualifierUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PackageMeasureQualifier");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PackageMeasureQualifier");
 					PackageMeasureQualifierUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PackageMeasureQualifierUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6530,11 +6530,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PackingType", ObjectTables, PackingTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PackingType", ObjectTables, PackingTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PackingType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PackingType");
 					PackingTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PackingTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6557,11 +6557,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ParagraphType", ObjectTables, ParagraphTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ParagraphType", ObjectTables, ParagraphTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ParagraphType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ParagraphType");
 					ParagraphTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ParagraphTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6584,11 +6584,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PassportType", ObjectTables, PassportTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PassportType", ObjectTables, PassportTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PassportType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PassportType");
 					PassportTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PassportTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6611,11 +6611,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PayerActivityType", ObjectTables, PayerActivityTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PayerActivityType", ObjectTables, PayerActivityTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PayerActivityType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PayerActivityType");
 					PayerActivityTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PayerActivityTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6638,11 +6638,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PayerType", ObjectTables, PayerTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PayerType", ObjectTables, PayerTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PayerType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PayerType");
 					PayerTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PayerTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6665,11 +6665,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentMethodStatus", ObjectTables, PaymentMethodStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentMethodStatus", ObjectTables, PaymentMethodStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentMethodStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentMethodStatus");
 					PaymentMethodStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentMethodStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6692,11 +6692,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentMethodType", ObjectTables, PaymentMethodTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentMethodType", ObjectTables, PaymentMethodTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentMethodType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentMethodType");
 					PaymentMethodTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentMethodTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6719,11 +6719,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentOrder", ObjectTables, PaymentOrderUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentOrder", ObjectTables, PaymentOrderUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentOrder");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentOrder");
 					PaymentOrderUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentOrderUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6746,11 +6746,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentOrderConnectionTable", ObjectTables, PaymentOrderConnectionTableUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentOrderConnectionTable", ObjectTables, PaymentOrderConnectionTableUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentOrderConnectionTable");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentOrderConnectionTable");
 					PaymentOrderConnectionTableUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentOrderConnectionTableUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6773,11 +6773,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentOrderLine", ObjectTables, PaymentOrderLineUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentOrderLine", ObjectTables, PaymentOrderLineUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentOrderLine");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentOrderLine");
 					PaymentOrderLineUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentOrderLineUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6800,11 +6800,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentOrderMethod", ObjectTables, PaymentOrderMethodUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentOrderMethod", ObjectTables, PaymentOrderMethodUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentOrderMethod");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentOrderMethod");
 					PaymentOrderMethodUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentOrderMethodUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6827,11 +6827,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentOrderProtestReason", ObjectTables, PaymentOrderProtestReasonUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentOrderProtestReason", ObjectTables, PaymentOrderProtestReasonUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentOrderProtestReason");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentOrderProtestReason");
 					PaymentOrderProtestReasonUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentOrderProtestReasonUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6854,11 +6854,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentOrderStatus", ObjectTables, PaymentOrderStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentOrderStatus", ObjectTables, PaymentOrderStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentOrderStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentOrderStatus");
 					PaymentOrderStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentOrderStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6881,11 +6881,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentOrderType", ObjectTables, PaymentOrderTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentOrderType", ObjectTables, PaymentOrderTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentOrderType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentOrderType");
 					PaymentOrderTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentOrderTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6908,11 +6908,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentProcess", ObjectTables, PaymentProcessUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentProcess", ObjectTables, PaymentProcessUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentProcess");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentProcess");
 					PaymentProcessUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentProcessUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6935,11 +6935,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentProtestType", ObjectTables, PaymentProtestTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentProtestType", ObjectTables, PaymentProtestTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentProtestType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentProtestType");
 					PaymentProtestTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentProtestTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6962,11 +6962,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentType", ObjectTables, PaymentTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PaymentType", ObjectTables, PaymentTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PaymentType");
 					PaymentTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PaymentTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -6989,11 +6989,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PendingByKeyword", ObjectTables, PendingByKeywordUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PendingByKeyword", ObjectTables, PendingByKeywordUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PendingByKeyword");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PendingByKeyword");
 					PendingByKeywordUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PendingByKeywordUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7016,11 +7016,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PendingErrorPlace", ObjectTables, PendingErrorPlaceUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PendingErrorPlace", ObjectTables, PendingErrorPlaceUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PendingErrorPlace");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PendingErrorPlace");
 					PendingErrorPlaceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PendingErrorPlaceUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7043,11 +7043,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PhysicalCheck", ObjectTables, PhysicalCheckUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PhysicalCheck", ObjectTables, PhysicalCheckUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PhysicalCheck");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PhysicalCheck");
 					PhysicalCheckUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PhysicalCheckUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7070,11 +7070,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PhysicalCheckOperation", ObjectTables, PhysicalCheckOperationUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PhysicalCheckOperation", ObjectTables, PhysicalCheckOperationUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PhysicalCheckOperation");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PhysicalCheckOperation");
 					PhysicalCheckOperationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PhysicalCheckOperationUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7097,11 +7097,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PhysicalCheckStatusMessage", ObjectTables, PhysicalCheckStatusMessageUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PhysicalCheckStatusMessage", ObjectTables, PhysicalCheckStatusMessageUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PhysicalCheckStatusMessage");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PhysicalCheckStatusMessage");
 					PhysicalCheckStatusMessageUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PhysicalCheckStatusMessageUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7124,11 +7124,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PointerLevel", ObjectTables, PointerLevelUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PointerLevel", ObjectTables, PointerLevelUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PointerLevel");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PointerLevel");
 					PointerLevelUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PointerLevelUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7151,11 +7151,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ProceduralFault", ObjectTables, ProceduralFaultUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ProceduralFault", ObjectTables, ProceduralFaultUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ProceduralFault");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ProceduralFault");
 					ProceduralFaultUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ProceduralFaultUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7178,11 +7178,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ProceduralFaultInProcessType", ObjectTables, ProceduralFaultInProcessTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ProceduralFaultInProcessType", ObjectTables, ProceduralFaultInProcessTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ProceduralFaultInProcessType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ProceduralFaultInProcessType");
 					ProceduralFaultInProcessTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ProceduralFaultInProcessTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7205,11 +7205,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ProceduralFaultInSourceType", ObjectTables, ProceduralFaultInSourceTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ProceduralFaultInSourceType", ObjectTables, ProceduralFaultInSourceTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ProceduralFaultInSourceType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ProceduralFaultInSourceType");
 					ProceduralFaultInSourceTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ProceduralFaultInSourceTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7232,11 +7232,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ProceduralFaultsConnEntity", ObjectTables, ProceduralFaultsConnEntityUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ProceduralFaultsConnEntity", ObjectTables, ProceduralFaultsConnEntityUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ProceduralFaultsConnEntity");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ProceduralFaultsConnEntity");
 					ProceduralFaultsConnEntityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ProceduralFaultsConnEntityUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7259,11 +7259,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ProceduralFaultStatus", ObjectTables, ProceduralFaultStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ProceduralFaultStatus", ObjectTables, ProceduralFaultStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ProceduralFaultStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ProceduralFaultStatus");
 					ProceduralFaultStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ProceduralFaultStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7286,11 +7286,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ProceduralFaultType", ObjectTables, ProceduralFaultTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ProceduralFaultType", ObjectTables, ProceduralFaultTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ProceduralFaultType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ProceduralFaultType");
 					ProceduralFaultTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ProceduralFaultTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7313,11 +7313,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ProcessingReason", ObjectTables, ProcessingReasonUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ProcessingReason", ObjectTables, ProcessingReasonUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ProcessingReason");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ProcessingReason");
 					ProcessingReasonUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ProcessingReasonUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7340,11 +7340,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ProductIdentificationType", ObjectTables, ProductIdentificationTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ProductIdentificationType", ObjectTables, ProductIdentificationTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ProductIdentificationType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ProductIdentificationType");
 					ProductIdentificationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ProductIdentificationTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7367,11 +7367,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ProductNameType", ObjectTables, ProductNameTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ProductNameType", ObjectTables, ProductNameTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ProductNameType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ProductNameType");
 					ProductNameTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ProductNameTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7394,11 +7394,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("PropertiesDetailsHistory", ObjectTables, PropertiesDetailsHistoryUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.PropertiesDetailsHistory", ObjectTables, PropertiesDetailsHistoryUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("PropertiesDetailsHistory");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.PropertiesDetailsHistory");
 					PropertiesDetailsHistoryUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					PropertiesDetailsHistoryUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7421,11 +7421,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("RansomViolationType", ObjectTables, RansomViolationTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.RansomViolationType", ObjectTables, RansomViolationTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("RansomViolationType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.RansomViolationType");
 					RansomViolationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					RansomViolationTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7448,11 +7448,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ReferantException", ObjectTables, ReferantExceptionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ReferantException", ObjectTables, ReferantExceptionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ReferantException");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ReferantException");
 					ReferantExceptionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ReferantExceptionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7475,11 +7475,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("RefundCustomerActivityType", ObjectTables, RefundCustomerActivityTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.RefundCustomerActivityType", ObjectTables, RefundCustomerActivityTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("RefundCustomerActivityType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.RefundCustomerActivityType");
 					RefundCustomerActivityTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					RefundCustomerActivityTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7502,11 +7502,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("RegisteredWarehouseSiteType", ObjectTables, RegisteredWarehouseSiteTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.RegisteredWarehouseSiteType", ObjectTables, RegisteredWarehouseSiteTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("RegisteredWarehouseSiteType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.RegisteredWarehouseSiteType");
 					RegisteredWarehouseSiteTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					RegisteredWarehouseSiteTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7529,11 +7529,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("RequestStatus", ObjectTables, RequestStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.RequestStatus", ObjectTables, RequestStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("RequestStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.RequestStatus");
 					RequestStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					RequestStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7556,11 +7556,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("RequestType", ObjectTables, RequestTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.RequestType", ObjectTables, RequestTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("RequestType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.RequestType");
 					RequestTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					RequestTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7583,11 +7583,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("RequiredGuaranteeType", ObjectTables, RequiredGuaranteeTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.RequiredGuaranteeType", ObjectTables, RequiredGuaranteeTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("RequiredGuaranteeType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.RequiredGuaranteeType");
 					RequiredGuaranteeTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					RequiredGuaranteeTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7610,11 +7610,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ReturnCondition", ObjectTables, ReturnConditionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ReturnCondition", ObjectTables, ReturnConditionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ReturnCondition");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ReturnCondition");
 					ReturnConditionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ReturnConditionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7637,11 +7637,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SalesTaxExemptionType", ObjectTables, SalesTaxExemptionTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SalesTaxExemptionType", ObjectTables, SalesTaxExemptionTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SalesTaxExemptionType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SalesTaxExemptionType");
 					SalesTaxExemptionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SalesTaxExemptionTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7664,11 +7664,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SealCompletenes", ObjectTables, SealCompletenesUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SealCompletenes", ObjectTables, SealCompletenesUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SealCompletenes");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SealCompletenes");
 					SealCompletenesUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SealCompletenesUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7691,11 +7691,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SealType", ObjectTables, SealTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SealType", ObjectTables, SealTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SealType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SealType");
 					SealTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SealTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7718,11 +7718,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SealUpdateReasonType", ObjectTables, SealUpdateReasonTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SealUpdateReasonType", ObjectTables, SealUpdateReasonTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SealUpdateReasonType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SealUpdateReasonType");
 					SealUpdateReasonTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SealUpdateReasonTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7745,11 +7745,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SeizureFactorType", ObjectTables, SeizureFactorTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SeizureFactorType", ObjectTables, SeizureFactorTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SeizureFactorType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SeizureFactorType");
 					SeizureFactorTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SeizureFactorTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7772,11 +7772,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SeizureMethodType", ObjectTables, SeizureMethodTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SeizureMethodType", ObjectTables, SeizureMethodTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SeizureMethodType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SeizureMethodType");
 					SeizureMethodTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SeizureMethodTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7799,11 +7799,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SignatureType", ObjectTables, SignatureTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SignatureType", ObjectTables, SignatureTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SignatureType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SignatureType");
 					SignatureTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SignatureTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7826,11 +7826,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SiteLookup", ObjectTables, SiteLookupUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SiteLookup", ObjectTables, SiteLookupUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SiteLookup");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SiteLookup");
 					SiteLookupUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SiteLookupUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7853,11 +7853,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SiteType", ObjectTables, SiteTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SiteType", ObjectTables, SiteTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SiteType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SiteType");
 					SiteTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SiteTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7880,11 +7880,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SpecialActionDescriptionType", ObjectTables, SpecialActionDescriptionTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SpecialActionDescriptionType", ObjectTables, SpecialActionDescriptionTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SpecialActionDescriptionType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SpecialActionDescriptionType");
 					SpecialActionDescriptionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SpecialActionDescriptionTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7907,11 +7907,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SpecializationType", ObjectTables, SpecializationTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SpecializationType", ObjectTables, SpecializationTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SpecializationType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SpecializationType");
 					SpecializationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SpecializationTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7934,11 +7934,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SplitOrMergeReason", ObjectTables, SplitOrMergeReasonUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SplitOrMergeReason", ObjectTables, SplitOrMergeReasonUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SplitOrMergeReason");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SplitOrMergeReason");
 					SplitOrMergeReasonUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SplitOrMergeReasonUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7961,11 +7961,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("StorageMessageType", ObjectTables, StorageMessageTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.StorageMessageType", ObjectTables, StorageMessageTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("StorageMessageType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.StorageMessageType");
 					StorageMessageTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					StorageMessageTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -7988,11 +7988,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("StorageStatus", ObjectTables, StorageStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.StorageStatus", ObjectTables, StorageStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("StorageStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.StorageStatus");
 					StorageStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					StorageStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8015,11 +8015,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SubCountry", ObjectTables, SubCountryUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SubCountry", ObjectTables, SubCountryUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SubCountry");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SubCountry");
 					SubCountryUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SubCountryUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8042,11 +8042,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvioceItemCertificat", ObjectTables, SupplierInvioceItemCertificatUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvioceItemCertificat", ObjectTables, SupplierInvioceItemCertificatUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvioceItemCertificat");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvioceItemCertificat");
 					SupplierInvioceItemCertificatUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvioceItemCertificatUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8069,11 +8069,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoice", ObjectTables, SupplierInvoiceUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoice", ObjectTables, SupplierInvoiceUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoice");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoice");
 					SupplierInvoiceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8096,11 +8096,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceFreightAmount", ObjectTables, SupplierInvoiceFreightAmountUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceFreightAmount", ObjectTables, SupplierInvoiceFreightAmountUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceFreightAmount");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceFreightAmount");
 					SupplierInvoiceFreightAmountUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceFreightAmountUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8123,11 +8123,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItem", ObjectTables, SupplierInvoiceItemUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItem", ObjectTables, SupplierInvoiceItemUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItem");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItem");
 					SupplierInvoiceItemUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8150,11 +8150,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemModVehicle", ObjectTables, SupplierInvoiceItemModVehicleUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemModVehicle", ObjectTables, SupplierInvoiceItemModVehicleUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemModVehicle");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemModVehicle");
 					SupplierInvoiceItemModVehicleUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemModVehicleUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8177,11 +8177,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemProcesType", ObjectTables, SupplierInvoiceItemProcesTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemProcesType", ObjectTables, SupplierInvoiceItemProcesTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemProcesType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemProcesType");
 					SupplierInvoiceItemProcesTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemProcesTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8204,11 +8204,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemsConDeclar", ObjectTables, SupplierInvoiceItemsConDeclarUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemsConDeclar", ObjectTables, SupplierInvoiceItemsConDeclarUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemsConDeclar");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemsConDeclar");
 					SupplierInvoiceItemsConDeclarUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemsConDeclarUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8231,11 +8231,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemsDescript", ObjectTables, SupplierInvoiceItemsDescriptUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemsDescript", ObjectTables, SupplierInvoiceItemsDescriptUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemsDescript");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemsDescript");
 					SupplierInvoiceItemsDescriptUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemsDescriptUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8258,11 +8258,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemsLevy", ObjectTables, SupplierInvoiceItemsLevyUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemsLevy", ObjectTables, SupplierInvoiceItemsLevyUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemsLevy");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemsLevy");
 					SupplierInvoiceItemsLevyUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemsLevyUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8285,11 +8285,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemsMod", ObjectTables, SupplierInvoiceItemsModUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemsMod", ObjectTables, SupplierInvoiceItemsModUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemsMod");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemsMod");
 					SupplierInvoiceItemsModUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemsModUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8312,11 +8312,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemsProdIdent", ObjectTables, SupplierInvoiceItemsProdIdentUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemsProdIdent", ObjectTables, SupplierInvoiceItemsProdIdentUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemsProdIdent");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemsProdIdent");
 					SupplierInvoiceItemsProdIdentUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemsProdIdentUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8339,11 +8339,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemsSerialNum", ObjectTables, SupplierInvoiceItemsSerialNumUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemsSerialNum", ObjectTables, SupplierInvoiceItemsSerialNumUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemsSerialNum");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemsSerialNum");
 					SupplierInvoiceItemsSerialNumUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemsSerialNumUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8366,11 +8366,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemsTax", ObjectTables, SupplierInvoiceItemsTaxUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemsTax", ObjectTables, SupplierInvoiceItemsTaxUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemsTax");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemsTax");
 					SupplierInvoiceItemsTaxUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemsTaxUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8393,11 +8393,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemVehicle", ObjectTables, SupplierInvoiceItemVehicleUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemVehicle", ObjectTables, SupplierInvoiceItemVehicleUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemVehicle");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemVehicle");
 					SupplierInvoiceItemVehicleUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemVehicleUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8420,11 +8420,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemVehicleAdd", ObjectTables, SupplierInvoiceItemVehicleAddUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemVehicleAdd", ObjectTables, SupplierInvoiceItemVehicleAddUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemVehicleAdd");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemVehicleAdd");
 					SupplierInvoiceItemVehicleAddUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemVehicleAddUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8447,11 +8447,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceItemVehicleMod", ObjectTables, SupplierInvoiceItemVehicleModUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceItemVehicleMod", ObjectTables, SupplierInvoiceItemVehicleModUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceItemVehicleMod");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceItemVehicleMod");
 					SupplierInvoiceItemVehicleModUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceItemVehicleModUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8474,11 +8474,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("SupplierInvoiceModification", ObjectTables, SupplierInvoiceModificationUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.SupplierInvoiceModification", ObjectTables, SupplierInvoiceModificationUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("SupplierInvoiceModification");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.SupplierInvoiceModification");
 					SupplierInvoiceModificationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					SupplierInvoiceModificationUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8501,11 +8501,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Tapag", ObjectTables, TapagUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Tapag", ObjectTables, TapagUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Tapag");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Tapag");
 					TapagUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					TapagUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8528,11 +8528,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("TapagConnectionTable", ObjectTables, TapagConnectionTableUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.TapagConnectionTable", ObjectTables, TapagConnectionTableUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("TapagConnectionTable");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.TapagConnectionTable");
 					TapagConnectionTableUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					TapagConnectionTableUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8555,11 +8555,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("TapagType", ObjectTables, TapagTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.TapagType", ObjectTables, TapagTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("TapagType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.TapagType");
 					TapagTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					TapagTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8582,11 +8582,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("TermsOfSaleType", ObjectTables, TermsOfSaleTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.TermsOfSaleType", ObjectTables, TermsOfSaleTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("TermsOfSaleType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.TermsOfSaleType");
 					TermsOfSaleTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					TermsOfSaleTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8609,11 +8609,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("TPGFileType", ObjectTables, TPGFileTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.TPGFileType", ObjectTables, TPGFileTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("TPGFileType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.TPGFileType");
 					TPGFileTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					TPGFileTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8636,11 +8636,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("TradeAgreement", ObjectTables, TradeAgreementUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.TradeAgreement", ObjectTables, TradeAgreementUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("TradeAgreement");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.TradeAgreement");
 					TradeAgreementUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					TradeAgreementUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8663,11 +8663,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("TradeLevyExamptType", ObjectTables, TradeLevyExamptTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.TradeLevyExamptType", ObjectTables, TradeLevyExamptTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("TradeLevyExamptType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.TradeLevyExamptType");
 					TradeLevyExamptTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					TradeLevyExamptTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8690,11 +8690,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("TransferCargoMethodType", ObjectTables, TransferCargoMethodTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.TransferCargoMethodType", ObjectTables, TransferCargoMethodTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("TransferCargoMethodType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.TransferCargoMethodType");
 					TransferCargoMethodTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					TransferCargoMethodTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8717,11 +8717,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("TreatmentWay", ObjectTables, TreatmentWayUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.TreatmentWay", ObjectTables, TreatmentWayUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("TreatmentWay");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.TreatmentWay");
 					TreatmentWayUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					TreatmentWayUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8744,11 +8744,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("UIMessage", ObjectTables, UIMessageUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.UIMessage", ObjectTables, UIMessageUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("UIMessage");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.UIMessage");
 					UIMessageUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					UIMessageUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8771,11 +8771,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("UIMessageAdditional", ObjectTables, UIMessageAdditionalUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.UIMessageAdditional", ObjectTables, UIMessageAdditionalUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("UIMessageAdditional");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.UIMessageAdditional");
 					UIMessageAdditionalUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					UIMessageAdditionalUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8798,11 +8798,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("UnloadingSiteType", ObjectTables, UnloadingSiteTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.UnloadingSiteType", ObjectTables, UnloadingSiteTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("UnloadingSiteType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.UnloadingSiteType");
 					UnloadingSiteTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					UnloadingSiteTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8825,11 +8825,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("UpdateCode", ObjectTables, UpdateCodeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.UpdateCode", ObjectTables, UpdateCodeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("UpdateCode");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.UpdateCode");
 					UpdateCodeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					UpdateCodeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8852,11 +8852,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("ValidCustomsItem", ObjectTables, ValidCustomsItemUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.ValidCustomsItem", ObjectTables, ValidCustomsItemUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("ValidCustomsItem");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.ValidCustomsItem");
 					ValidCustomsItemUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					ValidCustomsItemUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8879,11 +8879,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("Vehicle", ObjectTables, VehicleUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.Vehicle", ObjectTables, VehicleUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("Vehicle");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.Vehicle");
 					VehicleUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehicleUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8906,11 +8906,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VehicleManufacturer", ObjectTables, VehicleManufacturerUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VehicleManufacturer", ObjectTables, VehicleManufacturerUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VehicleManufacturer");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VehicleManufacturer");
 					VehicleManufacturerUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehicleManufacturerUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8933,11 +8933,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VehicleOwner", ObjectTables, VehicleOwnerUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VehicleOwner", ObjectTables, VehicleOwnerUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VehicleOwner");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VehicleOwner");
 					VehicleOwnerUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehicleOwnerUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8960,11 +8960,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VehiclePoolType", ObjectTables, VehiclePoolTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VehiclePoolType", ObjectTables, VehiclePoolTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VehiclePoolType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VehiclePoolType");
 					VehiclePoolTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehiclePoolTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -8987,11 +8987,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VehiclePriceListType", ObjectTables, VehiclePriceListTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VehiclePriceListType", ObjectTables, VehiclePriceListTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VehiclePriceListType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VehiclePriceListType");
 					VehiclePriceListTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehiclePriceListTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9014,11 +9014,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VehicleReductionType", ObjectTables, VehicleReductionTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VehicleReductionType", ObjectTables, VehicleReductionTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VehicleReductionType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VehicleReductionType");
 					VehicleReductionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehicleReductionTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9041,11 +9041,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VehicleSafeAccessoryInstlType", ObjectTables, VehicleSafeAccessoryInstlTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VehicleSafeAccessoryInstlType", ObjectTables, VehicleSafeAccessoryInstlTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VehicleSafeAccessoryInstlType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VehicleSafeAccessoryInstlType");
 					VehicleSafeAccessoryInstlTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehicleSafeAccessoryInstlTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9068,11 +9068,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VehicleSafetyAccessory", ObjectTables, VehicleSafetyAccessoryUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VehicleSafetyAccessory", ObjectTables, VehicleSafetyAccessoryUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VehicleSafetyAccessory");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VehicleSafetyAccessory");
 					VehicleSafetyAccessoryUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehicleSafetyAccessoryUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9095,11 +9095,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VehicleSafetyAccessoryType", ObjectTables, VehicleSafetyAccessoryTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VehicleSafetyAccessoryType", ObjectTables, VehicleSafetyAccessoryTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VehicleSafetyAccessoryType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VehicleSafetyAccessoryType");
 					VehicleSafetyAccessoryTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehicleSafetyAccessoryTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9122,11 +9122,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VehicleStatus", ObjectTables, VehicleStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VehicleStatus", ObjectTables, VehicleStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VehicleStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VehicleStatus");
 					VehicleStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehicleStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9149,11 +9149,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VehicleTecnologyType", ObjectTables, VehicleTecnologyTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VehicleTecnologyType", ObjectTables, VehicleTecnologyTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VehicleTecnologyType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VehicleTecnologyType");
 					VehicleTecnologyTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehicleTecnologyTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9176,11 +9176,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VehicleType", ObjectTables, VehicleTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VehicleType", ObjectTables, VehicleTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VehicleType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VehicleType");
 					VehicleTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VehicleTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9203,11 +9203,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VendorCommission", ObjectTables, VendorCommissionUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VendorCommission", ObjectTables, VendorCommissionUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VendorCommission");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VendorCommission");
 					VendorCommissionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VendorCommissionUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9230,11 +9230,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VendorCommunication", ObjectTables, VendorCommunicationUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VendorCommunication", ObjectTables, VendorCommunicationUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VendorCommunication");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VendorCommunication");
 					VendorCommunicationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VendorCommunicationUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9257,11 +9257,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VendorStatus", ObjectTables, VendorStatusUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VendorStatus", ObjectTables, VendorStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VendorStatus");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VendorStatus");
 					VendorStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VendorStatusUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9284,11 +9284,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VendorTransactionType", ObjectTables, VendorTransactionTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VendorTransactionType", ObjectTables, VendorTransactionTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VendorTransactionType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VendorTransactionType");
 					VendorTransactionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VendorTransactionTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
@@ -9311,11 +9311,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("VendorType", ObjectTables, VendorTypeUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.VendorType", ObjectTables, VendorTypeUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
 				{				
-					MetadataUpdateUtility.DeleteAllTableMetadata("VendorType");
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.VendorType");
 					VendorTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					VendorTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);

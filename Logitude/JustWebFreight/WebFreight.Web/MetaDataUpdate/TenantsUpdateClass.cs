@@ -195,16 +195,16 @@ namespace WebFreight.Web.MetaDataUpdate
                     case "customs":
                         {
                             GlobalModelUpdateClass modelUpdateClass = new GlobalModelUpdateClass();
-                            modelUpdateClass.LoadObjectsTenantZero(context);
+                            modelUpdateClass.LoadObjectTablesMetadata(context,false);
 
-                            UpdateInfrasturtureAndLogModules(context,true);
+                            UpdateInfrasturtureAndLogModules(context,false);
 
-                            UpdateCRMModule(context,true);
+                            UpdateCRMModule(context,false);
                             MetaDataUpdateClass metaDataUpdateClass = new MetaDataUpdateClass();
                             UpdateAllOldModules(metaDataUpdateClass,context);
 
                             CustomsUpdateClass customUpdate = new CustomsUpdateClass();//generated
-                            customUpdate.LoadObjectsTenantZero(context);//generated
+                            customUpdate.LoadObjectTablesMetadata(context,true);//generated
 
 
                             ForCourier();
@@ -753,7 +753,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
             performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
-            UpdateSystemLogsModule(context,true);
+            UpdateSystemLogsModule(context, runPostDeleteProcedure);
         }
 
         private static void UpdateSystemLogsModule(IWebFreightContext context, bool runPostDeleteProcedure)

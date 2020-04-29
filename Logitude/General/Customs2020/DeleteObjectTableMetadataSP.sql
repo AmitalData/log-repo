@@ -1,14 +1,20 @@
-CREATE OR REPLACE PROCEDURE usp_DeleteObjectTableMetadata(
+create or replace PROCEDURE usp_DeleteObjectTableMetadata(
     v_pTableName IN VARCHAR2 )
 AS
   v_ObjectTableId VARCHAR2(15);
 BEGIN
+  BEGIN
+  
   BEGIN
     SELECT Id
     INTO v_ObjectTableId
     FROM ObjectTables
     WHERE NAME  = v_pTableName
     AND ROWNUM <= 1;
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+    v_ObjectTableId := NULL;
+    END;
     --*--Delete--*--
     --ObjectFields
     DELETE objectfields

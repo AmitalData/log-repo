@@ -17220,7 +17220,8 @@
       IsPackagable="false"
       TextCodeCode="&quot;Customs.Declaration.B.SendDeclaration&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.SendDeclaration&quot;"
-      FeatureDefaultText="&quot;Send Declarations&quot;" />
+      FeatureDefaultText="&quot;Send Declarations&quot;"
+      HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendDeclarationComponent&quot;" />
     <MenuButton
       EventCode="&quot;SendManifest&quot;"
       DefaultText="&quot;Send Manifest&quot;"
@@ -17231,7 +17232,8 @@
       IsPackagable="true"
       TextCodeCode="&quot;Customs.Declaration.B.SendManifest&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.SendManifest&quot;"
-      FeatureDefaultText="&quot;Send Manifest&quot;" />
+      FeatureDefaultText="&quot;Send Manifest&quot;"
+      HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent&quot;" />
     <MenuButton
       EventCode="&quot;Forms&quot;"
       DefaultText="&quot;Forms&quot;"
@@ -17420,7 +17422,9 @@
       IsPackagable="true"
       TextCodeCode="&quot;Customs.Declaration.B.DocumentsPanel&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.DocumentsPanel&quot;"
-      FeatureDefaultText="&quot;Declaration Documents Panel&quot;" />
+      FeatureDefaultText="&quot;Declaration Documents Panel&quot;"
+      HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DocumentsPanel/DocumentsPanelComponent&quot;"
+      Width="30" />
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes>

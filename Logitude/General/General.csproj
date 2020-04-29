@@ -254,6 +254,7 @@
     <Content Include="Customs2020\2DROP CONSTRAINTS FOR METADATA ORACLE.sql" />
     <Content Include="Customs2020\3oracle before delete metadata.sql" />
     <Content Include="Customs2020\5 after update.sql" />
+    <Content Include="Customs2020\delete from metadata bad records.sql" />
     <Content Include="Customs2020\DeleteObjectTableMetadataSP.sql" />
     <Content Include="Customs2020\PreDeleteMetadata.sql" />
     <Content Include="Customs2020\ReconnectObjectMetaData.sql" />
