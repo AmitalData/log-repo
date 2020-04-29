@@ -160,13 +160,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                         this.isCopyButtonClicked = false;
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
-
-                    if (this.isUploadExcelFinished) {
-                        this.isUploadExcelFinished = false;
-                        CachedDataManager.RefreshTableData("Port", true);
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    }
-
+                  
                     if (this.isUpdateMissingPortsClicked) {
                         this.isUpdateMissingPortsClicked = false;
                         CachedDataManager.RefreshTableData("Port", true);
@@ -194,7 +188,6 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
         }
 
         this.isApproveButtonClicked = false;
-        this.isUploadExcelFinished = false;
         this.isCopyButtonClicked = false;
     }
 
@@ -472,7 +465,9 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
             }
         }
     }
-    UploadExcel(file: any) {
+  UploadExcel(file: any) {
+    this.CurrentSession.StartBusyIndicator("Uploading...");
+
         this.FileName = null;
         if (!AppTool.IsNullOrEmpty(file.name)) {
             var name = file.name.split('.');
@@ -527,70 +522,16 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
     SendExcelToServer(filter: any) {
         this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                var tariffLines: ExcelTariffLines[] = response.Result;
-                if (tariffLines) {
-                    this.CurrentVersion.TariffLines = [];
-                    this.InsertNewRowsFromExcel(tariffLines);
-                }
+              this.CurrentSession.StopBusyIndicator();
+              CachedDataManager.RefreshTableData("Port", true);
+              this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+
+            else {
+              this.CurrentSession.StopBusyIndicator();
+              this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
             }
         });
-    }
-
-    private isUploadExcelFinished: boolean = false;
-    private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
-        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            var tariffLine = new TariffLinePM(null);
-            tariffLine.StartDate = this.StartDate;
-            tariffLine.ExpirationDate = this.InitialEnddate;
-            tariffLine.Tenant = SessionLocator.Tenant;
-            tariffLine.Version = this.CurrentVersion.Version;
-            tariffLine.OriginPortId = item.FromPortId;
-            tariffLine.OriginPortCode = item.FromPortCode;
-            tariffLine.OriginPortCombinedCode = item.FromPortCombinedCode;
-            tariffLine.OriginPortName = item.FromPortName;
-            tariffLine.DestinationPortId = item.ToPortId;
-            tariffLine.DestinationPortCode = item.ToPortCode;
-            tariffLine.DestinationPortCombinedCode = item.ToPortCombinedCode;
-            tariffLine.DestinationPortName = item.ToPortName;
-            tariffLine.OriginPortText = item.FromPortText;
-            tariffLine.DestinationPortText = item.ToPortText;
-            tariffLine.HasErrors = item.HasErrors;
-            tariffLine.ErrorText = item.ErrorText;
-            tariffLine.Index = item.Index;
-            tariffLine.Notes = item.Notes;
-            tariffLine.TransitTime = item.TransitTime;
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType1Id)) {
-                tariffLine.Surcharge1Price = item.Surcharge1Price;
-                tariffLine.Surcharge1PriceText = item.Surcharge1PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType2Id)) {
-                tariffLine.Surcharge2Price = item.Surcharge2Price;
-                tariffLine.Surcharge2PriceText = item.Surcharge2PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType3Id)) {
-                tariffLine.Surcharge3Price = item.Surcharge3Price;
-                tariffLine.Surcharge3PriceText = item.Surcharge3PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType4Id)) {
-                tariffLine.Surcharge4Price = item.Surcharge4Price;
-                tariffLine.Surcharge4PriceText = item.Surcharge4PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType5Id)) {
-                tariffLine.Surcharge5Price = item.Surcharge5Price;
-                tariffLine.Surcharge5PriceText = item.Surcharge5PriceText;
-            }
-
-            this.CurrentVersion.AddTariffLine(tariffLine);
-        });
-
-        this.EntityPM.TariffLinesAddedFromExcel = true;
-        this.isUploadExcelFinished = true;
-        this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
     }
 
     // Download Excel 

@@ -172,13 +172,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.isCopyButtonClicked = false;
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
           }
-
-          if (this.isUploadExcelFinished) {
-            this.isUploadExcelFinished = false;
-            CachedDataManager.RefreshTableData("Port", true);
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-          }
-
+          
           if (this.isUpdateMissingPortsClicked) {
             this.isUpdateMissingPortsClicked = false;
             CachedDataManager.RefreshTableData("Port", true);
@@ -206,7 +200,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     this.isApproveButtonClicked = false;
-    this.isUploadExcelFinished = false;
     this.isCopyButtonClicked = false;
   }
 
@@ -518,6 +511,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
   }
   UploadExcel(file: any) {
+    this.CurrentSession.StartBusyIndicator("Uploading...");
+
     this.FileName = null;
     if (!AppTool.IsNullOrEmpty(file.name)) {
       var name = file.name.split('.');
@@ -574,61 +569,19 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
   SendExcelToServer(filter: any) {
     this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
       if (!response.HasError) {
-        var tariffLines: ExcelTariffLines[] = response.Result;
-        if (tariffLines) {
-          this.CurrentVersion.TariffLines = [];
-          this.InsertNewRowsFromExcel(tariffLines);
-        }
+        this.CurrentSession.StopBusyIndicator();
+        CachedDataManager.RefreshTableData("Port", true);
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+      }
+
+      else {
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
       }
     });
   }
 
-  private isUploadExcelFinished: boolean = false;
-  private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
-    tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-      var tariffLine = new TariffLinePM(null);
-      tariffLine.StartDate = this.StartDate;
-      tariffLine.ExpirationDate = this.InitialEnddate;
-      tariffLine.Tenant = SessionLocator.Tenant;
-      tariffLine.Version = this.CurrentVersion.Version;
-      tariffLine.OriginPortId = item.FromPortId;
-      tariffLine.OriginPortCode = item.FromPortCode;
-      tariffLine.OriginPortCombinedCode = item.FromPortCombinedCode;
-      tariffLine.OriginPortName = item.FromPortName;
-      tariffLine.DestinationPortId = item.ToPortId;
-      tariffLine.DestinationPortCode = item.ToPortCode;
-      tariffLine.DestinationPortCombinedCode = item.ToPortCombinedCode;
-      tariffLine.DestinationPortName = item.ToPortName;
-      tariffLine.OriginPortText = item.FromPortText;
-      tariffLine.DestinationPortText = item.ToPortText;
-      tariffLine.HasErrors = item.HasErrors;
-      tariffLine.ErrorText = item.ErrorText;
-      tariffLine.Index = item.Index;
-      tariffLine.Notes = item.Notes;
-      tariffLine.TransitTime = item.TransitTime;
-
-      if (this.PriceSteps.indexOf(',') > -1) {
-        var steps: string[] = this.PriceSteps.split(",");
-        var count = steps.length;
-
-        tariffLine.MinPrice = item.MinPrice;
-        tariffLine.MinPriceText = item.MinPriceText;
-
-        for (var i = 1; i <= count; i++) {
-          tariffLine["Step" + i + "Price"] = item["Step" + i + "Price"];
-          tariffLine["Step" + i + "PriceText"] = item["Step" + i + "PriceText"];
-        }
-      }
-
-      this.CurrentVersion.AddTariffLine(tariffLine);
-    });
-
-    this.EntityPM.TariffLinesAddedFromExcel = true;
-    this.isUploadExcelFinished = true;
-    this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
-  }
-
-  // Download Excel 
+   // Download Excel 
   DownloadExcelClicked(type: string) {
     this.TariffDomainService.DownloadTariff(this.EntityPM.Id, this.CurrentVersion.Version, type).subscribe((myResponse: ServiceResponse) => {
       if (!myResponse.HasError) {
