@@ -50,6 +50,7 @@ namespace Logitude.BL.Helpers
                             shipmentPM.ConsigneeReference1 = shipmentPM.CustomerReference1;
                             shipmentPM.ShipperReference2 = shipmentPM.CustomerReference2;
                             shipmentPM.ConsigneeReference2 = shipmentPM.CustomerReference2;
+                            shipmentPM.CreatedFromDigital = shipmentComputedFields.CreatedFromDigital;
                             //shipmentPM.ShipperId = shipmentPM.CustomerId;
                             shipmentPM.IsShipmentComputedFieldChange = true;
                             shipmentPM.IsImporterShipment = true;
@@ -92,6 +93,7 @@ namespace Logitude.BL.Helpers
                 if (oldShipmentComputedFields.IsDigitalSignRequired != newShipmentComputedFields.IsDigitalSignRequired) return true;
                 if (oldShipmentComputedFields.IsDepositionRequired != newShipmentComputedFields.IsDepositionRequired) return true;
                 if (oldShipmentComputedFields.ImporterDepositionRequestDetails != newShipmentComputedFields.ImporterDepositionRequestDetails) return true;
+                if (oldShipmentComputedFields.CreatedFromDigital != newShipmentComputedFields.CreatedFromDigital) return true;
                 //if (oldShipmentComputedFields.LastDocumentDateTime != newShipmentComputedFields.LastDocumentDateTime) return true;
             }
             return result;

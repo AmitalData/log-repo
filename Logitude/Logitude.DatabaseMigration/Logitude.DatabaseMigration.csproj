@@ -2343,6 +2343,10 @@
     <Compile Include="Migrations\202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.Designer.cs">
       <DependentUpon>202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs" />
+    <Compile Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.Designer.cs">
+      <DependentUpon>202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4233,6 +4237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.resx">
       <DependentUpon>202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.resx">
+      <DependentUpon>202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

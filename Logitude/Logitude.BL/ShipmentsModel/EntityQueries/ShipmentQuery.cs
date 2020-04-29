@@ -11622,6 +11622,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ProjectNumber = f.ProjectNumber,
                                ContainerLastStatusDate = f.ContainerLastStatusDate,
                                IsDepositionRequired = f.IsDepositionRequired,
+                               CreatedFromDigital = f.CreatedFromDigital,
                                ImporterDepositionRequestDetails = f.ImporterDepositionRequestDetails,
                                ForwarderPartnerId = f.ForwarderPartnerId,
                                From = f.From,

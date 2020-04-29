@@ -84,6 +84,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             shipmentPM.IsDepositionRequired = entity.IsDepositionRequired;
             shipmentPM.IsRequestedDocuments = entity.IsRequestedDocuments;
             shipmentPM.IsDigitalSignRequired = entity.IsDigitalSignRequired;
+            shipmentPM.CreatedFromDigital = entity.CreatedFromDigital;
         }
         private void SaveEntity()
         {
