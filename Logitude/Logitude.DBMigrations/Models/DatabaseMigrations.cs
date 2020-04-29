@@ -529,9 +529,13 @@ namespace Logitude.DBMigrations.Models
             {
                 return null;
             }
-            if (dxmlTableColumn.DefaultValue.ToLower() == "CurrentDate".ToLower())
+            if ((dxmlTableColumn.Type == "datetime" || dxmlTableColumn.Type == "date") && dxmlTableColumn.DefaultValue.ToLower() == "CurrentDate".ToLower())
             {
                 return "CurrentDate".ToLower();
+            }
+            if ((dxmlTableColumn.Type == "datetime" || dxmlTableColumn.Type == "date") && dxmlTableColumn.DefaultValue.ToLower() != "CurrentDate".ToLower())
+            {
+                return FormatDateTimeDefaultValue(dxmlTableColumn.DefaultValue, (dxmlTableColumn.Type == "datetime"));
             }
 
             return dxmlTableColumn.DefaultValue;
@@ -694,7 +698,22 @@ namespace Logitude.DBMigrations.Models
                 {
                     if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_") || name.ToLower().StartsWith("uq_") || name.ToLower().StartsWith("fk_"))
                     {
-                        return name.Substring(0, maxLength);
+                        if (name.ToLower().StartsWith("drop_"))
+                        {
+                            return name.Substring(0, maxLength);
+                        }
+                        else
+                        {
+                            string objectSubName = name.Substring(0, (maxLength - 6));
+                            if (objectSubName.EndsWith("_"))
+                            {
+                                return objectSubName.TrimEnd('_') + "_" + GenerateRandomString().Substring(0, 6);
+                            }
+                            else
+                            {
+                                return objectSubName + "_" + GenerateRandomString().Substring(0, 5);
+                            }
+                        }
                     }
                     else
                     {
@@ -1074,5 +1093,7 @@ namespace Logitude.DBMigrations.Models
         protected abstract string GetCreateUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint);
 
         protected abstract string GetDropUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint);
+
+        protected abstract string FormatDateTimeDefaultValue(string defaultValue, bool isDateTime);
     }
 }

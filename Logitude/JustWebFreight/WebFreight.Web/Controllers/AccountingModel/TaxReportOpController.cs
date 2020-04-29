@@ -291,7 +291,28 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
             return loggedContactPM;
         }
+        public HttpResponseMessage PutCreateTaxReportLine(TaxReportPM entityPM)
+        {
 
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
+                int tenant = authToken.Tenant;             
+                entityPM = TaxReportService.CreatetTaxReportLine(entityPM);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK,entityPM );
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
         public HttpResponseMessage PostCreateTaxReportInBatch(TaxReportPM entityPM)
         {

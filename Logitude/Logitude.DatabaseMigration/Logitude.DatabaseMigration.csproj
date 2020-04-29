@@ -2339,10 +2339,24 @@
     <Compile Include="Migrations\202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.Designer.cs">
       <DependentUpon>202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs" />
     <Compile Include="Migrations\202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.Designer.cs">
       <DependentUpon>202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.cs" />
+    <Compile Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.Designer.cs">
+      <DependentUpon>202004231311231_JournalIsExternalLineFieldMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.cs" />
+    <Compile Include="Migrations\202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.Designer.cs">
+      <DependentUpon>202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs" />
+    <Compile Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.Designer.cs">
+      <DependentUpon>202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4231,8 +4245,23 @@
     <EmbeddedResource Include="Migrations\202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.resx">
       <DependentUpon>202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.resx">
       <DependentUpon>202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs</DependentUpon>
+    </EmbeddedResource>
+
+
+    <EmbeddedResource Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.resx">
+      <DependentUpon>202004231311231_JournalIsExternalLineFieldMigration.cs</DependentUpon>
+    </EmbeddedResource>
+
+
+    <EmbeddedResource Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.resx">
+      <DependentUpon>202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.resx">
+      <DependentUpon>202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
