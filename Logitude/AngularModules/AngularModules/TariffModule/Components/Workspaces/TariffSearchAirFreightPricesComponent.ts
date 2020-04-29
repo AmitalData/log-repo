@@ -1094,8 +1094,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
       chargeItem.ChargesGroupCode = item.ChargesGroupCode;
       chargeItem.IsAllIN = false;
       var costAmount: number = item.CostTotalAmount;
-      chargeItem.SetCostQuantity();
-      chargeItem.SetSaleQuantity();
+      chargeItem.SetCostQuantity(chargeItem.ChargesGroupCode);
+      chargeItem.SetSaleQuantity(chargeItem.ChargesGroupCode);
       var costQuantity: number = chargeItem.CostQuantity;
       if (costQuantity != null && costQuantity != 0) {
         chargeItem.CostUnitPrice = (costAmount / costQuantity);

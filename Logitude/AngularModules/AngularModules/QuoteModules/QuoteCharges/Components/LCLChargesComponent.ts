@@ -2112,7 +2112,7 @@ export class QuoteChargeItem extends BaseComponent {
         });
     }
 
-    SetCostQuantity() {
+  SetCostQuantity(ChargesGroupCode: string = "FRT") {
         var myResult = null;
 
         if (this.IsAdhoc) {
@@ -2123,7 +2123,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "BTEU": { myResult = this.QuotePM.TEU; break; }
                 case "FIXD": { myResult = 1; break; }
                 case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
-                case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"); break; }
+                case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == ChargesGroupCode), "CostTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
                 case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
@@ -2428,29 +2428,29 @@ export class QuoteChargeItem extends BaseComponent {
         }
     }
 
-    SetSaleQuantity() {
-        var myResult = null;
+  SetSaleQuantity(ChargesGroupCode: string = "FRT") {
+    var myResult = null;
 
-        if (this.IsAdhoc) {
-            switch (this.SaleMeasurementCode) {
-                case "GRWT": { myResult = this.QuotePM.GrossWeight; break; }
-                case "CHWT": { myResult = this.QuotePM.ChargeableWeight; break; }
-                case "VOLU": { myResult = this.QuotePM.Volume; break; }
-                case "BTEU": { myResult = this.QuotePM.TEU; break; }
-                case "FIXD": { myResult = 1; break; }
-                case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
-                case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"); break; }
-                case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
-                case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
-                case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
-                case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
-                case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
-                default: { break; }
-            }
-        }
-
-        this.SaleQuantity = myResult;
+    if (this.IsAdhoc) {
+      switch (this.SaleMeasurementCode) {
+        case "GRWT": { myResult = this.QuotePM.GrossWeight; break; }
+        case "CHWT": { myResult = this.QuotePM.ChargeableWeight; break; }
+        case "VOLU": { myResult = this.QuotePM.Volume; break; }
+        case "BTEU": { myResult = this.QuotePM.TEU; break; }
+        case "FIXD": { myResult = 1; break; }
+        case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
+        case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == ChargesGroupCode), "SaleTotalAmount"); break; }
+        case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
+        case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
+        case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
+        case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
+        case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
+        default: { break; }
+      }
     }
+
+    this.SaleQuantity = myResult;
+  }
     ComputeSaleAmounts() {
         var myTotalAmount = null;
 
