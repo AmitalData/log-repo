@@ -74,7 +74,7 @@ export class MaintenanceComponent {
             this.PagesMenu.push(new Menu("OCS", "Occasions"));
         }
 
-        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMS")) {
+        if (FeatureLocator.HasFeaturePermession("CustomsGeneral", "CUSTOMS")) {
             this.PagesMenu.push(new Menu("CSM", TextCodeTranslator.Translate("General.MC.Custom.Customs")));
         }
 
