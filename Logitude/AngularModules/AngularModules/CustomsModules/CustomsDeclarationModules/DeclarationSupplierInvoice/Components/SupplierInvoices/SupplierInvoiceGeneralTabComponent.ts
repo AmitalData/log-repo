@@ -379,7 +379,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
     opacity: number = 1;
     FromClassificationJumpToSII;
-    InitTab(entityPM: SupplierInvoicePM, parent: AddEditSupplierInvoiceComponent, isDisplayOnly: boolean, getFreightTotals: boolean = true, IsNewEntity, IsFromCustomsAnswer, IsInvoiceAnswer) {
+    DocumentFilingId: string;
+    InitTab(entityPM: SupplierInvoicePM, parent: AddEditSupplierInvoiceComponent, isDisplayOnly: boolean, getFreightTotals: boolean = true, IsNewEntity, IsFromCustomsAnswer, IsInvoiceAnswer, documentFilingId) {
 
         this.InvoiceTypeFocus = false;
         this.focusTimerToken = setTimeout(() => {
@@ -391,7 +392,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
         this.IsDisplayOnly = isDisplayOnly;
         this.IsReadOnly = isDisplayOnly;
         this.IsActionButtonsEnabled = !isDisplayOnly;
-
+        this.DocumentFilingId = documentFilingId;
         this.Pointers = this.Parent.pointers;
         this.declarationPM = parent.declarationPM;
         this.IsFromCustomsAnswer = IsFromCustomsAnswer;
@@ -2533,7 +2534,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
     }
     OnSelectedItemChanged(selectedRow: SupplierInvoiceItemLine) {
         console.log("OnSelectedItemChanged > ", selectedRow);
-
+        selectedRow.entityPM.ClasifiedRemarks = this.DocumentFilingId;
         DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit(selectedRow.entityPM);
 
         if (selectedRow) {

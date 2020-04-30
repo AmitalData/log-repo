@@ -62,6 +62,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     DeclarationSplitDocumentSelectionEVENT;
     DeclarationSplitDocumentItemSelectionEVENT;
+    invoiceItem: any;
     constructor(private cd: ChangeDetectorRef, private elem: ElementRef) {
         super();
         var counter = ControlsIdCounter.GetNextControlIdCounter("DocumentViewerImage");
@@ -106,8 +107,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                 //    });
             });
 
-            debugger;
-            this.DeclarationSplitDocumentSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentSelection.subscribe((DocumentFilingId: any) => {
+             this.DeclarationSplitDocumentSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentSelection.subscribe((DocumentFilingId: any) => {
                 console.log("-->> Loading document for supplier invoice: " + DocumentFilingId);
                 if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
                     //ClassifcationComponent Build B4 This Component finish Load Document !!!
@@ -119,6 +119,19 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
             });
 
+
+            this.DeclarationSplitDocumentSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentItemSelection.subscribe((data: any) => {
+                 this.invoiceItem = data;
+                if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
+                    //ClassifcationComponent Build B4 This Component finish Load Document !!!
+                    this._DocumentFilingIdToSetWhileLoadDocument = this.invoiceItem.ClasifiedRemarks;
+                    return;
+                }
+                var document = this.RelatedDocuments.find(d => d.Id == this.invoiceItem.ClasifiedRemarks);
+                this.TicketItemClicked(document);
+
+
+            });
         }
     }
 
@@ -219,11 +232,12 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                         //SessionLocator.SelectedSession.StopBusyIndicator();
 
                         this.base64Image = "data:image/png;base64," + result.Page;
-
-                        debugger;
-                        this.DeclarationSplitDocumentSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentItemSelection.subscribe((invoiceItem: SupplierInvoiceItemPM) => {
-
-                            if (invoiceItem != null) {
+                         //document.getElementsByClassName("div-grabbable")[0].removeChild(document.getElementsByClassName("rectangle")[0]);
+                        var elements = document.getElementsByClassName("rectangle");
+                        while (elements.length > 0) {
+                            elements[0].parentNode.removeChild(elements[0]);
+                        }
+                        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrHeight != 0) {
                                 let rect = document.createElement('div');
                                 rect.className = 'rectangle';
                                 rect.id = 'rectangle-' + "rectangle-1";
@@ -231,21 +245,21 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                                 rect.style.border = '2px solid #0084FF';
                                 rect.style.borderRadius = '3px';
                                 rect.style.left = 0 + 'px';
-                                rect.style.top = invoiceItem.OcrTop + 'px';
+                                rect.style.top = this.invoiceItem.OcrTop + 'px';
                                 rect.style.width = '100%';
-                                rect.style.height = invoiceItem.OcrHeight + 'px';
+                                rect.style.height = this.invoiceItem.OcrHeight + 'px';
                                 document.getElementsByClassName("div-grabbable")[0].appendChild(rect);
 
                                 console.log(this.base64Image);
-                                this.CurrentPageIndex = invoiceItem.OcrPageNumber;
+                                this.CurrentPageIndex = this.invoiceItem.OcrPageNumber;
                             }
                             else {
                                 this.CurrentPageIndex = index;
 
                             }
-                        });
+                     
 
-                        debugger;
+                      
                         // this.img.src = this.base64Image;
                         // this.renderImage();
                         // var t = setTimeout(() => { this.renderImage(); }, 20);
