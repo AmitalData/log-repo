@@ -4560,7 +4560,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-  
 	  private int amendmentNumber ;
 	  	  
        
@@ -4585,8 +4584,8 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string courierPendingReasonName ;
- 
- 
+	  	  
+       
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
        public string CourierPendingReasonName  
