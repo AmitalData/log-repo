@@ -10989,6 +10989,12 @@
       LocalDefaultText="&quot;סכום חשבונית מקורי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.O.ReconcileData&quot;"
+      DefaultText="&quot;Reconcile Data&quot;"
+      LocalDefaultText="&quot;תאריך התאמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
