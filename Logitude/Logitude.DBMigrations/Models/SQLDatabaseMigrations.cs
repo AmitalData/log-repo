@@ -998,12 +998,29 @@ namespace Logitude.DBMigrations.Models
 
             string createRelationWithHistoryScript = createRelationScript + GetInsertScriptForMigrationsHistory("Create Relation", DXMLTable.Name, relation.ForeignKeyColumn, createRelationScript);
 
-            IndexDefinition relationIndex = new IndexDefinition
-            {
-                Columns = relation.ForeignKeyColumn
-            };
+            string createIndexScript = null;
 
-            string createIndexScript = GetCreateIndexScript(relationIndex);
+            if (CurrentTable == null)
+            {
+                IndexDefinition relationIndex = new IndexDefinition
+                {
+                    Columns = relation.ForeignKeyColumn
+                };
+
+                createIndexScript = GetCreateIndexScript(relationIndex);
+            }
+            else
+            {
+                if (!CurrentTable.AllIndexes.Where(i => i.Columns == foreignKeyColumns.Replace("[", String.Empty).Replace("]", String.Empty)).Any())
+                {
+                    IndexDefinition relationIndex = new IndexDefinition
+                    {
+                        Columns = relation.ForeignKeyColumn
+                    };
+
+                    createIndexScript = GetCreateIndexScript(relationIndex);
+                }
+            }
 
             return createRelationWithHistoryScript + createIndexScript;
         }
