@@ -187,6 +187,25 @@ export class AmitalGatewayUtil {
     }
 
 
+    public ShowCFIFILEMEnterRemarks(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMEnterRemarks",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMEnterRemarks",
+            unifreightMessageM,
+            " הזנת הערות לתור");
+    }
+
+
     public NewCustomsFileScreen(
         ViewModelName: string
     ) {
