@@ -372,7 +372,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                                 .then(cmpRef => {
                                     this.GENERAL = cmpRef.instance;
                                     this.GENERAL.FromClassificationJumpToSII = this.FromClassificationJumpToSII;
-                                    this.GENERAL.InitTab(this.EntityPM, this, this.IsDisplayOnly, true, this.IsNewEntity, this.IsFromCustomsAnswer, this.IsInvoiceAnswer);
+                                    this.GENERAL.InitTab(this.EntityPM, this, this.IsDisplayOnly, true, this.IsNewEntity, this.IsFromCustomsAnswer, this.IsInvoiceAnswer, this.DocumentFilingId);
                                     this.GENERAL.ReloadEntityEvent.subscribe((response: any) => {
                                         this.ReloadPromise().then(() => {
                                             this.GENERAL.InitTab(this.EntityPM, this, this.IsDisplayOnly, true, this.IsNewEntity, this.IsFromCustomsAnswer, this.IsInvoiceAnswer);
