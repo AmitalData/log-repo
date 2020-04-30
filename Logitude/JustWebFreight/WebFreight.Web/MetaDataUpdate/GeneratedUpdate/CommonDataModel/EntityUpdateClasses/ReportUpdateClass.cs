@@ -1062,7 +1062,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature ReportFeature_Report_Features_CSStatusReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Features.CSStatusReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.Report.Features.CSStatusReport", NameTextCodeDefaultText = @"Customer Status Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ReportFeature_ATRE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATRE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.AutomationTestReport", NameTextCodeDefaultText = @"Automation Test Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ReportFeature_Report_Features_VendorCharges = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Features.VendorCharges", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.VendorChargesAnalysis", NameTextCodeDefaultText = @"Vendor Charges Analysis" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+
+
+            Feature ReportFeature_Report_Features_VendorCharges = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Features.VendorCharges", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.VendorChargesAnalysis", NameTextCodeDefaultText = @"Vendor Charges Analysis" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ReportFeature_VDK = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VDK", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.VDK", NameTextCodeDefaultText = @"VDK Report Templates" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
@@ -1072,7 +1075,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   Feature ReportFeature_SHEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHEL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ShipmentsEventsList", NameTextCodeDefaultText = @"Shipments Events List" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_ATRE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATRE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.AutomationTestReport", NameTextCodeDefaultText = @"Automation Test Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+
+		   Feature ReportFeature_ObjectTable_ATRE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATRE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.AutomationTestReport", NameTextCodeDefaultText = @"Automation Test Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ReportFeature_WORKDAYSPERGATEGORY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WORKDAYSPERGATEGORY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.WorkDaysPerCategory", NameTextCodeDefaultText = @"Work Days Per Category" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 

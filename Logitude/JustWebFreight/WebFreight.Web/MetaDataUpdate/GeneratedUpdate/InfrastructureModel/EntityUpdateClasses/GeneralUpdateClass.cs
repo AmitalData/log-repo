@@ -280,7 +280,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_ERRORLOG = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ERRORLOG", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ErrorLog", NameTextCodeDefaultText = @"Error Log" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature GeneralFeature_CUSTOMS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Customs", NameTextCodeDefaultText = @"Customs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+          //  Feature GeneralFeature_ERRORLOG = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ERRORLOG", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ErrorLogs", NameTextCodeDefaultText = @"Error Logs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+
+            Feature GeneralFeature_CUSTOMS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Customs", NameTextCodeDefaultText = @"Customs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_CHAMP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHAMP", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Champ", NameTextCodeDefaultText = @"Champ Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
@@ -582,7 +585,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_General_Features_CompanyLocalAddress = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.CompanyLocalAddress", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CompanyLocalAddress", NameTextCodeDefaultText = @"Company Local Address" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature GeneralFeature_ERRORLOG = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ERRORLOG", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ErrorLogs", NameTextCodeDefaultText = @"Error Logs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_DEPOSITIONS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEPOSITIONS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Deposition", NameTextCodeDefaultText = @"Depositions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
