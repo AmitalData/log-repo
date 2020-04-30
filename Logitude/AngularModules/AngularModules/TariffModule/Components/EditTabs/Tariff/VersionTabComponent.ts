@@ -76,6 +76,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
     this.LoadVersions();
     this.SetOriginDependencyFilterValue();
+
+    this.PageIndex = 1;
+    this.QueryPageIndex = 0;
   }
 
   SetOriginDependencyFilterValue() {
@@ -329,9 +332,18 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     });
 
     this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
-    this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
     this.LinesCount = this.TariffsLinesSource.Length;
 
+    //some work here
+
+    var size = this.pageSize;
+    this.TotalPagesCount = Math.ceil(this.TariffsLinesSource.Length / size);
+
+    if (this.TotalPagesCount == 0) {
+      this.TotalPagesCount = 1;
+    }
+
+    this.SetPagerButtonsStates();
     this.DoCompare();
   }
 
@@ -793,6 +805,128 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
       }
     });
+  }
+
+  //Pager
+  private isHitStateFirstButton: boolean = false;
+  get IsHitState_FirstButton() {
+    return this.isHitStateFirstButton;
+  }
+  set IsHitState_FirstButton(value: boolean) {
+    this.isHitStateFirstButton = value;
+  }
+
+  private isHitStatePrevButton: boolean = false;
+  get IsHitState_PrevButton() {
+    return this.isHitStatePrevButton;
+  }
+  set IsHitState_PrevButton(value: boolean) {
+    this.isHitStatePrevButton = value;
+  }
+
+  private isHitStateNextButton: boolean = false;
+  get IsHitState_NextButton() {
+    return this.isHitStateNextButton;
+  }
+  set IsHitState_NextButton(value: boolean) {
+    this.isHitStateNextButton = value;
+  }
+
+  private isHitStateLastButton: boolean = false;
+  get IsHitState_LastButton() {
+    return this.isHitStateLastButton;
+  }
+  set IsHitState_LastButton(value: boolean) {
+    this.isHitStateLastButton = value;
+  }
+
+  private queryPageIndex = 0;
+  get QueryPageIndex() {
+    return this.queryPageIndex;
+  }
+  set QueryPageIndex(value: number) {
+    this.queryPageIndex = value;
+  }
+
+  private pageSize = 50;
+  get PageSize() {
+    return this.pageSize;
+  }
+  set PageSize(value: number) {
+    this.pageSize = value;
+  }
+
+  private pageIndex = 1;
+  get PageIndex() {
+    return this.pageIndex;
+  }
+  set PageIndex(value: number) {
+    this.pageIndex = value;
+  }
+
+  private totalPagesCount = 1;
+  get TotalPagesCount() {
+    return this.totalPagesCount;
+  }
+  set TotalPagesCount(value: number) {
+    this.totalPagesCount = value;
+  }
+
+  private SetPagerButtonsStates() {
+    if (this.PageIndex == 1 && this.PageIndex == this.TotalPagesCount) {
+      this.IsHitState_FirstButton = false;
+      this.IsHitState_PrevButton = false;
+      this.IsHitState_NextButton = false;
+      this.IsHitState_LastButton = false;
+    }
+
+    else if (this.PageIndex == 1 && this.PageIndex < this.TotalPagesCount) {
+      this.IsHitState_FirstButton = false;
+      this.IsHitState_PrevButton = false;
+
+      this.IsHitState_NextButton = true;
+      this.IsHitState_LastButton = true;
+    }
+
+    else if (this.PageIndex > 1 && this.PageIndex == this.TotalPagesCount) {
+      this.IsHitState_FirstButton = true;
+      this.IsHitState_PrevButton = true;
+
+      this.IsHitState_NextButton = false;
+      this.IsHitState_LastButton = false;
+    }
+
+    else if (this.PageIndex > 1 && this.PageIndex < this.TotalPagesCount) {
+      this.IsHitState_FirstButton = true;
+      this.IsHitState_PrevButton = true;
+      this.IsHitState_NextButton = true;
+      this.IsHitState_LastButton = true;
+    }
+  }
+
+  FirstPageClick() {
+    this.PageIndex = 1;
+    this.QueryPageIndex = 0;
+    this.SetPagerButtonsStates();
+    //this.LoadAllData();
+  }
+  PreviousPageClick() {
+    this.PageIndex = this.PageIndex - 1;
+    this.QueryPageIndex = this.QueryPageIndex - 50;
+    this.SetPagerButtonsStates();
+    //this.LoadAllData();
+  }
+  NextPageClick() {
+    this.PageIndex = this.PageIndex + 1;
+    this.QueryPageIndex = this.QueryPageIndex + 50;
+    this.SetPagerButtonsStates();
+    //this.LoadAllData();
+  }
+  LastPageClick() {
+    this.PageIndex = this.TotalPagesCount;
+    this.QueryPageIndex = (this.TotalPagesCount - 1) * this.pageSize;
+    this.SetPagerButtonsStates();
+    //this.LoadAllData();
   }
 }
 
