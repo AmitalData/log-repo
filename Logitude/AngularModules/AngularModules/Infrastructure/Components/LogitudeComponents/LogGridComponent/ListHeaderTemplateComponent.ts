@@ -47,6 +47,9 @@ export class ListHeaderTemplateComponent implements OnInit {
             if (this.colDef.ColumnHeaderTemplateName === "ActionListHeaderTemplate") {
                 SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsListTemplates/Components/ListHeaderTemplates/ActionListHeaderTemplate", this._ViewContainerRef);
             }
+            if (this.colDef.ColumnHeaderTemplateName === "ArrivalDateListHeaderTemplate") {
+                SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsListTemplates/Components/ListHeaderTemplates/ArrivalDateListHeaderTemplate", this._ViewContainerRef);
+            }
         }
         else {
             this.noComponent = true;

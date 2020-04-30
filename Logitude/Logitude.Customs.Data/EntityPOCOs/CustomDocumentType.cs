@@ -40,7 +40,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsCourierManadatory { get; set; }
         [Column("IsDiamondManadatory")]
 	    public bool IsDiamondManadatory { get; set; }
-       
     }
 }
 	 
