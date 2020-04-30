@@ -743,7 +743,7 @@ namespace Logitude.DBMigrations.Models
             alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterTypeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
             alterTypeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
-            alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? 1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
+            alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? -1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
             if (!columnMigration.CurrentColumn.Constraints.Nullable)
             {
                 alterTypeScript += " NOT NULL";
@@ -1011,13 +1011,13 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                if (!CurrentTable.AllIndexes.Where(i => i.Columns == foreignKeyColumns.Replace("[", String.Empty).Replace("]", String.Empty)).Any())
+                IndexDefinition relationIndex = new IndexDefinition
                 {
-                    IndexDefinition relationIndex = new IndexDefinition
-                    {
-                        Columns = relation.ForeignKeyColumn
-                    };
+                    Columns = relation.ForeignKeyColumn
+                };
 
+                if (!IsIndexInCurrentTable(relationIndex))
+                {
                     createIndexScript = GetCreateIndexScript(relationIndex);
                 }
             }
@@ -1050,13 +1050,18 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string columnName, string script)
         {
+            if(DXMLFileName.ToLower() == "DBMigrationsHistory.dxml".ToLower())
+            {
+                return null;
+            }
+
             if (!String.IsNullOrEmpty(script))
             {
                 string insertScript = "INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('" + Guid.NewGuid().ToString() + "', '" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', GETDATE(), '" + script.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "');" + "\n\n";
                 return insertScript;
             }
 
-            return "";
+            return null;
         }
 
         protected override string GetDefaultValueScript(bool nullable, string type, string defaultValue)
