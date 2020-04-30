@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WarehouseData;
 using WarehouseData.Helper;
 
 namespace WarehouseData.Service
@@ -394,27 +395,14 @@ namespace WarehouseData.Service
         #endregion
 
 
-        public void UpdateDWDataBase(TableClass table, string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
+        public void UpdateDWDataBase(BuildDWArgs buildDWArgs)
         {
-            string fieldName = !string.IsNullOrEmpty(table.FieldsDBName) ? table.FieldsDBName : "*";
-            bool isPrivateDB = privateTenant != null ? true : false;
-            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + table.TableName + "')";
-
-            if (isPrivateDB)
-            {
-                condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from PrivateWaterMarks where TableName = " + "'" + table.TableName + "'" + " and PrivateTenant = " + privateTenant + ") ";
-                if (!table.IsCloseTable && table.FieldsDBName.Contains("Tenant")) condition += " and Tenant in " + relatedTenants;
-                else if (table.DBTableName == "Tenants") condition += " and Id in " + relatedTenants;
-            }
-
-            if (table.TableName == "ObjectField")
-            {
-                condition += "and IsCustom = 1 and ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
-
-            }
-
+            TableClass table = buildDWArgs.table;
+            string fieldName = !string.IsNullOrEmpty(buildDWArgs.table.FieldsDBName) ? buildDWArgs.table.FieldsDBName : "*";
+            string condition =!string.IsNullOrEmpty( buildDWArgs.Conition) ? buildDWArgs.Conition :  GetUpdateDWDataBaseCondition(buildDWArgs);
+            
             using (SqlConnection sourceConnection =
-                       new SqlConnection(sourceConnectionString))
+                       new SqlConnection(buildDWArgs.SourceConnectionString))
             {
                 sourceConnection.Open();
 
@@ -435,18 +423,20 @@ namespace WarehouseData.Service
                                      .ToList();
 
                     table.UpdatedCount = columns != null ? columns.Count() : 0;
-                    table.RefreshIds = generalDataWarehouseService.DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = table.Dw_TableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = destinationConnectionString, ReturnDeleteIdsAsString = true });
+                    table.RefreshIds = generalDataWarehouseService.DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = table.Dw_TableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = buildDWArgs.DestinationConnectionString, ReturnDeleteIdsAsString = true });
 
                     if (!string.IsNullOrEmpty(table.RefreshIds))
                     {
-                        DateTime automaticLastUpdateDate = (DateTime)dataTable.Rows
-                                      .Cast<DataRow>()
-                                      .Max(d => d["AutomaticLastUpdateDate"]);
-
-
+                        DateTime automaticLastUpdateDate = DateTime.Now;
+                        if (!buildDWArgs.IsChildentity)
+                        {
+                            automaticLastUpdateDate = (DateTime)dataTable.Rows
+                            .Cast<DataRow>()
+                            .Max(d => d["AutomaticLastUpdateDate"]);
+                        }
 
                         using (SqlConnection destinationConnection =
-                                   new SqlConnection(destinationConnectionString))
+                                   new SqlConnection(buildDWArgs.DestinationConnectionString))
                         {
                             destinationConnection.Open();
 
@@ -471,16 +461,18 @@ namespace WarehouseData.Service
                                 {
                                     reader.Close();
 
-                                    if (table.DBTableName != "WaterMarks")
+                                    if (table.DBTableName != "WaterMarks" && !buildDWArgs.IsChildentity)
                                     {
                                         var lastUpdateDate = string.Empty;
                                         if (automaticLastUpdateDate != null) lastUpdateDate = automaticLastUpdateDate.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
                                         else lastUpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                                        this.waterMarkDataWarehouseService.UpdateWareMarkTable(table, lastUpdateDate, sourceConnectionString, privateTenant);
+                                        this.waterMarkDataWarehouseService.UpdateWareMarkTable(table, lastUpdateDate, buildDWArgs.SourceConnectionString, buildDWArgs.PrivateTenant);
 
                                         table.IsUpdated = true;
 
                                     }
+
+                                    UpdateDWRelatedEntities(buildDWArgs, table);
 
                                 }
                             }
@@ -499,6 +491,50 @@ namespace WarehouseData.Service
 
         }
 
+        private void UpdateDWRelatedEntities(BuildDWArgs buildDWArgs, TableClass table)
+        {
+            if (table.RelatedEntities != null)
+            {
+                foreach (TableClass relatedEntity in table.RelatedEntities)
+                {
+                    var condition = (" where " + relatedEntity.ParentKeyName + " in  " + table.RefreshIds);
+                    using (SqlConnection sqlConnection = new SqlConnection(buildDWArgs.DestinationConnectionString))
+                    {
+                        sqlConnection.Open();
+                        SqlCommand sqlCommand = new SqlCommand("delete FROM dbo." + relatedEntity.Dw_TableName + condition, sqlConnection);
+                        if (sqlCommand.ExecuteNonQuery() > 0)
+                        {
+                            UpdateDWDataBase(new BuildDWArgs() { table = relatedEntity, Conition = condition, IsChildentity = true, SourceConnectionString = buildDWArgs.SourceConnectionString, DestinationConnectionString = buildDWArgs.DestinationConnectionString, PrivateTenant = buildDWArgs.PrivateTenant, RelatedTenants = buildDWArgs.RelatedTenants });
+
+                        }
+                        sqlConnection.Close();
+                    }
+                }
+            }
+        }
+
+        private static string GetUpdateDWDataBaseCondition(BuildDWArgs buildDWArgs)
+        {
+
+            bool isPrivateDB = buildDWArgs.PrivateTenant != null ? true : false;
+
+            string condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from WaterMarks where TableName = " + "'" + buildDWArgs.table.TableName + "')";
+
+            if (isPrivateDB)
+            {
+                condition = " where AutomaticLastUpdateDate > ( select LastUpdateDate from PrivateWaterMarks where TableName = " + "'" + buildDWArgs.table.TableName + "'" + " and PrivateTenant = " + buildDWArgs.PrivateTenant + ") ";
+                if (!buildDWArgs.table.IsCloseTable && buildDWArgs.table.FieldsDBName.Contains("Tenant")) condition += " and Tenant in " + buildDWArgs.RelatedTenants;
+                else if (buildDWArgs.table.DBTableName == "Tenants") condition += " and Id in " + buildDWArgs.RelatedTenants;
+            }
+
+            if (buildDWArgs.table.TableName == "ObjectField")
+            {
+                condition += "and IsCustom = 1 and ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
+
+            }
+
+            return condition;
+        }
 
         public void UpdateAutomaticLastUpdate(TableClass table, string sourceConnectionString, string destinationConnectionString, int? tenant = null)
         {
@@ -557,4 +593,21 @@ namespace WarehouseData.Service
 
 
     }
+}
+
+
+public class BuildDWArgs
+{
+    public TableClass table { get; set; }
+    public string SourceConnectionString { get; set; }
+    public string DestinationConnectionString { get; set; }
+    public string RelatedTenants { get; set; }
+    public int? PrivateTenant { get; set; }
+    public string Conition { get; set; }
+    public bool IsChildentity { get; set; }
+
+
+
+
+
 }
