@@ -468,6 +468,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SE_6001_SealUpdateMessagingService>
                 ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
 
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+               DCAInUCSBondedDocument_MessagingServoce>
+               ((new DCAInUCSBondedDocument_MessagingServoce()).MainInterfaceCode);
+
         }
         public static void InitContainer()
         {
