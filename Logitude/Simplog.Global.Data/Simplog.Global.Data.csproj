@@ -425,6 +425,10 @@
     <Compile Include="Migrations\202003041403389_AddARInvoiceRegionalTax.Designer.cs">
       <DependentUpon>202003041403389_AddARInvoiceRegionalTax.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.cs" />
+    <Compile Include="Migrations\202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.Designer.cs">
+      <DependentUpon>202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -596,6 +600,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003041403389_AddARInvoiceRegionalTax.resx">
       <DependentUpon>202003041403389_AddARInvoiceRegionalTax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.resx">
+      <DependentUpon>202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
