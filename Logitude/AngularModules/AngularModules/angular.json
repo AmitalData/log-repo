@@ -107,6 +107,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "customs": {
+              "fileReplacements": [
+                {
+                  "replace": "environments/environment.ts",
+                  "with": "environments/environment.customs.ts"
+                }
+              ]
             }
           }
         },
@@ -118,6 +126,10 @@
           "configurations": {
             "production": {
               "browserTarget": "AngularModules:build:production"
+            },
+
+            "customs": {
+              "browserTarget": "AngularModules:build:customs"
             }
           }
         },
