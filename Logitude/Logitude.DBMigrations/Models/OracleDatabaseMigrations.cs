@@ -458,7 +458,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override bool IsIndexInDXMLTable(IndexDefinition index)
         {
-            if(DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
+            if (DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
             {
                 string dxmlPrimaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => FormatNameLength(c.Name, c.ShortName)).ToArray());
                 if (index.Columns == dxmlPrimaryKeyColumns)
@@ -467,7 +467,7 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            if(DXMLTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") ? FormatNameLength(u.Columns, DXMLTable.Columns.Where(c => c.Name == u.Columns).First().ShortName) : string.Join(",", u.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())) == index.Columns).Any())
+            if (DXMLTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") ? FormatNameLength(u.Columns, DXMLTable.Columns.Where(c => c.Name == u.Columns).First().ShortName) : string.Join(",", u.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())) == index.Columns).Any())
             {
                 return true;
             }
@@ -666,7 +666,7 @@ namespace Logitude.DBMigrations.Models
             alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
             alterTypeScript += "ALTER TABLE " + "\"" + tableName + "\"" + " ";
             alterTypeScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " ";
-            alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? 1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
+            alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? -1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
             alterTypeScript += ";\n\n";
 
             string alterTypeWithHistoryScript = dropRelationsScript + alterTypeScript + GetInsertScriptForMigrationsHistory("Alter Column Type", tableName, columnMigration.CurrentColumn.Name.ToUpper(), alterTypeScript);
@@ -864,7 +864,7 @@ namespace Logitude.DBMigrations.Models
 
             string createIndexScript = null;
 
-            if(CurrentTable == null)
+            if (CurrentTable == null)
             {
                 IndexDefinition relationIndex = new IndexDefinition
                 {
@@ -875,13 +875,13 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                if (!CurrentTable.AllIndexes.Where(i => i.Columns == foreignKeyColumns.Replace("\"", String.Empty).ToLower()).Any())
+                IndexDefinition relationIndex = new IndexDefinition
                 {
-                    IndexDefinition relationIndex = new IndexDefinition
-                    {
-                        Columns = relation.ForeignKeyColumn
-                    };
+                    Columns = relation.ForeignKeyColumn
+                };
 
+                if (!IsIndexInCurrentTable(relationIndex))
+                {
                     createIndexScript = GetCreateIndexScript(relationIndex);
                 }
             }
@@ -914,13 +914,18 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string columnName, string script)
         {
+            if (DXMLFileName.ToLower() == "DBMigrationsHistory.dxml".ToLower())
+            {
+                return null;
+            }
+
             if (!String.IsNullOrEmpty(script))
             {
                 string insertScript = "DECLARE ScriptText NCLOB; BEGIN ScriptText := '" + script.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "'; INSERT INTO \"DBMIGRATIONSHISTORY\"(\"ID\", \"DXMLFILENAME\", \"TABLENAME\", \"COLUMNNAME\", \"MIGRATIONTYPE\", \"EXECUTIONDATE\", \"MIGRATIONSCRIPT\")VALUES('" + Guid.NewGuid().ToString() + "', '" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', SYSDATE, ScriptText); END;" + "\n\n";
                 return insertScript;
             }
 
-            return "";
+            return null;
         }
 
         protected override string GetDefaultValueScript(bool nullable, string type, string defaultValue)
@@ -942,7 +947,7 @@ namespace Logitude.DBMigrations.Models
                     return " DEFAULT SYSDATE";
                 }
 
-                if((type == "datetime" || type == "date") && defaultValue.ToLower() != "CurrentDate".ToLower())
+                if ((type == "datetime" || type == "date") && defaultValue.ToLower() != "CurrentDate".ToLower())
                 {
                     return " DEFAULT " + (type == "datetime" ? "TIMESTAMP " : "DATE ") + FormatDateTimeDefaultValue(defaultValue, (type == "datetime"));
                 }
