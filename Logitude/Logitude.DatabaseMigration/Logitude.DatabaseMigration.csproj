@@ -2361,6 +2361,12 @@
     <Compile Include="Migrations\202004300503107_ChangeMinmumBillingDataType.Designer.cs">
       <DependentUpon>202004300503107_ChangeMinmumBillingDataType.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs" />
+    <Compile Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.Designer.cs">
+      <DependentUpon>202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4255,6 +4261,7 @@
     </EmbeddedResource>
 
 
+
     <EmbeddedResource Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.resx">
       <DependentUpon>202004231311231_JournalIsExternalLineFieldMigration.cs</DependentUpon>
     </EmbeddedResource>
@@ -4270,6 +4277,10 @@
     <EmbeddedResource Include="Migrations\202004300503107_ChangeMinmumBillingDataType.resx">
       <DependentUpon>202004300503107_ChangeMinmumBillingDataType.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.resx">
+      <DependentUpon>202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

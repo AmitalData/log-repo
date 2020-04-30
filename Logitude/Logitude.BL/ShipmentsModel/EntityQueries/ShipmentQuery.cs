@@ -11620,6 +11620,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ProjectNumber = f.ProjectNumber,
                                ContainerLastStatusDate = f.ContainerLastStatusDate,
                                IsDepositionRequired = f.IsDepositionRequired,
+                               CreatedFromDigital = f.CreatedFromDigital,
                                ImporterDepositionRequestDetails = f.ImporterDepositionRequestDetails,
                                ForwarderPartnerId = f.ForwarderPartnerId,
                                From = f.From,
@@ -11981,6 +11982,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CreatedByPartner= f.CreatedByPartner,
                     MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
                     MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
+                    CreatedFromDigital = f.CreatedFromDigital
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
