@@ -69,6 +69,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                     MethodHelper.AddToSearchFields(ref mySearchFields, myCountry.EnglishName);
                 }
             }
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CombinedCode);
 
             if (mySearchFields.Length > 1000)
             {
