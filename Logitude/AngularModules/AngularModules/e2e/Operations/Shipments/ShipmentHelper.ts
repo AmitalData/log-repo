@@ -127,7 +127,8 @@ export class ShipmentHelper {
     this.SelectDicrctionTransportMode(Direction, TransportMode, ShipmentType);
 
     this.Helper.WaitByIdAndClick(CancelBtnId);
-    this.Helper.WaitByCssStringAndClick('.RedButton','Yes');
+    this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+
   }
 
   AddSelectAirlineStock(usedIn: string) {
