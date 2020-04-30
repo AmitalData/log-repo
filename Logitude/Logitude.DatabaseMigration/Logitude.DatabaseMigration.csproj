@@ -2351,6 +2351,10 @@
     <Compile Include="Migrations\202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.Designer.cs">
       <DependentUpon>202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004300503107_ChangeMinmumBillingDataType.cs" />
+    <Compile Include="Migrations\202004300503107_ChangeMinmumBillingDataType.Designer.cs">
+      <DependentUpon>202004300503107_ChangeMinmumBillingDataType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4247,6 +4251,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.resx">
       <DependentUpon>202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004300503107_ChangeMinmumBillingDataType.resx">
+      <DependentUpon>202004300503107_ChangeMinmumBillingDataType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
