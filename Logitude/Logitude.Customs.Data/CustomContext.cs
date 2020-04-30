@@ -288,6 +288,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsExchangeRateMap());
 	
+            modelBuilder.Configurations.Add(new CustomsGeneralMap());
+	
             modelBuilder.Configurations.Add(new CustomsHouseTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomsHouseTypeAdditionalMap());
@@ -1797,6 +1799,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsExchangeRate> CustomsExchangeRates 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsGeneral> CustomsGenerals 
 	 {
 	      get; set;
 	 
