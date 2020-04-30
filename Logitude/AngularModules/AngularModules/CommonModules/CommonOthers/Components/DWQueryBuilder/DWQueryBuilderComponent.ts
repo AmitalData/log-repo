@@ -1323,6 +1323,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public TooltipContentId: string = null;
     private CurrentSession = SessionLocator.SelectedSession;
     public FilterTypes: ObjectFieldOperator[];
+    public  OriginalObjectFieldCode: string;
+    public FullNameTextCodeCode: string;
+    public PartnerFullNameTextCodeCode: string;
+
+    
     constructor(DWObjectField: any = null, ParentClass: DWQueryBuilderComponent = null) {
         super();
         var idIndex = this.CurrentSession.GetNewId("Tooltip");
@@ -1363,6 +1368,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.Code = DWObjectField.Code;
             this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
+            this.OriginalObjectFieldCode = DWObjectField.OriginalObjectFieldCode;
+            this.FullNameTextCodeCode = DWObjectField.FullNameTextCodeCode;
+            this.PartnerFullNameTextCodeCode = DWObjectField.PartnerFullNameTextCodeCode;
+
+            
             this.DataTypeCode = DWObjectField.DataTypeCode;
             //if (DWObjectField.FilterItems && DWObjectField.FilterItems.length == 0) {
             this.DisplayName = this.ComputeDisplayName(DWObjectField);
@@ -1394,23 +1404,33 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
 
 
-
-
     }
 
 
-
     public ComputeDisplayName(DWObjectField: any) {
-        //(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
+
+
         var Displayname = DWObjectField.DisplayName;
-        if (AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
-            if (DWObjectField.DWObjectTableCode && DWObjectField.DWObjectTableCode.indexOf("DIM_") != -1) {
-                Displayname = DWObjectField.ParentCode + ' ' + DWObjectField.Name;
-            }
-            else {
-                Displayname = DWObjectField.Name;
-            }
+        var translateText = "";
+        if (DWObjectField && DWObjectField.FullNameTextCodeCode) {
+            translateText = TextCodeTranslator.Translate(DWObjectField.FullNameTextCodeCode);
         }
+
+        if (AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
+            if (AppTool.IsNullOrEmpty(DWObjectField.PartnerFullNameTextCodeCode)) {
+                if (DWObjectField.DWObjectTableCode && DWObjectField.DWObjectTableCode.indexOf("DIM_") != -1) {
+                    Displayname = DWObjectField.ParentCode + ' ' + DWObjectField.Name;
+
+                }
+                else Displayname = DWObjectField.Name;
+            }
+
+            else Displayname = TextCodeTranslator.Translate(DWObjectField.PartnerFullNameTextCodeCode) + " " + translateText;
+        }
+
+        if (translateText && AppTool.IsNullOrEmpty(DWObjectField.PartnerFullNameTextCodeCode)) Displayname = translateText
+
+
         return Displayname;
     }
 
@@ -1867,7 +1887,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                 else {
                                     view.ParentDataTypeCode = DWObjectField.DataTypeCode;
                                 }
-                                var dwObjectFieldName: string = DWObjectField.IsCustom ? DWObjectField.DisplayName : DWObjectField.Name;
+                                var dwObjectFieldName: string = DWObjectField.DisplayName;
 
                                 if (!AppTool.IsNullOrEmpty(DWObjectField.Code)) {
                                     view.DisplayName = '[' + (dwObjectFieldName.replace('[', '').replace(']', '') + ' ' + view.Name.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
