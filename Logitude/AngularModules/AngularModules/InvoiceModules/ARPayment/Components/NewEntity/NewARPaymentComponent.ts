@@ -59,7 +59,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
+        this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {
 
+        });
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.TodayDate = DateTool.GetCurrentDateAsUtc();
