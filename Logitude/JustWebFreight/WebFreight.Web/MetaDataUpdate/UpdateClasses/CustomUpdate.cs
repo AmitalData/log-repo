@@ -14597,6 +14597,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature customCustomsAirlineMTCFeature = tenantFeatures.Where(d => d.Code == "CustomsAirlineMTC" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature customPendingByKeywordFeature = tenantFeatures.Where(d => d.Code == "PendingByKeyword" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature CustomsAutonomyKeyword = tenantFeatures.Where(d => d.Code == "AutonomyKeyword" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature CustomsReceiptCertificateFromFile = tenantFeatures.Where(d => d.Code == "ReceiptCertificateFromFile" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             Feature CustomsPartnerFtpFeature = tenantFeatures.Where(d => d.Code == "CPARTNERFTP" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature courierDeclarationFeature = tenantFeatures.Where(d => d.Code == "COURIERDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
@@ -14648,7 +14649,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 FeatureId = CustomsPartnerFtpFeature.Id }, MenusTablesRepository, tenantMenusTables);
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCPK", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 60, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.PendingByKeyword", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.PendingByKeyword").FirstOrDefault().Id, FeatureId = customPendingByKeywordFeature.Id }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCPA", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 60, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.AutonomyKeyword", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsAutonomyKeyword").FirstOrDefault().Id, FeatureId = CustomsAutonomyKeyword.Id }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCPA", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 61, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.AutonomyKeyword", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsAutonomyKeyword").FirstOrDefault().Id, FeatureId = CustomsAutonomyKeyword.Id }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MRCF", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 62, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.ReceiptCertificateFromFile", Icon = "", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.SupplierInvioceItemCertificat").FirstOrDefault().Id, FeatureId = CustomsReceiptCertificateFromFile.Id }, MenusTablesRepository, tenantMenusTables);
 
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CMAA", Tenant = 0, MenuTypeCode = "CSM", IndexOfOrder = 0, CategoryTypeCode = "Par", TextCode = "General.MC.Partners.Vendors", Icon = "Customer.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsVendor").FirstOrDefault().Id, FeatureId = customFeature.Id }, MenusTablesRepository, tenantMenusTables);
@@ -15200,6 +15202,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature GeneralPendingByKeywordFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PendingByKeyword", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.PendingByKeyword", NameTextCodeDefaultText = "Pending By Keywords", FullLocalDefaultText = "מילות מפתח לקודי עיכוב", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature AutonomyKeywordFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AutonomyKeyword", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.AutonomyKeyword", NameTextCodeDefaultText = "Autonomy By Keywords", FullLocalDefaultText = "מילות מפתח להצהרת אוטונומיה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ReceiptCertificateFromFileFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReceiptCertificateFromFile", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ReceiptCertificateFromFile", NameTextCodeDefaultText = "Receipt Certificate From File", FullLocalDefaultText = "קליטת קובץ אישורים מאיקאה להצהרה", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
             #endregion
             textCodeRep.SubmitChanges();
             FeaturesRepository.SubmitChanges();

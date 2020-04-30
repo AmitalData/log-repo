@@ -26,17 +26,17 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
-    selector: 'RecallSuppliersFromFileComponent',
+    selector: 'ReceiptCertificateFromFileComponent',
     moduleId: module.id,
-    templateUrl: './RecallSuppliersFromFileComponent.html',
+    templateUrl: './ReceiptCertificateFromFileComponent.html',
 })
 
-export class RecallSuppliersFromFileComponent
+export class ReceiptCertificateFromFileComponent
     extends BaseRequestsSheetMassaging
     implements AfterViewInit,IRequestsSheetMassagingComponent {
 
-    public DataContext: RecallSuppliersFromFileComponent = this;
-    public ObjectTableName: string = "Customs.CustomsVendor";
+    public DataContext: ReceiptCertificateFromFileComponent = this;
+    public ObjectTableName: string = "Customs.SupplierInvioceItemsCertificates";
     UploadButtonIsEnabled: boolean = true;
 
     _VendorMessagesService: VendorMessagesService = new VendorMessagesService();
@@ -113,30 +113,9 @@ export class RecallSuppliersFromFileComponent
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
         if (this.filterImageParameter != null && this.filterImageParameter.Base64String != null) {
-            debugger;
             this.SendRecallMessageToServer(this.filterImageParameter);
         }
     }
-
-    //CancelButtonClicked() {
-    //    if (this.IsUploadDone) {
-    //        this.CloseButtonClicked();
-    //    }
-    //    else {
-    //        if (this.IsUploadInProgress) {
-    //            this.IsUploadCanceled = true;
-    //            this._imageLibraryService.CancelUpload(this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe(result => {
-    //                this.IsUploadInProgress = false;
-    //                this.IsUploadDone = false;
-    //                this.IsUploadCanceled = true;
-    //                this.CloseButtonClicked();
-    //            });
-    //        }
-    //        else {
-    //            this.CloseButtonClicked();
-    //        }
-    //    }
-    //}
 
     public ShowMessage(message: string) {
         var messageWindow: MessageWindow = new MessageWindow();
@@ -208,7 +187,7 @@ export class RecallSuppliersFromFileComponent
         var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(filter.Key, 5, true);
-        debugger;
+
         this._VendorMessagesService.PutRecallSuppliersFromFileRequest(filter).subscribe((myServiceResponse: ServiceResponse) => {
             console.log("[Send] Response/PutRecallSuppliersFromFileRequest : ", myServiceResponse.Result);
             var response = myServiceResponse.Result;
@@ -233,5 +212,34 @@ export class RecallSuppliersFromFileComponent
         }
 
     }
-    //#endregion Commands
+
+
+
+    get CurrencyTypeCode() { return this.RequestParams.CurrencyTypeCode; }
+    set CurrencyTypeCode(value: string) {
+        if (this.RequestParams.CurrencyTypeCode != value) {
+            this.RequestParams.CurrencyTypeCode = value;
+        }
+    }
+
+    get CurrencyTypeName() { return this.RequestParams.CurrencyTypeName; }
+    set CurrencyTypeName(value: string) {
+        if (this.RequestParams.CurrencyTypeName != value) {
+            this.RequestParams.CurrencyTypeName = value;
+        }
+    }
+
+    get CustomsCurrencyRate() { return this.RequestParams.CustomsCurrencyRate; }
+    set CustomsCurrencyRate(value: string) {
+        if (this.RequestParams.CustomsCurrencyRate != value) {
+            this.RequestParams.CustomsCurrencyRate = value;
+        }
+    }
+
+    get StartDate() { return this.RequestParams.StartDate; }
+    set StartDate(value: string) {
+        if (this.RequestParams.StartDate != value) {
+            this.RequestParams.StartDate = value;
+        }
+    }
 }
