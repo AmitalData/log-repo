@@ -199,6 +199,7 @@ export class ReferantSpotlightDataTemplate
             }
             this.ShowBusyIndicator = false;
             this.spotlightSharedDataService.IsDirty = false;
+            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
         }
     }
     DeleteButtonClicked(item) {
