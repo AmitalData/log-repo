@@ -3,28 +3,27 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {DeclarationPM} from '../EntityPMs/DeclarationPM';
 import {DeclarationValidator} from '../Validators/DeclarationValidator'
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
-import {Observable}     from 'rxjs/Rx';
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
-import {Http, Headers} from '@angular/http';
 import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
-import {MenuButtonsEvents, MenuButtonsStateChangedEventArgs} from '../../Infrastructure/Utilities/events/MenuButtonsEvents';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
-import {DeclarationWebService} from '../Services/WebServices/DeclarationWebService';
-import { AppTool, ArrayTool, DateTool} from '../../Infrastructure/Tools';
+import { AppTool, DateTool} from '../../Infrastructure/Tools';
 import { CourierMasterValidator } from '../../Customs/Validators/CourierMasterValidator';
 import { CustomsRequestsSheetPM } from '../../Customs/EntityPMs/CustomsRequestsSheetPM';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 
 export class DeclarationDisplayOnlyChecks {
 
     private entityPM: DeclarationPM;
     private publishEventOnFinish: boolean;
     private viewModel: string;
-    private http: Http;
+  private http: HttpClient;
     private apiUrl: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
-        this.http = ServiceHelper.Http;
+      this.http = ServiceHelper.HttpClient;
     }
     private timerToken: any;
     private _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
@@ -41,7 +40,7 @@ export class DeclarationDisplayOnlyChecks {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
         if (this.entityPM.IsCancelled) {
-            return Observable.defer(() => {
+            return defer(() => {
                 // the declaration is cancelled 
 
                 var message = TextCodeTranslator.Translate("Customs.Declaration.O.Cancelled");
@@ -59,7 +58,7 @@ export class DeclarationDisplayOnlyChecks {
                     this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
                 }
                 serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             });
         }
 
@@ -67,7 +66,7 @@ export class DeclarationDisplayOnlyChecks {
         //other declaration checks
      declarationValidator.DeclarationViewDisplayOnlyChecks();
         if (declarationValidator.ValidationErrorMessageCodes.length > 0) {
-            return Observable.defer(() => {
+            return defer(() => {
                 var message = TextCodeTranslator.Translate(declarationValidator.ValidationErrorMessageCodes[0]);
                 serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
                 //for menu buttons
@@ -81,14 +80,14 @@ export class DeclarationDisplayOnlyChecks {
                 if (this.CurrentSession.CurrentEditComponent) {
                     this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
                 }
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             });
         }
         if (editComponentNeedsRefresh && this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage != null) {
-            return Observable.defer(() => {
+            return defer(() => {
                 var text = this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage;
                 serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             });
             
         }
@@ -116,7 +115,7 @@ export class DeclarationDisplayOnlyChecks {
 
         if (this.entityPM.AmendmentMessage != null && this.entityPM.AmendmentMessage != "") {
             {
-                return Observable.defer(() => {
+                return defer(() => {
 
                      var errorMessage: string = this.entityPM.AmendmentMessage;
                     SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
@@ -125,19 +124,18 @@ export class DeclarationDisplayOnlyChecks {
                     SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
                     serviceResponse.Result = new DisplayOnlyCheckResult(this.entityPM.IsAmendmentDisplayOnly, errorMessage);
                    // return serviceResponse;
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
                 });
              }
         } 
 
         // Request sheets in progress check
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        return Observable.defer(() => {
-            return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + entityPM.Tenant + '&interfaceTypeCode= 2750' + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + entityPM.CustomFileNo + '&displayOnlyMode= true', { headers: authHeader })
-                .map(response => {
+
+        return defer(() => {
+          return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + entityPM.Tenant + '&interfaceTypeCode= 2750' + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + entityPM.CustomFileNo + '&displayOnlyMode= true', ServiceHelper.GetHttpHeaders())
+                .pipe(map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response;
+                    var requestSheets:any = response;
                     if ((requestSheets == null || requestSheets.length == 0) && !editComponentNeedsRefresh) {
                         if (this.CurrentSession.CurrentEditComponent) {
                             this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = false;
@@ -233,13 +231,12 @@ export class DeclarationDisplayOnlyChecks {
     GetRequestByInterfaceTypeCode(entityPM: DeclarationPM) {
 
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
            
-            return this.http.get(this.apiUrl + '/GetRequestByInterfaceTypeCode/?' + 'tenant=' + entityPM.Tenant + '&interfaceTypeCode=2755' + '&objectTableId1=' + "" + '&entityId1=' + "" + '&customFileNo=' + entityPM.CustomFileNo , { headers: authHeader })
-                    .map(response => {
+          return this.http.get(this.apiUrl + '/GetRequestByInterfaceTypeCode/?' + 'tenant=' + entityPM.Tenant + '&interfaceTypeCode=2755' + '&objectTableId1=' + "" + '&entityId1=' + "" + '&customFileNo=' + entityPM.CustomFileNo, ServiceHelper.GetHttpHeaders())
+                    .pipe(map(response => {
                         var serviceResponse: ServiceResponse = new ServiceResponse();
                         var requestSheets = response;
                         serviceResponse.Result = requestSheets;
@@ -249,11 +246,10 @@ export class DeclarationDisplayOnlyChecks {
     }
 
     GetAnyRequest(interfaceTypeCode: string, customFileNo: string, tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        return Observable.defer(() => {
-            return this.http.get(this.apiUrl + '/GetAnyRequest/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode  +'&customFileNo=' + customFileNo , { headers: authHeader })
-                .map(response => {
+
+        return defer(() => {
+          return this.http.get(this.apiUrl + '/GetAnyRequest/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&customFileNo=' + customFileNo, ServiceHelper.GetHttpHeaders())
+                .pipe(map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     var requestSheets = response;
                     serviceResponse.Result = requestSheets;
@@ -263,11 +259,9 @@ export class DeclarationDisplayOnlyChecks {
     }
     CheckIfRequestInProgress(interfaceTypeCode: string, customFileNo: string, tenant: number, displayOnlyMode: boolean = true) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        return Observable.defer(() => {
-            return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + customFileNo + '&displayOnlyMode=' + displayOnlyMode, { headers: authHeader })
-                .map(response => {
+        return defer(() => {
+          return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + customFileNo + '&displayOnlyMode=' + displayOnlyMode, ServiceHelper.GetHttpHeaders())
+                .pipe(map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     var requestSheets = response;
                     serviceResponse.Result = requestSheets;
@@ -277,11 +271,10 @@ export class DeclarationDisplayOnlyChecks {
     }
 
     CheckIfGeneralRequestInProgress(interfaceTypeCode: string, customFileNo: string, tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        return Observable.defer(() => {
-            return this.http.get(this.apiUrl + '/GetGeneralRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + customFileNo , { headers: authHeader })
-                .map(response => {
+
+        return defer(() => {
+          return this.http.get(this.apiUrl + '/GetGeneralRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + customFileNo, ServiceHelper.GetHttpHeaders())
+                .pipe(map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     var requestSheets = response;
                     serviceResponse.Result = requestSheets;

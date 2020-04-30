@@ -1,8 +1,8 @@
-﻿
+
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -25,8 +25,6 @@ export class SupplierInvoiceFreightAmountExtendedListService {
 
     getSingle(declarationid: string, invoicecounterkey: number, CurrencyTypeCode: string) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
 
         return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid + '&' + 'invoicecounterkey=' + invoicecounterkey + '&' + 'CurrencyTypeCode=' + CurrencyTypeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {

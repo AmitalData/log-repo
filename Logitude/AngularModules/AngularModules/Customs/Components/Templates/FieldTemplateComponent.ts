@@ -5,18 +5,17 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
-
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { DeclarationReferantDataList } from '../../EntityLists/DeclarationReferantDataList';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
-import { ResourceLoader } from '@angular/compiler';
 
-@Component({
-    
+@Component({   
     templateUrl: './FieldTemplateComponent.html',
 })
 
 export class FieldTemplateComponent {
+  public IsDisplayOnly: boolean = false;
+
     public Entity: any = null;
     public FieldName: string = null;
     public FieldValue: any = null;
@@ -31,7 +30,7 @@ export class FieldTemplateComponent {
     }
 
     public ButtonClick() {
-        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        //this._ListComponentArgs.SuppressOnRowSelectedField = true;
 
      }
     ShowUnifaceCustomFile() {
@@ -118,7 +117,7 @@ export class FieldTemplateComponent {
     }
 
     OpenRemarks() {
-        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        //this._ListComponentArgs.SuppressOnRowSelectedField = true;
 
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};

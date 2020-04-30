@@ -24,12 +24,13 @@ import { DeclarationCourierStatusWebService } from '../../../../Customs/Services
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './CourierDeclarationWorkspaceComponent.html',
     providers: [DeclarationCourierStatusWebService, CourierWorksheetSharedDataService]
 })
 
 export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
+  public ObjectTableName: any;
+
     @Output() ReloadUserQueries = new EventEmitter();
     public RecentGLAccountsCount: number = 0;
     private _entityResourceService: EntityResourceService = new EntityResourceService();

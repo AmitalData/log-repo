@@ -50,9 +50,7 @@ import {CustomsSettingExtendedListService} from '../../../../../Customs/Services
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomsCountryListService } from '../../../../../Customs/Services/StandardLists/CustomsCountryListService';
-
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
-import { DecimalPipe } from '@angular/common';
 
 @Component({
     
@@ -60,8 +58,10 @@ import { DecimalPipe } from '@angular/common';
 })
 
 
-export class SupplierInvoiceGeneralTabComponent extends BaseComponent
-    implements OnDestroy {
+export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements OnDestroy {
+  public CurrencyTypeCode: any;
+  public OriginCountryCode: any;
+
     public InvoiceTypeFocus: boolean;
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.SupplierInvoice";

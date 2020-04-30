@@ -30,7 +30,7 @@ export class ClientAddressesTabComponent extends BaseComponent{
     responseData: INF_MSG_GenericResponseData;
     requestParams: AddAddressContactForClientRequestParams;
 
-    private Mode: string = "";
+    Mode: string = "";
     private newAddressButtonVisibility: boolean = true;
     private editButtonVisibility: boolean = true;
     Parent: ClaimGeneralTabComponent;

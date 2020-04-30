@@ -1,5 +1,4 @@
 import { Component, OnInit} from'@angular/core'
-import { from } from "rxjs/observable/from";
 import { KeyCode } from '../../../Infrastructure/DataContracts/KeyCode';
 import { KeyValuePair } from '../../CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
@@ -9,7 +8,6 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { AppTool } from '../../../Infrastructure/Tools';
  
 @Component({
-    moduleId: module.id,
     templateUrl: './CourierSendStatusComponent.html',
 
 })

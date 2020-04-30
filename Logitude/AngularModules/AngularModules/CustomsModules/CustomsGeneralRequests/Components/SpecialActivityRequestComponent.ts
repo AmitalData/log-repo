@@ -531,7 +531,7 @@ export class SpecialActivityRequestComponent
         this.SetRepresentativeRowNumber();
     }
 
-    private DeleteRepresentativeDetailsCommand(item: RepresentativeComponent) {
+    DeleteRepresentativeDetailsCommand(item: RepresentativeComponent) {
         this.RepresentativeList.Remove(item);
         this.SetRepresentativeRowNumber();
     }
@@ -633,7 +633,7 @@ export class SpecialActivityRequestComponent
         this.SetRepackingCurrentRowNumber();
     }
 
-    private DeleteRepackingCurrentItemCommand(item: RepackingCurrentRequestDetailsComponent) {
+    DeleteRepackingCurrentItemCommand(item: RepackingCurrentRequestDetailsComponent) {
         this.RepackingCurrentList.Remove(item);
         this.SetRepackingCurrentRowNumber();
     }
@@ -651,7 +651,7 @@ export class SpecialActivityRequestComponent
         this.SetRepackingDesiredRowNumber();
     }
 
-    private DeleteRepackingDesiredRequestDetailsCommand(item: RepackingDesiredRequestDetailsComponent) {
+    DeleteRepackingDesiredRequestDetailsCommand(item: RepackingDesiredRequestDetailsComponent) {
         this.RepackingDesiredList.Remove(item);
         this.SetRepackingDesiredRowNumber();
     }
@@ -688,7 +688,7 @@ export class SpecialActivityRequestComponent
         this.SetSampleRequestRowNumber();
     }
 
-    private DeleteSampleRequestDetailsCommand(item: SampleRequestDetailsComponent) {
+    DeleteSampleRequestDetailsCommand(item: SampleRequestDetailsComponent) {
         this.SampleRequestList.Remove(item);
         this.SetSampleRequestRowNumber();
     }

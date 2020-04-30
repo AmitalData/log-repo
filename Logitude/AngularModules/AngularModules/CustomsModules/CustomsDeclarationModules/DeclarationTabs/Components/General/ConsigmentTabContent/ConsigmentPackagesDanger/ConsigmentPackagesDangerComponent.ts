@@ -12,8 +12,7 @@ import { TextCodeTranslator } from '../../../../../../../Infrastructure/Utilitie
 
 
 @Component({
-    selector: 'ConsigmentPackagesDangerComponent',
-    moduleId: module.id,
+    selector: 'ConsigmentPackagesDangerComponent',    
     templateUrl: './ConsigmentPackagesDangerComponent.html',
 })
 

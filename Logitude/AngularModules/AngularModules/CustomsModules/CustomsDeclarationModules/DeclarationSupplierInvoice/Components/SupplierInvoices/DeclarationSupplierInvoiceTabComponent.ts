@@ -34,6 +34,7 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
  })
 
 export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implements OnInit{
+  public onQueryChangeEvent: any;
 
     public EntityPM: DeclarationPM;
     public ObjectTableName: string = null;

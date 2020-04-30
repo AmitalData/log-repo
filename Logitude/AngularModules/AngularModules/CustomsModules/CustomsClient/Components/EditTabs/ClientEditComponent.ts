@@ -24,6 +24,10 @@ import { TextCodeTranslator } from      '../../../../Infrastructure/Utilities/Te
 })
 
 export class ClientEditComponent extends BaseComponent{
+  public IsDisplayOnly: boolean = false;
+  public right: any;
+  public CustomSendOptionsButtonCanForcePersonalSign: any;
+
     public TabsItemsSource: TabItem[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentEntity: ClientPM;

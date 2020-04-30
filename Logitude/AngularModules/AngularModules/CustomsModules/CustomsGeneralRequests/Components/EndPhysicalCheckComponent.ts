@@ -17,8 +17,7 @@ import { PhysicalCheckExtendedPMService } from "../../../Common/Services/Extende
  
 
 @Component({
-    selector: 'EndPhysicalCheckComponent',
-    moduleId: module.id,
+    selector: 'EndPhysicalCheckComponent',    
     templateUrl: './EndPhysicalCheckComponent.html',
 })
 export class EndPhysicalCheckComponent

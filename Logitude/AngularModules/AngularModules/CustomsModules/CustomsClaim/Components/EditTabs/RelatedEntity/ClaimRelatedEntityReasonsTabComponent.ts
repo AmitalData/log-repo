@@ -29,6 +29,8 @@ import { ClaimRelatedEntReasonExpLineComponent } from './ClaimRelatedEntReasonEx
 })
 
 export class ClaimRelatedEntityReasonsTabComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+
     public DataContext: ClaimRelatedEntityReasonsTabComponent = this;
     public EntityPM: ClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(new ClaimPM());
     public ClaimPM: ClaimPM = new ClaimPM();

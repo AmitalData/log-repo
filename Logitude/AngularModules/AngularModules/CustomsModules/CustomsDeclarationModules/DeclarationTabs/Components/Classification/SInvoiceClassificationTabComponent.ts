@@ -1,45 +1,28 @@
 
 
-declare var window;
 import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import { AppTool, ArrayTool, FontTool } from '../../../../../Infrastructure/Tools';
-import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import { AppTool, FontTool } from '../../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { SupplierInvoiceItemPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
 import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 import { TradeAgreementPM } from '../../../../../Customs/EntityPMs/TradeAgreementPM';
 import { MeasurmentUnitPM } from '../../../../../Customs/EntityPMs/MeasurmentUnitPM';
 import { CustomsCountryPM } from '../../../../../Customs/EntityPMs/CustomsCountryPM';
-import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
-
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
-
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
-import { CardPMService } from '../../../../../Common/Services/StandardPMs/CardPMService';
-import { CustomsHouseTypeExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomsHouseTypeExtendedPMService';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
-import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
-
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { CustomsVendorListService } from '../../../../../Customs/Services/StandardLists/CustomsVendorListService';
 import { CustomsCountryListService } from '../../../../../Customs/Services/StandardLists/CustomsCountryListService';
-
 import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
-import { CustomsRequiredFieldListService } from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
-import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
-
-import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
-import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
-import { ItemCodeComponent } from '../../../../../Customsmodules/Customsdeclarationmodules/Declarationsupplierinvoice/Components/Supplierinvoices/SupplierInvoiceGeneralTabComponent';
+import { ItemCodeComponent } from '../../../../../CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceGeneralTabComponent';
 import { LogCellTemplateComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
 import { LuhnAlgorithm } from '../../../../../Customs/Utilities/LuhnAlgorithm';
 import { CustomsVendorPMService } from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
@@ -48,7 +31,6 @@ import { CustomsSettingListService } from '../../../../../Customs/Services/Stand
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { AddEditSupplierInvoiceDUMMY } from './DeclarationClassificationComponent';
 import { SupplierInvoiceService } from '../../../../../Customs/Services/Others/SupplierInvoiceService';
-
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import { QuantityTypeMessageService } from '../../../../../Customs/Services/WebServices/QuantityTypeMessageService';
@@ -63,9 +45,9 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
     providers: [DeclarationExtendedListService]
 })
 
-export class SInvoiceClassificationTabComponent
-    extends BaseComponent
-    implements OnDestroy, AfterViewInit {
+export class SInvoiceClassificationTabComponent extends BaseComponent implements OnDestroy, AfterViewInit {
+  public OriginCountryCode: any;
+
     public EntityPM: SupplierInvoicePM;
     public declarationPM: DeclarationPM;
 

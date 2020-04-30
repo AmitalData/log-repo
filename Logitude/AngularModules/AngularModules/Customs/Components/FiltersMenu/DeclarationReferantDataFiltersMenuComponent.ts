@@ -6,7 +6,6 @@ import { BaseComponent } from '../../../Infrastructure/Components/LogitudeCompon
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './DeclarationReferantDataFiltersMenuComponent.html',
 })
 

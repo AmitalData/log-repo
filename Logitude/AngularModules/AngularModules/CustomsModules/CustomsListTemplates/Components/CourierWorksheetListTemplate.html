@@ -133,11 +133,11 @@
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'StorageSiteStatusCode'">
-        <img *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == 1" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-        <img *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == 2" src="./Images/Icons/RedX.png" [attr.title]="_CourierWorksheet['StorageSiteErrorText']" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
-        <span *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == 1 && _CourierWorksheet['AcceptanceStatusCode'] == 0">{{'Customs.CourierMaster.Available.NotAvailable' | TextCodeTranslationPipe }}</span>
-        <span *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == 1 && _CourierWorksheet['AcceptanceStatusCode'] == 1">{{'Customs.CourierMaster.Available.Available' | TextCodeTranslationPipe }}</span>
-        <span *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == 1 && _CourierWorksheet['AcceptanceStatusCode'] == 2">{{'Customs.CourierMaster.Available.Additional' | TextCodeTranslationPipe }}</span>
+        <img *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == '1'" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+        <img *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == '2'" src="./Images/Icons/RedX.png" [attr.title]="_CourierWorksheet['StorageSiteErrorText']" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+        <span *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == '1' && _CourierWorksheet['AcceptanceStatusCode'] == '0'">{{'Customs.CourierMaster.Available.NotAvailable' | TextCodeTranslationPipe }}</span>
+        <span *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == '1' && _CourierWorksheet['AcceptanceStatusCode'] == '1'">{{'Customs.CourierMaster.Available.Available' | TextCodeTranslationPipe }}</span>
+        <span *ngIf="_CourierWorksheet['StorageSiteStatusCode'] == '1' && _CourierWorksheet['AcceptanceStatusCode'] == '2'">{{'Customs.CourierMaster.Available.Additional' | TextCodeTranslationPipe }}</span>
     </div>
 
 
@@ -178,7 +178,7 @@
     <div *ngIf="fieldName == 'CourierPendingReasonList'" (click)="ButtonClick($event)">
         <div (click)="ButtonClick($event)">
             <courier-filter-button #MyDropdownMenuFilterComponent
-                                   (DropdownMenuButtonClicked)="DropdownMenuButtonClicked(event);PrepareDropdownMenuFilter($event,_CourierWorksheet['DeclarationId'])"
+                                   (DropdownMenuButtonClicked)="DropdownMenuButtonClicked($event);PrepareDropdownMenuFilter($event,_CourierWorksheet['DeclarationId'])"
                                    [IsDisabled]="IsDisplayOnly">
                 <div class="class-filter-content">
                     <div>

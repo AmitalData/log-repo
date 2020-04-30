@@ -68,6 +68,8 @@ import { Observable } from 'rxjs';
 })
 
 export class DeclarationPaymentComponent extends BaseComponent implements OnInit {
+  public PayerActivityTypeCode: any;
+
     public DataContext: any = this;
     public DeclarationPM: DeclarationPM;
     public paymentPM: DeclarationPaymentPM;

@@ -20,6 +20,8 @@ import { ClaimExplanationCodeListService } from '../../../../../Customs/Services
 })
 
 export class ClaimRelatedEntReasonExpComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+
     public DataContext: ClaimRelatedEntReasonExpComponent = this;
     public EntityPM: ClaimsRelatedEntitiesReasonPM;
     public ObjectTableName: string = "Customs.ClaimsRelatedEntsReasonsExp";

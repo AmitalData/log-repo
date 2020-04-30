@@ -183,13 +183,13 @@
                     <td style="width:125px;padding-left:5px;">
                         <div *ngIf="IsDocumentRequestCodeButton">
                             <span>
-                                <button class="Button" *ngIf="DocumentRequestCodeIcon == 'DEFAULT'" (click)="DocumentRequestbuttonclicked($event)" tabindex="-1">
+                                <button class="Button" *ngIf="DocumentRequestCodeIcon == 'DEFAULT'" (click)="DocumentRequestbuttonclicked()" tabindex="-1">
                                     <img src="./Images/LogBox/DSV/Tab_Logo_Original.png" style="margin-right: -4px; margin-top: 1px" />  בקש מסמך מיבואן
                                 </button>
                             </span>
 
                             <span>
-                                <button class="Button" *ngIf="DocumentRequestCodeIcon == 'LOGBOX'" (click)="DocumentRequestbuttonclicked($event)" tabindex="-1">
+                                <button class="Button" *ngIf="DocumentRequestCodeIcon == 'LOGBOX'" (click)="DocumentRequestbuttonclicked()" tabindex="-1">
                                     <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  בקש מסמך מיבואן
                                 </button>
                             </span>

@@ -1,4 +1,4 @@
-﻿<table *ngIf="IsLoaded">
+<table *ngIf="IsLoaded">
     <tr>
         <td>
             <fieldset [disabled]="!IsControlEnabled">
@@ -100,7 +100,7 @@
                                                 </td>
                                                 <td style="width: 20px; height: 20px;padding: 5px;padding-bottom: 0px;">
                                                     <div>
-                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteBankDetailsCommand(item)"
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteBankDetailsCommand()"
                                                                     [IsEnabled]="IsraelBankFieldsEnabled"
                                                                     style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                     </div>

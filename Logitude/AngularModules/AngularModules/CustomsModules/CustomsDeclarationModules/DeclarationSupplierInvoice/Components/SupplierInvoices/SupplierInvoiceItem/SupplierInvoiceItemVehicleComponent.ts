@@ -37,6 +37,8 @@ import {CustomsSettingExtendedListService} from '../../../../../../Customs/Servi
 
 
 export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
+  public ExcludeFromInterface: any;
+
     public ObjectTableName: string = "Customs.SupplierInvoiceItemVehicle";
     public DataContext = this;
     public invoiceItemPM: SupplierInvoiceItemPM;

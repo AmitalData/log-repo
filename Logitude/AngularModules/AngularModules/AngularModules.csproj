@@ -319,13 +319,11 @@
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditReferantExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\CargoSealsQueryComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.html" />
-    <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.js" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleGeneralComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleGeneralComponent.js" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleMoreDetailsTabComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleMoreDetailsTabComponent.js" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehiclesOwnersAndSafetyTabComponent.html" />
-    <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehiclesOwnersAndSafetyTabComponent.js" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehiclesSelectionComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehiclesSelectionComponent.js" />
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\DeleteVehicleComponent.html" />
@@ -5819,7 +5817,6 @@
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\QueueMessagesWebService.ts" />
     <TypeScriptCompile Include="Infrastructure\Settings.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\CachedDataManagerServices.ts" />
-    <TypeScriptCompile Include="Infrastructure\Utilities\DynamicLoader_Cust.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\LastFilter.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\LocalStorageManager.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\DownloadManager.ts" />
@@ -7439,10 +7436,8 @@
     <Content Include="tsconfig.spec.json" />
     <Content Include="tsconfig.app-Cust.json" />
     <Content Include="Infrastructure\Components\StimulsoftComponent\IDAutomationCMC7n10.ttf" />
-    <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleGeneralComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleMoreDetailsTabComponent.js.map" />
-    <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehiclesOwnersAndSafetyTabComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehiclesSelectionComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\DeleteVehicleComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\SendVehicleComponent.js.map" />

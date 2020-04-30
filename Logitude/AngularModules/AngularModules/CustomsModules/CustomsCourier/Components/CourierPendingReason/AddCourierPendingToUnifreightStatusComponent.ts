@@ -20,9 +20,10 @@ import { CourierPendingReasonExtendedListService } from '../../../../Customs/Ser
     templateUrl: './AddCourierPendingToUnifreightStatusComponent.html',
 })
 
-export class AddCourierPendingToUnifreightStatusComponent
-    extends BaseComponent
-    implements OnInit {
+export class AddCourierPendingToUnifreightStatusComponent extends BaseComponent implements OnInit {
+  public PendingCode: any;
+  public FooterMethods: any;
+
 
     public DataContext: AddCourierPendingToUnifreightStatusComponent = this;
     public ObjectTableName: string = "Customs.CourierPendingReason";

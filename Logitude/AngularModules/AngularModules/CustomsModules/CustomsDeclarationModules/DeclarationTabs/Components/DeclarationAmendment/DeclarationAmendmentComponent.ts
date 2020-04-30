@@ -36,8 +36,7 @@ import { CustomsCollateralAnswerSharedDataService } from '../../../../../Customs
 import { GenericRequestParams } from "../../../../../Customs/DataContract/RequestParams/GenericRequestParams";
 import { SendRequestVIA } from "../../../../../Customs/DataContract/RequestParams/RequestParamsBase";
 
-@Component({
-    moduleId: module.id,
+@Component({    
     templateUrl: './DeclarationAmendmentComponent.html',
     providers: [DeclarationExtendedListService, DeclarationWebService]
 })

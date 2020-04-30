@@ -6,9 +6,7 @@ import { ClientList } from '../../../../../../Customs/EntityLists/ClientList';
 import { ClaimPM } from '../../../../../../Customs/EntityPMs/ClaimPM';
 
 
-@Component({
-
-    moduleId: module.id,
+@Component({   
     templateUrl: './PassportDetailsComponent.html',
     selector: 'PassportDetailsComponent',
 })

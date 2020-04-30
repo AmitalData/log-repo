@@ -32,6 +32,9 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 })
 
 export class PaymentOrdersGeneralTabComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+  public ProtestTypeCode: any;
+
     public DataContext: PaymentOrdersGeneralTabComponent = this;
     public EntityPM: PaymentOrderPM = new PaymentOrderPM();
     public ObjectTableName: string = "Customs.PaymentOrder";

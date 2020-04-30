@@ -30,6 +30,8 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 })
 
 export class ClaimRelatedEntityAdditionalDataTabComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+
     public DataContext: ClaimRelatedEntityAdditionalDataTabComponent = this;
     public EntityPM: ClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(null);
     public ClaimPM: ClaimPM = new ClaimPM();

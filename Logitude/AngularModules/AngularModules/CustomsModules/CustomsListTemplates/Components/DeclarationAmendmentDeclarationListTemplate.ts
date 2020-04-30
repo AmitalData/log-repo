@@ -17,7 +17,6 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { DeclarationAmendmentComponent } from '../../CustomsDeclarationModules/DeclarationTabs/Components/DeclarationAmendment/DeclarationAmendmentComponent';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './DeclarationAmendmentListTemplate.html',
 })
 
