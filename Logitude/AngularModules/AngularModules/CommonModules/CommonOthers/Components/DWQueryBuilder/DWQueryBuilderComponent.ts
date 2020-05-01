@@ -1323,7 +1323,6 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public TooltipContentId: string = null;
     private CurrentSession = SessionLocator.SelectedSession;
     public FilterTypes: ObjectFieldOperator[];
-    public  OriginalObjectFieldCode: string;
     public FullNameTextCodeCode: string;
     public PartnerFullNameTextCodeCode: string;
 
@@ -1368,7 +1367,6 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.Code = DWObjectField.Code;
             this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
-            this.OriginalObjectFieldCode = DWObjectField.OriginalObjectFieldCode;
             this.FullNameTextCodeCode = DWObjectField.FullNameTextCodeCode;
             this.PartnerFullNameTextCodeCode = DWObjectField.PartnerFullNameTextCodeCode;
 
@@ -1409,29 +1407,17 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     public ComputeDisplayName(DWObjectField: any) {
 
+        var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.Translate(DWObjectField.FullNameTextCodeCode) : "";
+        var partnerTranslateText = DWObjectField.PartnerFullNameTextCodeCode ? TextCodeTranslator.Translate(DWObjectField.PartnerFullNameTextCodeCode) : "";
 
-        var Displayname = DWObjectField.DisplayName;
-        var translateText = "";
-        if (DWObjectField && DWObjectField.FullNameTextCodeCode) {
-            translateText = TextCodeTranslator.Translate(DWObjectField.FullNameTextCodeCode);
+        var displayname = (translateText ? translateText : DWObjectField.Name);
+
+        if (DWObjectField.DimensionTableDisplayName) {
+            displayname = (partnerTranslateText ? partnerTranslateText : DWObjectField.DimensionTableDisplayName) + " "+ displayname;
         }
 
-        if (AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
-            if (AppTool.IsNullOrEmpty(DWObjectField.PartnerFullNameTextCodeCode)) {
-                if (DWObjectField.DWObjectTableCode && DWObjectField.DWObjectTableCode.indexOf("DIM_") != -1) {
-                    Displayname = DWObjectField.ParentCode + ' ' + DWObjectField.Name;
-
-                }
-                else Displayname = DWObjectField.Name;
-            }
-
-            else Displayname = TextCodeTranslator.Translate(DWObjectField.PartnerFullNameTextCodeCode) + " " + translateText;
-        }
-
-        if (translateText && AppTool.IsNullOrEmpty(DWObjectField.PartnerFullNameTextCodeCode)) Displayname = translateText
-
-
-        return Displayname;
+        return displayname;
+    
     }
 
 

@@ -232,7 +232,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 DimensionTableDisplayName = parent.Name,
                 OriginalObjectFieldCode = item.OriginalObjectFieldCode,
                 PartnerOriginalObjectFieldCode = parent.OriginalObjectFieldCode,
-
+                DisplayName = item.Name,
             };
         }
 
