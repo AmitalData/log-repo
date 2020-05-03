@@ -112,20 +112,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
     constructor(private CD: ChangeDetectorRef) {
         super();
 
-
-
         this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe((response: any) => {
-      
-            this.Start();
+            this._entityResourceService.getEntityResourceByTableName("Master").subscribe((response: any) => {
+                this.Start();
+            });
+
         });
-
-
-
-
-
-
-
-
 
     }
 
