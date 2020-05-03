@@ -524,9 +524,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                     this.StopBusyIndicator();
                                     var messageWindow = new MessageWindow();
                                    
-                                    if(result.ExceptionMessage=='Number of aging months is not set in Full Accounting Settings'){
-                                        result.ExceptionMessage= TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet");
-                                    }
+                                    // if(result.ExceptionMessage=='Number of aging months is not set in Full Accounting Settings'){
+                                    //     result.ExceptionMessage= TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet");
+                                    // }
                                     messageWindow.Show(result.ExceptionMessage);
                                 }
                                 else if (result.StatusCode == "D") {
