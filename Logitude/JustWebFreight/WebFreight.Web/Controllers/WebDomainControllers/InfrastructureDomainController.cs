@@ -1749,7 +1749,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 bITabularViewSettings.Columns.Add(new Column
                                 {
                                     Code = item.DisplayName.Replace("[", "").Replace("]", ""),
-                                    Name = item.Name,
+                                    Name = item.DisplayName,
                                     IsChecked = true,
                                     Width = 150,
                                     DataTypeCode = item.DataTypeCode,
@@ -1785,7 +1785,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             bITabularViewSettings.Columns.Add(new Column
                             {
                                 Code = item.DisplayName.Replace("[", "").Replace("]", ""),
-                                Name = item.Name,
+                                Name = item.DisplayName,
                                 IsChecked = true,
                                 Width = 150,
                                 DataTypeCode = item.DataTypeCode,
@@ -1813,7 +1813,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         bITabularViewSettings.Columns.Add(new Column
                         {
                             Code = item.DisplayName.Replace("[", "").Replace("]", ""),
-                            Name = item.Name,
+                            Name = item.DisplayName,
                             IsChecked = true,
                             Width = 150,
                             DataTypeCode = item.DataTypeCode,
