@@ -220,6 +220,7 @@ export class ReferantSpotlightDataTemplate
                     this.ReferantExceptionListPM.splice(this.ReferantExceptionListPM.indexOf(item), 1);
                     if (!this.ExceptionsList.includes(item.ExceptionReasonsCode)) {
                         this.DeletedCodeList.push(item.ExceptionReasonsCode);
+                        this.spotlightSharedDataService.IsDirty = true;
                     }
                 }
             });
