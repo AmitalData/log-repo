@@ -397,6 +397,7 @@
     <Compile Include="EntityDataMappings\DeclarationPaymentMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPaymentProtestDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPendingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeclarationRefernatDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationStatementTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationStatusTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationTaxDataMapping.cs" />
@@ -413,6 +414,7 @@
     <Compile Include="EntityDataMappings\DocumentTypeCustomsDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntitlementTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityTypeLookupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ExceptionReasonDataMapping.cs" />
     <Compile Include="EntityDataMappings\FacilitationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FaultInspectionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FreightPaymentMethodDataMapping.cs" />
@@ -565,6 +567,7 @@
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentProtestDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPendingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeclarationRefernatDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationStatementTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationStatusTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationTaxDataMapping.Generated.cs" />
@@ -581,6 +584,7 @@
     <Compile Include="EntityDataMappings\Generated\DocumentTypeCustomsDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntitlementTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityTypeLookupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ExceptionReasonDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FacilitationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FaultInspectionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FreightPaymentMethodDataMapping.Generated.cs" />
@@ -659,6 +663,7 @@
     <Compile Include="EntityDataMappings\Generated\ProductNameTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PropertiesDetailsHistoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RansomViolationTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReferantExceptionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RefundCustomerActivityTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RegisteredWarehouseSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RequestStatusDataMapping.Generated.cs" />
@@ -803,6 +808,7 @@
     <Compile Include="EntityDataMappings\ProductNameTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PropertiesDetailsHistoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\RansomViolationTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReferantExceptionDataMapping.cs" />
     <Compile Include="EntityDataMappings\RefundCustomerActivityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\RegisteredWarehouseSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\RequestStatusDataMapping.cs" />
@@ -901,7 +907,10 @@
     <Compile Include="EntityQueryServices\Generated\DBMigrationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DBMigrationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationPendingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeclarationRefernatDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeficitDecisionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExceptionReasonQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReferantExceptionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SealCompletenesQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SealTypeQueryService.Generated.cs" />
@@ -1377,9 +1386,11 @@
     <Compile Include="EntityUpdateServices\Generated\DeclarationCourierStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationMamanSpecialActionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationPendingUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DeclarationRefernatDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeficitDecisionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeficitUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DocumentTypeCustomsDataUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ExceptionReasonUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FacilitationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FreightPaymentMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GatepassRequestUpdateService.Generated.cs" />
@@ -1393,6 +1404,7 @@
     <Compile Include="EntityUpdateServices\Generated\PendingByKeywordUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PendingErrorPlaceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PointerLevelUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ReferantExceptionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RefundCustomerActivityTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SealCompletenesUpdateService.Generated.cs" />
