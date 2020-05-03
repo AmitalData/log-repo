@@ -114,7 +114,15 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
         this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("Master").subscribe((response: any) => {
-                this.Start();
+                this._entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("APInvoice").subscribe((response: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("ShipmentComputedFields").subscribe((response: any) => {
+                        this._entityResourceService.getEntityResourceByTableName("ShipmentPayable").subscribe((response: any) => {
+                            this.Start();
+                        });
+                    });
+                    });
+                });
             });
 
         });
