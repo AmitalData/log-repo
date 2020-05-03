@@ -129,37 +129,39 @@
 
                 <tr style="border: 1px solid #AAAAAA; border-top:0;">
                     <td style="padding: 2px;">
+                      <div class="MediaFill">
                         <div class="SimpleGridView">
-                            <div class="SimpleGridViewHeaderDark">
-                                <table>
-                                    <tr>
-                                        <td style="width: 120px;">{{'MAWBStack.F.Number' | TextCodeTranslationPipe}}</td>
-                                        <td class="LastChild">
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+                          <div class="SimpleGridViewHeaderDark">
+                            <table>
+                              <tr>
+                                <td style="width: 120px;">{{'MAWBStack.F.Number' | TextCodeTranslationPipe}}</td>
+                                <td class="LastChild">
+                                  <div></div>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
 
-                            <div class="SimpleGridViewBody">
-                                <table>
-                                    <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
-                                        <td class="GridViewCell" style="width: 120px;">
-                                            <div>{{item.Number | PaddingPipe:'L':8:'0'}}</div>
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
+                          <div class="SimpleGridViewBody">
+                            <table>
+                              <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                <td class="GridViewCell" style="width: 120px;">
+                                  <div>{{item.Number | PaddingPipe:'L':8:'0'}}</div>
+                                </td>
+                                <td>
+                                  <div></div>
+                                </td>
+                              </tr>
 
-                                    <tr>
-                                        <td colspan="2">
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+                              <tr>
+                                <td colspan="2">
+                                  <div></div>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
                         </div>
+                      </div>                        
                     </td>
                 </tr>
             </table>
