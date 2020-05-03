@@ -215,6 +215,22 @@ export class FieldTemplateComponent {
         }
     }
 
+
+    ShowCFIFILEMEnterRemarks() {
+
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            AmitalGatewayUtil.Instance.ShowCFIFILEMEnterRemarks(
+                this.Entity.CustomFileNo,
+                this.Entity.DeclarationId,
+                "ShowCFIFILEMEnterRemarks");
+        } else {
+            var myMessageWindow = new MessageWindow();
+            let mess = "ShowCFIFILEMEnterRemarks -" + this.Entity.CustomFileNo;
+            myMessageWindow.Show(mess);
+        }
+    }
+
+
     ShowDeclaration(event) {
         if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
             SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;

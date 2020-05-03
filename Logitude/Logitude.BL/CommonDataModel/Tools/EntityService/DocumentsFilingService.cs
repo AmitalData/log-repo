@@ -390,7 +390,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             myICreateUD2LTService.JustDoIt(extDocPM);
 
         }
+        private void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
+        {
+            ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
+            myISendBondedCustomDocumentService.JustDoIt(extDocPM);
 
+        }
         private void AddDocumentBackupLog()
         {
             var OTName = ObjectTableRepository.GetSingleObjectTable(entityPM.ObjectTableId, tenant, false);
@@ -1101,6 +1106,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
 
             TryBuildUD2LT(extDocPM);
+            TrySendBondedCustomDocument(extDocPM);
             if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))
             {
                 DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.MetaDataVersionValue);
