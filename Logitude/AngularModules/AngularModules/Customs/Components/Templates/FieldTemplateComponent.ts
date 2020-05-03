@@ -179,8 +179,11 @@ export class FieldTemplateComponent {
             });
         }
     }
+
+
     ShowCFIFILEMMoveToQueueScreen() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        /*
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             AmitalGatewayUtil.Instance.ShowCFIFILEMMoveToQueueScreen(
                 this.Entity.CustomFileNo,
@@ -190,6 +193,46 @@ export class FieldTemplateComponent {
             var myMessageWindow = new MessageWindow();
             let mess = "ShowCFIFILEMMoveToQueueScreen -" + this.Entity.CustomFileNo;
             myMessageWindow.Show(mess);
+        }
+        */
+
+        let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
+        let myViewModelName = "FieldTemplateComponent.ts-ShowCFIFILEMMoveToQueueScreen";
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclarationReferantDataList.DeclarationId &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                        }
+                    }
+                );
+
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
+                        myViewModelName);
+
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowCFIFILEMMoveToQueueScreen",
+                "CFIHMAIN.LogitudeTask",
+                "ShowCFIFILEMMoveToQueueScreen",
+                unifreightMessageM,
+                " הצגת מסך : העברה לתור");
+
+        }
+        else {
+            alert("ShowCFIFILEMMoveToQueueScreen");
         }
     }
     
@@ -202,7 +245,7 @@ export class FieldTemplateComponent {
     }
 
     ShowCFIFILEMMoveSIToOCRScreen() {
-        
+        /*
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             AmitalGatewayUtil.Instance.ShowCFIFILEMMoveSIToOCRScreen(
                 this.Entity.CustomFileNo,
@@ -213,11 +256,51 @@ export class FieldTemplateComponent {
             let mess = "ShowCFIFILEMMoveSIToOCRScreen -" + this.Entity.CustomFileNo;
             myMessageWindow.Show(mess);
         }
+        */
+
+        let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
+        let myViewModelName = "FieldTemplateComponent.ts-ShowCFIFILEMMoveSIToOCRScreen";
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclarationReferantDataList.DeclarationId &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                        }
+                    }
+                );
+
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
+                        myViewModelName);
+
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowCFIFILEMMoveSIToOCRScreen",
+                "CFIHMAIN.LogitudeTask",
+                "ShowCFIFILEMMoveSIToOCRScreen",
+                unifreightMessageM,
+                " הצגת מסך : העברת חשבונות ספק ל- OCR");
+
+        }
+        else {
+            alert("ShowCFIFILEMMoveSIToOCRScreen");
+        }
     }
 
 
     ShowCFIFILEMEnterRemarks() {
-
+        /*
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             AmitalGatewayUtil.Instance.ShowCFIFILEMEnterRemarks(
                 this.Entity.CustomFileNo,
@@ -228,6 +311,47 @@ export class FieldTemplateComponent {
             let mess = "ShowCFIFILEMEnterRemarks -" + this.Entity.CustomFileNo;
             myMessageWindow.Show(mess);
         }
+        */
+
+        let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
+        let myViewModelName = "FieldTemplateComponent.ts-ShowCFIFILEMEnterRemarks";
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclarationReferantDataList.DeclarationId &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                        }
+                    }
+                );
+
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(myDeclarationReferantDataList.CustomFileNo, myDeclarationReferantDataList.DeclarationId,
+                        myViewModelName);
+
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowCFIFILEMEnterRemarks",
+                "CFIHMAIN.LogitudeTask",
+                "ShowCFIFILEMEnterRemarks",
+                unifreightMessageM,
+                " הצגת מסך : הזנת הערות לתור");
+
+        }
+        else {
+            alert("ShowCFIFILEMEnterRemarks");
+        }
+
     }
 
 
