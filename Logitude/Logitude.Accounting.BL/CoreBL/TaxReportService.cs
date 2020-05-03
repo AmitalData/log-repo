@@ -60,6 +60,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private static List<LedgerTransaction> journalsTransactions;
         private static  List<Simplog.Data.CommonDataModel.EntityPOCOs.Card> cards;
         private static List<GLAccountPM> oppositeAccounts;
+        private static List<GLAccountPM> gLAccounts;
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
 
@@ -176,23 +177,24 @@ namespace Logitude.Accounting.BL.CoreBL
                 FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
                 FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
                 JournalQueryService journalQueryService = new JournalQueryService(tenant);
-               
-              
-                bool isEquipment = false;
-                APInvoicePM aPInvoice = null;
+            List<string> JournalIds = ledgerTransactons.Where(d => d.JournalId != null).Select(d => d.JournalId).ToList();
+            List<JournalPM> journalPMs = journalQueryService.GetJournalsByIds(JournalIds, tenant);
+            journalsTransactions = ledgerTransactionRepository.GetLedgerTransactionsByJournalIds(JournalIds, tenant);
 
-                List<string> glAccountIds = ledgerTransactons.Select(d => d.OppositGLAccount).ToList();
-                oppositeAccounts = gLAccountQueryService.GetByGLAccountsIdList(glAccountIds, tenant);
-                List<GLAccountPM> gLAccounts = gLAccountQueryService.GetByGLAccountsIdList(glAccountIds, tenant);
+
+            bool isEquipment = false;
+                APInvoicePM aPInvoice = null;
+            List<string> glAccountIds = journalsTransactions.Select(d => d.AccountId).ToList();
+
+            List<string> oppositeglAccountIds = ledgerTransactons.Select(d => d.OppositGLAccount).ToList();
+                oppositeAccounts = gLAccountQueryService.GetByGLAccountsIdList(oppositeglAccountIds, tenant);
+                 gLAccounts = gLAccountQueryService.GetByGLAccountsIdList(glAccountIds, tenant);
                 cards = cardRepository.GetCardsByGLAccountIds(glAccountIds, tenant).ToList();
 
                 List<string> apInvoiceIds = ledgerTransactons.Where(d => d.AccountingEntity == "4").Select(d => d.AccountingEntityId).ToList();
                 List<APInvoicePM> aPInvoices = aPInvoiceQueryService.GetAPInvoicesByIds(apInvoiceIds, tenant, taxReport.TaxReportMonth);
 
-                List<string> JournalIds = ledgerTransactons.Where(d => d.JournalId != null).Select(d => d.JournalId).ToList();
-                List<JournalPM> journalPMs = journalQueryService.GetJournalsByIds(JournalIds, tenant);
-                journalsTransactions = ledgerTransactionRepository.GetLedgerTransactionsByJournalIds(JournalIds, tenant);
-                List<string> ids = new List<string>();
+              List<string> ids = new List<string>();
                 ids = aPInvoices.Select(d => d.Id).ToList();
                 APInvoiceTotalVATQuery myTotalVATQuery = new APInvoiceTotalVATQuery(tenant);
                 totalvats = new List<APInvoiceTotalVATPM>();
@@ -217,7 +219,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 card = account != null ? cards.Where(d => d.GLAccountId == account.Id).FirstOrDefault() : null;
                 if (account != null)
                 {                   
-                    if(account.AccountTypeCode=="3" || account.AccountTypeCode == "1")
+                    if(account.AccountTypeCode=="3" || account.AccountTypeCode == "2" || account.AccountTypeCode == "1")
                     {
                         VatNumber = card != null ? card.VatNumber : null;
                     }
@@ -343,7 +345,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             else {
                 LedgerTransaction ledgerTransaction = journalsTransactions.Where(d => d.JournalId == transaction.JournalId && d.Reference1 == transaction.Reference && d.LocalAmountCredit != 0 && d.Account.ChartOfAccountsTypeCode !="5").FirstOrDefault();
-                return ledgerTransaction != null? oppositeAccounts.Where(d => d.Id == ledgerTransaction.AccountId).FirstOrDefault(): null;
+                return ledgerTransaction != null? gLAccounts.Where(d => d.Id == ledgerTransaction.AccountId).FirstOrDefault(): null;
             }
 
         }
