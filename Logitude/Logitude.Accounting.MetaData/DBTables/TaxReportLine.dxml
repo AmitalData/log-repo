@@ -141,6 +141,14 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="TotalInvoiceAmount"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
