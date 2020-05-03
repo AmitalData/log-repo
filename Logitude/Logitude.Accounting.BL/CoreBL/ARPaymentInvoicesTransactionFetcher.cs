@@ -37,7 +37,8 @@ namespace Logitude.Accounting.BL.CoreBL
             paymentId = arpaymentId;
             this.glaccountId = glaccountId;
 
-            paymentTransaction = GetPaymentTransaction();
+            if(paymentId != null)
+                paymentTransaction = GetPaymentTransaction();
 
             transactions = new List<LedgerTransactionPM>();
         }
@@ -172,21 +173,24 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private List<LedgerTransactionPM> FillReconciledPaymentAmountOnTransaction(List<LedgerTransactionPM> transactions)
         {
-            List<ReconciliationLinePM> reconciliationLines = GetReconciliationLinesForTransactions(transactions);
-
-            foreach (LedgerTransactionPM transaction in transactions)
+            if (paymentId != null)
             {
-                List<ReconciliationLinePM> transactionRecoLines = reconciliationLines.Where(d => d.TransactionId == transaction.Id).ToList();
+                List<ReconciliationLinePM> reconciliationLines = GetReconciliationLinesForTransactions(transactions);
 
-                decimal reconciledAmount = 0;
-                transactionRecoLines.ForEach(recoLine =>
+                foreach (LedgerTransactionPM transaction in transactions)
                 {
-                    if (recoLine.ReconciledWithTransactionId == paymentTransaction.Id && paymentTransaction.Id != null && recoLine.IsRecoCancelled == false)
-                        reconciledAmount += recoLine.ReconciliationAmount;
-                });
+                    List<ReconciliationLinePM> transactionRecoLines = reconciliationLines.Where(d => d.TransactionId == transaction.Id).ToList();
 
-                transaction.PaymentReconciledAmount = reconciledAmount;
+                    decimal reconciledAmount = 0;
+                    transactionRecoLines.ForEach(recoLine =>
+                    {
+                        if (recoLine.ReconciledWithTransactionId == paymentTransaction.Id && paymentTransaction.Id != null && recoLine.IsRecoCancelled == false)
+                            reconciledAmount += recoLine.ReconciliationAmount;
+                    });
 
+                    transaction.PaymentReconciledAmount = reconciledAmount;
+
+                }
             }
 
             return transactions;
