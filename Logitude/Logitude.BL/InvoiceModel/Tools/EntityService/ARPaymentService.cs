@@ -1605,7 +1605,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (this.entityPM.SetApproved && string.IsNullOrEmpty(entityPM.TransferError))
             {
-                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
+                if (this.isTransferToDropbox && this.TransferToDropboxActivated)
                 {
                     this.entityPM.TransferStatusCode = "TR";
                 }
