@@ -1,7 +1,8 @@
-import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnInit, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 
 @Component({
     template:
@@ -24,20 +25,23 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
     `,
 })
 
-export class AccountingTabComponent implements OnInit {
+export class AccountingTabComponent implements OnInit,AfterViewInit {
     public EntityPM: any = null;
     public ObjectTableName: string;
     public TabTitleTextCode: string = null;
-    @ViewChild("Child", { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
-    constructor(private entityArgs: EntityArgs) {
+   // @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+   @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+   constructor(private entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.TabTitleTextCode = this.ObjectTableName + ".TH.Accounting";
         this.InitializeComponent();
     }
+    ngAfterViewInit(): void {
+        this.LoadComponent();
+    }
 
     ngOnInit() {
-        this.LoadComponent();
         this.Listen();
     }
 
@@ -181,7 +185,7 @@ export class AccountingTabComponent implements OnInit {
             }
         }
 
-        if (!AppTool.IsNullOrEmpty(myComponentPath)) {
+        if (!AppTool.IsNullOrEmpty(myComponentPath) && this.viewContainerRef) {
             SessionLocator.DynamicLoader.Load(myComponentPath, this.viewContainerRef)
                 .then(cmpRef => {
                     //cmpRef.instance
