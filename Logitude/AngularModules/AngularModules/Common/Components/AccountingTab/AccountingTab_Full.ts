@@ -2,7 +2,7 @@ import { TextCodeTranslator } from './../../../Infrastructure/Utilities/TextCode
 import { GLAccountPM } from './../../../Accounting/EntityPMs/GLAccountPM';
 import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
 import { GLAccountPMService } from './../../../Accounting/Services/StandardPMs/GLAccountPMService';
-import {Component, OnDestroy, ViewContainerRef, ViewChild, OnInit} from '@angular/core';
+import {Component, OnDestroy, ViewContainerRef, ViewChild, OnInit, AfterViewInit} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -18,8 +18,8 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
     templateUrl: './AccountingTab_Full.html',
 })
 
-export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnInit {
-    @ViewChild("TabPlaceholder", { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnInit,AfterViewInit {
+    @ViewChild("TabPlaceholder", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     public EntityPM: any = null;
     public ObjectTableName: string;
     public DataContext = this;
@@ -46,8 +46,10 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.myCardListService = new CardListService();
-        this.LoadCardList();
         this.Listen();
+    }
+    ngAfterViewInit(): void {
+        this.LoadCardList();
     }
 
     private SaveCompletedEvent: any = null;
