@@ -36,7 +36,7 @@ export class RootComponent_Cust implements AfterViewInit {
   }
 
   Boot(args: any) {
-    ServiceHelper.HttpClient = args["HttpClient"];
+    ServiceHelper.HttpClient = args["Http"];
     SessionLocator.DynamicLoader = DynamicLoader;
     SessionLocator.RootComponent = this;
 
