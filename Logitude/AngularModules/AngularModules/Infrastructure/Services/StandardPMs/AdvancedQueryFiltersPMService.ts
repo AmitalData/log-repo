@@ -6,7 +6,7 @@ import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/EntityPMServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
 
 import {AdvancedQueryFilterPM} from '../../EntityPMs/AdvancedQueryFilterPM';
@@ -34,7 +34,7 @@ export class AdvancedQueryFiltersPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenant?' + 'tenant=' + tenant + '&loggedcontactid=' + userid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pms = response;
 
@@ -48,7 +48,7 @@ export class AdvancedQueryFiltersPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantandquery?' + 'tenant=' + tenant + '&loggedcontactid=' + userid + '&queryCode=' + queryCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pms = response;
 
@@ -63,7 +63,7 @@ export class AdvancedQueryFiltersPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantuserobjecttablequery?' + 'tenant=' + tenant + '&objecttableCode=' + objecttableCode + '&queryCode=' + queryCode + '&loggedcontactid=' + userid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pms = response;
 
@@ -75,7 +75,7 @@ export class AdvancedQueryFiltersPMService {
 
     insert(entityPM: AdvancedQueryFilterPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -115,7 +115,7 @@ export class AdvancedQueryFiltersPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });
@@ -123,7 +123,7 @@ export class AdvancedQueryFiltersPMService {
 
     delete(entityPM: AdvancedQueryFilterPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -164,7 +164,7 @@ export class AdvancedQueryFiltersPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });

@@ -30,7 +30,7 @@ import { ModulesService } from '../../../Services/ModulesService';
  
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ReceivablePageComponent.html',
 })
 

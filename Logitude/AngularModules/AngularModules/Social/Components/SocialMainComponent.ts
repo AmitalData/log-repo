@@ -10,7 +10,7 @@ import {ConversationHeaderExtendedPMService} from '../Services/ExtendedPMs/Conve
 
 import {AppTool} from '../../Infrastructure/Tools';
 @Component({
-    moduleId: module.id,
+    
     selector: 'SocialMainComponent',
     templateUrl: './SocialMainComponent.html',
 

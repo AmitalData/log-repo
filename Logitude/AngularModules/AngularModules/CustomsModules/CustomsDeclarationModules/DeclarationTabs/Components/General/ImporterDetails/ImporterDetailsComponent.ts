@@ -11,7 +11,7 @@ import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow'
 
 @Component({
 
-    moduleId: module.id,
+    
     templateUrl: './ImporterDetailsComponent.html',
     selector :'ImporterDetailsComponent',
 

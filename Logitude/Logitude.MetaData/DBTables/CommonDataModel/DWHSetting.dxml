@@ -5,6 +5,12 @@
   DBType="Main"
   Module="Common">
   <Column
+    Name="IsParentTenant"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Tenant"
     Type="int">
     <Constraints
@@ -25,14 +31,14 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="UserName"
+    Name="Password"
     Type="varchar"
     Size="200">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="Password"
+    Name="UserName"
     Type="varchar"
     Size="200">
     <Constraints
@@ -44,12 +50,6 @@
     Size="200">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="IsParentTenant"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="AutomaticLastUpdateDate"

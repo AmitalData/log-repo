@@ -1,34 +1,16 @@
-declare var window: any;
-import {Observable}     from 'rxjs/Rx';
-import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
-import { BaseComponent } from       '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { TextCodeTranslator } from  '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { ListComponentArgs } from '../../../Infrastructure/Args';
-
 import { ApiQueryFilters } from  '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ServiceResponse } from  '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityListService } from   '../../../Infrastructure/Services/EntityListService';
-import { SignStationExtendedListService, SignStationList, SignStationGroup} from   '../../../Customs/Services/ExtendedLists/SignStationExtendedListService';
-   
-
-
-
-import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
-
+import { SignStationExtendedListService, SignStationGroup} from   '../../../Customs/Services/ExtendedLists/SignStationExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SignStationsComponent.html',
 })
-
-
-
-
 
 export class SignStationsComponent
     extends BaseComponent

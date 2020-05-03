@@ -30,13 +30,15 @@ import { DeclarationPM } from '../../../../../../Customs/EntityPMs/DeclarationPM
 import {CustomsSettingExtendedListService} from '../../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SupplierInvoiceItemVehicleComponent.html',
 })
 
 
 
 export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
+  public ExcludeFromInterface: any;
+
     public ObjectTableName: string = "Customs.SupplierInvoiceItemVehicle";
     public DataContext = this;
     public invoiceItemPM: SupplierInvoiceItemPM;

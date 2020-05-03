@@ -17,7 +17,7 @@ import {InviteeArgs} from '../../../../CRM/Args';
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditInviteesComponent.html',
 })
 

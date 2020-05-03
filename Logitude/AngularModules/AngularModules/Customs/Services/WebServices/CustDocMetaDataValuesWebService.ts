@@ -1,7 +1,7 @@
 ﻿import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -24,7 +24,7 @@ export class CustDocMetaDataValuesWebService {
         authHeader.append('Token', SessionInfo.Token);
         authHeader.append('Content-Type', 'application/json');
         var params = encodeURIComponent(customsDocumentFilingsIds);
-        return Observable.defer(() => {
+        return defer(() => {
             var x = 10;
             var custDocMetadataValue = new CustomsDocumentMetaDataValuePM(null);
             custDocMetadataValue.CustomsDocumentId = customsDocumentFilingsIds;;
@@ -58,7 +58,7 @@ export class CustDocMetaDataValuesWebService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var params = encodeURIComponent(entityId);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCustomsDocumentMetaDataValuesByConnectedEntity?' + 'entityId=' + params, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();

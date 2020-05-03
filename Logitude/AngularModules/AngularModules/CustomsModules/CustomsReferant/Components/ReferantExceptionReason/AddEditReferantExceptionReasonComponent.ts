@@ -21,7 +21,6 @@ import { ExceptionReasonExtendedListService } from '../../../../Customs/Services
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './AddEditReferantExceptionReasonComponent.html',
 })
 

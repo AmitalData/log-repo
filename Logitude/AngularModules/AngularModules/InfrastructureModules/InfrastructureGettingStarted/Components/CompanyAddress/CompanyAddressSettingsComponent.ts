@@ -22,7 +22,7 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 
 @Component({
     selector: 'CompanyAddressSettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './CompanyAddressSettingsComponent.html',
 })
 

@@ -12,7 +12,7 @@ import {ObjectTablePM} from '../../../../Infrastructure/EntityPMs/ObjectTablePM'
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditStandardFieldComponent.html',
 })
 

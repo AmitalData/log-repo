@@ -1,6 +1,5 @@
 import { browser, by, element, WebDriver, protractor, ExpectedConditions } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
-import { Console } from '@angular/core/src/console';
 
 export class ReceivablesTabComponent {
     private Helper: FieldsHelper;

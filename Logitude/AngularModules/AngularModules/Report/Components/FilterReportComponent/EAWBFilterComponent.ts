@@ -14,7 +14,7 @@ import {CodeNameClass} from './CodeNameClass';
 import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'EAWBFilterComponent',
     templateUrl: './EAWBFilterComponent.html',
     inputs: ['ReportsPreview']

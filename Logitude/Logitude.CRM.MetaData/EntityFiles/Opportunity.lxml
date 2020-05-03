@@ -7507,29 +7507,29 @@
     <Feature
       Code="&quot;OUTLOOKCONNETION&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Opportunity.Features.OutlookConnection&quot;"
-      FeatureDefaultText="&quot;Outlook Connection&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Opportunity.Features.OutlookConnection&quot;"
+      FeatureDefaultText="&quot;Outlook Connection&quot;" />
     <Feature
       Code="&quot;Opportunity.Feature.EXCEL&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Opportunity.Features.EXCEL&quot;"
-      FeatureDefaultText="&quot;Download to Excel&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Opportunity.Features.EXCEL&quot;"
+      FeatureDefaultText="&quot;Download to Excel&quot;" />
     <Feature
       Code="&quot;More&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Opportunity.Features.More&quot;"
-      FeatureDefaultText="&quot;More&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Opportunity.Features.More&quot;"
+      FeatureDefaultText="&quot;More&quot;" />
   </AdditionalFeatures>
 </entity>

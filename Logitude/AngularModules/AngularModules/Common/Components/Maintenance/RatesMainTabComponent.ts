@@ -12,12 +12,12 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'RatesMainTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './RatesMainTabComponent.html',
 })
 
 export class RatesMainTabComponent extends BaseComponent {
-
+  public imgNgStyle: any = null;
     //Props 
     public TodayDate: Date = DateTool.GetCurrentDateAsUtc();
     public ItemsSource: RatesItem[] = [];

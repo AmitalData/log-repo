@@ -1,6 +1,5 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../../Controls/Pipes/TextCodeTranslationPipe';
-import {Http} from '@angular/http';
 import {WebFreightDomainService} from '../../../../Infrastructure/Services/WebFreightDomainService';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -8,7 +7,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './DownloadAllFilesComponent.html',
     //pipes: [TextCodeTranslationPipe],
@@ -22,9 +21,8 @@ export class DownloadAllFilesComponent {
     Filters: ApiQueryFilters;
     url: string;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private http: Http) {
-        ServiceHelper.Http = http;
-        //serviceArgs.http = http;
+    constructor() {
+
     }
     ObjectTableId: string;
     FileName : string;

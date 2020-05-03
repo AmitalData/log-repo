@@ -1,24 +1,19 @@
 declare var window: any;
-import { Component, AfterViewInit, ChangeDetectorRef, OnInit, Input, Output, OnDestroy } from '@angular/core';
+import { Component, Input,  OnDestroy } from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {AppTool, ArrayTool} from '../../../Infrastructure/Tools';
-import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {DocumentsFilingPM}  from '../../../Common/EntityPMs/DocumentsFilingPM';
 import {CustomsDocumentPM} from '../../../Customs/EntityPMs/CustomsDocumentPM';
 import {CustomsDocumentsTicketPM} from '../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
-import {CustomsDocumentPointerPM} from '../../../Customs/EntityPMs/CustomsDocumentPointerPM';
 import {CustomsDocumentTicketViewModel} from './CustomsDocumentTicketViewModel';
 import {RelatedDocumentViewModel} from './RelatedDocumentViewModel';
 import {CustDocsTicketWebService} from '../../../Customs/Services/WebServices/CustDocsTicketWebService';
 import {CustDocMetaDataValuesWebService} from '../../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
-import {Observable}     from 'rxjs/Rx';
 import {CustomsDocumentMetaDataValuePM} from '../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
 import {CustomsDocumentsDataProvider} from './CustomsDocumentsDataProvider';
 import {ICustomsDocumentsController} from './ICustomsDocumentsController';
@@ -32,13 +27,11 @@ import { CommunicationLogStepListService } from '../../../Common/Services/Extend
 import { CustomsRequestMenuService } from '../../../Customs/Services/Others/CustomsRequestMenuService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-///import { setTimeout } from 'timers';
-
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsDocumentsComponent.html',
 })
 

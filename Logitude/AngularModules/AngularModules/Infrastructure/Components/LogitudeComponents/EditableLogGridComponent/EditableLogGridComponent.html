@@ -150,7 +150,7 @@
                         <img [src]="row.DetailsIcon" *ngIf="DetailButtonVisibile && row.IsExpandable" (click)="OnPlusClick(row)" style="width:11px;height:11px;margin: 7px;" />
                         <!--<button *ngIf="DetailButtonVisibile" (click)="OnPlusClick(row)" style="width:20px;">{{row.DetailsIcon}}</button>-->
                         <div *ngFor="let col of customcolumns; let colIndex = index" [class.DisabledCell]="Disabled || (AllowDisableCells && !col.AllowDisableCells && (row.rowData[DisableRowByFieldName] == DisableRowByFieldValue)) || (col.Disabled)" [tabindex]="(AllowDisableCells && !col.AllowDisableCells && (row.rowData[DisableRowByFieldName] == DisableRowByFieldValue)) || (col.Disabled) ? -1 : 1" style="display: block;position: absolute;" [ngStyle]="col.Style">
-                            <div [ngStyle]="{background: row.rowData.CellBackground}">
+                            <div [ngStyle]="{background: row.rowData.CellBackground}" [style.height.px]="rowHeight">
                                 <!--<div style="position:relative;">-->
                                 <ng-template *ngIf="col.hastemplate" ngFor [ngForOf]="[row.rowData]"
                                           [ngForTemplate]="col.innerContentTpl.length == 2 ?col.innerContentTpl[1] :col.innerContentTpl[0] ">

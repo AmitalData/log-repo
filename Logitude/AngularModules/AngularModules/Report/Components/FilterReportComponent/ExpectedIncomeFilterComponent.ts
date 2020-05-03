@@ -8,7 +8,7 @@ import {Component}  from '@angular/core';
 import {CodeNameClass} from './CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ExpectedIncomeFilterComponent',
     templateUrl: './ExpectedIncomeFilterComponent.html',
 })

@@ -5,8 +5,6 @@ import { SessionInfo } from '../Utilities/SessionInfo';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AppTool } from '../Tools';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class LoginService {

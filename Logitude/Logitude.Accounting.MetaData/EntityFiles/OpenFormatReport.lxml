@@ -1436,5 +1436,15 @@
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;TestingMode&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;OpenFormatReport.Features.TestingMode&quot;"
+      FeatureDefaultText="&quot;Testing Mode&quot;" />
+  </AdditionalFeatures>
 </entity>

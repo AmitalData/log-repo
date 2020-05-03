@@ -5,7 +5,7 @@ import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MainReportSchedulerComponent.html',
 })
 

@@ -23,7 +23,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'ClientSearchByIDComponent',
-    moduleId: module.id,
+    
     templateUrl: './ClientSearchByIDComponent.html',
 })
 

@@ -68,7 +68,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 var start = new DateTime(_SeedDate.Date.Year, _SeedDate.Date.Month, 1);
                 var end = start.AddMonths(1).AddMinutes(-1);
                 
-                using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
+                using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(15)))
                 {
                     _AccountingContext = AccountingContext.GetContext(_Tenant);
 

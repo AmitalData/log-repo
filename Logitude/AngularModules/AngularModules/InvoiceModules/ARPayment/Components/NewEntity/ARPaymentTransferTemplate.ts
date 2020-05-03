@@ -15,7 +15,7 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ARPaymentPMService} from '../../../../Invoice/Services/StandardPMs/ARPaymentPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARPaymentTransferTemplate.html',
 })
 

@@ -2,44 +2,32 @@ declare var window;
 import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool, FontTool } from '../../../../../Infrastructure/Tools';
-import { ItemCodeComponent } from '../../../../../Customsmodules/Customsdeclarationmodules/Declarationsupplierinvoice/Components/Supplierinvoices/SupplierInvoiceGeneralTabComponent';
-import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { ConsignmentPM } from '../../../../../Customs/EntityPMs/ConsignmentPM';
 import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
-
 import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
-
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
-
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { CardPMService } from '../../../../../Common/Services/StandardPMs/CardPMService';
 import { CustomsHouseTypeExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomsHouseTypeExtendedPMService';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
-import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
-
 import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
 import { CustomsRequiredFieldListService } from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
-import { GITITEMDto } from '../../../../../Customs/EntityPMs/Extended/GITITEMDto';
 import { GITITEMExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/GITITEMExtendedPMService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
-import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationClassificationComponent.html',
 })
 //

@@ -90,12 +90,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         StatusLocalName, 
 	         IsLedgerCreated, 
 	         LineCreditAccountTypeCode, 
-
-	         TaxReportJournalLineNumber,
-
+	         TaxReportJournalLineNumber, 
 	         DocumentDate, 
 	         DueDate,
-
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

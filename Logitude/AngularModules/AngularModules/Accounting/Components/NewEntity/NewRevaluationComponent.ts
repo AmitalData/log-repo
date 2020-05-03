@@ -13,7 +13,7 @@ import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewRevaluationComponent.html',
 })
 

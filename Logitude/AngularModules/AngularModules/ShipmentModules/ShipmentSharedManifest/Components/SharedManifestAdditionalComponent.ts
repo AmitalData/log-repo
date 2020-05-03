@@ -66,7 +66,7 @@ import { ShipmentPickUpDeliverySL } from '../../../Common/DataContracts/Shipment
 import {CitySelectionArgs} from '../../../Common/Args';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedManifestAdditionalComponent',
     templateUrl: './SharedManifestAdditionalComponent.html',
     providers: [SharedAgentManifestService, AgentSharedManifestPMService,EntityPMService],

@@ -11,17 +11,17 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CMConnectedDeclarationTabComponent.html',
     providers: [CourierMasterService]
 })
 
 
 export class CMConnectedDeclarationTabComponent extends BaseComponent {
-  
+  public SelectedRow2: any;
+
     ObjectTableName: string = "Customs.CourierMaster";
     DataContext: any = this;
     entityPM: CourierMasterPM;

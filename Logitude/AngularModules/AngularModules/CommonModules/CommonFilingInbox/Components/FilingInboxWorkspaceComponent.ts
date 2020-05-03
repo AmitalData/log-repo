@@ -31,7 +31,7 @@ import { DocumentsFilingExtendedPMService } from '../../../Common/Services/Exten
 declare var window, SetHtmlToFrame: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FilingInboxWorkspaceComponent.html',
 })
 
@@ -212,7 +212,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             });
         }
     }
-    CloseToolTipArea(arg: boolean) {
+    CloseToolTipArea() {
         this.DontShowInboxToolTip = true;
     }
     OpenToolTipArea() {
@@ -1453,7 +1453,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                             windowArgs.SourceEntity = myResult.Result;//this.rowData;
                             windowArgs.HasSharedDocs = hasSharedDocs;
                             newWindow.WindowArgs = windowArgs;
-                            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/ForwarderShipmentsComponent');
+                          newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/ForwarderShipmentsComponent');
                         });
                     }
                 }
@@ -1477,10 +1477,10 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             windowArgs.IsNew = true;
             newWindow.WindowArgs = windowArgs;
             if (SessionLocator.PrivateLableSettings) {
-                newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
+              newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
             }
             else if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") {
-                newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');
+              newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');
             }
             else {
 

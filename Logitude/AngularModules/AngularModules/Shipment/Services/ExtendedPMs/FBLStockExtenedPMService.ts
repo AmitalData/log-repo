@@ -1,6 +1,6 @@
  
 import {Injectable} from '@angular/core';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -28,7 +28,7 @@ export class FBLStockExtenedPMService {
 
         var url = this._apiUrl + '/GetAllFBLStockPMsByTenant?tenant=' + tenant ;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -53,7 +53,7 @@ export class FBLStockExtenedPMService {
 
         var url = this._apiUrl + '/GetAllFBLStockPMsCountByTenant?tenant=' + tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                
@@ -70,7 +70,7 @@ export class FBLStockExtenedPMService {
 
         var url = this._apiUrl + '/GetFBLStockPMsByTenant?tenant=' + tenant + '&pageSize=' + pageSize + '&pageIndex=' + pageIndex;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -95,7 +95,7 @@ export class FBLStockExtenedPMService {
 
         var url = this._apiUrl + '/GetCreateFBLStocksOperation?myStartNumber=' + myStartNumber + '&myEndNumber=' + myEndNumber;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myResult = response;
@@ -112,7 +112,7 @@ export class FBLStockExtenedPMService {
 
         var url = this._apiUrl + '/GetDeleteFBLStocksOperation?myStackId=' + myStackId  + '&isDeletingSeries=' + isDeletingSeries;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myResult = response;
@@ -128,7 +128,7 @@ export class FBLStockExtenedPMService {
 
         var url = this._apiUrl + '/GetAllAvailableStockSeries';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();

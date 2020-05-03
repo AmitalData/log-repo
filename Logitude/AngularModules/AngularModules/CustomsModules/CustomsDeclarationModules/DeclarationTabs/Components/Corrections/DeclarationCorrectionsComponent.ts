@@ -39,7 +39,7 @@ import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: '././DeclarationCorrectionsComponent.html',
 })
 

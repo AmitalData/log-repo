@@ -22,7 +22,7 @@ import {PackagesTabComponent, ShipmentPackageItem} from '../../../ShipmentPackag
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditOnCarriageComponent.html',
 })
 

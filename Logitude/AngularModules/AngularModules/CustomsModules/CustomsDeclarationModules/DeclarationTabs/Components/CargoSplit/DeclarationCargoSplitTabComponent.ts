@@ -25,7 +25,7 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationCargoSplitTabComponent.html',
 })
 

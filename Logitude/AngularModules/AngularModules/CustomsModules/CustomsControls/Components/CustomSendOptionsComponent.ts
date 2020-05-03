@@ -16,7 +16,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'custom-send-options',
-    moduleId: module.id,
+    
     //templateUrl: 'CustomsRequestsComponent.html',
     host: {
         '(document:click)': 'handleClick($event)',
@@ -59,12 +59,12 @@ export class CustomSendOptionsComponent implements OnInit {
 
       
     private _CustomSendOptionsArgs: CustomSendOptionsArgs;
-    private _DropdownDisplay: string = 'none';
+     _DropdownDisplay: string = 'none';
     private _ElementRef: any;
 
     static MyId: number = 0;
-    private _CustomSendOptionsComponentId: string;
-    private _CustomSendOptionsComponentMenuId: string;
+     _CustomSendOptionsComponentId: string;
+     _CustomSendOptionsComponentMenuId: string;
     _IsLoaded: boolean = false;
     private EntityResourceService: EntityResourceService;
     constructor(private _CD: ChangeDetectorRef, myElement: ElementRef) {

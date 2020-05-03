@@ -17,7 +17,7 @@ import { IIGGeneralMessagesService } from '../../../Customs/Services/WebServices
 import { CustomMessageProgressComponent, CustomMessageProgressHelper } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsClosedTablesComponent.html',
 })
 

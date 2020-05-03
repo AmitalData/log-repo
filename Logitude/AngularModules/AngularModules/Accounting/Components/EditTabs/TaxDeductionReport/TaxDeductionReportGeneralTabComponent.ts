@@ -12,7 +12,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TaxDeductionReportGeneralTabComponent.html'
 })
 

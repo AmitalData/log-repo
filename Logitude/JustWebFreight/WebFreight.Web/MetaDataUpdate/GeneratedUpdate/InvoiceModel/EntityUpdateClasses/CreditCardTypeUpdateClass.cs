@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class CreditCardTypeUpdateClass
    {  		
-		public const string HashString = "3fce31f2e47ec2ec0b6b71bbaff4b568";
+		public const string HashString = "0a62ea509e1f9cbbda5b9221920664af";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -88,6 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    DBTableName =  "CreditCardTypes",
 			      				    ObjectTableSingular =  "Credit Card Type",
 			      				    ObjectTablePlural =  "Credit Card Types",
+			      				    DescriptionDefaultText =  "Maintain Credit Cards information.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -603,15 +604,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable CreditCardTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CreditCardType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode CreditCardTypeTextCode_CreditCardTypeOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.O.TableDescription", DefaultText = "Maintain Credit Cards information.",LocalDefaultText = null, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

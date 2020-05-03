@@ -36,8 +36,6 @@ import { DeclarationMamanSpecialActionListService } from '../../../Customs/Servi
 import { DeclarationMamanSpecialActionPM } from '../../../Customs/EntityPMs/DeclarationMamanSpecialActionPM';
 import { DeclarationMamanSpecialActionPMService } from '../../../Customs/Services/StandardPMs/DeclarationMamanSpecialActionPMService';
 import { DeclarationCourierStatusWebService } from '../../../Customs/Services/WebServices/DeclarationCourierStatusWebService';
-import { retry } from 'rxjs/operator/retry';
-import { forEach } from "@angular/router/src/utils/collection";
 import { DeclarationMamanSpecialActionList } from "../../../Customs/EntityLists/DeclarationMamanSpecialActionList";
 import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 import { CourierPendingReasonListService } from '../../../Customs/Services/StandardLists/CourierPendingReasonListService';
@@ -51,11 +49,12 @@ import { AmitalGatewayUtil } from "../../../Infrastructure/Utilities/AmitalGatew
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierWorksheetListTemplate.html',
 })
 
 export class CourierWorksheetListTemplate {
+  public entityPM: any;
 
     _CourierWorksheet: DeclarationCourierStatusList;
     public fieldName: any;
@@ -108,7 +107,7 @@ export class CourierWorksheetListTemplate {
     }
 
     //  @ViewChild( SplitButtonComponent)  public MySplitButtonComponent: SplitButtonComponent = new SplitButtonComponent(null,null);
-    //@ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
+    //@ViewChild('ShortTitle', { read: ViewContainerRef, static: false }) ShortTitleViewContainerRef: ViewContainerRef;
     //@ViewChild('MySplitButtonComponent', { read: SplitButtonComponent }) MySplitButtonComponent: SplitButtonComponent;
 
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private CD: ChangeDetectorRef) {

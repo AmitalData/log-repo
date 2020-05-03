@@ -2,18 +2,10 @@
 declare var System: any;
 declare var window: any;
 import { Component, OnInit, Type, Output, EventEmitter, ComponentRef, ViewChild, QueryList, ViewChildren, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import * as Rx from 'rxjs/Rx';
-import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
-//import {CORE_DIRECTIVES, Control, NgFormControl} from '@angular/common';
-//import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
-//import {IconButton} from '../../../Controls/IconButton';
-//import {LogGridComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent';
-//import {AdvanceSearchComponent} from '../../../Infrastructure/Components/AdvanceSearchComponent/AdvanceSearchComponent';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { Http } from '@angular/http';
 import { ServiceArgs } from '../../DataContracts/ServiceArgs';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { EntityResourceService } from '../../Services/EntityResourceService';
@@ -23,11 +15,9 @@ import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-//import {SearchTextBox} from '../../../Controls/SearchTextBox';
 import { LogEvents } from '../../../Infrastructure/Utilities/LogEvents';
 import { PubSubService } from '../../../Infrastructure/Utilities/events/ApiFiltersEvent';
 import { PubSubService1 } from '../../../Infrastructure/Utilities/events/ApiFiltersEvent1';
-//import {QueryListComponent} from '../../../Infrastructure/Components/LogitudeComponents/QueryListComponent/QueryListComponent';
 import { AppTool, DateTool } from '../../Tools';
 import { ListComponentArgs, NewEntityArgs } from '../../Args';
 import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
@@ -36,7 +26,6 @@ import { EntityPMService } from '../../Services/EntityPMService';
 import { TotangoService } from '../../Services/WebServices/TotangoService';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 import { QueryColumnsPMService } from '../../../Infrastructure/Services/StandardPMs/QueryColumnsPMService';
-import { QueryColumnPM } from '../../../Infrastructure/EntityPMs/QueryColumnPM';
 import { GeneralEntitiesArgs } from '../../../Infrastructure/DataContracts/GeneralEntitiesArgs';
 import { GeneralEntitiesService } from '../../../Infrastructure/Services/StandardPMs/GeneralEntitiesService';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -50,9 +39,11 @@ import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './ListComponent.html',
     //directives: [CORE_DIRECTIVES, IconButton, LogGridComponent, NgFormControl, AdvanceSearchComponent, QueryListComponent, LocationDirective, SearchTextBox],
@@ -869,40 +860,41 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
     ResourcesLoaded: boolean = false;
-    Run(args: ListComponentArgs) {
-        this.CurrentSession.AddMenuReference(this.ComponentRef);
-        this.CurrentSession.AddListComponent(this);
+  Run(args: ListComponentArgs) {
+    this.CurrentSession.AddMenuReference(this.ComponentRef);
+    this.CurrentSession.AddListComponent(this);
 
-        this.listArgs = args;
-        if (!this.IsDemoTenant) {
-            if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
-                this.Title = this.listArgs.DisplayTitle;
-            }
-            //args.QueryCode=this.ObjectTableName + '.' + args.QueryCode
-            this.QueryCode = args.QueryCode;
-            this.ObjectTableName = args.ObjectTableName;
-            this.SetAddButtonTitle();
-            this.MethodName = args.MethodName;
-            this.BackBtnTitle = args.BackButtonTitle;
-            this.ShowViews = args.ShowViews;
-            this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-            this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
+    this.listArgs = args;
+    if (!this.IsDemoTenant) {
+      if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
+        this.Title = this.listArgs.DisplayTitle;
+      }
+      //args.QueryCode=this.ObjectTableName + '.' + args.QueryCode
+      this.QueryCode = args.QueryCode;
+      this.ObjectTableName = args.ObjectTableName;
+      this.SetAddButtonTitle();
+      this.MethodName = args.MethodName;
+      this.BackBtnTitle = args.BackButtonTitle;
+      this.ShowViews = args.ShowViews;
+      this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+      this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
 
-            this.SearchTextValue = new FormControl();
-            this.NewButtonLable = args.NewButtonLabel;
-            this.SearchTextValue.valueChanges
-                .debounceTime(500)
-                .distinctUntilChanged()
-                .subscribe((search: string): any => {
-                    this.searchFields = (search === "") ? this.searchFields = "" : this.searchFields = search;
-                    this.SearchFieldchangeevent.emit(this.searchFields);
-                });
+      this.SearchTextValue = new FormControl();
+      this.NewButtonLable = args.NewButtonLabel;
 
+      this.SearchTextValue.valueChanges
+        .pipe(
+          debounceTime(500),
+          distinctUntilChanged()
+        ).subscribe((search: string): any => {
+          this.searchFields = (search === "") ? this.searchFields = "" : this.searchFields = search;
+          this.SearchFieldchangeevent.emit(this.searchFields);
+        });
 
-            this.GetQueries();
-            this.RunComponent();
-        }
+      this.GetQueries();
+      this.RunComponent();
     }
+  }
 
     ViewInitCompleted(event) {
         //this.afterViewGridInitCompleted.emit(event);

@@ -38,7 +38,7 @@ import { AccountingNoteListService } from '../../../Services/StandardLists/Accou
 declare var makeAmBarChart;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GLAccountOverviewComponent.html',
 })
 

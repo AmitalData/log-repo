@@ -18,7 +18,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 
 @Component({
     selector: 'PartnersTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './PartnersTabComponent.html',
 })
 

@@ -13,7 +13,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditAllInChargesComponent.html',
 })
 

@@ -1,10 +1,8 @@
 declare var window;
-
 import { CustomsDocumentPM } from '../../../../../Customs/EntityPMs/CustomsDocumentPM';
 import { CustomsDocumentsTicketPM } from '../../../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
 import { CustomsDocumentPointerPM } from '../../../../../Customs/EntityPMs/CustomsDocumentPointerPM';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
-import { DocumentsFilingPM } from '../../../../../Common/EntityPMs/DocumentsFilingPM';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
 import { ICustomsDocumentsController } from '../../../../CustomsDocuments/Components/ICustomsDocumentsController';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
@@ -12,22 +10,22 @@ import { CustomsDocumentsDefinitionExtendedService } from '../../../../../Custom
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomsDocumentTicketViewModel } from '../../../../CustomsDocuments/Components/CustomsDocumentTicketViewModel';
 import { RelatedEntityParams } from '../../../../CustomsDocuments/Components/CustomsDocumentsComponent';
-import { Observable } from 'rxjs/Rx';
-import { map } from 'rxjs/operators';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 import { SupplierInvoiceItemPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
 import { CustomsDocumentsDefinitionPM } from '../../../../../Customs/EntityPMs/CustomsDocumentsDefinitionPM';
-import { AppTool, ArrayTool, DateTool } from '../../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { Guid } from '../../../../../Infrastructure/Utilities/Guid';
-import { Http, Headers } from '@angular/http';
 import { SessionInfo } from '../../../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceHelper } from '../../../../../Infrastructure/Utilities/ServiceHelper';
 import { ConnectedToItem } from '../../../../CustomsDocuments/Components/ConnectedToItem';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { EventEmitter } from '@angular/core';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 
 export class DeclarationCustomsDocumentsController implements ICustomsDocumentsController {
     public loadedSupplierInvoices: SupplierInvoicePM[];
@@ -45,13 +43,13 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
 
     _CustomsDocumentsDefinitionList: CustomsDocumentsDefinitionPM[];
     private IsDisplayOnly: boolean;
-    private http: Http;
+  private http: HttpClient;
     private apiUrl: string;
     private CurrentSession = SessionLocator.SelectedSession;
     private declarationExtendedListService = new DeclarationExtendedListService();
     constructor(private declarationPM: DeclarationPM, private childEntity1Id: string, private ChildEntity1Code: string ) {
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
-        this.http = ServiceHelper.Http;
+      this.http = ServiceHelper.HttpClient;
 
     }
 
@@ -61,9 +59,9 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
 
         var supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService;
         supplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
-        return Observable.defer(() => {
-            return supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclarationWithTradeAgreementCount(this.declarationPM.Id)
-                .map((resp: ServiceResponse) => {
+      return defer(() => {
+        return supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclarationWithTradeAgreementCount(this.declarationPM.Id).pipe(
+                map((resp: ServiceResponse) => {
                     this.loadedSupplierInvoices = resp.Result.SupplierInvoices;
 
                     var count: number = resp.Result.Count;
@@ -389,8 +387,8 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                     if (createTicketsToEachSupplierInvoice) {
                         this.CreateTicketsToEachSupplierInvoice();
                     }
-                    return Observable.of(this.GeneratedCustomsDocumentTicketViewModel);
-                });
+                    return of(this.GeneratedCustomsDocumentTicketViewModel);
+                }));
         });
 
     }
@@ -498,8 +496,8 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         var rresponse: ServiceResponse = new ServiceResponse();
 
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
-        return Observable.defer(() => {
-            return declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.declarationPM).map((response: ServiceResponse) => {
+        return defer(() => {
+            return declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.declarationPM).pipe(map((response: ServiceResponse) => {
                 var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
                 var isDisplayOnly: boolean = displayOnlyCheckResult.IsDisplayOnly;
                 var displayOnlyMessage = null;
@@ -543,7 +541,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                 var rresponse: ServiceResponse = new ServiceResponse();
                 rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
                 return rresponse;
-            });
+            }));
         });
     }
 
@@ -551,15 +549,13 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
  
     CheckRequestsInProgress(documentsFilingId: string) {
         // Request sheets in progress check
-        var authHeader = new Headers();
         var table = window.ObjectTables.filter(d => d.Name === "Customs.Declaration")[0];
         var table2 = window.ObjectTables.filter(d => d.Name === "Customs.CustomsDocument")[0];
 
-        authHeader.append('Token', SessionInfo.Token);
-        return Observable.defer(() => {
-            return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + this.declarationPM.Tenant + '&interfaceTypeCode=2715' + '&objectTableId1=' + table.Id + '&entityId1=' + this.declarationPM.Id + '&objectTableId2=' + table2.Id + '&entityId2=' + encodeURIComponent(documentsFilingId) + '&customFileNo=' + "" + '&displayOnlyMode= false', { headers: authHeader }).map(response => {
+        return defer(() => {
+          return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + this.declarationPM.Tenant + '&interfaceTypeCode=2715' + '&objectTableId1=' + table.Id + '&entityId1=' + this.declarationPM.Id + '&objectTableId2=' + table2.Id + '&entityId2=' + encodeURIComponent(documentsFilingId) + '&customFileNo=' + "" + '&displayOnlyMode= false', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                var requestSheets = response.json();
+                var requestSheets:any = response;
                 if (requestSheets == null || requestSheets.length == 0) {
                     serviceResponse.Result = new DisplayOnlyCheckResult(false, "");
                 }
@@ -570,7 +566,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                     serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
                 }
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }), catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -683,7 +679,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
             if (AppTool.IsNullOrEmpty(item.DocumentsFilingId) && item.customsDocumentsTicketPM.CustomsDocumentPointers.length == 1) {
                 var supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService;
                 supplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
-                supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclarationWithTradeAgreementCount(this.declarationPM.Id).map((resp: ServiceResponse) => {
+                supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclarationWithTradeAgreementCount(this.declarationPM.Id).pipe(map((resp: ServiceResponse) => {
                     this.loadedSupplierInvoices = resp.Result.SupplierInvoices;
                     switch (item.DocumentTypeCode) {
                         case "380":
@@ -724,7 +720,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                 break;
                             }
                     }
-                });
+                }));
             }
 
             if (docTypecodes.indexOf(item.DocumentTypeCode) > -1) {

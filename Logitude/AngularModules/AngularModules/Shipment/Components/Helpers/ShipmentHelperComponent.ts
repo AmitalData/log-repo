@@ -15,7 +15,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ShipmentHelperComponent.html',
 })
 

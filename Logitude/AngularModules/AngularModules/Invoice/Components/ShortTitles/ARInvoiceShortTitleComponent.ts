@@ -6,7 +6,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./ARInvoiceShortTitleComponent.html",
 })
 

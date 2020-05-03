@@ -8560,20 +8560,20 @@
     <Feature
       Code="&quot;DOCUMENTSFILING&quot;"
       FeatureTypeCode="&quot;QUER&quot;"
-      FeatureTextCodeCode="&quot;DocumentsFiling.Features.DocumentsFilings&quot;"
-      FeatureDefaultText="&quot;Document Filing&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentsFiling.Features.DocumentsFilings&quot;"
+      FeatureDefaultText="&quot;Document Filing&quot;" />
     <Feature
       Code="&quot;DocumentsFiling.M.DocumentsFiling&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;DocumentsFilingObjectTable.Features.DocumentsFilingObjectTable&quot;"
-      FeatureDefaultText="&quot;Documents Filing&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentsFilingObjectTable.Features.DocumentsFilingObjectTable&quot;"
+      FeatureDefaultText="&quot;Documents Filing&quot;" />
   </AdditionalFeatures>
 </entity>

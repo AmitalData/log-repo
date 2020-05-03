@@ -9,7 +9,7 @@ import { SessionLocator } from '../Utilities/SessionLocator';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GeneratedComponent.html',
 })
 

@@ -12,7 +12,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditMamanStickerComponent.html',
 })
 

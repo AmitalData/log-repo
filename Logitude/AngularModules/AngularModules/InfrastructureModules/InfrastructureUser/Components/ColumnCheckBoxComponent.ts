@@ -3,7 +3,7 @@ import {UserExtendedList} from '../../../Common/Services/ExtendedLists/UserExten
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ColumnCheckBoxComponent.html',
 })
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -26,7 +26,7 @@ export class SharedAgentManifestService {
     getSharedAgentManifestTransLateIdByCode(code: string, tenant: number) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/getSharedAgentManifestTransLateIdByCode?' + 'code=' + code + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
@@ -43,7 +43,7 @@ export class SharedAgentManifestService {
 
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetCheckIfAnyShipmentHaveMasterNumber?' + 'master=' + master + '&longMaster=' + longMaster + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
@@ -60,7 +60,7 @@ export class SharedAgentManifestService {
     GetCheckIfMasterShipmentHaveHouseWithOtherAgent(entityId: string, agentId: string, tenant: number) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetCheckIfMasterShipmentHaveHouseWithOtherAgent?' + 'entityId=' + entityId + '&agentId=' + agentId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
@@ -76,7 +76,7 @@ export class SharedAgentManifestService {
     public ShareAgentManifest(shipmentId: string, isUpdateAgent: boolean = false) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetSharedAgentManifest?' + 'shipmentId=' + shipmentId + '&isUpdateAgent=' + isUpdateAgent + '&tenant=' + SessionInfo.LoggedUserTenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var pm = response;
@@ -101,7 +101,7 @@ export class SharedAgentManifestService {
     getAgentSharedManifesRefShipmentListsByIds(agentManifestSharedRefListIds: any) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.post(this._apiUrl + '/postagentsharedmanifesrefshipmentListsbyids', JSON.stringify(agentManifestSharedRefListIds), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
              
@@ -133,7 +133,7 @@ export class SharedAgentManifestService {
     GetIsAgentSharedManifests(agentId: string, entityid: string) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetIsAgentSharedManifests?' + 'agentId=' + agentId + '&entityid=' + entityid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
@@ -149,7 +149,7 @@ export class SharedAgentManifestService {
     get(id: string) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
                 map((response) => {
                     //if (response instanceof HttpResponse) {
@@ -177,7 +177,7 @@ export class SharedAgentManifestService {
     GetAgentSharedManifestsForDashBoard(lastMonths: number, lastDays: number, selectedIndex: number) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetAgentSharedManifestsForDashBoard?' + 'lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&selectedIndex=' + selectedIndex, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;

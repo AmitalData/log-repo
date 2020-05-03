@@ -9,7 +9,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { EntityResourceService } from '../../../Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BTELogTabComponent.html'
 })
 

@@ -14,12 +14,13 @@ import { VehicleReductionTypeList } from '../../../../Customs/EntityLists/Vehicl
 
 @Component({
     selector: 'VehicleModificationsComponent',
-    moduleId: module.id,
+    
     templateUrl: './VehicleModificationsComponent.html',
 })
 
 
 export class VehicleModificationsComponent extends BaseComponent {
+  public ObjectTableName: any;
 
     EntityPM: DeclarationPM;
     entityListService: EntityListService = new EntityListService();

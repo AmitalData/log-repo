@@ -221,7 +221,7 @@ export class LogitudeWindow {
 }
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./LogitudeWindow.html",
 })
 
@@ -262,7 +262,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     leftPadding: number = 0;
 
     public IsOverAll: boolean = false;
-    @ViewChild("WindowContent", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild("WindowContent", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;

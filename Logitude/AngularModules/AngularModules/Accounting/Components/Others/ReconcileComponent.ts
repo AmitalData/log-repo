@@ -1,3 +1,5 @@
+import { FullAccountingSettingPM } from './../../EntityPMs/FullAccountingSettingPM';
+import { FullAccountingSettingPMService } from './../../Services/StandardPMs/FullAccountingSettingPMService';
 import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -234,6 +236,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
+    fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
 
 
 
@@ -279,7 +282,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             if (!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId)) {
                 this.CurrencyId = this.GLAccountPM.CurrencyId;
             }
-            this.AutomaticReconcileId = this.GLAccountPM.AutomaticReconcileId;
+            if(this.GLAccountPM.AutomaticReconcileId)
+                this.AutomaticReconcileId = this.GLAccountPM.AutomaticReconcileId;
+            else{
+                this.SetDefaultReconcileMethodFromAccountingSettings();
+            }
             this.SetUIProperty();
             this.openAmountCurrency = args.openAmountCurrency;
             this.originalAmountCurrency = args.originalAmountCurrency;
@@ -299,6 +306,26 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     ngOnInit() {
         this.BuildColumns();
         //this.ColumnsReady.emit("");
+    }
+
+    SetDefaultReconcileMethodFromAccountingSettings(){
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe((myResult:any) =>
+        {
+            var myResponse: ServiceResponse = myResult;
+            this.CurrentSession.StopBusyIndicator();
+
+            if (myResponse != null) {
+
+                var res = myResponse.Result;
+                var fullAccountingSetting: FullAccountingSettingPM = res;
+
+                if(fullAccountingSetting){
+                    this.AutomaticReconcileId = fullAccountingSetting.AutomaticReconcileMethodId;
+                }
+
+            }
+
+        });
     }
 
     //#region Properties

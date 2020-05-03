@@ -7,7 +7,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     selector: 'AccountingAdvancedSettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './AccountingAdvancedSettingsComponent.html',
 })
 

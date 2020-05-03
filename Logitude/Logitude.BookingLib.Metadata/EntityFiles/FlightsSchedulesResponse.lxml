@@ -1243,4 +1243,6 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

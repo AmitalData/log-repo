@@ -30,7 +30,7 @@ import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindo
 
 @Component({
     selector: 'ConsigmentTabContent',
-    moduleId: module.id,
+    
     templateUrl: './ConsigmentTabContentComponent.html',
 })
 

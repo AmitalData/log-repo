@@ -12,7 +12,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {GeneralEntitiesArgs} from '../../../../Infrastructure/DataContracts/GeneralEntitiesArgs';
 import {GeneralEntitiesService} from '../../../../Infrastructure/Services/StandardPMs/GeneralEntitiesService';
 import {AdvancedQueryFiltersPMService} from '../../../../Infrastructure/Services/StandardPMs/AdvancedQueryFiltersPMService';
-import {Http} from '@angular/http';
+
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {AdvancedQueryFilterPM} from '../../../../Infrastructure/EntityPMs/AdvancedQueryFilterPM';
@@ -30,7 +30,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'QueryList',
     templateUrl: './QueryListComponent.html',

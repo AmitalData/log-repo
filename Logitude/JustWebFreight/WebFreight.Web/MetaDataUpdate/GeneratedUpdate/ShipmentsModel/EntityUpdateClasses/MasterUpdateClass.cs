@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class MasterUpdateClass
    {  		
-		public const string HashString = "82bbde7de7f37fc19b41fc494f31fd70";
+		public const string HashString = "4d1544e1a551075783fe65907f7f03ca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	             				    ObjectTableName =  "Master",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Masters",
-			      				    OldDBTableName =  "Masters",
 			      				    ObjectTableSingular =  "Master",
 			      				    ObjectTablePlural =  "Masters",
 			      				    HasCustomFilter =  false,
@@ -143,7 +142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipperNotExporterAddressId",
-					  						OldFieldName =  "ShipperNotExporterAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -208,7 +206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SpecialServicesTypeId",
-					  						OldFieldName =  "SpecialServicesTypeId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "SpecialServicesType",
@@ -273,7 +270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsigneeNotImporterId",
-					  						OldFieldName =  "ConsigneeNotImporterId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customer",
@@ -338,7 +334,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipperNotExporterId",
-					  						OldFieldName =  "ShipperNotExporterId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customer",
@@ -403,7 +398,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment3CarrierId",
-					  						OldFieldName =  "Transshipment3CarrierId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Carrier",
@@ -468,7 +462,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment3CarrierNumber",
-					  						OldFieldName =  "Transshipment3CarrierNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -532,7 +525,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment3ETA",
-					  						OldFieldName =  "Transshipment3ETA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -596,7 +588,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment3ETD",
-					  						OldFieldName =  "Transshipment3ETD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -660,7 +651,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment3ATA",
-					  						OldFieldName =  "Transshipment3ATA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -724,7 +714,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment3ATD",
-					  						OldFieldName =  "Transshipment3ATD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -788,14 +777,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment3ToPortId",
-					  						OldFieldName =  "Transshipment3ToPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -853,7 +841,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment3FromPortId",
-					  						OldFieldName =  "Transshipment3FromPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -918,14 +905,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment2ToPortId",
-					  						OldFieldName =  "Transshipment2ToPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -983,7 +969,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment2FromPortId",
-					  						OldFieldName =  "Transshipment2FromPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -1048,7 +1033,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment2CarrierId",
-					  						OldFieldName =  "Transshipment2CarrierId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Carrier",
@@ -1113,7 +1097,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment2CarrierNumber",
-					  						OldFieldName =  "Transshipment2CarrierNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1177,7 +1160,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment2ETA",
-					  						OldFieldName =  "Transshipment2ETA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1241,7 +1223,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment2ETD",
-					  						OldFieldName =  "Transshipment2ETD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1305,7 +1286,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment2ATA",
-					  						OldFieldName =  "Transshipment2ATA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1369,7 +1349,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment2ATD",
-					  						OldFieldName =  "Transshipment2ATD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1433,14 +1412,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment1ToPortId",
-					  						OldFieldName =  "Transshipment1ToPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -1498,7 +1476,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment1FromPortId",
-					  						OldFieldName =  "Transshipment1FromPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -1563,14 +1540,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment1CarrierId",
-					  						OldFieldName =  "Transshipment1CarrierId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Carrier",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -1628,7 +1604,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment1CarrierNumber",
-					  						OldFieldName =  "Transshipment1CarrierNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1692,13 +1667,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment1ETA",
-					  						OldFieldName =  "Transshipment1ETA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -1756,13 +1730,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment1ETD",
-					  						OldFieldName =  "Transshipment1ETD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -1820,13 +1793,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment1ATA",
-					  						OldFieldName =  "Transshipment1ATA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -1884,13 +1856,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment1ATD",
-					  						OldFieldName =  "Transshipment1ATD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -1948,7 +1919,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DelivaryToAddressId",
-					  						OldFieldName =  "DelivaryToAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -2013,14 +1983,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageVesselId",
-					  						OldFieldName =  "MainCarriageVesselId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Vessel",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -2080,7 +2049,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OnCarriageVesselId",
-					  						OldFieldName =  "OnCarriageVesselId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Vessel",
@@ -2145,7 +2113,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PreCarriageVesselId",
-					  						OldFieldName =  "PreCarriageVesselId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Vessel",
@@ -2210,14 +2177,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment1VesselId",
-					  						OldFieldName =  "Transshipment1VesselId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Vessel",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -2275,7 +2241,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment2VesselId",
-					  						OldFieldName =  "Transshipment2VesselId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Vessel",
@@ -2340,7 +2305,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment3VesselId",
-					  						OldFieldName =  "Transshipment3VesselId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Vessel",
@@ -2405,7 +2369,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FromOrToPort",
-					  						OldFieldName =  "FromOrToPort",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2467,7 +2430,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MasterReceivableStatusFilter",
-					  						OldFieldName =  "MasterReceivableStatusFilter",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2529,7 +2491,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MasterPayableStatusFilter",
-					  						OldFieldName =  "MasterPayableStatusFilter",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2591,7 +2552,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Partner",
-					  						OldFieldName =  "Partner",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2654,7 +2614,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Reference",
-					  						OldFieldName =  "Reference",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2717,7 +2676,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TodayFollowUps",
-					  						OldFieldName =  "TodayFollowUps",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -2778,7 +2736,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TomorrowFollowUps",
-					  						OldFieldName =  "TomorrowFollowUps",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -2839,7 +2796,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DueDateFollowUps",
-					  						OldFieldName =  "DueDateFollowUps",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -2900,7 +2856,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AllFollowUps",
-					  						OldFieldName =  "AllFollowUps",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -2961,7 +2916,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "GrossWeight",
-					  						OldFieldName =  "GrossWeight",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -3025,7 +2979,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "NumberOfPackages",
-					  						OldFieldName =  "NumberOfPackages",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3089,7 +3042,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "NumberOfContainers",
-					  						OldFieldName =  "NumberOfContainers",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3153,7 +3105,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "VolumeInCBM",
-					  						OldFieldName =  "VolumeInCBM",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -3219,7 +3170,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ChargeableWeight",
-					  						OldFieldName =  "ChargeableWeight",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -3287,7 +3237,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "BookingNumberOfPackages",
-					  						OldFieldName =  "BookingNumberOfPackages",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3354,7 +3303,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OrderGrossWeight",
-					  						OldFieldName =  "OrderGrossWeight",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -3421,7 +3369,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "BookingVolume",
-					  						OldFieldName =  "BookingVolume",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -3488,7 +3435,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OrderVolumeInKG",
-					  						OldFieldName =  "OrderVolumeInKG",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -3553,7 +3499,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OrderChargeableWeight",
-					  						OldFieldName =  "OrderChargeableWeight",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -3620,7 +3565,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OrderIsDangerouseGoods",
-					  						OldFieldName =  "OrderIsDangerouseGoods",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3685,7 +3629,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CurrencyValueOfGoods",
-					  						OldFieldName =  "CurrencyValueOfGoods",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -3750,7 +3693,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ValueOfGoods",
-					  						OldFieldName =  "ValueOfGoods",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -3816,7 +3758,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FinalDistenationPortId",
-					  						OldFieldName =  "FinalDistenationPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -3883,7 +3824,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ContainerNumber",
-					  						OldFieldName =  "ContainerNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3946,7 +3886,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "InvoiceNumber",
-					  						OldFieldName =  "InvoiceNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4009,7 +3948,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentTypeViewField",
-					  						OldFieldName =  "ShipmentTypeViewField",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4074,7 +4012,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentLevelCode",
-					  						OldFieldName =  "ShipmentLevelCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentLevel",
@@ -4142,7 +4079,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentLevelName",
-					  						OldFieldName =  "ShipmentLevelName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4208,7 +4144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConnectedShipments",
-					  						OldFieldName =  "ConnectedShipments",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -4272,7 +4207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4335,7 +4269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Routing",
-					  						OldFieldName =  "Routing",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4401,7 +4334,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PPCC",
-					  						OldFieldName =  "PPCC",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4465,7 +4397,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FlightDate",
-					  						OldFieldName =  "FlightDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4530,7 +4461,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipperName",
-					  						OldFieldName =  "ShipperName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4596,7 +4526,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsigneeName",
-					  						OldFieldName =  "ConsigneeName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4660,7 +4589,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AgentName",
-					  						OldFieldName =  "AgentName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4726,7 +4654,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageCarrierName",
-					  						OldFieldName =  "MainCarriageCarrierName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4790,7 +4717,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OpenPayablesInLocalCurrency",
-					  						OldFieldName =  "OpenPayablesInLocalCurrency",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -4857,7 +4783,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OpenPayablesInProfitCurrency",
-					  						OldFieldName =  "OpenPayablesInProfitCurrency",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -4924,7 +4849,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountedPayablesInLocalCurrency",
-					  						OldFieldName =  "AccountedPayablesInLocalCurrency",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -4991,7 +4915,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountedPayablesInProfitCurrency",
-					  						OldFieldName =  "AccountedPayablesInProfitCurrency",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -5058,7 +4981,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OrderVolumetricWeight",
-					  						OldFieldName =  "OrderVolumetricWeight",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -5125,7 +5047,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "GrossWeightUnitCode",
-					  						OldFieldName =  "GrossWeightUnitCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "WeightUnit",
@@ -5190,7 +5111,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ChargeableWeightUnitCode",
-					  						OldFieldName =  "ChargeableWeightUnitCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "WeightUnit",
@@ -5257,7 +5177,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "VolumetricWeight",
-					  						OldFieldName =  "VolumetricWeight",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -5321,7 +5240,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "GrossWeightInKG",
-					  						OldFieldName =  "GrossWeightInKG",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -5385,7 +5303,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ChargeableWeightInKG",
-					  						OldFieldName =  "ChargeableWeightInKG",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -5453,7 +5370,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Volume",
-					  						OldFieldName =  "Volume",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -5517,13 +5433,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CutoffDate",
-					  						OldFieldName =  "CutoffDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  1,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -5584,7 +5499,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OpenReceivablesInProfitCurrency",
-					  						OldFieldName =  "OpenReceivablesInProfitCurrency",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -5650,7 +5564,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountedReceivablesInProfitCurrency",
-					  						OldFieldName =  "AccountedReceivablesInProfitCurrency",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -5716,7 +5629,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBPlace",
-					  						OldFieldName =  "AWBPlace",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5780,7 +5692,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBSignature",
-					  						OldFieldName =  "AWBSignature",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5844,7 +5755,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBChargesCodeCode",
-					  						OldFieldName =  "AWBChargesCodeCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBChargesCode",
@@ -5909,7 +5819,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IssuingCarrierAgentId",
-					  						OldFieldName =  "IssuingCarrierAgentId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -5976,7 +5885,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IssuingCarrierIATACode",
-					  						OldFieldName =  "IssuingCarrierIATACode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6042,7 +5950,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IssuingCarrierAddressId",
-					  						OldFieldName =  "IssuingCarrierAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -6109,7 +6016,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainHarmonize",
-					  						OldFieldName =  "MainHarmonize",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6173,7 +6079,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBChargeRate",
-					  						OldFieldName =  "AWBChargeRate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -6237,7 +6142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBChargeAmount",
-					  						OldFieldName =  "AWBChargeAmount",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -6301,7 +6205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBCommodityItemNumber",
-					  						OldFieldName =  "AWBCommodityItemNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6365,7 +6268,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBComments",
-					  						OldFieldName =  "AWBComments",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6431,7 +6333,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FWBStatusCode",
-					  						OldFieldName =  "FWBStatusCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6497,7 +6398,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FHLStatusCode",
-					  						OldFieldName =  "FHLStatusCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6563,7 +6463,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageFromPartnerId",
-					  						OldFieldName =  "MainCarriageFromPartnerId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -6628,7 +6527,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageToPartnerId",
-					  						OldFieldName =  "MainCarriageToPartnerId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -6693,7 +6591,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageFromAddressId",
-					  						OldFieldName =  "MainCarriageFromAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -6758,7 +6655,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageToAddressId",
-					  						OldFieldName =  "MainCarriageToAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -6823,7 +6719,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Driver",
-					  						OldFieldName =  "Driver",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6887,7 +6782,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TruckNumber",
-					  						OldFieldName =  "TruckNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6951,7 +6845,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TrailerNumber",
-					  						OldFieldName =  "TrailerNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7017,7 +6910,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageCarrierPrefix",
-					  						OldFieldName =  "MainCarriageCarrierPrefix",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7081,7 +6973,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment1CarrierPrefix",
-					  						OldFieldName =  "Transshipment1CarrierPrefix",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7145,7 +7036,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment2CarrierPrefix",
-					  						OldFieldName =  "Transshipment2CarrierPrefix",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7209,7 +7099,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment3CarrierPrefix",
-					  						OldFieldName =  "Transshipment3CarrierPrefix",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7273,7 +7162,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FWBStatusName",
-					  						OldFieldName =  "FWBStatusName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7340,7 +7228,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FHLStatusName",
-					  						OldFieldName =  "FHLStatusName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7407,7 +7294,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBPrint",
-					  						OldFieldName =  "AWBPrint",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7474,13 +7360,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageFinalDestinationETA",
-					  						OldFieldName =  "MainCarriageFinalDestinationETA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -7538,13 +7423,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageFinalDestinationATA",
-					  						OldFieldName =  "MainCarriageFinalDestinationATA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -7602,7 +7486,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CarrierLastStatusCode",
-					  						OldFieldName =  "CarrierLastStatusCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7666,7 +7549,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CarrierLastStatusName",
-					  						OldFieldName =  "CarrierLastStatusName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7733,7 +7615,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CarrierLastStatusDate",
-					  						OldFieldName =  "CarrierLastStatusDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -7800,7 +7681,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FWBStatusDate",
-					  						OldFieldName =  "FWBStatusDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -7867,7 +7747,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "NextLegName",
-					  						OldFieldName =  "NextLegName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7933,7 +7812,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "NextETD",
-					  						OldFieldName =  "NextETD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -8001,7 +7879,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "NextETA",
-					  						OldFieldName =  "NextETA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -8069,7 +7946,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SCI",
-					  						OldFieldName =  "SCI",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8132,7 +8008,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CASSCode",
-					  						OldFieldName =  "CASSCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8196,7 +8071,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FromAddress",
-					  						OldFieldName =  "FromAddress",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8258,7 +8132,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ToAddress",
-					  						OldFieldName =  "ToAddress",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8320,7 +8193,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "EstimateProfitInLocalCurrency",
-					  						OldFieldName =  "EstimateProfitInLocalCurrency",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -8384,7 +8256,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsCancelled",
-					  						OldFieldName =  "IsCancelled",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8448,7 +8319,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShowAllFollowUps",
-					  						OldFieldName =  "ShowAllFollowUps",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8511,7 +8381,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsOperationalClosed",
-					  						OldFieldName =  "IsOperationalClosed",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8581,7 +8450,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsMaster",
-					  						OldFieldName =  "IsMaster",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8644,7 +8512,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsDirect",
-					  						OldFieldName =  "IsDirect",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8707,7 +8574,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsAccountingClosed",
-					  						OldFieldName =  "IsAccountingClosed",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8777,7 +8643,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TotalContainers",
-					  						OldFieldName =  "TotalContainers",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8841,7 +8706,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OpenReceivablesInLocalCurrency",
-					  						OldFieldName =  "OpenReceivablesInLocalCurrency",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -8907,7 +8771,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountedReceivablesInLocalCurrency",
-					  						OldFieldName =  "AccountedReceivablesInLocalCurrency",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -8973,7 +8836,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AsAgreedFreight",
-					  						OldFieldName =  "AsAgreedFreight",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -9037,7 +8899,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AsAgreedOtherCharges",
-					  						OldFieldName =  "AsAgreedOtherCharges",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -9101,7 +8962,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ProfitInLocalCurrency",
-					  						OldFieldName =  "ProfitInLocalCurrency",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -9168,7 +9028,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MasterPayableStatusCode",
-					  						OldFieldName =  "MasterPayableStatusCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentPayableStatus",
@@ -9233,7 +9092,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MasterReceivableStatusCode",
-					  						OldFieldName =  "MasterReceivableStatusCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentReceivableStatus",
@@ -9298,7 +9156,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DimFactor",
-					  						OldFieldName =  "DimFactor",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -9362,7 +9219,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MasterPayableStatusName",
-					  						OldFieldName =  "MasterPayableStatusName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9426,7 +9282,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsMultipleCommodities",
-					  						OldFieldName =  "IsMultipleCommodities",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -9490,7 +9345,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MasterReceivableStatusName",
-					  						OldFieldName =  "MasterReceivableStatusName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9556,7 +9410,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MasterReceivables",
-					  						OldFieldName =  "MasterReceivables",
 					  						ObjectTableName =  "Master",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -9618,7 +9471,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MasterPayables",
-					  						OldFieldName =  "MasterPayables",
 					  						ObjectTableName =  "Master",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -9680,7 +9532,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomerReference1",
-					  						OldFieldName =  "CustomerReference1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9746,7 +9597,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomerReference2",
-					  						OldFieldName =  "CustomerReference2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9812,7 +9662,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MasterDeliveries",
-					  						OldFieldName =  "MasterDeliveries",
 					  						ObjectTableName =  "Master",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -9874,7 +9723,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ARInvoiceIssued",
-					  						OldFieldName =  "ARInvoiceIssued",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -9937,7 +9785,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CreditNoteIssued",
-					  						OldFieldName =  "CreditNoteIssued",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10000,7 +9847,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MasterPackages",
-					  						OldFieldName =  "MasterPackages",
 					  						ObjectTableName =  "Master",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -10062,7 +9908,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MasterPickUps",
-					  						OldFieldName =  "MasterPickUps",
 					  						ObjectTableName =  "Master",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -10124,7 +9969,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SpecialServicesTypeName",
-					  						OldFieldName =  "SpecialServicesTypeName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10190,7 +10034,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PackagesQuantity",
-					  						OldFieldName =  "PackagesQuantity",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -10255,7 +10098,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountNumber",
-					  						OldFieldName =  "AccountNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10319,7 +10161,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FHLStatusDate",
-					  						OldFieldName =  "FHLStatusDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -10386,7 +10227,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CargonautFHLStatusCode",
-					  						OldFieldName =  "CargonautFHLStatusCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10450,7 +10290,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CargonautFHLStatusName",
-					  						OldFieldName =  "CargonautFHLStatusName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10517,7 +10356,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CargonautFHLStatusDate",
-					  						OldFieldName =  "CargonautFHLStatusDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -10584,7 +10422,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CargonautFWBStatusCode",
-					  						OldFieldName =  "CargonautFWBStatusCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10648,7 +10485,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CargonautFWBStatusName",
-					  						OldFieldName =  "CargonautFWBStatusName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10715,7 +10551,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CargonautFWBStatusDate",
-					  						OldFieldName =  "CargonautFWBStatusDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -10782,7 +10617,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "StatusId",
-					  						OldFieldName =  "StatusId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "EntityStatus",
@@ -10851,7 +10685,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ReferenceNumber",
-					  						OldFieldName =  "ReferenceNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10914,7 +10747,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SupplementaryShipmentInformation1",
-					  						OldFieldName =  "SupplementaryShipmentInformation1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10977,7 +10809,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SupplementaryShipmentInformation2",
-					  						OldFieldName =  "SupplementaryShipmentInformation2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11040,7 +10871,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformation1",
-					  						OldFieldName =  "AccountingInformation1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11103,7 +10933,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformation2",
-					  						OldFieldName =  "AccountingInformation2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11166,7 +10995,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformation3",
-					  						OldFieldName =  "AccountingInformation3",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11229,7 +11057,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformation4",
-					  						OldFieldName =  "AccountingInformation4",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11292,7 +11119,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformation5",
-					  						OldFieldName =  "AccountingInformation5",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11355,7 +11181,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformation6",
-					  						OldFieldName =  "AccountingInformation6",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11418,7 +11243,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformationIdentifierCode1",
-					  						OldFieldName =  "AccountingInformationIdentifierCode1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AccountingInformationIdentifier",
@@ -11482,7 +11306,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformationIdentifierCode2",
-					  						OldFieldName =  "AccountingInformationIdentifierCode2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AccountingInformationIdentifier",
@@ -11546,7 +11369,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformationIdentifierCode3",
-					  						OldFieldName =  "AccountingInformationIdentifierCode3",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AccountingInformationIdentifier",
@@ -11610,7 +11432,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformationIdentifierCode4",
-					  						OldFieldName =  "AccountingInformationIdentifierCode4",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AccountingInformationIdentifier",
@@ -11674,7 +11495,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformationIdentifierCode5",
-					  						OldFieldName =  "AccountingInformationIdentifierCode5",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AccountingInformationIdentifier",
@@ -11738,7 +11558,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingInformationIdentifierCode6",
-					  						OldFieldName =  "AccountingInformationIdentifierCode6",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AccountingInformationIdentifier",
@@ -11802,7 +11621,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "NominatedHandlingPartyId",
-					  						OldFieldName =  "NominatedHandlingPartyId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -11866,7 +11684,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationName1",
-					  						OldFieldName =  "OtherParticipantInformationName1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11929,7 +11746,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationName2",
-					  						OldFieldName =  "OtherParticipantInformationName2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11992,7 +11808,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationName3",
-					  						OldFieldName =  "OtherParticipantInformationName3",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12055,7 +11870,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationReference1",
-					  						OldFieldName =  "OtherParticipantInformationReference1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12118,7 +11932,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationReference2",
-					  						OldFieldName =  "OtherParticipantInformationReference2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12181,7 +11994,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationReference3",
-					  						OldFieldName =  "OtherParticipantInformationReference3",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12244,7 +12056,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "StatusName",
-					  						OldFieldName =  "StatusName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12311,7 +12122,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentNumber",
-					  						OldFieldName =  "ShipmentNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12377,7 +12187,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "NumberOfInsidePackages",
-					  						OldFieldName =  "NumberOfInsidePackages",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -12440,7 +12249,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "NumberOfInsidePackagesDetails",
-					  						OldFieldName =  "NumberOfInsidePackagesDetails",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12503,7 +12311,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OpenMasters",
-					  						OldFieldName =  "OpenMasters",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -12565,7 +12372,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ClosedMasters",
-					  						OldFieldName =  "ClosedMasters",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -12627,7 +12433,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsolidatorId",
-					  						OldFieldName =  "ConsolidatorId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -12691,7 +12496,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsolidatorReference",
-					  						OldFieldName =  "ConsolidatorReference",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12757,7 +12561,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsolidatorName",
-					  						OldFieldName =  "ConsolidatorName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12821,7 +12624,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsolidatorNote",
-					  						OldFieldName =  "ConsolidatorNote",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12883,7 +12685,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsolidatorAddressId",
-					  						OldFieldName =  "ConsolidatorAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -12948,7 +12749,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsolidatorContactId",
-					  						OldFieldName =  "ConsolidatorContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -13013,7 +12813,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingOpen",
-					  						OldFieldName =  "AccountingOpen",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -13075,7 +12874,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationCode1",
-					  						OldFieldName =  "OtherParticipantInformationCode1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -13138,7 +12936,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationCode2",
-					  						OldFieldName =  "OtherParticipantInformationCode2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -13201,7 +12998,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationCode3",
-					  						OldFieldName =  "OtherParticipantInformationCode3",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -13264,7 +13060,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationPortCode1",
-					  						OldFieldName =  "OtherParticipantInformationPortCode1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -13327,7 +13122,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationPortCode2",
-					  						OldFieldName =  "OtherParticipantInformationPortCode2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -13390,7 +13184,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantInformationPortCode3",
-					  						OldFieldName =  "OtherParticipantInformationPortCode3",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -13453,7 +13246,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ManifestReason",
-					  						OldFieldName =  "ManifestReason",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -13519,7 +13311,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ManifestStatusCode",
-					  						OldFieldName =  "ManifestStatusCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ManifestStatus",
@@ -13584,7 +13375,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ViaColoader",
-					  						OldFieldName =  "ViaColoader",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -13647,7 +13437,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsKnownCargo",
-					  						OldFieldName =  "IsKnownCargo",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -13710,7 +13499,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "RegulatedAgentRANumber",
-					  						OldFieldName =  "RegulatedAgentRANumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -13773,7 +13561,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "KnownConsignorNumber",
-					  						OldFieldName =  "KnownConsignorNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -13836,7 +13623,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ColoaderRANumber",
-					  						OldFieldName =  "ColoaderRANumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -13899,7 +13685,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBPrintingSecurityStatus",
-					  						OldFieldName =  "AWBPrintingSecurityStatus",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -13962,7 +13747,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBPrintingRANumber",
-					  						OldFieldName =  "AWBPrintingRANumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -14025,7 +13809,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AdditionalHandlingInfo",
-					  						OldFieldName =  "AdditionalHandlingInfo",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -14088,7 +13871,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBPrintingRANumberEdited",
-					  						OldFieldName =  "AWBPrintingRANumberEdited",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -14151,7 +13933,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBPrintingSecurityStatusEdited",
-					  						OldFieldName =  "AWBPrintingSecurityStatusEdited",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -14214,7 +13995,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AdditionalHandlingInfoEdited",
-					  						OldFieldName =  "AdditionalHandlingInfoEdited",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -14277,7 +14057,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IssuingCarrierReference1",
-					  						OldFieldName =  "IssuingCarrierReference1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -14341,7 +14120,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipperReference1",
-					  						OldFieldName =  "ShipperReference1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -14409,7 +14187,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "StatusLocation",
-					  						OldFieldName =  "StatusLocation",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -14473,13 +14250,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AirlinePrefix",
-					  						OldFieldName =  "AirlinePrefix",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -14537,7 +14313,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "InterlineId",
-					  						OldFieldName =  "InterlineId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -14602,7 +14377,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "KCExpirationDate",
-					  						OldFieldName =  "KCExpirationDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -14665,7 +14439,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBPrintingSecurityStatusId",
-					  						OldFieldName =  "AWBPrintingSecurityStatusId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBSpecialHandlingCode",
@@ -14729,7 +14502,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBSpecialHandlingCodeId1",
-					  						OldFieldName =  "AWBSpecialHandlingCodeId1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBSpecialHandlingCode",
@@ -14794,7 +14566,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBSpecialHandlingCodeId2",
-					  						OldFieldName =  "AWBSpecialHandlingCodeId2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBSpecialHandlingCode",
@@ -14859,7 +14630,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBSpecialHandlingCodeId3",
-					  						OldFieldName =  "AWBSpecialHandlingCodeId3",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBSpecialHandlingCode",
@@ -14924,7 +14694,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBSpecialHandlingCodeId4",
-					  						OldFieldName =  "AWBSpecialHandlingCodeId4",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBSpecialHandlingCode",
@@ -14989,7 +14758,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBSpecialHandlingCodeId5",
-					  						OldFieldName =  "AWBSpecialHandlingCodeId5",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBSpecialHandlingCode",
@@ -15054,7 +14822,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBSpecialHandlingCodeId6",
-					  						OldFieldName =  "AWBSpecialHandlingCodeId6",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBSpecialHandlingCode",
@@ -15119,7 +14886,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBSpecialHandlingCodeId7",
-					  						OldFieldName =  "AWBSpecialHandlingCodeId7",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBSpecialHandlingCode",
@@ -15184,7 +14950,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBSpecialHandlingCodeId8",
-					  						OldFieldName =  "AWBSpecialHandlingCodeId8",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBSpecialHandlingCode",
@@ -15249,7 +15014,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBSpecialHandlingCodeId9",
-					  						OldFieldName =  "AWBSpecialHandlingCodeId9",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBSpecialHandlingCode",
@@ -15314,7 +15078,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OperationalCloseDate",
-					  						OldFieldName =  "OperationalCloseDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -15381,7 +15144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountingCloseDate",
-					  						OldFieldName =  "AccountingCloseDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -15448,7 +15210,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipperReference2",
-					  						OldFieldName =  "ShipperReference2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -15514,7 +15275,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsigneeReference2",
-					  						OldFieldName =  "ConsigneeReference2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -15580,7 +15340,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsDeclarationNumber",
-					  						OldFieldName =  "CustomsDeclarationNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -15645,7 +15404,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsigneeReference1",
-					  						OldFieldName =  "ConsigneeReference1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -15711,7 +15469,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "BranchId",
-					  						OldFieldName =  "BranchId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Branch",
@@ -15776,7 +15533,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -15841,7 +15597,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CreateDateTime",
-					  						OldFieldName =  "CreateDateTime",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -15908,7 +15663,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DepartmentId",
-					  						OldFieldName =  "DepartmentId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Department",
@@ -15973,7 +15727,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentTypeId",
-					  						OldFieldName =  "ShipmentTypeId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentType",
@@ -16040,7 +15793,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentCustomerTypeCode",
-					  						OldFieldName =  "ShipmentCustomerTypeCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentCustomerType",
@@ -16104,7 +15856,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -16169,7 +15920,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomerName",
-					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -16233,7 +15983,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBSpecialHandlingCodeId",
-					  						OldFieldName =  "AWBSpecialHandlingCodeId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -16294,7 +16043,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomerNote",
-					  						OldFieldName =  "CustomerNote",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -16356,7 +16104,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipperId",
-					  						OldFieldName =  "ShipperId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -16420,7 +16167,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantIdCode1",
-					  						OldFieldName =  "OtherParticipantIdCode1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -16483,7 +16229,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantIdCode2",
-					  						OldFieldName =  "OtherParticipantIdCode2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -16546,7 +16291,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherParticipantIdCode3",
-					  						OldFieldName =  "OtherParticipantIdCode3",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -16609,7 +16353,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageVesselName",
-					  						OldFieldName =  "MainCarriageVesselName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -16676,7 +16419,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Shipper",
-					  						OldFieldName =  "Shipper",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -16742,7 +16484,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsigneeId",
-					  						OldFieldName =  "ConsigneeId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -16806,7 +16547,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Consignee",
-					  						OldFieldName =  "Consignee",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -16872,7 +16612,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AgentId",
-					  						OldFieldName =  "AgentId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -16939,7 +16678,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomAgentExportId",
-					  						OldFieldName =  "CustomAgentExportId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -17004,7 +16742,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomAgentImportId",
-					  						OldFieldName =  "CustomAgentImportId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -17069,7 +16806,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notify1Id",
-					  						OldFieldName =  "Notify1Id",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -17134,7 +16870,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notify2Id",
-					  						OldFieldName =  "Notify2Id",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -17199,7 +16934,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FreightForwarderId",
-					  						OldFieldName =  "FreightForwarderId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -17266,7 +17000,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipperAddressId",
-					  						OldFieldName =  "ShipperAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -17333,7 +17066,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomerAddressId",
-					  						OldFieldName =  "CustomerAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -17400,7 +17132,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsigneeAddressId",
-					  						OldFieldName =  "ConsigneeAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -17467,7 +17198,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Quantity1",
-					  						OldFieldName =  "Quantity1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -17529,7 +17259,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Quantity2",
-					  						OldFieldName =  "Quantity2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -17591,7 +17320,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Quantity3",
-					  						OldFieldName =  "Quantity3",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -17653,7 +17381,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Quantity4",
-					  						OldFieldName =  "Quantity4",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -17715,7 +17442,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Quantity5",
-					  						OldFieldName =  "Quantity5",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -17777,7 +17503,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PackageTypeId1",
-					  						OldFieldName =  "PackageTypeId1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PackageType",
@@ -17840,7 +17565,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PackageTypeId2",
-					  						OldFieldName =  "PackageTypeId2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PackageType",
@@ -17903,7 +17627,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PackageTypeId3",
-					  						OldFieldName =  "PackageTypeId3",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PackageType",
@@ -17966,7 +17689,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PackageTypeId4",
-					  						OldFieldName =  "PackageTypeId4",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PackageType",
@@ -18029,7 +17751,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PackageTypeId5",
-					  						OldFieldName =  "PackageTypeId5",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PackageType",
@@ -18092,7 +17813,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ValueOfGoodsCurrencyId",
-					  						OldFieldName =  "ValueOfGoodsCurrencyId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -18159,7 +17879,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AgentAddressId",
-					  						OldFieldName =  "AgentAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -18226,7 +17945,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomAgentExportAddressId",
-					  						OldFieldName =  "CustomAgentExportAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -18293,7 +18011,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomAgentImportAddressId",
-					  						OldFieldName =  "CustomAgentImportAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -18360,7 +18077,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notify1AddressId",
-					  						OldFieldName =  "Notify1AddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -18427,7 +18143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notify2AddressId",
-					  						OldFieldName =  "Notify2AddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -18494,7 +18209,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsTransmissionsStatusCode",
-					  						OldFieldName =  "CustomsTransmissionsStatusCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CustomsTransmissionsStatus",
@@ -18559,7 +18273,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsTransmissionsStatusName",
-					  						OldFieldName =  "CustomsTransmissionsStatusName",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -18625,7 +18338,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsTransmissionsStatusError",
-					  						OldFieldName =  "CustomsTransmissionsStatusError",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -18691,7 +18403,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsTransmissionsStatusDate",
-					  						OldFieldName =  "CustomsTransmissionsStatusDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -18758,7 +18469,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FreightForwarderAddressId",
-					  						OldFieldName =  "FreightForwarderAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -18825,7 +18535,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IncludesCustoms",
-					  						OldFieldName =  "IncludesCustoms",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -18889,7 +18598,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DeclarationNumber",
-					  						OldFieldName =  "DeclarationNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -18953,7 +18661,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DeclarationDate",
-					  						OldFieldName =  "DeclarationDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -19018,7 +18725,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsClearanceDate",
-					  						OldFieldName =  "CustomsClearanceDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -19083,7 +18789,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomerContactId",
-					  						OldFieldName =  "CustomerContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -19148,7 +18853,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipperContactId",
-					  						OldFieldName =  "ShipperContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -19213,7 +18917,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "BranchAddress",
-					  						OldFieldName =  "BranchAddress",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -19277,7 +18980,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "NumberOfHouses",
-					  						OldFieldName =  "NumberOfHouses",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -19343,7 +19045,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsigneeContactId",
-					  						OldFieldName =  "ConsigneeContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -19408,7 +19109,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AgentContactId",
-					  						OldFieldName =  "AgentContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -19475,7 +19175,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomAgentExportContactId",
-					  						OldFieldName =  "CustomAgentExportContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -19540,7 +19239,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "GrossWeightPerTon",
-					  						OldFieldName =  "GrossWeightPerTon",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -19606,7 +19304,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomAgentImportContactId",
-					  						OldFieldName =  "CustomAgentImportContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -19671,7 +19368,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBPrintingComments",
-					  						OldFieldName =  "AWBPrintingComments",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -19735,7 +19431,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notify1ContactId",
-					  						OldFieldName =  "Notify1ContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -19800,7 +19495,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notify2ContactId",
-					  						OldFieldName =  "Notify2ContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -19865,7 +19559,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FreightForwarderContactId",
-					  						OldFieldName =  "FreightForwarderContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -19930,7 +19623,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DirectionId",
-					  						OldFieldName =  "DirectionId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Direction",
@@ -19999,7 +19691,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -20064,7 +19755,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DescriptionOfGoods",
-					  						OldFieldName =  "DescriptionOfGoods",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -20128,7 +19818,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageFromPortId",
-					  						OldFieldName =  "MainCarriageFromPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -20195,7 +19884,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageFinalDestinationPortId",
-					  						OldFieldName =  "MainCarriageFinalDestinationPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -20262,14 +19950,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageToPortId",
-					  						OldFieldName =  "MainCarriageToPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -20329,7 +20016,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TransportModeId",
-					  						OldFieldName =  "TransportModeId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TransportMode",
@@ -20400,7 +20086,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PreCarriageTransportModeId",
-					  						OldFieldName =  "PreCarriageTransportModeId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TransportMode",
@@ -20467,7 +20152,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PreCarriageFromPortId",
-					  						OldFieldName =  "PreCarriageFromPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -20534,7 +20218,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PreCarriageToPortId",
-					  						OldFieldName =  "PreCarriageToPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -20601,7 +20284,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PreCarriageATD",
-					  						OldFieldName =  "PreCarriageATD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -20667,7 +20349,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PreCarriageATA",
-					  						OldFieldName =  "PreCarriageATA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -20733,7 +20414,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PreCarriageETD",
-					  						OldFieldName =  "PreCarriageETD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -20802,7 +20482,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PreCarriageETA",
-					  						OldFieldName =  "PreCarriageETA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -20868,7 +20547,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PreCarriageCarrierNumber",
-					  						OldFieldName =  "PreCarriageCarrierNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -20934,7 +20612,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PreCarriageCarrierId",
-					  						OldFieldName =  "PreCarriageCarrierId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Carrier",
@@ -21001,13 +20678,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageETA",
-					  						OldFieldName =  "MainCarriageETA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -21070,7 +20746,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OnCarriageTransportModeId",
-					  						OldFieldName =  "OnCarriageTransportModeId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TransportMode",
@@ -21137,7 +20812,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OnCarriageFromPortId",
-					  						OldFieldName =  "OnCarriageFromPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -21204,7 +20878,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OnCarriageToPortId",
-					  						OldFieldName =  "OnCarriageToPortId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -21271,7 +20944,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OnCarriageATD",
-					  						OldFieldName =  "OnCarriageATD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -21337,7 +21009,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OnCarriageATA",
-					  						OldFieldName =  "OnCarriageATA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -21403,7 +21074,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OnCarriageETD",
-					  						OldFieldName =  "OnCarriageETD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -21469,7 +21139,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OnCarriageETA",
-					  						OldFieldName =  "OnCarriageETA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -21535,7 +21204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OnCarriageCarrierNumber",
-					  						OldFieldName =  "OnCarriageCarrierNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -21601,7 +21269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OnCarriageCarrierId",
-					  						OldFieldName =  "OnCarriageCarrierId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Carrier",
@@ -21668,13 +21335,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Master",
-					  						OldFieldName =  "Master",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  20,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -21734,7 +21400,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "LongMaster",
-					  						OldFieldName =  "LongMaster",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -21800,13 +21465,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment1AdditionalMAWBOBLBL",
-					  						OldFieldName =  "Transshipment1AdditionalMAWBOBLBL",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  20,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -21864,7 +21528,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment2AdditionalMAWBOBLBL",
-					  						OldFieldName =  "Transshipment2AdditionalMAWBOBLBL",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -21928,7 +21591,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Transshipment3AdditionalMAWBOBLBL",
-					  						OldFieldName =  "Transshipment3AdditionalMAWBOBLBL",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -21992,14 +21654,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageCarrierId",
-					  						OldFieldName =  "MainCarriageCarrierId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Carrier",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -22059,13 +21720,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageCarrierNumber",
-					  						OldFieldName =  "MainCarriageCarrierNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -22125,13 +21785,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageETD",
-					  						OldFieldName =  "MainCarriageETD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -22192,13 +21851,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageATA",
-					  						OldFieldName =  "MainCarriageATA",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -22256,13 +21914,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MainCarriageATD",
-					  						OldFieldName =  "MainCarriageATD",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -22320,7 +21977,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FromPort",
-					  						OldFieldName =  "FromPort",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -22387,7 +22043,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ToPort",
-					  						OldFieldName =  "ToPort",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -22454,7 +22109,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentType",
-					  						OldFieldName =  "ShipmentType",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -22521,7 +22175,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FollowUpType",
-					  						OldFieldName =  "FollowUpType",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -22586,7 +22239,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FollowUpTypeId",
-					  						OldFieldName =  "FollowUpTypeId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "EventType",
@@ -22652,7 +22304,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FollowUpDate",
-					  						OldFieldName =  "FollowUpDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -22718,7 +22369,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FollowUpNotes",
-					  						OldFieldName =  "FollowUpNotes",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -22784,7 +22434,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FollowUpOwner",
-					  						OldFieldName =  "FollowUpOwner",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -22849,7 +22498,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FollowUpOwnerId",
-					  						OldFieldName =  "FollowUpOwnerId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -22913,13 +22561,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "BookingConfirmationNumber",
-					  						OldFieldName =  "BookingConfirmationNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  25,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -22979,13 +22626,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "BookingConfirmedBy",
-					  						OldFieldName =  "BookingConfirmedBy",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -23043,13 +22689,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "BookingConfirmationNotes",
-					  						OldFieldName =  "BookingConfirmationNotes",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -23107,7 +22752,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FreightPrepaidCollectId",
-					  						OldFieldName =  "FreightPrepaidCollectId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
@@ -23174,7 +22818,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OtherPrepaidCollectId",
-					  						OldFieldName =  "OtherPrepaidCollectId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
@@ -23241,7 +22884,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DangerousMaterialDescription",
-					  						OldFieldName =  "DangerousMaterialDescription",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -23307,7 +22949,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DangerousPackagingGroup",
-					  						OldFieldName =  "DangerousPackagingGroup",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -23373,7 +23014,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DangerousClassNumber",
-					  						OldFieldName =  "DangerousClassNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -23439,7 +23079,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DangerousUnNumber",
-					  						OldFieldName =  "DangerousUnNumber",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -23505,7 +23144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DangerousIMDGCode",
-					  						OldFieldName =  "DangerousIMDGCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -23571,7 +23209,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DangerousFlashPoint",
-					  						OldFieldName =  "DangerousFlashPoint",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -23637,7 +23274,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBFreightAmountPrepaid",
-					  						OldFieldName =  "AWBFreightAmountPrepaid",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -23703,7 +23339,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBCarrierTarrifReference",
-					  						OldFieldName =  "AWBCarrierTarrifReference",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -23769,7 +23404,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBDeclaredValueForCarriage",
-					  						OldFieldName =  "AWBDeclaredValueForCarriage",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -23835,7 +23469,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBDeclaredValueForCustoms",
-					  						OldFieldName =  "AWBDeclaredValueForCustoms",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -23901,7 +23534,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBInsurrenceValue",
-					  						OldFieldName =  "AWBInsurrenceValue",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -23967,7 +23599,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBAccountingInformation",
-					  						OldFieldName =  "AWBAccountingInformation",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -24033,7 +23664,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBHandlingInformation",
-					  						OldFieldName =  "AWBHandlingInformation",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -24099,7 +23729,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBCurrencyId",
-					  						OldFieldName =  "AWBCurrencyId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -24166,7 +23795,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBFreightAmountCollect",
-					  						OldFieldName =  "AWBFreightAmountCollect",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -24232,7 +23860,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsDangerous",
-					  						OldFieldName =  "IsDangerous",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -24297,7 +23924,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "VolumeUnitCode",
-					  						OldFieldName =  "VolumeUnitCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VolumeUnit",
@@ -24362,7 +23988,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ChargeableWeightEdited",
-					  						OldFieldName =  "ChargeableWeightEdited",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -24426,7 +24051,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "GrossWeightEdited",
-					  						OldFieldName =  "GrossWeightEdited",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -24490,13 +24114,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MAWBOBLDate",
-					  						OldFieldName =  "MAWBOBLDate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -24557,7 +24180,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Ratio",
-					  						OldFieldName =  "Ratio",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -24621,7 +24243,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "RateClassCode",
-					  						OldFieldName =  "RateClassCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "RateClass",
@@ -24686,7 +24307,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DimensionsUnitCode",
-					  						OldFieldName =  "DimensionsUnitCode",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "DimensionsUnit",
@@ -24751,7 +24371,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBPrintRate",
-					  						OldFieldName =  "AWBPrintRate",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -24817,7 +24436,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AgentReference2",
-					  						OldFieldName =  "AgentReference2",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -24883,7 +24501,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AgentReference1",
-					  						OldFieldName =  "AgentReference1",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -24949,7 +24566,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipperNotExporterContactId",
-					  						OldFieldName =  "ShipperNotExporterContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -25014,7 +24630,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsigneeNotImporterContactId",
-					  						OldFieldName =  "ConsigneeNotImporterContactId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -25079,7 +24694,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ConsigneeNotImporterAddressId",
-					  						OldFieldName =  "ConsigneeNotImporterAddressId",
 					  						ObjectTableName =  "Master",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -25164,6 +24778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SLAC",
 					  						ListPropertyPath =  "SLAC",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

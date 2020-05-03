@@ -24,7 +24,7 @@ import { ObjectsLocator } from '../../../Locators/ObjectsLocator';
 import { ObjectsUpdater } from '../../../Locators/ObjectsUpdater';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './WizardBaseComponent.html',
 })
 

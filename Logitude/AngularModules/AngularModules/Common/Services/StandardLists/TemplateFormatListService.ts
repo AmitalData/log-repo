@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -29,7 +29,7 @@ export class TemplateFormatListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -58,7 +58,7 @@ export class TemplateFormatListService {
         var callTime = new Date();
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -123,7 +123,7 @@ export class TemplateFormatListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -164,17 +164,17 @@ export class TemplateFormatListService {
 
         if (TemplateFormatListService.CachedData.length > 0) {
 
-            return Observable.defer(() => {
+            return defer(() => {
 
                 var filteredData = TemplateFormatListService.CachedData.filter(a => a.Code === code)[0];
                 serviceResponse.Result = filteredData;
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             });
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("TemplateFormat").pipe(map(cachedJson => {
+            return CachedDataManager.GetClosedTableData("TemplateFormat").pipe(map((cachedJson:any) => {
 
                 var _mappedListsArray: Array<TemplateFormatList> = [];
                 if (cachedJson) {
@@ -224,7 +224,7 @@ export class TemplateFormatListService {
 
         if (TemplateFormatListService.CachedData.length > 0) {
 
-            return Observable.defer(() => {
+            return defer(() => {
                 if (filters.GetAll) {
                     serviceResponse.Result = TemplateFormatListService.CachedData;
                 }
@@ -232,13 +232,13 @@ export class TemplateFormatListService {
                     var filteredData = InfraGenericFilter.GetFilteredArray(TemplateFormatListService.CachedData, filters);
                     serviceResponse.Result = filteredData;
                 }
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             });
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("TemplateFormat").pipe(map(cachedJson => {
+            return CachedDataManager.GetClosedTableData("TemplateFormat").pipe(map((cachedJson:any) => {
 
                 var _mappedListsArray: Array<TemplateFormatList> = [];
                 if (cachedJson) {

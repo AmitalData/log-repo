@@ -29,12 +29,15 @@ import { DeclarationEditComponentController } from '../../../Customs/Controller/
 import { EntityPMService } from '../../../Infrastructure/Services/EntityPMService';
 
 @Component({
-    selector: 'NotificationComponent',
-    moduleId: module.id,
+    selector: 'NotificationComponent',    
     templateUrl: './NotificationComponent.html',
 })
 
 export class NotificationComponent extends BaseComponent implements OnInit {
+  public LayoutDirection: any;
+  public IsDisplayOnly: any;
+  public SelectedRow: any;
+
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() CustomBackFromEditevent = new EventEmitter();
     @Output() ShowHLineOverRow = new EventEmitter();

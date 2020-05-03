@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -33,7 +33,7 @@ export class ExternalReconciliationExtendedPMService {
         reconcileExternalPageLineIdList: string[],
         TheAccountId: string, AdjustAccountId: string, AccountDate: string,Remarks: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
            
 

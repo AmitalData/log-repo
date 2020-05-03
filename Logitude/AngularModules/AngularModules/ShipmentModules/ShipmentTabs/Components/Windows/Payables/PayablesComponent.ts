@@ -20,7 +20,7 @@ import {PackageTypeListService} from '../../../../../Common/Services/StandardLis
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PayablesComponent.html',
 })
 

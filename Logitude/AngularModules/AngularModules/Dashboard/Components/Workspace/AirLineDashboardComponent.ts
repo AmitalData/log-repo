@@ -20,7 +20,7 @@ declare var makeAMLineChart, BarClick, ResetItem, makeAmBarChart, makePieChart, 
 
 @Component({
     selector: 'DashBoard',
-    moduleId: module.id,
+    
     templateUrl: './AirLineDashboardComponent.html',
     encapsulation: ViewEncapsulation.None,
 })

@@ -182,8 +182,8 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IsEnabled]="item.EntityPM.tenant==0 ? false : true">
                                             <div style="width: 100%; text-align: left;">
-                                                <div *ngIf="item.EntityPM.tenant!=0 || Session.Tenant==0">{{item.UpdatedByUserName}}</div>
-                                                <div *ngIf="item.EntityPM.tenant==0 && Session.Tenant!=0">System</div>
+                                                <div *ngIf="item.EntityPM.Tenant!=0 || Session==0">{{item.UpdatedByUserName}}</div>
+                                                <div *ngIf="item.EntityPM.Tenant==0 && Session!=0">System</div>
 
                                             </div>
                                         </log-cell-template>

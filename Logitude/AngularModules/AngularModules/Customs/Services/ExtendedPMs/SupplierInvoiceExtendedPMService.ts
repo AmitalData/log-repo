@@ -1,7 +1,7 @@
 ﻿import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -47,7 +47,7 @@ export class SupplierInvoiceExtendedPMService {
 
         var url = this._apiUrl + '/GetSupplierInvoicesPMsForDeclaration';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSupplierInvoicesPMsForDeclaration/?' + 'declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
@@ -73,7 +73,7 @@ export class SupplierInvoiceExtendedPMService {
     delete(declarationId: string, counterKey: number) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -113,7 +113,7 @@ export class SupplierInvoiceExtendedPMService {
 
         var url = this._apiUrl + '/GetInvoiceItemsWithTradeAgreementCount';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetInvoiceItemsWithTradeAgreementCount/?' + 'declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -128,7 +128,7 @@ export class SupplierInvoiceExtendedPMService {
 
         var url = this._apiUrl + '/GetSupplierInvoicesPMsForDeclarationWithTradeAgreementCount';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSupplierInvoicesPMsForDeclarationWithTradeAgreementCount/?' + 'declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
@@ -159,7 +159,7 @@ export class SupplierInvoiceExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleSupplierInvoicePMWithLimitedItems?' + 'declarationId=' + declarationId + '&' + 'counterkey=' + counterkey + '&' + 'skip=' + skip + '&' + 'take=' + take + '&' + 'type=' + type, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
 
@@ -186,7 +186,7 @@ export class SupplierInvoiceExtendedPMService {
 
         //  var url = this._apiUrl + '/CheckForPointers';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetImporterDepositions?' + 'vendorId=' + vendorId + '&importerId=' + importerId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var pm = response;
@@ -210,7 +210,7 @@ export class SupplierInvoiceExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDocumentFilingIdForForInvoice?'
                 + 'declarationId=' + declarationId + '&' + 'counterkey=' + counterkey, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var resultJson = response;
@@ -225,7 +225,7 @@ export class SupplierInvoiceExtendedPMService {
     }
 
     PutSupplierInvoicePercentage(invoice:SupplierInvoicePM) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);

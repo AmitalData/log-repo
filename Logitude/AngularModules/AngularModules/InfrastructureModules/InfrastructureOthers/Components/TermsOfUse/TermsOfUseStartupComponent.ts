@@ -13,7 +13,7 @@ import {Environment} from '../../../../Infrastructure/Locators/Environment';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'TermsOfUseStartupComponent',
     templateUrl: './TermsOfUseStartupComponent.html',

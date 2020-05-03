@@ -35,7 +35,7 @@ import {CustomerPM} from '../../Common/EntityPMs/CustomerPM';
 import {ObservableCollection} from '../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CutsomerTenantAccessManagementComponent.html',
     providers: [SharedLogisticsService, DocumentTypeListService],
 })

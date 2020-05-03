@@ -28,12 +28,13 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 
 @Component({
     selector: 'DeclarationSupplierInvoiceTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './DeclarationSupplierInvoiceTabComponent.html',
     providers: [DeclarationExtendedListService]
  })
 
 export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implements OnInit{
+  public onQueryChangeEvent: any;
 
     public EntityPM: DeclarationPM;
     public ObjectTableName: string = null;

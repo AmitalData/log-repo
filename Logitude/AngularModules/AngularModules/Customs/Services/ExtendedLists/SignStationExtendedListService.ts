@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -31,7 +31,7 @@ export class SignStationExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid + '&' + 'invoicecounterkey=' + invoicecounterkey + '&' + 'lineNumber=' + lineNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var list = response;
 
@@ -53,7 +53,7 @@ export class SignStationExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -80,7 +80,7 @@ export class SignStationExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(
                 this._apiUrl + '/GetSignStationGroupByStatus?' + "&searchfields=" + searchfields ,
                 ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
@@ -104,7 +104,7 @@ export class SignStationExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(
                 this._apiUrl + '/GetSignStations?' + "&skip=" + skip.toString() + "&take=" + take.toString() + "&sortingCol=" + sortingCol.toString() + "&sortingDir=" + sortingDir.toString() + "&searchfields=" + searchfields + "&FilterByStatus=" + FilterByStatus.toString(),
                 ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {

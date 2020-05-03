@@ -20,7 +20,7 @@ import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
 import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AttachExternal',
     templateUrl: './AttachmentUploaderComponent.html',
     providers: [DocumentsFilingExtendedPMService, ImageLibraryService, DocumentsFilingPMService],

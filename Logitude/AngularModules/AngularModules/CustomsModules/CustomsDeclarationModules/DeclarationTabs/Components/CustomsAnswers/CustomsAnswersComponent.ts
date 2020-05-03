@@ -1,8 +1,7 @@
 declare var window: any;
 import {Component, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import {AppTool, ArrayTool} from '../../../../../Infrastructure/Tools';
-import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -12,22 +11,17 @@ import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
-
 import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
-import {ConsignmentPM} from '../../../../../Customs/EntityPMs/ConsignmentPM';
 import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 import {DeclarationErrorView} from '../../../../../Customs/EntityPMs/Extended/DeclarationErrorView';
 import {DeclarationConstraintPM} from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
 import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
-
 import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {ConstraintApprovalRequestParams} from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
 
 // Send Request
 import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
-import {VendorCommunicationResult} from '../../../../../Customs/DataContract/ResponseData/VendorCommunicationResult';
-import {VendorInsertUpdateDeleteMessageRequestParams, OperationTypes} from '../../../../../Customs/DataContract/RequestParams/VendorInsertUpdateDeleteMessageRequestParams';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
 import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
@@ -35,11 +29,10 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
-@Component({
-    moduleId: module.id,
+
+@Component({    
     templateUrl: './CustomsAnswersComponent.html',
     providers: [DeclarationExtendedListService]
-
 })
 
 export class CustomsAnswersComponent extends BaseComponent implements AfterViewInit {
@@ -625,7 +618,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         if (this.EntityPM.IsDirty) {
             this.CurrentSession.CurrentEditComponent.SaveChanges();
 
-            var event = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            var event:any = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
 
                 if (event) {
                     event.unsubscribe();

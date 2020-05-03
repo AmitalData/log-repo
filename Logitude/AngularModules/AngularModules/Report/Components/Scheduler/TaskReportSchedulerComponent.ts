@@ -11,7 +11,7 @@ import { ReportList } from '../../EntityLists/ReportList';
 import { SchedulerDetails, ReportSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TaskReportSchedulerComponent.html',
 })
 

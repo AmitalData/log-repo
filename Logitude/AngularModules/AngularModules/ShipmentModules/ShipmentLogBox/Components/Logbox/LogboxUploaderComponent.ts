@@ -19,7 +19,7 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 declare var ResultAsArray: any;
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'LogBoxUploader',
     templateUrl: './LogboxUploaderComponent.html',

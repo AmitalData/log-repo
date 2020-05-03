@@ -314,9 +314,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					BatchTaskExecutionStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					BatchTaskExecutionStatusUpdateClass.FillBatchTaskExecutionStatus();
 					scope.Complete();
 				}
+ 
+				BatchTaskExecutionStatusUpdateClass.FillBatchTaskExecutionStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BIReport", ObjectTables, BIReportUpdateClass.HashString))
@@ -423,9 +426,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					BIReportsTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					BIReportsTypeUpdateClass.FillBIReportsType();
 					scope.Complete();
 				}
+ 
+				BIReportsTypeUpdateClass.FillBIReportsType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BusinessProcessQueue", ObjectTables, BusinessProcessQueueUpdateClass.HashString))
@@ -694,9 +700,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					ToggleUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					ToggleUpdateClass.FillToggle();
 					scope.Complete();
 				}
+ 
+				ToggleUpdateClass.FillToggle();
+
+ 
 			}
 
         }

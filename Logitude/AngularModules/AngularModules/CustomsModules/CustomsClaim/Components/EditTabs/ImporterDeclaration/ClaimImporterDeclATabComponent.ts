@@ -18,11 +18,14 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimImporterDeclATabComponent.html',
 })
 
 export class ClaimImporterDeclATabComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+  public FooterMethods: any;
+
     public DataContext: ClaimImporterDeclATabComponent = this;
     public EntityPM: ClaimPM = new ClaimPM();
     public ObjectTableName: string = "Customs.Claim";

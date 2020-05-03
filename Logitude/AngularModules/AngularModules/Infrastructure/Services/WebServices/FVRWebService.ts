@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 
@@ -16,7 +16,7 @@ export class FVRWebService {
     }
 
     SendFVR(myAirlineId: string, myFromPortId: string, myToPortId: string, myETD: Date, myETA: Date, myVolume: number, myGrossWeight: number, myVolumeUnitCode: string, myGrossWeightUnitCode: string, myShipmentId: string, myBookingId: string, myRecipient: string) {
-        return Observable.defer(() => {
+        return defer(() => {
             var args = new FVRServiceArgs();
             args.AirlineId = myAirlineId;
             args.ShipmentId = myShipmentId;
@@ -46,7 +46,7 @@ export class FVRWebService {
     SimulateXML(xmlString: string, myShipmentId: string, myBookingId, isFNA: boolean) {
         var url = this._apiUrl + '/GetSimulateXML?xmlString=' + xmlString + '&myShipmentId=' + myShipmentId + '&myBookingId=' + myBookingId + '&isFNA=' + isFNA;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var mappedResult: FVASimulatorResult = new FVASimulatorResult();
@@ -68,7 +68,7 @@ export class FVRWebService {
 
     GetCopyFlightsSchedulesPorts(myResponseIds: string) {
         var url = this._apiUrl + '/GetCopyFlightsSchedulesPorts?myResponseIds=' + myResponseIds;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 var listMapped: Array<FlightSchedulePort> = [];

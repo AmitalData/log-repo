@@ -17,7 +17,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'AddEditQuoteTemplateSectionComponent',
-    moduleId: module.id,
+    
     templateUrl: './AddEditQuoteTemplateSectionComponent.html',
 })
 

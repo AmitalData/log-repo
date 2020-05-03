@@ -9,9 +9,7 @@ import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
 import { CustomerIdentifyTypePM } from '../../../../../Customs/EntityPMs/CustomerIdentifyTypePM';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
-@Component({
-
-    moduleId: module.id,
+@Component({    
     templateUrl: './CasualSupplierDetailsComponent.html',
     selector: 'CasualSupplierDetailsComponent',
 

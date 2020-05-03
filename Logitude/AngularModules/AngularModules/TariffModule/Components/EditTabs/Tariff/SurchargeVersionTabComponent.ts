@@ -27,7 +27,7 @@ import { UpdateTariffArgs } from '../../../Args';
 import { AirSurchargeTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SurchargeVersionTabComponent.html',
 })
 
@@ -48,7 +48,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
     public IsAir: boolean = false;
-    private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
+  private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
+  public LinesCount: number;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -394,7 +396,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         });
 
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
-
+      this.LinesCount = this.TariffsLinesSource.Length;
         this.DoCompare();    
     }
 

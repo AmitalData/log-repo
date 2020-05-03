@@ -6,7 +6,7 @@ import {ShipmentPM} from '../../Shipment/EntityPMs/ShipmentPM';
 
 @Component({
     selector: "HelperNotes",
-    moduleId: module.id,
+    
     templateUrl: './HelperNotes.html',
     inputs: ['Title', 'EntityTitle', 'Text', 'IconCode', 'IsEnabled', 'ShipmentPM', 'QuotePM'],
     changeDetection: ChangeDetectionStrategy.OnPush,

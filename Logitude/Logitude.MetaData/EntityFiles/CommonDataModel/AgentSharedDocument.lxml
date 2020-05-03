@@ -925,11 +925,11 @@
     <Feature
       Code="&quot;DOCSSHAREDVIAEMAIL&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;AgentSharedDocument.Features.DocsSharedViaEmail&quot;"
-      FeatureDefaultText="&quot;Docs Shared Via Email&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;AgentSharedDocument.Features.DocsSharedViaEmail&quot;"
+      FeatureDefaultText="&quot;Docs Shared Via Email&quot;" />
   </AdditionalFeatures>
 </entity>

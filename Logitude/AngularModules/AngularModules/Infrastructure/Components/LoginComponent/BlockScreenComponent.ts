@@ -3,7 +3,7 @@ import {SessionInfo} from '../../Utilities/SessionInfo';
 import {InfraSettings} from '../../Utilities/InfraSettings';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {LoginService} from '../../Services/LoginService';
-import {Headers} from '@angular/http';
+
 import {TenantManagementPMService} from '../../Services/StandardPMs/TenantManagementPMService';
 import {AppTool} from '../../Tools';
 import {Environment} from '../../Locators/Environment';
@@ -12,7 +12,7 @@ import { HomeComponent } from '../HomeComponent/HomeComponent';
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BlockScreenComponent.html',
 })
 

@@ -9,13 +9,13 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {TeamPM} from '../../../../Infrastructure/EntityPMs/TeamPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TasksWorkspaceComponent.html',
 })
 
 export class TasksWorkspaceComponent {
     private businessProcessDomainService: BusinessProcessDomainService;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {         

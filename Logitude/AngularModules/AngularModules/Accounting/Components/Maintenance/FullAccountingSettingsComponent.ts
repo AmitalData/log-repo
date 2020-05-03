@@ -1,5 +1,4 @@
 import {Component, OnInit, AfterViewInit, ChangeDetectorRef} from '@angular/core';
-import {Response} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LogLabelComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogLabelComponent';
@@ -31,7 +30,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'FullAccountingSettingsComponent',
     templateUrl: './FullAccountingSettingsComponent.html',
     providers: [ServiceArgs]

@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'NewCashBookComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './NewCashBookComponent.html',
 })

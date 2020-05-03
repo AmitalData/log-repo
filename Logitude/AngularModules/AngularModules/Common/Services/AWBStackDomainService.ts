@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {MAWBStackPM} from '../EntityPMs/MAWBStackPM';
@@ -22,7 +22,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetMAWBStackPMsByAirlineId?myCardId=' + myCardId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -45,7 +45,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetMAWBStackPMByNumber?number=' + number;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var itemJason = response;
@@ -68,7 +68,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetMAWBStackPMsCountByAirlineIdAndShipperId?airlineId=' + airlineId + '&customerId=' + customerId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var itemJason = response;
@@ -84,7 +84,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetCardHasAssignedMawbStacks?airlineId=' + airlineId + '&customerId=' + customerId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
       
                 var itemMapped: Boolean = response.body;   //== "true" ? true : false;
@@ -98,7 +98,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetMAWBStackPMsByAirlineIdAndShipperId?airlineId=' + airlineId + '&customerId=' + customerId + '&pageSize=' + pageSize + '&pageIndex=' + pageIndex;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -119,7 +119,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetCustomerStockSeries?myCustomerId=' + myCustomerId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -134,7 +134,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetAllAvailableStockSeries';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -149,7 +149,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetAirlineAvailableStockSeries?airlineId=' + airlineId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -164,7 +164,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetAssignStockSeriesToCustomer?start=' + start + '&end=' + end + '&airlineId=' + airlineId + '&customerId=' + customerId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -179,7 +179,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetUnAssignStockSeriesToUser?start=' + start + '&end=' + end + '&airlineId=' + airlineId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -194,7 +194,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetDeleteMAWBStacksOperation?myStackId=' + myStackId + '&myAirlineId=' + myAirlineId + '&isDeletingSeries=' + isDeletingSeries;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myResult = response;
@@ -213,7 +213,7 @@ export class AWBStackDomainService {
 
         var url = this._apiUrl + '/GetCreateMAWBStacksOperation?myAirlineId=' + myAirlineId + '&myStartNumber=' + myStartNumber + '&myEndNumber=' + myEndNumber + '&assignedToId=' + assignedToId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myResult = response;

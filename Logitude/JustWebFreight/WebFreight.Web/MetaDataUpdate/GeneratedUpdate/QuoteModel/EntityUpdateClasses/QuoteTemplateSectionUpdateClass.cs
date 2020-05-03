@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteTemplateSectionUpdateClass
    {  		
-		public const string HashString = "4b791bc9806032eee20323268c1727b6";
+		public const string HashString = "8c725db9cb7ea56a3be8f1009e75c122";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuoteTemplateSection",
 			      				    IsNew =  false,
 			      				    DBTableName =  "QuoteTemplateSections",
-			      				    OldDBTableName =  "QuoteTemplateSections",
 			      				    ObjectTableSingular =  "Quote Template Sections",
 			      				    ObjectTablePlural =  "Quote Template Sections",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote Template Sections",
-			      				    Code =  "a952",
+			      				    Code =  "622d",
 			      				    Name =  "QuoteTemplateSection",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Quote",
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "QuoteTemplateId",
-					  						OldFieldName =  "QuoteTemplateId",
 					  						ObjectTableName =  "QuoteTemplateSection",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -202,7 +200,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "SectionDocId",
-					  						OldFieldName =  "SectionDocId",
 					  						ObjectTableName =  "QuoteTemplateSection",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -263,7 +260,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "Order",
-					  						OldFieldName =  "Order",
 					  						ObjectTableName =  "QuoteTemplateSection",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -324,7 +320,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "QuoteTemplateSectionTypeCode",
-					  						OldFieldName =  "QuoteTemplateSectionTypeCode",
 					  						ObjectTableName =  "QuoteTemplateSection",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -410,12 +405,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable QuoteTemplateSectionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteTemplateSection" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature QuoteTemplateSectionFeature_Module = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteTemplateSectionObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplateSection.Features.Module", NameTextCodeDefaultText = @"QuoteTemplateSection Package Feature" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
    
 	    
 		}

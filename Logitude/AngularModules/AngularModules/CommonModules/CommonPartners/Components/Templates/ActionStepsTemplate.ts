@@ -6,7 +6,7 @@ import {EntityPMServiceResponse} from '../../../../Infrastructure/DataContracts/
 import {EntityPMService} from '../../../../Infrastructure/Services/EntityPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ActionStepsTemplate.html',
 })
 

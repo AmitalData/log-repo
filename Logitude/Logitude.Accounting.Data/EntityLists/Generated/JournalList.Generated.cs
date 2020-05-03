@@ -73,9 +73,9 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public bool IsLedgerCreated  { get; set; }
        [DataMember]
-       public DateTime DocumentDate  { get; set; }
+       public DateTime? DocumentDate  { get; set; }
        [DataMember]
-       public DateTime DueDate  { get; set; }
+       public DateTime? DueDate  { get; set; }
    }
 
 }

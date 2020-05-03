@@ -18,7 +18,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentCustomFields',
     templateUrl: './DocumentCustomFieldsComponent.html',
     inputs: ['DocumentCustomArgs'],

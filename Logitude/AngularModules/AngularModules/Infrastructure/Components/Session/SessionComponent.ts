@@ -10,12 +10,12 @@ import {LogitudeGridHelper} from '../../Utilities/LogitudeGridHelper';
 import {PubSubFiltersChangeEventService} from '../../Utilities/events/ApiFiltersChangeEvent'; 
 import {MainMenuComponent} from '../MainMenuComponent/MainMenuComponent'; 
 import {AmitalGatewayUtil} from '../../Utilities/AmitalGatewayUtil';
-import { Subscription, TeardownLogic } from 'rxjs/Subscription';//itzik
+import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import {EntityResourceService} from '../../Services/EntityResourceService';
 
 @Component({
     selector: 'SessionComponent',
-    moduleId: module.id,
+    
     templateUrl: "./SessionComponent.html",
     providers: [PubSubFiltersChangeEventService],
 })

@@ -18,13 +18,17 @@ import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirectiv
 import {CardListService} from '../../Common/Services/StandardLists/CardListService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'EditWarehouseEntryComponent',
     templateUrl: './EditWarehouseEntryComponent.html',
 })
 
 
 export class EditWarehouseEntryComponent extends BaseComponent implements OnInit {
+  public ExpectedEntryDate: any;
+  public SpecialInstruction: any;
+  public Notes: any;
+
     public ValidationErrorsList: string[];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     DataContext: any = this;
@@ -285,7 +289,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
     }
     
 
-    SetActualDateClicked(fieldName: string) {
+    SetActualDateClicked() {
         this.ActualEntryDate = DateTool.GetDateParts(this.warehouseEntryPM.ExpectedEntryDate).DateObject;
     }
 }

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RevaluationUpdateClass
    {  		
-		public const string HashString = "a42affee840ed8ece5dc6f572e3c7e2e";
+		public const string HashString = "d35d3bc16e0129fba615054c094c5310";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1300,7 +1300,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature RevaluationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature RevaluationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature RevaluationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature RevaluationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.PackageFeature", NameTextCodeDefaultText = "Revaluation Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature RevaluationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.PackageFeature", NameTextCodeDefaultText = "Revaluation Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature RevaluationFeature_DETAILS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Details", NameTextCodeDefaultText = @"Details" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature RevaluationFeature_REVALUATIONMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REVALUATIONMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.RevaluationMenu", NameTextCodeDefaultText = @"Revaluations" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -1371,7 +1379,37 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable RevaluationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Revaluation" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode RevaluationTextCode_GeneralMCACCRevaluations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Revaluations", DefaultText = "Revaluations",LocalDefaultText = @"שערוכים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationDetailsODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Revaluation.Details.O.Details", DefaultText = "Details",LocalDefaultText = @"פרטי שערוך", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationGeneralODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Revaluation.General.O.Details", DefaultText = "General",LocalDefaultText = @"הגדרות שערוך", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationDetailsBCancelRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.Details.B.CancelRevaluation", DefaultText = "Cancel Revaluation",LocalDefaultText = @"ביטול שערוך", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_GeneralMCACCCashBooks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.CashBooks", DefaultText = "Cash Books",LocalDefaultText = @"שערוכים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationOGLAccountForRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.GLAccountForRevaluation", DefaultText = "You must choose GL Accounts for revaluation",LocalDefaultText = @"חובה לבחור כרטיסים לשערוך", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationOChartAccountForRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.ChartAccountForRevaluation", DefaultText = "You must choose Chart of account for revaluation",LocalDefaultText = @"שדה קבוצת מאזן הוא שדה חובה", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationOFutureDateIsNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.O.FutureDateIsNotAllowed", DefaultText = "Future Date!",LocalDefaultText = @"!תאריך עתידי", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationCHId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.CH.Id", DefaultText = "Revaluation Id",LocalDefaultText = null, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationCHRevaluationNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.CH.RevaluationNumber", DefaultText = "Revaluation Number",LocalDefaultText = null, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationCHRevaluationDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.CH.RevaluationDate", DefaultText = "Revaluation Date",LocalDefaultText = null, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RevaluationTextCode_RevaluationCHRevaluationEnabled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.CH.RevaluationEnabled", DefaultText = "Revaluation Enabled",LocalDefaultText = null, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

@@ -19,7 +19,7 @@ import {CouriersVatPMService} from '../../../../Customs/Services/StandardPMs/Cou
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditCouriersVatComponent.html',
 })
 

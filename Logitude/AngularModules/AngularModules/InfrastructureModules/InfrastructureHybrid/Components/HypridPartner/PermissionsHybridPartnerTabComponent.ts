@@ -2,7 +2,7 @@ import {Component, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {HybridPartnerList} from '../../../../Common/EntityLists/HybridPartnerList';
-import {Headers} from '@angular/http';
+
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -10,7 +10,7 @@ import {HybridPartnerExtendedListService} from '../../../../Common/Services/Exte
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PermissionsHybridPartnerTabComponent.html',
 })
 

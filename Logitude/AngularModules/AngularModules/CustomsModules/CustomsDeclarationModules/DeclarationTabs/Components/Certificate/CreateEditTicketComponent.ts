@@ -26,7 +26,7 @@ import { CustomsDocumentsTicketsExtendedService } from '../../../../../Customs/S
 import { CustomsDocumentsTicketPMService } from '../../../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
 import { DocumentsFilingPMService } from '../../../../../Common/Services/StandardPMs/DocumentsFilingPMService';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CreateEditTicketComponent.html',
 })
 

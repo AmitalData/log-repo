@@ -489,7 +489,7 @@
 
                                             <tr class="FormFieldRow">
                                                 <td style="width:10px"></td>
-                                                <td colspan="3" style="" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                <td colspan="7" style="" [style.text-align]="isRTL ? 'right' : 'left'">
 
                                                     <span float-start  style="height: 100%;padding-top: 10px; ">{{'Accounting.General.O.OpenAmount' | TextCodeTranslationPipe}}</span>
 
@@ -534,7 +534,17 @@
                                                 </td>
 
                                                 <td>
-                                                    <div></div>
+                                                    <div [style.float]="isRTL ? 'left' : 'right'" style="width: 220px;padding: 0 5px;">
+                                                        <SearchTextBox [ObjectTableName]="'LedgerTransaction'" [PlaceHolder]="'Accounting.General.O.JournalNoRef' | TextCodeTranslationPipe"
+                                                            (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                                    </div>
+                                                    <div style="width: 30px;" [style.float]="isRTL ? 'left' : 'right'">
+                                                        <!--<IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()" [disabled]="true"></IconButton>-->
+                                                    </div>
+
+                                                    <div  [style.float]="isRTL ? 'left' : 'right'">
+                                                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                                                    </div>
                                                 </td>
                                             </tr>
 
@@ -565,7 +575,7 @@
                     </tr>
 
                     <!-- Transactions ToolBar -->
-                    <tr style="height: 40px;">
+                    <tr *ngIf="0" style="height: 40px;">
                         <td colspan="4" style="width: 620px; padding: 4px;">
                             <div [style.float]="isRTL ? 'left' : 'right'" style="width: 220px;padding: 0 5px;">
                                 <SearchTextBox [ObjectTableName]="'LedgerTransaction'" [PlaceHolder]="'Accounting.General.O.JournalNoRef' | TextCodeTranslationPipe"

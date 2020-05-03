@@ -174,17 +174,15 @@
   </Column>
   <Column
     Name="DocumentDate"
-    Type="datetime"
-    DefaultValue="'1900-01-01T00:00:00.000'">
+    Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="DueDate"
-    Type="datetime"
-    DefaultValue="'1900-01-01T00:00:00.000'">
+    Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="TypeCode"

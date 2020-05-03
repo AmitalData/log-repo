@@ -9,7 +9,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CreditLimitSettingsComponent.html',
 })
 

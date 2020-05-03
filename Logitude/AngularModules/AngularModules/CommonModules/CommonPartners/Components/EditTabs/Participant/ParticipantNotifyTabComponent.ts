@@ -10,7 +10,7 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 
 @Component({
     selector: 'ParticipantNotifyTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './ParticipantNotifyTabComponent.html',
 
 })

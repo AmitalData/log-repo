@@ -33,7 +33,7 @@ import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServi
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewVendorComponent.html',
 })
 

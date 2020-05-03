@@ -10,7 +10,7 @@ import {TenantManagementPMService} from '../../../../Infrastructure/Services/Sta
 import {QueueMessagesWebService} from '../../../../Infrastructure/Services/WebServices/QueueMessagesWebService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'TenantManagementStatisticsTabComponent',
     templateUrl: './TenantManagementStatisticsTabComponent.html',
 })

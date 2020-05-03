@@ -4,7 +4,7 @@ import { ServiceHelper } from '../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class TranslateLablesService {
@@ -16,7 +16,7 @@ export class TranslateLablesService {
     }
 
     Post(args: TranslateLabelsAPIHelper) {
-        return Observable.defer(() => {
+        return defer(() => {
             var mappedEntity: TranslateLabelsAPIHelper = this.MapJsonToTranslateLabelsAPIHelper(args, false);
 
             return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {

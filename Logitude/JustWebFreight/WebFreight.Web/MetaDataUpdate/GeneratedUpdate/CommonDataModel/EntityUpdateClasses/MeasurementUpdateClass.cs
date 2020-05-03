@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class MeasurementUpdateClass
    {  		
-		public const string HashString = "b30587cb2d19ff03f1607cdc9ce28342";
+		public const string HashString = "13a66aec654233b1fb75f0cb4e1aaa26";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -707,7 +707,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature MeasurementFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature MeasurementFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature MeasurementFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature MeasurementFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.PackageFeature", NameTextCodeDefaultText = "Measurement Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature MeasurementFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.PackageFeature", NameTextCodeDefaultText = "Measurement Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature MeasurementFeature_Measurement_M_Measurements = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Measurement.M.Measurements", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Measurements", NameTextCodeDefaultText = @"Measurements" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 

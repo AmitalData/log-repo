@@ -33,7 +33,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationGeneralComponent.html',
     providers: [DeclarationExtendedListService],
 })

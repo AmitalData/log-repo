@@ -19,12 +19,14 @@ import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServi
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationCargoSplitEditComponent.html',
     providers: [EntityArgs],
 })
 
 export class DeclarationCargoSplitEditComponent extends BaseComponent {
+  public right: any;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public EntityPM: DeclarationCargoSplitPM;
     public ObjectTableName: string = "Customs.DeclarationCargoSplit";

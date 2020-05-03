@@ -1,6 +1,6 @@
 import {Injectable, Injector, Inject} from '@angular/core';
 
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {CardList} from '../../EntityLists/CardList';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
@@ -50,7 +50,7 @@ export class WarehouseExtendedListService {
         var callUrl = this._apiUrl.concat(urlparameters);
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                 var viewResponse: ServiceResponse = response.body;

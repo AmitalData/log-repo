@@ -1,6 +1,6 @@
 declare var window: any;
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Headers } from '@angular/http';
+
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { InfraSettings } from '../../Utilities/InfraSettings';
@@ -45,7 +45,7 @@ import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/User
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LoginComponent.html',
     providers: [ApplicationTimersManager, LogitudeApplicationService, UserLastLoginPMService]
 })

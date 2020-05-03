@@ -14,7 +14,7 @@ import {SessionLocator} from '../../../Utilities/SessionLocator';
 import {ServiceResponse} from '../../../DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddFollowupComponent.html',
 })
 

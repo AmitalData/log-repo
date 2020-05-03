@@ -6,7 +6,7 @@ import { InfrastructureDomainService, Column, BITabularViewSettings, BIReportXML
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AgGridColumnsOperations.html',
 })
 

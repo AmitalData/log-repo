@@ -23,7 +23,7 @@ import {DateTimePipe} from '../../../Controls/Pipes/DateTimePipe';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MasterActionConfirmationComponent.html',
 })
 

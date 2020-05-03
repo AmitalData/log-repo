@@ -1,6 +1,6 @@
 declare var window: any;
 declare var SelectingElement: any;
-import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, ApplicationRef, ViewChild} from '@angular/core';
+import {Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, ApplicationRef, ViewChild} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
@@ -9,15 +9,11 @@ import {AppTool} from '../../Tools';
 import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {ControlsIdCounter} from '../../Utilities/ControlsIdCounter';
 import {FieldValidator} from '../../Validators/FieldValidator';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/throttleTime';
-import 'rxjs/add/observable/fromEvent';
 import {FormGroup} from '@angular/forms';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
-import { timer } from 'rxjs/observable/timer';
-import { timeInterval, pluck, take } from 'rxjs/operators';
+import { timer } from 'rxjs';
+import { take } from 'rxjs/operators';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
 
 interface BeforeOnDestroy {
@@ -38,7 +34,7 @@ export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descr
 }
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'LogTextBoxV2',
     templateUrl: "./LogTextBoxV2Component.html",
@@ -107,7 +103,7 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
     private show: boolean;
-    private IsDisabled: boolean;
+    IsDisabled: boolean;
     private timerToken: any;
 
     private textValue;

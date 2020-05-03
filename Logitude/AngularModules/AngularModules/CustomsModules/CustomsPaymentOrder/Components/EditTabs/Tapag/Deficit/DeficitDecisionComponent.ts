@@ -8,7 +8,6 @@ import { DeficitPM } from '../../../../../../Customs/EntityPMs/DeficitPM';
 import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './DeficitDecisionComponent.html',
     selector: 'DeficitDecisionComponent',
 })

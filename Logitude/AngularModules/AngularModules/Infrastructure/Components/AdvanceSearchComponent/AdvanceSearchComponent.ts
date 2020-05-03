@@ -4,7 +4,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 import {AdvancedQueryFilterPM} from '../../../Infrastructure/EntityPMs/AdvancedQueryFilterPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {AdvancedQueryFiltersPMService} from '../../../Infrastructure/Services/StandardPMs/AdvancedQueryFiltersPMService';
-import {Http} from '@angular/http';
+
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ObjectFieldPM} from '../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
@@ -20,7 +20,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AdvSearchComponent',
     templateUrl: './AdvanceSearchComponent.html',
     inputs: ['ObjectTableName', 'QueryChangeEvent', 'isWindowViewMode', 'isNewViewMode', 'QueryId','QueryCode', 'Filterchangeevent', 'rabaia'],

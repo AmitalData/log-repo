@@ -17,7 +17,6 @@ import { EntityResourceService } from '../../../../../Infrastructure/Services/En
 import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './DeclarationCargoSealTabComponent.html',
 })
 

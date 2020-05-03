@@ -10,7 +10,7 @@ import {EntityListService} from '../../../Infrastructure/Services/EntityListServ
 
 @Component({
     selector: 'NewBankCodeComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './NewBankCodeComponent.html',
 })

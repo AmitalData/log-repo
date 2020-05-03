@@ -13,7 +13,7 @@ import { TariffList } from '../../EntityLists/TariffList';
 
 @Component({
     selector: 'CostComponent',
-    moduleId: module.id,
+    
     templateUrl: './CostWorkspaceComponent.html',
     providers: [EntityResourceService, TariffDomainService]
 })

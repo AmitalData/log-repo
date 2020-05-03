@@ -6,7 +6,7 @@ import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponen
 import {VatTypePM} from '../../EntityPMs/VatTypePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AccountingTab_VatType.html',
 })
 

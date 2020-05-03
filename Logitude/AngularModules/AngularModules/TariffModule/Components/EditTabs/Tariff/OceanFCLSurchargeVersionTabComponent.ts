@@ -31,7 +31,7 @@ import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList'
 import { PackageTypeListService } from '../../../../Common/Services/StandardLists/PackageTypeListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './OceanFCLSurchargeVersionTabComponent.html',
 })
 
@@ -50,7 +50,9 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     public IsFirstDraft: boolean = false;
     public SelectedVersionNumber: number;    
     private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
-    @Output() ReloadDetails = new EventEmitter();
+  @Output() ReloadDetails = new EventEmitter();
+  public LinesCount: number;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -392,7 +394,8 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             this.ItemsCollection.push(new OceanFCLSurchargeTariffLineData(false, item, this));
         });
 
-        this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
+      this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
+      this.LinesCount = this.TariffsLinesSource.Length;
         this.DoCompare();
     }
 

@@ -11,7 +11,7 @@ import {CommonDomainService} from '../../../../Common/Services/CommonDomainServi
 import { HybridTenantThresholdPMService } from '../../../../Common/Services/StandardPMs/HybridTenantThresholdPMService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'HybridTenantThresholdComponent',
     templateUrl: './HybridTenantThresholdComponent.html',
 })

@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="7">
@@ -80,7 +80,7 @@
                         <ng-template let-item>
 <log-cell-template [IgnoreMods]="true"  #logcelltemplate>
                             <div style="width: 30px; float: right; height:20px;padding-top:3px">
-                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked(it)" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
                             </div>
                            
 

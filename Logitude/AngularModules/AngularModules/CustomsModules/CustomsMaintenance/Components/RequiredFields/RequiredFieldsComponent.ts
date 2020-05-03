@@ -21,7 +21,7 @@ import { CustomsRequierdFieldsWebService } from '../../../../Customs/Services/We
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'RequiredFieldsComponent',
     templateUrl: 'RequiredFieldsComponent.html',
 })

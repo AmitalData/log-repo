@@ -20,11 +20,13 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import {TaxReportExtendedPMService} from '../../../Services/ExtendedPMs/TaxReportExtendedPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TaxReportDetailsTabComponent.html',
 })
 
 export class TaxReportDetailsTabComponent extends BaseComponent implements OnInit {
+  public Export2ExcelClicked() { }
+
 
     public EntityPM: TaxReportPM = null;
     public ObjectTableName = "TaxReport";

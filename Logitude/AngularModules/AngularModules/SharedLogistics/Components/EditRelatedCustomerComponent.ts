@@ -23,7 +23,7 @@ import {CustomerTenantAccessStatusTypeListService} from '../../Common/Services/S
 import {CommonDomainService} from '../../Common/Services/CommonDomainService';
 import {AppTool} from '../../Infrastructure/Tools';
 @Component({
-    moduleId: module.id,
+    
     selector: 'EditRelatedCustomerComponent',
     templateUrl: './EditRelatedCustomerComponent.html',
 })

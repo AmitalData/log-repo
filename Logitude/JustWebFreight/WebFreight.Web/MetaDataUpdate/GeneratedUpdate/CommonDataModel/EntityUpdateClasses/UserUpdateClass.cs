@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class UserUpdateClass
    {  		
-		public const string HashString = "f0c06470ddd82fa4a9ecdeb85002b694";
+		public const string HashString = "fade5526b12110894481dd392ceb0c2c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -408,7 +408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -473,7 +473,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -2748,6 +2748,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AutomaticLastUpdateDate",
 					  						ListPropertyPath =  "AutomaticLastUpdateDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2984,7 +2985,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   Feature UserFeature_SETANGULARASDEFAULT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETANGULARASDEFAULT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.SetAngularAsDefault", NameTextCodeDefaultText = @"Set Angular As Default" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature UserFeature_User_Feature_ViewsSharing  = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.ViewsSharing ", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.ENABLESHAEDVIEWS", NameTextCodeDefaultText = @"Views Sharing " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature UserFeature_User_Feature_ViewsSharing = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.ViewsSharing", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.ENABLESHAEDVIEWS", NameTextCodeDefaultText = @"Views Sharing " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature UserFeature_User_Feature_EditSharedViews = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.EditSharedViews", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.User.Feature.EditSharedViews", NameTextCodeDefaultText = @"Edit Shared Views" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 

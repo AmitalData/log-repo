@@ -6,7 +6,7 @@ import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 @Component({
-    moduleId: module.id,
+    
     selector: 'StatementFilterComponent',
     templateUrl: './StatementFilterComponent.html',
     inputs: ['ReportsPreview']

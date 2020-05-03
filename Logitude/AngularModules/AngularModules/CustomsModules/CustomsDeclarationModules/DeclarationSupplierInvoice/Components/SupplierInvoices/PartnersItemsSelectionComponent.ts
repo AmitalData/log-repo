@@ -21,7 +21,7 @@ import { CustomsSettingListService } from '../../../../../Customs/Services/Stand
 import { CustomsVendorListService } from '../../../../../Customs/Services/StandardLists/CustomsVendorListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PartnersItemsSelectionComponent.html',
 })
 

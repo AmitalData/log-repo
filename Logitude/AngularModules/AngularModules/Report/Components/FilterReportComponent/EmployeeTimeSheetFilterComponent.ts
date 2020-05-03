@@ -8,7 +8,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'EmployeeTimeSheetFilterComponent',
     templateUrl: './EmployeeTimeSheetFilterComponent.html',
     inputs: ['ReportsPreview']

@@ -27,7 +27,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ReadyForActivationComponent.html',
 })
 
@@ -41,7 +41,7 @@ export class ReadyForActivationComponent extends BaseComponent {
     public ProductsList: Array<ProductTypeItemClass> = [];
     public ServicesList: Array<ServiceItemClass> = [];
     private _QuestionnairePMService: QuestionnairePMService
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();

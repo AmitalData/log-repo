@@ -14,7 +14,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'TermsofUseSignature',
     templateUrl: './TermsofUseSignatureComponent.html',

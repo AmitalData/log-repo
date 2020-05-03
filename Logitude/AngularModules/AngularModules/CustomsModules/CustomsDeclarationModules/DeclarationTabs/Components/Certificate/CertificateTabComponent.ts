@@ -39,7 +39,7 @@ import {ConfirmationTypePM} from  '../../../../../Customs/EntityPMs/Confirmation
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CertificateTabComponent.html',
     providers: [DeclarationExtendedListService]
 })

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CRMFilterSettingUpdateClass
    {  		
-		public const string HashString = "683911cf4b5285cfbdb0fc77223bce54";
+		public const string HashString = "3a8ed7f9ac943512a84efc4a2c072c28";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

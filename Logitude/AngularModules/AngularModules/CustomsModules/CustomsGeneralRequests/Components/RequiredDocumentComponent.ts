@@ -20,7 +20,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'RequiredDocumentComponent',
-    moduleId: module.id,
+    
     templateUrl: './RequiredDocumentComponent.html',
 })
 

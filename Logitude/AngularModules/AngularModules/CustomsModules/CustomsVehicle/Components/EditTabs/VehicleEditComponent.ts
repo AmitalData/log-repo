@@ -22,12 +22,14 @@ import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServi
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VehicleEditComponent.html',
     providers: [EntityArgs],
 })
 
 export class VehicleEditComponent extends BaseComponent {
+  public right: any;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public EntityPM: VehiclePM;
     public ObjectTableName: string = "Customs.Vehicle";

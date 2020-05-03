@@ -9,7 +9,7 @@ import {DocumentTypeCopyPM} from '../../../../Common/EntityPMs/DocumentTypeCopyP
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedDocumentsPermissionsComponent',
     templateUrl: './SharedDocumentsPermissionsComponent.html',
     providers: [DocumentTypePMExtendedService],

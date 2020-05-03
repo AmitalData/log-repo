@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankAccountUpdateClass
    {  		
-		public const string HashString = "8acba5e3874bd1556e89c2dbbb471a3b";
+		public const string HashString = "96d5d58ae1c3ab5d4a2d0583dbc1df51";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2543,7 +2543,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature BankAccountFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BankAccountFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BankAccountFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BankAccountFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.PackageFeature", NameTextCodeDefaultText = "BankAccount Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature BankAccountFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.PackageFeature", NameTextCodeDefaultText = "BankAccount Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature BankAccountFeature_BANKACCOUNTMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKACCOUNTMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.BankAccountMenu", NameTextCodeDefaultText = @"Bank Accounts" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -2675,6 +2681,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   		   //--------------> Additional TextCodes <--------------\\
 
  		   ObjectTable BankAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankAccount" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode BankAccountTextCode_GeneralMCACCBankAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.BankAccounts", DefaultText = "Bank Accounts",LocalDefaultText = @"חשבונות בנק", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankAccountTextCode_BankAccountsOCurrencyGLAccountAndDefferredMustSame = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.CurrencyGLAccountAndDefferredMustSame", DefaultText = "The currency of the GL Account and the defferred GL Account must be the same",LocalDefaultText = @"המטבע של הכרטיס צריך להיות זהה למטבע של כרטיס הדחויים", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankAccountTextCode_BankAccountsOCancelPage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.CancelPage", DefaultText = "Cancel Page",LocalDefaultText = @"ביטול דף בנק", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankAccountTextCode_BankAccountsOCantCancelItsNotLastApproved = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.CantCancelItsNotLastApproved", DefaultText = "Can’t cancel the bank page. It’s not the last approved page",LocalDefaultText = @"לא ניתן לבטל דף בנק זה משום שהוא אינו הדף המאושר האחרו", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankAccountTextCode_BankAccountsOCanCancelItsTransactionsReconciled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.CanCancelItsTransactionsReconciled", DefaultText = "Can’t cancel the bank page. It’s transactions have been reconciled",LocalDefaultText = @"לא ניתן לבטל דף בנק זה משום שהתנועות שלו הותאמו כבר", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode BankAccountTextCode_BankAccountOBank_and_GL_Account_must_be_same_currency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccount.O.Bank_and_GL_Account_must_be_same_currency", DefaultText = "Bank currency and GL Account currency must be the same",LocalDefaultText = @"מטבע הבנק ומטבע הכרטיס חייב להיות זהים", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

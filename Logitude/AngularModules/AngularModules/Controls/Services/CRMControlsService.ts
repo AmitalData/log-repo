@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
 
 @Injectable()
 
@@ -16,7 +16,7 @@ export class CRMControlsService {
     }
 
     PutCompleteActivity(args: MeetingSummary) {
-        return Observable.defer(() => {
+      return defer(() => {
 
             return this._http.put(this._apiUrl + '/PutCompleteActivity', JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myJsonResult = res;

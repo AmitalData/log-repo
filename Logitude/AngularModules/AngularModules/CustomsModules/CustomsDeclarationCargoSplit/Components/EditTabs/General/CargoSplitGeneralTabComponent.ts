@@ -40,7 +40,7 @@ import { EntityListService } from '../../../../../Infrastructure/Services/Entity
 //import {DecCargoSplitConComponent} from '../DecCargoSplitConComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CargoSplitGeneralTabComponent.html',
 })
 

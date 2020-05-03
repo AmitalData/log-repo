@@ -10,7 +10,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditARGeneralInvoiceLineComponent.html',
 })
 

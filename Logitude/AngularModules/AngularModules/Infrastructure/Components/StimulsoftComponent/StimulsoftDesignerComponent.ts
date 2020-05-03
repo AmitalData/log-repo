@@ -1,4 +1,3 @@
-/// <reference path="../../tools.ts" />
 declare var Stimulsoft: any;
 declare var jQuery: any;
 import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
@@ -17,7 +16,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'StimulsoftDesigner',
     templateUrl: './StimulsoftDesignerComponent.html',

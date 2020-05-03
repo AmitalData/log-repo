@@ -27,11 +27,14 @@ import { CustomBanksCardPM } from '../../../../../Customs/EntityPMs/CustomBanksC
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PaymentOrdersGeneralTabComponent.html',
 })
 
 export class PaymentOrdersGeneralTabComponent extends BaseComponent {
+  public IsDisplayOnly: boolean = false;
+  public ProtestTypeCode: any;
+
     public DataContext: PaymentOrdersGeneralTabComponent = this;
     public EntityPM: PaymentOrderPM = new PaymentOrderPM();
     public ObjectTableName: string = "Customs.PaymentOrder";

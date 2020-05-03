@@ -13,7 +13,7 @@ import {CardListService } from '../../../../Common/Services/StandardLists/CardLi
 import {ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditPayableComponent.html',
 })
 

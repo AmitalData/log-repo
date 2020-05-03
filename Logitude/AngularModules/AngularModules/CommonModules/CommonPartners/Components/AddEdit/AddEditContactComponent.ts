@@ -11,7 +11,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditContactComponent.html',
 })
 
@@ -22,7 +22,7 @@ export class AddEditContactComponent {
     public DataContext: ContactItemClass;
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 

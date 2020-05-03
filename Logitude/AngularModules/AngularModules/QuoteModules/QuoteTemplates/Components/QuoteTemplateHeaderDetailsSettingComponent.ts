@@ -22,13 +22,13 @@ import {QuoteTemplateDetailsFieldExtendedPMService} from '../../../Quote/Service
 import {QuoteTemplateHeaderFieldExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateHeaderFieldExtendedPMService';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ObjectFieldPM} from'../../../infrastructure/entitypms/ObjectFieldPM';
+import { ObjectFieldPM } from'../../../Infrastructure/entitypms/ObjectFieldPM';
 import {TextCodeData} from'./QuoteTemplatePricingSettingComponent';
 import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'QuoteTemplateHeaderDetailsSettingComponent',
-    moduleId: module.id,
+    
     templateUrl: './QuoteTemplateHeaderDetailsSettingComponent.html',
 })
 
@@ -81,7 +81,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     QuotePM: any;
     QuoteTemplateSectionTypeName: string = "QuoteHeader";
     QuoteTemplateSectionTypeCode: string = "QH";
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();

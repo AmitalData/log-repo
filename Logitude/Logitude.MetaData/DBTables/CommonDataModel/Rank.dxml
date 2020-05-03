@@ -19,16 +19,16 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
+    Name="Code"
     Type="varchar"
-    Size="40">
+    Size="4">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="Code"
+    Name="Name"
     Type="varchar"
-    Size="4">
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>

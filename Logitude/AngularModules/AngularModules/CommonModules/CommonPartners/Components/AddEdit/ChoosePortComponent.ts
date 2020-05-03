@@ -8,7 +8,7 @@ import { DateTool } from '../../../../Infrastructure/Tools';
 import { AreaItemClass } from '../EditTabs/AreasTabComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ChoosePortComponent.html',
 })
 

@@ -62,12 +62,14 @@ import { DeclarationCourierStatusListService } from '../../../../../Customs/Serv
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { Observable } from 'rxjs';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationPaymentComponent.html',
     providers : [DeclarationExtendedListService]
 })
 
 export class DeclarationPaymentComponent extends BaseComponent implements OnInit {
+  public PayerActivityTypeCode: any;
+
     public DataContext: any = this;
     public DeclarationPM: DeclarationPM;
     public paymentPM: DeclarationPaymentPM;

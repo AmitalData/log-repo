@@ -40,13 +40,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="AddedManually"
     Type="bit">
     <Constraints
@@ -57,6 +50,13 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="SearchFields"

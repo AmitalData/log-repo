@@ -26,7 +26,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 @Component({
     selector:'PhysicalCheckAvailableTimes',
-    moduleId: module.id,
+    
     templateUrl: './PhysicalCheckGeneralTabComponent.html',
 })
 

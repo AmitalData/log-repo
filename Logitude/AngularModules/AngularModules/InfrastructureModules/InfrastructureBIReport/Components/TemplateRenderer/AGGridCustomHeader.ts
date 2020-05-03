@@ -1,16 +1,15 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ILoadingOverlayComp } from "ag-grid-community"; 
 import { IHeaderAngularComp  } from 'ag-grid-angular';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'app-loading-overlay',
     template: `
         <div class="MediaFill">
-            <div *ngIf="params.enableMenu && params.menuIcon !='fa-list-ol'" #menuButton class="customHeaderMenuButton" (click)="onMenuClicked($event)">
+            <div *ngIf="params.enableMenu && params.menuIcon !='fa-list-ol'" #menuButton class="customHeaderMenuButton" (click)="onMenuClicked()">
                 <i class="fa {{params.menuIcon}}"></i>
             </div>
-            <div *ngIf="params.enableMenu && params.menuIcon =='fa-list-ol'" #menuButton class="customHeaderMenuButton" (click)="onMenuClicked($event)">
+            <div *ngIf="params.enableMenu && params.menuIcon =='fa-list-ol'" #menuButton class="customHeaderMenuButton" (click)="onMenuClicked()">
                 <img  src="./Images/numberIcon.png" [className]="'LeftCenter'"/>
             </div>
             <div class="customHeaderLabel TextTrimming">{{params.displayName}}</div>

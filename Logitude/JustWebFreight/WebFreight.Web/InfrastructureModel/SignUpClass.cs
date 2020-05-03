@@ -447,7 +447,7 @@ namespace WebFreight.Web.InfrastructureModel
                 AddEntityStatus(tenant, entityStatusRepository, tenantZeroEntityStatus, tenantZeroObjectTables);
                 List<EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToList();
 
-                AddEventTypes(tenant, eventTypeRepository, tenantZeroEventTypes, /*CurrentTenantObjectTables*/null, tenantZeroObjectTables, currentTenantEntityStatus);
+                AddEventTypes(tenant, eventTypeRepository, tenantZeroEventTypes, /*CurrentTenantObjectTables*/null, tenantZeroObjectTables, currentTenantEntityStatus, tenantZeroEntityStatus);
 
                 AddMeasurements(tenant, measurementRepository, tenantZeroMeasurements);
                 List<Measurement> currentTenantMeasurement = measurementRepository.GetMeasurementsByTenant(tenant).ToList();
@@ -2010,11 +2010,12 @@ namespace WebFreight.Web.InfrastructureModel
             theEntityStatusRepository.SubmitChanges();
         }
 
-        public static void AddEventTypes(int theTenant, EventTypeRepository theEventTypeRepository, List<EventTypePM> tenantZeroEventTypes, List<ObjectTable> currentTenantObjectTables, List<ObjectTable> tenantZeroObjectTables, List<EntityStatus> currentTenantEntityStatus)
+        public static void AddEventTypes(int theTenant, EventTypeRepository theEventTypeRepository, List<EventTypePM> tenantZeroEventTypes, List<ObjectTable> currentTenantObjectTables, List<ObjectTable> tenantZeroObjectTables, List<EntityStatus> currentTenantEntityStatus, List<EntityStatusPM> tenantZeroEntityStatus)
         {
             foreach (EventTypePM eventType in tenantZeroEventTypes)
             {
                 ObjectTable tenantZeroObject = tenantZeroObjectTables.Where(d => d.Id == eventType.ObjectTableId).FirstOrDefault();
+
                 if (tenantZeroObject != null)
                 {
                     EventType newEventType = new EventType()
@@ -2024,7 +2025,6 @@ namespace WebFreight.Web.InfrastructureModel
                         AddedManually = eventType.AddedManually,
                         Code = eventType.Code,
                         EnglishName = eventType.EnglishName,
-                        EntityStatusId = currentTenantEntityStatus.Where(d => d.Name == eventType.EntityStatusName).FirstOrDefault() != null ? currentTenantEntityStatus.Where(d => d.Name == eventType.EntityStatusName).FirstOrDefault().Id : null,
                         FollowUpEnglishName = eventType.FollowUpEnglishName,
                         FollowUpLocalName = eventType.FollowUpLocalName,
                         ManualActivatedFollowUp = eventType.ManualActivatedFollowUp,
@@ -2034,8 +2034,21 @@ namespace WebFreight.Web.InfrastructureModel
                         LocalName = eventType.LocalName,
                         ShortView = eventType.ShortView,
                         SearchFields = eventType.SearchFields,
-                        IsCustomerView = eventType.IsCustomerView,
+                        IsCustomerView = eventType.IsCustomerView,                         
                     };
+
+                    if (eventType.EntityStatusId != null)
+                    {
+                        EntityStatusPM tenantZeroStatus = tenantZeroEntityStatus.Where(d => d.Id == eventType.EntityStatusId).FirstOrDefault();
+                        if (tenantZeroStatus != null)
+                        {
+                            EntityStatus tenantStatus = currentTenantEntityStatus.Where(d => d.Code == tenantZeroStatus.Code && d.ObjectTableId == tenantZeroStatus.ObjectTableId).FirstOrDefault();
+                            if (tenantStatus != null)
+                            {
+                                newEventType.EntityStatusId = tenantStatus.Id;
+                            }
+                        }
+                    }
 
                     theEventTypeRepository.Add(newEventType);
                 }

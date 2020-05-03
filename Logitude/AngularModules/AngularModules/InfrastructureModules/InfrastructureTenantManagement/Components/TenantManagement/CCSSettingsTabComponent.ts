@@ -17,7 +17,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 declare var UploadPortsFile, ArrayBufferToBase64: any;
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'CCSSettingsTabComponent',
     templateUrl: './CCSSettingsTabComponent.html',
 })

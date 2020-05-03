@@ -15,26 +15,20 @@ import { DeclarationPMService } from '../../../Customs/Services/StandardPMs/Decl
 import { DeclarationPM } from '../../../Customs/EntityPMs/DeclarationPM';
 import { CardListService } from '../../../Common/Services/StandardLists/CardListService'
 import { CardList } from '../../../Common/EntityLists/CardList';
-
-
-declare var window: any;
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { CustomsCollateralPMService } from '../../../Customs/Services/StandardPMs/CustomsCollateralPMService';
-import { forEach } from '@angular/router/src/utils/collection';
 import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { SendCollateralRequestParams } from '../../../Customs/DataContract/RequestParams/SendCollateralRequestParams';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { CustomsCollateralAnswerSharedDataService } from '../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
-import { subscribeOn } from 'rxjs/operator/subscribeOn';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-@Component({
-    moduleId: module.id,
+
+@Component({    
     templateUrl: './CustomsCollateralAnswerComponent.html',
     providers: [CustomsCollateralPMService, DeclarationExtendedListService, CustomsCollateralAnswerSharedDataService]
 })
+
 export class CustomsCollateralAnswerComponent extends BaseComponent implements OnInit {
+  public imgNgStyle: any;
 
     public ObjectTableName: string = "Customs.CustomsCollateralsAnswer";
     public DataContext: any = this;

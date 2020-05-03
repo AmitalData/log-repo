@@ -15,15 +15,15 @@ BEGIN
 		WHILE @@FETCH_STATUS = 0
 			BEGIN
 
-				if not exists (select * from Counters where Tenant = @Tenant AND Code = 'INVC' AND ObjectTableId = @InvoiceObjectTableId)
+				if not exists (select * from Counters where Tenant = @Tenant AND Code = 'INVC' AND ObjectTableId = @InvoiceObjectTableId and Id in (select CounterId from CounterDefinitions))
 				begin
 					EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'Counter'
 					insert into Counters (Id, Tenant, Code, Name, ObjectTableId) values (@NewEntityId, @Tenant, 'INVC', 'A/R Invoice',@InvoiceObjectTableId)
 				end
 
-				set @ARInvoiceCounterId = (select Id from Counters where Tenant = @Tenant and ObjectTableId = @InvoiceObjectTableId and Code = 'INVC')
+				set @ARInvoiceCounterId = (select Id from Counters where Tenant = @Tenant and ObjectTableId = @InvoiceObjectTableId and Code = 'INVC' and Id in (select CounterId from CounterDefinitions))
 
-				if not exists (select * from CounterDefinitions where Tenant = @Tenant AND CounterId = @ARInvoiceCounterId AND Parameter1 = 'IT')
+				if not exists (select * from CounterDefinitions where Tenant = @Tenant AND CounterId = @ARInvoiceCounterId AND Parameter1 = 'IT' )
 				begin
 					EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'CounterDefinition'
 					insert into CounterDefinitions (Id, Tenant, Parameter1, StartNumber, CounterId, Prefix, UniquePerPrefix)

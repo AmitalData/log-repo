@@ -26,13 +26,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Sign"
-    Type="nvarchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="EnglishName"
     Type="varchar"
     Size="40">
@@ -47,11 +40,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
+    Name="AddedManually"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="InActive"
@@ -60,15 +52,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="AddedManually"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="SearchFields"
+    Name="Notes"
     Type="nvarchar"
-    Size="1000">
+    Size="250">
     <Constraints
       Nullable="true" />
   </Column>
@@ -76,6 +62,20 @@
     Name="AccountingExternalCode"
     Type="nvarchar"
     Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Sign"
+    Type="nvarchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>

@@ -16,7 +16,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
-  moduleId: module.id,
+  
   selector: 'TrailBalanceFiltersComponent',
   templateUrl: './TrailBalanceFiltersComponent.html',
   inputs: ['ReportsPreview']
@@ -279,7 +279,8 @@ private toDate: Date;
   SelectedItemChanged(item) {
     this.SelectedCategory = item;
   }
-    //#endregion    RunReport() {
+    //#endregion
+    RunReport() {
         this.ValidationErrorsList = [];
        
         if (this.ToDate == null) {

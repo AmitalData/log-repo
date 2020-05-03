@@ -1,12 +1,35 @@
+// @ts-check
+// Protractor configuration file, see link for more information
+// https://github.com/angular/protractor/blob/master/lib/config.ts
+
 const { SpecReporter } = require('jasmine-spec-reporter');
 const HtmlReporter = require('protractor-beautiful-reporter');
 const { JUnitXmlReporter } = require('jasmine-reporters');
 
+/**
+ * @type { import("protractor").Config }
+ */
 exports.config = {
-    allScriptsTimeout: 480000,
-    // specs: [
-    //  './e2e/Operations/**/Operations.e2e-spec.ts'
-    // ],
+  allScriptsTimeout: 480000,
+  // specs: [
+    // './src/**/*.e2e-spec.ts'                       Angular 9
+    // './e2e/Operations/**/Operations.e2e-spec.ts'   Master Branch
+  // ],
+  capabilities: {
+    browserName: 'chrome',
+    acceptInsecureCerts: true,
+  },
+  seleniumServerJar: './node_modules/selenium-standalone-jar/bin/selenium-server-standalone-3.0.1.jar',
+  directConnect: true, // Direct connect with the chrome or firefox without running selenium server
+  baseUrl: 'http://localhost:4200/',
+  framework: 'jasmine',
+
+  jasmineNodeOpts: {
+    showColors: true,
+    defaultTimeoutInterval: 10000000,
+    print: function() {}
+  },
+
     params: {
         Env: null,
         Link: null,
@@ -43,23 +66,53 @@ exports.config = {
             AccountingType: null,
         }
     },
-    capabilities: {
-        'browserName': 'chrome',
-        'acceptInsecureCerts': true,
-    },
-    seleniumServerJar: './node_modules/selenium-standalone-jar/bin/selenium-server-standalone-3.0.1.jar',
 
-    directConnect: true, // Direct connect with the chrome or firefox without running selenium server 
-    framework: 'jasmine',
-    jasmineNodeOpts: {
-        showColors: true,
-        defaultTimeoutInterval: 10000000,
-        print: function () { }
+    suites: {
+        // ********************* Login **********************************
+        login: './Login/**/Login.e2e-spec.ts',
+        NewQuote: './CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
+        // CustomerGLA: './FullAccounting/'
+
+        CRM: './CRM/**/CRMModule-spec.ts',
+        NewShipment: './Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+        NewEAWB: './Operations/Shipments/NewEntity/**/OpEAWB-spec.ts',
+        NewShipmentlogbox: './LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
+        Contact: './Contacts/**/Contacts-spec.ts',
+
+        // ********************* FullAccounting **********************************
+        PaymentCheque: './FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts',
+        ARPayment: './FullAccounting/**/ARPayment-spec.ts',
+        NewChartOfAccount: './FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
+        FullAccProcess: './FullAccounting/**/FullAccScenarios-spec.ts',
+        ARInvoice: './FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
+        BankAccount: './FullAccounting/BankAccount/**/NewBank-spec.ts',
+        VendorGLAccount: './FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
+        CustomerGLAccount: './FullAccounting/**/CustomerGLAccount-spec.ts',
+        APInvoice: './FullAccounting/APInvoice/**/APInvoice-spec.ts',
+        RevGLAccount: './FullAccounting/**/GlAccount-spec.ts',
+        //   CashDeposit: './FullAccounting/**/Deposit/NewDposit-spec.ts',
+        //*************Report********************
+        Reports: './Report/**/Report-spec.ts',
+
+        //*************ShipmentView********************
+        ShipmentView: './**/ShipmentView-spec.ts',
+
+        //*************Maintenance********************
+        CompanyAddressSetting: './Maintenance/**/CompanyAddressSetting-spec.ts',
+        NewAgent: './Maintenance/**/Agent-spec.ts',
+        NewUser: './Maintenance/**/Users-spec.ts',
+        NewShipper: './Maintenance/**/Shipper-spec.ts',
+
+        //*************DocOutTab***************
+        DocOut: './**/DocsOut.e2e-spec.ts',
+        LogitudeAccounting: './Accounting/**/AccountingModule-spec.ts'
     },
+
     onPrepare() {
         require('ts-node').register({
-            project: 'e2e/tsconfig.e2e.json'
+          project: require('path').join(__dirname, './tsconfig.json')
         });
+
         const junitReporterAyman = new JUnitXmlReporter({
             savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamAymanE2EScripts',
             consolidateAll: false
@@ -267,47 +320,4 @@ exports.config = {
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/e2eTracking/screenshots' }).getJasmine2Reporter());
         }
     },
-
-    suites: {
-        // ********************* Login **********************************
-        login: 'e2e/Login/**/Login.e2e-spec.ts',
-        NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
-        // CustomerGLA: 'e2e/FullAccounting/'
-
-        CRM: 'e2e/CRM/**/CRMModule-spec.ts',
-        NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
-        NewEAWB: 'e2e/Operations/Shipments/NewEntity/**/OpEAWB-spec.ts',
-        NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
-        Contact: 'e2e/Contacts/**/Contacts-spec.ts',
-
-        // ********************* FullAccounting **********************************
-        PaymentCheque: 'e2e/FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts',
-        ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
-        NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
-        FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
-        ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
-        BankAccount: 'e2e/FullAccounting/BankAccount/**/NewBank-spec.ts',
-        VendorGLAccount: 'e2e/FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
-        CustomerGLAccount: 'e2e/FullAccounting/**/CustomerGLAccount-spec.ts',
-        APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
-        RevGLAccount: 'e2e/FullAccounting/**/GlAccount-spec.ts',
-        //   CashDeposit: 'e2e/FullAccounting/**/Deposit/NewDposit-spec.ts',
-        //*************Report********************
-        Reports: 'e2e/Report/**/Report-spec.ts',
-
-        //*************ShipmentView********************
-        ShipmentView: 'e2e/**/ShipmentView-spec.ts',
-
-        //*************Maintenance********************
-        CompanyAddressSetting: 'e2e/Maintenance/**/CompanyAddressSetting-spec.ts',
-        NewAgent: 'e2e/Maintenance/**/Agent-spec.ts',
-        NewUser: 'e2e/Maintenance/**/Users-spec.ts',
-        NewShipper: 'e2e/Maintenance/**/Shipper-spec.ts',
-
-        //*************DocOutTab***************
-        DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
-        LogitudeAccounting: 'e2e/Accounting/**/AccountingModule-spec.ts'
-    },
 };
-
-

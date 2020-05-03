@@ -10,7 +10,7 @@ import {CustomerCustomsAgentByProductPM} from '../../../../../Common/EntityPMs/C
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerCustomsAgentByProductSplitComponent.html',
 })
 

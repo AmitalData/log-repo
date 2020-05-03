@@ -1,7 +1,7 @@
 ﻿import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -23,7 +23,7 @@ export class CustomsExchangeRateExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCustomsExchangeRateForCurrencyAndDate/?' + 'currencyTypeCode=' + currencyTypeCodes + '&date=' + date,  ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
@@ -59,7 +59,7 @@ export class CustomsExchangeRateExtendedPMService {
         ///var stringDate = date.toJSON();
         authHeader.append('Token', SessionInfo.Token);
        
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCustomsExchangeRateForDate/?' + 'date=' + stringDate, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 

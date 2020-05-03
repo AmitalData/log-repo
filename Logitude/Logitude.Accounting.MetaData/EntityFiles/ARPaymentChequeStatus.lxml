@@ -476,4 +476,6 @@
       Inactive="false" />
   </Records>
   <DataContracts />
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

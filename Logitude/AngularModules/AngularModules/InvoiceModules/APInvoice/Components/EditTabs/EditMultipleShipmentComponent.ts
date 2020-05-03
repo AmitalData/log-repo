@@ -28,7 +28,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditMultipleShipmentComponent.html',
 })
 

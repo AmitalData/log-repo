@@ -9,7 +9,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { DashBoardFilters } from '../../../../Infrastructure/DataContracts/Dashboard/DashboardFilters';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'VehiclesFilterComponent',
     templateUrl: './VehiclesFilterComponent.html',
     inputs: ['ReportsPreview']

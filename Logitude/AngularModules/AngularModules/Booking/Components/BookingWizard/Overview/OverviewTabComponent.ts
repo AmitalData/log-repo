@@ -14,11 +14,18 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'OverviewTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OverviewTabComponent.html',
 })
 
 export class OverviewTabComponent {
+  public Transshipment2CarriageCarrierName: any;
+  public Transshipment2CarriageFlightNumber: any;
+  public Transshipment2CarriageETD: any;
+  public Transshipment2CarriageSpaceAllocationCode: any;
+  public Transshipment2CarriageAllotmentId: any;
+
+
     public Wizard: BookingWizardComponent;
     public EntityPM: BookingPM;
     public ObjectTableName: string;

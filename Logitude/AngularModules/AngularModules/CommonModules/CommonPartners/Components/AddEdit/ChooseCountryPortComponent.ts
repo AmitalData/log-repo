@@ -12,7 +12,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { DateTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ChooseCountryPortComponent.html',
 })
 

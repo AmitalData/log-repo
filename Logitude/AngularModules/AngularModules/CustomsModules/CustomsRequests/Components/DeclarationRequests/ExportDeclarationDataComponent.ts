@@ -22,7 +22,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'ExportDeclarationDataComponent',
-    moduleId: module.id,
+    
     templateUrl: './ExportDeclarationDataComponent.html',
 })
 

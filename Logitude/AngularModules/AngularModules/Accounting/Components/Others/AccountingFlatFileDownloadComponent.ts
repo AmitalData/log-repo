@@ -21,7 +21,7 @@ declare var window;
 
 @Component({
     selector: 'AccountingFlatFileDownloadComponent',
-    moduleId: module.id,
+    
     templateUrl: './AccountingFlatFileDownloadComponent.html',
 })
 export class AccountingFlatFileDownloadComponent extends BaseComponent implements OnDestroy {

@@ -18,14 +18,15 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { KeyValuePair } from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './ReferantSpotlightDataTemplate.html',
 })
 
 
-export class ReferantSpotlightDataTemplate
-    extends BaseComponent
-    implements AfterViewInit{
+export class ReferantSpotlightDataTemplate extends BaseComponent implements AfterViewInit{
+  public IsDisplayOnly: boolean = false;
+  public OnRowEnded(event:any) { }
+
+
     ngAfterViewInit(): void { 
         this.ShowBusyIndicator = false;
     }
@@ -40,7 +41,7 @@ export class ReferantSpotlightDataTemplate
     _IsReady: boolean = false;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response:any) {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response:any) => {
             this._IsReady = true;
         });
         this.ReferantExceptionItemsSource = new ObservableCollection([]);

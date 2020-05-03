@@ -23,7 +23,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'BrandingTabComponent',
     templateUrl: './BrandingTabComponent.html',

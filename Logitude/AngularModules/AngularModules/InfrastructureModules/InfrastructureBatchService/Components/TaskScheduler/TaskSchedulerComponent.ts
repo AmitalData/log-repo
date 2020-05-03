@@ -13,7 +13,7 @@ import { EntityListService } from '../../../../Infrastructure/Services/EntityLis
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TaskSchedulerComponent.html',
 })
 

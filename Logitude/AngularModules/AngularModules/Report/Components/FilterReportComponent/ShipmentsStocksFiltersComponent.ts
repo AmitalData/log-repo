@@ -15,7 +15,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ShipmentsStocksFiltersComponent',
     templateUrl: './ShipmentsStocksFiltersComponent.html',
     inputs: ['ReportsPreview']

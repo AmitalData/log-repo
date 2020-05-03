@@ -7,6 +7,7 @@
   DBTableOldNames="SpecialServicesTypes"
   ObjectTableSingular="&quot;Special Services Type&quot;"
   ObjectTablePlural="&quot;Special Services Types&quot;"
+  DescriptionDefaultText="&quot;Define the special services you want to use in your shipments.&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
   HasHelper="false"
@@ -221,7 +222,7 @@
     MinLength="0"
     MaxLength="8"
     IsRequired="true"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -298,7 +299,7 @@
     MinLength="0"
     MaxLength="100"
     IsRequired="true"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -375,7 +376,7 @@
     MinLength="0"
     MaxLength="100"
     IsRequired="false"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
@@ -766,6 +767,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AutomaticLastUpdateDate&quot;"
     ListPropertyPath="&quot;AutomaticLastUpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -957,12 +959,6 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;SpecialServicesType.O.TableDescription&quot;"
-      DefaultText="&quot;Define the special services you want to use in your shipments.&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

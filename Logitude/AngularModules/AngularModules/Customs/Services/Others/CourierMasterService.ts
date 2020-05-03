@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -33,7 +33,7 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetIfCourierMasterExists?' + 'Id=' + Id + '&airlineId=' + airlineId + '&HAWB=' + HAWB + '&MAWB=' + MAWB, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -93,7 +93,7 @@ export class CourierMasterService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;
@@ -157,7 +157,7 @@ export class CourierMasterService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;
@@ -180,7 +180,7 @@ export class CourierMasterService {
     }
 
     GetRequiredFieldsForCourierMaster(courierMasterId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -198,7 +198,7 @@ export class CourierMasterService {
     }
 
     GetRequiredFieldsForCourierMasterIncludeManifest(courierMasterId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -249,7 +249,7 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getCourierMasterByDeclarationId?' + 'declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
 
@@ -275,7 +275,7 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetStatistic?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var KeyValuePairList = response;
 
@@ -298,7 +298,7 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendPayReadyLow2755?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&InternalBankId=' + InternalBankId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var messString = response;
                 
@@ -317,7 +317,7 @@ export class CourierMasterService {
 
     PostSendPayReadyLow2755(requestParams: SendPayReadyLowRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -343,7 +343,7 @@ export class CourierMasterService {
     }
     PostSendALLTerminal(requestParams: SendALLCorrectRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -369,7 +369,7 @@ export class CourierMasterService {
     }
     PostSendALLCorrectDec(requestParams: SendALLCorrectRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -396,7 +396,7 @@ export class CourierMasterService {
 
     PostSendALLCorrectManifest(requestParams: SendALLCorrectRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -423,7 +423,7 @@ export class CourierMasterService {
 
     PostSendALLChangeStorageSiteCode(requestParams: SendALLStorageSiteRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -447,7 +447,7 @@ export class CourierMasterService {
 
     PostSendUnCorrectDocuments(requestParams: SendUnCorrectDocumentsRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -472,7 +472,7 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendALLCorrectManifest?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var messString = response;
 
@@ -497,7 +497,7 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendALLCorrectDec?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var messString = response;
 
@@ -526,7 +526,7 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId +
                 '&testerSendOption=' +  sTesterSendOption, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var messString = response;
@@ -543,7 +543,7 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendECTHRDataMaman?' + 'declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var messString = response;
                 var serviceResponse: ServiceResponse;
@@ -559,7 +559,7 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendFTPMamanRequest?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var messString = response;
                 var serviceResponse: ServiceResponse;
@@ -600,7 +600,7 @@ export class CourierMasterService {
 
     PostGatepassRequestMessage(requestParams: GatepassRequestMessageRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -627,7 +627,7 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetPending?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var KeyValuePairList = response;
 
@@ -646,7 +646,7 @@ export class CourierMasterService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetIfAllowToCancelCourierMaster?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
  
                 var serviceResponse: ServiceResponse;

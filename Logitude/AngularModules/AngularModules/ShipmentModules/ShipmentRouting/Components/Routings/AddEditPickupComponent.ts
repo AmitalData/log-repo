@@ -22,11 +22,13 @@ import {WarehouseHelper} from '../../../../Warehouse/Helpers/WarehouseHelper';
 import { ShipmentPickupValidator } from '../../../../Shipment/Validators/ShipmentPickupValidator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditPickupComponent.html',
 })
 
 export class AddEditPickupComponent implements OnDestroy {
+  public SelectedTab: any;
+
     public EntityPM: ShipmentPickUpPM;
     public ShipmentPM: ShipmentPM;
     public ObjectTableName: string = "ShipmentPickUpDelivery";

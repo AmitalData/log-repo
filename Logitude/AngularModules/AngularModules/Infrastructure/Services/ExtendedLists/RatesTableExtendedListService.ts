@@ -4,7 +4,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class RatesTableExtendedListService {
@@ -19,7 +19,7 @@ export class RatesTableExtendedListService {
     getClosestRate(baseCurrenyId: string, foreignCurrencyId: string) {
         var url = this._apiUrl + '/GetClosestRate/?' + 'baseCurrenyId=' + baseCurrenyId + '&foreignCurrencyId=' + foreignCurrencyId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var list = response;
 

@@ -41,13 +41,18 @@ namespace WebFreight.Web.WebPages
         int? tenant = null;
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+
             string fileName = Request["fileName"] ?? "";
             string type = Request["type"] ?? "";
 
             bool useOnePageHeaderAndFooter = ToBoolean(Request["UseOnePageHF"]);
             bool exportDataOnly = ToBoolean(Request["exportDataOnly"]);
             bool exportObjectFormatting = ToBoolean(Request["exportObjectForm"]);
+
             string token = Request["tempId"] ?? "";
+
             SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
             bool isValid = securityDocumentResult.IsValid;
             string email = securityDocumentResult.Email;
@@ -57,23 +62,58 @@ namespace WebFreight.Web.WebPages
             if (isValid)
             {
                 StiReport stiReport = new StiReport();
-                byte[] result = ReadFileFromStorage(fileName, type);
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = fileName,
+                    FolderName = "others",
+                    Extension = "mdc",
+                    Tenant = (int)tenant,
+
+                };
+
+                byte[] result = storageservice.Read(fileInfo);
+
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    string[] Names = fileName.Split('@');
+                    if (Names.Count() > 1) fileName = Names[1];
+
+                }
+
+
                 if (result != null)
                 {
+                    stiReport.LoadDocument(result);
                     MemoryStream memoryStream = new MemoryStream();
-                    string ShowType = type == "PrintToPDF" ? "inline" : "attachment";
-                    string contentType = "application/" + type == "PrintToPDF" ? "pdf" : "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                    string reportName = GetReportName(fileName) + (type == "PrintToPDF" ? ".pdf" : ".xlsx");
-                    if (type != "ExcelOnly")
+                    string documentName = "";
+                    string ShowType = "attachment";
+                    string contentType = "";
+                    if (type == "PrintToPDF")
                     {
-                        stiReport.LoadDocument(result);
-                        if (type == "PrintToPDF") stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
-                        else if (type == "MicrosoftExce" || type == "MicrosoftExceAdvanced")
-                        {
-                            new StiExcel2007ExportService().ExportExcel(stiReport, memoryStream, new StiExcel2007ExportSettings() { UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter, ExportDataOnly = exportDataOnly, ExportObjectFormatting = exportObjectFormatting });
-                        }
+
+                        stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+                        contentType = "application/" + "pdf";
+                        documentName = fileName + ".pdf";
+                        ShowType = "inline";
+
+
                     }
-                    else memoryStream = new MemoryStream(result);
+                    else if (type == "MicrosoftExce" || type == "MicrosoftExceAdvanced")
+                    {
+
+                        StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
+                        setting.UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter;
+                        setting.ExportDataOnly = exportDataOnly;
+                        setting.ExportObjectFormatting = exportObjectFormatting;
+                        StiExcel2007ExportService service = new StiExcel2007ExportService();
+                        service.ExportExcel(stiReport, memoryStream, setting);
+                        contentType = "application/" + "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        documentName = fileName + ".xlsx";
+
+                    }
+
 
                     if (memoryStream != null)
                     {
@@ -87,11 +127,11 @@ namespace WebFreight.Web.WebPages
                         if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
                         {
 
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename*=UTF-8''" + HttpUtility.UrlPathEncode(reportName) + "\"");
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename*=UTF-8''" + HttpUtility.UrlPathEncode(documentName) + "\"");
                         }
                         else
                         {
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(reportName) + "\"");
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
                         }
 
                         HttpContext.Current.Response.BinaryWrite(_DatainByte);
@@ -106,55 +146,29 @@ namespace WebFreight.Web.WebPages
 
                     }
 
-                 
+
 
                 }
 
             }
             else
             {
+
                 var message = exceptionMessage;
                 if (string.IsNullOrEmpty(exceptionMessage)) message = "Sorry you’re not authenticated to view this document.";
                 Response.Output.Write(message);
-
+                //  throw new ApplicationException(message);
             }
 
         }
 
-        private byte[] ReadFileFromStorage(string fileName, string type)
-        {
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
 
-            BlobFileInfo fileInfo = new BlobFileInfo()
-            {
-                FileName = fileName,
-                FolderName = "others",
-                Extension = type == "ExcelOnly" ? "xlsx" : "mdc",
-                Tenant = (int)tenant,
-
-            };
-            byte[] result = storageservice.Read(fileInfo);
-            return result;
-        }
 
         private bool ToBoolean(string value)
         {
             bool result = false;
             if (!string.IsNullOrEmpty(value)) value = value.ToLower();
             if (value == "true") result = true;
-
-            return result;
-        }
-
-
-      public string   GetReportName(string fileName)
-        {
-            string result = fileName;
-            if (!string.IsNullOrEmpty(fileName))
-            {
-                string[] Names = fileName.Split('@');
-                if (Names.Count() > 1) result = Names[1];
-            }
 
             return result;
         }

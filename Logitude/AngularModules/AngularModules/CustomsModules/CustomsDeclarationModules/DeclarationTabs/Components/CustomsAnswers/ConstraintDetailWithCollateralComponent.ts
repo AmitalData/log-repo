@@ -31,7 +31,7 @@ import {DeclarationMessagesService} from '../../../../../Customs/Services/WebSer
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ConstraintDetailWithCollateralComponent.html',
 })
 

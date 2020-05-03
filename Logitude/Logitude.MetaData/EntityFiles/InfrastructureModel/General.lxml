@@ -1941,13 +1941,13 @@
     <TextCode
       Code="&quot;Accounting.General.O.OriginalAmount&quot;"
       DefaultText="&quot;Original Amount&quot;"
-      LocalDefaultText="&quot;מקורף סכום מקורי&quot;"
+      LocalDefaultText="&quot;סכום מקורי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.OpenAmount&quot;"
       DefaultText="&quot;Open Amount&quot;"
-      LocalDefaultText="&quot;יתרת פתיחה לתקופה המוצגת&quot;"
+      LocalDefaultText="&quot;יתרת פתיחה לתקופה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -2275,7 +2275,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.B.OK&quot;"
-      DefaultText="&quot;OK&quot;"
+      DefaultText="&quot;Ok&quot;"
       LocalDefaultText="&quot;אישור&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
@@ -2799,8 +2799,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.NewInvoice&quot;"
-      DefaultText="&quot;New General Invoice&quot;"
-      LocalDefaultText="&quot;חשבונית כללית חדשה&quot;"
+      DefaultText="&quot;New Invoice&quot;"
+      LocalDefaultText="&quot;חשבונית חדשה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -2847,14 +2847,14 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.GeneralInvoice&quot;"
-      DefaultText="&quot;Invoices&quot;"
-      LocalDefaultText="&quot; החשבוניות&quot;"
+      DefaultText="&quot;General Invoice&quot;"
+      LocalDefaultText="&quot;חשבוניות לקוח&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.Payments&quot;"
       DefaultText="&quot;Payments&quot;"
-      LocalDefaultText="&quot;תשלומים&quot;"
+      LocalDefaultText="&quot;קבלות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -3238,7 +3238,7 @@
     <TextCode
       Code="&quot;Accounting.General.O.cashbookDetails&quot;"
       DefaultText="&quot;Cashbook details&quot;"
-      LocalDefaultText="&quot;נוצרה בהצלחה&quot;"
+      LocalDefaultText="&quot;כללי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -3526,7 +3526,7 @@
     <TextCode
       Code="&quot;Accounting.General.O.ChildAdded&quot;"
       DefaultText="&quot;The GLAccount- was added as a child &quot;"
-      LocalDefaultText="&quot;הכרטיס - נוסף ככרטיס בן&quot;"
+      LocalDefaultText="&quot;לכרטיס - נוסף כרטיס בן&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -3664,7 +3664,7 @@
     <TextCode
       Code="&quot;Accounting.General.O.IsCancelled&quot;"
       DefaultText="&quot;Cancelled&quot;"
-      LocalDefaultText="&quot;מבוטל&quot;"
+      LocalDefaultText="&quot;מבוטלת&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -3885,14 +3885,14 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.O.OutOfDeposit&quot;"
-      DefaultText="&quot;Out of deposit&quot;"
+      DefaultText="&quot;Out of Deposit&quot;"
       LocalDefaultText="&quot;הוצאה מהפקדה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.O.OutOfDepositMSG&quot;"
-      DefaultText="&quot;The selected cheque will be out of deposite, Choose if you want to return the cheque to cashbook or to customer&quot;"
-      LocalDefaultText="&quot;ההמחאה שנבחרה תוצא מהפקדה, בחר אם תרצה להחזיר את ההמחאה לקופה או ללקוח&quot;"
+      DefaultText="&quot;The selected cheque will be out of deposite and returned to cashbook&quot;"
+      LocalDefaultText="&quot;ההמחאות שנבחרו יוצאו מההפקדה ויוחזרו לקופה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -3963,8 +3963,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.OpenPayments&quot;"
-      DefaultText="&quot;Open Payments&quot;"
-      LocalDefaultText="&quot;קבלות בסטטוס מאושר&quot;"
+      DefaultText="&quot;Open ARPayments&quot;"
+      LocalDefaultText="&quot;קבלות פתוחות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -4164,7 +4164,7 @@
     <TextCode
       Code="&quot;Accounting.O.Noautorecofoundbymethodchangemethod&quot;"
       DefaultText="&quot;No automatic reconcile found by this method, Please change method or select lines manually&quot;"
-      LocalDefaultText="&quot;לא נמצאו תנועות מתאימות לשיטת ההתאמה שנבחרה&quot;"
+      LocalDefaultText="&quot;לא נמצאו תנועות להתאמה, יש לשנות שיטת התאמה או להתאים ידנית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -4361,13 +4361,13 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.FromDateMustBeLTT&quot;"
-      DefaultText="&quot;From date&quot; field must be less than or equal to &quot;To date&quot; field  &quot;"
+      DefaultText="&quot;From date'' field must be less than or equal to ''To date'' field  &quot;"
       LocalDefaultText="&quot;מ-תאריך חייב להיות קטן או שווה לשדה  עד תאריך &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.ToDateMustBeGTF&quot;"
-      DefaultText="&quot;To date&quot;  field must be greater than or equal to &quot;From date&quot; field&quot;"
+      DefaultText="&quot;To date''  field must be greater than or equal to ''From date'' field&quot;"
       LocalDefaultText="&quot;עד תאריך חייב להיות גדול או שווה לשדה מ-תאריך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
@@ -4412,1834 +4412,2455 @@
       DefaultText="&quot;Tariff Products&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.B.InvoiceNumber&quot;"
+      DefaultText="&quot;The Invoice Number&quot;"
+      LocalDefaultText="&quot;מספר חשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.B.AlreadyExist&quot;"
+      DefaultText="&quot;already exist in another invoice&quot;"
+      LocalDefaultText="&quot; כבר קיים בחשבונית אחרת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.JournalNumber&quot;"
+      DefaultText="&quot;Journal No.&quot;"
+      LocalDefaultText="&quot;פקודת יומן מספר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.YearTransferJournalNotLT&quot;"
+      DefaultText="&quot; is not registered. Can not complete the year transfer process, please contact Support Center.&quot;"
+      LocalDefaultText="&quot; לא נרשמה בספרים לכן לא ניתן להשלים את תהליך העברת השנה, נא לפנות למוקד התמיכה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.MiscQueries&quot;"
+      DefaultText="&quot;Misc Queries&quot;"
+      LocalDefaultText="&quot;שאילתות שונות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.NewOpenFormatReport&quot;"
+      DefaultText="&quot;New Open Format Report&quot;"
+      LocalDefaultText="&quot;דוח מבנה אחיד חדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ARInvoices&quot;"
+      DefaultText="&quot;AR Invoices&quot;"
+      LocalDefaultText="&quot;חשבוניות לקוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ARPayments&quot;"
+      DefaultText="&quot;AR Payments&quot;"
+      LocalDefaultText="&quot;קבלות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.APInvoices&quot;"
+      DefaultText="&quot;AP Invoices&quot;"
+      LocalDefaultText="&quot;חשבוניות ספק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.APPayments&quot;"
+      DefaultText="&quot;AP Payments&quot;"
+      LocalDefaultText="&quot;תשלום לספקים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.DraftInvoices&quot;"
+      DefaultText="&quot;Draft Invoices&quot;"
+      LocalDefaultText="&quot;חשבוניות בסטטוס טיוטה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ApprovedInvoices&quot;"
+      DefaultText="&quot;Approved Invoices&quot;"
+      LocalDefaultText="&quot;חשבוניות מאושרות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ApprovedPayments&quot;"
+      DefaultText="&quot;Approved Payments&quot;"
+      LocalDefaultText="&quot;תשלומים מאושרים &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ClosedMonth&quot;"
+      DefaultText="&quot;Closed Month&quot;"
+      LocalDefaultText="&quot;חודש סגור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.PaymentCheques&quot;"
+      DefaultText="&quot;Payment Cheques&quot;"
+      LocalDefaultText="&quot;המחאות תשלום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.AllPaymentCheques&quot;"
+      DefaultText="&quot;All Payment Cheques&quot;"
+      LocalDefaultText="&quot;כל המחאות התשלום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.minusDepositNotAllowed&quot;"
+      DefaultText="&quot;Cannot deposit a minus value&quot;"
+      LocalDefaultText="&quot;Cannot deposit minus value&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.WithholdingBlocked&quot;"
+      DefaultText="&quot;Line : The Vendor does not have a certificate according to the 1000 System&quot;"
+      LocalDefaultText="&quot;שורה מספר : לספק לא קיים אישור על פי מערכת 1000&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.WithholdingLineDisabled&quot;"
+      DefaultText="&quot;Line : A new line was entered with the same date by the 1000 System&quot;"
+      LocalDefaultText="&quot;שורה מספר : נקלטה שורה חדשה עם תאריך זהה על ידי מערכת 1000&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.WithholdingLineCreated&quot;"
+      DefaultText="&quot;Line : New Withholding tax line wtitten by the 1000 System&quot;"
+      LocalDefaultText="&quot;שורה מספר : הוגדרה שורת שיעור ניכוי מס חדשה על ידי מערכת 1000&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.AccountingPeriodClosed&quot;"
+      DefaultText="&quot;The accounting period for recording the Journal is closed&quot;"
+      LocalDefaultText="&quot;התקופה החשבונאית לרישום פקודת היומן סגורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.YearTransferredAlready&quot;"
+      DefaultText="&quot;The chosen year is transferred already, In order to transfer it again, you must void Journal &quot;"
+      LocalDefaultText="&quot;השנה שנבחרה הועברה כבר, ע”מ להעביר אותה בשנית, יש לבטל את פקודת יומן &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.YearNotYetTransferred&quot;"
+      DefaultText="&quot;The chosen year is not yet transferred&quot;"
+      LocalDefaultText="&quot;השנה שנבחרה טרם הועברה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.TheYearTransferJournal&quot;"
+      DefaultText="&quot;The Year Transfer Journal &quot;"
+      LocalDefaultText="&quot;פקודת יומן &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.YearTransferCancelledAlready&quot;"
+      DefaultText="&quot; for chosen yead is cancelled already&quot;"
+      LocalDefaultText="&quot; להשנה שנבחרה כבר בוטלה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.MoreThanPaymentCheque&quot;"
+      DefaultText="&quot;There are more than one cheques for this payment&quot;"
+      LocalDefaultText="&quot;קיימת יותר מהמחאה אחת עבור קבלה זו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.CantIncludeTwoOrMorePayment&quot;"
+      DefaultText="&quot;Can’t include more than one payment in the same reconciliation&quot;"
+      LocalDefaultText="&quot;לא ניתן לכלול יותר מקבלה אחת באותה התאמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ClientActivationMSG&quot;"
+      DefaultText="&quot;Client is not yet activated in accounting system&quot;"
+      LocalDefaultText="&quot;הלקוח עדיין לא הופעל במערכת הנהלת חשבונות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ClientActivationBTN&quot;"
+      DefaultText="&quot;Activate&quot;"
+      LocalDefaultText="&quot;הפעל כעת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.MultiRecoCreated&quot;"
+      DefaultText="&quot;Reconciliations created successfully&quot;"
+      LocalDefaultText="&quot;התאמות בוצעו בהצלחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.RedeemedChequeMSG&quot;"
+      DefaultText="&quot;The cheque is redeemed and can’t be out of deposit, cancel the external reconcilaition in order to return the cheque to the cashbook&quot;"
+      LocalDefaultText="&quot;לא ניתן להוציא את ההמחאה מההפקדה משום שהיא בסטטוס נפרע, יש לבטל את ההתאמה החיצונית ע”מ להחזיר את ההמחאה לקופה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.IntegrityChecks&quot;"
+      DefaultText="&quot;Accounting Integrity Checks&quot;"
+      LocalDefaultText="&quot;Accounting Integrity Checks&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.CustomersNotes&quot;"
+      DefaultText="&quot;Customer's Notes&quot;"
+      LocalDefaultText="&quot;הערות לקוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.NewAccountingNote&quot;"
+      DefaultText="&quot;New Accounting Note&quot;"
+      LocalDefaultText="&quot;הזן הערה חדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.CompletedReportExist&quot;"
+      DefaultText="&quot;Can’t create tax report for the the chosen month, there is no tax report for the previous month&quot;"
+      LocalDefaultText="&quot;לא ניתן להפיק דוח מעמ לחודש הנבחר משום שלא הופק דוח מעמ לחודש הקודם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.NotCompletedReportExist&quot;"
+      DefaultText="&quot;Can’t create tax report for the chosen month, the report of the previous month is not completed&quot;"
+      LocalDefaultText="&quot;לא ניתן להפיק דוח לחודש הנבחר, הדוח של החודש הקודם לא הושלם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.InvoiceNumber&quot;"
+      DefaultText="&quot;Invoice Number&quot;"
+      LocalDefaultText="&quot;מספר חשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.InvoiceAmount&quot;"
+      DefaultText="&quot;Invoice Amount&quot;"
+      LocalDefaultText="&quot;סכום חשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.Duedate&quot;"
+      DefaultText="&quot;Due date&quot;"
+      LocalDefaultText="&quot;תאריך פרעון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.Status&quot;"
+      DefaultText="&quot;Status&quot;"
+      LocalDefaultText="&quot;סטטוס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.ReconciliationNumber&quot;"
+      DefaultText="&quot;Reco. Number&quot;"
+      LocalDefaultText="&quot;מספר התאמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.Open&quot;"
+      DefaultText="&quot;Open&quot;"
+      LocalDefaultText="&quot;פתוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.Closed&quot;"
+      DefaultText="&quot;Closed&quot;"
+      LocalDefaultText="&quot;סגור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.partiallyOpened&quot;"
+      DefaultText="&quot;Partially open&quot;"
+      LocalDefaultText="&quot;פתוח חלקית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.selectedinvoicesishigherthanpayamount&quot;"
+      DefaultText="&quot;The amount of the selected invoices is higher than the payment amount&quot;"
+      LocalDefaultText="&quot;סכום החשבוניות שנבחרו גבוה מסכום הקבלה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.ReconciledAmount&quot;"
+      DefaultText="&quot;Amount adjusted&quot;"
+      LocalDefaultText="&quot;סכום שהותאם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.invoiceAmount2reconcileMSG&quot;"
+      DefaultText="&quot;The amount to reconcile in the invoice is higher than the invoice open amount&quot;"
+      LocalDefaultText="&quot;הסכום להתאמה גדול מהסכום הפתוח בחשבונית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.paymentAmount2reconcileMSG&quot;"
+      DefaultText="&quot;The amount to reconcile in the invoices is higher than the payment open amount&quot;"
+      LocalDefaultText="&quot;הסכום להתאמה גדול מהסכום הפתוח בקבלה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.PaymentAmount&quot;"
+      DefaultText="&quot;Payment amount&quot;"
+      LocalDefaultText="&quot;סכום הקבלה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ARP.Amount2Reconcile&quot;"
+      DefaultText="&quot;Amount to reconcile&quot;"
+      LocalDefaultText="&quot;סכום להתאמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.DocumentTypeNotFound&quot;"
+      DefaultText="&quot;Document type X not found&quot;"
+      LocalDefaultText="&quot;סוג מסמך X לא נמצא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.DeductionFileNumberNotFound&quot;"
+      DefaultText="&quot;Deduction file number not found&quot;"
+      LocalDefaultText="&quot;לא הוקלד מספר תיק ניכויים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.Rebuild&quot;"
+      DefaultText="&quot;Rebuild&quot;"
+      LocalDefaultText="&quot;בניה מחדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.Building&quot;"
+      DefaultText="&quot;Building...&quot;"
+      LocalDefaultText="&quot;...בניין&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.AuthoritiesReports&quot;"
+      DefaultText="&quot;Authorities Reports&quot;"
+      LocalDefaultText="&quot;דוחות לרשויות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.856Report&quot;"
+      DefaultText="&quot;856 Report&quot;"
+      LocalDefaultText="&quot;דוח 856&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.OpenFormat&quot;"
+      DefaultText="&quot;Open Format&quot;"
+      LocalDefaultText="&quot;דוח מבנה אחיד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.VendorsGLAccount&quot;"
+      DefaultText="&quot;Internal Cheques can be created only from APPayment for vendors GLAccount&quot;"
+      LocalDefaultText="&quot;ניתן להפיק המחאה לכרטיס ספק רק באמצעות הוראת תשלום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.FutureDateNotAllowed&quot;"
+      DefaultText="&quot;Can not enter future date&quot;"
+      LocalDefaultText="&quot;לא ניתן להקליד תאריך עתידי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.OlderThan180Days&quot;"
+      DefaultText="&quot;Do not type a value date older than 180 days&quot;"
+      LocalDefaultText="&quot;אין להקליד תאריך ערך יותר מ- 180 ימים אחורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Generate1000&quot;"
+      DefaultText="&quot;Generate a vendor file for the system 1000&quot;"
+      LocalDefaultText="&quot;הפקת קובץ ספקים למערכת 1000&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Receiving1000&quot;"
+      DefaultText="&quot;Receiving file withholding tax system 1000&quot;"
+      LocalDefaultText="&quot;קליטת קובץ ניכוי מס מערכת 1000&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.AccountingPeriods&quot;"
+      DefaultText="&quot;Accounting Periods&quot;"
+      LocalDefaultText="&quot;תקופות חשבונאיות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.AccountingPeriodsDefinition&quot;"
+      DefaultText="&quot;Accounting Periods Definition&quot;"
+      LocalDefaultText="&quot;הגדרת תקופות חשבונאיות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Fix&quot;"
+      DefaultText="&quot;Fix&quot;"
+      LocalDefaultText="&quot;תקן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.GLAccounts&quot;"
+      DefaultText="&quot;GL Accounts&quot;"
+      LocalDefaultText="&quot;כרטיסים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ShipmentsAndMasters&quot;"
+      DefaultText="&quot;Shipments &amp; Masters&quot;"
+      LocalDefaultText="&quot;תיקים וגו’בים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.YearTransfer&quot;"
+      DefaultText="&quot;Year Transfer&quot;"
+      LocalDefaultText="&quot;העברת שנה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.CancelYearTransfer&quot;"
+      DefaultText="&quot;Cancel Year Transfer&quot;"
+      LocalDefaultText="&quot;ביטול העברת שנה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.TaxReport&quot;"
+      DefaultText="&quot;Tax Report&quot;"
+      LocalDefaultText="&quot;דוח מעמ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.APPaymentDueDate&quot;"
+      DefaultText="&quot;Due Date&quot;"
+      LocalDefaultText="&quot;תאריך פרעון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.LoadBankPage&quot;"
+      DefaultText="&quot;Load Bank Page&quot;"
+      LocalDefaultText="&quot;טען דפי בנק מקובץ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.YouDontHavePermission&quot;"
+      DefaultText="&quot;Sorry! you have no permission to do this operation on &quot;"
+      LocalDefaultText="&quot; אין לך הרשאה להכנת המחאה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.PaymentChequeManualOption&quot;"
+      DefaultText="&quot;Manual entry&quot;"
+      LocalDefaultText="&quot;המחאה ידנית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.PaymentChequeAutomaticOption&quot;"
+      DefaultText="&quot;Internal Cheque&quot;"
+      LocalDefaultText="&quot;מערכת המחאות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Cheques&quot;"
+      DefaultText="&quot;Cheques&quot;"
+      LocalDefaultText="&quot;שקים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.LastBankPage&quot;"
+      DefaultText="&quot;This is not the last bank page&quot;"
+      LocalDefaultText="&quot;רק דף אחרון ניתן לעריכה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ReconciledLinesExist&quot;"
+      DefaultText="&quot;There are reconciled lines&quot;"
+      LocalDefaultText="&quot;לא ניתן לבטל כי חלק מהשורות הותאמו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Edit&quot;"
+      DefaultText="&quot;Edit&quot;"
+      LocalDefaultText="&quot;עריכה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Restore&quot;"
+      DefaultText="&quot;Restore&quot;"
+      LocalDefaultText="&quot;שחזר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.RestoreIsNotPossible&quot;"
+      DefaultText="&quot;Restore is not possible , there are approved bank pages with a later date&quot;"
+      LocalDefaultText="&quot;לא ניתן לבטל את ביטול דף הבנק , ישנם דפי בנק מאושרים עם תאריך מאוחר יותר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.True&quot;"
+      DefaultText="&quot;True&quot;"
+      LocalDefaultText="&quot;נכון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.MoreData&quot;"
+      DefaultText="&quot;More Data&quot;"
+      LocalDefaultText="&quot;פרטים נוספים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.FieldMustBeNumeric&quot;"
+      DefaultText="&quot;The field , must be numeric&quot;"
+      LocalDefaultText="&quot;השדה , חייב להיות מספרי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.FillPayToName&quot;"
+      DefaultText="&quot;This vendor requires to fill in the pay to name&quot;"
+      LocalDefaultText="&quot;עבור ספק זה נדרש למלא את שם הספק בהמחאה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ToDateGreater&quot;"
+      DefaultText="&quot;To date must be Greater or equal than from date&quot;"
+      LocalDefaultText="&quot;תאריך עד צריך להיות גדול או שווה מתאריך מ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.InvoiceDateValidation&quot;"
+      DefaultText="&quot;Vendor invoice date typed, entered with old date (over 180 days back)&quot;"
+      LocalDefaultText="&quot;תאריך חשבונית הספק שהוקלדה,  הוקלדה עם תאריך ישן (למעלה מ- 180 יום אחורה)&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;DASHBOARD&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Dashboard&quot;"
-      FeatureDefaultText="&quot;Dashboard&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Dashboard&quot;"
+      FeatureDefaultText="&quot;Dashboard&quot;" />
     <Feature
       Code="&quot;USERS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Users&quot;"
-      FeatureDefaultText="&quot;Users&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Users&quot;"
+      FeatureDefaultText="&quot;Users&quot;" />
     <Feature
       Code="&quot;QUOTES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Quotes&quot;"
-      FeatureDefaultText="&quot;Quotes&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Quotes&quot;"
+      FeatureDefaultText="&quot;Quotes&quot;" />
     <Feature
       Code="&quot;ARINVOICES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ARInvoices&quot;"
-      FeatureDefaultText="&quot;Accounting&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ARInvoices&quot;"
+      FeatureDefaultText="&quot;Accounting&quot;" />
     <Feature
       Code="&quot;SHIPMENTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Shipments&quot;"
-      FeatureDefaultText="&quot;Shipments&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Shipments&quot;"
+      FeatureDefaultText="&quot;Shipments&quot;" />
     <Feature
       Code="&quot;MASTERS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Masters&quot;"
-      FeatureDefaultText="&quot;Masters&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Masters&quot;"
+      FeatureDefaultText="&quot;Masters&quot;" />
     <Feature
       Code="&quot;MAINTENANCE&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Maintenance&quot;"
-      FeatureDefaultText="&quot;Maintenance&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Maintenance&quot;"
+      FeatureDefaultText="&quot;Maintenance&quot;" />
     <Feature
       Code="&quot;CONTACTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Contacts&quot;"
-      FeatureDefaultText="&quot;Contacts&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Contacts&quot;"
+      FeatureDefaultText="&quot;Contacts&quot;" />
     <Feature
       Code="&quot;CUSTOMERS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Customers&quot;"
-      FeatureDefaultText="&quot;Customers&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Customers&quot;"
+      FeatureDefaultText="&quot;Customers&quot;" />
     <Feature
       Code="&quot;AGENTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Agents&quot;"
-      FeatureDefaultText="&quot;Agents&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Agents&quot;"
+      FeatureDefaultText="&quot;Agents&quot;" />
     <Feature
       Code="&quot;CUSTOMAGENTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CustomAgents&quot;"
-      FeatureDefaultText="&quot;CustomAgents&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CustomAgents&quot;"
+      FeatureDefaultText="&quot;CustomAgents&quot;" />
     <Feature
       Code="&quot;SHIPPINGAGENTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ShippingAgents&quot;"
-      FeatureDefaultText="&quot;Shipping Agents&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ShippingAgents&quot;"
+      FeatureDefaultText="&quot;Shipping Agents&quot;" />
     <Feature
       Code="&quot;AIRLINES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Airlines&quot;"
-      FeatureDefaultText="&quot;Airlines&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Airlines&quot;"
+      FeatureDefaultText="&quot;Airlines&quot;" />
     <Feature
       Code="&quot;SHIPPINGLINES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ShippingLines&quot;"
-      FeatureDefaultText="&quot;Shipping Lines&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ShippingLines&quot;"
+      FeatureDefaultText="&quot;Shipping Lines&quot;" />
     <Feature
       Code="&quot;TRUCKERS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Truckers&quot;"
-      FeatureDefaultText="&quot;Truckers&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Truckers&quot;"
+      FeatureDefaultText="&quot;Truckers&quot;" />
     <Feature
       Code="&quot;INCOTERMS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Incoterms&quot;"
-      FeatureDefaultText="&quot;Incoterms&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Incoterms&quot;"
+      FeatureDefaultText="&quot;Incoterms&quot;" />
     <Feature
       Code="&quot;PAYMENTTERMS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.PaymentTerms&quot;"
-      FeatureDefaultText="&quot;Payment Terms&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.PaymentTerms&quot;"
+      FeatureDefaultText="&quot;Payment Terms&quot;" />
     <Feature
       Code="&quot;CURRENCIES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Currencies&quot;"
-      FeatureDefaultText="&quot;Currencies&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Currencies&quot;"
+      FeatureDefaultText="&quot;Currencies&quot;" />
     <Feature
       Code="&quot;VATTYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.VatTypes&quot;"
-      FeatureDefaultText="&quot;Vat Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.VatTypes&quot;"
+      FeatureDefaultText="&quot;Vat Types&quot;" />
     <Feature
       Code="&quot;CHARGESTYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ChargesTypes&quot;"
-      FeatureDefaultText="&quot;Charges Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ChargesTypes&quot;"
+      FeatureDefaultText="&quot;Charges Types&quot;" />
     <Feature
       Code="&quot;PORTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Ports&quot;"
-      FeatureDefaultText="&quot;Ports&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Ports&quot;"
+      FeatureDefaultText="&quot;Ports&quot;" />
     <Feature
       Code="&quot;COUNTRIES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Countries&quot;"
-      FeatureDefaultText="&quot;Countries&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Countries&quot;"
+      FeatureDefaultText="&quot;Countries&quot;" />
     <Feature
       Code="&quot;GLOBALZONES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.GlobalZones&quot;"
-      FeatureDefaultText="&quot;Global Zones&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.GlobalZones&quot;"
+      FeatureDefaultText="&quot;Global Zones&quot;" />
     <Feature
       Code="&quot;BRANCHES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Branches&quot;"
-      FeatureDefaultText="&quot;Branches&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Branches&quot;"
+      FeatureDefaultText="&quot;Branches&quot;" />
     <Feature
       Code="&quot;DEPARTMENTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Departments&quot;"
-      FeatureDefaultText="&quot;Departments&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Departments&quot;"
+      FeatureDefaultText="&quot;Departments&quot;" />
     <Feature
       Code="&quot;STATES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.States&quot;"
-      FeatureDefaultText="&quot;States&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.States&quot;"
+      FeatureDefaultText="&quot;States&quot;" />
     <Feature
       Code="&quot;DOCUMENTTYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.DocumentTypes&quot;"
-      FeatureDefaultText="&quot;Document Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.DocumentTypes&quot;"
+      FeatureDefaultText="&quot;Document Types&quot;" />
     <Feature
       Code="&quot;EVENTTYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.EventTypes&quot;"
-      FeatureDefaultText="&quot;Event Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.EventTypes&quot;"
+      FeatureDefaultText="&quot;Event Types&quot;" />
     <Feature
       Code="&quot;PACKAGETYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.PackageTypes&quot;"
-      FeatureDefaultText="&quot;Package Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.PackageTypes&quot;"
+      FeatureDefaultText="&quot;Package Types&quot;" />
     <Feature
       Code="&quot;PACKAGETYSPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.PackageTypes&quot;"
-      FeatureDefaultText="&quot;Package Types&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.PackageTypes&quot;"
+      FeatureDefaultText="&quot;Package Types&quot;" />
     <Feature
       Code="&quot;VESSELS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Vessels&quot;"
-      FeatureDefaultText="&quot;Vessels&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Vessels&quot;"
+      FeatureDefaultText="&quot;Vessels&quot;" />
     <Feature
       Code="&quot;WAREHOUSES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Warehouses&quot;"
-      FeatureDefaultText="&quot;Warehouses&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Warehouses&quot;"
+      FeatureDefaultText="&quot;Warehouses&quot;" />
     <Feature
       Code="&quot;RATESTABLES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.RatesTables&quot;"
-      FeatureDefaultText="&quot;Rates Tables&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.RatesTables&quot;"
+      FeatureDefaultText="&quot;Rates Tables&quot;" />
     <Feature
       Code="&quot;POTENTIALCUSTOMERS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.PotentialCustomers&quot;"
-      FeatureDefaultText="&quot;PotentialCustomers&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.PotentialCustomers&quot;"
+      FeatureDefaultText="&quot;PotentialCustomers&quot;" />
     <Feature
       Code="&quot;ACCOUNTS&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Accounts&quot;"
-      FeatureDefaultText="&quot;Accounts&quot;"
       IsPackagable="false"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Accounts&quot;"
+      FeatureDefaultText="&quot;Accounts&quot;" />
     <Feature
       Code="&quot;APINVOICES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.APInvoices&quot;"
-      FeatureDefaultText="&quot;A/P Invoices&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.APInvoices&quot;"
+      FeatureDefaultText="&quot;A/P Invoices&quot;" />
     <Feature
       Code="&quot;VENDORS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Vendors&quot;"
-      FeatureDefaultText="&quot;Vendors&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Vendors&quot;"
+      FeatureDefaultText="&quot;Vendors&quot;" />
     <Feature
       Code="&quot;FOLLOWUPS&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.FollowUps&quot;"
-      FeatureDefaultText="&quot;Follow Ups&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.FollowUps&quot;"
+      FeatureDefaultText="&quot;Follow Ups&quot;" />
     <Feature
       Code="&quot;GETTINGSTARTED&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.GettingStarted&quot;"
-      FeatureDefaultText="&quot;Getting Started&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.GettingStarted&quot;"
+      FeatureDefaultText="&quot;Getting Started&quot;" />
     <Feature
       Code="&quot;EVENTS&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Events&quot;"
-      FeatureDefaultText="&quot;Events&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Events&quot;"
+      FeatureDefaultText="&quot;Events&quot;" />
     <Feature
       Code="&quot;DOCSIN&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.DocsIn&quot;"
-      FeatureDefaultText="&quot;DocsIn&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.DocsIn&quot;"
+      FeatureDefaultText="&quot;DocsIn&quot;" />
     <Feature
       Code="&quot;BUILDQUERIES&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.BuildQueries&quot;"
-      FeatureDefaultText="&quot;Build Queries&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.BuildQueries&quot;"
+      FeatureDefaultText="&quot;Build Queries&quot;" />
     <Feature
       Code="&quot;General.Features.Customization&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Customization&quot;"
-      FeatureDefaultText="&quot;Customization&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Customization&quot;"
+      FeatureDefaultText="&quot;Customization&quot;" />
     <Feature
       Code="&quot;PERSONALSETTINGS&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.PersonalSettings&quot;"
-      FeatureDefaultText="&quot;Personal Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.PersonalSettings&quot;"
+      FeatureDefaultText="&quot;Personal Settings&quot;" />
     <Feature
       Code="&quot;SYSTEMSETTINGS&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SystemSettings&quot;"
-      FeatureDefaultText="&quot;System Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SystemSettings&quot;"
+      FeatureDefaultText="&quot;System Settings&quot;" />
     <Feature
       Code="&quot;SHAREDLOGISTICS&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SharedLogisticsUpdates&quot;"
-      FeatureDefaultText="&quot;Web Access&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SharedLogisticsUpdates&quot;"
+      FeatureDefaultText="&quot;Web Access&quot;" />
     <Feature
       Code="&quot;CANCELINVOICE&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CANCELINVOICE&quot;"
-      FeatureDefaultText="&quot;CANCEL INVOICE&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CANCELINVOICE&quot;"
+      FeatureDefaultText="&quot;CANCEL INVOICE&quot;" />
     <Feature
       Code="&quot;HOWTOACCOUNTINGSETTINGS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.HOWTOACCOUNTINGSETTINGS&quot;"
-      FeatureDefaultText="&quot;Accounting Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.HOWTOACCOUNTINGSETTINGS&quot;"
+      FeatureDefaultText="&quot;Accounting Settings&quot;" />
     <Feature
       Code="&quot;CREDITCARDTYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CreditCardTypes&quot;"
-      FeatureDefaultText="&quot;Credit Card Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CreditCardTypes&quot;"
+      FeatureDefaultText="&quot;Credit Card Types&quot;" />
     <Feature
       Code="&quot;SHAREDLOGISTICSMENU&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SharedLogistics&quot;"
-      FeatureDefaultText="&quot;Shared Logistics&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SharedLogistics&quot;"
+      FeatureDefaultText="&quot;Shared Logistics&quot;" />
     <Feature
       Code="&quot;MOVETYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.MoveTypes&quot;"
-      FeatureDefaultText="&quot;Move Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.MoveTypes&quot;"
+      FeatureDefaultText="&quot;Move Types&quot;" />
     <Feature
       Code="&quot;REPORTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
       FeatureTextCodeCode="&quot;General.Features.Report&quot;"
-      FeatureDefaultText="&quot;Report&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureDefaultText="&quot;Report&quot;" />
     <Feature
-      Code="&quot;ERRORLOG&quot;"
+      Code="&quot;CUSTOMS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ErrorLog&quot;"
-      FeatureDefaultText="&quot;Error Log&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Customs&quot;"
+      FeatureDefaultText="&quot;Customs&quot;" />
     <Feature
       Code="&quot;CHAMP&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Champ&quot;"
-      FeatureDefaultText="&quot;Champ Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Champ&quot;"
+      FeatureDefaultText="&quot;Champ Settings&quot;" />
     <Feature
       Code="&quot;COMPETITORS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Competitors&quot;"
-      FeatureDefaultText="&quot;Competitors&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Competitors&quot;"
+      FeatureDefaultText="&quot;Competitors&quot;" />
     <Feature
       Code="&quot;STAGES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Stages&quot;"
-      FeatureDefaultText="&quot;Stages&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Stages&quot;"
+      FeatureDefaultText="&quot;Stages&quot;" />
     <Feature
       Code="&quot;LEADSOURCES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.LeadSources&quot;"
-      FeatureDefaultText="&quot;Lead Sources&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.LeadSources&quot;"
+      FeatureDefaultText="&quot;Lead Sources&quot;" />
     <Feature
       Code="&quot;CRM&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CRM&quot;"
-      FeatureDefaultText="&quot;CRM&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CRM&quot;"
+      FeatureDefaultText="&quot;CRM&quot;" />
     <Feature
       Code="&quot;OPERATIONS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Operations&quot;"
-      FeatureDefaultText="&quot;Operations&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Operations&quot;"
+      FeatureDefaultText="&quot;Operations&quot;" />
     <Feature
       Code="&quot;INDUSTRIES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Industries&quot;"
-      FeatureDefaultText="&quot;Industries&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Industries&quot;"
+      FeatureDefaultText="&quot;Industries&quot;" />
     <Feature
       Code="&quot;CUSTOMBANK&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CustomBank&quot;"
-      FeatureDefaultText="&quot;Custom Bank&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CustomBank&quot;"
+      FeatureDefaultText="&quot;Custom Bank&quot;" />
     <Feature
       Code="&quot;SOCIAL&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Social&quot;"
-      FeatureDefaultText="&quot;Social&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Social&quot;"
+      FeatureDefaultText="&quot;Social&quot;" />
     <Feature
       Code="&quot;QUOTETMPLATES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.QuoteTemplate&quot;"
-      FeatureDefaultText="&quot;Quote Template&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.QuoteTemplate&quot;"
+      FeatureDefaultText="&quot;Quote Template&quot;" />
     <Feature
       Code="&quot;COUNTERS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Counters&quot;"
-      FeatureDefaultText="&quot;Counters&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Counters&quot;"
+      FeatureDefaultText="&quot;Counters&quot;" />
     <Feature
       Code="&quot;General.Features.CompanyAddress&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CompanyAddress&quot;"
-      FeatureDefaultText="&quot;Company Address Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CompanyAddress&quot;"
+      FeatureDefaultText="&quot;Company Address Settings&quot;" />
     <Feature
       Code="&quot;General.Features.SystemDefaults&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SystemDefaults&quot;"
-      FeatureDefaultText="&quot;System Defaults&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SystemDefaults&quot;"
+      FeatureDefaultText="&quot;System Defaults&quot;" />
     <Feature
       Code="&quot;General.Features.CompanyLogo&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CompanyLogo&quot;"
-      FeatureDefaultText="&quot;Company Logo&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CompanyLogo&quot;"
+      FeatureDefaultText="&quot;Company Logo&quot;" />
     <Feature
       Code="&quot;General.Features.SystemCurrencies&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SystemCurrencies&quot;"
-      FeatureDefaultText="&quot;System Currencies&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SystemCurrencies&quot;"
+      FeatureDefaultText="&quot;System Currencies&quot;" />
     <Feature
       Code="&quot;General.Features.LocalSettings&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.LocalSettings&quot;"
-      FeatureDefaultText="&quot;Local Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.LocalSettings&quot;"
+      FeatureDefaultText="&quot;Local Settings&quot;" />
     <Feature
       Code="&quot;General.Features.InvoiceSettings&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.InvoiceSettings&quot;"
-      FeatureDefaultText="&quot;Invoice Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.InvoiceSettings&quot;"
+      FeatureDefaultText="&quot;Invoice Settings&quot;" />
     <Feature
       Code="&quot;General.Features.Signature&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Signature&quot;"
-      FeatureDefaultText="&quot;Signature&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Signature&quot;"
+      FeatureDefaultText="&quot;Signature&quot;" />
     <Feature
       Code="&quot;SIGNATURESETTING&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Signature&quot;"
-      FeatureDefaultText="&quot;Signature&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Signature&quot;"
+      FeatureDefaultText="&quot;Signature&quot;" />
     <Feature
       Code="&quot;CHANGEPASSWORDSETTING&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ChangePassword&quot;"
-      FeatureDefaultText="&quot;Change Password&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ChangePassword&quot;"
+      FeatureDefaultText="&quot;Change Password&quot;" />
     <Feature
       Code="&quot;General.Features.ChangePassword&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ChangePassword&quot;"
-      FeatureDefaultText="&quot;Change Password&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ChangePassword&quot;"
+      FeatureDefaultText="&quot;Change Password&quot;" />
     <Feature
       Code="&quot;ADDITIONALSERVICES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AdditionalServices&quot;"
-      FeatureDefaultText="&quot;Additional Services&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.AdditionalServices&quot;"
+      FeatureDefaultText="&quot;Additional Services&quot;" />
     <Feature
       Code="&quot;SOCIALGENERAL&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SocialGeneral&quot;"
-      FeatureDefaultText="&quot;Social&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SocialGeneral&quot;"
+      FeatureDefaultText="&quot;Social&quot;" />
     <Feature
       Code="&quot;PRODUCTTYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ProductTypes&quot;"
-      FeatureDefaultText="&quot;Product Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ProductTypes&quot;"
+      FeatureDefaultText="&quot;Product Types&quot;" />
     <Feature
       Code="&quot;IMPORTSHIPMETNS&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ImportShipments&quot;"
-      FeatureDefaultText="&quot;Import Shipments&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ImportShipments&quot;"
+      FeatureDefaultText="&quot;Import Shipments&quot;" />
     <Feature
       Code="&quot;General.Features.CustomerActivation&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CustomerActivation&quot;"
-      FeatureDefaultText="&quot;Customer Activation Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CustomerActivation&quot;"
+      FeatureDefaultText="&quot;Customer Activation Settings&quot;" />
     <Feature
       Code="&quot;EMAILALERTSETTINGS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.EmailAlertSettings&quot;"
-      FeatureDefaultText="&quot;Email Alert Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.EmailAlertSettings&quot;"
+      FeatureDefaultText="&quot;Email Alert Settings&quot;" />
     <Feature
       Code="&quot;SHIPPERSANDCONSIGNEES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ShippersAndConsignees&quot;"
-      FeatureDefaultText="&quot;Shippers and Consignees&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ShippersAndConsignees&quot;"
+      FeatureDefaultText="&quot;Shippers and Consignees&quot;" />
     <Feature
       Code="&quot;SPECIALSERVICESTYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SpecialServicesType&quot;"
-      FeatureDefaultText="&quot;Special Service Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SpecialServicesType&quot;"
+      FeatureDefaultText="&quot;Special Service Types&quot;" />
     <Feature
       Code="&quot;REGIONS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Region&quot;"
-      FeatureDefaultText="&quot;Regions&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Region&quot;"
+      FeatureDefaultText="&quot;Regions&quot;" />
     <Feature
       Code="&quot;LOGITUDELEADS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.LogitudeLead&quot;"
-      FeatureDefaultText="&quot;Logitude Lead&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.LogitudeLead&quot;"
+      FeatureDefaultText="&quot;Logitude Lead&quot;" />
     <Feature
       Code="&quot;CUSTOMERSIZES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CustomerSizes&quot;"
-      FeatureDefaultText="&quot;Customer Sizes&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CustomerSizes&quot;"
+      FeatureDefaultText="&quot;Customer Sizes&quot;" />
     <Feature
       Code="&quot;CLOSINGREASONS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ClosingReasons&quot;"
-      FeatureDefaultText="&quot;Closing Reasons&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ClosingReasons&quot;"
+      FeatureDefaultText="&quot;Closing Reasons&quot;" />
     <Feature
       Code="&quot;QUESTIONNAIRE&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Questionnaire&quot;"
-      FeatureDefaultText="&quot;Questionnaire&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Questionnaire&quot;"
+      FeatureDefaultText="&quot;Questionnaire&quot;" />
     <Feature
       Code="&quot;QUESTIONNAIREGENERAL&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.QuestionnaireGeneral&quot;"
-      FeatureDefaultText="&quot;Questionnaire&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.QuestionnaireGeneral&quot;"
+      FeatureDefaultText="&quot;Questionnaire&quot;" />
     <Feature
       Code="&quot;General.Features.TenantManagement&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.TenantManagement&quot;"
-      FeatureDefaultText="&quot;Tenant Management&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.TenantManagement&quot;"
+      FeatureDefaultText="&quot;Tenant Management&quot;" />
     <Feature
       Code="&quot;CountryCity.M.Cities&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Cities&quot;"
-      FeatureDefaultText="&quot;Cities&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Cities&quot;"
+      FeatureDefaultText="&quot;Cities&quot;" />
     <Feature
       Code="&quot;General.Features.SupportManagement&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SupportManagement&quot;"
-      FeatureDefaultText="&quot;Support Management&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SupportManagement&quot;"
+      FeatureDefaultText="&quot;Support Management&quot;" />
     <Feature
       Code="&quot;General.Features.CustomFieldsEdit&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CustomFieldsEdit&quot;"
-      FeatureDefaultText="&quot;Custom Fields Edit&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CustomFieldsEdit&quot;"
+      FeatureDefaultText="&quot;Custom Fields Edit&quot;" />
     <Feature
       Code="&quot;DOCUMENTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Documents&quot;"
-      FeatureDefaultText="&quot;Documents&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Documents&quot;"
+      FeatureDefaultText="&quot;Documents&quot;" />
     <Feature
       Code="&quot;MAINCUSTOMERS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.MaintenanceCustomers&quot;"
-      FeatureDefaultText="&quot;Maintenance Customers&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.MaintenanceCustomers&quot;"
+      FeatureDefaultText="&quot;Maintenance Customers&quot;" />
     <Feature
       Code="&quot;CUSTOMIZATION&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Customization1&quot;"
-      FeatureDefaultText="&quot;Customization&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Customization1&quot;"
+      FeatureDefaultText="&quot;Customization&quot;" />
     <Feature
       Code="&quot;General.Features.BluesnapContract&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.BluesnapContract&quot;"
-      FeatureDefaultText="&quot;Bluesnap Contract&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.BluesnapContract&quot;"
+      FeatureDefaultText="&quot;Bluesnap Contract&quot;" />
     <Feature
       Code="&quot;BLUESNAPS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.BluesnapContracts&quot;"
-      FeatureDefaultText="&quot;Bluesnap Contracts&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.BluesnapContracts&quot;"
+      FeatureDefaultText="&quot;Bluesnap Contracts&quot;" />
     <Feature
       Code="&quot;DOCUMENTFOLDERS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.DocumentFolder&quot;"
-      FeatureDefaultText="&quot;Document Folder&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.DocumentFolder&quot;"
+      FeatureDefaultText="&quot;Document Folder&quot;" />
     <Feature
       Code="&quot;MOBILE&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Mobile&quot;"
-      FeatureDefaultText="&quot;Mobile&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Mobile&quot;"
+      FeatureDefaultText="&quot;Mobile&quot;" />
     <Feature
       Code="&quot;TENANTTOTANGO&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Totango&quot;"
-      FeatureDefaultText="&quot;Totango&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Totango&quot;"
+      FeatureDefaultText="&quot;Totango&quot;" />
     <Feature
       Code="&quot;ACCOUNTINGSYSTEMS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AccountingSystems&quot;"
-      FeatureDefaultText="&quot;Accounting Systems&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.AccountingSystems&quot;"
+      FeatureDefaultText="&quot;Accounting Systems&quot;" />
     <Feature
       Code="&quot;General.Menu.AWBAdditionalHandlingInfo&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Menu.AWBAdditionalHandlingInfo&quot;"
-      FeatureDefaultText="&quot;AWB Additional Handling Info&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Menu.AWBAdditionalHandlingInfo&quot;"
+      FeatureDefaultText="&quot;AWB Additional Handling Info&quot;" />
     <Feature
       Code="&quot;IMPORTER&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Importers&quot;"
-      FeatureDefaultText="&quot;Importers&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Importers&quot;"
+      FeatureDefaultText="&quot;Importers&quot;" />
     <Feature
       Code="&quot;CUSTOMERTENANTACCESSES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CustomerTenantAccesses&quot;"
-      FeatureDefaultText="&quot;Customer Tenant Accesses&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CustomerTenantAccesses&quot;"
+      FeatureDefaultText="&quot;Customer Tenant Accesses&quot;" />
     <Feature
       Code="&quot;CUSTOMERTENANTACCESSREQUESTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CustomerTenantAccessRequests&quot;"
-      FeatureDefaultText="&quot;Customer Tenant Access Requests&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CustomerTenantAccessRequests&quot;"
+      FeatureDefaultText="&quot;Customer Tenant Access Requests&quot;" />
     <Feature
       Code="&quot;HYBRIDPARTNERS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.HybridPartners&quot;"
-      FeatureDefaultText="&quot;Hybrid Partners&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.HybridPartners&quot;"
+      FeatureDefaultText="&quot;Hybrid Partners&quot;" />
     <Feature
       Code="&quot;General.Features.BusinessHour&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.BusinessHour&quot;"
-      FeatureDefaultText="&quot;Business Hours&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.BusinessHour&quot;"
+      FeatureDefaultText="&quot;Business Hours&quot;" />
     <Feature
       Code="&quot;BUSINESSHOUR&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.BusinessHour&quot;"
-      FeatureDefaultText="&quot;Business Hours&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.BusinessHour&quot;"
+      FeatureDefaultText="&quot;Business Hours&quot;" />
     <Feature
       Code="&quot;General.Features.HybridTenantThreshold&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.HybridTenantThreshold&quot;"
-      FeatureDefaultText="&quot;Hybrid Tenant Threshold&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.HybridTenantThreshold&quot;"
+      FeatureDefaultText="&quot;Hybrid Tenant Threshold&quot;" />
     <Feature
       Code="&quot;General.Features.SystemUserPassword&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SystemUserPassword&quot;"
-      FeatureDefaultText="&quot;System User Password&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SystemUserPassword&quot;"
+      FeatureDefaultText="&quot;System User Password&quot;" />
     <Feature
       Code="&quot;DATACHECK&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.DataCheck&quot;"
-      FeatureDefaultText="&quot;Data Security Check&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.DataCheck&quot;"
+      FeatureDefaultText="&quot;Data Security Check&quot;" />
     <Feature
       Code="&quot;INBOUNDEMAIL&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.InboundEmail&quot;"
-      FeatureDefaultText="&quot;Inbound Email&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.InboundEmail&quot;"
+      FeatureDefaultText="&quot;Inbound Email&quot;" />
     <Feature
       Code="&quot;FULLACCOUNTING&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.FULLACCOUNTING&quot;"
-      FeatureDefaultText="&quot;FULL ACCOUNTING&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.FULLACCOUNTING&quot;"
+      FeatureDefaultText="&quot;FULL ACCOUNTING&quot;" />
     <Feature
       Code="&quot;ACTIVATIONWIZARD&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ActivationWizards&quot;"
-      FeatureDefaultText="&quot;Activation Wizard&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ActivationWizards&quot;"
+      FeatureDefaultText="&quot;Activation Wizard&quot;" />
     <Feature
       Code="&quot;PARTICIPANTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Participants&quot;"
-      FeatureDefaultText="&quot;Participants&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Participants&quot;"
+      FeatureDefaultText="&quot;Participants&quot;" />
     <Feature
       Code="&quot;AIRLINESTATISTICS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AirlineStatistics&quot;"
-      FeatureDefaultText="&quot;Airline Statistics&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.AirlineStatistics&quot;"
+      FeatureDefaultText="&quot;Airline Statistics&quot;" />
     <Feature
       Code="&quot;ApiCredintials&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ApiCredintials&quot;"
-      FeatureDefaultText="&quot;API Credintials&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ApiCredintials&quot;"
+      FeatureDefaultText="&quot;API Credintials&quot;" />
     <Feature
       Code="&quot;OPPORTUNITYTYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.OpportunityTypes&quot;"
-      FeatureDefaultText="&quot;Opportunity Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.OpportunityTypes&quot;"
+      FeatureDefaultText="&quot;Opportunity Types&quot;" />
     <Feature
       Code="&quot;TICKETTYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.TicketTypes&quot;"
-      FeatureDefaultText="&quot;Ticket Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.TicketTypes&quot;"
+      FeatureDefaultText="&quot;Ticket Types&quot;" />
     <Feature
       Code="&quot;TICKETSEVERITIES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.TicketSeverities&quot;"
-      FeatureDefaultText="&quot;Ticket Severities&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.TicketSeverities&quot;"
+      FeatureDefaultText="&quot;Ticket Severities&quot;" />
     <Feature
       Code="&quot;TICKETSTAGES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.TicketStages&quot;"
-      FeatureDefaultText="&quot;Ticket Stages&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.TicketStages&quot;"
+      FeatureDefaultText="&quot;Ticket Stages&quot;" />
     <Feature
       Code="&quot;TICKETCLASSIFICATION&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.TicketClassifications&quot;"
-      FeatureDefaultText="&quot;Ticket Classifications&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.TicketClassifications&quot;"
+      FeatureDefaultText="&quot;Ticket Classifications&quot;" />
     <Feature
       Code="&quot;EMPLOYEEGROUPS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.EmployeeGroups&quot;"
-      FeatureDefaultText="&quot;Employee Groups&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.EmployeeGroups&quot;"
+      FeatureDefaultText="&quot;Employee Groups&quot;" />
     <Feature
       Code="&quot;SLAHEADER&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SLAHeader&quot;"
-      FeatureDefaultText="&quot;SLA&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SLAHeader&quot;"
+      FeatureDefaultText="&quot;SLA&quot;" />
     <Feature
       Code="&quot;HYBRIDTENANTSTATE&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.HybridTenantStates&quot;"
-      FeatureDefaultText="&quot;Hybrid Tenant State&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.HybridTenantStates&quot;"
+      FeatureDefaultText="&quot;Hybrid Tenant State&quot;" />
     <Feature
       Code="&quot;General.Features.AirlineSettings&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AirlineSettings&quot;"
-      FeatureDefaultText="&quot;Airline Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.AirlineSettings&quot;"
+      FeatureDefaultText="&quot;Airline Settings&quot;" />
     <Feature
       Code="&quot;FlightsSchedules&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.FlightsSchedules&quot;"
-      FeatureDefaultText="&quot;Flights Schedules&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.FlightsSchedules&quot;"
+      FeatureDefaultText="&quot;Flights Schedules&quot;" />
     <Feature
       Code="&quot;General.Features.Automations&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Automations&quot;"
-      FeatureDefaultText="&quot;Automations&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Automations&quot;"
+      FeatureDefaultText="&quot;Automations&quot;" />
     <Feature
       Code="&quot;TICKET&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Ticket&quot;"
-      FeatureDefaultText="&quot;Tickets&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Ticket&quot;"
+      FeatureDefaultText="&quot;Tickets&quot;" />
     <Feature
       Code="&quot;TRANSMISSIONLOG&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.LogitudeMessagesTransmissionLogs&quot;"
-      FeatureDefaultText="&quot;Logitude Messages Transmission Logs&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.LogitudeMessagesTransmissionLogs&quot;"
+      FeatureDefaultText="&quot;Logitude Messages Transmission Logs&quot;" />
     <Feature
       Code="&quot;AIRLINEDASHBOARD&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AirlineDashboard&quot;"
-      FeatureDefaultText="&quot;Airline Dashboard&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.AirlineDashboard&quot;"
+      FeatureDefaultText="&quot;Airline Dashboard&quot;" />
     <Feature
       Code="&quot;OUTLOOKCONNETION&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.OutLookConnection&quot;"
-      FeatureDefaultText="&quot;OutLook Connection&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.OutLookConnection&quot;"
+      FeatureDefaultText="&quot;OutLook Connection&quot;" />
     <Feature
       Code="&quot;ADDPARTNERTOACTIVATIONWIZARD&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AddPartnerToActivationWizards&quot;"
-      FeatureDefaultText="&quot;Add Partner To Activation Wizard&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.AddPartnerToActivationWizards&quot;"
+      FeatureDefaultText="&quot;Add Partner To Activation Wizard&quot;" />
     <Feature
       Code="&quot;ACCOUNTINGS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Accounting&quot;"
-      FeatureDefaultText="&quot;Accounting&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Accounting&quot;"
+      FeatureDefaultText="&quot;Accounting&quot;" />
     <Feature
       Code="&quot;General.Features.Category1&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Category1&quot;"
-      FeatureDefaultText="&quot;Category 1&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Category1&quot;"
+      FeatureDefaultText="&quot;Category 1&quot;" />
     <Feature
       Code="&quot;General.Features.Category2&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Category2&quot;"
-      FeatureDefaultText="&quot;Category 2&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Category2&quot;"
+      FeatureDefaultText="&quot;Category 2&quot;" />
     <Feature
       Code="&quot;General.Features.Category3&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Category3&quot;"
-      FeatureDefaultText="&quot;Category 3&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Category3&quot;"
+      FeatureDefaultText="&quot;Category 3&quot;" />
     <Feature
       Code="&quot;General.Features.Category4&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Category4&quot;"
-      FeatureDefaultText="&quot;Category 4&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Category4&quot;"
+      FeatureDefaultText="&quot;Category 4&quot;" />
     <Feature
       Code="&quot;General.Features.Category5&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Category5&quot;"
-      FeatureDefaultText="&quot;Category 5&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Category5&quot;"
+      FeatureDefaultText="&quot;Category 5&quot;" />
     <Feature
       Code="&quot;General.Features.FullAccountingSetting&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.FullAccountingSetting&quot;"
-      FeatureDefaultText="&quot;Full Accounting Setting&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.FullAccountingSetting&quot;"
+      FeatureDefaultText="&quot;Full Accounting Setting&quot;" />
     <Feature
       Code="&quot;General.Features.CustomerFieldsUpdateSetting&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CustomerFieldsUpdateSetting&quot;"
-      FeatureDefaultText="&quot;Customer Fields Update Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CustomerFieldsUpdateSetting&quot;"
+      FeatureDefaultText="&quot;Customer Fields Update Settings&quot;" />
     <Feature
       Code="&quot;General.Features.AccountingPeriods&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AccountingPeriods&quot;"
-      FeatureDefaultText="&quot;Accounting Periods Menu&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.AccountingPeriods&quot;"
+      FeatureDefaultText="&quot;Accounting Periods Menu&quot;" />
     <Feature
       Code="&quot;CHARGESGROUP&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ChargesGroups&quot;"
-      FeatureDefaultText="&quot;Charges Groups&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ChargesGroups&quot;"
+      FeatureDefaultText="&quot;Charges Groups&quot;" />
     <Feature
       Code="&quot;NotesRightToLeftEnabled&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.NotesRightToLeftEnabled&quot;"
-      FeatureDefaultText="&quot;Notes Right To Left&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.NotesRightToLeftEnabled&quot;"
+      FeatureDefaultText="&quot;Notes Right To Left&quot;" />
     <Feature
       Code="&quot;PrivateLabels&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.PrivateLabels&quot;"
-      FeatureDefaultText="&quot;Private Labels&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.PrivateLabels&quot;"
+      FeatureDefaultText="&quot;Private Labels&quot;" />
     <Feature
       Code="&quot;WAREHOUSEMANAGEMENT&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.WarehouseManagement&quot;"
-      FeatureDefaultText="&quot;Warehouse Management&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.WarehouseManagement&quot;"
+      FeatureDefaultText="&quot;Warehouse Management&quot;" />
     <Feature
       Code="&quot;EXPORTEXCEL&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.EXCEL&quot;"
-      FeatureDefaultText="&quot;Download to Excel&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.EXCEL&quot;"
+      FeatureDefaultText="&quot;Download to Excel&quot;" />
     <Feature
       Code="&quot;DROPBOX&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.DropBox&quot;"
-      FeatureDefaultText="&quot;DropBox&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.DropBox&quot;"
+      FeatureDefaultText="&quot;DropBox&quot;" />
     <Feature
       Code="&quot;DROPBOXTESTFILE&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.DropBoxTestFile&quot;"
-      FeatureDefaultText="&quot;DropBoxTestFile&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.DropBoxTestFile&quot;"
+      FeatureDefaultText="&quot;DropBoxTestFile&quot;" />
+    <Feature
+      Code="&quot;CUSTOMSINTERFACESETTINGS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;General.Features.CUSTOMSINTERFACESETTINGS&quot;"
+      FeatureDefaultText="&quot;Customs Interface Settings&quot;" />
     <Feature
       Code="&quot;SATINTERFACE&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SATInterface&quot;"
-      FeatureDefaultText="&quot;SAT Interface&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SATInterface&quot;"
+      FeatureDefaultText="&quot;SAT Interface&quot;" />
     <Feature
       Code="&quot;LBDS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.LBDS&quot;"
-      FeatureDefaultText="&quot;LB Digital signature&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.LBDS&quot;"
+      FeatureDefaultText="&quot;LB Digital signature&quot;" />
     <Feature
       Code="&quot;FBLSTOCKS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.FBLStocks&quot;"
-      FeatureDefaultText="&quot;FBL Stock&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.FBLStocks&quot;"
+      FeatureDefaultText="&quot;FBL Stock&quot;" />
     <Feature
       Code="&quot;MOBILELOGO&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.MobileLogo&quot;"
-      FeatureDefaultText="&quot;Mobile Logo&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.MobileLogo&quot;"
+      FeatureDefaultText="&quot;Mobile Logo&quot;" />
     <Feature
       Code="&quot;SHAREDLOGISTICSLOGO&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.sharedLogisticsLogo&quot;"
-      FeatureDefaultText="&quot;Shared Logistics Logo&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.sharedLogisticsLogo&quot;"
+      FeatureDefaultText="&quot;Shared Logistics Logo&quot;" />
     <Feature
       Code="&quot;TimeManagement&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.TimeManagement&quot;"
-      FeatureDefaultText="&quot;TimeManagement&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.TimeManagement&quot;"
+      FeatureDefaultText="&quot;TimeManagement&quot;" />
     <Feature
       Code="&quot;General.Features.SecurityPolicySettings&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SecurityPolicySettings&quot;"
-      FeatureDefaultText="&quot;Login Policy Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SecurityPolicySettings&quot;"
+      FeatureDefaultText="&quot;Login Policy Settings&quot;" />
     <Feature
       Code="&quot;INTEGRATIONSYSTEMSETTINGS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.IntegrationSystemsSetting&quot;"
-      FeatureDefaultText="&quot;Integration Systems Setting&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.IntegrationSystemsSetting&quot;"
+      FeatureDefaultText="&quot;Integration Systems Setting&quot;" />
     <Feature
       Code="&quot;TERMOFUSERFEATUE&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.TermsofUse&quot;"
-      FeatureDefaultText="&quot;Terms of Use&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.TermsofUse&quot;"
+      FeatureDefaultText="&quot;Terms of Use&quot;" />
     <Feature
       Code="&quot;FeaturesChanges&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.FeaturesChanges&quot;"
-      FeatureDefaultText="&quot;Features Changes&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.FeaturesChanges&quot;"
+      FeatureDefaultText="&quot;Features Changes&quot;" />
     <Feature
       Code="&quot;General.Features.DocumentFilingEmailSettings&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.DocumentFilingEmailSettings&quot;"
-      FeatureDefaultText="&quot;Document Filing Email Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.DocumentFilingEmailSettings&quot;"
+      FeatureDefaultText="&quot;Document Filing Email Settings&quot;" />
     <Feature
       Code="&quot;General.Features.YearTransfer&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.YearTransfer&quot;"
-      FeatureDefaultText="&quot;Year Transfer&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.YearTransfer&quot;"
+      FeatureDefaultText="&quot;Year Transfer&quot;" />
     <Feature
       Code="&quot;AppSettingsBtn&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AppSettingsBtn&quot;"
-      FeatureDefaultText="&quot;Application Settings Button&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.AppSettingsBtn&quot;"
+      FeatureDefaultText="&quot;Application Settings Button&quot;" />
     <Feature
       Code="&quot;CROSSDOCKS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CrossDocks&quot;"
-      FeatureDefaultText="&quot;Cross Docks&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CrossDocks&quot;"
+      FeatureDefaultText="&quot;Cross Docks&quot;" />
     <Feature
       Code="&quot;General.Features.QuoteSettings&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.QuoteSettings&quot;"
-      FeatureDefaultText="&quot;Quote Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.QuoteSettings&quot;"
+      FeatureDefaultText="&quot;Quote Settings&quot;" />
     <Feature
       Code="&quot;General.Features.InttraSettings&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.InttraSettings&quot;"
-      FeatureDefaultText="&quot;INTTRA Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.InttraSettings&quot;"
+      FeatureDefaultText="&quot;INTTRA Settings&quot;" />
     <Feature
       Code="&quot;General.Features.InttraCommunicationSettings&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.InttraCommunicationSettings&quot;"
-      FeatureDefaultText="&quot;INTTRA Communication Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.InttraCommunicationSettings&quot;"
+      FeatureDefaultText="&quot;INTTRA Communication Settings&quot;" />
     <Feature
       Code="&quot;ARPAYMENTMETHODS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ARPaymentMethods&quot;"
-      FeatureDefaultText="&quot;AR payment Methods&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ARPaymentMethods&quot;"
+      FeatureDefaultText="&quot;AR payment Methods&quot;" />
     <Feature
       Code="&quot;APPAYMENTMETHODS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.APPaymentMethods&quot;"
-      FeatureDefaultText="&quot;AP payment Methods&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.APPaymentMethods&quot;"
+      FeatureDefaultText="&quot;AP payment Methods&quot;" />
     <Feature
       Code="&quot;General.Features.DocumentsBackup&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.DocumentsBackup&quot;"
-      FeatureDefaultText="&quot;Documents Backup&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.DocumentsBackup&quot;"
+      FeatureDefaultText="&quot;Documents Backup&quot;" />
     <Feature
       Code="&quot;AllowAgentInCustomersLOV&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AllowAgentInCustomersLOV&quot;"
-      FeatureDefaultText="&quot;Allow Agent In Shippers/Consignees LOV&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.AllowAgentInCustomersLOV&quot;"
+      FeatureDefaultText="&quot;Allow Agent In Shippers/Consignees LOV&quot;" />
     <Feature
       Code="&quot;General.Features.DataBackup&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.DataBackup&quot;"
-      FeatureDefaultText="&quot;Data Backup&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.DataBackup&quot;"
+      FeatureDefaultText="&quot;Data Backup&quot;" />
     <Feature
       Code="&quot;TicketsSetting&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.TicketsSetting&quot;"
-      FeatureDefaultText="&quot;Ticket Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.TicketsSetting&quot;"
+      FeatureDefaultText="&quot;Ticket Settings&quot;" />
     <Feature
       Code="&quot;ACCOUNTINGPAYMENTMETHODS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AccountingPaymentMethods&quot;"
-      FeatureDefaultText="&quot;Accounting payment Methods&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.AccountingPaymentMethods&quot;"
+      FeatureDefaultText="&quot;Accounting payment Methods&quot;" />
     <Feature
       Code="&quot;General.Features.BusinessProcessQueue&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.BusinessProcessQueue&quot;"
-      FeatureDefaultText="&quot;Business Process Queues&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.BusinessProcessQueue&quot;"
+      FeatureDefaultText="&quot;Business Process Queues&quot;" />
     <Feature
       Code="&quot;General.Features.BusinessProcessBusinessRole&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.BusinessProcessBusinessRole&quot;"
-      FeatureDefaultText="&quot;Business Process Business Roles&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.BusinessProcessBusinessRole&quot;"
+      FeatureDefaultText="&quot;Business Process Business Roles&quot;" />
     <Feature
       Code="&quot;General.Features.BusinessProcessTeam&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.BusinessProcessTeam&quot;"
-      FeatureDefaultText="&quot;Business Process Teams&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.BusinessProcessTeam&quot;"
+      FeatureDefaultText="&quot;Business Process Teams&quot;" />
     <Feature
       Code="&quot;TASKS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Tasks&quot;"
-      FeatureDefaultText="&quot;Tasks&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Tasks&quot;"
+      FeatureDefaultText="&quot;Tasks&quot;" />
     <Feature
       Code="&quot;BatchTaskExecutionMNU&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.BatchTaskExecutions&quot;"
-      FeatureDefaultText="&quot;Batch Task Executions&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.BatchTaskExecutions&quot;"
+      FeatureDefaultText="&quot;Batch Task Executions&quot;" />
     <Feature
       Code="&quot;SHAREDSHIPMENTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SharedShipments&quot;"
-      FeatureDefaultText="&quot;Shared Logistics Shipments&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SharedShipments&quot;"
+      FeatureDefaultText="&quot;Shared Logistics Shipments&quot;" />
     <Feature
       Code="&quot;SHAREDINVOICES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SharedInvoices&quot;"
-      FeatureDefaultText="&quot;Shared Logistics Invoices&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.SharedInvoices&quot;"
+      FeatureDefaultText="&quot;Shared Logistics Invoices&quot;" />
     <Feature
       Code="&quot;EXTERNALAPIS&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ExternalAPIs&quot;"
-      FeatureDefaultText="&quot;External API&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ExternalAPIs&quot;"
+      FeatureDefaultText="&quot;External API&quot;" />
     <Feature
       Code="&quot;SCHEDULERS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Schedulers&quot;"
-      FeatureDefaultText="&quot;Schedulers&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Schedulers&quot;"
+      FeatureDefaultText="&quot;Schedulers&quot;" />
     <Feature
       Code="&quot;TariffModule&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.TariffModule&quot;"
-      FeatureDefaultText="&quot;Tariffs&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.TariffModule&quot;"
+      FeatureDefaultText="&quot;Tariffs&quot;" />
     <Feature
       Code="&quot;CREATETENANT&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CREATETENANT&quot;"
-      FeatureDefaultText="&quot;Create Tenant&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CREATETENANT&quot;"
+      FeatureDefaultText="&quot;Create Tenant&quot;" />
     <Feature
       Code="&quot;ACCJORN&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ACCJORN&quot;"
-      FeatureDefaultText="&quot;Journal Tab&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.ACCJORN&quot;"
+      FeatureDefaultText="&quot;Journal Tab&quot;" />
     <Feature
       Code="&quot;CacheLogMenu&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CacheLogMenu&quot;"
-      FeatureDefaultText="&quot;Cache Log&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CacheLogMenu&quot;"
+      FeatureDefaultText="&quot;Cache Log&quot;" />
     <Feature
       Code="&quot;General.Occasion.OccasionType&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.General.Occasion.OccasionType&quot;"
-      FeatureDefaultText="&quot;Occasion Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.General.Occasion.OccasionType&quot;"
+      FeatureDefaultText="&quot;Occasion Types&quot;" />
     <Feature
       Code="&quot;General.Features.VATSettings&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.General.Features.VATSettings&quot;"
-      FeatureDefaultText="&quot;VAT Settings&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.General.Features.VATSettings&quot;"
+      FeatureDefaultText="&quot;VAT Settings&quot;" />
     <Feature
       Code="&quot;General.Features.TenantAdditionalData&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.General.Features.TenantAdditionalData&quot;"
-      FeatureDefaultText="&quot;Payment Gateway Definition&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.General.Features.TenantAdditionalData&quot;"
+      FeatureDefaultText="&quot;Payment Gateway Definition&quot;" />
     <Feature
       Code="&quot;Menu.Occasions&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Menu.Occasions&quot;"
-      FeatureDefaultText="&quot;Occasions&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Menu.Occasions&quot;"
+      FeatureDefaultText="&quot;Occasions&quot;" />
     <Feature
       Code="&quot;AllowCustomersInAgentsLOV&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AllowCustomersInAgentsLOV&quot;"
-      FeatureDefaultText="&quot;Allow Shippers/Consignees in Agents LOV&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.AllowCustomersInAgentsLOV&quot;"
+      FeatureDefaultText="&quot;Allow Shippers/Consignees in Agents LOV&quot;" />
     <Feature
       Code="&quot;PRICESTEPS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Menu.PriceSteps&quot;"
-      FeatureDefaultText="&quot;Prices Steps&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.Menu.PriceSteps&quot;"
+      FeatureDefaultText="&quot;Prices Steps&quot;" />
     <Feature
       Code="&quot;SupportMailBoxMenu&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
       FeatureTextCodeCode="&quot;General.Features.SupportMailBoxMenu&quot;"
-      FeatureDefaultText="&quot;Support Mail Box&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;ACCOUNTINGTRANSFER&quot;"
-      FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ACCOUNTINGTRANSFER&quot;"
-      FeatureDefaultText="&quot;Accounting Transfer&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureDefaultText="&quot;Support Mail Box&quot;" />
     <Feature
       Code="&quot;JOURNALMENU&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.JOURNALMENU&quot;"
-      FeatureDefaultText="&quot;Journal&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.JOURNALMENU&quot;"
+      FeatureDefaultText="&quot;Journal&quot;" />
     <Feature
       Code="&quot;VENDORGLACCOUNTSMENU&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.VENDORGLACCOUNTSMENU&quot;"
-      FeatureDefaultText="&quot;Vendor Accounts&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.VENDORGLACCOUNTSMENU&quot;"
+      FeatureDefaultText="&quot;Vendor Accounts&quot;" />
     <Feature
       Code="&quot;CLIENTGLACCOUNTSMENU&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CLIENTGLACCOUNTSMENU&quot;"
-      FeatureDefaultText="&quot;Client Accounts&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.CLIENTGLACCOUNTSMENU&quot;"
+      FeatureDefaultText="&quot;Client Accounts&quot;" />
     <Feature
       Code="&quot;GLACCOUNTSMENU&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.GLACCOUNTSMENU&quot;"
-      FeatureDefaultText="&quot;General Ledger Accounts&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.GLACCOUNTSMENU&quot;"
+      FeatureDefaultText="&quot;General Ledger Accounts&quot;" />
     <Feature
       Code="&quot;JOURNALACTIONTYPESMENU&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.JOURNALACTIONTYPESMENU&quot;"
-      FeatureDefaultText="&quot;Journal Action Types&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.JOURNALACTIONTYPESMENU&quot;"
+      FeatureDefaultText="&quot;Journal Action Types&quot;" />
     <Feature
       Code="&quot;QPDB&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.QPDB&quot;"
-      FeatureDefaultText="&quot;Quotes Performance Dashboard&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.QPDB&quot;"
+      FeatureDefaultText="&quot;Quotes Performance Dashboard&quot;" />
     <Feature
       Code="&quot;REGIONALTAX&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.REGIONALTAX&quot;"
-      FeatureDefaultText="&quot;Regional Tax&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.REGIONALTAX&quot;"
+      FeatureDefaultText="&quot;Regional Tax&quot;" />
     <Feature
       Code="&quot;TARIFFPRODUCTS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.TARIFFPRODUCTS&quot;"
-      FeatureDefaultText="&quot;Tariff Products&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.TARIFFPRODUCTS&quot;"
+      FeatureDefaultText="&quot;Tariff Products&quot;" />
     <Feature
       Code="&quot;APPaymentExternalPayment&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.APPaymentExternalPayment&quot;"
-      FeatureDefaultText="&quot;APPayment External Payment&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.APPaymentExternalPayment&quot;"
+      FeatureDefaultText="&quot;APPayment External Payment&quot;" />
+    <Feature
+      Code="&quot;General.Features.CompanyLocalAddress&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;General.Features.CompanyLocalAddress&quot;"
+      FeatureDefaultText="&quot;Company Local Address&quot;" />
+    <Feature
+      Code="&quot;ERRORLOG&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;General.Features.ErrorLogs&quot;"
+      FeatureDefaultText="&quot;Error Logs&quot;" />
+    <Feature
+      Code="&quot;DEPOSITIONS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;General.Features.Deposition&quot;"
+      FeatureDefaultText="&quot;Depositions&quot;" />
+    <Feature
+      Code="&quot;ACCMAIN&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Accounting.Features.Main&quot;"
+      FeatureDefaultText="&quot;Main Tab&quot;" />
+    <Feature
+      Code="&quot;ACCCustomers&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Accounting.Features.Customers&quot;"
+      FeatureDefaultText="&quot;Customers Tab&quot;" />
+    <Feature
+      Code="&quot;ACCVendors&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Accounting.Features.Vendors&quot;"
+      FeatureDefaultText="&quot;Vendors Tab&quot;" />
+    <Feature
+      Code="&quot;ACCBanks&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Accounting.Features.Banks&quot;"
+      FeatureDefaultText="&quot;Banks Tab&quot;" />
+    <Feature
+      Code="&quot;ACCGLAccounts&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Accounting.Features.GLAccounts&quot;"
+      FeatureDefaultText="&quot;GLAccounts Tab&quot;" />
+    <Feature
+      Code="&quot;ACCMisc&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Accounting.Features.Misc&quot;"
+      FeatureDefaultText="&quot;Misc Tab&quot;" />
+    <Feature
+      Code="&quot;ACCInterest&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Accounting.Features.Interest&quot;"
+      FeatureDefaultText="&quot;Interest Tab&quot;" />
+    <Feature
+     Code="&quot;ACCOUNTINGTRANSFER&quot;"
+     FeatureTypeCode="&quot;AREA&quot;"
+     FeatureTextCodeCode="&quot;General.Features.ACCOUNTINGTRANSFER&quot;"
+     FeatureDefaultText="&quot;Accounting Transfer&quot;"
+     IsPackagable="true"
+     IsOld="false"
+     IsCoreFeature="false"
+     IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

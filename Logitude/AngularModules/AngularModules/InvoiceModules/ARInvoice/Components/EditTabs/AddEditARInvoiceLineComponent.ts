@@ -9,7 +9,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditARInvoiceLineComponent.html',
 })
 

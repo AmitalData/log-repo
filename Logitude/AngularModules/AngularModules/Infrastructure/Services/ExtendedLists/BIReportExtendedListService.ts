@@ -7,7 +7,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { BIReportList } from '../../EntityLists/BIReportList';
 import { map, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class BIReportExtendedListService {
@@ -27,7 +27,7 @@ export class BIReportExtendedListService {
 
     getReports(filters: ApiQueryFilters, copyFromTenant: number) {
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             var urlparameters = '?';
             var mykeys = Object.keys(filters);
             var addtionalFiltersValues = null;

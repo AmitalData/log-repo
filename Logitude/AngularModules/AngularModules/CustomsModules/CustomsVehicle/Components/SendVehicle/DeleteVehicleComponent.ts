@@ -10,7 +10,7 @@ import { VehiclePM } from '../../../../Customs/EntityPMs/VehiclePM';
 import { SendVehicleComponent } from './SendVehicleComponent';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DeleteVehicleComponent',
     templateUrl: "DeleteVehicleComponent.html",
 })

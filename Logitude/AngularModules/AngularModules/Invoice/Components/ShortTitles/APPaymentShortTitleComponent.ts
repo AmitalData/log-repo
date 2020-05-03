@@ -4,7 +4,7 @@ import {APPaymentPM} from '../../EntityPMs/APPaymentPM';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./APPaymentShortTitleComponent.html",
 })
 

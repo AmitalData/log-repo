@@ -28,7 +28,7 @@ import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameCla
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsSettingsComponent.html',
 })
 

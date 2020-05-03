@@ -2,8 +2,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {QuoteList} from '../../EntityLists/QuoteList';
@@ -24,7 +23,7 @@ export class QuoteFollowUpListService {
 
     getCount() {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '?tenant=' + SessionLocator.Tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }));
@@ -35,7 +34,7 @@ export class QuoteFollowUpListService {
 
     getSingle(id: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var list = response;
 
@@ -51,7 +50,7 @@ export class QuoteFollowUpListService {
 
     getAll() {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -98,7 +97,7 @@ export class QuoteFollowUpListService {
 
         var callUrl = this._apiUrl.concat(urlparameters);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var viewResponse: any = response;

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class TransportModeUpdateClass
    {  		
-		public const string HashString = "b312c5fae653d3df139dfd2cc54a5ab9";
+		public const string HashString = "68fe9dd974bd0f1c353975f317cdb3e2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Transport Mode",
-			      				    Code =  "75ea",
+			      				    Code =  "6647",
 			      				    Name =  "TransportMode",
 			      				    CloseTableName =  "Name",
 			      				    GenerateDomainService =  false,
@@ -209,7 +209,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MinLength =  0,
 					  						MaxLength =  10,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,

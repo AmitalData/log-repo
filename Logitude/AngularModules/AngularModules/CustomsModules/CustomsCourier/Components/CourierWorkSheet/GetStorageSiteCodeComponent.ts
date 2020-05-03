@@ -14,7 +14,6 @@ import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
     selector: 'GetStorageSiteCodeComponent',
     templateUrl: './GetStorageSiteCodeComponent.html',
 })

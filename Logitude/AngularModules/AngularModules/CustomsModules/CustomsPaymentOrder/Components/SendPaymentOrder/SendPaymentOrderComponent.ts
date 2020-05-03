@@ -26,7 +26,7 @@ import { PaymentOrderPMService } from '../../../../Customs/Services/StandardPMs/
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendPaymentOrderComponent',
     templateUrl: "SendPaymentOrderComponent.html",
 })

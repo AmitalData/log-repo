@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 
 
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 import {DocumentOutPM} from '../../EntityPMs/DocumentOutPM';
 
@@ -143,7 +143,7 @@ export class DocumentOutPMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl, JSON.stringify(entityPM),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                var result :any = response;
                 var entity: DocumentOutPM;

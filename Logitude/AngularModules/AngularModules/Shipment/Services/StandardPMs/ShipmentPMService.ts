@@ -2,9 +2,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import {AWBOCIPM} from '../../EntityPMs/AWBOCIPM';
 import {ShipmentPackagePM} from '../../EntityPMs/ShipmentPackagePM';
@@ -33,9 +31,6 @@ import { PerformanceLogger } from '../../../Infrastructure/Utilities/Performance
 import {ShipmentAssemblyPM} from '../../EntityPMs/ShipmentAssemblyPM';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { PickUpDeliveryPackageHarmonizePM } from '../../EntityPMs/PickUpDeliveryPackageHarmonizePM';
-import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
-import { LoginService } from '../../../Infrastructure/Services/LoginService';
-
 
 @Injectable()
 
@@ -51,7 +46,7 @@ export class ShipmentPMService {
 
         var callTime = new Date();
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingle?id=' + id, ServiceHelper.GetHttpFullHeaders()).pipe(
                 map((response: HttpResponse<any>) => {
 
@@ -90,7 +85,7 @@ export class ShipmentPMService {
 
         var callTime = new Date();
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleByForwarderShipmentNumber?fsn=' + ForwarderShipmentNumber, ServiceHelper.GetHttpFullHeaders()).pipe(
                 map((response: HttpResponse<any>) => {
 
@@ -145,7 +140,7 @@ export class ShipmentPMService {
 
         //var key = PerformanceLogger.AddLogTime();
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(myCustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey + '&tenant=' + Tenant, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(
                 map(response => {
 
@@ -184,7 +179,7 @@ export class ShipmentPMService {
 
         //var key = PerformanceLogger.AddLogTime();
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getUserIdDetailsByShipmentSecurityKeyWithoutToken?tenant=' + Tenant + '&key=' + SecurityKey, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(
                 map(response => {
 
@@ -209,7 +204,7 @@ export class ShipmentPMService {
 
     getSingleByShipmentNumber(number: string) {
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getSingleByShipmentNumber?number=' + number, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var Id = response;
                 var pmresponse: ServiceResponse;
@@ -225,7 +220,7 @@ export class ShipmentPMService {
 
         //var key = PerformanceLogger.AddLogTime();
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleByCustomerReference1?CustomerReference1=' + CustomerReference1 + '&IsForwarderShipment=' + IsForwarderShipment, ServiceHelper.GetHttpFullHeaders()).pipe(
                 map((response: HttpResponse<any>) => {
 
@@ -262,7 +257,7 @@ export class ShipmentPMService {
 
         var callTime = new Date();
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetByCustomerReference1?CustomerReference1=' + CustomerReference1 + '&IsForwarderShipment=' + IsForwarderShipment, ServiceHelper.GetHttpFullHeaders()).pipe(
                 map((response: HttpResponse<any>) => {
 
@@ -299,7 +294,7 @@ export class ShipmentPMService {
 
         //var key = PerformanceLogger.AddLogTime();
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetByCustomerReference1ForUpdate?CustomerReference1=' + CustomerReference1 + '&ShipmentId=' + ShipmentId + '&IsForwarderShipment=' + IsForwarderShipment, ServiceHelper.GetHttpFullHeaders()).pipe(
                 map((response: HttpResponse<any>) => {
 
@@ -334,7 +329,7 @@ export class ShipmentPMService {
     }
     insert(entityPM: ShipmentPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var validator: ClassLevelValidator = new ClassLevelValidator();
             var entityValidator: ShipmentValidator = new ShipmentValidator();
@@ -370,13 +365,13 @@ export class ShipmentPMService {
                 response.HasError = true;
                 response.ErrorsArray = errors;
 
-                return Observable.of(response);
+                return of(response);
 
             }
         });         
     }
     update(entityPM: ShipmentPM) {                       
-            return Observable.defer(() => {
+            return defer(() => {
 
                 var validator: ClassLevelValidator = new ClassLevelValidator();
                 var entityValidator: ShipmentValidator = new ShipmentValidator();
@@ -413,7 +408,7 @@ export class ShipmentPMService {
                     response.HasError = true;
                     response.ErrorsArray = errors;
 
-                    return Observable.of(response);
+                    return of(response);
                    
                 }
         });
@@ -434,7 +429,7 @@ export class ShipmentPMService {
     //    response.HasError = true;
     //    response.ErrorsArray.push(apiException.ShortErrorMessage);
 
-    //    return Observable.of(response);
+    //    return of(response);
     //}
     clone(jsonPM: any) {
         var entityPM: any;
@@ -2156,7 +2151,7 @@ export class ShipmentPMService {
 
 
         // Send request
-        return Observable.defer(() => {
+        return defer(() => {
 
             // Prepare parameters
             var IdsParameterString = "";
@@ -2219,7 +2214,7 @@ export class ShipmentPMService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -2260,7 +2255,7 @@ export class ShipmentPMService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var Ids = response;
 
@@ -2276,7 +2271,7 @@ export class ShipmentPMService {
 
         //var key = PerformanceLogger.AddLogTime();
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/RemoveShipmentTasks?id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 //var servertime = response.headers.get('ServerExecutionTime');

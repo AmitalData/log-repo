@@ -38,7 +38,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 // }
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ReconciliationDetailsTabComponent.html',
 })
 

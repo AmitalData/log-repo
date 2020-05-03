@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -27,10 +27,8 @@ export class CustomsCollateralExtendedListService {
 
     getSingle(declarationid: string, invoicecounterkey: number, lineNumber: number) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + declarationid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var list = response;
 
@@ -49,10 +47,8 @@ export class CustomsCollateralExtendedListService {
 
     getAll() {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -101,12 +97,11 @@ export class CustomsCollateralExtendedListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;

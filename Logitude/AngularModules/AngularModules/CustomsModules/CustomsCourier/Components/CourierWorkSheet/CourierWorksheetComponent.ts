@@ -1,10 +1,9 @@
 declare var window: any;
-import { BehaviorSubject } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { Component, Output, EventEmitter, OnInit, ComponentRef, ViewChild, OnDestroy, Injectable } from '@angular/core';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { CourierMasterPM } from '../../../../Customs/EntityPMs/CourierMasterPM';
@@ -20,30 +19,28 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DeclarationEditComponentController } from '../../../../Customs/Controller/DeclarationEditComponentController';
 import { DropdownMenuFilterComponent } from './DropdownMenuFilterComponent'
-import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { SendPayReadyLowRequestParams } from '../../../../Customs/DataContract/RequestParams/SendPayReadyLowRequestParams';
 import { SendALLCorrectRequestParams } from '../../../../Customs/DataContract/RequestParams/SendALLCorrectRequestParams';
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { SendUnCorrectDocumentsRequestParams } from '../../../../Customs/DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
 import { CourierPendingReasonListService } from '../../../../Customs/Services/StandardLists/CourierPendingReasonListService';
 import { CourierPendingReasonList } from '../../../../Customs/EntityLists/CourierPendingReasonList';
-import { element } from 'protractor';
 import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierWorksheetComponent.html',
     providers: [CourierWorksheetSharedDataService],
 })
 
 
-export class CourierWorksheetComponent extends BaseComponent
-    implements OnDestroy {
+export class CourierWorksheetComponent extends BaseComponent implements OnDestroy {
+  public _SelectedItems: any;
+
     ObjectTableName: string = "Customs.CourierMaster";
     DataContext: any = this;
     entityPM: CourierMasterPM;
@@ -117,7 +114,7 @@ export class CourierWorksheetComponent extends BaseComponent
     public DisplayOnlyMessage: string = "";
     private currentSession=SessionLocator.SelectedSession;
     //constructor(public entityArgs: EntityArgs) {
-    constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
+    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         //this.entityPM = entityArgs.EntityPM;
         this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));

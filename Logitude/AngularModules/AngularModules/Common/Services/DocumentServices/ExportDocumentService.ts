@@ -2,9 +2,7 @@
 import {Injectable, } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
-
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 
@@ -43,7 +41,7 @@ export class ExportDocumentService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(this._apiUrl + '/postreportstimulsoftviewer', JSON.stringify(filter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
@@ -61,7 +59,7 @@ export class ExportDocumentService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(this._apiUrl + '/PostBuildDocumentViaWorkerRole', JSON.stringify(filter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();

@@ -35,7 +35,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewAPInvoiceComponent.html',
 })
 
@@ -72,7 +72,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     private GeneratedComponent: any;	
     private additionalFieldsScreenCode = "APInvoice.AdditionalFields";
     public ShowAdditionalFieldsScreen: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     BuildAdditionalFields() {
 

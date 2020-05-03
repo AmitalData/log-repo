@@ -6,10 +6,12 @@ import {ARPaymentPM} from '../../../../Invoice/EntityPMs/ARPaymentPM';
 import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARPaymentGeneralTabComponent.html',
 })
 export class ARPaymentGeneralTabComponent extends BaseComponent implements OnInit {
+  public MetodoPagoCode: any;
+
     public EntityPM: ARPaymentPM;
     public ObjectTableName: string = "ARPayment";
     // public TenantPM: TenantPM;
@@ -20,7 +22,7 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
     public DisplaySATSettings: boolean = false;
     public DisplayFechaPago: boolean = false;
 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
 

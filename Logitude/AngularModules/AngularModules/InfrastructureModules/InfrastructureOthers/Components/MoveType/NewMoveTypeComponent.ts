@@ -8,7 +8,7 @@ import {ClassLevelValidator} from '../../../../Infrastructure/Validators/ClassLe
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewMoveTypeComponent.html',    
 })
 

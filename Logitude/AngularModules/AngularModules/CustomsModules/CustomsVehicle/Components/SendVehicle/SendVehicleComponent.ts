@@ -17,8 +17,8 @@ import { VehiclePM } from '../../../../Customs/EntityPMs/VehiclePM';
 import { VehicleExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/VehicleExtendedPMService';
 
 @Component({
-    moduleId: module.id,
-    selector: 'SendVehicleComponent',
+    
+    selector: 'SendVehicleComponent', 
     templateUrl: "SendVehicleComponent.html",
 })
 

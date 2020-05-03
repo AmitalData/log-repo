@@ -27,8 +27,8 @@ import { CustomsSettingListService } from '../../../Customs/Services/StandardLis
 import { CustomDocumentTypeListService } from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
 import { DocumentTypeMetaDataExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
 
-@Component({
-    moduleId: module.id,
+@Component({ 
+    
     templateUrl: './AddEditCustomsDocumentComponent.html',
 })
 

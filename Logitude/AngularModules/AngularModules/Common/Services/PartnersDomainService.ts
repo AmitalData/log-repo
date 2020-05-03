@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {AppTool} from '../../Infrastructure/Tools';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
@@ -63,7 +63,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAllowedAirlineId';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -83,7 +83,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetMessagingRulesForAirline?myAirlineCode=' + myAirlineCode + '&myMessageCode=' + myMessageCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -109,7 +109,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAllAddressesPMsbyCardId?myCardId=' + myCardId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -131,7 +131,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCustomerCardListByTenantVatNumber?vatNumber=' + vatNumber;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 var listMapped: Array<CardList> = [];
@@ -153,7 +153,7 @@ export class PartnersDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCustomerActualData?customerId=' + customerId + '&year=' + year + '&month=' + month;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 return listJason;
@@ -167,7 +167,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCustomerSalesNotes?entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -188,7 +188,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAllContactsPMsbyCardId?myCardId=' + myCardId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -209,7 +209,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetTarrifHeadersByCardIdAndTypeCode?cardId=' + cardId + '&typeCode=' + typeCode + '&getAll=' + getAll;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -234,7 +234,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetContactsByEmail?email=' + email;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -255,7 +255,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCardContactsByContact?contactId=' + contactId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 var myResponse: ServiceResponse;
@@ -271,7 +271,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCustomerProducts?customerId=' + customerId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 return listJason;
@@ -286,7 +286,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCustomerProductHistoryActualData?customerId=' + customerId + '&productTypeCode=' + productTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -299,7 +299,7 @@ export class PartnersDomainService {
     }
 
     PostPartnerAddress(entityPM: PartnerServicePM) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -320,7 +320,7 @@ export class PartnersDomainService {
         });
     }
     Put(entityPM: PartnerExternalAccountsServicePM) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -347,7 +347,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCarrierUpdate?entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -360,7 +360,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCarrierCopyToCurrentTenant?entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -372,7 +372,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetIsCustomerConnectedToEntities?entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
 
@@ -390,7 +390,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCardsForContact?contactId=' + contactId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -411,7 +411,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetInUseCarrier?type=' + type + '&code=' + code;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -423,7 +423,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAirlineByPrefix?Prefix=' + Prefix;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -453,7 +453,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAirlineByCode?code=' + code + '&tenant=' + tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -483,7 +483,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAirlineByICAO?code=' + code + '&tenant=' + tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -495,7 +495,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetShippingLineByCode?code=' + code + '&tenant=' + tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -507,7 +507,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetTruckerByCode?code=' + code + '&tenant=' + tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -519,7 +519,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetWarehouseByCode?code=' + code + '&tenant=' + tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -531,7 +531,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetBillingAddressListByCardId?cardId=' + cardId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -543,7 +543,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetMainAddressListByCardId?cardId=' + cardId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -553,7 +553,7 @@ export class PartnersDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetBillingOrMainAddressListByCardId?cardId=' + cardId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -565,7 +565,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAddressByCardAndType?cardId=' + cardId + '&type=' + type;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -577,7 +577,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCustomerById?id=' + id;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -603,7 +603,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetIsVATUniqueForCustomer?vatNumber=' + vatNumber + '&customerId=' + customerId + '&countryId=' + countryId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
 
@@ -621,7 +621,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCardExternalAccountsByProducts?myCardId=' + myCardId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
 
@@ -665,7 +665,7 @@ export class PartnersDomainService {
         authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -1320,7 +1320,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetRecentCustomers?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -1338,7 +1338,7 @@ export class PartnersDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCustomersCounts?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -1366,7 +1366,7 @@ export class PartnersDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCustomersDecreasedShipments?dataTypeCode=' + dataTypeCode + '&startDate=' + ServiceHelper.GetDateString(startDate) + '&timeRange=' + timeRange + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 var listMapped: Array<CompareDataClass> = [];
@@ -1404,7 +1404,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAirlinesBySearchTextAndTenant?AWBMessagesCCSTypeCode=' + AWBMessagesCCSTypeCode + '&searchText=' + searchText + '&tenant=' + tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -1423,7 +1423,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAllowAirline?isAllowed=' + isAllowed + "&code=" + code + "&myTenantId=" + myTenantId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var done: string = response.body;
                 var serviceResponse: ServiceResponse;
@@ -1440,7 +1440,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetIsDirect?forwarderTenantId=' + forwarderTenantId + "&airlineTenantId=" + airlineTenantId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var done: string = response.body;
 
@@ -1458,7 +1458,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetRegistrationRequested?isRequested=' + isRequested + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var done: string = response.body;
 
@@ -1476,7 +1476,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetRegisteringAirline?isRegistered=' + isRegistered + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode + "&loggedContactName=" + loggedContactName;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var done: string = response.body;
 
@@ -1494,7 +1494,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetSetIsDirect?isDirect=' + isDirect + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var done: string = response.body;
 
@@ -1512,7 +1512,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetSetIsDeclined?isDeclined=' + isDeclined + "&declineNotes=" + declineNotes + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var done: string = response.body;
 
@@ -1531,7 +1531,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAirlinesForRequestedTenant?tenant=' + tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -1593,7 +1593,7 @@ export class PartnersDomainService {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(urlparameters,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var _mappedListsArray: Array<AirlineList> = [];
@@ -1621,7 +1621,7 @@ export class PartnersDomainService {
 
         var url = myapiUrl + '/GetCustomerCreditLimitActualAmount?myCustomerId=' + myCustomerId + "&invoiceId=" + invoiceId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -1638,7 +1638,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCardContactProducts?cardId=' + cardId + "&contactId=" + contactId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var done: string = response.body;
 
@@ -1656,7 +1656,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAllCarrierAreasByCarrierId?carrierId=' + carrierId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -1786,7 +1786,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetRemoveCarrierAreaFromCarrier?areaId=' + areaId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var done: string = response.body;
 
@@ -1804,7 +1804,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetInUseWarehouse?code=' + code;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -1817,7 +1817,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAllTariffTranslationsByCarrierId?carrierId=' + carrierId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -1872,7 +1872,7 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetRemoveTranslationFromCarrier?id=' + id;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var done: string = response.body;
 

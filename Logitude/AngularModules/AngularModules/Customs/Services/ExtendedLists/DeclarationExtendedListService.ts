@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationList } from '../../EntityLists/DeclarationList';
-
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
  import { SendCollateralRequestParams } from '../../DataContract/RequestParams/SendCollateralRequestParams';
- 
-import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
- 
+  
 @Injectable()
 
 export class DeclarationExtendedListService {
@@ -22,14 +19,9 @@ export class DeclarationExtendedListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Declarartion';
     }
 
+        GetSingleDeclarationByCustomFileNo(customFileNo: string) {
 
-    GetSingleDeclarationByCustomFileNo(customFileNo: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-
-
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleDeclarationByCustomFileNo/?' + 'customFileNo=' + customFileNo,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -54,12 +46,7 @@ export class DeclarationExtendedListService {
     }
 
     GetSupplierInvoiceItemsCount(declarationId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-
-
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemCount/?' + 'declarationId=' + declarationId,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -73,12 +60,9 @@ export class DeclarationExtendedListService {
     }
 
     GetSingleDeclarationByNumber(declarationByNumber: string, tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+       var url = this._apiUrl + '/GetSingleDeclarationByCustomFileNo';
 
-        var url = this._apiUrl + '/GetSingleDeclarationByCustomFileNo';
-
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http
                 .get(this._apiUrl + '/GetSingleDeclarationByNumber/?' + 'declarationByNumber=' + declarationByNumber + '&tenant=' + tenant,
                     ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -104,12 +88,9 @@ export class DeclarationExtendedListService {
     }
 
     GetConsignmentListPMByCustomFileNo(customFileNo: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
         var url = this._apiUrl + '/GetConsignmentListPMByCustomFileNo';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetConsignmentListPMByCustomFileNo/?' + 'customFileNo=' + customFileNo,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -122,12 +103,9 @@ export class DeclarationExtendedListService {
     }
 
     GetDeclarationPendingListPMByDeclarationId(declarationId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
         var url = this._apiUrl + '/GetDeclarationPendingListPMByDeclarationId';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDeclarationPendingListPMByDeclarationId/?' + 'declarationId=' + declarationId,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -140,12 +118,9 @@ export class DeclarationExtendedListService {
     }
 
     GetCurrenciesCodesForDeclaration(declarationId: string, tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
         //var url = this._apiUrl + '/GetConsignmentListPMByCustomFileNo';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCurrenciesCodesForDeclaration/?' + 'declarationId=' + declarationId + '&tenant=' + tenant,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -159,12 +134,10 @@ export class DeclarationExtendedListService {
     }
 
     GetSingleDeclarationPMByCargoIdentifiers(cargoTypeCode: string, manifestNumber: string, secondCargoID: string, tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
 
         //var url = this._apiUrl + '/GetConsignmentListPMByCustomFileNo';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleDeclarationPMByCargoIdentifiers/?' + 'cargoTypeCode=' + cargoTypeCode + '&manifestNumber=' + manifestNumber + '&secondCargoID=' + secondCargoID + '&tenant=' + tenant,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -180,11 +153,7 @@ export class DeclarationExtendedListService {
 
     PostSendCollateral8212(requestParams: SendCollateralRequestParams) {
 
-        return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
+        return defer(() => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
@@ -206,12 +175,7 @@ export class DeclarationExtendedListService {
     }
 
     PutCopyDeclaration_test(fromDeclarationId: string , tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-
-
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl + '/PutCopyDeclaration_test/?' + 'fromDeclarationId=' + fromDeclarationId + '&tenant=' + tenant,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -226,12 +190,7 @@ export class DeclarationExtendedListService {
 
 
     PutCopyDeclaration(fromDeclarationId: string, toDeclarationId: string, tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-
-
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl + '/PutCopyDeclaration/?' + 'fromDeclarationId=' + fromDeclarationId + '&toDeclarationId=' + toDeclarationId + '&tenant=' + tenant,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -245,10 +204,7 @@ export class DeclarationExtendedListService {
     }
 
     GetDeclarationByCustomFileNoAndCCU(customFileNo: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDeclarationByCustomFileNoAndCCU/?' + 'customFileNo=' + customFileNo,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -269,10 +225,7 @@ export class DeclarationExtendedListService {
 
 
     GetDeclarationAmendmentsById(id: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDeclarationAmendmentsById/?' + 'id=' + id,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
@@ -325,12 +278,10 @@ export class DeclarationExtendedListService {
         var urlparameters = '/GetDeclarationAmendmentsById/?' + 'id=' + filters.AdditionalFilters[0].FieldValue;
  
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;

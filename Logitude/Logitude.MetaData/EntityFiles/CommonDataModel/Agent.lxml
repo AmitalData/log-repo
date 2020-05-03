@@ -6027,11 +6027,11 @@
     <Feature
       Code="&quot;NEWAGENT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Agent.Features.NewAgent&quot;"
-      FeatureDefaultText="&quot;New Agent&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Agent.Features.NewAgent&quot;"
+      FeatureDefaultText="&quot;New Agent&quot;" />
   </AdditionalFeatures>
 </entity>

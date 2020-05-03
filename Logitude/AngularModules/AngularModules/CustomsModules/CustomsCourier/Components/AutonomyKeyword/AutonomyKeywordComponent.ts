@@ -23,7 +23,6 @@ import { I18NHtmlParser } from '@angular/compiler';
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './AutonomyKeywordComponent.html',
 })
 

@@ -8,7 +8,7 @@ import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ProfitByShipmentFilterConmponent',
     templateUrl: './ProfitByShipmentFilterConmponent.html',
     inputs: ['ReportsPreview']

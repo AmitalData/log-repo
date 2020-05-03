@@ -20,7 +20,7 @@ import {TarrifChargePM} from '../../../../Common/EntityPMs/TarrifChargePM';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AirlineSurchargeTabComponent.html',
 })
 

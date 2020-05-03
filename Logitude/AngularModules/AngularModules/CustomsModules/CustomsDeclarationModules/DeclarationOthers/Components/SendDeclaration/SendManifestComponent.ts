@@ -34,7 +34,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendManifestComponent',
     templateUrl: "SendManifestComponent.html",
 })

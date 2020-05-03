@@ -11,7 +11,6 @@ import { DateTool } from "../../../Infrastructure/Tools";
 
 @Component({
     selector: 'DeclarationRemarksComponent',
-    moduleId: module.id,
     templateUrl: './DeclarationRemarksComponent.html',
 })
 export class DeclarationRemarksComponent

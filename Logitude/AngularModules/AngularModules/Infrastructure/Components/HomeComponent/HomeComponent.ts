@@ -12,9 +12,7 @@ import {EntityResourceService} from '../../Services/EntityResourceService';
 import {UserPM} from '../../../Common/EntityPMs/UserPM';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {LoginService} from '../../Services/LoginService';
-import {Headers} from '@angular/http';
 import {AmitalGatewayUtil} from '../../Utilities/AmitalGatewayUtil';
-import {Observable}     from 'rxjs/Rx';
 import {NotificationExtendedListService} from '../../../Customs/Services/ExtendedLists/NotificationExtendedListService';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
 import {Environment} from '../../Locators/Environment';
@@ -25,9 +23,11 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BluesnapContractPMService } from '../../Services/StandardPMs/BluesnapContractPMService';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
+import { interval } from 'rxjs';
+import { timeInterval } from 'rxjs/operators';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './HomeComponent.html',
 })
 
@@ -39,7 +39,7 @@ export class HomeComponent implements OnDestroy{
     public ChangeHeaderColor: boolean = false;
     @Output() SignoutCompleted = new EventEmitter();
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    @ViewChild("ApplicationLocation", { read: ViewContainerRef }) ApplicationLocation: ViewContainerRef;
+    @ViewChild("ApplicationLocation", { read: ViewContainerRef, static: false }) ApplicationLocation: ViewContainerRef;
     SettingBtnVisibility: boolean = false;
     IsShowLastSuccessfulLoginComponent: boolean = true;
     public IfBlueSnapContracts: boolean = false;
@@ -638,20 +638,20 @@ export class HomeComponent implements OnDestroy{
             }       
         });
     }
-    initializeBadjCountTimer() {
-        return Observable.interval(60000).timeInterval();
+  initializeBadjCountTimer() {
+    return interval(60000).pipe(timeInterval());
+  }
+  onBellButtonClicked() {
+    this.BellClicked = true;
+    if (this.IsControlVisibile) {
+      this.IsControlVisibile = false;
     }
-    onBellButtonClicked() {
-        this.BellClicked = true;
-        if (this.IsControlVisibile) {
-            this.IsControlVisibile = false;
-        }
-        else {
-            this.IsControlVisibile = true;
-            this.IsBadjCountVisibile = false;
-          
-        }
+    else {
+      this.IsControlVisibile = true;
+      this.IsBadjCountVisibile = false;
+
     }
+  }
     OnClickOutSide() {
         if (!this.BellClicked && !this.MouseInArea) {
             if (this.IsControlVisibile) {
@@ -1739,7 +1739,7 @@ export class HomeComponent implements OnDestroy{
         //newWindow.WindowArgs = windowArgs;
         //newWindow.Add(control);
 
-        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DigitalSignDocTypeComponent');
+      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DigitalSignDocTypeComponent');
 
         newWindow.WindowClosed.subscribe(($event: any) => {
             //if ($event == "MyShipmentAdded") {

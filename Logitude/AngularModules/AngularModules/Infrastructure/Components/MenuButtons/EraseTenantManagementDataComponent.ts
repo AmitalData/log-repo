@@ -9,7 +9,7 @@ import { BatchTaskExecutionList } from '../../EntityLists/BatchTaskExecutionList
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EraseTenantManagementDataComponent.html',
 })
 

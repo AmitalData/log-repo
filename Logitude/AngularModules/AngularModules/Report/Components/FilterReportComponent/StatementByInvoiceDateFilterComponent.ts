@@ -7,7 +7,7 @@ import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
-    moduleId: module.id,
+    
     selector: 'StatementByInvoiceDateFilterComponent',
     templateUrl: './StatementByInvoiceDateFilterComponent.html',
     inputs: ['ReportsPreview']

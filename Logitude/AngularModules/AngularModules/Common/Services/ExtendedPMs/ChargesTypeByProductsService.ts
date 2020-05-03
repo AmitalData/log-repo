@@ -1,7 +1,7 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ChargesExternalAccountsByProductPM}  from '../../EntityPMs/ChargesExternalAccountsByProductPM';
@@ -18,12 +18,9 @@ export class ChargesTypeByProductsService {
     }
 
     GetChargesTypeExternalAccountsByProducts(myChargesTypeId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetChargesTypeExternalAccountsByProducts?myChargesTypeId=' + myChargesTypeId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
 
@@ -37,7 +34,7 @@ export class ChargesTypeByProductsService {
     }
 
     Put(entityPM: ChargesTypeByProductsControllerHelper) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

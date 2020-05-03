@@ -1,39 +1,25 @@
 declare var window: any;
-
-import { Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
-import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
-import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { Component } from '@angular/core';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { Validator } from '../../../../Infrastructure/Validators/Validator';
-import { CustomSendOptionsArgs, SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { DeclarationCourierStatusPM } from '../../../../Customs/EntityPMs/DeclarationCourierStatusPM';
 import { DeclarationCourierStatusPMService } from '../../../../Customs/Services/StandardPMs/DeclarationCourierStatusPMService';
-import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { DeclarationPendingPM } from '../../../../Customs/EntityPMs/DeclarationPendingPM';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-//import { DeclarationPendingPMService } from '../../../../Customs/Services/StandardPMs/DeclarationPendingPMService';
 import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
 import { DeclarationPMService } from '../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { CourierPendingReasonPM } from '../../../../Customs/EntityPMs/CourierPendingReasonPM';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { KeyValuePair } from '../CourierWorkSheet/CourierWorksheetComponent';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './DeclarationPendingsGeneralComponent.html',
 })
-
-
 
 export class DeclarationPendingsGeneralComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.DeclarationPending";

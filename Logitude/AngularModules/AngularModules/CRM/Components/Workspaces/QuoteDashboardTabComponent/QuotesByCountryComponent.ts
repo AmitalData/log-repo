@@ -11,7 +11,7 @@ declare var PieClick, makePieChart, ResetItemPie: any;
 
 @Component({
     selector: 'quotes-by-country',
-    moduleId: module.id,
+    
     templateUrl: './QuotesByCountryComponent.html'
 })
 

@@ -36,7 +36,7 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './APInvoiceDetailsTabGeneral.html',
 })
 

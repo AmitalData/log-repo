@@ -6,7 +6,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 @Component({
-    moduleId: module.id,
+    
     selector: 'OperationsComponent',
     templateUrl: './OperationsComponent.html',
     providers: [EntityResourceService],

@@ -40,11 +40,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
+    Name="CountryId"
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="InActive"
@@ -57,6 +57,13 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="SearchFields"
@@ -77,13 +84,6 @@
     Type="datetime">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="CountryId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="CountryId"

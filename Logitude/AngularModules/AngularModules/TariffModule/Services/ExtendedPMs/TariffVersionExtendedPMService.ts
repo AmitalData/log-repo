@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -24,7 +24,7 @@ export class TariffVersionExtendedPMService {
 
         var url = this._apiUrl + '/GetAllTariffVersionsForTariff?tariffId=' + tariffId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;

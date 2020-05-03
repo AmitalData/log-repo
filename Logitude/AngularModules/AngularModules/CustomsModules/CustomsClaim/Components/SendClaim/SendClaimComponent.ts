@@ -26,7 +26,7 @@ import { ClaimPMService } from '../../../../Customs/Services/StandardPMs/ClaimPM
 import { ClaimPM } from '../../../../Customs/EntityPMs/ClaimPM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendClaimComponent',
     templateUrl: "SendClaimComponent.html",
 })

@@ -11,7 +11,7 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierMasterGeneralTabComponent.html',
 })
 

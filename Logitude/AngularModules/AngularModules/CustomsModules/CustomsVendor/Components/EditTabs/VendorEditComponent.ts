@@ -15,13 +15,15 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {CustomsVendorPM} from '../../../../Customs/EntityPMs/CustomsVendorPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VendorEditComponent.html',
     providers: [EntityArgs],
 
 })
 
 export class VendorEditComponent extends BaseComponent {
+  public right: any;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public EntityPM: CustomsVendorPM;
     public ObjectTableName: string = "Customs.CustomsVendor";

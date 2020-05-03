@@ -15,13 +15,13 @@ import { ExceptionReasonPMService } from '../../../../Customs/Services/StandardP
 import { ExceptionReasonExtendedListService } from '../../../../Customs/Services/ExtendedLists/ExceptionReasonExtendedListService';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './AddExceptionReasonToUnifreightStatusComponent.html',
 })
 
-export class AddExceptionReasonToUnifreightStatusComponent
-    extends BaseComponent
-    implements OnInit {
+export class AddExceptionReasonToUnifreightStatusComponent extends BaseComponent implements OnInit {
+  public Code: any;
+  public FooterMethods: any;
+
 
     public DataContext: AddExceptionReasonToUnifreightStatusComponent = this;
     public ObjectTableName: string = "Customs.ExceptionReason";

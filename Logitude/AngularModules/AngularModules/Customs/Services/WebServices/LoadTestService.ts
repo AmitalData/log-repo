@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -25,7 +25,7 @@ export class LoadTestService {
 
     PostCourierBOLRequest(entity: any) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -59,7 +59,7 @@ export class LoadTestService {
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetNewCustomFile/?' + '&tenant=' + tenant + '&ConsigneeId=' + ConsigneeId + '&CustomerId=' + CustomerId,
@@ -80,7 +80,7 @@ export class LoadTestService {
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetDeclarationFromFileNo/?' + '&tenant=' + tenant + '&fileNo=' + fileNo + '&FilingCopy=' +  FilingCopy,
@@ -100,7 +100,7 @@ export class LoadTestService {
 
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetTicket/?' + '&tenant=' + tenant + '&declarationId=' + declarationId,

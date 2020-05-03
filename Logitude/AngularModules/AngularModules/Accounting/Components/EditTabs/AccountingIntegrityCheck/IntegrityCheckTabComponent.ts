@@ -14,10 +14,9 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { AccountingEntegrityCheckExtendedPMService } from '../../../Services/ExtendedPMs/AccountingEntegrityCheckExtendedPMService';
 import { AccountingIntegrityCheckPMService } from '../../../Services/StandardPMs/AccountingIntegrityCheckPMService';
-import { builder } from "xmlbuilder";
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './IntegrityCheckTabComponent.html',
 })
 

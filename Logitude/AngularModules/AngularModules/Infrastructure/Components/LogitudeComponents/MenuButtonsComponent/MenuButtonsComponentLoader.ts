@@ -11,7 +11,7 @@ import {AppTool} from '../../../Tools'
 
 
 @Component({
-    moduleId: module.id,   
+       
     selector: 'MenuButtonsComponentLoader',
     templateUrl: "./MenuButtonsComponentLoader.html", 
 })
@@ -23,7 +23,7 @@ export class MenuButtonsComponentLoader implements OnInit {
     @Input() ObjectTable: ObjectTablePM;
     @Input() EntityPM: any;
     //----------------------------------------------------------------------------//
-    @ViewChild('MenuButtonComponent', { read: ViewContainerRef }) ComponentViewContainerRef: ViewContainerRef; 
+    @ViewChild('MenuButtonComponent', { read: ViewContainerRef, static: false }) ComponentViewContainerRef: ViewContainerRef; 
 
     constructor() {
     }

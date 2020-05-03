@@ -6,7 +6,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {SearchTextBox} from '../../../../Controls/SearchTextBox';
 import {IconButton} from '../../../../Controls/IconButton';
 import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import {Http, Response} from '@angular/http';
+
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -34,11 +34,13 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PrivateLabelApprovePaymentComponent.html'
 })
 
 export class PrivateLabelApprovePaymentComponent extends BaseComponent implements OnInit, AfterViewInit {
+  public SearchText: string = null;
+  public DeleteDocumentClicked(item: any) { }
 
     DataContext: PrivateLabelApprovePaymentComponent = this;
     private messageWindow: MessageWindow = new MessageWindow();
@@ -245,7 +247,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                 windowArgs.AdditionalData = entity;
                 newWindow.WindowArgs = windowArgs;
                 //newWindow.Add(control); 
-                newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent');
+              newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent');
                 newWindow.WindowClosed.subscribe(($event: any) => {
                     if ($event == "Denied") {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Deny Declaration");
@@ -374,7 +376,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         windowArgs.AdditionalData = this.AdditionalData;
         newWindow.WindowArgs = windowArgs;
         //newWindow.Add(control); 
-        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/GoodsValueComponent');
+      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/GoodsValueComponent');
 
     }
 

@@ -1260,5 +1260,33 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;RECONCILERECO&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Reconciliation.Features.Reconcile&quot;"
+      FeatureDefaultText="&quot;Reconcile&quot;" />
+    <Feature
+      Code="&quot;SAVEASDRAFTRECO&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Reconciliation.Features.SaveAsDraft&quot;"
+      FeatureDefaultText="&quot;Save As Draft&quot;" />
+    <Feature
+      Code="&quot;ADJUSTRECO&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Reconciliation.Features.Adjust&quot;"
+      FeatureDefaultText="&quot;Adjust&quot;" />
+  </AdditionalFeatures>
 </entity>

@@ -11,7 +11,7 @@ import {CardListService} from '../../../../Common/Services/StandardLists/CardLis
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditShipmentAssemblyComponent.html',
 })
 

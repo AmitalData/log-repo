@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
 import {Guid} from '../../Utilities/Guid';
@@ -26,7 +26,7 @@ export class ObjectTableRuleFieldPMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -49,7 +49,7 @@ export class ObjectTableRuleFieldPMService {
 
     insert(entityPM: ObjectTableRuleFieldPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -89,7 +89,7 @@ export class ObjectTableRuleFieldPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });
@@ -98,7 +98,7 @@ export class ObjectTableRuleFieldPMService {
     update(entityPM: ObjectTableRuleFieldPM) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -137,7 +137,7 @@ export class ObjectTableRuleFieldPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });
@@ -145,7 +145,7 @@ export class ObjectTableRuleFieldPMService {
     }
 
     updateRuleFieldsList(ruleFieldsPMList: ObjectTableRuleFieldPM[]) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
             authHeader.append('Content-Type', 'application/json');
@@ -177,7 +177,7 @@ export class ObjectTableRuleFieldPMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetObjectTableRuleFieldPMsByTenant?' + 'tenant=' + tenant, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {

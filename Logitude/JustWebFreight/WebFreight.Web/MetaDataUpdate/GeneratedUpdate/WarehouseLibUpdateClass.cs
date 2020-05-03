@@ -350,9 +350,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					WarehouseEntryStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					WarehouseEntryStatusUpdateClass.FillWarehouseEntryStatus();
 					scope.Complete();
 				}
+ 
+				WarehouseEntryStatusUpdateClass.FillWarehouseEntryStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("WarehouseRelease", ObjectTables, WarehouseReleaseUpdateClass.HashString))
@@ -432,9 +435,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					WarehouseReleaseStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					WarehouseReleaseStatusUpdateClass.FillWarehouseReleaseStatus();
 					scope.Complete();
 				}
+ 
+				WarehouseReleaseStatusUpdateClass.FillWarehouseReleaseStatus();
+
+ 
 			}
 
         }

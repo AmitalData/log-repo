@@ -23,7 +23,7 @@ import { CustomsAirlineListService } from '../../../Customs/Services/StandardLis
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditCustomsAirlineComponent.html',
 })
 

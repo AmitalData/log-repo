@@ -15,7 +15,7 @@ import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimRelatedEntityCustomAnswerTabComponent.html',
 })
 

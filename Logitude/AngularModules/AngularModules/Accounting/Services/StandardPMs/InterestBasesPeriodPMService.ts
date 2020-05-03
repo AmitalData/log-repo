@@ -8,7 +8,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -35,7 +35,7 @@ export class InterestBasesPeriodPMService {
          
        
         var callTime = new Date();		
-     return Observable.defer(() => {
+     return defer(() => {
          return this._http.get(this._apiUrl + '/getsingle?' + 'interestbasetypeid=' + interestbasetypeid + '&' + 'linenumber=' + linenumber, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
              var pm = response.body;
 
@@ -62,7 +62,7 @@ export class InterestBasesPeriodPMService {
 	 insert(entityPM: InterestBasesPeriodPM) {
  
         var callTime = new Date();        
-        return Observable.defer(() => {
+        return defer(() => {
 
                 
                 var validator: ClassLevelValidator;
@@ -102,7 +102,7 @@ export class InterestBasesPeriodPMService {
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
                    
                 }
             }
@@ -113,7 +113,7 @@ export class InterestBasesPeriodPMService {
     update(entityPM: InterestBasesPeriodPM) {
 
             var callTime = new Date();         
-            return Observable.defer(() => {
+            return defer(() => {
 
  
                 var validator: ClassLevelValidator;
@@ -152,7 +152,7 @@ export class InterestBasesPeriodPMService {
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
                    
                 }
             }

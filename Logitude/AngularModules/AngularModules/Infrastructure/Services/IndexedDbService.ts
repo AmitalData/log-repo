@@ -1,9 +1,7 @@
-﻿declare var window: any;
+declare var window: any;
 import {Injectable} from '@angular/core';
 import {InfraSettings} from '../../Infrastructure/Utilities/InfraSettings';
-//import Rx from 'rxjs/Rx';
-import {Observable} from 'rxjs/Observable';
-
+import {Observable} from 'rxjs';
 
 @Injectable()
 

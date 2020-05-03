@@ -5,7 +5,7 @@ import { BusinessRoleList } from '../../EntityLists/BusinessRoleList';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class BusinessRoleExtendedListService {
@@ -21,7 +21,7 @@ export class BusinessRoleExtendedListService {
         var url = this._apiUrl + '/GetToggleBusinessRoles?memberId=' + memberId;
         var callTime = new Date();
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
                 if (response instanceof HttpResponse) {
                     var allLists = response;

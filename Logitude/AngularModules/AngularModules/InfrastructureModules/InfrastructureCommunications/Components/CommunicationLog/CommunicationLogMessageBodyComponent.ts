@@ -25,7 +25,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'CommunicationLogMessageBody',
     templateUrl: './CommunicationLogMessageBodyComponent.html',
     providers: [DocumentExtendedService, ImageLibraryService ],

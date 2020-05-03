@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -23,7 +23,7 @@ export class VehicleExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetVehicleByVehicleChassisNumberOrRichbitFileNumber?vehicleChassisNumber=' + vehicleChassisNumber + '&richbitFileNumber=' + richbitFileNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                // serviceResponse.Result = response;
@@ -50,7 +50,7 @@ export class VehicleExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
         authHeader.append('Content-Type', 'application/json');
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/CheckIfVehicleExistByChassisNumber/?' + '&vehicleChassisNumber=' + vehicleChassisNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
@@ -67,7 +67,7 @@ export class VehicleExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http
                 .get(this._apiUrl + '/GetCheckIfVehicleExistByChassisNumber/?' + '&vehicleChassisNumber=' + vehicleChassisNumber,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -84,7 +84,7 @@ export class VehicleExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDuplicatedVehInSameDeclaration?declarationId=' + declarationId + '&richbitNumbersString=' + vehiclesNumbers + '&chassissNumbersString=' + chassissNumbersString, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 // serviceResponse.Result = response;
@@ -110,7 +110,7 @@ export class VehicleExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCheckRichbitNumbersError?richbitNumbersString=' + vehiclesNumbers, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 // serviceResponse.Result = response;
@@ -137,7 +137,7 @@ export class VehicleExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetVehiclesByRichbitFileNumbers/?' + '&richbitNumbersString=' + richbitNumbersString, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                 var allLists = response.body;
@@ -165,7 +165,7 @@ export class VehicleExtendedPMService {
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetIsVehicleAttachmentNumberIsMoreThenAllow/?' + '&vehicleId=' + vehicleId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 var pm = response;

@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -29,7 +29,7 @@ export class VendorExtendedListService {
 
         var url = this._apiUrl + '/GetVendorsWithImporterDespositions';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetVendorsWithImporterDespositions/?' + 'vendorId=' + vendorId + '&importerId=' + importerId + '&ShowOnlyValid=' + ShowOnlyValid + '&useImporterFilter=' + useImporterFilter+ '&searchText=' + searchText, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
 

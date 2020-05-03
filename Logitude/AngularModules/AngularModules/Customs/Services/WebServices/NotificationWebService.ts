@@ -1,7 +1,7 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -25,11 +25,7 @@ export class NotificationWebService {
 
     //NotificationReply
     GetNotificationsByDefinitionCode(objectTableId: string, entityId: string, tenant: number) {
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+        return defer(() => {
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
@@ -59,11 +55,7 @@ export class NotificationWebService {
 
     PostSendNotificationReplyRequest(entity: MessageToAgentRequestParams) {
 
-        return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
+        return defer(() => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
@@ -84,10 +76,8 @@ export class NotificationWebService {
 
     SetNotificationsStatus(Ids: string[], status: string) {
 
-   
-
         // Send request
-        return Observable.defer(() => {
+        return defer(() => {
 
             // Prepare parameters
             var IdsParameterString = "";
@@ -100,10 +90,6 @@ export class NotificationWebService {
                 console.log("[ERROR] cannot set notification status without Ids!", Ids, status);
                 return;
             }
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();

@@ -3,7 +3,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ContactListService} from '../../../../Common/Services/StandardLists/ContactListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 @Component({
-    moduleId: module.id,
+    
     selector: 'btnComponentComputingPartner',
     templateUrl: './btnComponentComputingPartner.html',
 })

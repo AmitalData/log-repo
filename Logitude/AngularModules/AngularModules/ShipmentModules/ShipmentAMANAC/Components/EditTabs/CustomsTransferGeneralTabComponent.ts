@@ -9,7 +9,6 @@ import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDom
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './CustomsTransferGeneralTabComponent.html',
 })
 

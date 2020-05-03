@@ -20,7 +20,7 @@ declare var window: any;
 
 @Component({
     selector: 'NewOpenFormatReportComponent',
-    moduleId: module.id,
+    
 
     templateUrl: './NewOpenFormatReportComponent.html',
 })

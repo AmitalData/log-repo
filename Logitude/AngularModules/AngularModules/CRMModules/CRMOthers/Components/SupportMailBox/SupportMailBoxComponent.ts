@@ -8,7 +8,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SupportMailBoxComponent.html',
 })
 

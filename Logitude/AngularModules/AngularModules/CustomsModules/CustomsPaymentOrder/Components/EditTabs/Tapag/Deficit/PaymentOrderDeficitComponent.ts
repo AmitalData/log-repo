@@ -23,7 +23,7 @@ import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow'
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PaymentOrderDeficitComponent.html',
     selector: 'PaymentOrderDeficitComponent',
 })
