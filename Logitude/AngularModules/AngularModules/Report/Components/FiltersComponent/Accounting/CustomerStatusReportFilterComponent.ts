@@ -42,7 +42,6 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         // salesman lov field filtera
         this.SalesmanFilterItems = new ApiQueryFilters();
         this.SalesmanFilterItems.addAdditionalFilter("IsSalesman", true, null, null, "Equals", false, false, false, "boolean", false, false);
-          this.LoadAccSettings();
         // set default value for no of months
         // var newDate = new Date();
         // var currentMonth = newDate.getMonth()+1;
@@ -252,27 +251,31 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
 
     public  accSettings: FullAccountingSettingList;
             LoadAccSettings() {
-        
+              return new Promise(resolve => {
                 // Full Accounting Settings
                 this.CurrentSession.StartBusyIndicatorLoading();
                 this._FullAccountingSettingListService.getAll().subscribe((myResponse: ServiceResponse) => {
                     this.CurrentSession.StopBusyIndicator();
                     if (!myResponse.HasError) {
                         var res = myResponse.Result;
-                        if (res != null && res.length > 0) {
-                            var list: FullAccountingSettingList[];
-                            list = res;
-                            this.accSettings = list[0]; // because there is only one record for each tenant
-                             
-                         }
+                      if (res != null && res.length > 0) {
+                        var list: FullAccountingSettingList[];
+                        list = res;
+                        this.accSettings = list[0]; // because there is only one record for each tenant
+                        resolve(this.accSettings);
+                      }
+                      else {
+                      //  reject();
+                      }
                     }
                 });
-        
+              });
             }
     //#endregion
 
     RunButtonClicked() {
         this.SetUIProperties();
+      this.LoadAccSettings().then(res => { 
 
         var errors: string[] = [];
         var categoryValue = null;
@@ -348,6 +351,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             }
             this.ValidationErrorsList = errors;
         }
+      }); 
     }
 
     IsBalanceTypeDisabled = false;
