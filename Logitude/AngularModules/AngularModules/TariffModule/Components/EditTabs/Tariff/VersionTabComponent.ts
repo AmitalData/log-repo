@@ -76,9 +76,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
     this.LoadVersions();
     this.SetOriginDependencyFilterValue();
-
-    this.PageIndex = 1;
-    this.QueryPageIndex = 0;
   }
 
   SetOriginDependencyFilterValue() {
@@ -218,6 +215,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
   private loadedTariffLines: TariffLinePM[];
   private compareTariffLines: TariffLinePM[];
   private LoadTariffLines(type: string) {
+
     this.CurrentSession.StartBusyIndicatorLoading();
 
     if (type == "currentVersion") {
@@ -320,31 +318,37 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
   private ItemsCollection: AirCostTariffLineData[] = [];
   FillTariffLines(tariffLines: TariffLinePM[]) {
+
+    this.LinesCount = tariffLines.length;
+
     if (this.TariffsLinesSource != null) {
       this.TariffsLinesSource.Clear();
     }
 
     this.ItemsCollection = [];
 
-
     tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
       this.ItemsCollection.push(new AirCostTariffLineData(item, this));
     });
 
-    this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
-    this.LinesCount = this.TariffsLinesSource.Length;
+    this.InitializePager();
+    this.FillGridPagerItems();
+    this.DoCompare();
+  }
 
-    //some work here
+  FillGridPagerItems() {
 
-    var size = this.pageSize;
-    this.TotalPagesCount = Math.ceil(this.TariffsLinesSource.Length / size);
+    var items: AirCostTariffLineData[] = [];
 
-    if (this.TotalPagesCount == 0) {
-      this.TotalPagesCount = 1;
+    if (this.ItemsCollection) {
+      var start = (this.PageIndex - 1) * this.PageSize;
+      var end = start + this.PageSize;
+
+      items = this.ItemsCollection.slice(start, end);
     }
 
-    this.SetPagerButtonsStates();
-    this.DoCompare();
+    this.TariffsLinesSource.Clear();
+    this.TariffsLinesSource.InsertCollection(items);
   }
 
   private DoCompare() {
@@ -808,6 +812,42 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
   }
 
   //Pager
+  public PageSize: number = 50;
+  public PageIndex: number = 1;
+  public TotalPagesCount: number = 1;
+  InitializePager() {
+    this.PageIndex = 1;
+
+    this.TotalPagesCount = Math.ceil(this.ItemsCollection.length / this.PageSize);
+
+    if (this.TotalPagesCount == 0) {
+      this.TotalPagesCount = 1;
+    }
+
+    this.SetPagerButtonsStates();
+  }
+
+  FirstPageClick() {
+    this.PageIndex = 1;
+    this.SetPagerButtonsStates();
+    this.FillGridPagerItems();
+  }
+  PreviousPageClick() {
+    this.PageIndex = this.PageIndex - 1;
+    this.SetPagerButtonsStates();
+    this.FillGridPagerItems();
+  }
+  NextPageClick() {
+    this.PageIndex = this.PageIndex + 1;
+    this.SetPagerButtonsStates();
+    this.FillGridPagerItems();
+  }
+  LastPageClick() {
+    this.PageIndex = this.TotalPagesCount;
+    this.SetPagerButtonsStates();
+    this.FillGridPagerItems();
+  }
+
   private isHitStateFirstButton: boolean = false;
   get IsHitState_FirstButton() {
     return this.isHitStateFirstButton;
@@ -840,39 +880,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     this.isHitStateLastButton = value;
   }
 
-  private queryPageIndex = 0;
-  get QueryPageIndex() {
-    return this.queryPageIndex;
-  }
-  set QueryPageIndex(value: number) {
-    this.queryPageIndex = value;
-  }
-
-  private pageSize = 50;
-  get PageSize() {
-    return this.pageSize;
-  }
-  set PageSize(value: number) {
-    this.pageSize = value;
-  }
-
-  private pageIndex = 1;
-  get PageIndex() {
-    return this.pageIndex;
-  }
-  set PageIndex(value: number) {
-    this.pageIndex = value;
-  }
-
-  private totalPagesCount = 1;
-  get TotalPagesCount() {
-    return this.totalPagesCount;
-  }
-  set TotalPagesCount(value: number) {
-    this.totalPagesCount = value;
-  }
-
-  private SetPagerButtonsStates() {
+   private SetPagerButtonsStates() {
     if (this.PageIndex == 1 && this.PageIndex == this.TotalPagesCount) {
       this.IsHitState_FirstButton = false;
       this.IsHitState_PrevButton = false;
@@ -904,30 +912,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
   }
 
-  FirstPageClick() {
-    this.PageIndex = 1;
-    this.QueryPageIndex = 0;
-    this.SetPagerButtonsStates();
-    //this.LoadAllData();
-  }
-  PreviousPageClick() {
-    this.PageIndex = this.PageIndex - 1;
-    this.QueryPageIndex = this.QueryPageIndex - 50;
-    this.SetPagerButtonsStates();
-    //this.LoadAllData();
-  }
-  NextPageClick() {
-    this.PageIndex = this.PageIndex + 1;
-    this.QueryPageIndex = this.QueryPageIndex + 50;
-    this.SetPagerButtonsStates();
-    //this.LoadAllData();
-  }
-  LastPageClick() {
-    this.PageIndex = this.TotalPagesCount;
-    this.QueryPageIndex = (this.TotalPagesCount - 1) * this.pageSize;
-    this.SetPagerButtonsStates();
-    //this.LoadAllData();
-  }
+
 }
 
 export class VersionClass {
