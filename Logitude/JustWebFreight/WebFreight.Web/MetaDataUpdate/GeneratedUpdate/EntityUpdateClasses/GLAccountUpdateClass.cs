@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "9127186b69b46d6d336139a16278bb79";
+		public const string HashString = "3a603f88e775c9f6ef8b2e6d1c15d436";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8443,6 +8443,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "GLCC",
+                EnglishName =  "GLAccount.currency conected",
+                LocalName =  "חיבור כרטסת מטבעית בוצעה",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "GLDD",
+                EnglishName =  "GLAccount.currency disconnected",
+                LocalName =  "ניתוק כרטסת מטבעית בוצע",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -8949,6 +8985,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOIsCreditLimitSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.IsCreditLimitSet", DefaultText = "Credit Limit Is Set",LocalDefaultText = @"מוגדר מסגרת אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOSortBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SortBy", DefaultText = "Sort By",LocalDefaultText = @"מיון לפי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLAccount", DefaultText = "GLAccount",LocalDefaultText = @"מזהה פנימי לכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOConnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connect", DefaultText = "Connect",LocalDefaultText = @"חיבור כרטיס קיים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountODisconnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Disconnect", DefaultText = "Disconnect",LocalDefaultText = @"ניתוק", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOWantToDisconnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.WantToDisconnect", DefaultText = "Do you want to disconnect?",LocalDefaultText = @"האם ברצונך גם לנתק את הקשר?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOConnectToAnExisting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ConnectToAnExisting", DefaultText = "Connect to an existing GLAccount",LocalDefaultText = @"חיבור לכרטיס מטבעי קיים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOGLAccountCurrencyConected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLAccountCurrencyConected", DefaultText = "GLAccount.currency conected",LocalDefaultText = @"חיבור כרטסת מטבעית בוצעה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOGlaccountCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Glaccount.Currency", DefaultText = "glaccount .currency",LocalDefaultText = @"כרטיס מטבעי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOWasConnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.WasConnected", DefaultText = "was connected to glaccount .main",LocalDefaultText = @"חובר לכרטיס ראשי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOGLAccountCurrencyDisconnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLAccountCurrencyDisconnected", DefaultText = "GLAccount.currency disconnected",LocalDefaultText = @"ניתוק כרטסת מטבעית בוצע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOWasDisconnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.WasDisconnected", DefaultText = "was disconnected to glaccount .main",LocalDefaultText = @"נותק מכרטיס ראשי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

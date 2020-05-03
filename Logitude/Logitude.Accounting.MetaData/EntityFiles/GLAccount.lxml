@@ -10675,6 +10675,32 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;GLCC&quot;"
+      ObjectTableName="&quot;GLAccount&quot;"
+      EnglishName="&quot;GLAccount.currency conected&quot;"
+      LocalName="&quot;חיבור כרטסת מטבעית בוצעה&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;GLDD&quot;"
+      ObjectTableName="&quot;GLAccount&quot;"
+      EnglishName="&quot;GLAccount.currency disconnected&quot;"
+      LocalName="&quot;ניתוק כרטסת מטבעית בוצע&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons
@@ -12923,6 +12949,66 @@
       Code="&quot;GLAccount.O.SortBy&quot;"
       DefaultText="&quot;Sort By&quot;"
       LocalDefaultText="&quot;מיון לפי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.GLAccount&quot;"
+      DefaultText="&quot;GLAccount&quot;"
+      LocalDefaultText="&quot;מזהה פנימי לכרטיס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.Connect&quot;"
+      DefaultText="&quot;Connect&quot;"
+      LocalDefaultText="&quot;חיבור כרטיס קיים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.Disconnect&quot;"
+      DefaultText="&quot;Disconnect&quot;"
+      LocalDefaultText="&quot;ניתוק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.WantToDisconnect&quot;"
+      DefaultText="&quot;Do you want to disconnect?&quot;"
+      LocalDefaultText="&quot;האם ברצונך גם לנתק את הקשר?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.ConnectToAnExisting&quot;"
+      DefaultText="&quot;Connect to an existing GLAccount&quot;"
+      LocalDefaultText="&quot;חיבור לכרטיס מטבעי קיים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.GLAccountCurrencyConected&quot;"
+      DefaultText="&quot;GLAccount.currency conected&quot;"
+      LocalDefaultText="&quot;חיבור כרטסת מטבעית בוצעה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.Glaccount.Currency&quot;"
+      DefaultText="&quot;glaccount .currency&quot;"
+      LocalDefaultText="&quot;כרטיס מטבעי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.WasConnected&quot;"
+      DefaultText="&quot;was connected to glaccount .main&quot;"
+      LocalDefaultText="&quot;חובר לכרטיס ראשי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.GLAccountCurrencyDisconnected&quot;"
+      DefaultText="&quot;GLAccount.currency disconnected&quot;"
+      LocalDefaultText="&quot;ניתוק כרטסת מטבעית בוצע&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.WasDisconnected&quot;"
+      DefaultText="&quot;was disconnected to glaccount .main&quot;"
+      LocalDefaultText="&quot;נותק מכרטיס ראשי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
