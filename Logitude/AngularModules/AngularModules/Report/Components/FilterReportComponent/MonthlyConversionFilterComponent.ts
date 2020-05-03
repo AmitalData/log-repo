@@ -52,9 +52,7 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
     public ObjectTableName: string = "Report";
 
     public SelectedViewItem: any;
-
-
-
+  
     public DataContext: MonthlyConversionFilterComponent = this;
     public IsCRMTenant: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -188,7 +186,16 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
                     this.queryFilterItem.Operator = "Equals";
                     this.queryFilterItems.push(this.queryFilterItem);
                 }
-            }
+          }
+
+          if (this.StageCountRadio != null) {
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "StageCount";
+            this.queryFilterItem.FieldValue = this.StageCountRadio;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+          }
 
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
@@ -211,5 +218,12 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
         date.setUTCMinutes(0);
         date.setUTCSeconds(0);
         return date;
+  }
+
+  public StageCountRadio: string = "Actual";
+  SetStageCountRadio(value: string) {
+    if (this.StageCountRadio != value) {
+      this.StageCountRadio = value;
     }
+  }
 }
