@@ -246,7 +246,6 @@
     <Content Include="2020.R1\04 - 2020\Day 13 [Maheera] Add QuoteAutomaticallyClosingDataHistory Table.sql" />
     <Content Include="2020.R2\04\Day 26 [Samar] Add New Help Resources.sql" />
     <Content Include="2020.R2\04\Day 30 [Wesam] Add ImporterDigitalShipments To BatchServicesDef.sql" />
-    <Content Include="2020.R2\04\Set Event Types Local Names To English Names.sql" />
     <Content Include="2020.R2\05\Day 03[Wesam] AddColumnAutomaticLastUpdateDate.sql" />
     <Content Include="2020.R2\04\Set Event Types Local Names To English Names.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
