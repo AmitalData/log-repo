@@ -53,7 +53,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
     private packageTypeListService: PackageTypeListService;
-    public IsFirstTime: boolean = true;
+  public IsFirstTime: boolean = true;
+  public IsViewSurchargesClickedEnabled: boolean = true;
+
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myDomainService = new TariffDomainService();
@@ -658,7 +660,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
     ViewSurchargesClicked(item: TariffSearchSummary) {
-        if (item && item.SurchargesWithoutAllIn != null) {
+      if (item && item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length != 0) {
             var surcharge = item.SurchargesWithoutAllIn[0];
             var editWindow = new LogitudeWindow();
             editWindow.ShowHeaderButtons = true;
