@@ -2567,6 +2567,29 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private string entityTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntityTypeName  
+	   {
+	    
+	     get
+		{
+		   return entityTypeName;
+		 }
+		 set
+		 {
+		   if(entityTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityTypeName",OldValue=entityTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entityTypeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
