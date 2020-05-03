@@ -71,17 +71,11 @@
                                             </td>
 
                                             <td style="width: 120px;">
-                                                <div class="RadioButton">
-                                                    <input id="ByEndNumberRadio" type="radio" name="ByTypeRadio" [checked]="IsByNumber" (click)="SetIsByNumber(true)" />
-                                                    <label for="ByEndNumberRadio">{{'MAWBStack.O.ByEndNumber' | TextCodeTranslationPipe}}</label>
-                                                </div>
+                                              <RadioButton [Name]="'NumberOrAmountRadio'" [IsChecked]="IsByNumber" (Checked)="SetIsByNumber(true)" [Text]="'MAWBStack.O.ByEndNumber' | TextCodeTranslationPipe"></RadioButton>
                                             </td>
 
                                             <td>
-                                                <div class="RadioButton">
-                                                    <input id="ByAmountRadio" type="radio" name="ByTypeRadio" [checked]="!IsByNumber" (click)="SetIsByNumber(false)" />
-                                                    <label for="ByAmountRadio">{{'MAWBStack.O.ByAmount' | TextCodeTranslationPipe}}</label>
-                                                </div>
+                                              <RadioButton [Name]="'NumberOrAmountRadio'" [IsChecked]="!IsByNumber" (Checked)="SetIsByNumber(false)" [Text]="'MAWBStack.O.ByAmount' | TextCodeTranslationPipe"></RadioButton>
                                             </td>
                                         </tr>
                                     </table>
