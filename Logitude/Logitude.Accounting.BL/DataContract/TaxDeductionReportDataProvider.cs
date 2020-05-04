@@ -81,7 +81,11 @@ namespace Logitude.Accounting.BL.DataContract
         }
         private List<TaxDeductionReportLine> CreateTaxDeductionLinesByAPPayments(List<APPayment> payments,bool cancelled) {
             List<TaxDeductionReportLine> lines = new List<TaxDeductionReportLine>();
+            string id = null;
             foreach (APPayment payment in payments) {
+
+                if (id == payment.Id) continue;
+                id = payment.Id;
                 TaxDeductionReportLine taxDeductionReportline = new TaxDeductionReportLine();
                 taxDeductionReportline.VendorId = payment.VendorCard!= null? payment.VendorCard.GLAccountId: null;
                
@@ -343,7 +347,7 @@ namespace Logitude.Accounting.BL.DataContract
             vendors = vendors.Concat(GetVendorsByIds(payments)).ToList();
             payments = (from a in payments
                                  join v in vendors on a.VendorId equals v.Id
-                                 join g in gLAccounts on v.GLAccountId equals g.Id
+                                 join g in gLAccounts on v.GLAccountId equals g.Id  into g 
                                  select a).ToList();
             
             return payments;
