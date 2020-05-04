@@ -35,7 +35,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 entityPM.CreatedByUserName = createdByContact.EnglishName;
             }
             Contact updatedByContact = ContactRepository.GetSingleContact(entityPOCO.UpdatedByUserId, entityPOCO.Tenant, true);
-            if (createdByContact != null)
+            if (updatedByContact != null)
             {
                 entityPM.UpdatedByUserName = updatedByContact.EnglishName;
             }
