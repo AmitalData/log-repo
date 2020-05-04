@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -196,7 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -259,7 +259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -322,7 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -385,7 +385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -446,7 +446,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -509,7 +509,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -572,7 +572,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -635,7 +635,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -699,7 +699,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -762,13 +762,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ErrorLogQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ERLG", Name = "Error Log" }, queryGroupRepository);
@@ -781,7 +781,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
             }
 
 	         
-	        List<ObjectField> ErrorLogObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ErrorLog").ToList();   
+	        //List<ObjectField> ErrorLogObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ErrorLog").ToList();   
 
 			   TextCode ErrorLogTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ErrorLog.Q.TodayErrorLog", DefaultText = @"Today",LocalDefaultText = null, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ErrorLogFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYERRORLOG", ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLogObjectTable.Features.TodayErrorLog", NameTextCodeDefaultText = "Today Error Log", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -796,40 +796,40 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 
 			  Query TodayErrorLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ErrorLogTextCode_0.Id, NameTextCodeCode = ErrorLogTextCode_0.Code, ObjectTableName = "ErrorLog", Code = "Today Error Logs",  QueryGroupCode = "ERLG", IndexOrder = 0, Tenant = 0, ObjectTableId = ErrorLogObjectTable.Id, QuerySection = "ErrorLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ErrorLogFeature_0.Id,FeatureUniqeCode= ErrorLogFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn TodayErrorLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "UserName" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "UserName" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayErrorLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ErrorLog.UserName" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayErrorLogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "LogDate" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "LogDate" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayErrorLogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ErrorLog.LogDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayErrorLogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "ClientDate" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "ClientDate" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayErrorLogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ErrorLog.ClientDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayErrorLogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "Tier" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "Tier" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayErrorLogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ErrorLog.Tier" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayErrorLogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "Exception" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "Exception" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayErrorLogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ErrorLog.Exception" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayErrorLogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "StackTrace" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "StackTrace" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayErrorLogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ErrorLog.StackTrace" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayErrorLogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "Tenant" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "Tenant" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayErrorLogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ErrorLog.Tenant" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter TodayErrorLogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "LogDate" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "LogDate" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TodayErrorLogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ErrorLog.LogDate", PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayErrorLogsQuery.Id,QueryCode = TodayErrorLogsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
 			  Query AllErrorLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ErrorLogTextCode_1.Id, NameTextCodeCode = ErrorLogTextCode_1.Code, ObjectTableName = "ErrorLog", Code = "All Error Logs",  QueryGroupCode = "ERLG", IndexOrder = 1, Tenant = 0, ObjectTableId = ErrorLogObjectTable.Id, QuerySection = "ErrorLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ErrorLogFeature_1.Id,FeatureUniqeCode= ErrorLogFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllErrorLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "UserName" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "UserName" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllErrorLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ErrorLog.UserName" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllErrorLogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "LogDate" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "LogDate" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllErrorLogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ErrorLog.LogDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllErrorLogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "ClientDate" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "ClientDate" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllErrorLogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ErrorLog.ClientDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllErrorLogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "Tier" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "Tier" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllErrorLogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ErrorLog.Tier" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllErrorLogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "Exception" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "Exception" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllErrorLogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ErrorLog.Exception" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllErrorLogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "StackTrace" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "StackTrace" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllErrorLogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ErrorLog.StackTrace" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllErrorLogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "Tenant" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "Tenant" && d.ObjectTableId == ErrorLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllErrorLogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllErrorLogsQuery.Id,QueryCode = AllErrorLogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ErrorLog.Tenant" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -837,19 +837,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 	    {   
 
 		   ObjectTable ErrorLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ErrorLog" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> ErrorLogObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ErrorLog").ToList();
+		   //List<ObjectField> ErrorLogObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ErrorLog").ToList();
 		       
 	      
 
 	         Screen ErrorLogHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ErrorLog.HeaderScreen", Name = "Header Screen", ObjectTableId = ErrorLogObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "UserName").FirstOrDefault().Id, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "UserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ErrorLogErrorLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.UserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "LogDate").FirstOrDefault().Id, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "LogDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ErrorLogErrorLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.LogDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "Tier").FirstOrDefault().Id, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "Tier").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ErrorLogErrorLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.Tier", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ErrorLogErrorLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "ClientDate").FirstOrDefault().Id, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "ClientDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ErrorLogErrorLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ErrorLogHeaderScreenScreen0.Id,ScreenCode = ErrorLogHeaderScreenScreen0.Code, ObjectFieldCode = "ErrorLog.ClientDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ErrorLogObjectTable.HeaderScreenId = ErrorLogHeaderScreenScreen0.Id;
 		    ErrorLogObjectTable.HeaderScreenCode = ErrorLogHeaderScreenScreen0.Code;
@@ -859,9 +859,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 
 	         Screen ErrorLogGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ErrorLog.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ErrorLogObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ErrorLogErrorLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "ClientDate").FirstOrDefault().Id, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "ClientDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ErrorLogErrorLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ErrorLog.ClientDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ErrorLogErrorLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ErrorLogObjectFields.Where(d => d.FieldName == "IP").FirstOrDefault().Id, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = ErrorLogObjectFields.Where(d => d.FieldName == "IP").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ErrorLogErrorLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ErrorLogGeneralTabScreenScreen1.Id,ScreenCode = ErrorLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ErrorLog.IP", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

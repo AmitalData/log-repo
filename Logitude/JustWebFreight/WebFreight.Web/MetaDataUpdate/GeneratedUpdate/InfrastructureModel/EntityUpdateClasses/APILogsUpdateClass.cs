@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -197,7 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -259,7 +259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "CreateDateUTC",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -323,7 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "LastUpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -385,7 +385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "LastUpdateDateUTC",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -447,7 +447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "Id",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -512,7 +512,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "Direction",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -576,7 +576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "Status",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -640,7 +640,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "NumberOfRetries",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -704,7 +704,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "ExpirationDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -768,7 +768,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "Subject",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -832,7 +832,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "EntityId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -894,7 +894,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "ObjectTableId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -958,7 +958,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "PartnerName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1022,7 +1022,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "Refrence",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1084,7 +1084,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "SearchFields",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1148,7 +1148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "LastExceptionMessage",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1210,7 +1210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "CorrelationId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1274,7 +1274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "StatusName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1338,13 +1338,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "ObjectTableName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup APILogsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "APLG", Name = "API Logs" }, queryGroupRepository);
@@ -1357,7 +1357,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             }
 
 	         
-	        List<ObjectField> APILogsObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "APILogs").ToList();   
+	        //List<ObjectField> APILogsObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "APILogs").ToList();   
 
 			   TextCode APILogsTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.Q.TodayAPILogs", DefaultText = @"Today's Logs",LocalDefaultText = null, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature APILogsFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYAPILOGS", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.TodayAPILogs", NameTextCodeDefaultText = "Today API Logs", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -1372,48 +1372,48 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 			  Query TodayAPILogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APILogsTextCode_0.Id, NameTextCodeCode = APILogsTextCode_0.Code, ObjectTableName = "APILogs", Code = "Today API Logs",  QueryGroupCode = "APLG", IndexOrder = 0, Tenant = 0, ObjectTableId = APILogsObjectTable.Id, QuerySection = "APILogs", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APILogsFeature_0.Id,FeatureUniqeCode= APILogsFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn TodayAPILogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "APILogs.Subject" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "APILogs.StatusName" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Direction" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Direction" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "APILogs.Direction" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "NumberOfRetries" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "NumberOfRetries" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "APILogs.NumberOfRetries" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "APILogs.ExpirationDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "LastExceptionMessage" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "LastExceptionMessage" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "APILogs.LastExceptionMessage" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APILogs.CreateDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "LastUpdateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "LastUpdateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "APILogs.LastUpdateDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Refrence" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Refrence" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "APILogs.Refrence" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter TodayAPILogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TodayAPILogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APILogs.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
 			  Query AllAPILogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APILogsTextCode_1.Id, NameTextCodeCode = APILogsTextCode_1.Code, ObjectTableName = "APILogs", Code = "All API Logs",  QueryGroupCode = "APLG", IndexOrder = 1, Tenant = 0, ObjectTableId = APILogsObjectTable.Id, QuerySection = "APILogs", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APILogsFeature_1.Id,FeatureUniqeCode= APILogsFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllAPILogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "APILogs.Subject" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "APILogs.StatusName" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Direction" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Direction" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "APILogs.Direction" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "NumberOfRetries" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "NumberOfRetries" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "APILogs.NumberOfRetries" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "APILogs.ExpirationDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "LastExceptionMessage" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "LastExceptionMessage" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "APILogs.LastExceptionMessage" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APILogs.CreateDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "LastUpdateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "LastUpdateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "APILogs.LastUpdateDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Refrence" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Refrence" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "APILogs.Refrence" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -1421,19 +1421,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    {   
 
 		   ObjectTable APILogsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APILogs" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> APILogsObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "APILogs").ToList();
+		   //List<ObjectField> APILogsObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "APILogs").ToList();
 		       
 	      
 
 	         Screen APILogsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APILogs.HeaderScreen", Name = "Header Screen", ObjectTableId = APILogsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField APILogsAPILogsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APILogsAPILogsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APILogsAPILogsHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().Id, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.ExpirationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APILogsAPILogsHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Direction").FirstOrDefault().Id, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Direction").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = APILogsHeaderScreenScreen0.Id,ScreenCode = APILogsHeaderScreenScreen0.Code, ObjectFieldCode = "APILogs.Direction", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    APILogsObjectTable.HeaderScreenId = APILogsHeaderScreenScreen0.Id;
 		    APILogsObjectTable.HeaderScreenCode = APILogsHeaderScreenScreen0.Code;
@@ -1443,23 +1443,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 	         Screen APILogsGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APILogs.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = APILogsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 8, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.Id", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Direction").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Direction").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.Direction", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "NumberOfRetries").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "NumberOfRetries").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.NumberOfRetries", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "ExpirationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.ExpirationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "ObjectTableName").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "ObjectTableName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.ObjectTableName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "PartnerName").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "PartnerName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.PartnerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField APILogsAPILogsGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "LastExceptionMessage").FirstOrDefault().Id, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "LastExceptionMessage").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField APILogsAPILogsGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = APILogsGeneralTabScreenScreen1.Id,ScreenCode = APILogsGeneralTabScreenScreen1.Code, ObjectFieldCode = "APILogs.LastExceptionMessage", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

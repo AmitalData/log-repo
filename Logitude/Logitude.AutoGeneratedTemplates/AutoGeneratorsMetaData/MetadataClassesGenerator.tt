@@ -252,7 +252,7 @@ namespace <#= UpdateClassnamespacestring #>
  	 
 	 #>
 
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         <#+
 	         foreach(XElement field in entity.Elements("field"))  //get all classes
@@ -282,7 +282,7 @@ namespace <#= UpdateClassnamespacestring #>
         { 
 		#>
 
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup <#= ObjectTbl.Trim('"') #>QueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = <#= QGCode.Value #>, Name = <#= QGName.Value #> }, queryGroupRepository);
@@ -301,7 +301,7 @@ namespace <#= UpdateClassnamespacestring #>
             }
 
 	         
-	        List<ObjectField> <#= ObjectTbl.Trim('"') #>ObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == <#= TableNameFull #>).ToList();  <#+
+	        //List<ObjectField> <#= ObjectTbl.Trim('"') #>ObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == <#= TableNameFull #>).ToList();  <#+
 		int i = 0;
 		foreach(XElement Query in Queries) 
 		{ //get all Queries
@@ -337,7 +337,7 @@ namespace <#= UpdateClassnamespacestring #>
 		#> 
 
 		   ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> <#= ObjectTbl.Trim('"') #>ObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == <#= TableNameFull #>).ToList();
+		   //List<ObjectField> <#= ObjectTbl.Trim('"') #>ObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == <#= TableNameFull #>).ToList();
 		   <#+
 		//int i = 0;
 		//foreach(XElement Screen in entity.Elements("Screen")) 
@@ -661,7 +661,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 			 
 		 
 	#>		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 <#+
 }
@@ -1134,9 +1134,10 @@ private void WriteAddQueryColumnMethod(XElement entity,XElement Column,int index
 	   var IndexOrder = Column.Attributes().Where(a => a.Name == "IndexOrder").FirstOrDefault().Value;
 	   var ObjectFieldName = Column.Attributes().Where(a => a.Name == "ObjectFieldName").FirstOrDefault().Value;
 	   var ColumnWidth = Column.Attributes().Where(a => a.Name == "ColumnWidth").FirstOrDefault().Value;
+       var FieldCode= TblName.Trim('"') + "." + ObjectFieldName.Trim('"');
 #>
 
-			 QueryColumn <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>QueryColumn_<#= index #> = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.Id,QueryCode = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.UniqueCode, IndexOrder = <#= IndexOrder #>, ObjectFieldId = <#= TblName.Trim('"') #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #> && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = <#= TblName.Trim('"') #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #> && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = <#= ColumnWidth #> }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>QueryColumn_<#= index #> = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.Id,QueryCode = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.UniqueCode, IndexOrder = <#= IndexOrder #>, ObjectFieldCode = "<#= FieldCode #>" , ColumnWidth = <#= ColumnWidth #> }, queryColumnsRepository, tenantQueryColumns);
 <#+
 }
 
@@ -1157,9 +1158,10 @@ private void WriteAddQueryFilterMethod(XElement entity,XElement Column,int index
 			Operator = OperatorAttr.Value;
 	   }
 	   var ObjectFieldName = Column.Attributes().Where(a => a.Name == "ObjectFieldName").FirstOrDefault().Value; 
+       var FieldCode= TblName.Trim('"') + "." + ObjectFieldName.Trim('"');
 #>
 
-             AdvancedQueryFilter <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>QueryFilter_<#= index #> = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = <#= TblName.Trim('"') #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #> && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = <#= TblName.Trim('"') #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #> && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = <#= PredefinedValue #>,PredefinedValue2 = <#= PredefinedValue2 #>, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.Id,QueryCode = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.UniqueCode, Tenant = 0<#= !string.IsNullOrEmpty(Operator) ?",Operator = " + Operator  : "" #>}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>QueryFilter_<#= index #> = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "<#= FieldCode #>", PredefinedValue = <#= PredefinedValue #>,PredefinedValue2 = <#= PredefinedValue2 #>, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.Id,QueryCode = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.UniqueCode, Tenant = 0<#= !string.IsNullOrEmpty(Operator) ?",Operator = " + Operator  : "" #>}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 <#+
 }
@@ -1222,9 +1224,11 @@ private void WriteAddScreenFieldMethod(XElement entity,XElement ScreenField,int 
 		if(ScreenDBCode != null)
 		   ScreenName  = ScreenDBCode.Value.ToString().Trim('"');
 
+		  
+       var FieldCode= TblName.Trim('"') + "." + ObjectFieldName.Trim('"');
 #>
 
-            ScreenField <#= TblName.Trim('"').Replace(" ","").Replace(".","") #><#= ScreenName.Trim('"').Replace(" ","").Replace(".","") #>ScreenField<#= index #> = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = <#= Column #>, Row = <#= Row #>, ObjectFieldId = <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #>).FirstOrDefault().Id, ScreenId = <#= screenClassName #>.Id,ScreenCode = <#= screenClassName #>.Code, ObjectFieldCode = <#= TblName.Trim('"').Replace(" ","").Replace(".","") #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #>).FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField <#= TblName.Trim('"').Replace(" ","").Replace(".","") #><#= ScreenName.Trim('"').Replace(" ","").Replace(".","") #>ScreenField<#= index #> = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = <#= Column #>, Row = <#= Row #>, ScreenId = <#= screenClassName #>.Id,ScreenCode = <#= screenClassName #>.Code, ObjectFieldCode = "<#= FieldCode #>", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          <#+
 }
 
@@ -1671,8 +1675,14 @@ public void GenerateAllTableMethods(string sourceFilePath)
 #>
 					<#=classname #>.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
-					<#=classname #>.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-					this.ObjectContext.SaveChanges();
+					List<ObjectField> addedFields = new List<ObjectField>();
+					List<TextCode> addedTextCodes = new List<TextCode>();
+					<#=classname #>.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes);
+					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+					SqlBulkInsert.BulkInsert("ObjectFields", addedFields);					
+					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
+					//this.ObjectContext.ObjectFields.AddRange(addedFields);
+					//this.ObjectContext.SaveChanges();
 					<#=classname #>.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
 					this.ObjectContext.SaveChanges();
 					<#=classname #>.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
@@ -1839,7 +1849,7 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 		 #><#=""#>
 	   <#+
     #>
-	   <#=classname #>.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	   //<#=classname #>.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	<#+
     }
 	#>

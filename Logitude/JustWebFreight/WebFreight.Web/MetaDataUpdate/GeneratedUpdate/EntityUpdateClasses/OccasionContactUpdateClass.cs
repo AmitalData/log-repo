@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -195,7 +195,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -256,7 +256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -317,7 +317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -378,7 +378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -439,7 +439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -500,7 +500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -560,7 +560,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -620,7 +620,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -681,7 +681,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -742,13 +742,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup OccasionContactQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "e511", Name = " Query Group" }, queryGroupRepository);
@@ -761,7 +761,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }
 
 	         
-	        List<ObjectField> OccasionContactObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OccasionContact").ToList();   
+	        //List<ObjectField> OccasionContactObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OccasionContact").ToList();   
 
 			   TextCode OccasionContactTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OccasionContact.Q.OCCASIONCONTACTS", DefaultText = @"Occasion Contacts",LocalDefaultText = null, ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature OccasionContactFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OccasionContact.Q.OCCASIONCONTACTS", ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionContactFeatures.OCCASIONCONTACTS", NameTextCodeDefaultText = "OCCASIONCONTACTS", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -772,23 +772,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query OCCASIONCONTACTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OccasionContactTextCode_0.Id, NameTextCodeCode = OccasionContactTextCode_0.Code, ObjectTableName = "OccasionContact", Code = "OCCASIONCONTACTS",  QueryGroupCode = "e511", IndexOrder = 0, Tenant = 0, ObjectTableId = OccasionContactObjectTable.Id, QuerySection = "OccasionContact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OccasionContactFeature_0.Id,FeatureUniqeCode= OccasionContactFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn OCCASIONCONTACTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OccasionContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "OccasionContact.Name" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OccasionContactObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "OccasionContact.Email" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "BusinessPhone" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OccasionContactObjectFields.Where(d => d.FieldName == "BusinessPhone" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "OccasionContact.BusinessPhone" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Mobile" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OccasionContactObjectFields.Where(d => d.FieldName == "Mobile" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "OccasionContact.Mobile" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Position" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OccasionContactObjectFields.Where(d => d.FieldName == "Position" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "OccasionContact.Position" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Customers" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OccasionContactObjectFields.Where(d => d.FieldName == "Customers" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "OccasionContact.Customers" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OccasionContactObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "OccasionContact.Notes" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Invited" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OccasionContactObjectFields.Where(d => d.FieldName == "Invited" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "OccasionContact.Invited" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Participated" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OccasionContactObjectFields.Where(d => d.FieldName == "Participated" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "OccasionContact.Participated" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -796,7 +796,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable OccasionContactObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OccasionContact" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> OccasionContactObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OccasionContact").ToList();
+		   //List<ObjectField> OccasionContactObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OccasionContact").ToList();
 		       
 	      
 

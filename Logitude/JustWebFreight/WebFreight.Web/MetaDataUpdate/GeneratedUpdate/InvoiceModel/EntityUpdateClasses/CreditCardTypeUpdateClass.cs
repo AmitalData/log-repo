@@ -138,7 +138,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -202,7 +202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -266,7 +266,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -328,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -392,7 +392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -454,13 +454,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HelpTextCode =  "BankAccountId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CreditCardTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CCTP", Name = "Credit Card Types" }, queryGroupRepository);
@@ -473,7 +473,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
             }
 
 	         
-	        List<ObjectField> CreditCardTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CreditCardType").ToList();   
+	        //List<ObjectField> CreditCardTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CreditCardType").ToList();   
 
 			   TextCode CreditCardTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.Q.AllCreditCardTypes", DefaultText = @"All Credit Card Types",LocalDefaultText = null, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CreditCardTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCREDITCARDS", ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.AllCreditCards", NameTextCodeDefaultText = "All Credit Cards", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -484,11 +484,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			  Query AllCreditCardTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CreditCardTypeTextCode_0.Id, NameTextCodeCode = CreditCardTypeTextCode_0.Code, ObjectTableName = "CreditCardType", Code = "All Credit Card Types",  QueryGroupCode = "CCTP", IndexOrder = 0, Tenant = 0, ObjectTableId = CreditCardTypeObjectTable.Id, QuerySection = "CreditCardType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CreditCardTypeFeature_0.Id,FeatureUniqeCode= CreditCardTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllCreditCardTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCreditCardTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CreditCardType.Code" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCreditCardTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCreditCardTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CreditCardType.Name" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCreditCardTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CreditCardTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCreditCardTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CreditCardType.InActive" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -496,25 +496,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    {   
 
 		   ObjectTable CreditCardTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CreditCardType" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CreditCardTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CreditCardType").ToList();
+		   //List<ObjectField> CreditCardTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CreditCardType").ToList();
 		       
 	      
 
 	         Screen CreditCardTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CreditCardType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CreditCardTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CreditCardType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CreditCardType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CreditCardTypeCreditCardTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CreditCardTypeGeneralTabScreenScreen0.Id,ScreenCode = CreditCardTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CreditCardType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen CreditCardTypeHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CreditCardType.HeaderScreen", Name = "Header Screen", ObjectTableId = CreditCardTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CreditCardTypeHeaderScreenScreen1.Id,ScreenCode = CreditCardTypeHeaderScreenScreen1.Code, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CreditCardTypeHeaderScreenScreen1.Id,ScreenCode = CreditCardTypeHeaderScreenScreen1.Code, ObjectFieldCode = "CreditCardType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CreditCardTypeHeaderScreenScreen1.Id,ScreenCode = CreditCardTypeHeaderScreenScreen1.Code, ObjectFieldCode = CreditCardTypeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CreditCardTypeCreditCardTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CreditCardTypeHeaderScreenScreen1.Id,ScreenCode = CreditCardTypeHeaderScreenScreen1.Code, ObjectFieldCode = "CreditCardType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CreditCardTypeObjectTable.HeaderScreenId = CreditCardTypeHeaderScreenScreen1.Id;
 		    CreditCardTypeObjectTable.HeaderScreenCode = CreditCardTypeHeaderScreenScreen1.Code;

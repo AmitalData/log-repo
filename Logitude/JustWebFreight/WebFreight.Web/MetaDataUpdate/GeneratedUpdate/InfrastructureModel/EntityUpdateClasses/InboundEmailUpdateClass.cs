@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -197,7 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "EntityId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -259,7 +259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "Uniquekey",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -324,7 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -389,7 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "UpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -452,7 +452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "ObjectTableId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -515,7 +515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "CreatedByContactId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -579,7 +579,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "ObjectTableName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -643,7 +643,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "Tenant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -699,13 +699,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup InboundEmailQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "IEHI", Name = "Inbound Email Additional Info" }, queryGroupRepository);
@@ -718,7 +718,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             }
 
 	         
-	        List<ObjectField> InboundEmailObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InboundEmail").ToList();   
+	        //List<ObjectField> InboundEmailObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InboundEmail").ToList();   
 
 			   TextCode InboundEmailTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmail.Q.InboundEmails", DefaultText = @"All Inbound Emails",LocalDefaultText = null, ObjectTableId = InboundEmailObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature InboundEmailFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INBOUNDEMAIL", ObjectTableId = InboundEmailObjectTable.Id, Tenant = 0, NameTextCodeCode = "InboundEmail.Features.InboundEmails", NameTextCodeDefaultText = "InboundEmails", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -729,11 +729,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 			  Query InboundEmailsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InboundEmailTextCode_0.Id, NameTextCodeCode = InboundEmailTextCode_0.Code, ObjectTableName = "InboundEmail", Code = "InboundEmails",  QueryGroupCode = "IEHI", IndexOrder = 0, Tenant = 0, ObjectTableId = InboundEmailObjectTable.Id, QuerySection = "InboundEmail", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InboundEmailFeature_0.Id,FeatureUniqeCode= InboundEmailFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn InboundEmailsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id,QueryCode = InboundEmailsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = InboundEmailObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InboundEmailObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InboundEmailsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id,QueryCode = InboundEmailsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InboundEmail.CreateDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InboundEmailsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id,QueryCode = InboundEmailsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = InboundEmailObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InboundEmailObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InboundEmailsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id,QueryCode = InboundEmailsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InboundEmail.UpdateDate" , ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InboundEmailsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id,QueryCode = InboundEmailsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = InboundEmailObjectFields.Where(d => d.FieldName == "ObjectTableName" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InboundEmailObjectFields.Where(d => d.FieldName == "ObjectTableName" && d.ObjectTableId == InboundEmailObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InboundEmailsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InboundEmailsQuery.Id,QueryCode = InboundEmailsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InboundEmail.ObjectTableName" , ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -741,7 +741,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    {   
 
 		   ObjectTable InboundEmailObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InboundEmail" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> InboundEmailObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InboundEmail").ToList();
+		   //List<ObjectField> InboundEmailObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InboundEmail").ToList();
 		       
 	      
 

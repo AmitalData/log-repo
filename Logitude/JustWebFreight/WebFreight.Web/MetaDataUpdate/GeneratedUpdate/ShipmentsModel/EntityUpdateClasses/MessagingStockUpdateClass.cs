@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -197,7 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -261,7 +261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "Amount",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -323,7 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "Remaining",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -388,7 +388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "StartDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -453,7 +453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "EndDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -517,7 +517,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -581,7 +581,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "UpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -644,7 +644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "CreatedByUserId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -707,7 +707,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "UpdatedByUserId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -769,7 +769,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "IsCancelled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -834,7 +834,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "Status",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -898,7 +898,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "Notes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -962,7 +962,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "TenantNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1026,7 +1026,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "TenantName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1090,7 +1090,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "TotalPrice",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1147,13 +1147,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup MessagingStockQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "AWMS", Name = "Messaging Stocks" }, queryGroupRepository);
@@ -1166,7 +1166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }
 
 	         
-	        List<ObjectField> MessagingStockObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MessagingStock").ToList();   
+	        //List<ObjectField> MessagingStockObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MessagingStock").ToList();   
 
 			   TextCode MessagingStockTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.Q.AllMessagingStocks", DefaultText = @"All Messaging Stocks",LocalDefaultText = null, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature MessagingStockFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Q.AllQuery", ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.AllMessagingStocks", NameTextCodeDefaultText = "All Messaging Stocks", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -1177,21 +1177,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			  Query AllMessagingStocksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MessagingStockTextCode_0.Id, NameTextCodeCode = MessagingStockTextCode_0.Code, ObjectTableName = "MessagingStock", Code = "All Messaging Stocks",  QueryGroupCode = "AWMS", IndexOrder = 0, Tenant = 0, ObjectTableId = MessagingStockObjectTable.Id, QuerySection = "MessagingStock", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MessagingStockFeature_0.Id,FeatureUniqeCode= MessagingStockFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllMessagingStocksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "TenantNumber" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "TenantNumber" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "MessagingStock.TenantNumber" , ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "StartDate" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "StartDate" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "MessagingStock.StartDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "EndDate" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "EndDate" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "MessagingStock.EndDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Amount" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "Amount" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "MessagingStock.Amount" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Remaining" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "Remaining" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "MessagingStock.Remaining" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "MessagingStock.Status" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 350 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "MessagingStock.Notes" , ColumnWidth = 350 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "TotalPrice" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "TotalPrice" && d.ObjectTableId == MessagingStockObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "MessagingStock.TotalPrice" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -1199,19 +1199,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    {   
 
 		   ObjectTable MessagingStockObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> MessagingStockObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MessagingStock").ToList();
+		   //List<ObjectField> MessagingStockObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MessagingStock").ToList();
 		       
 	      
 
 	         Screen MessagingStockHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MessagingStock.HeaderScreen", Name = "Header Screen", ObjectTableId = MessagingStockObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "StartDate").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "StartDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MessagingStockMessagingStockHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.StartDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "EndDate").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "EndDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MessagingStockMessagingStockHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.EndDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Amount").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "Amount").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MessagingStockMessagingStockHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.Amount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField MessagingStockMessagingStockHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Remaining").FirstOrDefault().Id, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = MessagingStockObjectFields.Where(d => d.FieldName == "Remaining").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField MessagingStockMessagingStockHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = MessagingStockHeaderScreenScreen0.Id,ScreenCode = MessagingStockHeaderScreenScreen0.Code, ObjectFieldCode = "MessagingStock.Remaining", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    MessagingStockObjectTable.HeaderScreenId = MessagingStockHeaderScreenScreen0.Id;
 		    MessagingStockObjectTable.HeaderScreenCode = MessagingStockHeaderScreenScreen0.Code;

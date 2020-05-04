@@ -446,7 +446,7 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-        public IDbSet<TextCode> TextCodes
+        public DbSet<TextCode> TextCodes
         {
             get;
             set;
@@ -458,7 +458,7 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-        public IDbSet<ObjectField> ObjectFields
+        public DbSet<ObjectField> ObjectFields
         {
             get;
             set;

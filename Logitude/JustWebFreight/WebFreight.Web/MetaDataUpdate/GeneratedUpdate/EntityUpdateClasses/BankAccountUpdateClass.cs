@@ -140,7 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -201,7 +201,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -258,7 +258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -319,7 +319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -376,7 +376,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -437,7 +437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -499,7 +499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -561,7 +561,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  true,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -624,7 +624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -686,7 +686,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -748,7 +748,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -811,7 +811,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -874,7 +874,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -936,7 +936,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -998,7 +998,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1060,7 +1060,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1122,7 +1122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1183,7 +1183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1244,7 +1244,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1305,7 +1305,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1366,7 +1366,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1425,7 +1425,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1486,7 +1486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1547,7 +1547,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1609,7 +1609,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1671,7 +1671,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1732,7 +1732,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1793,7 +1793,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1854,7 +1854,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1915,7 +1915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1976,7 +1976,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2032,7 +2032,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2095,7 +2095,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2156,7 +2156,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2218,7 +2218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2279,7 +2279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2340,7 +2340,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2401,13 +2401,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup BankAccountQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9b17", Name = "BankAccount Query Group" }, queryGroupRepository);
@@ -2420,7 +2420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }
 
 	         
-	        List<ObjectField> BankAccountObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BankAccount").ToList();   
+	        //List<ObjectField> BankAccountObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BankAccount").ToList();   
 
 			   TextCode BankAccountTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccount.Q.AllBankAccounts", DefaultText = @"All bank accounts",LocalDefaultText = "כל חשבונות הבנק", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature BankAccountFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccount.Q.AllBankAccounts", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.AllBankAccounts", NameTextCodeDefaultText = "AllBankAccounts", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -2431,25 +2431,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllBankAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankAccountTextCode_0.Id, NameTextCodeCode = BankAccountTextCode_0.Code, ObjectTableName = "BankAccount", Code = "AllBankAccounts",  QueryGroupCode = "9b17", IndexOrder = 0, Tenant = 0, ObjectTableId = BankAccountObjectTable.Id, QuerySection = "BankAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankAccountFeature_0.Id,FeatureUniqeCode= BankAccountFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllBankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankAccount.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "AccountNumber" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "AccountNumber" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankAccount.AccountNumber" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "BankId" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "BankId" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankAccount.BankId" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "GLAccountNumber" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "GLAccountNumber" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 142 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankAccount.GLAccountNumber" , ColumnWidth = 142 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "DeferedGLAccountNumber" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "DeferedGLAccountNumber" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 174 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankAccount.DeferedGLAccountNumber" , ColumnWidth = 174 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "BankCode" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "BankCode" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankAccount.BankCode" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "BranchNumber" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "BranchNumber" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 136 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankAccount.BranchNumber" , ColumnWidth = 136 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "DeferredGLAccountId" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "DeferredGLAccountId" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "BankAccount.DeferredGLAccountId" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "BranchAddress" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "BranchAddress" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "BankAccount.BranchAddress" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == BankAccountObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "BankAccount.Inactive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -2457,43 +2457,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable BankAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankAccount" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> BankAccountObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BankAccount").ToList();
+		   //List<ObjectField> BankAccountObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BankAccount").ToList();
 		       
 	      
 
 	         Screen BankAccountGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankAccount.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = BankAccountObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BankAccountBankAccountGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountBankAccountGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountBankAccountGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().Id, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountBankAccountGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.GLAccountId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountBankAccountGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "DeferredGLAccountId").FirstOrDefault().Id, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "DeferredGLAccountId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountBankAccountGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.DeferredGLAccountId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountBankAccountGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "BankId").FirstOrDefault().Id, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "BankId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountBankAccountGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.BankId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountBankAccountGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "BranchNumber").FirstOrDefault().Id, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "BranchNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountBankAccountGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.BranchNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountBankAccountGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "ChequeCounter").FirstOrDefault().Id, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "ChequeCounter").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountBankAccountGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.ChequeCounter", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountBankAccountGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "IBAN").FirstOrDefault().Id, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "IBAN").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountBankAccountGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.IBAN", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountBankAccountGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "SwiftCode").FirstOrDefault().Id, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "SwiftCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountBankAccountGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.SwiftCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountBankAccountGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "BranchAddress").FirstOrDefault().Id, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "BranchAddress").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountBankAccountGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.BranchAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountBankAccountGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountBankAccountGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen BankAccountHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankAccount.HeaderScreen", Name = "HeaderScreen", ObjectTableId = BankAccountObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BankAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "BankId").FirstOrDefault().Id, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "BankId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.BankId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "GLAccountNumber").FirstOrDefault().Id, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "GLAccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.GLAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "DeferedGLAccountNumber").FirstOrDefault().Id, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = BankAccountObjectFields.Where(d => d.FieldName == "DeferedGLAccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.DeferedGLAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BankAccountObjectTable.HeaderScreenId = BankAccountHeaderScreenScreen1.Id;
 		    BankAccountObjectTable.HeaderScreenCode = BankAccountHeaderScreenScreen1.Code;

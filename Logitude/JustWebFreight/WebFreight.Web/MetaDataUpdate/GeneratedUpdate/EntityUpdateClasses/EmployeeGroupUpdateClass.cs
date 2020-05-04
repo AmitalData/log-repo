@@ -137,7 +137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -197,7 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -254,7 +254,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -314,7 +314,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -371,7 +371,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -430,7 +430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -490,7 +490,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -549,7 +549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -609,7 +609,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -666,7 +666,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -725,7 +725,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -782,7 +782,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -839,13 +839,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup EmployeeGroupQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "OTQG", Name = "EmployeeGroup Query Group" }, queryGroupRepository);
@@ -858,7 +858,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }
 
 	         
-	        List<ObjectField> EmployeeGroupObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "EmployeeGroup").ToList();   
+	        //List<ObjectField> EmployeeGroupObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "EmployeeGroup").ToList();   
 
 			   TextCode EmployeeGroupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EmployeeGroup.Q.AllEmployeeGroups", DefaultText = @"All Employee Groups",LocalDefaultText = null, ObjectTableId = EmployeeGroupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature EmployeeGroupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EmployeeGroup.Q.AllEmployeeGroups", ObjectTableId = EmployeeGroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "EmployeeGroup.Features.AllEmployeeGroups", NameTextCodeDefaultText = "All Employee Groups", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -869,11 +869,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllEmployeeGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = EmployeeGroupTextCode_0.Id, NameTextCodeCode = EmployeeGroupTextCode_0.Code, ObjectTableName = "EmployeeGroup", Code = "All Employee Groups",  QueryGroupCode = "OTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = EmployeeGroupObjectTable.Id, QuerySection = "EmployeeGroup", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = EmployeeGroupFeature_0.Id,FeatureUniqeCode= EmployeeGroupFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllEmployeeGroupsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEmployeeGroupsQuery.Id,QueryCode = AllEmployeeGroupsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEmployeeGroupsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEmployeeGroupsQuery.Id,QueryCode = AllEmployeeGroupsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "EmployeeGroup.Name" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllEmployeeGroupsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEmployeeGroupsQuery.Id,QueryCode = AllEmployeeGroupsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = EmployeeGroupObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEmployeeGroupsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEmployeeGroupsQuery.Id,QueryCode = AllEmployeeGroupsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "EmployeeGroup.Description" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllEmployeeGroupsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEmployeeGroupsQuery.Id,QueryCode = AllEmployeeGroupsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = EmployeeGroupObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == EmployeeGroupObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllEmployeeGroupsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllEmployeeGroupsQuery.Id,QueryCode = AllEmployeeGroupsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "EmployeeGroup.CreateDate" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -881,13 +881,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable EmployeeGroupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "EmployeeGroup" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> EmployeeGroupObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "EmployeeGroup").ToList();
+		   //List<ObjectField> EmployeeGroupObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "EmployeeGroup").ToList();
 		       
 	      
 
 	         Screen EmployeeGroupEmployeeGroupHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "EmployeeGroup.EmployeeGroupHeaderScreen", Name = "EmployeeGroupHeaderScreen", ObjectTableId = EmployeeGroupObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField EmployeeGroupEmployeeGroupEmployeeGroupHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Id,ScreenCode = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Code, ObjectFieldCode = EmployeeGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField EmployeeGroupEmployeeGroupEmployeeGroupHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Id,ScreenCode = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Code, ObjectFieldCode = "EmployeeGroup.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    EmployeeGroupObjectTable.HeaderScreenId = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Id;
 		    EmployeeGroupObjectTable.HeaderScreenCode = EmployeeGroupEmployeeGroupHeaderScreenScreen0.Code;

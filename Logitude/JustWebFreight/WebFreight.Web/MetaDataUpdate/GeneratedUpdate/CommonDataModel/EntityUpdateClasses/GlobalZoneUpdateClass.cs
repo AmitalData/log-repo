@@ -124,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -184,7 +184,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -244,7 +244,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -304,7 +304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -362,7 +362,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -422,7 +422,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -480,13 +480,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup GlobalZoneQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "GLBL", Name = "Global Zones" }, queryGroupRepository);
@@ -498,7 +498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }
 
 	         
-	        List<ObjectField> GlobalZoneObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "GlobalZone").ToList();   
+	        //List<ObjectField> GlobalZoneObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "GlobalZone").ToList();   
 
 			   TextCode GlobalZoneTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GlobalZone.Q.GlobalZones", DefaultText = @"Global Zones",LocalDefaultText = null, ObjectTableId = GlobalZoneObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature GlobalZoneFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLOBALZONES", ObjectTableId = GlobalZoneObjectTable.Id, Tenant = 0, NameTextCodeCode = "GlobalZone.Features.GlobalZones", NameTextCodeDefaultText = "Global Zones", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -509,13 +509,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query GlobalzonesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GlobalZoneTextCode_0.Id, NameTextCodeCode = GlobalZoneTextCode_0.Code, ObjectTableName = "GlobalZone", Code = "Global zones",  QueryGroupCode = "GLBL", IndexOrder = 0, Tenant = 0, ObjectTableId = GlobalZoneObjectTable.Id, QuerySection = "GlobalZone", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = GlobalZoneFeature_0.Id,FeatureUniqeCode= GlobalZoneFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn GlobalzonesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GlobalzonesQuery.Id,QueryCode = GlobalzonesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = GlobalZoneObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == GlobalZoneObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GlobalZoneObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == GlobalZoneObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GlobalzonesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GlobalzonesQuery.Id,QueryCode = GlobalzonesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GlobalZone.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn GlobalzonesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GlobalzonesQuery.Id,QueryCode = GlobalzonesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = GlobalZoneObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GlobalZoneObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GlobalZoneObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GlobalZoneObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GlobalzonesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GlobalzonesQuery.Id,QueryCode = GlobalzonesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GlobalZone.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn GlobalzonesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GlobalzonesQuery.Id,QueryCode = GlobalzonesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = GlobalZoneObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GlobalZoneObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GlobalZoneObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GlobalZoneObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GlobalzonesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GlobalzonesQuery.Id,QueryCode = GlobalzonesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GlobalZone.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn GlobalzonesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GlobalzonesQuery.Id,QueryCode = GlobalzonesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = GlobalZoneObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == GlobalZoneObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GlobalZoneObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == GlobalZoneObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GlobalzonesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GlobalzonesQuery.Id,QueryCode = GlobalzonesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GlobalZone.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -523,27 +523,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {   
 
 		   ObjectTable GlobalZoneObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GlobalZone" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> GlobalZoneObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "GlobalZone").ToList();
+		   //List<ObjectField> GlobalZoneObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "GlobalZone").ToList();
 		       
 	      
 
 	         Screen GlobalZoneGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GlobalZone.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = GlobalZoneObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = GlobalZoneObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = GlobalZoneObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = GlobalZoneObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = GlobalZoneObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = GlobalZoneObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = GlobalZoneObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = GlobalZoneObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = GlobalZoneObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GlobalZoneGlobalZoneGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = GlobalZoneGeneralTabScreenScreen0.Id,ScreenCode = GlobalZoneGeneralTabScreenScreen0.Code, ObjectFieldCode = "GlobalZone.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen GlobalZoneHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GlobalZone.HeaderScreen", Name = "Header Screen", ObjectTableId = GlobalZoneObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField GlobalZoneGlobalZoneHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = GlobalZoneObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = GlobalZoneHeaderScreenScreen1.Id,ScreenCode = GlobalZoneHeaderScreenScreen1.Code, ObjectFieldCode = GlobalZoneObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GlobalZoneGlobalZoneHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = GlobalZoneHeaderScreenScreen1.Id,ScreenCode = GlobalZoneHeaderScreenScreen1.Code, ObjectFieldCode = "GlobalZone.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField GlobalZoneGlobalZoneHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = GlobalZoneObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = GlobalZoneHeaderScreenScreen1.Id,ScreenCode = GlobalZoneHeaderScreenScreen1.Code, ObjectFieldCode = GlobalZoneObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField GlobalZoneGlobalZoneHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = GlobalZoneHeaderScreenScreen1.Id,ScreenCode = GlobalZoneHeaderScreenScreen1.Code, ObjectFieldCode = "GlobalZone.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    GlobalZoneObjectTable.HeaderScreenId = GlobalZoneHeaderScreenScreen1.Id;
 		    GlobalZoneObjectTable.HeaderScreenCode = GlobalZoneHeaderScreenScreen1.Code;

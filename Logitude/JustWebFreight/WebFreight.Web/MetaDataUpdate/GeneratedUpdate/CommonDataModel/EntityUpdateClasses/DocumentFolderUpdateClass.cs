@@ -137,7 +137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -202,7 +202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -269,7 +269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -334,7 +334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -399,7 +399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsExternalFolder",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -461,7 +461,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -525,13 +525,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ParentFolderId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup DocumentFolderQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DOFL", Name = "Document Folders" }, queryGroupRepository);
@@ -544,7 +544,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }
 
 	         
-	        List<ObjectField> DocumentFolderObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DocumentFolder").ToList();   
+	        //List<ObjectField> DocumentFolderObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DocumentFolder").ToList();   
 
 			   TextCode DocumentFolderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentFolder.Q.DocumentFolders", DefaultText = @"Document Folders",LocalDefaultText = null, ObjectTableId = DocumentFolderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature DocumentFolderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTFOLDERS", ObjectTableId = DocumentFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentFolder.Features.DocumentFolders", NameTextCodeDefaultText = "Document Folders", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -555,15 +555,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query DocumentFoldersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentFolderTextCode_0.Id, NameTextCodeCode = DocumentFolderTextCode_0.Code, ObjectTableName = "DocumentFolder", Code = "Document Folders",  QueryGroupCode = "DOFL", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentFolderObjectTable.Id, QuerySection = "DocumentFolder", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DocumentFolderFeature_0.Id,FeatureUniqeCode= DocumentFolderFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn DocumentFoldersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentFoldersQuery.Id,QueryCode = DocumentFoldersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DocumentFolderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DocumentFolderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentFoldersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentFoldersQuery.Id,QueryCode = DocumentFoldersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DocumentFolder.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DocumentFoldersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentFoldersQuery.Id,QueryCode = DocumentFoldersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DocumentFolderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DocumentFolderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentFoldersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentFoldersQuery.Id,QueryCode = DocumentFoldersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DocumentFolder.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DocumentFoldersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentFoldersQuery.Id,QueryCode = DocumentFoldersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DocumentFolderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DocumentFolderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentFoldersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentFoldersQuery.Id,QueryCode = DocumentFoldersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DocumentFolder.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DocumentFoldersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentFoldersQuery.Id,QueryCode = DocumentFoldersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "IsExternalFolder" && d.ObjectTableId == DocumentFolderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "IsExternalFolder" && d.ObjectTableId == DocumentFolderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentFoldersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentFoldersQuery.Id,QueryCode = DocumentFoldersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DocumentFolder.IsExternalFolder" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DocumentFoldersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentFoldersQuery.Id,QueryCode = DocumentFoldersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "ParentFolderId" && d.ObjectTableId == DocumentFolderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "ParentFolderId" && d.ObjectTableId == DocumentFolderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentFoldersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentFoldersQuery.Id,QueryCode = DocumentFoldersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DocumentFolder.ParentFolderId" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -571,29 +571,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {   
 
 		   ObjectTable DocumentFolderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentFolder" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> DocumentFolderObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DocumentFolder").ToList();
+		   //List<ObjectField> DocumentFolderObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DocumentFolder").ToList();
 		       
 	      
 
 	         Screen DocumentFolderGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DocumentFolder.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = DocumentFolderObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "ParentFolderId").FirstOrDefault().Id, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "ParentFolderId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.ParentFolderId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "IsExternalFolder").FirstOrDefault().Id, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "IsExternalFolder").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentFolderDocumentFolderGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = DocumentFolderGeneralTabScreenScreen0.Id,ScreenCode = DocumentFolderGeneralTabScreenScreen0.Code, ObjectFieldCode = "DocumentFolder.IsExternalFolder", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen DocumentFolderHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DocumentFolder.HeaderScreen", Name = "Header Screen", ObjectTableId = DocumentFolderObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField DocumentFolderDocumentFolderHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = DocumentFolderHeaderScreenScreen1.Id,ScreenCode = DocumentFolderHeaderScreenScreen1.Code, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentFolderDocumentFolderHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DocumentFolderHeaderScreenScreen1.Id,ScreenCode = DocumentFolderHeaderScreenScreen1.Code, ObjectFieldCode = "DocumentFolder.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentFolderDocumentFolderHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = DocumentFolderHeaderScreenScreen1.Id,ScreenCode = DocumentFolderHeaderScreenScreen1.Code, ObjectFieldCode = DocumentFolderObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentFolderDocumentFolderHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DocumentFolderHeaderScreenScreen1.Id,ScreenCode = DocumentFolderHeaderScreenScreen1.Code, ObjectFieldCode = "DocumentFolder.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    DocumentFolderObjectTable.HeaderScreenId = DocumentFolderHeaderScreenScreen1.Id;
 		    DocumentFolderObjectTable.HeaderScreenCode = DocumentFolderHeaderScreenScreen1.Code;

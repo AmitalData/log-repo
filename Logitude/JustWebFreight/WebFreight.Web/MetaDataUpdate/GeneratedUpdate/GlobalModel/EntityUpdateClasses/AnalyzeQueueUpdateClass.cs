@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -197,7 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Id",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -260,7 +260,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CommunicationLogId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -324,7 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "EntityReference",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -388,7 +388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ObjectTableName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -452,7 +452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "From",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -516,7 +516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -580,7 +580,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "FileSize",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -644,7 +644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Status",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -708,7 +708,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ErrorMessage",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -770,7 +770,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Tenant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -834,7 +834,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Subject",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -898,7 +898,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Retries",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -962,7 +962,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ConnectedToTenant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1026,7 +1026,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ConnectedToEntity",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1090,7 +1090,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1154,7 +1154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TenantName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1218,7 +1218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "AWBNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1282,7 +1282,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "AckReason",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1346,7 +1346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "DoneDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1406,13 +1406,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup AnalyzeQueueQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ANQU", Name = "Analyze Queues" }, queryGroupRepository);
@@ -1425,7 +1425,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
             }
 
 	         
-	        List<ObjectField> AnalyzeQueueObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AnalyzeQueue").ToList();   
+	        //List<ObjectField> AnalyzeQueueObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AnalyzeQueue").ToList();   
 
 			   TextCode AnalyzeQueueTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AnalyzeQueue.Q.TodayAnalyzeQueues", DefaultText = @"Today",LocalDefaultText = null, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature AnalyzeQueueFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYANALYZEQUS", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = 0, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.TodayAnalyzeQueues", NameTextCodeDefaultText = "Today Analyze Queues", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -1440,60 +1440,60 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 			  Query TodayAnalyzeQueuesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AnalyzeQueueTextCode_0.Id, NameTextCodeCode = AnalyzeQueueTextCode_0.Code, ObjectTableName = "AnalyzeQueue", Code = "Today Analyze Queues",  QueryGroupCode = "ANQU", IndexOrder = 0, Tenant = 0, ObjectTableId = AnalyzeQueueObjectTable.Id, QuerySection = "AnalyzeQueue", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AnalyzeQueueFeature_0.Id,FeatureUniqeCode= AnalyzeQueueFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AnalyzeQueue.Id" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AnalyzeQueue.From" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "EntityReference" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "EntityReference" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AnalyzeQueue.EntityReference" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AnalyzeQueue.CreateDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AnalyzeQueue.FileSize" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AnalyzeQueue.Status" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ErrorMessage" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ErrorMessage" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AnalyzeQueue.ErrorMessage" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AnalyzeQueue.Subject" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AnalyzeQueue.Retries" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AnalyzeQueue.ConnectedToTenant" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AnalyzeQueue.ConnectedToEntity" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn TodayAnalyzeQueuesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "DoneDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "DoneDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAnalyzeQueuesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "AnalyzeQueue.DoneDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter TodayAnalyzeQueuesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TodayAnalyzeQueuesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "AnalyzeQueue.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayAnalyzeQueuesQuery.Id,QueryCode = TodayAnalyzeQueuesQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
 			  Query AllAnalyzeQueuesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AnalyzeQueueTextCode_1.Id, NameTextCodeCode = AnalyzeQueueTextCode_1.Code, ObjectTableName = "AnalyzeQueue", Code = "All Analyze Queues",  QueryGroupCode = "ANQU", IndexOrder = 1, Tenant = 0, ObjectTableId = AnalyzeQueueObjectTable.Id, QuerySection = "AnalyzeQueue", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AnalyzeQueueFeature_1.Id,FeatureUniqeCode= AnalyzeQueueFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllAnalyzeQueuesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AnalyzeQueue.Id" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AnalyzeQueue.From" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "EntityReference" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "EntityReference" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AnalyzeQueue.EntityReference" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AnalyzeQueue.CreateDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AnalyzeQueue.FileSize" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AnalyzeQueue.Status" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ErrorMessage" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ErrorMessage" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AnalyzeQueue.ErrorMessage" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AnalyzeQueue.Subject" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AnalyzeQueue.Retries" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AnalyzeQueue.ConnectedToTenant" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AnalyzeQueue.ConnectedToEntity" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAnalyzeQueuesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "DoneDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "DoneDate" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAnalyzeQueuesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAnalyzeQueuesQuery.Id,QueryCode = AllAnalyzeQueuesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "AnalyzeQueue.DoneDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -1501,19 +1501,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    {   
 
 		   ObjectTable AnalyzeQueueObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AnalyzeQueue" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> AnalyzeQueueObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AnalyzeQueue").ToList();
+		   //List<ObjectField> AnalyzeQueueObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AnalyzeQueue").ToList();
 		       
 	      
 
 	         Screen AnalyzeQueueHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AnalyzeQueue.HeaderScreen", Name = "Header Screen", ObjectTableId = AnalyzeQueueObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().Id, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.Id", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().Id, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.From", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = AnalyzeQueueHeaderScreenScreen0.Id,ScreenCode = AnalyzeQueueHeaderScreenScreen0.Code, ObjectFieldCode = "AnalyzeQueue.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AnalyzeQueueObjectTable.HeaderScreenId = AnalyzeQueueHeaderScreenScreen0.Id;
 		    AnalyzeQueueObjectTable.HeaderScreenCode = AnalyzeQueueHeaderScreenScreen0.Code;
@@ -1523,25 +1523,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	         Screen AnalyzeQueueGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AnalyzeQueue.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AnalyzeQueueObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 8, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "From").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.From", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "FileSize").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.FileSize", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.Status", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "Retries").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.Retries", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "TenantName").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "TenantName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.TenantName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.AWBNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToTenant").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.ConnectedToTenant", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity").FirstOrDefault().Id, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = AnalyzeQueueObjectFields.Where(d => d.FieldName == "ConnectedToEntity").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AnalyzeQueueAnalyzeQueueGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AnalyzeQueueGeneralTabScreenScreen1.Id,ScreenCode = AnalyzeQueueGeneralTabScreenScreen1.Code, ObjectFieldCode = "AnalyzeQueue.ConnectedToEntity", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

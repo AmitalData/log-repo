@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -187,7 +187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -246,7 +246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -305,7 +305,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -364,7 +364,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -423,7 +423,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -482,7 +482,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -543,7 +543,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -602,7 +602,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -658,7 +658,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -714,7 +714,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -770,7 +770,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -826,7 +826,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -884,7 +884,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -940,7 +940,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -996,7 +996,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1052,7 +1052,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1112,13 +1112,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CompetitorQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CMPT", Name = "Competitor" }, queryGroupRepository);
@@ -1130,7 +1130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }
 
 	         
-	        List<ObjectField> CompetitorObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Competitor").ToList();   
+	        //List<ObjectField> CompetitorObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Competitor").ToList();   
 
 			   TextCode CompetitorTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Competitor.Q.AllCompetitors", DefaultText = @"Competitors",LocalDefaultText = null, ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CompetitorFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCOMPETITORS", ObjectTableId = CompetitorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Competitor.Features.AllCompetitors", NameTextCodeDefaultText = "All Competitors", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -1141,11 +1141,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query AllCompetitorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CompetitorTextCode_0.Id, NameTextCodeCode = CompetitorTextCode_0.Code, ObjectTableName = "Competitor", Code = "All Competitors",  QueryGroupCode = "CMPT", IndexOrder = 0, Tenant = 0, ObjectTableId = CompetitorObjectTable.Id, QuerySection = "Competitor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CompetitorFeature_0.Id,FeatureUniqeCode= CompetitorFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllCompetitorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCompetitorsQuery.Id,QueryCode = AllCompetitorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CompetitorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CompetitorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCompetitorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCompetitorsQuery.Id,QueryCode = AllCompetitorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Competitor.Name" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCompetitorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCompetitorsQuery.Id,QueryCode = AllCompetitorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Website" && d.ObjectTableId == CompetitorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Website" && d.ObjectTableId == CompetitorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCompetitorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCompetitorsQuery.Id,QueryCode = AllCompetitorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Competitor.Website" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCompetitorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCompetitorsQuery.Id,QueryCode = AllCompetitorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CompetitorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CompetitorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCompetitorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCompetitorsQuery.Id,QueryCode = AllCompetitorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Competitor.InActive" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -1153,15 +1153,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {   
 
 		   ObjectTable CompetitorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Competitor" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CompetitorObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Competitor").ToList();
+		   //List<ObjectField> CompetitorObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Competitor").ToList();
 		       
 	      
 
 	         Screen CompetitorHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Competitor.HeaderScreen", Name = "Header Screen", ObjectTableId = CompetitorObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CompetitorCompetitorHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CompetitorHeaderScreenScreen0.Id,ScreenCode = CompetitorHeaderScreenScreen0.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CompetitorHeaderScreenScreen0.Id,ScreenCode = CompetitorHeaderScreenScreen0.Code, ObjectFieldCode = "Competitor.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().Id, ScreenId = CompetitorHeaderScreenScreen0.Id,ScreenCode = CompetitorHeaderScreenScreen0.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CompetitorHeaderScreenScreen0.Id,ScreenCode = CompetitorHeaderScreenScreen0.Code, ObjectFieldCode = "Competitor.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CompetitorObjectTable.HeaderScreenId = CompetitorHeaderScreenScreen0.Id;
 		    CompetitorObjectTable.HeaderScreenCode = CompetitorHeaderScreenScreen0.Code;
@@ -1171,29 +1171,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CompetitorGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Competitor.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CompetitorObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Address1").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Address1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Address1", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Address2").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Address2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Address2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Strengths").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Strengths").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Strengths", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Opportunity").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Opportunity").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Opportunity", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "ZipCode").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "ZipCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.ZipCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "City").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "City").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.City", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "CountryId").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "CountryId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.CountryId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Weaknesses").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Weaknesses").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Weaknesses", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CompetitorCompetitorGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ObjectFieldId = CompetitorObjectFields.Where(d => d.FieldName == "Threat").FirstOrDefault().Id, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = CompetitorObjectFields.Where(d => d.FieldName == "Threat").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CompetitorCompetitorGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = CompetitorGeneralTabScreenScreen1.Id,ScreenCode = CompetitorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Competitor.Threat", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

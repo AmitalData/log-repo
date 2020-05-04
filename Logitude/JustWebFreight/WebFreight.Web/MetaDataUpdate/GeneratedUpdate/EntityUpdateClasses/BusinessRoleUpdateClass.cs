@@ -138,7 +138,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -194,7 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -248,7 +248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -304,7 +304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -358,7 +358,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -414,7 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -470,7 +470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -526,7 +526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -582,7 +582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -638,13 +638,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup BusinessRoleQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0821", Name = " Query Group" }, queryGroupRepository);
@@ -657,7 +657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }
 
 	         
-	        List<ObjectField> BusinessRoleObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BusinessRole").ToList();   
+	        //List<ObjectField> BusinessRoleObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BusinessRole").ToList();   
 
 			   TextCode BusinessRoleTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessRole.Q.AllBusinessRoles", DefaultText = @"Business Roles",LocalDefaultText = "Business Roles", ObjectTableId = BusinessRoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature BusinessRoleFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessRole.Q.AllBusinessRoles", ObjectTableId = BusinessRoleObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessRoleFeatures.AllBusinessRoles", NameTextCodeDefaultText = "All Business Roles", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -668,11 +668,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllBusinessRolesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BusinessRoleTextCode_0.Id, NameTextCodeCode = BusinessRoleTextCode_0.Code, ObjectTableName = "BusinessRole", Code = "All Business Roles",  QueryGroupCode = "0821", IndexOrder = 0, Tenant = 0, ObjectTableId = BusinessRoleObjectTable.Id, QuerySection = "BusinessRole", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BusinessRoleFeature_0.Id,FeatureUniqeCode= BusinessRoleFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllBusinessRolesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessRolesQuery.Id,QueryCode = AllBusinessRolesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BusinessRoleObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BusinessRoleObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBusinessRolesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessRolesQuery.Id,QueryCode = AllBusinessRolesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BusinessRole.Name" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBusinessRolesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessRolesQuery.Id,QueryCode = AllBusinessRolesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == BusinessRoleObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == BusinessRoleObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBusinessRolesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessRolesQuery.Id,QueryCode = AllBusinessRolesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BusinessRole.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBusinessRolesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessRolesQuery.Id,QueryCode = AllBusinessRolesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == BusinessRoleObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == BusinessRoleObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBusinessRolesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessRolesQuery.Id,QueryCode = AllBusinessRolesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BusinessRole.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -680,13 +680,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable BusinessRoleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessRole" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> BusinessRoleObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BusinessRole").ToList();
+		   //List<ObjectField> BusinessRoleObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BusinessRole").ToList();
 		       
 	      
 
 	         Screen BusinessRoleBusinessRoleHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessRole.HeaderScreen", Name = "BusinessRoleHeaderScreen", ObjectTableId = BusinessRoleObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BusinessRoleBusinessRoleHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessRoleBusinessRoleHeaderScreenScreen0.Id,ScreenCode = BusinessRoleBusinessRoleHeaderScreenScreen0.Code, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessRoleBusinessRoleHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BusinessRoleBusinessRoleHeaderScreenScreen0.Id,ScreenCode = BusinessRoleBusinessRoleHeaderScreenScreen0.Code, ObjectFieldCode = "BusinessRole.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BusinessRoleObjectTable.HeaderScreenId = BusinessRoleBusinessRoleHeaderScreenScreen0.Id;
 		    BusinessRoleObjectTable.HeaderScreenCode = BusinessRoleBusinessRoleHeaderScreenScreen0.Code;
@@ -696,13 +696,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen BusinessRoleGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessRole.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = BusinessRoleObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id,ScreenCode = BusinessRoleGeneralTabScreenScreen1.Code, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id,ScreenCode = BusinessRoleGeneralTabScreenScreen1.Code, ObjectFieldCode = "BusinessRole.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id,ScreenCode = BusinessRoleGeneralTabScreenScreen1.Code, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id,ScreenCode = BusinessRoleGeneralTabScreenScreen1.Code, ObjectFieldCode = "BusinessRole.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id,ScreenCode = BusinessRoleGeneralTabScreenScreen1.Code, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id,ScreenCode = BusinessRoleGeneralTabScreenScreen1.Code, ObjectFieldCode = "BusinessRole.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id,ScreenCode = BusinessRoleGeneralTabScreenScreen1.Code, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id,ScreenCode = BusinessRoleGeneralTabScreenScreen1.Code, ObjectFieldCode = "BusinessRole.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

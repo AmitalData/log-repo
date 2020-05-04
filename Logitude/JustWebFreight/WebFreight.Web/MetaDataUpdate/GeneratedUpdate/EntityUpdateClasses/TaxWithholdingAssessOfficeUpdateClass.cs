@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -186,7 +186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -237,7 +237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -288,7 +288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -339,7 +339,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -390,13 +390,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup TaxWithholdingAssessOfficeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2822", Name = "TaxWithholdingAssessOffice Query Group" }, queryGroupRepository);
@@ -408,7 +408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }
 
 	         
-	        List<ObjectField> TaxWithholdingAssessOfficeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TaxWithholdingAssessOffice").ToList();   
+	        //List<ObjectField> TaxWithholdingAssessOfficeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TaxWithholdingAssessOffice").ToList();   
 
 			   TextCode TaxWithholdingAssessOfficeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxWithholdingAssessOffice.Q.ALLTAXOFFICES", DefaultText = @"Tax Withholding Assessing Offices",LocalDefaultText = "פקיד שומה", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TaxWithholdingAssessOfficeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxWithholdingAssessOffice.Q.ALLTAXOFFICES", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.ALLTAXOFFICES", NameTextCodeDefaultText = "ALLTAXOFFICES", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -419,13 +419,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ALLTAXOFFICESQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxWithholdingAssessOfficeTextCode_0.Id, NameTextCodeCode = TaxWithholdingAssessOfficeTextCode_0.Code, ObjectTableName = "TaxWithholdingAssessOffice", Code = "ALLTAXOFFICES",  QueryGroupCode = "2822", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, QuerySection = "TaxWithholdingAssessOffice", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxWithholdingAssessOfficeFeature_0.Id,FeatureUniqeCode= TaxWithholdingAssessOfficeFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ALLTAXOFFICESQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TaxWithholdingAssessOfficeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TaxWithholdingAssessOfficeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXOFFICESQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TaxWithholdingAssessOffice.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ALLTAXOFFICESQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TaxWithholdingAssessOfficeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TaxWithholdingAssessOfficeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXOFFICESQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TaxWithholdingAssessOffice.Name" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ALLTAXOFFICESQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == TaxWithholdingAssessOfficeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == TaxWithholdingAssessOfficeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXOFFICESQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TaxWithholdingAssessOffice.LocalName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ALLTAXOFFICESQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TaxWithholdingAssessOfficeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TaxWithholdingAssessOfficeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXOFFICESQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TaxWithholdingAssessOffice.Inactive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -433,15 +433,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable TaxWithholdingAssessOfficeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxWithholdingAssessOffice" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> TaxWithholdingAssessOfficeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TaxWithholdingAssessOffice").ToList();
+		   //List<ObjectField> TaxWithholdingAssessOfficeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TaxWithholdingAssessOffice").ToList();
 		       
 	      
 
 	         Screen TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxWithholdingAssessOffice.TaxWithholdingAssessOfficeHeaderScreen", Name = "TaxWithholdingAssessOfficeHeaderScreen", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id,ScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code, ObjectFieldCode = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id,ScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id,ScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code, ObjectFieldCode = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id,ScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TaxWithholdingAssessOfficeObjectTable.HeaderScreenId = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Id;
 		    TaxWithholdingAssessOfficeObjectTable.HeaderScreenCode = TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeHeaderScreenScreen0.Code;
@@ -451,11 +451,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TaxWithholdingAssessOfficeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxWithholdingAssessOffice.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = TaxWithholdingAssessOfficeObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TaxWithholdingAssessOfficeTaxWithholdingAssessOfficeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Id,ScreenCode = TaxWithholdingAssessOfficeGeneralTabScreenScreen1.Code, ObjectFieldCode = "TaxWithholdingAssessOffice.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

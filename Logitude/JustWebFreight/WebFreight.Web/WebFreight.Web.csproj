@@ -2461,6 +2461,7 @@
     <Compile Include="Helpers\SendGrid\SendGridAnalyzer.cs" />
     <Compile Include="Helpers\SharedLogisticContactHelper.cs" />
     <Compile Include="Helpers\SignUpHelper.cs" />
+    <Compile Include="Helpers\SqlBulkInsert.cs" />
     <Compile Include="Helpers\TableQueryReflector.cs" />
     <Compile Include="Helpers\MessageArgs.cs" />
     <Compile Include="Helpers\TermsofUseArgs.cs" />

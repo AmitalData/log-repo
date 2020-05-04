@@ -134,7 +134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -200,7 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "AccessKey",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -265,7 +265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PartnerName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -328,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -391,7 +391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "UpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -456,7 +456,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -521,7 +521,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CreatedByUserName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -586,7 +586,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "UpdatedByUserName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -651,7 +651,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Description",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -706,13 +706,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup WebhookKeysQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "df4d", Name = "WebhookKeys" }, queryGroupRepository);
@@ -725,7 +725,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
             }
 
 	         
-	        List<ObjectField> WebhookKeysObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WebhookKeys").ToList();   
+	        //List<ObjectField> WebhookKeysObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WebhookKeys").ToList();   
 
 			   TextCode WebhookKeysTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WebhookKeys.Q.WebhookKeys", DefaultText = @"All Webhook Keys",LocalDefaultText = null, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature WebhookKeysFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WebhookKeys.Q.WebhookKeys", ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, NameTextCodeCode = "WebhookKeysFeatures.WebhookKeys", NameTextCodeDefaultText = "WebhookKeys", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -737,21 +737,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			  Query WebhookKeysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WebhookKeysTextCode_0.Id, NameTextCodeCode = WebhookKeysTextCode_0.Code, ObjectTableName = "WebhookKeys", Code = "WebhookKeys",  EditWizardComponentPath = "./InfrastructureModules/InfrastructureOthers/Components/WebhookKeys/WebhookKeysComponent",
 			   QueryGroupCode = "df4d", IndexOrder = 0, Tenant = 0, ObjectTableId = WebhookKeysObjectTable.Id, QuerySection = "WebhookKeys", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WebhookKeysFeature_0.Id,FeatureUniqeCode= WebhookKeysFeature_0.FeatureUniqeCode, DefaultSortName = "PartnerName", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn WebhookKeysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WebhookKeysObjectFields.Where(d => d.FieldName == "PartnerName" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WebhookKeysObjectFields.Where(d => d.FieldName == "PartnerName" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WebhookKeysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WebhookKeys.PartnerName" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn WebhookKeysQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WebhookKeysObjectFields.Where(d => d.FieldName == "AccessKey" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WebhookKeysObjectFields.Where(d => d.FieldName == "AccessKey" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WebhookKeysQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WebhookKeys.AccessKey" , ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn WebhookKeysQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WebhookKeysObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WebhookKeysObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WebhookKeysQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WebhookKeys.CreateDate" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn WebhookKeysQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WebhookKeysObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WebhookKeysObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WebhookKeysQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WebhookKeys.UpdateDate" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn WebhookKeysQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WebhookKeysObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WebhookKeysObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WebhookKeysQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WebhookKeys.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn WebhookKeysQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WebhookKeysObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WebhookKeysObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WebhookKeysQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "WebhookKeys.CreatedByUserName" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn WebhookKeysQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WebhookKeysObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WebhookKeysObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WebhookKeysQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "WebhookKeys.UpdatedByUserName" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn WebhookKeysQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WebhookKeysObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WebhookKeysObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == WebhookKeysObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WebhookKeysQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WebhookKeysQuery.Id,QueryCode = WebhookKeysQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "WebhookKeys.Description" , ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -759,7 +759,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    {   
 
 		   ObjectTable WebhookKeysObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WebhookKeys" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> WebhookKeysObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WebhookKeys").ToList();
+		   //List<ObjectField> WebhookKeysObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WebhookKeys").ToList();
 		       
 	      
 

@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -198,7 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -258,7 +258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -318,7 +318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -378,7 +378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -437,7 +437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -496,7 +496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -555,7 +555,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -614,7 +614,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -673,7 +673,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -729,7 +729,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -787,13 +787,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup AutomaticReconcileMethodQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ARCM", Name = "AutomaticReconcileMethod" }, queryGroupRepository);
@@ -806,7 +806,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }
 
 	         
-	        List<ObjectField> AutomaticReconcileMethodObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AutomaticReconcileMethod").ToList();   
+	        //List<ObjectField> AutomaticReconcileMethodObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AutomaticReconcileMethod").ToList();   
 
 			   TextCode AutomaticReconcileMethodTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AutomaticReconcileMethod.Q.AutomaticReconcileMethod", DefaultText = @"Automatic Reconcile Methods",LocalDefaultText = "שיטות התאמה אוטומטית", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature AutomaticReconcileMethodFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTORECOMETHODS", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomaticReconcileMethod.Features.AutomaticReconcileMethods", NameTextCodeDefaultText = "Automatic Reconcile Methods", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -817,15 +817,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AutomaticReconcileMethodsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AutomaticReconcileMethodTextCode_0.Id, NameTextCodeCode = AutomaticReconcileMethodTextCode_0.Code, ObjectTableName = "AutomaticReconcileMethod", Code = "Automatic Reconcile Methods",  QueryGroupCode = "ARCM", IndexOrder = 0, Tenant = 0, ObjectTableId = AutomaticReconcileMethodObjectTable.Id, QuerySection = "AutomaticReconcileMethod", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AutomaticReconcileMethodFeature_0.Id,FeatureUniqeCode= AutomaticReconcileMethodFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AutomaticReconcileMethodsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id,QueryCode = AutomaticReconcileMethodsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AutomaticReconcileMethodsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id,QueryCode = AutomaticReconcileMethodsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AutomaticReconcileMethod.Code" , ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AutomaticReconcileMethodsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id,QueryCode = AutomaticReconcileMethodsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName1" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName1" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AutomaticReconcileMethodsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id,QueryCode = AutomaticReconcileMethodsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AutomaticReconcileMethod.AutomaticReconcileName1" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AutomaticReconcileMethodsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id,QueryCode = AutomaticReconcileMethodsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName2" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName2" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AutomaticReconcileMethodsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id,QueryCode = AutomaticReconcileMethodsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AutomaticReconcileMethod.AutomaticReconcileName2" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AutomaticReconcileMethodsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id,QueryCode = AutomaticReconcileMethodsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName3" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcileName3" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AutomaticReconcileMethodsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id,QueryCode = AutomaticReconcileMethodsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AutomaticReconcileMethod.AutomaticReconcileName3" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AutomaticReconcileMethodsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id,QueryCode = AutomaticReconcileMethodsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == AutomaticReconcileMethodObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AutomaticReconcileMethodsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutomaticReconcileMethodsQuery.Id,QueryCode = AutomaticReconcileMethodsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AutomaticReconcileMethod.Inactive" , ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -833,13 +833,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable AutomaticReconcileMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AutomaticReconcileMethod" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> AutomaticReconcileMethodObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AutomaticReconcileMethod").ToList();
+		   //List<ObjectField> AutomaticReconcileMethodObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AutomaticReconcileMethod").ToList();
 		       
 	      
 
 	         Screen AutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AutomaticReconcileMethod.AutomaticReconcileMethodHeaderScreen", Name = "AutomaticReconcileMethodHeaderScreen", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AutomaticReconcileMethodAutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = AutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreen0.Id,ScreenCode = AutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreen0.Code, ObjectFieldCode = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AutomaticReconcileMethodAutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreen0.Id,ScreenCode = AutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreen0.Code, ObjectFieldCode = "AutomaticReconcileMethod.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AutomaticReconcileMethodObjectTable.HeaderScreenId = AutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreen0.Id;
 		    AutomaticReconcileMethodObjectTable.HeaderScreenCode = AutomaticReconcileMethodAutomaticReconcileMethodHeaderScreenScreen0.Code;
@@ -849,13 +849,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen AutomaticReconcileMethodGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AutomaticReconcileMethod.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = AutomaticReconcileMethodObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AutomaticReconcileMethodAutomaticReconcileMethodGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = AutomaticReconcileMethodGeneralTabScreenScreen1.Id,ScreenCode = AutomaticReconcileMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AutomaticReconcileMethodAutomaticReconcileMethodGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AutomaticReconcileMethodGeneralTabScreenScreen1.Id,ScreenCode = AutomaticReconcileMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AutomaticReconcileMethod.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AutomaticReconcileMethodAutomaticReconcileMethodGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcile1").FirstOrDefault().Id, ScreenId = AutomaticReconcileMethodGeneralTabScreenScreen1.Id,ScreenCode = AutomaticReconcileMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcile1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AutomaticReconcileMethodAutomaticReconcileMethodGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AutomaticReconcileMethodGeneralTabScreenScreen1.Id,ScreenCode = AutomaticReconcileMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AutomaticReconcileMethod.AutomaticReconcile1", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AutomaticReconcileMethodAutomaticReconcileMethodGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcile2").FirstOrDefault().Id, ScreenId = AutomaticReconcileMethodGeneralTabScreenScreen1.Id,ScreenCode = AutomaticReconcileMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcile2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AutomaticReconcileMethodAutomaticReconcileMethodGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AutomaticReconcileMethodGeneralTabScreenScreen1.Id,ScreenCode = AutomaticReconcileMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AutomaticReconcileMethod.AutomaticReconcile2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AutomaticReconcileMethodAutomaticReconcileMethodGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcile3").FirstOrDefault().Id, ScreenId = AutomaticReconcileMethodGeneralTabScreenScreen1.Id,ScreenCode = AutomaticReconcileMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = AutomaticReconcileMethodObjectFields.Where(d => d.FieldName == "AutomaticReconcile3").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AutomaticReconcileMethodAutomaticReconcileMethodGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AutomaticReconcileMethodGeneralTabScreenScreen1.Id,ScreenCode = AutomaticReconcileMethodGeneralTabScreenScreen1.Code, ObjectFieldCode = "AutomaticReconcileMethod.AutomaticReconcile3", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

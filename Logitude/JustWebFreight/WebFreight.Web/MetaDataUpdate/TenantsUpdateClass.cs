@@ -51,6 +51,7 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel;
 using WebFreight.Web.Helpers.AutomationModel;
+using Microsoft.VisualStudio.Services.Common;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -991,7 +992,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static void UpdateAllOldModules(MetaDataUpdateClass updateClass, IWebFreightContext context)
         {
-            
+             
             updateClass.LoadObjectTablesToTenantZero(context);
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTablesToTenantZero");
             //updateClass.UpgradeClosedTablesForTenantZero();

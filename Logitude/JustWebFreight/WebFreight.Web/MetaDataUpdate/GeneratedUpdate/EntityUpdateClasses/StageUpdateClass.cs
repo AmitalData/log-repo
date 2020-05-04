@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -196,7 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -256,7 +256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -316,7 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -375,7 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -434,7 +434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -496,7 +496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -556,13 +556,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup StageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "STAG", Name = "Stage" }, queryGroupRepository);
@@ -575,7 +575,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }
 
 	         
-	        List<ObjectField> StageObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Stage").ToList();   
+	        //List<ObjectField> StageObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Stage").ToList();   
 
 			   TextCode StageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Stage.Q.AllStages", DefaultText = @"Stages",LocalDefaultText = null, ObjectTableId = StageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature StageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLSTAGES", ObjectTableId = StageObjectTable.Id, Tenant = 0, NameTextCodeCode = "Stage.Features.AllStages", NameTextCodeDefaultText = "All Stages", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -586,13 +586,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = StageTextCode_0.Id, NameTextCodeCode = StageTextCode_0.Code, ObjectTableName = "Stage", Code = "All Stages",  QueryGroupCode = "STAG", IndexOrder = 0, Tenant = 0, ObjectTableId = StageObjectTable.Id, QuerySection = "Stage", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = StageFeature_0.Id,FeatureUniqeCode= StageFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllStagesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStagesQuery.Id,QueryCode = AllStagesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = StageObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == StageObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = StageObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == StageObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllStagesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStagesQuery.Id,QueryCode = AllStagesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Stage.Name" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllStagesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStagesQuery.Id,QueryCode = AllStagesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = StageObjectFields.Where(d => d.FieldName == "Probability" && d.ObjectTableId == StageObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = StageObjectFields.Where(d => d.FieldName == "Probability" && d.ObjectTableId == StageObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllStagesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStagesQuery.Id,QueryCode = AllStagesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Stage.Probability" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllStagesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStagesQuery.Id,QueryCode = AllStagesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = StageObjectFields.Where(d => d.FieldName == "MaxDays" && d.ObjectTableId == StageObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = StageObjectFields.Where(d => d.FieldName == "MaxDays" && d.ObjectTableId == StageObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllStagesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStagesQuery.Id,QueryCode = AllStagesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Stage.MaxDays" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllStagesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStagesQuery.Id,QueryCode = AllStagesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = StageObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == StageObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = StageObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == StageObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllStagesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllStagesQuery.Id,QueryCode = AllStagesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Stage.InActive" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -600,13 +600,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable StageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Stage" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> StageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Stage").ToList();
+		   //List<ObjectField> StageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Stage").ToList();
 		       
 	      
 
 	         Screen StageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Stage.HeaderScreen", Name = "Header Screen", ObjectTableId = StageObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField StageStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = StageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = StageHeaderScreenScreen0.Id,ScreenCode = StageHeaderScreenScreen0.Code, ObjectFieldCode = StageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField StageStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = StageHeaderScreenScreen0.Id,ScreenCode = StageHeaderScreenScreen0.Code, ObjectFieldCode = "Stage.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    StageObjectTable.HeaderScreenId = StageHeaderScreenScreen0.Id;
 		    StageObjectTable.HeaderScreenCode = StageHeaderScreenScreen0.Code;

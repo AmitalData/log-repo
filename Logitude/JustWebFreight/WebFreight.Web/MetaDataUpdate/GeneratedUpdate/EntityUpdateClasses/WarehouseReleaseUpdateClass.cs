@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -194,7 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -251,7 +251,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -310,7 +310,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -367,7 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -427,7 +427,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -486,7 +486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -545,7 +545,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -604,7 +604,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -663,7 +663,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -722,7 +722,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -781,7 +781,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -841,7 +841,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -900,7 +900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -957,7 +957,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1016,7 +1016,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1077,7 +1077,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1136,7 +1136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1197,7 +1197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1256,7 +1256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1316,7 +1316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1372,7 +1372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1428,7 +1428,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1488,7 +1488,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1548,7 +1548,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1605,7 +1605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1665,7 +1665,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1725,7 +1725,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1785,7 +1785,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1845,7 +1845,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1901,7 +1901,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1957,7 +1957,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2013,7 +2013,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2075,7 +2075,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2132,7 +2132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2188,7 +2188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2244,7 +2244,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2300,7 +2300,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2356,7 +2356,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2412,7 +2412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2468,7 +2468,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2524,7 +2524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2586,7 +2586,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2646,7 +2646,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2706,7 +2706,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2762,7 +2762,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2818,7 +2818,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2874,7 +2874,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2930,7 +2930,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2986,7 +2986,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3045,7 +3045,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3104,7 +3104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3160,7 +3160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3221,7 +3221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3279,7 +3279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3335,7 +3335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3392,7 +3392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3449,7 +3449,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3505,7 +3505,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3561,7 +3561,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3618,7 +3618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3674,7 +3674,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3730,7 +3730,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3787,7 +3787,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3843,13 +3843,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup WarehouseReleaseQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2e12", Name = "WarehouseRelease Query Group" }, queryGroupRepository);
@@ -3862,7 +3862,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }
 
 	         
-	        List<ObjectField> WarehouseReleaseObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WarehouseRelease").ToList();   
+	        //List<ObjectField> WarehouseReleaseObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WarehouseRelease").ToList();   
 
 			   TextCode WarehouseReleaseTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseRelease.Q.CreatedReleasesQuery", DefaultText = @"Expected Delivery Releases",LocalDefaultText = "Expected Delivery Releases", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature WarehouseReleaseFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseRelease.Q.CreatedReleasesQuery", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.CreatedReleasesQuery", NameTextCodeDefaultText = "CreatedReleasesQuery", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -3885,122 +3885,122 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CreatedReleasesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseReleaseTextCode_0.Id, NameTextCodeCode = WarehouseReleaseTextCode_0.Code, ObjectTableName = "WarehouseRelease", Code = "CreatedReleasesQuery",  QueryGroupCode = "2e12", IndexOrder = 0, Tenant = 0, ObjectTableId = WarehouseReleaseObjectTable.Id, QuerySection = "WarehouseRelease", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseReleaseFeature_0.Id,FeatureUniqeCode= WarehouseReleaseFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn CreatedReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WarehouseRelease.ReleaseNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WarehouseRelease.ReleaseDate" , ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WarehouseRelease.TotalQuantity" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WarehouseRelease.ReleaseBy" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WarehouseRelease.WarehouseName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "WarehouseRelease.SpecialInstruction" , ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "WarehouseRelease.Notes" , ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "WarehouseRelease.CustomerName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "WarehouseRelease.References" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "WarehouseRelease.HouseNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "WarehouseRelease.MasterNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseRelease.StatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter CreatedReleasesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CreatedReleases" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CreatedReleases" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CreatedReleasesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseRelease.CreatedReleases", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
 			  Query ReleasedQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseReleaseTextCode_1.Id, NameTextCodeCode = WarehouseReleaseTextCode_1.Code, ObjectTableName = "WarehouseRelease", Code = "ReleasedQuery",  QueryGroupCode = "2e12", IndexOrder = 1, Tenant = 0, ObjectTableId = WarehouseReleaseObjectTable.Id, QuerySection = "WarehouseRelease", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseReleaseFeature_1.Id,FeatureUniqeCode= WarehouseReleaseFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ReleasedQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WarehouseRelease.ReleaseNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WarehouseRelease.ReleaseBy" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WarehouseRelease.SpecialInstruction" , ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WarehouseRelease.Notes" , ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WarehouseRelease.HouseNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "WarehouseRelease.MasterNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "WarehouseRelease.WarehouseName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "WarehouseRelease.CustomerName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "WarehouseRelease.References" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "WarehouseRelease.StatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "WarehouseRelease.ReleaseDate" , ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseRelease.TotalQuantity" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ReleasedQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleasedReleases" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleasedReleases" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ReleasedQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseRelease.ReleasedReleases", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
 			  Query CancelledReleasesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseReleaseTextCode_2.Id, NameTextCodeCode = WarehouseReleaseTextCode_2.Code, ObjectTableName = "WarehouseRelease", Code = "CancelledReleasesQuery",  QueryGroupCode = "2e12", IndexOrder = 2, Tenant = 0, ObjectTableId = WarehouseReleaseObjectTable.Id, QuerySection = "WarehouseRelease", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseReleaseFeature_2.Id,FeatureUniqeCode= WarehouseReleaseFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn CancelledReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WarehouseRelease.ReleaseNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WarehouseRelease.ReleaseBy" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WarehouseRelease.SpecialInstruction" , ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WarehouseRelease.Notes" , ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WarehouseRelease.HouseNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "WarehouseRelease.MasterNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "WarehouseRelease.WarehouseName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "WarehouseRelease.CustomerName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "WarehouseRelease.References" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "WarehouseRelease.StatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "WarehouseRelease.ReleaseDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseRelease.TotalQuantity" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter CancelledReleasesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "CARE",PredefinedValue2 = null, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CancelledReleasesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "WarehouseRelease.StatusCode", PredefinedValue = "CARE",PredefinedValue2 = null, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
 			  Query AllReleasesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseReleaseTextCode_3.Id, NameTextCodeCode = WarehouseReleaseTextCode_3.Code, ObjectTableName = "WarehouseRelease", Code = "AllReleasesQuery",  QueryGroupCode = "2e12", IndexOrder = 3, Tenant = 0, ObjectTableId = WarehouseReleaseObjectTable.Id, QuerySection = "WarehouseRelease", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseReleaseFeature_3.Id,FeatureUniqeCode= WarehouseReleaseFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "WarehouseRelease.ReleaseNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WarehouseRelease.ReleaseBy" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WarehouseRelease.SpecialInstruction" , ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WarehouseRelease.Notes" , ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "WarehouseRelease.HouseNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "WarehouseRelease.MasterNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "WarehouseRelease.WarehouseName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "WarehouseRelease.CustomerName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "WarehouseRelease.References" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "WarehouseRelease.StatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "WarehouseRelease.ReleaseDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "WarehouseRelease.TotalQuantity" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -4008,27 +4008,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable WarehouseReleaseObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WarehouseRelease" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> WarehouseReleaseObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WarehouseRelease").ToList();
+		   //List<ObjectField> WarehouseReleaseObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WarehouseRelease").ToList();
 		       
 	      
 
 	         Screen WarehouseReleaseWarehouseReleaseHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WarehouseRelease.WarehouseReleaseHeaderScreen", Name = "WarehouseReleaseHeaderScreen", ObjectTableId = WarehouseReleaseObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName").FirstOrDefault().Id, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseRelease.WarehouseName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ShipmentNumberWithType").FirstOrDefault().Id, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ShipmentNumberWithType").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseRelease.ShipmentNumberWithType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName").FirstOrDefault().Id, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseRelease.CustomerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References").FirstOrDefault().Id, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseRelease.References", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber").FirstOrDefault().Id, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseRelease.MasterNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber").FirstOrDefault().Id, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseRelease.HouseNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseRelease.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate").FirstOrDefault().Id, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField WarehouseReleaseWarehouseReleaseWarehouseReleaseHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id,ScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code, ObjectFieldCode = "WarehouseRelease.ReleaseDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    WarehouseReleaseObjectTable.HeaderScreenId = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Id;
 		    WarehouseReleaseObjectTable.HeaderScreenCode = WarehouseReleaseWarehouseReleaseHeaderScreenScreen0.Code;

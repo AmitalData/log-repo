@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -201,7 +201,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -266,7 +266,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -331,7 +331,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "PrintDescription",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -394,13 +394,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "SearchFields",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup AWBAdditionalHandlingInfoQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ADHI", Name = "AWB Additional Handling Info" }, queryGroupRepository);
@@ -413,7 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }
 
 	         
-	        List<ObjectField> AWBAdditionalHandlingInfoObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AWBAdditionalHandlingInfo").ToList();   
+	        //List<ObjectField> AWBAdditionalHandlingInfoObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AWBAdditionalHandlingInfo").ToList();   
 
 			   TextCode AWBAdditionalHandlingInfoTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalHandlingInfo.Q.AllHandlingInfos", DefaultText = @"AWB Additional Handling Infos",LocalDefaultText = null, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature AWBAdditionalHandlingInfoFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalHandlingInfo.Q.AllQuery", ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.AllAdditionalHandlingInfos", NameTextCodeDefaultText = "All Additional Handling Infos", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -424,11 +424,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			  Query AllAdditionalHandlingInfosQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AWBAdditionalHandlingInfoTextCode_0.Id, NameTextCodeCode = AWBAdditionalHandlingInfoTextCode_0.Code, ObjectTableName = "AWBAdditionalHandlingInfo", Code = "All Additional Handling Infos",  QueryGroupCode = "ADHI", IndexOrder = 0, Tenant = 0, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, QuerySection = "AWBAdditionalHandlingInfo", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AWBAdditionalHandlingInfoFeature_0.Id,FeatureUniqeCode= AWBAdditionalHandlingInfoFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllAdditionalHandlingInfosQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AWBAdditionalHandlingInfoObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AWBAdditionalHandlingInfoObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AWBAdditionalHandlingInfoObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AWBAdditionalHandlingInfoObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAdditionalHandlingInfosQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AWBAdditionalHandlingInfo.Code" , ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAdditionalHandlingInfosQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AWBAdditionalHandlingInfoObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == AWBAdditionalHandlingInfoObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AWBAdditionalHandlingInfoObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == AWBAdditionalHandlingInfoObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAdditionalHandlingInfosQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AWBAdditionalHandlingInfo.Name" , ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllAdditionalHandlingInfosQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AWBAdditionalHandlingInfoObjectFields.Where(d => d.FieldName == "PrintDescription" && d.ObjectTableId == AWBAdditionalHandlingInfoObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AWBAdditionalHandlingInfoObjectFields.Where(d => d.FieldName == "PrintDescription" && d.ObjectTableId == AWBAdditionalHandlingInfoObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAdditionalHandlingInfosQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AWBAdditionalHandlingInfo.PrintDescription" , ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -436,15 +436,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    {   
 
 		   ObjectTable AWBAdditionalHandlingInfoObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AWBAdditionalHandlingInfo" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> AWBAdditionalHandlingInfoObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AWBAdditionalHandlingInfo").ToList();
+		   //List<ObjectField> AWBAdditionalHandlingInfoObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AWBAdditionalHandlingInfo").ToList();
 		       
 	      
 
 	         Screen AWBAdditionalHandlingInfoHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AWBAdditionalHandlingInfo.HeaderScreen", Name = "Header Screen", ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AWBAdditionalHandlingInfoAWBAdditionalHandlingInfoHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AWBAdditionalHandlingInfoObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = AWBAdditionalHandlingInfoHeaderScreenScreen0.Id,ScreenCode = AWBAdditionalHandlingInfoHeaderScreenScreen0.Code, ObjectFieldCode = AWBAdditionalHandlingInfoObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AWBAdditionalHandlingInfoAWBAdditionalHandlingInfoHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AWBAdditionalHandlingInfoHeaderScreenScreen0.Id,ScreenCode = AWBAdditionalHandlingInfoHeaderScreenScreen0.Code, ObjectFieldCode = "AWBAdditionalHandlingInfo.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AWBAdditionalHandlingInfoAWBAdditionalHandlingInfoHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AWBAdditionalHandlingInfoObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AWBAdditionalHandlingInfoHeaderScreenScreen0.Id,ScreenCode = AWBAdditionalHandlingInfoHeaderScreenScreen0.Code, ObjectFieldCode = AWBAdditionalHandlingInfoObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AWBAdditionalHandlingInfoAWBAdditionalHandlingInfoHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AWBAdditionalHandlingInfoHeaderScreenScreen0.Id,ScreenCode = AWBAdditionalHandlingInfoHeaderScreenScreen0.Code, ObjectFieldCode = "AWBAdditionalHandlingInfo.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AWBAdditionalHandlingInfoObjectTable.HeaderScreenId = AWBAdditionalHandlingInfoHeaderScreenScreen0.Id;
 		    AWBAdditionalHandlingInfoObjectTable.HeaderScreenCode = AWBAdditionalHandlingInfoHeaderScreenScreen0.Code;

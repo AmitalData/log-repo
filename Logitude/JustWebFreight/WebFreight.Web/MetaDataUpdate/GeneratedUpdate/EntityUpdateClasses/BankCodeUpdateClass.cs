@@ -141,7 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -198,7 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -255,7 +255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -312,7 +312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -369,7 +369,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -426,7 +426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -480,13 +480,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup BankCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "99b6", Name = "BankCode Query Group" }, queryGroupRepository);
@@ -499,7 +499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }
 
 	         
-	        List<ObjectField> BankCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BankCode").ToList();   
+	        //List<ObjectField> BankCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BankCode").ToList();   
 
 			   TextCode BankCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankCode.Q.BankCodes", DefaultText = @"All Bank Codes",LocalDefaultText = null, ObjectTableId = BankCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature BankCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankCode.Q.BankCodes", ObjectTableId = BankCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankCode.Features.BankCodes", NameTextCodeDefaultText = "BankCodes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -510,13 +510,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query BankCodesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankCodeTextCode_0.Id, NameTextCodeCode = BankCodeTextCode_0.Code, ObjectTableName = "BankCode", Code = "BankCodes",  QueryGroupCode = "99b6", IndexOrder = 0, Tenant = 0, ObjectTableId = BankCodeObjectTable.Id, QuerySection = "BankCode", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankCodeFeature_0.Id,FeatureUniqeCode= BankCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn BankCodesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankCodesQuery.Id,QueryCode = BankCodesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == BankCodeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == BankCodeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BankCodesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankCodesQuery.Id,QueryCode = BankCodesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankCode.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BankCodesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankCodesQuery.Id,QueryCode = BankCodesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == BankCodeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == BankCodeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BankCodesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankCodesQuery.Id,QueryCode = BankCodesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankCode.LocalName" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BankCodesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankCodesQuery.Id,QueryCode = BankCodesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == BankCodeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == BankCodeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BankCodesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankCodesQuery.Id,QueryCode = BankCodesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankCode.EnglishName" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn BankCodesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankCodesQuery.Id,QueryCode = BankCodesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == BankCodeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == BankCodeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BankCodesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankCodesQuery.Id,QueryCode = BankCodesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankCode.Inactive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -524,31 +524,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable BankCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankCode" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> BankCodeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BankCode").ToList();
+		   //List<ObjectField> BankCodeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BankCode").ToList();
 		       
 	      
 
 	         Screen BankCodeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankCode.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = BankCodeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BankCodeBankCodeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = BankCodeGeneralTabScreenScreen0.Id,ScreenCode = BankCodeGeneralTabScreenScreen0.Code, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankCodeBankCodeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankCodeGeneralTabScreenScreen0.Id,ScreenCode = BankCodeGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankCode.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankCodeBankCodeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = BankCodeGeneralTabScreenScreen0.Id,ScreenCode = BankCodeGeneralTabScreenScreen0.Code, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankCodeBankCodeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BankCodeGeneralTabScreenScreen0.Id,ScreenCode = BankCodeGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankCode.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankCodeBankCodeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BankCodeGeneralTabScreenScreen0.Id,ScreenCode = BankCodeGeneralTabScreenScreen0.Code, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankCodeBankCodeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = BankCodeGeneralTabScreenScreen0.Id,ScreenCode = BankCodeGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankCode.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankCodeBankCodeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = BankCodeGeneralTabScreenScreen0.Id,ScreenCode = BankCodeGeneralTabScreenScreen0.Code, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankCodeBankCodeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = BankCodeGeneralTabScreenScreen0.Id,ScreenCode = BankCodeGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankCode.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen BankCodeBankCodeHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankCode.BankCodeHeaderScreen", Name = "BankCodeHeaderScreen", ObjectTableId = BankCodeObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BankCodeBankCodeBankCodeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = BankCodeBankCodeHeaderScreenScreen1.Id,ScreenCode = BankCodeBankCodeHeaderScreenScreen1.Code, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankCodeBankCodeBankCodeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankCodeBankCodeHeaderScreenScreen1.Id,ScreenCode = BankCodeBankCodeHeaderScreenScreen1.Code, ObjectFieldCode = "BankCode.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankCodeBankCodeBankCodeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = BankCodeBankCodeHeaderScreenScreen1.Id,ScreenCode = BankCodeBankCodeHeaderScreenScreen1.Code, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankCodeBankCodeBankCodeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankCodeBankCodeHeaderScreenScreen1.Id,ScreenCode = BankCodeBankCodeHeaderScreenScreen1.Code, ObjectFieldCode = "BankCode.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankCodeBankCodeBankCodeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BankCodeBankCodeHeaderScreenScreen1.Id,ScreenCode = BankCodeBankCodeHeaderScreenScreen1.Code, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankCodeBankCodeBankCodeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = BankCodeBankCodeHeaderScreenScreen1.Id,ScreenCode = BankCodeBankCodeHeaderScreenScreen1.Code, ObjectFieldCode = "BankCode.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BankCodeBankCodeBankCodeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = BankCodeObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = BankCodeBankCodeHeaderScreenScreen1.Id,ScreenCode = BankCodeBankCodeHeaderScreenScreen1.Code, ObjectFieldCode = BankCodeObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BankCodeBankCodeBankCodeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = BankCodeBankCodeHeaderScreenScreen1.Id,ScreenCode = BankCodeBankCodeHeaderScreenScreen1.Code, ObjectFieldCode = "BankCode.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BankCodeObjectTable.HeaderScreenId = BankCodeBankCodeHeaderScreenScreen1.Id;
 		    BankCodeObjectTable.HeaderScreenCode = BankCodeBankCodeHeaderScreenScreen1.Code;

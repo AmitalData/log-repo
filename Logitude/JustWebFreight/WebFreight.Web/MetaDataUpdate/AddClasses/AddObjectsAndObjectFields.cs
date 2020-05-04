@@ -1587,5 +1587,301 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             //}
 
         }
+
+
+
+
+
+        //---------------------------------------------------------
+        public static void AddObjectField(ObjectFieldsDetails objectFieldDetails, TextCodeRepository textCodeRepository, ObjectFieldRepository objectFieldsRepository, Dictionary<string, ObjectField> tenantZeroObjectFields, Dictionary<string, TextCode> tenantZeroTextCodes, Dictionary<string, ObjectTable> tenantZeroObjectTables, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
+        {
+
+
+            if (!String.IsNullOrEmpty(objectFieldDetails.ObjectTableName) && String.IsNullOrEmpty(objectFieldDetails.ObjectTableId))
+            {
+                ObjectTable table = GetObjectTable(objectFieldDetails.ObjectTableName, tenantZeroObjectTables);
+
+                objectFieldDetails.ObjectTableId = table.Id;
+
+            }
+            if (!String.IsNullOrEmpty(objectFieldDetails.LookUpTableName) && String.IsNullOrEmpty(objectFieldDetails.LookUpTableId))
+            {
+                ObjectTable table = GetObjectTable(objectFieldDetails.LookUpTableName, tenantZeroObjectTables);
+                if (table != null)
+                {
+                    objectFieldDetails.LookUpTableId = table.Id;
+                }
+
+            }
+
+            if (!String.IsNullOrEmpty(objectFieldDetails.MultiTableName) && String.IsNullOrEmpty(objectFieldDetails.MultiTableId))
+            {
+                ObjectTable table = GetObjectTable(objectFieldDetails.MultiTableName, tenantZeroObjectTables);
+                if (table != null)
+                {
+                    objectFieldDetails.MultiTableId = table.Id;
+                }
+
+            }
+
+
+            TextCode objectFieldTextCode = null;
+
+            objectFieldTextCode = new TextCode();
+            objectFieldTextCode.Code = objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable;
+            objectFieldTextCode.DefaultText = objectFieldDetails.DefaultText;
+            objectFieldTextCode.Id =IdCounter.GetIdFromIdsRangeFromDataBase("TextCode",100, objectFieldDetails.Tenant).ToString();
+            objectFieldTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
+            objectFieldTextCode.Tenant = 0;
+            objectFieldTextCode.TextCodeTypeCode = "F";
+            objectFieldTextCode.InActive = objectFieldDetails.InActive;
+            objectFieldTextCode.LocalDefaultText = objectFieldDetails.FullLocalDefaultText;
+            addedTextCodes.Add(objectFieldTextCode);
+
+
+
+            TextCode helpTextTextCode = null;
+            TextCode listFieldLableTextCode = null;
+            TextCode fullFieldTextCode = null;
+            if (!string.IsNullOrEmpty(objectFieldDetails.HelpTextCode))
+            {
+
+                helpTextTextCode = new TextCode();
+                helpTextTextCode.Code = objectFieldDetails.ObjectTableName + "." + objectFieldDetails.HelpTextCode + "HelpText";
+                helpTextTextCode.DefaultText = objectFieldDetails.HelpTextDefaultText;
+                helpTextTextCode.Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode",100, objectFieldDetails.Tenant).ToString();
+                helpTextTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
+                helpTextTextCode.Tenant = 0;
+                helpTextTextCode.TextCodeTypeCode = "H";
+                helpTextTextCode.InActive = objectFieldDetails.InActive;
+                helpTextTextCode.LocalDefaultText = objectFieldDetails.HelpLocalDefaultText;
+                addedTextCodes.Add(helpTextTextCode);
+
+
+            }
+
+            else
+            {
+
+                helpTextTextCode = new TextCode();
+                helpTextTextCode.Code = (!string.IsNullOrEmpty(objectFieldDetails.ObjectTableName) ? objectFieldDetails.ObjectTableName : objectFieldDetails.ValidForQuerySection1) + "." + objectFieldDetails.FullFieldLable + "HelpText";
+                helpTextTextCode.DefaultText = null;
+                helpTextTextCode.Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode",100, objectFieldDetails.Tenant).ToString();
+                helpTextTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
+                helpTextTextCode.Tenant = 0;
+                helpTextTextCode.TextCodeTypeCode = "H";
+                helpTextTextCode.InActive = objectFieldDetails.InActive;
+                helpTextTextCode.LocalDefaultText = objectFieldDetails.HelpLocalDefaultText;
+                addedTextCodes.Add(helpTextTextCode);
+
+
+            }
+
+            if (!string.IsNullOrEmpty(objectFieldDetails.ShortFieldLable))
+            {
+
+                fullFieldTextCode = new TextCode();
+                fullFieldTextCode.Code = objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.ShortFieldLable + ".Short";
+                fullFieldTextCode.DefaultText = objectFieldDetails.ShortFieldLableDefaultText;
+                fullFieldTextCode.Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode",100, objectFieldDetails.Tenant).ToString();
+                fullFieldTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
+                fullFieldTextCode.Tenant = 0;
+                fullFieldTextCode.TextCodeTypeCode = "F";
+                fullFieldTextCode.InActive = objectFieldDetails.InActive;
+                fullFieldTextCode.LocalDefaultText = objectFieldDetails.ShortLocalDefaultText;
+                addedTextCodes.Add(fullFieldTextCode);
+
+            }
+
+            if (!string.IsNullOrEmpty(objectFieldDetails.ListFieldLable) && (objectFieldDetails.DisplayInList || objectFieldDetails.DisplayInSearchWindowList || objectFieldDetails.DisplayOnLookUp || objectFieldDetails.DisplayOnLookUpLocal))
+            {
+
+                listFieldLableTextCode = new TextCode();
+                listFieldLableTextCode.Code = objectFieldDetails.ObjectTableName + ".CH." + objectFieldDetails.ListFieldLable;
+                listFieldLableTextCode.DefaultText = objectFieldDetails.ListLableDefaultText;
+                listFieldLableTextCode.Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode",100, objectFieldDetails.Tenant).ToString();
+                listFieldLableTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
+                listFieldLableTextCode.Tenant = 0;
+                listFieldLableTextCode.TextCodeTypeCode = "CH";
+                listFieldLableTextCode.InActive = objectFieldDetails.InActive;
+                listFieldLableTextCode.LocalDefaultText = objectFieldDetails.ListLocalDefaultText;
+                addedTextCodes.Add(listFieldLableTextCode);
+
+
+            }
+
+
+            ObjectField newObjectField = new ObjectField();
+            newObjectField.ControlField1 = objectFieldDetails.ControlField1;
+            newObjectField.ControlField2 = objectFieldDetails.ControlField2;
+            newObjectField.ControlField3 = objectFieldDetails.ControlField3;
+            newObjectField.DataTypeCode = objectFieldDetails.FieldsDataType;
+            newObjectField.DisplayOnLookUp = objectFieldDetails.DisplayOnLookUp;
+            newObjectField.DisplayOnLookUpLocal = objectFieldDetails.DisplayOnLookUpLocal;
+            newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
+            newObjectField.FullNameTextCodeCode = objectFieldTextCode.Code;
+            newObjectField.FieldName = objectFieldDetails.FieldName;
+            newObjectField.Code = objectFieldDetails.Code;
+            if (string.IsNullOrEmpty(newObjectField.FieldCode))
+            {
+                newObjectField.FieldCode = objectFieldDetails.ObjectTableName + "." + objectFieldDetails.FieldName; ;
+            }
+            if (string.IsNullOrEmpty(objectFieldDetails.Code))
+            {
+                newObjectField.Code = objectFieldDetails.FieldName;
+            }
+            if (helpTextTextCode != null)
+            {
+                newObjectField.HelpTextCodeId = helpTextTextCode.Id;
+                newObjectField.HelpTextCodeCode = helpTextTextCode.Code;
+            }
+            if (listFieldLableTextCode != null)
+            {
+                newObjectField.ListTextCodeId = listFieldLableTextCode.Id;
+                newObjectField.ListTextCodeCode = listFieldLableTextCode.Code;
+            }
+            newObjectField.Id = IdCounter.GetIdFromIdsRangeFromDataBase("ObjectField",100, objectFieldDetails.Tenant).ToString();
+            newObjectField.IsCustom = objectFieldDetails.IsCustom;
+            // newObjectField.IsOverridden = objectFieldDetails.Isoveridden;
+
+            newObjectField.LookUpTableId = objectFieldDetails.LookUpTableId;
+
+            newObjectField.MaxLength = objectFieldDetails.MaxLength;
+            newObjectField.MinLength = objectFieldDetails.MinLength;
+
+            newObjectField.IsMaxLength = objectFieldDetails.IsMaxLength;
+            /* Ayman says: 
+             * if you want to do this if else , then do it correctly
+             * not only 'Text' type has lengths.
+             * 
+            if (objectFieldDetails.FieldsDataType == "Text")
+            {
+                newObjectField.MaxLength = objectFieldDetails.MaxLength;
+                newObjectField.MinLength = objectFieldDetails.MinLength;
+            }
+            else
+            {
+                newObjectField.MaxLength = 0;
+                newObjectField.MinLength = 0;
+            }
+            */
+
+            newObjectField.IsRequiered = objectFieldDetails.IsRequired;
+            //if (objectFieldDetails.FieldsDataType == "Boolean")
+            //{
+            //    newObjectField.IsRequiered = true;
+            //}
+            //else
+            //{
+            //    newObjectField.IsRequiered = objectFieldDetails.IsRequired;
+            //}
+            newObjectField.ObjectTableId = objectFieldDetails.ObjectTableId;
+            newObjectField.Tenant = 0;
+            newObjectField.CanFilter = objectFieldDetails.CanFilter;
+            newObjectField.DisplayOnly = objectFieldDetails.DisplayOnly;
+            if (objectFieldDetails.IsRequired)
+            {
+                newObjectField.SystemRequired = objectFieldDetails.SystemRequired;
+            }
+            newObjectField.SystemMaxLength = newObjectField.MaxLength;
+            newObjectField.DisplayInList = objectFieldDetails.DisplayInList;
+            newObjectField.ConverterName = objectFieldDetails.ConverterName;
+            newObjectField.DataTemplateName = objectFieldDetails.DataTemplateName;
+            newObjectField.MultiLine = objectFieldDetails.MultiLine;
+            newObjectField.IsCustomFilter = objectFieldDetails.IsCustomFilter;
+            newObjectField.Operator = objectFieldDetails.Operator;
+            newObjectField.IsTimeFrameFilter = objectFieldDetails.IsTimeFrameFilter;
+            newObjectField.DisplayInSearchWindowFilters = objectFieldDetails.DisplayInSearchWindowFilters;
+            newObjectField.DisplayInSearchWindowList = objectFieldDetails.DisplayInSearchWindowList;
+            newObjectField.PMPropertyPath = objectFieldDetails.PMPropertyPath;
+            newObjectField.ListPropertyPath = objectFieldDetails.ListPropertyPath;
+            newObjectField.DisplayInLookUpIndex = objectFieldDetails.DisplayInLookUpIndex;
+            newObjectField.AutomaticField = objectFieldDetails.AutomaticField;
+            newObjectField.UniqueField = objectFieldDetails.UniqueField;
+            newObjectField.ShortNameTextCodeId = fullFieldTextCode != null ? fullFieldTextCode.Id : null;
+            newObjectField.ShortNameTextCodeCode = fullFieldTextCode != null ? fullFieldTextCode.Code : null;
+            newObjectField.DisplayInSearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
+            newObjectField.DisplayInSearchWindowListIndex = objectFieldDetails.DisplayInSearchWindowListIndex;
+            newObjectField.IsMulti = objectFieldDetails.IsMulti;
+            newObjectField.MultiTableId = objectFieldDetails.MultiTableId;
+            newObjectField.DependencyFilter1Value = objectFieldDetails.DependencyFilter1Value;
+            newObjectField.DependencyFilter2Value = objectFieldDetails.DependencyFilter2Value;
+            newObjectField.DependencyFilter3Value = objectFieldDetails.DependencyFilter3Value;
+            newObjectField.DependencyFilter1Type = objectFieldDetails.DependencyFilter1Type;
+            newObjectField.DependencyFilter2Type = objectFieldDetails.DependencyFilter2Type;
+            newObjectField.DependencyFilter3Type = objectFieldDetails.DependencyFilter3Type;
+            newObjectField.ValidForQuerySection1 = objectFieldDetails.ValidForQuerySection1;
+            newObjectField.ValidForQuerySection2 = objectFieldDetails.ValidForQuerySection2;
+            newObjectField.IsRestrictable = objectFieldDetails.IsRestrictable;
+            newObjectField.DisplayInEntityVariables = objectFieldDetails.DisplayInEntityVariables;
+            newObjectField.InActive = objectFieldDetails.InActive;
+            newObjectField.DisplayInLookupColumnSize = objectFieldDetails.DisplayInLookupColumnSize;
+            //newObjectField.SearchFields = objectFieldDetails.SearchFields;
+            newObjectField.ColumnHeaderTemplateName = objectFieldDetails.ColumnHeaderTemplateName;
+            newObjectField.CustomerPermissionTypeCode = objectFieldDetails.CustomerPermissionTypeCode;
+            newObjectField.AgentPermissionTypeCode = objectFieldDetails.AgentPermissionTypeCode;
+            newObjectField.CustomPickListCode = objectFieldDetails.CustomPickListCode;
+            newObjectField.NumberOfDigits = objectFieldDetails.NumberOfDigits;
+            newObjectField.DigitsAfterPoint = objectFieldDetails.DigitsAfterPoint;
+
+            newObjectField.DependencyFilter1IsList = objectFieldDetails.DependencyFilter1IsList;
+            newObjectField.DependencyFilter2IsList = objectFieldDetails.DependencyFilter2IsList;
+            newObjectField.DependencyFilter3IsList = objectFieldDetails.DependencyFilter3IsList;
+            newObjectField.IsMaxLength = objectFieldDetails.IsMaxLength;
+
+            newObjectField.HasTemplate = objectFieldDetails.HasTemplate;
+            newObjectField.HtmlHeaderComponentName = objectFieldDetails.HtmlHeaderComponentName;
+            newObjectField.HtmlHeaderComponentUrl = objectFieldDetails.HtmlHeaderComponentUrl;
+            newObjectField.HtmlListComponentName = objectFieldDetails.HtmlListComponentName;
+            newObjectField.HtmlListComponentUrl = objectFieldDetails.HtmlListComponentUrl;
+            newObjectField.AllowedinAutomationConditions = objectFieldDetails.AllowedinAutomationConditions;
+            newObjectField.AutomationEmailRecipient = objectFieldDetails.AutomationEmailRecipient;
+            newObjectField.CanAutomateSetValue = objectFieldDetails.CanAutomateSetValue;
+            newObjectField.CopyToDW = objectFieldDetails.CopyToDW;
+
+            newObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
+            newObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
+            newObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
+            newObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
+            newObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
+            newObjectField.RecordType = objectFieldDetails.RecordType;
+
+
+
+            if (newObjectField.IsCustomFilter)
+            {
+                //newObjectField.CanFilter = true;
+            }
+
+            newObjectField.GeneratedComponentPath = objectFieldDetails.GeneratedComponentPath;
+            addedFields.Add(newObjectField);
+
+
+
+
+        }
+
+    }
+
+    public static class MyIdCounter
+    {
+        public static int IdLastNumber = 1;
+        public static Dictionary<string, int> TablesCounters = new Dictionary<string, int>();
+        public static string GetNumber(string tableName, int tenant)
+        {
+            int lastnumber = 1;
+            if (TablesCounters.ContainsKey(tableName))
+            {
+                lastnumber = TablesCounters[tableName] + 1;
+                TablesCounters[tableName] = lastnumber;
+
+            }
+            else
+            {
+                TablesCounters.Add(tableName, 1);
+            }
+
+            return "9-" + lastnumber;
+        }
     }
 }

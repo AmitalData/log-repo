@@ -137,7 +137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -193,7 +193,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -249,7 +249,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -305,13 +305,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup TMProjectCategoryQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a849", Name = " Query Group" }, queryGroupRepository);
@@ -324,7 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }
 
 	         
-	        List<ObjectField> TMProjectCategoryObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TMProjectCategory").ToList();   
+	        //List<ObjectField> TMProjectCategoryObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TMProjectCategory").ToList();   
 
 			   TextCode TMProjectCategoryTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMProjectCategory.Q.AllCategories", DefaultText = @"All Categories",LocalDefaultText = "All Categories", ObjectTableId = TMProjectCategoryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TMProjectCategoryFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProjectCategory.Q.AllCategories", ObjectTableId = TMProjectCategoryObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProjectCategoryFeatures.AllCategories", NameTextCodeDefaultText = "All Categories", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -335,9 +335,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllCategoriesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectCategoryTextCode_0.Id, NameTextCodeCode = TMProjectCategoryTextCode_0.Code, ObjectTableName = "TMProjectCategory", Code = "All Categories",  QueryGroupCode = "a849", IndexOrder = 0, Tenant = 0, ObjectTableId = TMProjectCategoryObjectTable.Id, QuerySection = "TMProjectCategory", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectCategoryFeature_0.Id,FeatureUniqeCode= TMProjectCategoryFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllCategoriesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCategoriesQuery.Id,QueryCode = AllCategoriesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TMProjectCategoryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TMProjectCategoryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCategoriesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCategoriesQuery.Id,QueryCode = AllCategoriesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TMProjectCategory.Name" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCategoriesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCategoriesQuery.Id,QueryCode = AllCategoriesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TMProjectCategoryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TMProjectCategoryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCategoriesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCategoriesQuery.Id,QueryCode = AllCategoriesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TMProjectCategory.Inactive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -345,21 +345,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable TMProjectCategoryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMProjectCategory" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> TMProjectCategoryObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TMProjectCategory").ToList();
+		   //List<ObjectField> TMProjectCategoryObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TMProjectCategory").ToList();
 		       
 	      
 
 	         Screen TMProjectCategoryGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMProjectCategory.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TMProjectCategoryObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TMProjectCategoryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMProjectCategoryGeneralTabScreenScreen0.Id,ScreenCode = TMProjectCategoryGeneralTabScreenScreen0.Code, ObjectFieldCode = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TMProjectCategoryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TMProjectCategoryGeneralTabScreenScreen0.Id,ScreenCode = TMProjectCategoryGeneralTabScreenScreen0.Code, ObjectFieldCode = "TMProjectCategory.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TMProjectCategoryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TMProjectCategoryGeneralTabScreenScreen0.Id,ScreenCode = TMProjectCategoryGeneralTabScreenScreen0.Code, ObjectFieldCode = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TMProjectCategoryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TMProjectCategoryGeneralTabScreenScreen0.Id,ScreenCode = TMProjectCategoryGeneralTabScreenScreen0.Code, ObjectFieldCode = "TMProjectCategory.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen TMProjectCategoryTMProjectCategoryHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMProjectCategory.HeaderScreen", Name = "TMProjectCategoryHeaderScreen", ObjectTableId = TMProjectCategoryObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TMProjectCategoryTMProjectCategoryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMProjectCategoryTMProjectCategoryHeaderScreenScreen1.Id,ScreenCode = TMProjectCategoryTMProjectCategoryHeaderScreenScreen1.Code, ObjectFieldCode = TMProjectCategoryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TMProjectCategoryTMProjectCategoryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TMProjectCategoryTMProjectCategoryHeaderScreenScreen1.Id,ScreenCode = TMProjectCategoryTMProjectCategoryHeaderScreenScreen1.Code, ObjectFieldCode = "TMProjectCategory.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TMProjectCategoryObjectTable.HeaderScreenId = TMProjectCategoryTMProjectCategoryHeaderScreenScreen1.Id;
 		    TMProjectCategoryObjectTable.HeaderScreenCode = TMProjectCategoryTMProjectCategoryHeaderScreenScreen1.Code;

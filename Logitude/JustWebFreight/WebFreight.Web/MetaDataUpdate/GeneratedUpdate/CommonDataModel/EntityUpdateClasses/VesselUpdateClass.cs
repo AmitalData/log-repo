@@ -138,7 +138,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -202,7 +202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -266,7 +266,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "EnglishName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -330,7 +330,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -392,7 +392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ComputedLocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -456,7 +456,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AddedManually",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -520,7 +520,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -585,7 +585,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Notes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -647,7 +647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -711,7 +711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IMOCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -774,7 +774,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CountryId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -836,7 +836,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CountryName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -900,13 +900,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CountryCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup VesselQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "VSSL", Name = "Vessels" }, queryGroupRepository);
@@ -919,7 +919,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }
 
 	         
-	        List<ObjectField> VesselObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Vessel").ToList();   
+	        //List<ObjectField> VesselObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Vessel").ToList();   
 
 			   TextCode VesselTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel.Q.Vessels", DefaultText = @"Vessels",LocalDefaultText = null, ObjectTableId = VesselObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature VesselFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VESSELS", ObjectTableId = VesselObjectTable.Id, Tenant = 0, NameTextCodeCode = "Vessel.Features.Vessels", NameTextCodeDefaultText = "Vessels", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -930,17 +930,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query VesselsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VesselTextCode_0.Id, NameTextCodeCode = VesselTextCode_0.Code, ObjectTableName = "Vessel", Code = "Vessels",  QueryGroupCode = "VSSL", IndexOrder = 0, Tenant = 0, ObjectTableId = VesselObjectTable.Id, QuerySection = "Vessel", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VesselFeature_0.Id,FeatureUniqeCode= VesselFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn VesselsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Vessel.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VesselsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Vessel.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VesselsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Vessel.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VesselsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "AddedManually" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Vessel.AddedManually" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VesselsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Vessel.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VesselsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == VesselObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VesselsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VesselsQuery.Id,QueryCode = VesselsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Vessel.Notes" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -948,17 +948,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {   
 
 		   ObjectTable VesselObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Vessel" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> VesselObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Vessel").ToList();
+		   //List<ObjectField> VesselObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Vessel").ToList();
 		       
 	      
 
 	         Screen VesselHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Vessel.HeaderScreen", Name = "Header Screen", ObjectTableId = VesselObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField VesselVesselHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VesselVesselHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = "Vessel.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VesselVesselHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VesselVesselHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = "Vessel.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VesselVesselHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = VesselObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().Id, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = VesselObjectFields.Where(d => d.FieldName == "AddedManually").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VesselVesselHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = VesselHeaderScreenScreen0.Id,ScreenCode = VesselHeaderScreenScreen0.Code, ObjectFieldCode = "Vessel.AddedManually", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    VesselObjectTable.HeaderScreenId = VesselHeaderScreenScreen0.Id;
 		    VesselObjectTable.HeaderScreenCode = VesselHeaderScreenScreen0.Code;

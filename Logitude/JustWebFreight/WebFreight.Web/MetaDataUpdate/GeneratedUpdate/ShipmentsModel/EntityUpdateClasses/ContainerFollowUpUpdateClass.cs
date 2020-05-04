@@ -134,7 +134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -199,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ShipmentNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -264,7 +264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "CustomerName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -329,7 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "CustomerContactName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -394,7 +394,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "CarrierName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -459,7 +459,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ShipperName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -524,7 +524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ConsigneeName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -589,7 +589,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "LongMaster",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -654,7 +654,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "House",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -721,7 +721,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "TransportModeId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -788,7 +788,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DirectionId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -853,7 +853,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ShipmentLevelName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -918,7 +918,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ShipmentType",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -983,7 +983,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ContainerTypeName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1048,7 +1048,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ContainerNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1113,7 +1113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "Volume",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1178,7 +1178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "IsDangerous",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1243,7 +1243,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "MarksAndNumbers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1308,7 +1308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "Description",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1371,7 +1371,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "IsDeliveryFU",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1435,7 +1435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1497,7 +1497,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryETD",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1559,7 +1559,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryATD",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1621,7 +1621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryETA",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1683,7 +1683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryATA",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1747,7 +1747,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryOn",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1810,7 +1810,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "IsEmptyContainerReturnFU",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1874,7 +1874,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "EmptyContainerReturnId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1936,7 +1936,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "EmptyContainerReturnETD",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1998,7 +1998,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "EmptyContainerReturnATD",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2060,7 +2060,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "EmptyContainerReturnETA",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2122,7 +2122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "EmptyContainerReturnATA",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2186,7 +2186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ReturnOn",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2248,7 +2248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ArrivedNotDelivered",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2310,7 +2310,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveredNotReturned",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2372,7 +2372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "InTransit",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2437,7 +2437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ConsigneeReference",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2502,7 +2502,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryDeparture",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2567,7 +2567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryArrival",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2634,7 +2634,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryFrom",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2701,7 +2701,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryTo",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2766,7 +2766,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ReturnDeparture",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2831,7 +2831,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ReturnArrival",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2898,7 +2898,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "EmptyContainerReturnFrom",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2965,7 +2965,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "EmptyContainerReturnTo",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3029,7 +3029,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ShipperId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3093,7 +3093,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ConsigneeId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3157,7 +3157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "CustomerId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3221,7 +3221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "CarrierId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3286,7 +3286,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ShipperSeal",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3350,7 +3350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryTransportModeCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3416,7 +3416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "DeliveryTransportModeName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3480,7 +3480,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ECRTransportModeCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3546,7 +3546,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ECRTransportModeName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3611,7 +3611,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "VesselName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3676,7 +3676,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "ShipmentNotes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3735,13 +3735,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ContainerFollowUpQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CNFL", Name = "Containers Follow Up" }, queryGroupRepository);
@@ -3754,7 +3754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }
 
 	         
-	        List<ObjectField> ContainerFollowUpObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ContainerFollowUp").ToList();   
+	        //List<ObjectField> ContainerFollowUpObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ContainerFollowUp").ToList();   
 
 			   TextCode ContainerFollowUpTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.ArrivedNotDelivered", DefaultText = @"Arrived Not Delivered",LocalDefaultText = null, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ContainerFollowUpFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ArrivedNotDelivered", ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.ArrivedNotDelivered", NameTextCodeDefaultText = "Arrived Not Delivered", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -3774,29 +3774,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			  Query ArrivedNotDeliveredQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerFollowUpTextCode_0.Id, NameTextCodeCode = ContainerFollowUpTextCode_0.Code, ObjectTableName = "ContainerFollowUp", Code = "ArrivedNotDelivered",  EditWizardComponentPath = "./ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardComponent",
 			   QueryGroupCode = "CNFL", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_0.Id,FeatureUniqeCode= ContainerFollowUpFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ArrivedNotDeliveredQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContainerFollowUp.ContainerTypeName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerNumber" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerNumber" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContainerFollowUp.ContainerNumber" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ShipperSeal" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ShipperSeal" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContainerFollowUp.ShipperSeal" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Volume" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Volume" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContainerFollowUp.Volume" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "IsDangerous" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "IsDangerous" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ContainerFollowUp.IsDangerous" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "MarksAndNumbers" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "MarksAndNumbers" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ContainerFollowUp.MarksAndNumbers" , ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ContainerFollowUp.Description" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ContainerFollowUp.DeliveryTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "EmptyContainerReturnTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "EmptyContainerReturnTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ContainerFollowUp.EmptyContainerReturnTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ContainerFollowUp.DeliveryArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ReturnArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ReturnArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ArrivedNotDeliveredQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ArrivedNotDelivered" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ArrivedNotDelivered" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ArrivedNotDeliveredQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.ArrivedNotDelivered", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -3804,29 +3804,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			  Query DeliveredNotReturnedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerFollowUpTextCode_1.Id, NameTextCodeCode = ContainerFollowUpTextCode_1.Code, ObjectTableName = "ContainerFollowUp", Code = "DeliveredNotReturned",  EditWizardComponentPath = "./ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardComponent",
 			   QueryGroupCode = "CNFL", IndexOrder = 1, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_1.Id,FeatureUniqeCode= ContainerFollowUpFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn DeliveredNotReturnedQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContainerFollowUp.ContainerTypeName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerNumber" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerNumber" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContainerFollowUp.ContainerNumber" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ShipperSeal" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ShipperSeal" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContainerFollowUp.ShipperSeal" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Volume" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Volume" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContainerFollowUp.Volume" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "IsDangerous" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "IsDangerous" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ContainerFollowUp.IsDangerous" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "MarksAndNumbers" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "MarksAndNumbers" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ContainerFollowUp.MarksAndNumbers" , ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ContainerFollowUp.Description" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ContainerFollowUp.DeliveryTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "EmptyContainerReturnTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "EmptyContainerReturnTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ContainerFollowUp.EmptyContainerReturnTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ContainerFollowUp.DeliveryArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ReturnArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ReturnArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter DeliveredNotReturnedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveredNotReturned" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveredNotReturned" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DeliveredNotReturnedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.DeliveredNotReturned", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -3834,29 +3834,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			  Query InTransitQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerFollowUpTextCode_2.Id, NameTextCodeCode = ContainerFollowUpTextCode_2.Code, ObjectTableName = "ContainerFollowUp", Code = "InTransit",  EditWizardComponentPath = "./ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardComponent",
 			   QueryGroupCode = "CNFL", IndexOrder = 2, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_2.Id,FeatureUniqeCode= ContainerFollowUpFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn InTransitQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerTypeName" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContainerFollowUp.ContainerTypeName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerNumber" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ContainerNumber" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContainerFollowUp.ContainerNumber" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ShipperSeal" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ShipperSeal" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContainerFollowUp.ShipperSeal" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Volume" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Volume" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContainerFollowUp.Volume" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "IsDangerous" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "IsDangerous" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ContainerFollowUp.IsDangerous" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "MarksAndNumbers" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "MarksAndNumbers" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ContainerFollowUp.MarksAndNumbers" , ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ContainerFollowUp.Description" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ContainerFollowUp.DeliveryTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "EmptyContainerReturnTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "EmptyContainerReturnTo" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ContainerFollowUp.EmptyContainerReturnTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "DeliveryArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ContainerFollowUp.DeliveryArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ReturnArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "ReturnArrival" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter InTransitQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ContainerFollowUpObjectFields.Where(d => d.FieldName == "InTransit" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContainerFollowUpObjectFields.Where(d => d.FieldName == "InTransit" && d.ObjectTableId == ContainerFollowUpObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InTransitQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.InTransit", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -3865,7 +3865,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    {   
 
 		   ObjectTable ContainerFollowUpObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ContainerFollowUp" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> ContainerFollowUpObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ContainerFollowUp").ToList();
+		   //List<ObjectField> ContainerFollowUpObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ContainerFollowUp").ToList();
 		       
 	      
 

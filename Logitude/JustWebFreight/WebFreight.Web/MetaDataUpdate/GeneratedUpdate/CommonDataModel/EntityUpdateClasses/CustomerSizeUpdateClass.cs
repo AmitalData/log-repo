@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -200,7 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -264,7 +264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -325,7 +325,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SearchFields",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -389,13 +389,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Order",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CustomerSizeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CUSS", Name = "Customer Size" }, queryGroupRepository);
@@ -408,7 +408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }
 
 	         
-	        List<ObjectField> CustomerSizeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerSize").ToList();   
+	        //List<ObjectField> CustomerSizeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerSize").ToList();   
 
 			   TextCode CustomerSizeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.Q.AllCustomerSizes", DefaultText = @"Customer Sizes",LocalDefaultText = null, ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CustomerSizeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCUSTOMERSIZES", ObjectTableId = CustomerSizeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerSize.Features.AllCustomerSizes", NameTextCodeDefaultText = "All Customer Sizes", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -419,11 +419,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query AllCustomerSizesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerSizeTextCode_0.Id, NameTextCodeCode = CustomerSizeTextCode_0.Code, ObjectTableName = "CustomerSize", Code = "All Customer Sizes",  QueryGroupCode = "CUSS", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerSizeObjectTable.Id, QuerySection = "CustomerSize", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerSizeFeature_0.Id,FeatureUniqeCode= CustomerSizeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllCustomerSizesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id,QueryCode = AllCustomerSizesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CustomerSizeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CustomerSizeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomerSizesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id,QueryCode = AllCustomerSizesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomerSize.Name" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCustomerSizesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id,QueryCode = AllCustomerSizesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Order" && d.ObjectTableId == CustomerSizeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Order" && d.ObjectTableId == CustomerSizeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomerSizesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id,QueryCode = AllCustomerSizesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomerSize.Order" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCustomerSizesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id,QueryCode = AllCustomerSizesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomerSizeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomerSizeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomerSizesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerSizesQuery.Id,QueryCode = AllCustomerSizesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomerSize.InActive" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -431,15 +431,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {   
 
 		   ObjectTable CustomerSizeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CustomerSizeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerSize").ToList();
+		   //List<ObjectField> CustomerSizeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerSize").ToList();
 		       
 	      
 
 	         Screen CustomerSizeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerSize.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomerSizeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CustomerSizeHeaderScreenScreen0.Id,ScreenCode = CustomerSizeHeaderScreenScreen0.Code, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerSizeHeaderScreenScreen0.Id,ScreenCode = CustomerSizeHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerSize.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().Id, ScreenId = CustomerSizeHeaderScreenScreen0.Id,ScreenCode = CustomerSizeHeaderScreenScreen0.Code, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerSizeHeaderScreenScreen0.Id,ScreenCode = CustomerSizeHeaderScreenScreen0.Code, ObjectFieldCode = "CustomerSize.Order", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomerSizeObjectTable.HeaderScreenId = CustomerSizeHeaderScreenScreen0.Id;
 		    CustomerSizeObjectTable.HeaderScreenCode = CustomerSizeHeaderScreenScreen0.Code;
@@ -449,11 +449,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CustomerSizeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerSize.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomerSizeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "Order").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.Order", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomerSizeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomerSizeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerSizeCustomerSizeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomerSizeGeneralTabScreenScreen1.Id,ScreenCode = CustomerSizeGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomerSize.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

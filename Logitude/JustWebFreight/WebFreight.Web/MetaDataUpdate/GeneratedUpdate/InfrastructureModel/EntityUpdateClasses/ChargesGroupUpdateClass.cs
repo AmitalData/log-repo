@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -204,7 +204,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -268,7 +268,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -331,7 +331,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -394,7 +394,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HelpTextCode =  "Local Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -453,13 +453,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ChargesGroupQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CARG", Name = "ChargesGroups" }, queryGroupRepository);
@@ -472,7 +472,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             }
 
 	         
-	        List<ObjectField> ChargesGroupObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ChargesGroup").ToList();   
+	        //List<ObjectField> ChargesGroupObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ChargesGroup").ToList();   
 
 			   TextCode ChargesGroupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesGroup.Q.AllChargesGroups", DefaultText = @"All Charges Groups",LocalDefaultText = null, ObjectTableId = ChargesGroupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ChargesGroupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCHARGESGROUP", ObjectTableId = ChargesGroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesGroup.Features.AllChargesGroups", NameTextCodeDefaultText = "All Charges Groups", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -483,9 +483,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 			  Query AllChargesGroupsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ChargesGroupTextCode_0.Id, NameTextCodeCode = ChargesGroupTextCode_0.Code, ObjectTableName = "ChargesGroup", Code = "All Charges Groups",  QueryGroupCode = "CARG", IndexOrder = 0, Tenant = 0, ObjectTableId = ChargesGroupObjectTable.Id, QuerySection = "ChargesGroup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ChargesGroupFeature_0.Id,FeatureUniqeCode= ChargesGroupFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllChargesGroupsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChargesGroupsQuery.Id,QueryCode = AllChargesGroupsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ChargesGroupObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ChargesGroupObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesGroupObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ChargesGroupObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllChargesGroupsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChargesGroupsQuery.Id,QueryCode = AllChargesGroupsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ChargesGroup.Code" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllChargesGroupsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChargesGroupsQuery.Id,QueryCode = AllChargesGroupsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ChargesGroupObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ChargesGroupObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ChargesGroupObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ChargesGroupObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllChargesGroupsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChargesGroupsQuery.Id,QueryCode = AllChargesGroupsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ChargesGroup.Name" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -493,17 +493,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    {   
 
 		   ObjectTable ChargesGroupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChargesGroup" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> ChargesGroupObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ChargesGroup").ToList();
+		   //List<ObjectField> ChargesGroupObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ChargesGroup").ToList();
 		       
 	      
 
 	         Screen ChargesGroupHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChargesGroup.HeaderScreen", Name = "Header Screen", ObjectTableId = ChargesGroupObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ChargesGroupChargesGroupHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ChargesGroupObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ChargesGroupHeaderScreenScreen0.Id,ScreenCode = ChargesGroupHeaderScreenScreen0.Code, ObjectFieldCode = ChargesGroupObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ChargesGroupChargesGroupHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ChargesGroupHeaderScreenScreen0.Id,ScreenCode = ChargesGroupHeaderScreenScreen0.Code, ObjectFieldCode = "ChargesGroup.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ChargesGroupChargesGroupHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ChargesGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ChargesGroupHeaderScreenScreen0.Id,ScreenCode = ChargesGroupHeaderScreenScreen0.Code, ObjectFieldCode = ChargesGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ChargesGroupChargesGroupHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ChargesGroupHeaderScreenScreen0.Id,ScreenCode = ChargesGroupHeaderScreenScreen0.Code, ObjectFieldCode = "ChargesGroup.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ChargesGroupChargesGroupHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = ChargesGroupObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = ChargesGroupHeaderScreenScreen0.Id,ScreenCode = ChargesGroupHeaderScreenScreen0.Code, ObjectFieldCode = ChargesGroupObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ChargesGroupChargesGroupHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ChargesGroupHeaderScreenScreen0.Id,ScreenCode = ChargesGroupHeaderScreenScreen0.Code, ObjectFieldCode = "ChargesGroup.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ChargesGroupObjectTable.HeaderScreenId = ChargesGroupHeaderScreenScreen0.Id;
 		    ChargesGroupObjectTable.HeaderScreenCode = ChargesGroupHeaderScreenScreen0.Code;
@@ -513,13 +513,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 	         Screen ChargesGroupGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChargesGroup.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ChargesGroupObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ChargesGroupObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = ChargesGroupObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = "ChargesGroup.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = ChargesGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = ChargesGroupObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = "ChargesGroup.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = ChargesGroupObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = ChargesGroupObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = "ChargesGroup.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = ChargesGroupObjectFields.Where(d => d.FieldName == "ViewOrder").FirstOrDefault().Id, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = ChargesGroupObjectFields.Where(d => d.FieldName == "ViewOrder").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ChargesGroupChargesGroupGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ChargesGroupGeneralTabScreenScreen1.Id,ScreenCode = ChargesGroupGeneralTabScreenScreen1.Code, ObjectFieldCode = "ChargesGroup.ViewOrder", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

@@ -36,15 +36,36 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     DefaultTextPlural = textCodeDetails.DefaultTextPlural,
                     DefaultText = textCodeDetails.DefaultText,
                     Code = textCodeDetails.Code,
-                    Id = IdCounter.GetNumber("TextCode",textCodeDetails.Tenant).ToString(),
+                    Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode", 100, textCodeDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode",textCodeDetails.Tenant).ToString(),
                     ObjectTableId = textCodeDetails.ObjectTableId,
                     Tenant = textCodeDetails.Tenant,
-                    LocalDefaultText=textCodeDetails.LocalDefaultText,
+                    LocalDefaultText = textCodeDetails.LocalDefaultText,
                     IsSpellChecked = textCodeDetails.IsSpellChecked,
-            };
+                };
                 textCodeRepository.Add(newTextCode);
                 return newTextCode;
             }
         }
+
+
+        public static TextCode AddTextCode(TextCodeDetails textCodeDetails, List<TextCode> addedTextCodes)
+        {
+            TextCode newTextCode = new TextCode()
+            {
+                TextCodeTypeCode = textCodeDetails.TextCodeTypeCode,
+                DefaultTextPlural = textCodeDetails.DefaultTextPlural,
+                DefaultText = textCodeDetails.DefaultText,
+                Code = textCodeDetails.Code,
+                Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode", 100, textCodeDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode",textCodeDetails.Tenant).ToString(),
+                ObjectTableId = textCodeDetails.ObjectTableId,
+                Tenant = textCodeDetails.Tenant,
+                LocalDefaultText = textCodeDetails.LocalDefaultText,
+                IsSpellChecked = textCodeDetails.IsSpellChecked,
+            };
+            addedTextCodes.Add(newTextCode);
+            return newTextCode;
+
+        }
+
     }
 }
