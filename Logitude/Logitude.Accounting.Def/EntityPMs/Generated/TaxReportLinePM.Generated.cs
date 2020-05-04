@@ -574,6 +574,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? totalInvoiceAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalInvoiceAmount  
+	   {
+	    
+	     get
+		{
+		   return totalInvoiceAmount;
+		 }
+		 set
+		 {
+		   if(totalInvoiceAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalInvoiceAmount",OldValue=totalInvoiceAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalInvoiceAmount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
