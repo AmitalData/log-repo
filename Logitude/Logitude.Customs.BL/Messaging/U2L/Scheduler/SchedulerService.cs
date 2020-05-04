@@ -97,6 +97,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 case "DIAMONDS":
                     DeclarationChecksForDiamonds();
                     break;
+                case "DeletePending":
+                    DeletePending();
+                    break;
                 case "TEST":
                     SendGenericRequest();
                     break;
@@ -109,6 +112,79 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             MyGenericResponseObj.Stage = "Done All ";
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
 
+        }
+
+        private void DeletePending()
+        {
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM;
+            if (!String.IsNullOrWhiteSpace(_LogitudeScheduler.Param1))
+            {
+                GetDeclarationPM(_LogitudeScheduler.Param1);
+                if (_MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
+                }
+                else
+                {
+                    var declarationPendingCode = _LogitudeScheduler.Param2;
+                    if (String.IsNullOrWhiteSpace(declarationPendingCode))
+                    {
+                        throw new BusinessErrorException("Pending code is missing");
+                    }
+
+                    if (_MyDeclarationPM.DeclarationStatusTypeCode == "1")
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Status is 1 (canceled) " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+                    if (_MyDeclarationPM.IsClose)
+                    {
+                        AppendLogLine("Declaration Status Request canceled because Declaration Is Closed " + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                        return;
+                    }
+
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                    currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+
+
+                    if (currentDeclarationCourierStatusPM != null)
+                    {
+                        CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
+                        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(declarationPendingCode, false, false);
+                        if (courierPendingReasonPM == null)
+                        {
+                            LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");
+                            return;
+                        }
+                        LogMessagingUtil.Instance.AppendLine("Pending - " + declarationPendingCode);
+                        DeclarationPendingPM _declarationPendingPM = null;
+                        if (currentDeclarationCourierStatusPM.DeclarationPendings != null && currentDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+                        {
+                            _declarationPendingPM = currentDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == currentDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == declarationPendingCode).FirstOrDefault();
+                        }
+                        if (_declarationPendingPM == null)
+                        {
+                            LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בהצהרה");
+                            return;
+                        }
+                        else if (_declarationPendingPM.Status != "A")
+                        {
+                            LogMessagingUtil.Instance.AppendLine(" Pending = " + declarationPendingCode + " לא פעיל");
+                            return;
+                        }
+                        _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+                        _declarationPendingPM.Status = "S";
+                        LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code " + declarationPendingCode + " as Solved"); 
+                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                    }
+                }
+            }
+            else
+            {
+                throw new BusinessErrorException("Declaration ID is missing");
+            }
         }
 
         private void SendDeclarationStatusRequest()
