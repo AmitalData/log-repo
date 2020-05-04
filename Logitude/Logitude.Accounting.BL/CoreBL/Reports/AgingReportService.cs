@@ -519,7 +519,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 }
                 CurrencyQuery _CurrencyQuery = new CurrencyQuery(_Param.Tenant);
                 var currencies = _CurrencyQuery.GetCurrenciesByTenantPM(_Param.Tenant);
+
                 List<PeriodMExtended> namedPeriods = MapExtended(reportList, periodMExtendeds, currencies);
+
                 //
 
                 namedPeriods =
