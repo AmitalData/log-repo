@@ -73,6 +73,7 @@ export class LoginComponent implements OnInit {
     public dataLoaded: boolean = false;
     public ShowTwoFactorAuthenScreen: boolean = false;
     public InvalidVerificationCode: boolean = false;
+    private generalTableResourcesIsLoaded: boolean = false;
     public DefultText: string;
     //public LogoURL: string = "./Images/ApplicationLogo/UnifreightLogo.jpg";
     //public SampleLogoURL: string = "./Images/ApplicationLogo/UnifreightLogo.jpg";
@@ -506,7 +507,8 @@ export class LoginComponent implements OnInit {
                 });
 
                 CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response:any) => {
-                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {
+                  this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response: any) => {
+                    this.generalTableResourcesIsLoaded = true;
                         this.IncreaseProgressBar("General Resources");
                         //26
                     });
@@ -928,7 +930,7 @@ export class LoginComponent implements OnInit {
     IncreaseProgressBar(loadOPName: string = "") {
         console.log(loadOPName + "==>Completed Login Loads Count: " + this.CompletedLoadsCount);
         if (this.TotalNumberOfLoads == 0) {
-            this.TotalNumberOfLoads = 37;
+            this.TotalNumberOfLoads = 39;
 
             if (!SessionLocator.UseCachedData) {
                 this.TotalNumberOfLoads += 1;
@@ -964,7 +966,7 @@ export class LoginComponent implements OnInit {
                 }
             }
 
-            if (this.CompletedLoadsCount == this.TotalNumberOfLoads) {
+          if (this.CompletedLoadsCount === this.TotalNumberOfLoads && this.generalTableResourcesIsLoaded === true) {
                 console.log("===============>Changing Page<==================");
                 ServiceLocator.RulesValidator = new RulesValidator();
                 this.timerToken = setTimeout(() => this.ChangePage(), 1000);
