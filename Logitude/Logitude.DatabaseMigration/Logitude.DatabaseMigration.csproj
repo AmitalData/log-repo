@@ -2355,10 +2355,17 @@
     <Compile Include="Migrations\202004300503107_ChangeMinmumBillingDataType.Designer.cs">
       <DependentUpon>202004300503107_ChangeMinmumBillingDataType.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.cs" />
     <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.Designer.cs">
       <DependentUpon>202005031054228_FixReferenceLengthInTransferLine_Samar.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202005031303293_TaxReportLineTotalInvoiceAmountMigration.cs" />
+    <Compile Include="Migrations\202005031303293_TaxReportLineTotalInvoiceAmountMigration.Designer.cs">
+      <DependentUpon>202005031303293_TaxReportLineTotalInvoiceAmountMigration.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4259,9 +4266,15 @@
     <EmbeddedResource Include="Migrations\202004300503107_ChangeMinmumBillingDataType.resx">
       <DependentUpon>202004300503107_ChangeMinmumBillingDataType.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.resx">
       <DependentUpon>202005031054228_FixReferenceLengthInTransferLine_Samar.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202005031303293_TaxReportLineTotalInvoiceAmountMigration.resx">
+      <DependentUpon>202005031303293_TaxReportLineTotalInvoiceAmountMigration.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
