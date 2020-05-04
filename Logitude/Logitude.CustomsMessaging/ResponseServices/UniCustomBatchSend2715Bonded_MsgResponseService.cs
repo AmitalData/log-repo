@@ -36,6 +36,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DCAInUCSBondedWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
+            this.MyResponseData = new INF_MSG_GenericResponseData();
             bool lockit = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Singleton.CRS:2715/UDLT"));
             string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(customResponse.DocumentsFilingId, requestParams.Tenant);
 
