@@ -1279,6 +1279,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\SignStationExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\SupplierInvoiceController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\UIMessagesController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\UrouterController .cs" />
     <Compile Include="Controllers\CustomsModel\Extended\VendorCommissionController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\VehicleController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\VendorExtendedController.cs" />
