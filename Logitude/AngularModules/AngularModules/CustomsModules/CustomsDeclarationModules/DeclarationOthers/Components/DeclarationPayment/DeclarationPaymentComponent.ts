@@ -1637,7 +1637,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
             if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לא ניתן להזין תםריך בעבר");
+                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
         }
         //#endregion
 
@@ -2228,7 +2228,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 confirmWindow.Show(mess);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לםישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
+                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לאישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
                     {
                         this.RefreshDeclaration();
                         if (SessionLocator.SelectedSession.CurrentWindow != null) {
