@@ -2356,9 +2356,6 @@
       <DependentUpon>202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs</DependentUpon>
     </Compile>
 
-
-    <Compile Include="Migrations\202004300503107_ChangeMinmumBillingDataType.cs" />
-
     <Compile Include="Migrations\202004291007569_AbedAddOriginalObjectFieldCodeToDWObjectField.cs" />
     <Compile Include="Migrations\202004291007569_AbedAddOriginalObjectFieldCodeToDWObjectField.Designer.cs">
       <DependentUpon>202004291007569_AbedAddOriginalObjectFieldCodeToDWObjectField.cs</DependentUpon>
