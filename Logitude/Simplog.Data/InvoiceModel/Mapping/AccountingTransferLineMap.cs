@@ -34,7 +34,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
 
             this.Property(t => t.EntityReference)
                 .IsOptional()
-                .HasMaxLength(20)
+                .HasMaxLength(30)
                 .IsUnicode(false);
 
             this.Property(t => t.SearchFields)
