@@ -161,7 +161,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB8250",//,Batch Send 8250 per CourierMasterId
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
 "UCB8212",/// Batch Send Collateral
+
 "2892",
+
+"UCBNDCD",///  Send bonded filing
+
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
