@@ -4347,7 +4347,11 @@ User/Pass",
                                 myCommonContext.CountryCities.Add(newCity);
                                 myCount++;
                             }
-
+                           else
+                            {
+                                newCity.EnglishName = item.CityName;
+                                newCity.LocalName = item.CityName;
+                            }
                             if (myCount == 1000)
                             {
                                 myCommonContext.SaveChanges();
