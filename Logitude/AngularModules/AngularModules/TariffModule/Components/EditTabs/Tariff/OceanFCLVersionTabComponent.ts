@@ -71,7 +71,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
 
                 this.LoadVersions();                
             }
-        });
+      });
     }
     
     LoadVersions() {
@@ -176,13 +176,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                         this.isCopyButtonClicked = false;
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
-
-                    if (this.isUploadExcelFinished) {
-                        this.isUploadExcelFinished = false;
-                        CachedDataManager.RefreshTableData("Port", true);
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    }
-
+                  
                     if (this.isUpdateMissingPortsClicked) {
                         this.isUpdateMissingPortsClicked = false;
                         CachedDataManager.RefreshTableData("Port", true);
@@ -210,7 +204,6 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
         }
 
         this.isApproveButtonClicked = false;
-        this.isUploadExcelFinished = false;
         this.isCopyButtonClicked = false;
     }
 
@@ -317,21 +310,38 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
     }
     
     private ItemsCollection: OceanFCLFreightTariffLineData[] = [];
-    FillTariffLines(tariffLines: TariffLinePM[]) {
-        if (this.TariffsLinesSource != null) {
-            this.TariffsLinesSource.Clear();
-        }
+  FillTariffLines(tariffLines: TariffLinePM[]) {
+    this.LinesCount = tariffLines.length;
 
-        this.ItemsCollection = [];
-
-        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            this.ItemsCollection.push(new OceanFCLFreightTariffLineData(item, this));
-        });
-
-        this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
-      this.LinesCount = this.TariffsLinesSource.Length;
-        this.DoCompare();
+    if (this.TariffsLinesSource != null) {
+      this.TariffsLinesSource.Clear();
     }
+
+    this.ItemsCollection = [];
+
+    tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
+      this.ItemsCollection.push(new OceanFCLFreightTariffLineData(item, this));
+    });
+
+    this.InitializePager();
+    this.FillGridPagerItems();
+    this.DoCompare();
+  }
+
+FillGridPagerItems() {
+
+    var items: OceanFCLFreightTariffLineData[] = [];
+
+    if (this.ItemsCollection) {
+      var start = (this.PageIndex - 1) * this.PageSize;
+      var end = start + this.PageSize;
+
+      items = this.ItemsCollection.slice(start, end);
+    }
+
+    this.TariffsLinesSource.Clear();
+    this.TariffsLinesSource.InsertCollection(items);
+  }
 
     private DoCompare() {
         this.DeletedTariffsLines = [];
@@ -488,7 +498,9 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
             }
         }
     }
-    UploadExcel(file: any) {
+  UploadExcel(file: any) {
+    this.CurrentSession.StartBusyIndicator("Uploading...");
+
         this.FileName = null;
         if (!AppTool.IsNullOrEmpty(file.name)) {
             var name = file.name.split('.');
@@ -543,70 +555,16 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
     SendExcelToServer(filter: any) {
         this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                var tariffLines: ExcelTariffLines[] = response.Result;
-                if (tariffLines) {
-                    this.CurrentVersion.TariffLines = [];
-                    this.InsertNewRowsFromExcel(tariffLines);
-                }
+              this.CurrentSession.StopBusyIndicator();
+              CachedDataManager.RefreshTableData("Port", true);
+              this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+
+            else {
+              this.CurrentSession.StopBusyIndicator();
+              this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
             }
         });
-    }
-
-    private isUploadExcelFinished: boolean = false;
-    private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
-        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            var tariffLine = new TariffLinePM(null);
-            tariffLine.StartDate = this.StartDate;
-            tariffLine.ExpirationDate = this.InitialEnddate;
-            tariffLine.Tenant = SessionLocator.Tenant;
-            tariffLine.Version = this.CurrentVersion.Version;
-            tariffLine.OriginPortId = item.FromPortId;
-            tariffLine.OriginPortCode = item.FromPortCode;
-            tariffLine.OriginPortCombinedCode = item.FromPortCombinedCode;
-            tariffLine.OriginPortName = item.FromPortName;
-            tariffLine.DestinationPortId = item.ToPortId;
-            tariffLine.DestinationPortCode = item.ToPortCode;
-            tariffLine.DestinationPortCombinedCode = item.ToPortCombinedCode;
-            tariffLine.DestinationPortName = item.ToPortName;
-            tariffLine.OriginPortText = item.FromPortText;
-            tariffLine.DestinationPortText = item.ToPortText;
-            tariffLine.HasErrors = item.HasErrors;
-            tariffLine.ErrorText = item.ErrorText;
-            tariffLine.Index = item.Index;
-            tariffLine.Notes = item.Notes;
-            tariffLine.TransitTime = item.TransitTime;
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType1Id)) {
-                tariffLine.Surcharge1Price = item.Surcharge1Price;
-                tariffLine.Surcharge1PriceText = item.Surcharge1PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType2Id)) {
-                tariffLine.Surcharge2Price = item.Surcharge2Price;
-                tariffLine.Surcharge2PriceText = item.Surcharge2PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType3Id)) {
-                tariffLine.Surcharge3Price = item.Surcharge3Price;
-                tariffLine.Surcharge3PriceText = item.Surcharge3PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType4Id)) {
-                tariffLine.Surcharge4Price = item.Surcharge4Price;
-                tariffLine.Surcharge4PriceText = item.Surcharge4PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType5Id)) {
-                tariffLine.Surcharge5Price = item.Surcharge5Price;
-                tariffLine.Surcharge5PriceText = item.Surcharge5PriceText;
-            }
-
-            this.CurrentVersion.AddTariffLine(tariffLine);
-        });
-
-        this.EntityPM.TariffLinesAddedFromExcel = true;
-        this.isUploadExcelFinished = true;
-        this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
     }
 
     // Download Excel 
@@ -817,7 +775,108 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
         });
+  }
+
+  //Pager
+  public PageSize: number = 50;
+  public PageIndex: number = 1;
+  public TotalPagesCount: number = 1;
+  InitializePager() {
+    this.PageIndex = 1;
+
+    this.TotalPagesCount = Math.ceil(this.ItemsCollection.length / this.PageSize);
+
+    if (this.TotalPagesCount == 0) {
+      this.TotalPagesCount = 1;
     }
+
+    this.SetPagerButtonsStates();
+  }
+
+  FirstPageClick() {
+    this.PageIndex = 1;
+    this.SetPagerButtonsStates();
+    this.FillGridPagerItems();
+  }
+  PreviousPageClick() {
+    this.PageIndex = this.PageIndex - 1;
+    this.SetPagerButtonsStates();
+    this.FillGridPagerItems();
+  }
+  NextPageClick() {
+    this.PageIndex = this.PageIndex + 1;
+    this.SetPagerButtonsStates();
+    this.FillGridPagerItems();
+  }
+  LastPageClick() {
+    this.PageIndex = this.TotalPagesCount;
+    this.SetPagerButtonsStates();
+    this.FillGridPagerItems();
+  }
+
+  private isHitStateFirstButton: boolean = false;
+  get IsHitState_FirstButton() {
+    return this.isHitStateFirstButton;
+  }
+  set IsHitState_FirstButton(value: boolean) {
+    this.isHitStateFirstButton = value;
+  }
+
+  private isHitStatePrevButton: boolean = false;
+  get IsHitState_PrevButton() {
+    return this.isHitStatePrevButton;
+  }
+  set IsHitState_PrevButton(value: boolean) {
+    this.isHitStatePrevButton = value;
+  }
+
+  private isHitStateNextButton: boolean = false;
+  get IsHitState_NextButton() {
+    return this.isHitStateNextButton;
+  }
+  set IsHitState_NextButton(value: boolean) {
+    this.isHitStateNextButton = value;
+  }
+
+  private isHitStateLastButton: boolean = false;
+  get IsHitState_LastButton() {
+    return this.isHitStateLastButton;
+  }
+  set IsHitState_LastButton(value: boolean) {
+    this.isHitStateLastButton = value;
+  }
+
+   private SetPagerButtonsStates() {
+    if (this.PageIndex == 1 && this.PageIndex == this.TotalPagesCount) {
+      this.IsHitState_FirstButton = false;
+      this.IsHitState_PrevButton = false;
+      this.IsHitState_NextButton = false;
+      this.IsHitState_LastButton = false;
+    }
+
+    else if (this.PageIndex == 1 && this.PageIndex < this.TotalPagesCount) {
+      this.IsHitState_FirstButton = false;
+      this.IsHitState_PrevButton = false;
+
+      this.IsHitState_NextButton = true;
+      this.IsHitState_LastButton = true;
+    }
+
+    else if (this.PageIndex > 1 && this.PageIndex == this.TotalPagesCount) {
+      this.IsHitState_FirstButton = true;
+      this.IsHitState_PrevButton = true;
+
+      this.IsHitState_NextButton = false;
+      this.IsHitState_LastButton = false;
+    }
+
+    else if (this.PageIndex > 1 && this.PageIndex < this.TotalPagesCount) {
+      this.IsHitState_FirstButton = true;
+      this.IsHitState_PrevButton = true;
+      this.IsHitState_NextButton = true;
+      this.IsHitState_LastButton = true;
+    }
+  }
 }
 
 export class VersionClass {
