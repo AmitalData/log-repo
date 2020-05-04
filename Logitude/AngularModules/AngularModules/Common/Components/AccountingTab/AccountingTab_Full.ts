@@ -20,6 +20,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 
 export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnInit,AfterViewInit {
     @ViewChild("TabPlaceholder", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+
     public EntityPM: any = null;
     public ObjectTableName: string;
     public DataContext = this;
