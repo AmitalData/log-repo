@@ -2373,6 +2373,10 @@
     <Compile Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.Designer.cs">
       <DependentUpon>202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.cs" />
+    <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.Designer.cs">
+      <DependentUpon>202005031054228_FixReferenceLengthInTransferLine_Samar.cs</DependentUpon>
+    </Compile>
 
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
@@ -4288,6 +4292,9 @@
       <DependentUpon>202004291007569_AbedAddOriginalObjectFieldCodeToDWObjectField.cs</DependentUpon>
     </EmbeddedResource>
 
+    <EmbeddedResource Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.resx">
+      <DependentUpon>202005031054228_FixReferenceLengthInTransferLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
