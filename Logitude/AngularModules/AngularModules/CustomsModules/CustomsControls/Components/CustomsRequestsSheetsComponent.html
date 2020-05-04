@@ -458,7 +458,7 @@
                                     <td style="width: 150px"></td>
                                     <td style="width:10px"></td>
 
-                                    <td style="width: 200px; padding-right: 15px;text-align:left">
+                                    <td style="width: 200px;" >
                                         <button class="GreenButton"
                                                 style="width:90px;"
                                                 [disabled]="!IsSearchButtonEnabled"
@@ -467,23 +467,28 @@
                                         </button>
                                     </td>
 
+                             
+
+                                </tr>
+                                <tr>
+                                    <td style="width: 150px"></td>
                                     <td style="width: 150px; padding-right: 15px;">
-                                        <button class="GreenButton" *ngIf="isReAnAnalysis"
-                                                style="width:90px;"
-                                               
+                                        <button *ngIf="isReAnAnalysis"  class="Button" 
+                                                style="width:90px;"  [disabled]="!IsSearchButtonEnabled"
                                                 (click)="ReAnalysisByFilters()">
-                                           נתח מחדש
+                                            נתח מחדש
                                         </button>
                                     </td>
 
-                                    <td><div>
-    <button class="GreenButton"
-            style="width:90px;"
- *ngIf="isReAnAnalysis"
-            (click)="CancelByFilters()">
-ביטול    </button>
-</div></td>
-
+                                    <td>
+                                        <div>
+                                            <button style="width:90px;"  class="Button" 
+                                                    *ngIf="isReAnAnalysis"  [disabled]="!IsSearchButtonEnabled"
+                                                    (click)="CancelByFilters()">
+                                               ביטול בקשות
+                                            </button>
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
 
