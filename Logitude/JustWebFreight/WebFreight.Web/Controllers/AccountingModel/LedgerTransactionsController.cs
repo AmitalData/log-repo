@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL.Reports;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
@@ -469,41 +470,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
-                SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
-                SecurityUtility.CheckContactFeature("ARPayment", "READ", authToken.Tenant);
+                int tenant = GetAuthinticatedTenant();
 
-                if (arpaymentId == "undefined")
-                    arpaymentId = null;
+                if (arpaymentId == "undefined") arpaymentId = null;
 
-                var accountingContext = AccountingContext.GetContext(tenant);
-                LedgerTransactionQueryService query = new LedgerTransactionQueryService(accountingContext);
-                string accountId =  GetGLAccountIdForReconciledTransactions(billToGLAccountId, tenant, paymentCurrencyId);
-                // get reconciled transactions
-                List<LedgerTransactionPM> reconciledTransactions = new List<LedgerTransactionPM>();
-                if (arpaymentId != null) reconciledTransactions = query.GetReconciledInvoicesTransactionsForARPayment(arpaymentId, accountId, tenant);
+                string accountId = GetGLAccountIdForReconciledTransactions(billToGLAccountId, tenant, paymentCurrencyId);
 
-                // get full opened & partailly reconciled transactions
-                List<LedgerTransactionPM> openedTransactions 
-                    = query.GetOpenInvoicesTransactionsForAccount(accountId, arpaymentId, tenant);
+                ARPaymentInvoicesTransactionFetcher invoiceTransactionsFetcher = new ARPaymentInvoicesTransactionFetcher(arpaymentId, accountId, tenant);
+                var transactions = invoiceTransactionsFetcher.FetchSorted();
 
-                // concat two list
-                IEnumerable<LedgerTransactionPM> finalTransactionsList
-                    = openedTransactions
-                        .Concat(reconciledTransactions);
-
-
-                finalTransactionsList
-                    = finalTransactionsList
-                        .OrderByDescending(d => d.IsReconciled).ThenByDescending(d => d.PaymentReconciledAmount).ToList();
-
-
-                ServiceResponse response = new ServiceResponse();
-                response.Result = finalTransactionsList;
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                HttpResponseMessage reponseMessage = BuildResponseMessage(transactions);
 
                 return reponseMessage;
             }
@@ -513,6 +489,51 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
+
+        private HttpResponseMessage BuildResponseMessage(List<LedgerTransactionPM> transactions)
+        {
+            ServiceResponse response = new ServiceResponse();
+            response.Result = transactions;
+            HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+            return reponseMessage;
+        }
+
+
+        //var accountingContext = AccountingContext.GetContext(tenant);
+        //LedgerTransactionQueryService query = new LedgerTransactionQueryService(accountingContext);
+
+
+
+        //// get reconciled transactions
+        //List<LedgerTransactionPM> reconciledTransactions = new List<LedgerTransactionPM>();
+        //if (arpaymentId != null) reconciledTransactions = query.GetReconciledInvoicesTransactionsForARPayment(arpaymentId, accountId, tenant);
+
+        //// get full opened & partailly reconciled transactions
+        //List<LedgerTransactionPM> openedTransactions
+        //    = query.GetOpenInvoicesTransactionsForAccount(accountId, arpaymentId, tenant);
+
+        //// concat two list
+        //IEnumerable<LedgerTransactionPM> finalTransactionsList
+        //    = openedTransactions
+        //        .Concat(reconciledTransactions);
+
+
+        //finalTransactionsList
+        //    = finalTransactionsList
+        //        .OrderByDescending(d => d.IsReconciled).ThenByDescending(d => d.PaymentReconciledAmount).ToList();
+
+
+        private static int GetAuthinticatedTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            int tenant = authToken.Tenant;
+            SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
+            SecurityUtility.CheckContactFeature("ARPayment", "READ", authToken.Tenant);
+            return tenant;
+        }
+
         private string GetGLAccountIdForReconciledTransactions(string glAccountId, int tenant, string paymentCurrencyId)
         {
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
