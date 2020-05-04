@@ -16,8 +16,8 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {DeclarationReferantDataList} from '../../EntityLists/DeclarationReferantDataList';
+import { LocalStorageManager } from '../../../Infrastructure/Utilities/LocalStorageManager';
+import { DeclarationReferantDataList } from '../../EntityLists/DeclarationRefernatDataList';
 
 @Injectable()
 

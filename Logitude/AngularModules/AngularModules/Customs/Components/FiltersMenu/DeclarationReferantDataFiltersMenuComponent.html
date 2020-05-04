@@ -1,0 +1,69 @@
+<table>
+    <tr>
+        <td>
+            <div></div>
+        </td>
+
+        <td style="width:20px; vertical-align:middle; font-size:11px; color : #6E7172;">
+        </td>
+        <!--(ChosenListItemsChanged)="OnChosenListItemsChanged()"-->
+        <td style="width:250px; vertical-align:middle;">
+            <MultiSelectLOV [DataContext]="DataContext"
+                            [PlaceHolder]="'רפרנט'"
+                            [LayoutDirection]="'rtl'"
+                            [LOVListComponentPropName]="'LOVListUsers'"
+                            (ChosenListItemsChanged)="SelectedValueChangedEmitUser()"
+                            [ChosenListHeader]="'רפרנטים שנבחרו'"
+                            [ButtonAddLabel]="'בחר'">
+                <span class="class-MultiSelectLOV-content">
+                    <LogLov [ObjectFieldName]="'ReferentUserId'"
+                            [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"
+                            [HideColumns]="true"
+                            [LookUpTableName]="'User'"
+                            [DisplayMemberPath]="'LocalName'">
+                    </LogLov>
+                </span>
+            </MultiSelectLOV>
+        </td>
+        <td style="width:20px; vertical-align:middle; font-size:11px; color : #6E7172;">
+        </td>
+        <td style="width:250px; vertical-align:middle;">
+            <MultiSelectLOV [DataContext]="DataContext"
+                            [PlaceHolder]="'קוד חוליה'"
+                            [LayoutDirection]="'rtl'"
+                            [LOVListComponentPropName]="'LOVListDepartment'"
+                            (ChosenListItemsChanged)="SelectedValueChangedEmitDepartment()"
+                            [ChosenListHeader]="'חוליות שנבחרו'"
+                            [ButtonAddLabel]="'בחר'">
+                <span class="class-MultiSelectLOV-content">
+                    <LogLov [ObjectFieldName]="'DepartmentId'"
+                            [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"
+                            [HideColumns]="true"
+                            [LookUpTableName]="'Department'"
+                            [DisplayMemberPath]="'LocalName'">
+                    </LogLov>
+                </span>
+            </MultiSelectLOV>
+        </td>
+        <td style="width:20px; vertical-align:middle; font-size:11px; color : #6E7172;">
+        </td>
+        <td style="width:117px; vertical-align:middle;">
+            <ul class="FiltersMenu">
+                <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')" [class.SelectedFilter]="SelectedValue === 'All'">
+                    All
+                </li>
+                <li (click)="itemClicked('A')" (mouseover)="itemMouseOver('A')" (mouseleave)="itemMouseLeave('A')" [class.SelectedFilter]="SelectedValue === 'A'" title="Air">
+                    <img [id]="TransportFilter_A" class="CenterCenter" src="./Images/TransportModes/A_g.png" style="top: 1px;" />
+                </li>
+                <li (click)="itemClicked('O')" (mouseover)="itemMouseOver('O')" (mouseleave)="itemMouseLeave('O')" [class.SelectedFilter]="SelectedValue === 'O'" title="Ocean">
+                    <img [id]="TransportFilter_O" class="CenterCenter" src="./Images/TransportModes/O_g.png" style="top: 1px;" />
+                </li>
+                <li (click)="itemClicked('I')" (mouseover)="itemMouseOver('I')" (mouseleave)="itemMouseLeave('I')" [class.SelectedFilter]="SelectedValue === 'I'" title="Inland">
+                    <img [id]="TransportFilter_I" class="CenterCenter" src="./Images/TransportModes/I_g.png" style="top: 1px;" />
+                </li>
+            </ul>
+        </td>
+    </tr>
+</table>
