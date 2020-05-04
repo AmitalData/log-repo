@@ -206,7 +206,7 @@ import { ShippingLineMenuButtonsHandler } from './Components/MenuButtons/Shippin
 import { TruckerMenuButtonsHandler } from './Components/MenuButtons/TruckerMenuButtonsHandler';
 import { VendorMenuButtonsHandler } from './Components/MenuButtons/VendorMenuButtonsHandler';
 import { AirlineMenuButtonsHandler } from './Components/MenuButtons/AirlineMenuButtonsHandler';
-
+import { AccountingPartnerMenuButtonsHandler } from './Components/MenuButtons/AccountingPartnerMenuButtonsHandler';
 import {PaymentTermDateTypeListService} from './Services/StandardLists/PaymentTermDateTypeListService';
 import { NumberFormatListService } from './Services/StandardLists/NumberFormatListService';
 
@@ -449,7 +449,7 @@ export class ModuleProviders {
             case "VendorMenuButtonsHandler": { myResult = new VendorMenuButtonsHandler(); break; }
             case "TruckerMenuButtonsHandler": { myResult = new TruckerMenuButtonsHandler(); break; }
             case "AirlineMenuButtonsHandler": { myResult = new AirlineMenuButtonsHandler(); break; }
-
+          case "AccountingPartnerMenuButtonsHandler": { myResult = new AccountingPartnerMenuButtonsHandler(); break;}
             case "CarrierExtendedListService": { myResult = new CarrierExtendedListService(); break; }   
             case "PortExtendedListService": { myResult = new PortExtendedListService(); break; }   
 
