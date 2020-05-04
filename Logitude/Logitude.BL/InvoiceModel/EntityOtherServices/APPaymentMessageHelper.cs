@@ -321,7 +321,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             if (payment != null)
             {
                 entityId = payment.Id;
-                FTPFileName = "APPayment_" + payment.PaymentNo;
+                FTPFileName = ("APPayment_" + payment.PaymentNo).ToLower();
             }
 
             CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode);
