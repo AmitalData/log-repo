@@ -897,6 +897,7 @@
     <Compile Include="EntityQueryServices\CustomsAutonomyKeywordQueryService.cs" />
     <Compile Include="EntityQueryServices\DBMigrationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
+    <Compile Include="EntityQueryServices\ExceptionReasonQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoSealIdentifierQueryService.Generated.cs" />
@@ -1343,6 +1344,7 @@
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DeclarationReferantDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\GatepassRequestUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AcceptanceStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AccumalationStateUpdateService.Generated.cs" />
@@ -1423,6 +1425,8 @@
     <Compile Include="EntityUpdateServices\LogChangesService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PendingByKeywordUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.amital.cs" />
+    <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleAddUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBanksCardUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBankUpdateService.cs" />
@@ -1833,6 +1837,7 @@
     <Compile Include="Messaging\Maman\CourierGWMessageECSpclMamanResponseService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECTHRDataMamanResponseService.cs" />
     <Compile Include="Messaging\U2L\CellFile\CellFileUpsertService.cs" />
+    <Compile Include="Messaging\U2L\CommDecReferantData\CommDecReferantDataService.cs" />
     <Compile Include="Messaging\U2L\CommMasterCourier\CommMasterCourierService.cs" />
     <Compile Include="Messaging\U2L\CommDec\CommDecService.cs" />
     <Compile Include="Messaging\U2L\CourierStatus\CourierStatusService.cs" />

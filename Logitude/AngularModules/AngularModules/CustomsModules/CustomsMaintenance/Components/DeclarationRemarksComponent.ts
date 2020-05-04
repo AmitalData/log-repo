@@ -1,0 +1,70 @@
+import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
+import { BaseComponent } from "../../../Infrastructure/Components/LogitudeComponents/BaseComponent";
+import { CustomMessageWrapperComponent } from "../../CustomsControls/Components/CustomMessageWrapperComponent";
+import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from "../../CustomsRequests/Components/BaseRequestsSheetMassaging";
+import { CustomSendOptionsArgs } from "../../../Customs/DataContract/RequestParams/RequestParamsBase";
+import { DeclarationRemarksService } from "../../../Common/Services/ExtendedPMs/DeclarationRemarksService";
+import { DeclarationRemarks } from "../../../Customs/EntityPMs/Extended/DeclarationRemarks";
+import { SessionLocator } from "../../../Infrastructure/Utilities/SessionLocator";
+import { ObservableCollection } from "../../../Infrastructure/Utilities/ObservableCollection";
+import { DateTool } from "../../../Infrastructure/Tools";
+
+@Component({
+    selector: 'DeclarationRemarksComponent',
+    moduleId: module.id,
+    templateUrl: './DeclarationRemarksComponent.html',
+})
+export class DeclarationRemarksComponent
+    extends BaseComponent{
+    public DataContext:any=this;
+    public DeclarationRemarksQueryObservableList: ObservableCollection;
+    private CurrentSession = SessionLocator.SelectedSession;
+    private Entity: DeclarationRemarks[] = [];
+    
+    _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
+    constructor() {
+        super();
+        this.DeclarationRemarksQueryObservableList = new ObservableCollection([]);
+    }
+    SetWindowArgs(args: any) {
+        if (this.EntityPM != null) {
+            this.EntityPM = new DeclarationRemarks();
+        }
+        this.Entity = args.EntityPM;
+        for (let item of this.Entity){
+            this.DeclarationRemarksQueryObservableList.Insert(new RemarksComponent(item));
+        }
+        for (let entity of this.DeclarationRemarksQueryObservableList.Collection) {
+            var myFormats = DateTool.GetDateFormats(entity.StatusDate);
+            entity.StatusDate = myFormats.DateString;
+            entity.StatusTime = myFormats.ShortTimeString;
+        } 
+    }
+    public get StatusComment() { return this.EntityPM.StatusComment; }
+    public set StatusComment(newValue: string) { this.EntityPM.StatusComment = newValue; }
+}
+export class RemarksComponent extends BaseComponent{
+    public DataContext: any = this;
+    constructor(public entityPM: DeclarationRemarks) {
+        super();
+    }
+    public get Id() { return this.entityPM.StatusId; }
+    public set Id(newValue: string) { this.entityPM.StatusId = newValue; }
+
+    public get StatusDate() { return this.entityPM.StatusDate; }
+    public set StatusDate(newValue: string) { this.entityPM.StatusDate = newValue; }
+
+    public get StatuseTime() { return this.entityPM.StatuseTime; }
+    public set StatuseTime(newValue: string) { this.entityPM.StatuseTime = newValue; }
+
+    public get StatusComment() { return this.entityPM.StatusComment; }
+    public set StatusComment(newValue: string) { this.entityPM.StatusComment = newValue; }
+
+    public get StatusName() { return this.entityPM.StatusName; }
+    public set StatusName(newValue: string) { this.entityPM.StatusName = newValue; }
+
+}
+
+
+ 
+

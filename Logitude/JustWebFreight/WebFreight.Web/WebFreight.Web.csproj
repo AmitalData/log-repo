@@ -1266,6 +1266,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\DeclarartionController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\DeclarationSupplierInvoicesController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\DeclarationVehicleModificationController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\ExceptionReasonController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\GITITEMController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\GovernmentProcedureTypesController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\InterfaceManagementListExtendedController.cs" />
@@ -1274,6 +1275,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\MultiCertificatesController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\NotificationListExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PaymentOrderConnectionTableController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\ReferantExceptionExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\SignStationExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\SupplierInvoiceController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\UIMessagesController.cs" />

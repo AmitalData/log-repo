@@ -58,6 +58,9 @@
     <Compile Include="Customs\CustomFile\CourierStatus\LOGICOURIERSTATUS.cs">
       <DependentUpon>LOGICOURIERSTATUS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Customs\CustomFile\DeclarationReferantData\LOGIDECREFERANTDATA.cs">
+      <DependentUpon>LOGIDECREFERANTDATA.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Customs\CustomFile\FileAdditionalData.cs" />
     <Compile Include="Customs\CustomFile\CargoQueryContext.cs" />
     <Compile Include="Customs\CustomFile\CellFile\LOGICELLFILE.cs">
@@ -168,6 +171,12 @@
     </None>
     <None Include="Customs\CustomFile\CustomCertificatesResponse.dtd" />
     <None Include="Customs\CustomFile\CustomCertificatesResponse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\DeclarationReferantData\LOGIDECREFERANTDATA.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\DeclarationReferantData\LOGIDECREFERANTDATA.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Customs\CustomFile\LOGIDOCS.xsd">
