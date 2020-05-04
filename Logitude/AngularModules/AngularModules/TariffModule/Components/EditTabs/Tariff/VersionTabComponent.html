@@ -11,129 +11,133 @@
         <tr style="height: 1px;">
             <td>
                 <table>
-                    <tr>
-                        <td style="width:70px;">
-                            <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
+                  <tr>
+                    <td style="width:70px;">
+                      <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
 
-                        <td *ngIf="IsDraftVersion" style="width:150px;">
-                            <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                        </td>
+                    <td *ngIf="IsDraftVersion" style="width:150px;">
+                      <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
 
-                        <td *ngIf="!IsDraftVersion" style="width:130px;">
-                            {{StartDate | DateTimePipe:'SD'}}
-                        </td>
+                    <td *ngIf="!IsDraftVersion" style="width:130px;">
+                      {{StartDate | DateTimePipe:'SD'}}
+                    </td>
 
-                        <td style="width:10px;">
-                            <div></div>
-                        </td>
+                    <td style="width:10px;">
+                      <div></div>
+                    </td>
 
-                        <td style="width:100px;">
-                            <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
+                    <td style="width:100px;">
+                      <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
 
-                        <td *ngIf="IsDraftVersion" style="width:150px;">
-                            <LogDatePicker [ObjectFieldName]="'InitialEnddate'" [SelectedDateValue]="InitialEnddate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                        </td>
+                    <td *ngIf="IsDraftVersion" style="width:150px;">
+                      <LogDatePicker [ObjectFieldName]="'InitialEnddate'" [SelectedDateValue]="InitialEnddate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
 
-                        <td *ngIf="!IsDraftVersion" style="width:130px;">
-                            {{InitialEnddate | DateTimePipe:'SD'}}
-                        </td>
+                    <td *ngIf="!IsDraftVersion" style="width:130px;">
+                      {{InitialEnddate | DateTimePipe:'SD'}}
+                    </td>
 
-                        <td style="width:10px;">
-                            <div></div>
-                        </td>
+                    <td style="width:10px;">
+                      <div></div>
+                    </td>
 
-                        <td style="width:90px;" class="Label">All-In Charges: </td>
-                        <td style="width:1px;" class="Value">
-                            {{AllInCharges}}
-                        </td>
-                        <td style="width:20px;">
-                            <IconButton [Left]="5" [Name]="'Edit'" [IsSmall]="true" (click)="AllInChargesClicked()"></IconButton>
-                        </td>
+                    <td style="width:90px;" class="Label">All-In Charges: </td>
+                    <td style="width:1px;" class="Value">
+                      {{AllInCharges}}
+                    </td>
+                    <td style="width:20px;">
+                      <IconButton [Left]="5" [Name]="'Edit'" [IsSmall]="true" (click)="AllInChargesClicked()"></IconButton>
+                    </td>
 
-                        <td>
-                            <div></div>
-                        </td>
+                    <td style="width:5px;">
+                      <div></div>
+                    </td>
 
-                        <td style="width:90px;">
-                            <CheckBox [IsChecked]="IsComparToChecked" (Checked)="IsComparToChecked = $event" [Text]="'Compare to'" [IsEnabled]="!IsFirstDraft"></CheckBox>
-                        </td>
+                    <td>
+                      <div></div>
+                    </td>
 
-                        <td style="width:190px;">
-                            <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="!IsComparToChecked" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
-                        </td>
+                    <td style="width:90px;">
+                      <CheckBox [IsChecked]="IsComparToChecked" (Checked)="IsComparToChecked = $event" [Text]="'Compare to'" [IsEnabled]="!IsFirstDraft"></CheckBox>
+                    </td>
 
-                        <td style="width:5px;">
-                            <div></div>
-                        </td>
+                    <td style="width:190px;">
+                      <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="!IsComparToChecked" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
+                    </td>
 
-                        <td style="width:60px;">
-                            <LogLabel [NoObjectField]="true" [Text]="'Warning'" [DataContext]="DataContext"></LogLabel>
-                        </td>
+                    <td style="width:5px;">
+                      <div></div>
+                    </td>
 
-                        <td style="width:50px;">
-                            <LogTextBox [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'WarningPercentage'" [Text]="WarningPercentage" [DataContext]="DataContext"></LogTextBox>
-                        </td>
+                    <td style="width:60px;">
+                      <LogLabel [NoObjectField]="true" [Text]="'Warning'" [DataContext]="DataContext"></LogLabel>
+                    </td>
 
-                        <td style="width:1px;padding-left:3px;">
-                            %
-                        </td>
+                    <td style="width:50px;">
+                      <LogTextBox [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'WarningPercentage'" [Text]="WarningPercentage" [DataContext]="DataContext"></LogTextBox>
+                    </td>
 
-                        <td style="width:50px;">
-                            <div></div>
-                        </td>
+                    <td style="width:1px;padding-left:3px;">
+                      %
+                    </td>
 
-                        <td style="width: 20px;">
-                            <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Add'" (click)="AddTariffLine()"></IconButton>
-                        </td>
+                    <td style="width:50px;">
+                      <div></div>
+                    </td>
 
-                        <td style="width:5px;">
-                            <div></div>
-                        </td>
+                    <td style="width: 20px;">
+                      <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Add'" (click)="AddTariffLine()"></IconButton>
+                    </td>
 
-                        <td style="width: 20px;">
-                            <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Refresh'" (click)="RefreshPortsFromTranslations()"></IconButton>
-                        </td>
+                    <td style="width:5px;">
+                      <div></div>
+                    </td>
 
-                        <td style="width:5px;">
-                            <div></div>
-                        </td>
+                    <td style="width: 20px;">
+                      <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Refresh'" (click)="RefreshPortsFromTranslations()"></IconButton>
+                    </td>
 
-                        <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
-                            <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
-                        </td>
+                    <td style="width:5px;">
+                      <div></div>
+                    </td>
 
-                        <td style="width:5px;" *ngIf="IsApproveVersionButtonVisible">
-                            <div></div>
-                        </td>
+                    <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
+                      <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
+                    </td>
 
-                        <td style="width:70px;">
-                            <div tabindex="0" class="ToggleButton">
-                                <label>Actions</label>
-                                <img src="./Images/ToggleIcon.png" />
+                    <td style="width:5px;" *ngIf="IsApproveVersionButtonVisible">
+                      <div></div>
+                    </td>
 
-                                <div class="ToggleButtonMenu">
-                                    <button (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
-                                    <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
+                    <td style="width:70px;">
+                      <div tabindex="0" class="ToggleButton">
+                        <label>Actions</label>
+                        <img src="./Images/ToggleIcon.png" />
 
-                                    <div *ngIf="IsDraftVersion">
-                                        <input class="upload" style="display: none;width:65px"
-                                               type="file" (change)="OnFileChanged($event)"
-                                               (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
-                                               #fileInput>
-                                        <a href="#" style="text-decoration:none">
-                                            <button (click)="fileInput.click()">Upload Excel</button>
-                                        </a>
-                                    </div>
+                        <div class="ToggleButtonMenu">
+                          <button (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
+                          <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
 
-                                    <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
-                                    <!--<button (click)="AllInChargesClicked()">All-In Charges</button>-->
-                                    <button (click)="UpdateMissingPortsClicked()" *ngIf="IsUpdateMissingPortsVisible">Update Missing Ports</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                          <div *ngIf="IsDraftVersion">
+                            <input class="upload" style="display: none;width:65px"
+                                   type="file" (change)="OnFileChanged($event)"
+                                   (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
+                                   #fileInput>
+                            <a href="#" style="text-decoration:none">
+                              <button (click)="fileInput.click()">Upload Excel</button>
+                            </a>
+                          </div>
+
+                          <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
+                          <!--<button (click)="AllInChargesClicked()">All-In Charges</button>-->
+                          <button (click)="UpdateMissingPortsClicked()" *ngIf="IsUpdateMissingPortsVisible">Update Missing Ports</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
                 </table>
             </td>
         </tr>

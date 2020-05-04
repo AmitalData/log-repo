@@ -119,7 +119,19 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     var allInCharges: string = null;
 
     if (this.CurrentVersion != null) {
-      this.CurrentVersion.TariffAllInCharges.forEach((item: TariffVersionAllInChargePM) => {
+      var codesList: TariffVersionAllInChargePM[] = [];
+      var addDots:boolean = false;
+
+      if(this.CurrentVersion.TariffAllInCharges.length > 4){
+        codesList = this.CurrentVersion.TariffAllInCharges.slice(0, 4);
+        addDots = true;
+      }
+
+      else {
+        codesList = this.CurrentVersion.TariffAllInCharges;
+      }
+
+      codesList.forEach((item: TariffVersionAllInChargePM) => {
         if (AppTool.IsNullOrEmpty(allInCharges)) {
           allInCharges = item.ChargesTypeCode;
         }
@@ -128,8 +140,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
           allInCharges = allInCharges + ", " + item.ChargesTypeCode;
         }
       });
-
     }
+
+    if(addDots) {
+      allInCharges = allInCharges + "...";
+    }
+
     this.AllInCharges = allInCharges;
   }
 
