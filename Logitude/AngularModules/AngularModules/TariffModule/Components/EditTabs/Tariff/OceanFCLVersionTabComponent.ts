@@ -105,22 +105,38 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
     }
 
     private BuildAllInChargesText() {
-        var allInCharges: string = null;
+    var allInCharges: string = null;
 
-        if (this.CurrentVersion != null) {
-            this.CurrentVersion.TariffAllInCharges.forEach((item: TariffVersionAllInChargePM) => {
-                if (AppTool.IsNullOrEmpty(allInCharges)) {
-                    allInCharges = item.ChargesTypeCode;
-                }
+    if (this.CurrentVersion != null) {
+      var codesList: TariffVersionAllInChargePM[] = [];
+      var addDots:boolean = false;
 
-                else {
-                    allInCharges = allInCharges + ", " + item.ChargesTypeCode;
-                }
-            });
+      if(this.CurrentVersion.TariffAllInCharges.length > 4){
+        codesList = this.CurrentVersion.TariffAllInCharges.slice(0, 4);
+        addDots = true;
+      }
 
+      else {
+        codesList = this.CurrentVersion.TariffAllInCharges;
+      }
+
+      codesList.forEach((item: TariffVersionAllInChargePM) => {
+        if (AppTool.IsNullOrEmpty(allInCharges)) {
+          allInCharges = item.ChargesTypeCode;
         }
-        this.AllInCharges = allInCharges;
+
+        else {
+          allInCharges = allInCharges + ", " + item.ChargesTypeCode;
+        }
+      });
     }
+
+    if(addDots) {
+      allInCharges = allInCharges + "...";
+    }
+
+    this.AllInCharges = allInCharges;
+  }
 
     private GetTariffSettings() {
         this.TariffDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
