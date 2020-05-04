@@ -10,7 +10,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { DeclarationReferantDataList } from '../../EntityLists/DeclarationReferantDataList';
+import { DeclarationReferantDataList } from '../../EntityLists/DeclarationRefernatDataList';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ResourceLoader } from '@angular/compiler';
 @Component({
