@@ -192,6 +192,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
             }
+            else
+            {
+                transactions.ForEach(transaction =>
+                {
+                    transaction.PaymentReconciledAmount = 0;
+                });
+            }
 
             return transactions;
         }
