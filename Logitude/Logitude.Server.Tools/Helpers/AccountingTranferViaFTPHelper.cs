@@ -32,7 +32,7 @@ namespace Logitude.Server.Tools.Helpers
             this.commonContext = CommonDataContext.GetContext(tenant);
         }
 
-        public CommunicationLog CreateCommunicationLog(byte[] ByteData, string fileName, string entityId, string accountingSystemCode, string entityType)
+        public CommunicationLog CreateCommunicationLog(byte[] ByteData, string fileName, string entityId, string accountingSystemCode)
         {
             TenantRepository tenantrepository = new TenantRepository(commonContext);
             Tenant curtenant = tenantrepository.GetSingleTenant(tenant);
@@ -65,7 +65,7 @@ namespace Logitude.Server.Tools.Helpers
                 To = xmlTarget,
                 InOut = "O",
                 EntityId = entityId,
-                ObjectTableId = objectTableId,
+                ObjectTableId = objectTableId,                
                 Subject = xmlSubject,
                 Tenant = tenant,
                 CommunicationLogTypeCode = "T",
@@ -74,7 +74,7 @@ namespace Logitude.Server.Tools.Helpers
                 DocumentId = document.Id,
                 SearchFields = xmlTarget + "," + "O" + "," + xmlSubject,
                 CreateDateUTC = System.DateTime.UtcNow,
-                LogSettings = this.GetLogSettings(xmlSubject, fileName, entityType),
+                LogSettings = this.GetLogSettings(xmlSubject, fileName),
                 QueueName = "FTPCommunicationLogQueue",
             };
 
@@ -88,7 +88,7 @@ namespace Logitude.Server.Tools.Helpers
             return commLog;
         }
 
-        private string GetLogSettings(string xmlSubject, string fileName, string entityType)
+        private string GetLogSettings(string xmlSubject, string fileName)
         {
             string myResult = null;
 
@@ -98,15 +98,12 @@ namespace Logitude.Server.Tools.Helpers
 
                 if (fTPDetail != null)
                 {
-                    //string[] fileNameArray = fileName.Split('.');
-
                     LogSettings settings = new LogSettings()
                     {
                         Host = fTPDetail.Host,
-                        Folder = fTPDetail.Folder + "\\FromLogitude\\" + entityType,
+                        Folder = fTPDetail.Folder + "\\fromlogitude",
                         Username = fTPDetail.UserName,
                         Password = fTPDetail.Password,
-                        //Filename = fileNameArray[0],
                         Filename = fileName,
                         UseSFTP = fTPDetail.UseSFTP,
                     };
