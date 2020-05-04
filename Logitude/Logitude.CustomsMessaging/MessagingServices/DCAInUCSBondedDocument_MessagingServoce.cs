@@ -68,14 +68,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 InterfaceTypeCode = this.MainInterfaceCode,
                 MainInterfaceCode = this.MainInterfaceCode,
 
-
-                LoggingObjectTableId = objectTableId,
-                LoggingEntityId = customsResponse.DeclarationId,
-                LoggingObjectTableId2 = objectTableId2,
-                LoggingEntityId2 = customsResponse.DocumentsFilingId,
+                LoggingObjectTableId = objectTableId2,
+                LoggingEntityId = customsResponse.DocumentsFilingId,
+                LoggingEntityReference = customsResponse.LoggingEntityReference,
+                //LoggingObjectTableId = objectTableId,
+                //LoggingEntityId = customsResponse.DeclarationId,
+                //LoggingObjectTableId2 = objectTableId2,
+                //LoggingEntityId2 = customsResponse.DocumentsFilingId,
 
                 LoggingUserId = customsResponse.LoggingUserId,
-                RequestName = $" UCBNDCD   שליחת מסמך למכס " + customsResponse.CustomsDoucumentTypeCode + " "
+                RequestName = $" UCBNDCD   שליחת מסמך למכס " + customsResponse.LoggingEntityReference + " "
             };
 
             return genericRequestParams;
@@ -91,7 +93,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
 
-        public string CreateCRS(
+        public  string CreateCRS(
             int tenant, 
             string LoggingUserId,
             DocumentsFilingPM documentsFilingPM,
@@ -110,7 +112,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
              .GetRequestInProgress(tenant, this.MainInterfaceCode,
              objectTableDocumentsFilingId, documentsFilingPM.Id,
              null, null,
-              null, true);
+              null, false);
             }
             else
             {
@@ -122,7 +124,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
-
+                LogMessagingUtil.Instance.AppendLine("קיים מסר זהה בתהליך");
                 ///throw new System.Exception("Requestsheet  with Interface Type  = UCBUCBNDCD  already in progress  !!!");
                 return "קיים מסר זהה בתהליך";
 
@@ -144,7 +146,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = LoggingUserId,
                 
                 DocumentTypeCode = documentsFilingPM.DocumentTypeCode,
-
+                 LoggingEntityReference = documentsFilingPM.Code,
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
@@ -194,6 +196,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                     trans.Complete();
+                    LogMessagingUtil.Instance.AppendLine("המסר נבנה בהצלחה וישלח בתהליך רקע");
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -246,6 +249,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string DocumentsFilingId { get; set; }
         public string DOCUMENTTYPEID { get; set; }
         public string DocumentTypeCode { get; set; }
+        public string LoggingEntityReference { get;  set; }
 
         //public string DocumentTypeId { get; set; }
 
@@ -317,6 +321,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             loggingUserId,
                             _DocumentsFilingPM,
                             myDocumentTypeCustomsData.CustomsDoucumentTypeCode);
+                        logData = LogMessagingUtil.Instance.ToString();
                         LogitudeSettings.HandleLogMe(crs + " " + logData, false, "CreateUCBNDCDService.OK", stopLogAt);
 
                     }
@@ -325,7 +330,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             catch (Exception E)
             {
-
+                logData = LogMessagingUtil.Instance.ToString();
                 LogitudeSettings.HandleLogMe(E.ToString() + logData, true, "SendBondedCustomDocument", stopLogAt);
                 throw;
             }
@@ -443,6 +448,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
                     customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
+                    customsDocumentPM.CustomsDocumentMetaDataValues.ForEach(r =>
+                    {
+                        r.ChangeSetOp = ChangeSetOperation.None;
+                    });
                     customsDocumentPM.IsSendToQueue = true;
                     myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
