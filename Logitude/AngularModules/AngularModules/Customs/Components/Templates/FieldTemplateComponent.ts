@@ -25,12 +25,12 @@ export class FieldTemplateComponent {
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
-    constructor() {
+    constructor(private _ListComponentArgs: ListComponentArgs) {
 
     }
 
     public ButtonClick() {
-        //this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
 
      }
     ShowUnifaceCustomFile() {
@@ -117,7 +117,7 @@ export class FieldTemplateComponent {
     }
 
     OpenRemarks() {
-        //this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
 
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
