@@ -548,6 +548,10 @@
     <Compile Include="Migrations\202004190752541_AddSearchfieldTAutonomyKeyword.Designer.cs">
       <DependentUpon>202004190752541_AddSearchfieldTAutonomyKeyword.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005050458332_EnabaleNullAvailabilityDate.cs" />
+    <Compile Include="Migrations\202005050458332_EnabaleNullAvailabilityDate.Designer.cs">
+      <DependentUpon>202005050458332_EnabaleNullAvailabilityDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -949,6 +953,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004190752541_AddSearchfieldTAutonomyKeyword.resx">
       <DependentUpon>202004190752541_AddSearchfieldTAutonomyKeyword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005050458332_EnabaleNullAvailabilityDate.resx">
+      <DependentUpon>202005050458332_EnabaleNullAvailabilityDate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
