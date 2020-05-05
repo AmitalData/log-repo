@@ -581,6 +581,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.SetUIProperties_Invoices();
         this.SetUIProperties_CreditCard();
         this.SetUIProperties_BankTransfer();
+        this.SetUIProperties_ValueDate();
         this.GetRateIsEnabled();
 
         if (!this.IsScreenEnabled) {
@@ -1600,17 +1601,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM != null) {
             if (this.EntityPM.ValueDate != value) {
                 this.EntityPM.ValueDate = value;
-                //if (value != null) {
-                //    this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, false);
-                //    this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, false, null);
-                //}
-                //else {
-                //    this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, true);
-                //    this.UIProperties.SetValidity("ValueDate", this.ObjectTableName, true, null);
-                //}
+              this.SetUIProperties_ValueDate();
             }
         }
-    }
+  }
+  SetUIProperties_ValueDate() {
+    this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, this.ValueDate != null ? false : true);
+  }
 
     get ChequeOrPaymentRef() {
         if (this.EntityPM == null) {

@@ -196,11 +196,27 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
                 }
             }
-
+            ValidateValueDate(entityPM);
             ValidateAccountingSetting(entityPM);
             ValidateFullAccounting(entityPM.ARPaymentChequeReplicas, entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account, entityPM.Bank );
-
             ValidateUnUpdateFields(entityPM,entityPOCO, isNew);
+        }
+
+        private static void ValidateValueDate(ARPaymentPM entityPM)
+        {
+            int tenant = entityPM.Tenant;
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
+
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            if (tenantPOCO != null && !tenantPOCO.AccountingActivated)
+            {
+                if (entityPM.AccountingPaymentMethodCode != "CA" && entityPM.AccountingPaymentMethodCode != "FS" && entityPM.ValueDate == null)
+                {
+                    throw new ApplicationException(rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ValueDate", tenant)));
+                }
+            }
         }
 
         private static void ValidateUnUpdateFields(ARPaymentPM entityPM, ARPayment entityPOCO, bool isNew)
