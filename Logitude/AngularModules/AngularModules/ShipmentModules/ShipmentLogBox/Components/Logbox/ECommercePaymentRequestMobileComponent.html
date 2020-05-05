@@ -107,7 +107,7 @@
     }
 </style>
 <div class="MediaFillAbsolute" style="background:white;">
-    <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == false">
+    <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == false && ShowErrorMessage == false">
         <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
             <td>
                 <div class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
@@ -460,6 +460,22 @@
             <td></td>
         </tr>
     </table>
+<table class="LogitudeWindow" style="direction:rtl;border: 1px solid #BCBEC0;" *ngIf="ShowFinalMessage == true && ShowErrorMessage == true">
+  <tr>
+    <td>
+      <table style="direction:rtl;border: 1px solid #BCBEC0;">
+        <tr>
+          <td style="text-align:center;" *ngIf="ShowFinalMessage == true">
+            <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;word-wrap: break-word;white-space: normal;">
+              {{FinalMessage}}
+            </span>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+</table>
 </div>
 
 <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == true" style="direction:rtl;">
