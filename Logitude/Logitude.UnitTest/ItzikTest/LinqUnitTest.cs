@@ -23,5 +23,53 @@ namespace Logitude.UnitTest.ItzikTest
         }
 
 
+
+        [TestMethod]
+        public void TestLetAsLeftJoin()
+        {
+            var list = new List<MyClass>() {
+
+                new MyClass () { accid="1"},
+                new MyClass () { accid="2"},
+                new MyClass () { accid="3"},
+                new MyClass () { accid="4"},
+
+            };
+            var leftjoinList = new List<MyClass>() {
+
+                new MyClass () { accid="1" , currName="USD"},
+                new MyClass () { accid="2", currName="NIS"},
+                new MyClass () { accid="3", currName="USD"},
+                new MyClass () { accid="5"},
+
+            };
+            var newlist = (from a in list
+                           let cur = leftjoinList.FirstOrDefault(r => r.accid == a.accid)
+                           select new MyClass()
+                           {
+                               accid = a.accid,
+                               currName = cur?.currName
+                           }
+                           );
+            var l = newlist.ToList();
+            Assert.IsNotNull(newlist.First(r => r.accid == "1" && r.currName == "USD"));
+            Assert.IsNotNull(newlist.First(r => r.accid == "2" && r.currName == "NIS"));
+            Assert.IsNotNull(newlist.First(r => r.accid == "3" && r.currName == "USD"));
+            Assert.IsNotNull(newlist.First(r => r.accid == "4" && string.IsNullOrEmpty(r.currName)));
+
+
+        }
+
+
     }
+
+    class MyClass
+    {
+        public string accid { get; set; }
+
+        public int total { get; set; }
+        public string currName{ get; set; }
+    }
+    
+    
 }
