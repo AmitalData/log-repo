@@ -843,46 +843,57 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup IncotermQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "INCO", Name = "Incoterms" }, queryGroupRepository);
-						QueryGroup IncotermQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0926", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup IncotermQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "INCO", Name = "Incoterms" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup IncotermQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0926", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable IncotermObjectTable = objectTables.ContainsKey("Incoterm") ? objectTables["Incoterm"] : null;
             if (IncotermObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 IncotermObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Incoterm" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> IncotermObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Incoterm").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode IncotermTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.Q.Incoterms", DefaultText = @"Incoterms",LocalDefaultText = null, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature IncotermFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INCOTERMS", ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.Incoterms", NameTextCodeDefaultText = "Incoterms", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode IncotermTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.Q.Incoterms", DefaultText = @"Incoterms",LocalDefaultText = null, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature IncotermFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INCOTERMS", ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.Incoterms", NameTextCodeDefaultText = "Incoterms", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,IncotermObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query IncotermsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IncotermTextCode_0.Id, NameTextCodeCode = IncotermTextCode_0.Code, ObjectTableName = "Incoterm", Code = "Incoterms",  QueryGroupCode = "INCO", IndexOrder = 0, Tenant = 0, ObjectTableId = IncotermObjectTable.Id, QuerySection = "Incoterm", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = IncotermFeature_0.Id,FeatureUniqeCode= IncotermFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query IncotermsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IncotermTextCode_0.Id, NameTextCodeCode = IncotermTextCode_0.Code, ObjectTableName = "Incoterm", Code = "Incoterms",  QueryGroupCode = "INCO", IndexOrder = 0, Tenant = 0, ObjectTableId = IncotermObjectTable.Id, QuerySection = "Incoterm", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = IncotermFeature_0.Id,FeatureUniqeCode= IncotermFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn IncotermsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Incoterm.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn IncotermsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Incoterm.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IncotermsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Incoterm.Name" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn IncotermsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Incoterm.Name" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IncotermsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Incoterm.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn IncotermsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Incoterm.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IncotermsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Incoterm.Freight" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn IncotermsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Incoterm.Freight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IncotermsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Incoterm.OtherCharges" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn IncotermsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Incoterm.OtherCharges" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IncotermsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Incoterm.AddedManually" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn IncotermsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Incoterm.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IncotermsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Incoterm.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn IncotermsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IncotermsQuery.Id,QueryCode = IncotermsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Incoterm.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -930,11 +941,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable IncotermObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Incoterm" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode IncotermGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature IncotermGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature IncotermGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,IncotermObjectTable);
  
                  
 			   TextCode IncotermEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Incoterm.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature IncotermEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature IncotermEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,IncotermObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -950,10 +961,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable IncotermObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Incoterm" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature IncotermFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature IncotermFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature IncotermFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature IncotermFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.PackageFeature", NameTextCodeDefaultText = "Incoterm Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature IncotermFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,IncotermObjectTable);
+		   Feature IncotermFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,IncotermObjectTable);
+		   Feature IncotermFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,IncotermObjectTable);
+		   Feature IncotermFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = IncotermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Incoterm.Features.PackageFeature", NameTextCodeDefaultText = "Incoterm Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,IncotermObjectTable);    
 	    
 		}
 

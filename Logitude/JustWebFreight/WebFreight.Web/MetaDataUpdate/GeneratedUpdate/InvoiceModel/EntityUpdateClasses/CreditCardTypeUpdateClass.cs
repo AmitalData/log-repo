@@ -458,38 +458,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CreditCardTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CCTP", Name = "Credit Card Types" }, queryGroupRepository);
-						QueryGroup CreditCardTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "e6f4", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CreditCardTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CCTP", Name = "Credit Card Types" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CreditCardTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "e6f4", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CreditCardTypeObjectTable = objectTables.ContainsKey("CreditCardType") ? objectTables["CreditCardType"] : null;
             if (CreditCardTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CreditCardTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CreditCardType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> CreditCardTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CreditCardType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CreditCardTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.Q.AllCreditCardTypes", DefaultText = @"All Credit Card Types",LocalDefaultText = null, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CreditCardTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCREDITCARDS", ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.AllCreditCards", NameTextCodeDefaultText = "All Credit Cards", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CreditCardTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.Q.AllCreditCardTypes", DefaultText = @"All Credit Card Types",LocalDefaultText = null, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CreditCardTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCREDITCARDS", ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.AllCreditCards", NameTextCodeDefaultText = "All Credit Cards", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CreditCardTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCreditCardTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CreditCardTypeTextCode_0.Id, NameTextCodeCode = CreditCardTypeTextCode_0.Code, ObjectTableName = "CreditCardType", Code = "All Credit Card Types",  QueryGroupCode = "CCTP", IndexOrder = 0, Tenant = 0, ObjectTableId = CreditCardTypeObjectTable.Id, QuerySection = "CreditCardType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CreditCardTypeFeature_0.Id,FeatureUniqeCode= CreditCardTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCreditCardTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CreditCardTypeTextCode_0.Id, NameTextCodeCode = CreditCardTypeTextCode_0.Code, ObjectTableName = "CreditCardType", Code = "All Credit Card Types",  QueryGroupCode = "CCTP", IndexOrder = 0, Tenant = 0, ObjectTableId = CreditCardTypeObjectTable.Id, QuerySection = "CreditCardType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CreditCardTypeFeature_0.Id,FeatureUniqeCode= CreditCardTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCreditCardTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CreditCardType.Code" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCreditCardTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CreditCardType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCreditCardTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CreditCardType.Name" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCreditCardTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CreditCardType.Name" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCreditCardTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CreditCardType.InActive" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllCreditCardTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCreditCardTypesQuery.Id,QueryCode = AllCreditCardTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CreditCardType.InActive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -529,11 +540,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   ObjectTable CreditCardTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CreditCardType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CreditCardTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CreditCardTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CreditCardTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CreditCardTypeObjectTable);
  
                  
 			   TextCode CreditCardTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditCardType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CreditCardTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CreditCardTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CreditCardTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -549,10 +560,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    {  
 		   ObjectTable CreditCardTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CreditCardType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CreditCardTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CreditCardTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CreditCardTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CreditCardTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.PackageFeature", NameTextCodeDefaultText = "CreditCardType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CreditCardTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditCardTypeObjectTable);
+		   Feature CreditCardTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditCardTypeObjectTable);
+		   Feature CreditCardTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditCardTypeObjectTable);
+		   Feature CreditCardTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CreditCardTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditCardType.Features.PackageFeature", NameTextCodeDefaultText = "CreditCardType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CreditCardTypeObjectTable);    
 	    
 		}
 

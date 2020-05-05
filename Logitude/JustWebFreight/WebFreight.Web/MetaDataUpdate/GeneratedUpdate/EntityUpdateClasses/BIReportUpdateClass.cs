@@ -1201,50 +1201,61 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup BIReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "df7a", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup BIReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3701", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup BIReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "df7a", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup BIReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3701", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable BIReportObjectTable = objectTables.ContainsKey("BIReport") ? objectTables["BIReport"] : null;
             if (BIReportObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 BIReportObjectTable = objectContext.ObjectTables.Where(d => d.Name == "BIReport" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> BIReportObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BIReport").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode BIReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BIReport.Q.ALLBIREPORTS", DefaultText = @"BI Reports",LocalDefaultText = "BI Reports", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BIReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Q.ALLBIREPORTS", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFeatures.ALLBIREPORTS", NameTextCodeDefaultText = "ALLBIREPORTS", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BIReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BIReport.Q.ALLBIREPORTS", DefaultText = @"BI Reports",LocalDefaultText = "BI Reports", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BIReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Q.ALLBIREPORTS", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFeatures.ALLBIREPORTS", NameTextCodeDefaultText = "ALLBIREPORTS", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BIReportObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
 			  Query ALLBIREPORTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BIReportTextCode_0.Id, NameTextCodeCode = BIReportTextCode_0.Code, ObjectTableName = "BIReport", Code = "ALLBIREPORTS",  EditWizardName = "",
 			   EditWizardComponentPath = "",
-			   QueryGroupCode = "df7a", IndexOrder = 0, Tenant = 0, ObjectTableId = BIReportObjectTable.Id, QuerySection = "BIReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BIReportFeature_0.Id,FeatureUniqeCode= BIReportFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "df7a", IndexOrder = 0, Tenant = 0, ObjectTableId = BIReportObjectTable.Id, QuerySection = "BIReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BIReportFeature_0.Id,FeatureUniqeCode= BIReportFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ALLBIREPORTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BIReport.Name" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BIReport.Name" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BIReport.Description" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BIReport.Description" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BIReport.CreateDate" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BIReport.CreateDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BIReport.CreatedByUserName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BIReport.CreatedByUserName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BIReport.UpdateDate" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BIReport.UpdateDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BIReport.UpdatedByUserName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BIReport.UpdatedByUserName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BIReport.LastRunDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BIReport.LastRunDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "BIReport.LastRunByUserName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ALLBIREPORTSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id,QueryCode = ALLBIREPORTSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "BIReport.LastRunByUserName" , ColumnWidth = 120 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1270,11 +1281,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable BIReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BIReport" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode BIReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BIReport.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BIReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Tab.General", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFeatures.BIGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BIReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Tab.General", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFeatures.BIGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BIReportObjectTable);
  
                  
 			   TextCode BIReportEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BIReport.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BIReportEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Tab.Events", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFeatures.BIEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BIReportEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Tab.Events", ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFeatures.BIEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BIReportObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1290,20 +1301,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable BIReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BIReport" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature BIReportFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BIReportFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BIReportFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BIReportFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.PackageFeature", NameTextCodeDefaultText = "BIReport Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature BIReportFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+		   Feature BIReportFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+		   Feature BIReportFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
+		   Feature BIReportFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.PackageFeature", NameTextCodeDefaultText = "BIReport Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature BIReportFeature_BIReport_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Menu", NameTextCodeDefaultText = @"BI Reports" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BIReportFeature_BIReport_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReport.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReport.Menu", NameTextCodeDefaultText = @"BI Reports" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
-		   Feature BIReportFeature_BIReportDelete = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportDelete", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportDelete", NameTextCodeDefaultText = @"Delete" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BIReportFeature_BIReportDelete = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportDelete", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportDelete", NameTextCodeDefaultText = @"Delete" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
-		   Feature BIReportFeature_BIReportCopy = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportCopy", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportCopy", NameTextCodeDefaultText = @"Copy" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BIReportFeature_BIReportCopy = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportCopy", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportCopy", NameTextCodeDefaultText = @"Copy" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
-		   Feature BIReportFeature_BIReportCopyFromLibrary = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportCopyFromLibrary", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportCopyFromLibrary", NameTextCodeDefaultText = @"Copy From Library" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BIReportFeature_BIReportCopyFromLibrary = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BIReportCopyFromLibrary", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BIReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReport.Features.BIReportCopyFromLibrary", NameTextCodeDefaultText = @"Copy From Library" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportObjectTable);
 
    
 	    

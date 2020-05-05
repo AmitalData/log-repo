@@ -796,40 +796,51 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AccountingIntegrityCheckQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cd6d", Name = "AccountingIntegrityCheck Query Group" }, queryGroupRepository);
-						QueryGroup AccountingIntegrityCheckQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "fe5a", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup AccountingIntegrityCheckQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cd6d", Name = "AccountingIntegrityCheck Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AccountingIntegrityCheckQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "fe5a", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AccountingIntegrityCheckObjectTable = objectTables.ContainsKey("AccountingIntegrityCheck") ? objectTables["AccountingIntegrityCheck"] : null;
             if (AccountingIntegrityCheckObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 AccountingIntegrityCheckObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AccountingIntegrityCheck" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> AccountingIntegrityCheckObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingIntegrityCheck").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode AccountingIntegrityCheckTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingIntegrityCheck.Q.AllChecks", DefaultText = @"All Integrity Checks",LocalDefaultText = "All Integrity Checks", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingIntegrityCheckFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Q.AllChecks", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheckFeatures.AllChecks", NameTextCodeDefaultText = "AllChecks", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AccountingIntegrityCheckTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingIntegrityCheck.Q.AllChecks", DefaultText = @"All Integrity Checks",LocalDefaultText = "All Integrity Checks", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AccountingIntegrityCheckFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Q.AllChecks", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheckFeatures.AllChecks", NameTextCodeDefaultText = "AllChecks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AccountingIntegrityCheckObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingIntegrityCheckTextCode_0.Id, NameTextCodeCode = AccountingIntegrityCheckTextCode_0.Code, ObjectTableName = "AccountingIntegrityCheck", Code = "AllChecks",  QueryGroupCode = "cd6d", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, QuerySection = "AccountingIntegrityCheck", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AccountingIntegrityCheckFeature_0.Id,FeatureUniqeCode= AccountingIntegrityCheckFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDateTimeUTC", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingIntegrityCheckTextCode_0.Id, NameTextCodeCode = AccountingIntegrityCheckTextCode_0.Code, ObjectTableName = "AccountingIntegrityCheck", Code = "AllChecks",  QueryGroupCode = "cd6d", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, QuerySection = "AccountingIntegrityCheck", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AccountingIntegrityCheckFeature_0.Id,FeatureUniqeCode= AccountingIntegrityCheckFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDateTimeUTC", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingIntegrityCheck.CreateDateTimeUTC" , ColumnWidth = 152 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingIntegrityCheck.CreateDateTimeUTC" , ColumnWidth = 152 }, addedQueryColumns);
 
-			 QueryColumn AllChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingIntegrityCheck.DoneDateTimeUTC" , ColumnWidth = 142 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingIntegrityCheck.DoneDateTimeUTC" , ColumnWidth = 142 }, addedQueryColumns);
 
-			 QueryColumn AllChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingIntegrityCheck.HasException" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingIntegrityCheck.HasException" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AccountingIntegrityCheck.StatusName" , ColumnWidth = 169 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllChecksQuery.Id,QueryCode = AllChecksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AccountingIntegrityCheck.StatusName" , ColumnWidth = 169 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -863,7 +874,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable AccountingIntegrityCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingIntegrityCheck" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AccountingIntegrityCheckGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingIntegrityCheck.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingIntegrityCheckGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Tab.General", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheckFeatures.AICG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingIntegrityCheckGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Tab.General", ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheckFeatures.AICG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingIntegrityCheckObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -877,14 +888,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable AccountingIntegrityCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingIntegrityCheck" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature AccountingIntegrityCheckFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingIntegrityCheckFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingIntegrityCheckFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingIntegrityCheckFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.PackageFeature", NameTextCodeDefaultText = "AccountingIntegrityCheck Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature AccountingIntegrityCheckFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingIntegrityCheckObjectTable);
+		   Feature AccountingIntegrityCheckFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingIntegrityCheckObjectTable);
+		   Feature AccountingIntegrityCheckFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingIntegrityCheckObjectTable);
+		   Feature AccountingIntegrityCheckFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.PackageFeature", NameTextCodeDefaultText = "AccountingIntegrityCheck Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingIntegrityCheckObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature AccountingIntegrityCheckFeature_AccountingIntegrityCheck_Features_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Features.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.Menu", NameTextCodeDefaultText = @"Accounting Integrity Checks" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature AccountingIntegrityCheckFeature_AccountingIntegrityCheck_Features_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Features.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingIntegrityCheck.Features.Menu", NameTextCodeDefaultText = @"Accounting Integrity Checks" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingIntegrityCheckObjectTable);
 
    
 	    

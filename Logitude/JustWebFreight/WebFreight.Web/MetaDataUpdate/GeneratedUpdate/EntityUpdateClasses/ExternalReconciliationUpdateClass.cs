@@ -927,8 +927,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    {    
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -962,11 +962,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable ExternalReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalReconciliation" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ExternalReconciliationDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ExternalReconciliationDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalReconciliation.Tab.Details", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ExternalReconciliationDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalReconciliation.Tab.Details", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExternalReconciliationObjectTable);
  
                  
 			   TextCode ExternalReconciliationEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ExternalReconciliationEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalReconciliation.Tab.Events", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliationFeatures.EREV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ExternalReconciliationEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalReconciliation.Tab.Events", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliationFeatures.EREV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExternalReconciliationObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -982,14 +982,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable ExternalReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalReconciliation" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature ExternalReconciliationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ExternalReconciliationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ExternalReconciliationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ExternalReconciliationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.PackageFeature", NameTextCodeDefaultText = "ExternalReconciliation Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature ExternalReconciliationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExternalReconciliationObjectTable);
+		   Feature ExternalReconciliationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExternalReconciliationObjectTable);
+		   Feature ExternalReconciliationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExternalReconciliationObjectTable);
+		   Feature ExternalReconciliationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.PackageFeature", NameTextCodeDefaultText = "ExternalReconciliation Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExternalReconciliationObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature ExternalReconciliationFeature_ExtRecoGenerateTestRecords = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExtRecoGenerateTestRecords", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.ExtRecoGenerateTestRecords", NameTextCodeDefaultText = @"Generate Test Records" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ExternalReconciliationFeature_ExtRecoGenerateTestRecords = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExtRecoGenerateTestRecords", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.ExtRecoGenerateTestRecords", NameTextCodeDefaultText = @"Generate Test Records" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExternalReconciliationObjectTable);
 
    
 	    
@@ -1058,11 +1058,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable ExternalReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalReconciliation" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature ExternalReconciliationFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExtReconciliationCancelMenuButton", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.CancelReconcileMenuButton", NameTextCodeDefaultText = "Cancel Reconciltiation", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ExternalReconciliationFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExtReconciliationCancelMenuButton", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.CancelReconcileMenuButton", NameTextCodeDefaultText = "Cancel Reconciltiation", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExternalReconciliationObjectTable);
 
  
 

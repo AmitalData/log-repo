@@ -72,6 +72,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups {get;set;}
 		public EntityStatusRepository EntityStatusRepository { get; set; }
 		public  List<EntityStatus>  AllEntityStatuses { get; set; }
+		Dictionary<string, QueryGroup> tenantQueryGroups {get; set; }
 		 
 	   	SprintUpdateClass  SprintUpdateClass = new SprintUpdateClass();
 		TMBudgetUpdateClass  TMBudgetUpdateClass = new TMBudgetUpdateClass();
@@ -186,6 +187,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			tenantMenuButtons = new Dictionary<string, MenuButton>();//menuButtonRepository.GetMenuButtonsByTenant(0).ToDictionary(d => d.EventCode + d.MenuButtonGroupId, a => a);
 			tenantMenuButtonGroups = menuButtonGroupRepository.GetMenuButtonGroupsByTenant(0).ToDictionary(d => d.Name, a => a);
 			AllEntityStatuses = EntityStatusRepository.GetEntityStatusByTenant(0).ToList();
+			tenantQueryGroups = queryGroupRepository.GetQueryGroups().ToDictionary(d => d.Code, a => a);	
 
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
@@ -265,18 +267,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
 					//this.ObjectContext.ObjectFields.AddRange(addedFields);
 					//this.ObjectContext.SaveChanges();
-					SprintUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-					this.ObjectContext.SaveChanges();
+					SprintUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
 					SprintUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					SprintUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					SprintUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					SprintUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					SprintUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					SprintUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
@@ -298,18 +300,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
 					//this.ObjectContext.ObjectFields.AddRange(addedFields);
 					//this.ObjectContext.SaveChanges();
-					TMBudgetUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-					this.ObjectContext.SaveChanges();
+					TMBudgetUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
 					TMBudgetUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMBudgetUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMBudgetUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMBudgetUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMBudgetUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMBudgetUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
@@ -331,18 +333,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
 					//this.ObjectContext.ObjectFields.AddRange(addedFields);
 					//this.ObjectContext.SaveChanges();
-					TMDayOffTypeUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-					this.ObjectContext.SaveChanges();
+					TMDayOffTypeUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
 					TMDayOffTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMDayOffTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMDayOffTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMDayOffTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMDayOffTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMDayOffTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
@@ -368,18 +370,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
 					//this.ObjectContext.ObjectFields.AddRange(addedFields);
 					//this.ObjectContext.SaveChanges();
-					TMEmployeeTimeUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-					this.ObjectContext.SaveChanges();
+					TMEmployeeTimeUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
 					TMEmployeeTimeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMEmployeeTimeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMEmployeeTimeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMEmployeeTimeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMEmployeeTimeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMEmployeeTimeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
@@ -401,18 +403,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
 					//this.ObjectContext.ObjectFields.AddRange(addedFields);
 					//this.ObjectContext.SaveChanges();
-					TMLocationUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-					this.ObjectContext.SaveChanges();
+					TMLocationUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
 					TMLocationUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMLocationUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMLocationUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMLocationUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMLocationUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMLocationUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
@@ -438,18 +440,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
 					//this.ObjectContext.ObjectFields.AddRange(addedFields);
 					//this.ObjectContext.SaveChanges();
-					TMOfficeHourUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-					this.ObjectContext.SaveChanges();
+					TMOfficeHourUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
 					TMOfficeHourUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMOfficeHourUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMOfficeHourUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMOfficeHourUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMOfficeHourUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMOfficeHourUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
@@ -471,18 +473,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
 					//this.ObjectContext.ObjectFields.AddRange(addedFields);
 					//this.ObjectContext.SaveChanges();
-					TMProjectUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-					this.ObjectContext.SaveChanges();
+					TMProjectUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
 					TMProjectUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMProjectUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMProjectUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMProjectUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMProjectUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMProjectUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
@@ -504,18 +506,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
 					//this.ObjectContext.ObjectFields.AddRange(addedFields);
 					//this.ObjectContext.SaveChanges();
-					TMProjectCategoryUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-					this.ObjectContext.SaveChanges();
+					TMProjectCategoryUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
 					TMProjectCategoryUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMProjectCategoryUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMProjectCategoryUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMProjectCategoryUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMProjectCategoryUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMProjectCategoryUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
@@ -537,18 +539,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
 					//this.ObjectContext.ObjectFields.AddRange(addedFields);
 					//this.ObjectContext.SaveChanges();
-					TMReleaseUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-					this.ObjectContext.SaveChanges();
+					TMReleaseUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
 					TMReleaseUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMReleaseUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMReleaseUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMReleaseUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMReleaseUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					TMReleaseUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
@@ -608,23 +610,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllQueries()
         {
    
-	   	   SprintUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   	   SprintUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
-	   	   TMBudgetUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   	   TMBudgetUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
-	   	   TMDayOffTypeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   	   TMDayOffTypeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
-	   	   TMEmployeeTimeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   	   TMEmployeeTimeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
-	   	   TMLocationUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   	   TMLocationUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
-	   	   TMOfficeHourUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   	   TMOfficeHourUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
-	   	   TMProjectUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   	   TMProjectUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
-	   	   TMProjectCategoryUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   	   TMProjectCategoryUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
-	   	   TMReleaseUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   	   TMReleaseUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
         }
 

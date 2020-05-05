@@ -372,38 +372,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup Category1QueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f86a", Name = "Category1 Query Group" }, queryGroupRepository);
-						QueryGroup Category1QueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "e95a", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup Category1QueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f86a", Name = "Category1 Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup Category1QueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "e95a", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable Category1ObjectTable = objectTables.ContainsKey("Category1") ? objectTables["Category1"] : null;
             if (Category1ObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 Category1ObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Category1" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> Category1ObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Category1").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode Category1TextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Category1.Q.allcategory1", DefaultText = @"Categories 1",LocalDefaultText = null, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature Category1Feature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category1.Q.allcategory1", ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.allcategory1", NameTextCodeDefaultText = "allcategory1", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode Category1TextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Category1.Q.allcategory1", DefaultText = @"Categories 1",LocalDefaultText = null, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature Category1Feature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category1.Q.allcategory1", ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.allcategory1", NameTextCodeDefaultText = "allcategory1", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,Category1ObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query allcategory1Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category1TextCode_0.Id, NameTextCodeCode = Category1TextCode_0.Code, ObjectTableName = "Category1", Code = "allcategory1",  QueryGroupCode = "f86a", IndexOrder = 0, Tenant = 0, ObjectTableId = Category1ObjectTable.Id, QuerySection = "Category1", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category1Feature_0.Id,FeatureUniqeCode= Category1Feature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query allcategory1Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = Category1TextCode_0.Id, NameTextCodeCode = Category1TextCode_0.Code, ObjectTableName = "Category1", Code = "allcategory1",  QueryGroupCode = "f86a", IndexOrder = 0, Tenant = 0, ObjectTableId = Category1ObjectTable.Id, QuerySection = "Category1", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = Category1Feature_0.Id,FeatureUniqeCode= Category1Feature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn allcategory1QueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategory1Query.Id,QueryCode = allcategory1Query.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Category1.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn allcategory1QueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategory1Query.Id,QueryCode = allcategory1Query.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Category1.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn allcategory1QueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategory1Query.Id,QueryCode = allcategory1Query.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Category1.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn allcategory1QueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategory1Query.Id,QueryCode = allcategory1Query.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Category1.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn allcategory1QueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategory1Query.Id,QueryCode = allcategory1Query.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Category1.Inactive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn allcategory1QueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allcategory1Query.Id,QueryCode = allcategory1Query.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Category1.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -445,11 +456,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable Category1ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Category1" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode Category1GeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Category1.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature Category1GeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category1.Tab.General", ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature Category1GeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category1.Tab.General", ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,Category1ObjectTable);
  
                  
 			   TextCode Category1EventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Category1.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature Category1EventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category1.Tab.Events", ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature Category1EventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category1.Tab.Events", ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,Category1ObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -465,14 +476,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable Category1ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Category1" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature Category1FeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature Category1FeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature Category1FeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature Category1FeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.PackageFeature", NameTextCodeDefaultText = "Category1 Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature Category1FeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Category1ObjectTable);
+		   Feature Category1FeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Category1ObjectTable);
+		   Feature Category1FeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Category1ObjectTable);
+		   Feature Category1FeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.PackageFeature", NameTextCodeDefaultText = "Category1 Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Category1ObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature Category1Feature_Category1_Features_Category1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category1.Features.Category1", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.Category1", NameTextCodeDefaultText = @"Category 1" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature Category1Feature_Category1_Features_Category1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category1.Features.Category1", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = Category1ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category1.Features.Category1", NameTextCodeDefaultText = @"Category 1" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Category1ObjectTable);
 
    
 	    

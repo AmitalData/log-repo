@@ -1727,48 +1727,59 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup PortQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PORT", Name = "Ports" }, queryGroupRepository);
-						QueryGroup PortQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "b1ac", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup PortQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PORT", Name = "Ports" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup PortQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "b1ac", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable PortObjectTable = objectTables.ContainsKey("Port") ? objectTables["Port"] : null;
             if (PortObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 PortObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Port" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> PortObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Port").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode PortTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.Q.Ports", DefaultText = @"Ports",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PortFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PORTS", ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.Ports", NameTextCodeDefaultText = "Ports", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PortTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.Q.Ports", DefaultText = @"Ports",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature PortFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PORTS", ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.Ports", NameTextCodeDefaultText = "Ports", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PortObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query PortsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PortTextCode_0.Id, NameTextCodeCode = PortTextCode_0.Code, ObjectTableName = "Port", Code = "Ports",  QueryGroupCode = "PORT", IndexOrder = 0, Tenant = 0, ObjectTableId = PortObjectTable.Id, QuerySection = "Port", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PortFeature_0.Id,FeatureUniqeCode= PortFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query PortsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PortTextCode_0.Id, NameTextCodeCode = PortTextCode_0.Code, ObjectTableName = "Port", Code = "Ports",  QueryGroupCode = "PORT", IndexOrder = 0, Tenant = 0, ObjectTableId = PortObjectTable.Id, QuerySection = "Port", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PortFeature_0.Id,FeatureUniqeCode= PortFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PortsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Port.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Port.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PortsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Port.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Port.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PortsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Port.IsAir" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Port.IsAir" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PortsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Port.IsOcean" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Port.IsOcean" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PortsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Port.IsInland" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Port.IsInland" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PortsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Port.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Port.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PortsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Port.CountryName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PortsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Port.CountryName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PortsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Port.Remark" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn PortsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PortsQuery.Id,QueryCode = PortsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Port.Remark" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1824,11 +1835,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable PortObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Port" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode PortGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PortGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PortGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PortObjectTable);
  
                  
 			   TextCode PortEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PortEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PortEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PortObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1844,14 +1855,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable PortObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Port" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature PortFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PortFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PortFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PortFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.PackageFeature", NameTextCodeDefaultText = "Port Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature PortFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PortObjectTable);
+		   Feature PortFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PortObjectTable);
+		   Feature PortFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PortObjectTable);
+		   Feature PortFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.PackageFeature", NameTextCodeDefaultText = "Port Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PortObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature PortFeature_NEWPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.NewPort", NameTextCodeDefaultText = @"New Port" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature PortFeature_NEWPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PortObjectTable.Id, Tenant = 0, NameTextCodeCode = "Port.Features.NewPort", NameTextCodeDefaultText = @"New Port" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PortObjectTable);
 
    
 	    

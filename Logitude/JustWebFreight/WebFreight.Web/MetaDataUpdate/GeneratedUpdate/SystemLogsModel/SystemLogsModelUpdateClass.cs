@@ -72,6 +72,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel
 		public Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups {get;set;}
 		public EntityStatusRepository EntityStatusRepository { get; set; }
 		public  List<EntityStatus>  AllEntityStatuses { get; set; }
+		Dictionary<string, QueryGroup> tenantQueryGroups {get; set; }
 		 
 	   	BatchServicesLogUpdateClass  BatchServicesLogUpdateClass = new BatchServicesLogUpdateClass();
 		ErrorLogUpdateClass  ErrorLogUpdateClass = new ErrorLogUpdateClass();
@@ -179,6 +180,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel
 			tenantMenuButtons = new Dictionary<string, MenuButton>();//menuButtonRepository.GetMenuButtonsByTenant(0).ToDictionary(d => d.EventCode + d.MenuButtonGroupId, a => a);
 			tenantMenuButtonGroups = menuButtonGroupRepository.GetMenuButtonGroupsByTenant(0).ToDictionary(d => d.Name, a => a);
 			AllEntityStatuses = EntityStatusRepository.GetEntityStatusByTenant(0).ToList();
+			tenantQueryGroups = queryGroupRepository.GetQueryGroups().ToDictionary(d => d.Code, a => a);	
 
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
@@ -251,18 +253,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel
 					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
 					//this.ObjectContext.ObjectFields.AddRange(addedFields);
 					//this.ObjectContext.SaveChanges();
-					BatchServicesLogUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-					this.ObjectContext.SaveChanges();
+					BatchServicesLogUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
 					BatchServicesLogUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					BatchServicesLogUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					BatchServicesLogUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					BatchServicesLogUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					BatchServicesLogUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					BatchServicesLogUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
@@ -284,18 +286,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel
 					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
 					//this.ObjectContext.ObjectFields.AddRange(addedFields);
 					//this.ObjectContext.SaveChanges();
-					ErrorLogUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-					this.ObjectContext.SaveChanges();
+					ErrorLogUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
 					ErrorLogUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					ErrorLogUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					ErrorLogUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					ErrorLogUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					ErrorLogUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-					this.ObjectContext.SaveChanges();
+					//this.ObjectContext.SaveChanges();
 					ErrorLogUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
@@ -327,9 +329,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel
 		public void CreateAllQueries()
         {
    
-	   	   BatchServicesLogUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   	   BatchServicesLogUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
-	   	   ErrorLogUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   	   ErrorLogUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
         }
 

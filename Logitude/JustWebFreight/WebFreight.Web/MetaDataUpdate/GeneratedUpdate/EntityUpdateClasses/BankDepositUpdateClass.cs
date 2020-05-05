@@ -1914,129 +1914,140 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup BankDepositQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BNKD", Name = "BankDeposit Query Group" }, queryGroupRepository);
-						QueryGroup BankDepositQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "aa10", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup BankDepositQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BNKD", Name = "BankDeposit Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup BankDepositQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "aa10", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable BankDepositObjectTable = objectTables.ContainsKey("BankDeposit") ? objectTables["BankDeposit"] : null;
             if (BankDepositObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 BankDepositObjectTable = objectContext.ObjectTables.Where(d => d.Name == "BankDeposit" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> BankDepositObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BankDeposit").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode BankDepositTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.AllBankDeposits", DefaultText = @"All Bank Deposits",LocalDefaultText = "כל פיקדונות הבנק", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BankDepositFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankDeposit.Q.AllBankDeposits", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.AllBankDeposits", NameTextCodeDefaultText = "AllBankDeposits", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BankDepositTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.AllBankDeposits", DefaultText = @"All Bank Deposits",LocalDefaultText = "כל פיקדונות הבנק", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BankDepositFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankDeposit.Q.AllBankDeposits", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.AllBankDeposits", NameTextCodeDefaultText = "AllBankDeposits", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BankDepositObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode BankDepositTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.Today", DefaultText = @"Today Deposits",LocalDefaultText = "הפקדות מהיום", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BankDepositFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TodayBankDeposit", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.todaydepo", NameTextCodeDefaultText = "Today Deposit", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BankDepositTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.Today", DefaultText = @"Today Deposits",LocalDefaultText = "הפקדות מהיום", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BankDepositFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TodayBankDeposit", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.todaydepo", NameTextCodeDefaultText = "Today Deposit", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BankDepositObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode BankDepositTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.cash", DefaultText = @"Cash Deposit",LocalDefaultText = "הפקדות מזומן", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BankDepositFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBankDeposit", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.cashdepo", NameTextCodeDefaultText = "Cash Deposit", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BankDepositTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.cash", DefaultText = @"Cash Deposit",LocalDefaultText = "הפקדות מזומן", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BankDepositFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBankDeposit", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.cashdepo", NameTextCodeDefaultText = "Cash Deposit", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BankDepositObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode BankDepositTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.chequeDeposit", DefaultText = @"Cheque Deposit",LocalDefaultText = "הפקדות המחאות", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BankDepositFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ChequeBankDeposit", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.chequedepo", NameTextCodeDefaultText = "Cheque Deposit", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BankDepositTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.chequeDeposit", DefaultText = @"Cheque Deposit",LocalDefaultText = "הפקדות המחאות", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BankDepositFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ChequeBankDeposit", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.chequedepo", NameTextCodeDefaultText = "Cheque Deposit", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BankDepositObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllBankDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_0.Id, NameTextCodeCode = BankDepositTextCode_0.Code, ObjectTableName = "BankDeposit", Code = "AllBankDeposits",  QueryGroupCode = "8a96", IndexOrder = 0, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_0.Id,FeatureUniqeCode= BankDepositFeature_0.FeatureUniqeCode, DefaultSortName = "DepositNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllBankDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_0.Id, NameTextCodeCode = BankDepositTextCode_0.Code, ObjectTableName = "BankDeposit", Code = "AllBankDeposits",  QueryGroupCode = "8a96", IndexOrder = 0, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_0.Id,FeatureUniqeCode= BankDepositFeature_0.FeatureUniqeCode, DefaultSortName = "DepositNumber", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllBankDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankDeposit.DepositNumber" , ColumnWidth = 137 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankDeposit.DepositNumber" , ColumnWidth = 137 }, addedQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankDeposit.CreatedByUserId" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankDeposit.CreatedByUserId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankDeposit.CreateDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankDeposit.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankDeposit.DepositDate" , ColumnWidth = 116 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankDeposit.DepositDate" , ColumnWidth = 116 }, addedQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankDeposit.AccountingDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankDeposit.AccountingDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankDeposit.LocalDepositAmount" , ColumnWidth = 135 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankDeposit.LocalDepositAmount" , ColumnWidth = 135 }, addedQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankDeposit.DepositCurrencyCode" , ColumnWidth = 142 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankDeposit.DepositCurrencyCode" , ColumnWidth = 142 }, addedQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "BankDeposit.DepositCurrencyId" , ColumnWidth = 124 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "BankDeposit.DepositCurrencyId" , ColumnWidth = 124 }, addedQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "BankDeposit.ForeignAmount" , ColumnWidth = 118 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "BankDeposit.ForeignAmount" , ColumnWidth = 118 }, addedQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "BankDeposit.DepositBankAccountId" , ColumnWidth = 147 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "BankDeposit.DepositBankAccountId" , ColumnWidth = 147 }, addedQueryColumns);
 
-			 QueryColumn AllBankDepositsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "BankDeposit.CreatedByUserName" , ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBankDepositsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankDepositsQuery.Id,QueryCode = AllBankDepositsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "BankDeposit.CreatedByUserName" , ColumnWidth = 220 }, addedQueryColumns);
   
 	      
 
-			  Query TodayDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_1.Id, NameTextCodeCode = BankDepositTextCode_1.Code, ObjectTableName = "BankDeposit", Code = "TodayDeposits",  QueryGroupCode = "BNKD", IndexOrder = 1, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_1.Id,FeatureUniqeCode= BankDepositFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query TodayDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_1.Id, NameTextCodeCode = BankDepositTextCode_1.Code, ObjectTableName = "BankDeposit", Code = "TodayDeposits",  QueryGroupCode = "BNKD", IndexOrder = 1, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_1.Id,FeatureUniqeCode= BankDepositFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn TodayDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankDeposit.DepositNumber" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankDeposit.DepositNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankDeposit.DepositDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankDeposit.DepositDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankDeposit.LocalDepositAmount" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankDeposit.LocalDepositAmount" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankDeposit.DepositCurrencyCode" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankDeposit.DepositCurrencyCode" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankDeposit.ForeignAmount" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankDeposit.ForeignAmount" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankDeposit.CreatedByUserName" , ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankDeposit.CreatedByUserName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn TodayDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankDeposit.CreateDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankDeposit.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter TodayDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.DepositDate", PredefinedValue = "#today",PredefinedValue2 = "#today", QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, Tenant = 0,Operator = "Between"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-  
-	      
-
-			  Query cashDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_2.Id, NameTextCodeCode = BankDepositTextCode_2.Code, ObjectTableName = "BankDeposit", Code = "cashDeposits",  QueryGroupCode = "BNKD", IndexOrder = 2, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_2.Id,FeatureUniqeCode= BankDepositFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn cashDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankDeposit.DepositNumber" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankDeposit.DepositDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankDeposit.LocalDepositAmount" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankDeposit.DepositCurrencyCode" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankDeposit.ForeignAmount" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankDeposit.CreatedByUserName" , ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn cashDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankDeposit.CreateDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter cashDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.IsCashDeposit", PredefinedValue = "true",PredefinedValue2 = null, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TodayDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.DepositDate", PredefinedValue = "#today",PredefinedValue2 = "#today", QueryId = TodayDepositsQuery.Id,QueryCode = TodayDepositsQuery.UniqueCode, Tenant = 0,Operator = "Between"}, addedQueryFilters);
 
   
 	      
 
-			  Query chequeDepositQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_3.Id, NameTextCodeCode = BankDepositTextCode_3.Code, ObjectTableName = "BankDeposit", Code = "chequeDeposit",  QueryGroupCode = "BNKD", IndexOrder = 3, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_3.Id,FeatureUniqeCode= BankDepositFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query cashDepositsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_2.Id, NameTextCodeCode = BankDepositTextCode_2.Code, ObjectTableName = "BankDeposit", Code = "cashDeposits",  QueryGroupCode = "BNKD", IndexOrder = 2, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_2.Id,FeatureUniqeCode= BankDepositFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn chequeDepositQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankDeposit.DepositNumber" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankDeposit.DepositNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankDeposit.DepositDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankDeposit.DepositDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankDeposit.LocalDepositAmount" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankDeposit.LocalDepositAmount" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankDeposit.DepositCurrencyCode" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankDeposit.DepositCurrencyCode" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankDeposit.ForeignAmount" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankDeposit.ForeignAmount" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankDeposit.CreatedByUserName" , ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankDeposit.CreatedByUserName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn chequeDepositQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankDeposit.CreateDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn cashDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankDeposit.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter chequeDepositQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.IsCashDeposit", PredefinedValue = "false",PredefinedValue2 = null, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter cashDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.IsCashDeposit", PredefinedValue = "true",PredefinedValue2 = null, QueryId = cashDepositsQuery.Id,QueryCode = cashDepositsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
-	   
+  
+	      
+
+			  Query chequeDepositQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankDepositTextCode_3.Id, NameTextCodeCode = BankDepositTextCode_3.Code, ObjectTableName = "BankDeposit", Code = "chequeDeposit",  QueryGroupCode = "BNKD", IndexOrder = 3, Tenant = 0, ObjectTableId = BankDepositObjectTable.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankDepositFeature_3.Id,FeatureUniqeCode= BankDepositFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+	
+			 QueryColumn chequeDepositQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankDeposit.DepositNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankDeposit.DepositDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankDeposit.LocalDepositAmount" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankDeposit.DepositCurrencyCode" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankDeposit.ForeignAmount" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankDeposit.CreatedByUserName" , ColumnWidth = 180 }, addedQueryColumns);
+
+			 QueryColumn chequeDepositQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankDeposit.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+             AdvancedQueryFilter chequeDepositQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "BankDeposit.IsCashDeposit", PredefinedValue = "false",PredefinedValue2 = null, QueryId = chequeDepositQuery.Id,QueryCode = chequeDepositQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -2082,11 +2093,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable BankDepositObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankDeposit" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode BankDepositDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BankDepositDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankDeposit.Tab.Details", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Details", NameTextCodeDefaultText = "Details Tab", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BankDepositDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankDeposit.Tab.Details", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Details", NameTextCodeDefaultText = "Details Tab", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankDepositObjectTable);
  
                  
 			   TextCode BankDepositEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BankDepositEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankDeposit.Tab.Events", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDepositFeatures.DPEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BankDepositEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankDeposit.Tab.Events", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDepositFeatures.DPEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankDepositObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2102,18 +2113,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable BankDepositObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankDeposit" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature BankDepositFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BankDepositFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BankDepositFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BankDepositFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.PackageFeature", NameTextCodeDefaultText = "BankDeposit Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature BankDepositFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable);
+		   Feature BankDepositFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable);
+		   Feature BankDepositFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable);
+		   Feature BankDepositFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.PackageFeature", NameTextCodeDefaultText = "BankDeposit Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature BankDepositFeature_DETAILS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Details", NameTextCodeDefaultText = @"Details Tab" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BankDepositFeature_DETAILS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Details", NameTextCodeDefaultText = @"Details Tab" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable);
 
-		   Feature BankDepositFeature_BANKDEPOSITMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKDEPOSITMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.BankDepositMenu", NameTextCodeDefaultText = @"Bank Deposit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BankDepositFeature_BANKDEPOSITMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKDEPOSITMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.BankDepositMenu", NameTextCodeDefaultText = @"Bank Deposit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable);
 
-		   Feature BankDepositFeature_MOREBNKDPST = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREBNKDPST", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.More", NameTextCodeDefaultText = @"More Buttons" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BankDepositFeature_MOREBNKDPST = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREBNKDPST", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.More", NameTextCodeDefaultText = @"More Buttons" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankDepositObjectTable);
 
    
 	    
@@ -2201,14 +2212,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable BankDepositObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankDeposit" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature BankDepositFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKDEPOSITAPRV", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.BankDepositApprove", NameTextCodeDefaultText = "Approve Deposit", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BankDepositFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKDEPOSITAPRV", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.BankDepositApprove", NameTextCodeDefaultText = "Approve Deposit", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankDepositObjectTable);
 
-			   Feature BankDepositFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKDEPOSITPRINT", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.BankDepositPrint", NameTextCodeDefaultText = "Print Bank Deposit", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature BankDepositFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelDeposit", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.CancelDeposit", NameTextCodeDefaultText = "Cancel Deposit", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BankDepositFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKDEPOSITPRINT", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.BankDepositPrint", NameTextCodeDefaultText = "Print Bank Deposit", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankDepositObjectTable);
+             			   Feature BankDepositFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelDeposit", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.CancelDeposit", NameTextCodeDefaultText = "Cancel Deposit", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankDepositObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

@@ -1223,42 +1223,53 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup VatTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "VATT", Name = "Vat Types" }, queryGroupRepository);
-						QueryGroup VatTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9aab", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup VatTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "VATT", Name = "Vat Types" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup VatTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9aab", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable VatTypeObjectTable = objectTables.ContainsKey("VatType") ? objectTables["VatType"] : null;
             if (VatTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 VatTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "VatType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> VatTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "VatType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode VatTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.Q.VatTypes", DefaultText = @"Vat Types",LocalDefaultText = null, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature VatTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VATTYPES", ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.VatTypes", NameTextCodeDefaultText = "VatTypes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode VatTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.Q.VatTypes", DefaultText = @"Vat Types",LocalDefaultText = null, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature VatTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VATTYPES", ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.VatTypes", NameTextCodeDefaultText = "VatTypes", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,VatTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query VattypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VatTypeTextCode_0.Id, NameTextCodeCode = VatTypeTextCode_0.Code, ObjectTableName = "VatType", Code = "Vat types",  QueryGroupCode = "VATT", IndexOrder = 0, Tenant = 0, ObjectTableId = VatTypeObjectTable.Id, QuerySection = "VatType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VatTypeFeature_0.Id,FeatureUniqeCode= VatTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query VattypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VatTypeTextCode_0.Id, NameTextCodeCode = VatTypeTextCode_0.Code, ObjectTableName = "VatType", Code = "Vat types",  QueryGroupCode = "VATT", IndexOrder = 0, Tenant = 0, ObjectTableId = VatTypeObjectTable.Id, QuerySection = "VatType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VatTypeFeature_0.Id,FeatureUniqeCode= VatTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn VattypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "VatType.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VattypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "VatType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn VattypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "VatType.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VattypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "VatType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn VattypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "VatType.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VattypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "VatType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn VattypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "VatType.AddedManually" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VattypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "VatType.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn VattypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "VatType.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn VattypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VattypesQuery.Id,QueryCode = VattypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "VatType.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1308,19 +1319,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable VatTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "VatType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode VatTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VatTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VatTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,VatTypeObjectTable);
  
                  
 			   TextCode VatTypePercentagesTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Percentages", DefaultText = "Percentages",LocalDefaultText = null, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VatTypePercentagesFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERCENTAGES", ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.Percentages", NameTextCodeDefaultText = "Percentages", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VatTypePercentagesFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERCENTAGES", ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.Percentages", NameTextCodeDefaultText = "Percentages", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,VatTypeObjectTable);
  
                  
 			   TextCode VatTypeAccountingTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GeneralObjectTable);
  
                  
 			   TextCode VatTypeEventsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VatTypeEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VatTypeEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,VatTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1340,10 +1351,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable VatTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "VatType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature VatTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature VatTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature VatTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature VatTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.PackageFeature", NameTextCodeDefaultText = "VatType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature VatTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,VatTypeObjectTable);
+		   Feature VatTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,VatTypeObjectTable);
+		   Feature VatTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,VatTypeObjectTable);
+		   Feature VatTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.PackageFeature", NameTextCodeDefaultText = "VatType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,VatTypeObjectTable);    
 	    
 		}
 

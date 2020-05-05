@@ -1342,79 +1342,90 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup APILogsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "APLG", Name = "API Logs" }, queryGroupRepository);
-						QueryGroup APILogsQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "eaa5", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup APILogsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "APLG", Name = "API Logs" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup APILogsQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "eaa5", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable APILogsObjectTable = objectTables.ContainsKey("APILogs") ? objectTables["APILogs"] : null;
             if (APILogsObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 APILogsObjectTable = objectContext.ObjectTables.Where(d => d.Name == "APILogs" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> APILogsObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "APILogs").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode APILogsTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.Q.TodayAPILogs", DefaultText = @"Today's Logs",LocalDefaultText = null, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature APILogsFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYAPILOGS", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.TodayAPILogs", NameTextCodeDefaultText = "Today API Logs", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode APILogsTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.Q.TodayAPILogs", DefaultText = @"Today's Logs",LocalDefaultText = null, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature APILogsFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYAPILOGS", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.TodayAPILogs", NameTextCodeDefaultText = "Today API Logs", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,APILogsObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode APILogsTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.Q.AllAPILogs", DefaultText = @"All Logs",LocalDefaultText = null, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature APILogsFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLAPILOGS", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.AllAPILogs", NameTextCodeDefaultText = "All API Logs", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode APILogsTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.Q.AllAPILogs", DefaultText = @"All Logs",LocalDefaultText = null, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature APILogsFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLAPILOGS", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.AllAPILogs", NameTextCodeDefaultText = "All API Logs", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,APILogsObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TodayAPILogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APILogsTextCode_0.Id, NameTextCodeCode = APILogsTextCode_0.Code, ObjectTableName = "APILogs", Code = "Today API Logs",  QueryGroupCode = "APLG", IndexOrder = 0, Tenant = 0, ObjectTableId = APILogsObjectTable.Id, QuerySection = "APILogs", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APILogsFeature_0.Id,FeatureUniqeCode= APILogsFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query TodayAPILogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APILogsTextCode_0.Id, NameTextCodeCode = APILogsTextCode_0.Code, ObjectTableName = "APILogs", Code = "Today API Logs",  QueryGroupCode = "APLG", IndexOrder = 0, Tenant = 0, ObjectTableId = APILogsObjectTable.Id, QuerySection = "APILogs", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APILogsFeature_0.Id,FeatureUniqeCode= APILogsFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn TodayAPILogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "APILogs.Subject" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "APILogs.Subject" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "APILogs.StatusName" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "APILogs.StatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "APILogs.Direction" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "APILogs.Direction" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "APILogs.NumberOfRetries" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "APILogs.NumberOfRetries" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "APILogs.ExpirationDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "APILogs.ExpirationDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "APILogs.LastExceptionMessage" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "APILogs.LastExceptionMessage" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APILogs.CreateDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APILogs.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "APILogs.LastUpdateDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "APILogs.LastUpdateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TodayAPILogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "APILogs.Refrence" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TodayAPILogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "APILogs.Refrence" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter TodayAPILogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APILogs.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TodayAPILogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "APILogs.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayAPILogsQuery.Id,QueryCode = TodayAPILogsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query AllAPILogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APILogsTextCode_1.Id, NameTextCodeCode = APILogsTextCode_1.Code, ObjectTableName = "APILogs", Code = "All API Logs",  QueryGroupCode = "APLG", IndexOrder = 1, Tenant = 0, ObjectTableId = APILogsObjectTable.Id, QuerySection = "APILogs", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APILogsFeature_1.Id,FeatureUniqeCode= APILogsFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAPILogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APILogsTextCode_1.Id, NameTextCodeCode = APILogsTextCode_1.Code, ObjectTableName = "APILogs", Code = "All API Logs",  QueryGroupCode = "APLG", IndexOrder = 1, Tenant = 0, ObjectTableId = APILogsObjectTable.Id, QuerySection = "APILogs", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APILogsFeature_1.Id,FeatureUniqeCode= APILogsFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllAPILogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "APILogs.Subject" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "APILogs.Subject" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "APILogs.StatusName" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "APILogs.StatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "APILogs.Direction" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "APILogs.Direction" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "APILogs.NumberOfRetries" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "APILogs.NumberOfRetries" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "APILogs.ExpirationDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "APILogs.ExpirationDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "APILogs.LastExceptionMessage" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "APILogs.LastExceptionMessage" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APILogs.CreateDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "APILogs.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "APILogs.LastUpdateDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAPILogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "APILogs.LastUpdateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllAPILogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "APILogs.Refrence" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllAPILogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id,QueryCode = AllAPILogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "APILogs.Refrence" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1470,22 +1481,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   ObjectTable APILogsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APILogs" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode APILogsGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature APILogsGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature APILogsGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APILogsObjectTable);
  
                  
 			   TextCode APILogsDiagnosticLogTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.DiagnosticLog", DefaultText = "Diagnostic Log",LocalDefaultText = null, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
  
                  
 			   TextCode APILogsRequestBodyTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.RequestBody", DefaultText = "Request Body",LocalDefaultText = null, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature APILogsRequestBodyFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTS", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.Requests", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature APILogsRequestBodyFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTS", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.Requests", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APILogsObjectTable);
  
                  
 			   TextCode APILogsResponseBodyTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.ResponseBody", DefaultText = "Response Body",LocalDefaultText = null, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature APILogsResponseBodyFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESPONCE", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.Responce", NameTextCodeDefaultText = "Resend", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature APILogsResponseBodyFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESPONCE", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.Responce", NameTextCodeDefaultText = "Resend", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APILogsObjectTable);
  
                  
 			   TextCode APILogsExceptionsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APILogs.TH.Exceptions", DefaultText = "Exceptions",LocalDefaultText = null, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature APILogsExceptionsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCEPTIONS", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.Exceptions", NameTextCodeDefaultText = "Messages", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature APILogsExceptionsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCEPTIONS", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.Exceptions", NameTextCodeDefaultText = "Messages", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APILogsObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1507,14 +1518,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    {  
 		   ObjectTable APILogsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APILogs" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature APILogsFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature APILogsFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature APILogsFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature APILogsFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.PackageFeature", NameTextCodeDefaultText = "APILogs Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature APILogsFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,APILogsObjectTable);
+		   Feature APILogsFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,APILogsObjectTable);
+		   Feature APILogsFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,APILogsObjectTable);
+		   Feature APILogsFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.PackageFeature", NameTextCodeDefaultText = "APILogs Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,APILogsObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature APILogsFeature_APILogs = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APILogs", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.APILogs", NameTextCodeDefaultText = @"API Logs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature APILogsFeature_APILogs = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APILogs", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.APILogs", NameTextCodeDefaultText = @"API Logs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,APILogsObjectTable);
 
    
 	    
@@ -1563,9 +1574,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable APILogsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APILogs" && d.Tenant == 0).FirstOrDefault(); 			   Feature APILogsFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReturnToQueue", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.ReturnToQueue", NameTextCodeDefaultText = "Return To Queue", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable APILogsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APILogs" && d.Tenant == 0).FirstOrDefault(); 			   Feature APILogsFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReturnToQueue", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.ReturnToQueue", NameTextCodeDefaultText = "Return To Queue", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,APILogsObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

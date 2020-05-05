@@ -2620,54 +2620,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AirlineStatisticsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ALST", Name = "Airline Statistics" }, queryGroupRepository);
-						QueryGroup AirlineStatisticsQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "62e9", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup AirlineStatisticsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ALST", Name = "Airline Statistics" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AirlineStatisticsQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "62e9", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AirlineStatisticsObjectTable = objectTables.ContainsKey("AirlineStatistics") ? objectTables["AirlineStatistics"] : null;
             if (AirlineStatisticsObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 AirlineStatisticsObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AirlineStatistics" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> AirlineStatisticsObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AirlineStatistics").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode AirlineStatisticsTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.Q.AllAirlineStatistics", DefaultText = @"All Airline Statistics",LocalDefaultText = null, ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AirlineStatisticsFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIRLINESTATISTICS", ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineStatistics.Features.AirlineStatistics", NameTextCodeDefaultText = "Airline Statistics", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AirlineStatisticsTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.Q.AllAirlineStatistics", DefaultText = @"All Airline Statistics",LocalDefaultText = null, ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AirlineStatisticsFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIRLINESTATISTICS", ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineStatistics.Features.AirlineStatistics", NameTextCodeDefaultText = "Airline Statistics", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AirlineStatisticsObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAirlineStatisticsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineStatisticsTextCode_0.Id, NameTextCodeCode = AirlineStatisticsTextCode_0.Code, ObjectTableName = "AirlineStatistics", Code = "All Airline Statistics",  QueryGroupCode = "ALST", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineStatisticsObjectTable.Id, QuerySection = "AirlineStatistics", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AirlineStatisticsFeature_0.Id,FeatureUniqeCode= AirlineStatisticsFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAirlineStatisticsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineStatisticsTextCode_0.Id, NameTextCodeCode = AirlineStatisticsTextCode_0.Code, ObjectTableName = "AirlineStatistics", Code = "All Airline Statistics",  QueryGroupCode = "ALST", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineStatisticsObjectTable.Id, QuerySection = "AirlineStatistics", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AirlineStatisticsFeature_0.Id,FeatureUniqeCode= AirlineStatisticsFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllAirlineStatisticsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AirlineStatistics.SourceTenant" , ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AirlineStatistics.SourceTenant" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AirlineStatistics.SourceTenantName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AirlineStatistics.SourceTenantName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AirlineStatistics.EntityReference" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AirlineStatistics.EntityReference" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AirlineStatistics.AWBNumber" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AirlineStatistics.AWBNumber" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AirlineStatistics.EntityCreatedByUserName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AirlineStatistics.EntityCreatedByUserName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AirlineStatistics.MessageType" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AirlineStatistics.MessageType" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AirlineStatistics.LastSentDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AirlineStatistics.LastSentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AirlineStatistics.OriginCode" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AirlineStatistics.OriginCode" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AirlineStatistics.DestinationCode" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AirlineStatistics.DestinationCode" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AirlineStatistics.ShipperName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAirlineStatisticsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AirlineStatistics.ShipperName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllAirlineStatisticsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AirlineStatistics.ConsigneeName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllAirlineStatisticsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id,QueryCode = AllAirlineStatisticsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AirlineStatistics.ConsigneeName" , ColumnWidth = 120 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -2725,7 +2736,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable AirlineStatisticsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AirlineStatistics" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AirlineStatisticsGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineStatisticsGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineStatistics.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineStatisticsGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineStatistics.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineStatisticsObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 

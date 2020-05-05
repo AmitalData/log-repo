@@ -1151,48 +1151,59 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup MessagingStockQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "AWMS", Name = "Messaging Stocks" }, queryGroupRepository);
-						QueryGroup MessagingStockQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "40e1", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup MessagingStockQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "AWMS", Name = "Messaging Stocks" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup MessagingStockQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "40e1", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable MessagingStockObjectTable = objectTables.ContainsKey("MessagingStock") ? objectTables["MessagingStock"] : null;
             if (MessagingStockObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 MessagingStockObjectTable = objectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> MessagingStockObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MessagingStock").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode MessagingStockTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.Q.AllMessagingStocks", DefaultText = @"All Messaging Stocks",LocalDefaultText = null, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature MessagingStockFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Q.AllQuery", ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.AllMessagingStocks", NameTextCodeDefaultText = "All Messaging Stocks", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode MessagingStockTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.Q.AllMessagingStocks", DefaultText = @"All Messaging Stocks",LocalDefaultText = null, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature MessagingStockFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Q.AllQuery", ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.AllMessagingStocks", NameTextCodeDefaultText = "All Messaging Stocks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,MessagingStockObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllMessagingStocksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MessagingStockTextCode_0.Id, NameTextCodeCode = MessagingStockTextCode_0.Code, ObjectTableName = "MessagingStock", Code = "All Messaging Stocks",  QueryGroupCode = "AWMS", IndexOrder = 0, Tenant = 0, ObjectTableId = MessagingStockObjectTable.Id, QuerySection = "MessagingStock", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MessagingStockFeature_0.Id,FeatureUniqeCode= MessagingStockFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllMessagingStocksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MessagingStockTextCode_0.Id, NameTextCodeCode = MessagingStockTextCode_0.Code, ObjectTableName = "MessagingStock", Code = "All Messaging Stocks",  QueryGroupCode = "AWMS", IndexOrder = 0, Tenant = 0, ObjectTableId = MessagingStockObjectTable.Id, QuerySection = "MessagingStock", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MessagingStockFeature_0.Id,FeatureUniqeCode= MessagingStockFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllMessagingStocksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "MessagingStock.TenantNumber" , ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "MessagingStock.TenantNumber" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "MessagingStock.StartDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "MessagingStock.StartDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "MessagingStock.EndDate" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "MessagingStock.EndDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "MessagingStock.Amount" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "MessagingStock.Amount" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "MessagingStock.Remaining" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "MessagingStock.Remaining" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "MessagingStock.Status" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "MessagingStock.Status" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "MessagingStock.Notes" , ColumnWidth = 350 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllMessagingStocksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "MessagingStock.Notes" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn AllMessagingStocksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "MessagingStock.TotalPrice" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllMessagingStocksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMessagingStocksQuery.Id,QueryCode = AllMessagingStocksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "MessagingStock.TotalPrice" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1226,11 +1237,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   ObjectTable MessagingStockObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode MessagingStockGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature MessagingStockGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Tab.General", ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature MessagingStockGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Tab.General", ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,MessagingStockObjectTable);
  
                  
 			   TextCode MessagingStockEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature MessagingStockEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Tab.Events", ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature MessagingStockEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Tab.Events", ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,MessagingStockObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1246,14 +1257,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    {  
 		   ObjectTable MessagingStockObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature MessagingStockFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature MessagingStockFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature MessagingStockFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature MessagingStockFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.PackageFeature", NameTextCodeDefaultText = "MessagingStock Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature MessagingStockFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MessagingStockObjectTable);
+		   Feature MessagingStockFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MessagingStockObjectTable);
+		   Feature MessagingStockFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MessagingStockObjectTable);
+		   Feature MessagingStockFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.PackageFeature", NameTextCodeDefaultText = "MessagingStock Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MessagingStockObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature MessagingStockFeature_MessagingStock_M_MessagingStocks = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.M.MessagingStocks", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.MessagingStocks", NameTextCodeDefaultText = @"Messaging Stocks" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature MessagingStockFeature_MessagingStock_M_MessagingStocks = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.M.MessagingStocks", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.MessagingStocks", NameTextCodeDefaultText = @"Messaging Stocks" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,MessagingStockObjectTable);
 
    
 	    
@@ -1304,9 +1315,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable MessagingStockObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault(); 			   Feature MessagingStockFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Action.Cancel", ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable MessagingStockObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault(); 			   Feature MessagingStockFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Action.Cancel", ObjectTableId = MessagingStockObjectTable.Id, Tenant = 0, NameTextCodeCode = "MessagingStock.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,MessagingStockObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

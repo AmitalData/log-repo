@@ -705,8 +705,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    {    
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -737,7 +737,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature DocumentFilingBackupBatchFeature_DOCUMENTFILINGBACKUPBATCH = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTFILINGBACKUPBATCH", FeatureTypeCode = "MODL", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentFilingBackupBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentFilingBackupBatch.Features.DocumentFilingBackupBatch", NameTextCodeDefaultText = @"DocumentFilingBackupBatch" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentFilingBackupBatchFeature_DOCUMENTFILINGBACKUPBATCH = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTFILINGBACKUPBATCH", FeatureTypeCode = "MODL", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentFilingBackupBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentFilingBackupBatch.Features.DocumentFilingBackupBatch", NameTextCodeDefaultText = @"DocumentFilingBackupBatch" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentFilingBackupBatchObjectTable);
 
    
 	    

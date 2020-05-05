@@ -591,38 +591,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup HybridPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CTHP", Name = "HybridPartners" }, queryGroupRepository);
-						QueryGroup HybridPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9700", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup HybridPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CTHP", Name = "HybridPartners" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup HybridPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9700", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable HybridPartnerObjectTable = objectTables.ContainsKey("HybridPartner") ? objectTables["HybridPartner"] : null;
             if (HybridPartnerObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 HybridPartnerObjectTable = objectContext.ObjectTables.Where(d => d.Name == "HybridPartner" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> HybridPartnerObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "HybridPartner").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode HybridPartnerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.Q.HybridPartners", DefaultText = @"Hybrid Partner",LocalDefaultText = null, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature HybridPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HYBRIDPARTNERS", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.HybridPartners", NameTextCodeDefaultText = "HybridPartners", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode HybridPartnerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.Q.HybridPartners", DefaultText = @"Hybrid Partner",LocalDefaultText = null, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature HybridPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HYBRIDPARTNERS", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.HybridPartners", NameTextCodeDefaultText = "HybridPartners", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,HybridPartnerObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query HybridPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HybridPartnerTextCode_0.Id, NameTextCodeCode = HybridPartnerTextCode_0.Code, ObjectTableName = "HybridPartner", Code = "HybridPartners",  QueryGroupCode = "CTHP", IndexOrder = 0, Tenant = 0, ObjectTableId = HybridPartnerObjectTable.Id, QuerySection = "HybridPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = HybridPartnerFeature_0.Id,FeatureUniqeCode= HybridPartnerFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query HybridPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HybridPartnerTextCode_0.Id, NameTextCodeCode = HybridPartnerTextCode_0.Code, ObjectTableName = "HybridPartner", Code = "HybridPartners",  QueryGroupCode = "CTHP", IndexOrder = 0, Tenant = 0, ObjectTableId = HybridPartnerObjectTable.Id, QuerySection = "HybridPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = HybridPartnerFeature_0.Id,FeatureUniqeCode= HybridPartnerFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn HybridPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "HybridPartner.Name" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HybridPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "HybridPartner.Name" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn HybridPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "HybridPartner.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HybridPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "HybridPartner.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn HybridPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "HybridPartner.PartnerTenant" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn HybridPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HybridPartnersQuery.Id,QueryCode = HybridPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "HybridPartner.PartnerTenant" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -648,11 +659,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable HybridPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HybridPartner" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode HybridPartnerGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature HybridPartnerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature HybridPartnerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,HybridPartnerObjectTable);
  
                  
 			   TextCode HybridPartnerPermissionsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner.TH.Permissions", DefaultText = "Permissions",LocalDefaultText = null, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature HybridPartnerPermissionsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERMISSIONS", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Permissions", NameTextCodeDefaultText = "Permissions", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature HybridPartnerPermissionsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERMISSIONS", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Permissions", NameTextCodeDefaultText = "Permissions", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,HybridPartnerObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -668,10 +679,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable HybridPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HybridPartner" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature HybridPartnerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature HybridPartnerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature HybridPartnerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature HybridPartnerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.PackageFeature", NameTextCodeDefaultText = "HybridPartner Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature HybridPartnerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HybridPartnerObjectTable);
+		   Feature HybridPartnerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HybridPartnerObjectTable);
+		   Feature HybridPartnerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HybridPartnerObjectTable);
+		   Feature HybridPartnerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "HybridPartner.Features.PackageFeature", NameTextCodeDefaultText = "HybridPartner Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,HybridPartnerObjectTable);    
 	    
 		}
 

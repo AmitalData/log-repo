@@ -2166,48 +2166,59 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup DocumentTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DOCT", Name = "Document Types" }, queryGroupRepository);
-						QueryGroup DocumentTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5385", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup DocumentTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DOCT", Name = "Document Types" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup DocumentTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5385", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable DocumentTypeObjectTable = objectTables.ContainsKey("DocumentType") ? objectTables["DocumentType"] : null;
             if (DocumentTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 DocumentTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "DocumentType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> DocumentTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DocumentType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode DocumentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.Q.DocumentTypes", DefaultText = @"Document Types",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTTYPES", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.DocumentTypes", NameTextCodeDefaultText = "Document Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DocumentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.Q.DocumentTypes", DefaultText = @"Document Types",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DocumentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTTYPES", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.DocumentTypes", NameTextCodeDefaultText = "Document Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DocumentTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query DocumentTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentTypeTextCode_0.Id, NameTextCodeCode = DocumentTypeTextCode_0.Code, ObjectTableName = "DocumentType", Code = "Document Types",  QueryGroupCode = "DOCT", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentTypeObjectTable.Id, QuerySection = "DocumentType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DocumentTypeFeature_0.Id,FeatureUniqeCode= DocumentTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query DocumentTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentTypeTextCode_0.Id, NameTextCodeCode = DocumentTypeTextCode_0.Code, ObjectTableName = "DocumentType", Code = "Document Types",  QueryGroupCode = "DOCT", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentTypeObjectTable.Id, QuerySection = "DocumentType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DocumentTypeFeature_0.Id,FeatureUniqeCode= DocumentTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DocumentTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DocumentType.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DocumentType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DocumentType.Name" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DocumentType.Name" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DocumentType.IsAir" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DocumentType.IsAir" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DocumentType.IsOcean" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DocumentType.IsOcean" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DocumentType.IsInland" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DocumentType.IsInland" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "DocumentType.IsDocIn" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "DocumentType.IsDocIn" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "DocumentType.IsDocOut" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DocumentTypesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "DocumentType.IsDocOut" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DocumentTypesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DocumentType.OrderBy" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn DocumentTypesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentTypesQuery.Id,QueryCode = DocumentTypesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DocumentType.OrderBy" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -2267,27 +2278,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable DocumentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode DocumentTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature DocumentTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentTypeObjectTable);
  
                  
 			   TextCode DocumentTypeSharedLogisticsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.SharedLogistics", DefaultText = "Shared Logistics",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypeSharedLogisticsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDLOGISTICS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.SHAREDLOGISTICS", NameTextCodeDefaultText = "SharedLogistics", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature DocumentTypeSharedLogisticsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDLOGISTICS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.SHAREDLOGISTICS", NameTextCodeDefaultText = "SharedLogistics", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentTypeObjectTable);
  
                  
 			   TextCode DocumentTypeCustomFieldsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.CustomFields", DefaultText = "Custom Fields",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypeCustomFieldsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMEFIELD", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.CustomFields", NameTextCodeDefaultText = "Custom Fields", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature DocumentTypeCustomFieldsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMEFIELD", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.CustomFields", NameTextCodeDefaultText = "Custom Fields", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentTypeObjectTable);
  
                  
 			   TextCode DocumentTypePrintingOptionsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.PrintingOptions", DefaultText = "Printing Options",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypePrintingOptionsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTINGOPTIONS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.PRINTINGOPTIONS", NameTextCodeDefaultText = "Printing Options", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature DocumentTypePrintingOptionsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTINGOPTIONS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.PRINTINGOPTIONS", NameTextCodeDefaultText = "Printing Options", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentTypeObjectTable);
  
                  
 			   TextCode DocumentTypeCopiesTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Copies", DefaultText = "Copies",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypeCopiesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPIES", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.COPIES", NameTextCodeDefaultText = "Copies", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature DocumentTypeCopiesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPIES", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.COPIES", NameTextCodeDefaultText = "Copies", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentTypeObjectTable);
  
                  
 			   TextCode DocumentTypeEventsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentTypeEventsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature DocumentTypeEventsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2311,30 +2322,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable DocumentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature DocumentTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DocumentTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DocumentTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DocumentTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.PackageFeature", NameTextCodeDefaultText = "DocumentType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature DocumentTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
+		   Feature DocumentTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
+		   Feature DocumentTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
+		   Feature DocumentTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.PackageFeature", NameTextCodeDefaultText = "DocumentType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature DocumentTypeFeature_DOCUMENTTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTTYPE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.DocumentType", NameTextCodeDefaultText = @"Show all Document Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentTypeFeature_DOCUMENTTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTTYPE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.DocumentType", NameTextCodeDefaultText = @"Show all Document Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
-		   Feature DocumentTypeFeature_FROMFILE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FROMFILE", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.FromFile", NameTextCodeDefaultText = @"From File" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentTypeFeature_FROMFILE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FROMFILE", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.FromFile", NameTextCodeDefaultText = @"From File" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
-		   Feature DocumentTypeFeature_DOCUMENTTYPEPROPERTIES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTTYPEPROPERTIES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.Properties", NameTextCodeDefaultText = @"Document Type Properties" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentTypeFeature_DOCUMENTTYPEPROPERTIES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTTYPEPROPERTIES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.Properties", NameTextCodeDefaultText = @"Document Type Properties" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
-		   Feature DocumentTypeFeature_FROMLIBRARY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FROMLIBRARY", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.FromLibrary", NameTextCodeDefaultText = @"Add From Library" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentTypeFeature_FROMLIBRARY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FROMLIBRARY", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.FromLibrary", NameTextCodeDefaultText = @"Add From Library" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
-		   Feature DocumentTypeFeature_HTMLEMAIL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HTMLEMAIL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.HtmlEmail", NameTextCodeDefaultText = @"Html Email" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentTypeFeature_HTMLEMAIL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HTMLEMAIL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.HtmlEmail", NameTextCodeDefaultText = @"Html Email" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
-		   Feature DocumentTypeFeature_RICHTEXTPRINT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RICHTEXTPRINT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.RichTextPrint", NameTextCodeDefaultText = @"Rich Text Print" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentTypeFeature_RICHTEXTPRINT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RICHTEXTPRINT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.RichTextPrint", NameTextCodeDefaultText = @"Rich Text Print" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
-		   Feature DocumentTypeFeature_MRTPDFPRINT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MRTPDFPRINT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.MrtPdfPrint", NameTextCodeDefaultText = @"Mrt Pdf Print" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentTypeFeature_MRTPDFPRINT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MRTPDFPRINT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.MrtPdfPrint", NameTextCodeDefaultText = @"Mrt Pdf Print" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
-		   Feature DocumentTypeFeature_CATEGORY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CATEGORY", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DocumentTypesCategory", NameTextCodeDefaultText = @"Document Types Category" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentTypeFeature_CATEGORY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CATEGORY", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DocumentTypesCategory", NameTextCodeDefaultText = @"Document Types Category" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
-		   Feature DocumentTypeFeature_LogBoxTab = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogBoxTab", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.LogBoxTab", NameTextCodeDefaultText = @"Digital Sign Definitions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentTypeFeature_LogBoxTab = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogBoxTab", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentType.Features.LogBoxTab", NameTextCodeDefaultText = @"Digital Sign Definitions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentTypeObjectTable);
 
    
 	    

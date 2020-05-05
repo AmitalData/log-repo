@@ -398,38 +398,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AWBAdditionalHandlingInfoQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ADHI", Name = "AWB Additional Handling Info" }, queryGroupRepository);
-						QueryGroup AWBAdditionalHandlingInfoQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "da39", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup AWBAdditionalHandlingInfoQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ADHI", Name = "AWB Additional Handling Info" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AWBAdditionalHandlingInfoQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "da39", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AWBAdditionalHandlingInfoObjectTable = objectTables.ContainsKey("AWBAdditionalHandlingInfo") ? objectTables["AWBAdditionalHandlingInfo"] : null;
             if (AWBAdditionalHandlingInfoObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 AWBAdditionalHandlingInfoObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AWBAdditionalHandlingInfo" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> AWBAdditionalHandlingInfoObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AWBAdditionalHandlingInfo").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode AWBAdditionalHandlingInfoTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalHandlingInfo.Q.AllHandlingInfos", DefaultText = @"AWB Additional Handling Infos",LocalDefaultText = null, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AWBAdditionalHandlingInfoFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalHandlingInfo.Q.AllQuery", ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.AllAdditionalHandlingInfos", NameTextCodeDefaultText = "All Additional Handling Infos", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AWBAdditionalHandlingInfoTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalHandlingInfo.Q.AllHandlingInfos", DefaultText = @"AWB Additional Handling Infos",LocalDefaultText = null, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AWBAdditionalHandlingInfoFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalHandlingInfo.Q.AllQuery", ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.AllAdditionalHandlingInfos", NameTextCodeDefaultText = "All Additional Handling Infos", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AWBAdditionalHandlingInfoObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAdditionalHandlingInfosQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AWBAdditionalHandlingInfoTextCode_0.Id, NameTextCodeCode = AWBAdditionalHandlingInfoTextCode_0.Code, ObjectTableName = "AWBAdditionalHandlingInfo", Code = "All Additional Handling Infos",  QueryGroupCode = "ADHI", IndexOrder = 0, Tenant = 0, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, QuerySection = "AWBAdditionalHandlingInfo", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AWBAdditionalHandlingInfoFeature_0.Id,FeatureUniqeCode= AWBAdditionalHandlingInfoFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAdditionalHandlingInfosQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AWBAdditionalHandlingInfoTextCode_0.Id, NameTextCodeCode = AWBAdditionalHandlingInfoTextCode_0.Code, ObjectTableName = "AWBAdditionalHandlingInfo", Code = "All Additional Handling Infos",  QueryGroupCode = "ADHI", IndexOrder = 0, Tenant = 0, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, QuerySection = "AWBAdditionalHandlingInfo", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AWBAdditionalHandlingInfoFeature_0.Id,FeatureUniqeCode= AWBAdditionalHandlingInfoFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllAdditionalHandlingInfosQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AWBAdditionalHandlingInfo.Code" , ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAdditionalHandlingInfosQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AWBAdditionalHandlingInfo.Code" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn AllAdditionalHandlingInfosQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AWBAdditionalHandlingInfo.Name" , ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAdditionalHandlingInfosQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AWBAdditionalHandlingInfo.Name" , ColumnWidth = 300 }, addedQueryColumns);
 
-			 QueryColumn AllAdditionalHandlingInfosQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AWBAdditionalHandlingInfo.PrintDescription" , ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllAdditionalHandlingInfosQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAdditionalHandlingInfosQuery.Id,QueryCode = AllAdditionalHandlingInfosQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AWBAdditionalHandlingInfo.PrintDescription" , ColumnWidth = 300 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -459,7 +470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   ObjectTable AWBAdditionalHandlingInfoObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AWBAdditionalHandlingInfo" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AWBAdditionalHandlingInfoGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBAdditionalHandlingInfo.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AWBAdditionalHandlingInfoGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalHandlingInfo.Tab.General", ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AWBAdditionalHandlingInfoGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalHandlingInfo.Tab.General", ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AWBAdditionalHandlingInfoObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -473,10 +484,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    {  
 		   ObjectTable AWBAdditionalHandlingInfoObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AWBAdditionalHandlingInfo" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature AWBAdditionalHandlingInfoFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AWBAdditionalHandlingInfoFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AWBAdditionalHandlingInfoFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AWBAdditionalHandlingInfoFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.PackageFeature", NameTextCodeDefaultText = "AWBAdditionalHandlingInfo Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature AWBAdditionalHandlingInfoFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AWBAdditionalHandlingInfoObjectTable);
+		   Feature AWBAdditionalHandlingInfoFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AWBAdditionalHandlingInfoObjectTable);
+		   Feature AWBAdditionalHandlingInfoFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AWBAdditionalHandlingInfoObjectTable);
+		   Feature AWBAdditionalHandlingInfoFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, NameTextCodeCode = "AWBAdditionalHandlingInfo.Features.PackageFeature", NameTextCodeDefaultText = "AWBAdditionalHandlingInfo Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AWBAdditionalHandlingInfoObjectTable);    
 	    
 		}
 

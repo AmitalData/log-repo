@@ -636,49 +636,60 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup TicketEscalationQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TEQG", Name = "TicketEscalation" }, queryGroupRepository);
+	        QueryGroup TicketEscalationQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TEQG", Name = "TicketEscalation" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable TicketEscalationObjectTable = objectTables.ContainsKey("TicketEscalation") ? objectTables["TicketEscalation"] : null;
             if (TicketEscalationObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 TicketEscalationObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TicketEscalation" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> TicketEscalationObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TicketEscalation").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode TicketEscalationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.AllTicketEscalations", DefaultText = @"Ticket Escalations",LocalDefaultText = null, ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TicketEscalationFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.AllTicketEscalations", ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.AllTicketEscalations", NameTextCodeDefaultText = "Ticket Escalations", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TicketEscalationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.AllTicketEscalations", DefaultText = @"Ticket Escalations",LocalDefaultText = null, ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TicketEscalationFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.AllTicketEscalations", ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.AllTicketEscalations", NameTextCodeDefaultText = "Ticket Escalations", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,TicketEscalationObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTicketEscalationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketEscalationTextCode_0.Id, NameTextCodeCode = TicketEscalationTextCode_0.Code, ObjectTableName = "TicketEscalation", Code = "All Ticket Escalations",  QueryGroupCode = "TEQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketEscalationObjectTable.Id, QuerySection = "TicketEscalation", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketEscalationFeature_0.Id,FeatureUniqeCode= TicketEscalationFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTicketEscalationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketEscalationTextCode_0.Id, NameTextCodeCode = TicketEscalationTextCode_0.Code, ObjectTableName = "TicketEscalation", Code = "All Ticket Escalations",  QueryGroupCode = "TEQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketEscalationObjectTable.Id, QuerySection = "TicketEscalation", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketEscalationFeature_0.Id,FeatureUniqeCode= TicketEscalationFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllTicketEscalationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TicketEscalation.LineNumber" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketEscalationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TicketEscalation.LineNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllTicketEscalationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TicketEscalation.CreateDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketEscalationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TicketEscalation.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllTicketEscalationsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TicketEscalation.EscalationForName" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketEscalationsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TicketEscalation.EscalationForName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllTicketEscalationsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TicketEscalation.Recepients" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketEscalationsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TicketEscalation.Recepients" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllTicketEscalationsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TicketEscalation.DueDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketEscalationsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TicketEscalation.DueDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllTicketEscalationsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "TicketEscalation.IsSLAViolated" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketEscalationsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "TicketEscalation.IsSLAViolated" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllTicketEscalationsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "TicketEscalation.UpdateDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketEscalationsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "TicketEscalation.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllTicketEscalationsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "TicketEscalation.IsClose" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketEscalationsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "TicketEscalation.IsClose" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllTicketEscalationsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "TicketEscalation.CloseDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllTicketEscalationsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketEscalationsQuery.Id,QueryCode = AllTicketEscalationsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "TicketEscalation.CloseDate" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -694,10 +705,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TicketEscalationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TicketEscalation" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TicketEscalationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketEscalation.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TicketEscalationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketEscalation.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TicketEscalationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketEscalation.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TicketEscalationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketEscalation.Features.PackageFeature", NameTextCodeDefaultText = "TicketEscalation Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature TicketEscalationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketEscalation.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketEscalationObjectTable);
+		   Feature TicketEscalationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketEscalation.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketEscalationObjectTable);
+		   Feature TicketEscalationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketEscalation.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketEscalationObjectTable);
+		   Feature TicketEscalationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TicketEscalationObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketEscalation.Features.PackageFeature", NameTextCodeDefaultText = "TicketEscalation Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketEscalationObjectTable);    
 	    
 		}
 

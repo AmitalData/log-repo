@@ -374,36 +374,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup TicketTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TTQG", Name = "TicketType" }, queryGroupRepository);
-						QueryGroup TicketTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8b0d", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup TicketTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TTQG", Name = "TicketType" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup TicketTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8b0d", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable TicketTypeObjectTable = objectTables.ContainsKey("TicketType") ? objectTables["TicketType"] : null;
             if (TicketTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 TicketTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TicketType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> TicketTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TicketType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode TicketTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketType.Q.AllTicketTypes", DefaultText = @"Ticket Types",LocalDefaultText = null, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TicketTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTICKETTYPES", ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.AllTicketTypes", NameTextCodeDefaultText = "All Ticket Types", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TicketTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketType.Q.AllTicketTypes", DefaultText = @"Ticket Types",LocalDefaultText = null, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TicketTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTICKETTYPES", ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.AllTicketTypes", NameTextCodeDefaultText = "All Ticket Types", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,TicketTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTicketTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTypeTextCode_0.Id, NameTextCodeCode = TicketTypeTextCode_0.Code, ObjectTableName = "TicketType", Code = "All Ticket Types",  QueryGroupCode = "TTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketTypeObjectTable.Id, QuerySection = "TicketType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketTypeFeature_0.Id,FeatureUniqeCode= TicketTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTicketTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTypeTextCode_0.Id, NameTextCodeCode = TicketTypeTextCode_0.Code, ObjectTableName = "TicketType", Code = "All Ticket Types",  QueryGroupCode = "TTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketTypeObjectTable.Id, QuerySection = "TicketType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketTypeFeature_0.Id,FeatureUniqeCode= TicketTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllTicketTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketTypesQuery.Id,QueryCode = AllTicketTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TicketType.Name" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketTypesQuery.Id,QueryCode = AllTicketTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TicketType.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllTicketTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketTypesQuery.Id,QueryCode = AllTicketTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TicketType.Inactive" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllTicketTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketTypesQuery.Id,QueryCode = AllTicketTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TicketType.Inactive" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -439,11 +450,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable TicketTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TicketType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TicketTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TicketTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketType.Tab.General", ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TicketTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketType.Tab.General", ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketTypeObjectTable);
  
                  
 			   TextCode TicketTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TicketTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketType.Tab.Events", ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TicketTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketType.Tab.Events", ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -459,10 +470,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TicketTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TicketType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TicketTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TicketTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TicketTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TicketTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.PackageFeature", NameTextCodeDefaultText = "TicketType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature TicketTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketTypeObjectTable);
+		   Feature TicketTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketTypeObjectTable);
+		   Feature TicketTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketTypeObjectTable);
+		   Feature TicketTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TicketTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketType.Features.PackageFeature", NameTextCodeDefaultText = "TicketType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketTypeObjectTable);    
 	    
 		}
 

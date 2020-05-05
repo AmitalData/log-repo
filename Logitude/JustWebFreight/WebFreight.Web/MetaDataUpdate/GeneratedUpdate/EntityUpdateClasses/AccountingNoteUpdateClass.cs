@@ -611,38 +611,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AccountingNoteQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9417", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup AccountingNoteQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "681a", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup AccountingNoteQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9417", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AccountingNoteQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "681a", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AccountingNoteObjectTable = objectTables.ContainsKey("AccountingNote") ? objectTables["AccountingNote"] : null;
             if (AccountingNoteObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 AccountingNoteObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AccountingNote" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> AccountingNoteObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingNote").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode AccountingNoteTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingNote.Q.AllNotes", DefaultText = @"All Notes",LocalDefaultText = null, ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingNoteFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingNote.Q.AllNotes", ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingNoteFeatures.AllNotes", NameTextCodeDefaultText = "AllNotes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AccountingNoteTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingNote.Q.AllNotes", DefaultText = @"All Notes",LocalDefaultText = null, ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AccountingNoteFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingNote.Q.AllNotes", ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingNoteFeatures.AllNotes", NameTextCodeDefaultText = "AllNotes", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AccountingNoteObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllNotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingNoteTextCode_0.Id, NameTextCodeCode = AccountingNoteTextCode_0.Code, ObjectTableName = "AccountingNote", Code = "AllNotes",  QueryGroupCode = "9417", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingNoteObjectTable.Id, QuerySection = "AccountingNote", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingNoteFeature_0.Id,FeatureUniqeCode= AccountingNoteFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllNotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingNoteTextCode_0.Id, NameTextCodeCode = AccountingNoteTextCode_0.Code, ObjectTableName = "AccountingNote", Code = "AllNotes",  QueryGroupCode = "9417", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingNoteObjectTable.Id, QuerySection = "AccountingNote", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingNoteFeature_0.Id,FeatureUniqeCode= AccountingNoteFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllNotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllNotesQuery.Id,QueryCode = AllNotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingNote.CreateDate" , ColumnWidth = 143 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllNotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllNotesQuery.Id,QueryCode = AllNotesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingNote.CreateDate" , ColumnWidth = 143 }, addedQueryColumns);
 
-			 QueryColumn AllNotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllNotesQuery.Id,QueryCode = AllNotesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingNote.UpdateDate" , ColumnWidth = 154 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllNotesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllNotesQuery.Id,QueryCode = AllNotesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingNote.UpdateDate" , ColumnWidth = 154 }, addedQueryColumns);
 
-			 QueryColumn AllNotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllNotesQuery.Id,QueryCode = AllNotesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingNote.Notes" , ColumnWidth = 454 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllNotesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllNotesQuery.Id,QueryCode = AllNotesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingNote.Notes" , ColumnWidth = 454 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -676,10 +687,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable AccountingNoteObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingNote" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature AccountingNoteFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingNote.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingNoteFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingNote.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingNoteFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingNote.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingNoteFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingNote.Features.PackageFeature", NameTextCodeDefaultText = "AccountingNote Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature AccountingNoteFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingNote.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingNoteObjectTable);
+		   Feature AccountingNoteFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingNote.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingNoteObjectTable);
+		   Feature AccountingNoteFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingNote.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingNoteObjectTable);
+		   Feature AccountingNoteFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingNoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingNote.Features.PackageFeature", NameTextCodeDefaultText = "AccountingNote Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingNoteObjectTable);    
 	    
 		}
 

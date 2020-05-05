@@ -3739,126 +3739,137 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ContainerFollowUpQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CNFL", Name = "Containers Follow Up" }, queryGroupRepository);
-						QueryGroup ContainerFollowUpQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "970c", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup ContainerFollowUpQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CNFL", Name = "Containers Follow Up" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ContainerFollowUpQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "970c", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ContainerFollowUpObjectTable = objectTables.ContainsKey("ContainerFollowUp") ? objectTables["ContainerFollowUp"] : null;
             if (ContainerFollowUpObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ContainerFollowUpObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ContainerFollowUp" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> ContainerFollowUpObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ContainerFollowUp").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ContainerFollowUpTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.ArrivedNotDelivered", DefaultText = @"Arrived Not Delivered",LocalDefaultText = null, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ContainerFollowUpFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ArrivedNotDelivered", ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.ArrivedNotDelivered", NameTextCodeDefaultText = "Arrived Not Delivered", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ContainerFollowUpTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.ArrivedNotDelivered", DefaultText = @"Arrived Not Delivered",LocalDefaultText = null, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFollowUpFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ArrivedNotDelivered", ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.ArrivedNotDelivered", NameTextCodeDefaultText = "Arrived Not Delivered", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerFollowUpObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerFollowUpTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.DeliveredNotReturned", DefaultText = @"Delivered Not Returned",LocalDefaultText = null, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ContainerFollowUpFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeliveredNotReturned", ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.DeliveredNotReturned", NameTextCodeDefaultText = "Delivered Not Returned", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ContainerFollowUpTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.DeliveredNotReturned", DefaultText = @"Delivered Not Returned",LocalDefaultText = null, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFollowUpFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeliveredNotReturned", ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.DeliveredNotReturned", NameTextCodeDefaultText = "Delivered Not Returned", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerFollowUpObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerFollowUpTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.InTransit", DefaultText = @"In Transit",LocalDefaultText = null, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ContainerFollowUpFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InTransit", ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.InTransit", NameTextCodeDefaultText = "In Transit", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ContainerFollowUpTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.InTransit", DefaultText = @"In Transit",LocalDefaultText = null, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFollowUpFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InTransit", ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.InTransit", NameTextCodeDefaultText = "In Transit", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerFollowUpObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
 			  Query ArrivedNotDeliveredQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerFollowUpTextCode_0.Id, NameTextCodeCode = ContainerFollowUpTextCode_0.Code, ObjectTableName = "ContainerFollowUp", Code = "ArrivedNotDelivered",  EditWizardComponentPath = "./ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardComponent",
-			   QueryGroupCode = "CNFL", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_0.Id,FeatureUniqeCode= ContainerFollowUpFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "CNFL", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_0.Id,FeatureUniqeCode= ContainerFollowUpFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ArrivedNotDeliveredQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContainerFollowUp.ContainerTypeName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContainerFollowUp.ContainerTypeName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContainerFollowUp.ContainerNumber" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContainerFollowUp.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContainerFollowUp.ShipperSeal" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContainerFollowUp.ShipperSeal" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContainerFollowUp.Volume" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContainerFollowUp.Volume" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ContainerFollowUp.IsDangerous" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ContainerFollowUp.IsDangerous" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ContainerFollowUp.MarksAndNumbers" , ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ContainerFollowUp.MarksAndNumbers" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ContainerFollowUp.Description" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ContainerFollowUp.Description" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ContainerFollowUp.DeliveryTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ContainerFollowUp.DeliveryTo" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ContainerFollowUp.EmptyContainerReturnTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ContainerFollowUp.EmptyContainerReturnTo" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ContainerFollowUp.DeliveryArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ContainerFollowUp.DeliveryArrival" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ArrivedNotDeliveredQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ArrivedNotDeliveredQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter ArrivedNotDeliveredQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.ArrivedNotDelivered", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ArrivedNotDeliveredQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.ArrivedNotDelivered", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ArrivedNotDeliveredQuery.Id,QueryCode = ArrivedNotDeliveredQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query DeliveredNotReturnedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerFollowUpTextCode_1.Id, NameTextCodeCode = ContainerFollowUpTextCode_1.Code, ObjectTableName = "ContainerFollowUp", Code = "DeliveredNotReturned",  EditWizardComponentPath = "./ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardComponent",
-			   QueryGroupCode = "CNFL", IndexOrder = 1, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_1.Id,FeatureUniqeCode= ContainerFollowUpFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "CNFL", IndexOrder = 1, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_1.Id,FeatureUniqeCode= ContainerFollowUpFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DeliveredNotReturnedQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContainerFollowUp.ContainerTypeName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContainerFollowUp.ContainerTypeName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContainerFollowUp.ContainerNumber" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContainerFollowUp.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContainerFollowUp.ShipperSeal" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContainerFollowUp.ShipperSeal" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContainerFollowUp.Volume" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContainerFollowUp.Volume" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ContainerFollowUp.IsDangerous" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ContainerFollowUp.IsDangerous" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ContainerFollowUp.MarksAndNumbers" , ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ContainerFollowUp.MarksAndNumbers" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ContainerFollowUp.Description" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ContainerFollowUp.Description" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ContainerFollowUp.DeliveryTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ContainerFollowUp.DeliveryTo" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ContainerFollowUp.EmptyContainerReturnTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ContainerFollowUp.EmptyContainerReturnTo" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ContainerFollowUp.DeliveryArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ContainerFollowUp.DeliveryArrival" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn DeliveredNotReturnedQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliveredNotReturnedQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter DeliveredNotReturnedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.DeliveredNotReturned", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DeliveredNotReturnedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.DeliveredNotReturned", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeliveredNotReturnedQuery.Id,QueryCode = DeliveredNotReturnedQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query InTransitQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerFollowUpTextCode_2.Id, NameTextCodeCode = ContainerFollowUpTextCode_2.Code, ObjectTableName = "ContainerFollowUp", Code = "InTransit",  EditWizardComponentPath = "./ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardComponent",
-			   QueryGroupCode = "CNFL", IndexOrder = 2, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_2.Id,FeatureUniqeCode= ContainerFollowUpFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "CNFL", IndexOrder = 2, Tenant = 0, ObjectTableId = ContainerFollowUpObjectTable.Id, QuerySection = "ContainerFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFollowUpFeature_2.Id,FeatureUniqeCode= ContainerFollowUpFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn InTransitQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContainerFollowUp.ContainerTypeName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContainerFollowUp.ContainerTypeName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContainerFollowUp.ContainerNumber" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContainerFollowUp.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContainerFollowUp.ShipperSeal" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContainerFollowUp.ShipperSeal" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContainerFollowUp.Volume" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContainerFollowUp.Volume" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ContainerFollowUp.IsDangerous" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ContainerFollowUp.IsDangerous" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ContainerFollowUp.MarksAndNumbers" , ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ContainerFollowUp.MarksAndNumbers" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ContainerFollowUp.Description" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ContainerFollowUp.Description" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ContainerFollowUp.DeliveryTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ContainerFollowUp.DeliveryTo" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ContainerFollowUp.EmptyContainerReturnTo" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ContainerFollowUp.EmptyContainerReturnTo" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ContainerFollowUp.DeliveryArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ContainerFollowUp.DeliveryArrival" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn InTransitQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InTransitQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ContainerFollowUp.ReturnArrival" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter InTransitQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.InTransit", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InTransitQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ContainerFollowUp.InTransit", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InTransitQuery.Id,QueryCode = InTransitQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
-	   
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -3886,10 +3897,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    {  
 		   ObjectTable ContainerFollowUpObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ContainerFollowUp" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature ContainerFollowUpFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ContainerFollowUpFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ContainerFollowUpFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ContainerFollowUpFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.PackageFeature", NameTextCodeDefaultText = "ContainerFollowUp Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature ContainerFollowUpFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerFollowUpObjectTable);
+		   Feature ContainerFollowUpFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerFollowUpObjectTable);
+		   Feature ContainerFollowUpFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerFollowUpObjectTable);
+		   Feature ContainerFollowUpFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFollowUp.Features.PackageFeature", NameTextCodeDefaultText = "ContainerFollowUp Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerFollowUpObjectTable);    
 	    
 		}
 

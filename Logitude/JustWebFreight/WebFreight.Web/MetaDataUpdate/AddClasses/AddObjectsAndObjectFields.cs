@@ -1630,7 +1630,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             objectFieldTextCode = new TextCode();
             objectFieldTextCode.Code = objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable;
             objectFieldTextCode.DefaultText = objectFieldDetails.DefaultText;
-            objectFieldTextCode.Id =IdCounter.GetIdFromIdsRangeFromDataBase("TextCode",100, objectFieldDetails.Tenant).ToString();
+            objectFieldTextCode.Id =IdCounter.GetIdWithIdsRange("TextCode",100, objectFieldDetails.Tenant).ToString();
             objectFieldTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
             objectFieldTextCode.Tenant = 0;
             objectFieldTextCode.TextCodeTypeCode = "F";
@@ -1649,7 +1649,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 helpTextTextCode = new TextCode();
                 helpTextTextCode.Code = objectFieldDetails.ObjectTableName + "." + objectFieldDetails.HelpTextCode + "HelpText";
                 helpTextTextCode.DefaultText = objectFieldDetails.HelpTextDefaultText;
-                helpTextTextCode.Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode",100, objectFieldDetails.Tenant).ToString();
+                helpTextTextCode.Id = IdCounter.GetIdWithIdsRange("TextCode",100, objectFieldDetails.Tenant).ToString();
                 helpTextTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
                 helpTextTextCode.Tenant = 0;
                 helpTextTextCode.TextCodeTypeCode = "H";
@@ -1666,7 +1666,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 helpTextTextCode = new TextCode();
                 helpTextTextCode.Code = (!string.IsNullOrEmpty(objectFieldDetails.ObjectTableName) ? objectFieldDetails.ObjectTableName : objectFieldDetails.ValidForQuerySection1) + "." + objectFieldDetails.FullFieldLable + "HelpText";
                 helpTextTextCode.DefaultText = null;
-                helpTextTextCode.Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode",100, objectFieldDetails.Tenant).ToString();
+                helpTextTextCode.Id = IdCounter.GetIdWithIdsRange("TextCode",100, objectFieldDetails.Tenant).ToString();
                 helpTextTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
                 helpTextTextCode.Tenant = 0;
                 helpTextTextCode.TextCodeTypeCode = "H";
@@ -1683,7 +1683,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 fullFieldTextCode = new TextCode();
                 fullFieldTextCode.Code = objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.ShortFieldLable + ".Short";
                 fullFieldTextCode.DefaultText = objectFieldDetails.ShortFieldLableDefaultText;
-                fullFieldTextCode.Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode",100, objectFieldDetails.Tenant).ToString();
+                fullFieldTextCode.Id = IdCounter.GetIdWithIdsRange("TextCode",100, objectFieldDetails.Tenant).ToString();
                 fullFieldTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
                 fullFieldTextCode.Tenant = 0;
                 fullFieldTextCode.TextCodeTypeCode = "F";
@@ -1699,7 +1699,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 listFieldLableTextCode = new TextCode();
                 listFieldLableTextCode.Code = objectFieldDetails.ObjectTableName + ".CH." + objectFieldDetails.ListFieldLable;
                 listFieldLableTextCode.DefaultText = objectFieldDetails.ListLableDefaultText;
-                listFieldLableTextCode.Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode",100, objectFieldDetails.Tenant).ToString();
+                listFieldLableTextCode.Id = IdCounter.GetIdWithIdsRange("TextCode",100, objectFieldDetails.Tenant).ToString();
                 listFieldLableTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
                 listFieldLableTextCode.Tenant = 0;
                 listFieldLableTextCode.TextCodeTypeCode = "CH";
@@ -1740,7 +1740,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.ListTextCodeId = listFieldLableTextCode.Id;
                 newObjectField.ListTextCodeCode = listFieldLableTextCode.Code;
             }
-            newObjectField.Id = IdCounter.GetIdFromIdsRangeFromDataBase("ObjectField",100, objectFieldDetails.Tenant).ToString();
+            newObjectField.Id = IdCounter.GetIdWithIdsRange("ObjectField",100, objectFieldDetails.Tenant).ToString();
             newObjectField.IsCustom = objectFieldDetails.IsCustom;
             // newObjectField.IsOverridden = objectFieldDetails.Isoveridden;
 

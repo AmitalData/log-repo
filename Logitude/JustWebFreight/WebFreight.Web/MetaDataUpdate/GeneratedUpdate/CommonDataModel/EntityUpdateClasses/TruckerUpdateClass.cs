@@ -2641,48 +2641,59 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup TruckerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TRCK", Name = "Truckers" }, queryGroupRepository);
-						QueryGroup TruckerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d164", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup TruckerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TRCK", Name = "Truckers" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup TruckerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d164", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable TruckerObjectTable = objectTables.ContainsKey("Trucker") ? objectTables["Trucker"] : null;
             if (TruckerObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 TruckerObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Trucker" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> TruckerObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Trucker").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode TruckerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.Q.Truckers", DefaultText = @"Truckers",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TruckerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRUCKERS", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Truckers", NameTextCodeDefaultText = "Truckers", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TruckerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.Q.Truckers", DefaultText = @"Truckers",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TruckerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRUCKERS", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Truckers", NameTextCodeDefaultText = "Truckers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TruckerObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TruckersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TruckerTextCode_0.Id, NameTextCodeCode = TruckerTextCode_0.Code, ObjectTableName = "Trucker", Code = "Truckers",  QueryGroupCode = "TRCK", IndexOrder = 0, Tenant = 0, ObjectTableId = TruckerObjectTable.Id, QuerySection = "Trucker", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TruckerFeature_0.Id,FeatureUniqeCode= TruckerFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query TruckersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TruckerTextCode_0.Id, NameTextCodeCode = TruckerTextCode_0.Code, ObjectTableName = "Trucker", Code = "Truckers",  QueryGroupCode = "TRCK", IndexOrder = 0, Tenant = 0, ObjectTableId = TruckerObjectTable.Id, QuerySection = "Trucker", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TruckerFeature_0.Id,FeatureUniqeCode= TruckerFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn TruckersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Trucker.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TruckersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Trucker.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TruckersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Trucker.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TruckersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Trucker.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TruckersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Trucker.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TruckersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Trucker.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TruckersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Trucker.VatNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TruckersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Trucker.VatNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TruckersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Trucker.ReceivablesAccountingCard" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TruckersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Trucker.ReceivablesAccountingCard" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TruckersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Trucker.AddedManually" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TruckersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Trucker.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TruckersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Trucker.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TruckersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Trucker.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TruckersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Trucker.Remark" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn TruckersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TruckersQuery.Id,QueryCode = TruckersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Trucker.Remark" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -2760,31 +2771,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable TruckerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Trucker" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TruckerGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TruckerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TruckerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TruckerObjectTable);
  
                  
 			   TextCode TruckerBillingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TruckerBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TruckerBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TruckerObjectTable);
  
                  
 			   TextCode TruckerAccountingTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GeneralObjectTable);
  
                  
 			   TextCode TruckerAddressesTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Addresses", DefaultText = "Addresses",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TruckerAddressesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TruckerAddressesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TruckerObjectTable);
  
                  
 			   TextCode TruckerContactsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Contacts", DefaultText = "Contacts",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TruckerContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TruckerContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TruckerObjectTable);
  
                  
 			   TextCode TruckerDocsInTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TruckerDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TruckerDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TruckerObjectTable);
  
                  
 			   TextCode TruckerEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TruckerEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TruckerEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TruckerObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2810,10 +2821,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable TruckerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Trucker" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TruckerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TruckerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TruckerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TruckerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.PackageFeature", NameTextCodeDefaultText = "Trucker Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature TruckerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TruckerObjectTable);
+		   Feature TruckerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TruckerObjectTable);
+		   Feature TruckerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TruckerObjectTable);
+		   Feature TruckerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.PackageFeature", NameTextCodeDefaultText = "Trucker Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TruckerObjectTable);    
 	    
 		}
 
@@ -2880,9 +2891,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable TruckerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Trucker" && d.Tenant == 0).FirstOrDefault(); 			   Feature TruckerFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable TruckerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Trucker" && d.Tenant == 0).FirstOrDefault(); 			   Feature TruckerFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = TruckerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Trucker.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TruckerObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

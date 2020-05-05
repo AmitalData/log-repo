@@ -1432,50 +1432,61 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup PackageTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PCKT", Name = "Pacage Types" }, queryGroupRepository);
-						QueryGroup PackageTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "78a3", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup PackageTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PCKT", Name = "Pacage Types" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup PackageTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "78a3", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable PackageTypeObjectTable = objectTables.ContainsKey("PackageType") ? objectTables["PackageType"] : null;
             if (PackageTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 PackageTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "PackageType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> PackageTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "PackageType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode PackageTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.Q.PackageTypes", DefaultText = @"Package Types",LocalDefaultText = null, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PackageTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKAGETYPES", ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.PackageTypes", NameTextCodeDefaultText = "Package Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PackageTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.Q.PackageTypes", DefaultText = @"Package Types",LocalDefaultText = null, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature PackageTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKAGETYPES", ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.PackageTypes", NameTextCodeDefaultText = "Package Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PackageTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query PackageTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PackageTypeTextCode_0.Id, NameTextCodeCode = PackageTypeTextCode_0.Code, ObjectTableName = "PackageType", Code = "Package Types",  QueryGroupCode = "PCKT", IndexOrder = 0, Tenant = 0, ObjectTableId = PackageTypeObjectTable.Id, QuerySection = "PackageType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PackageTypeFeature_0.Id,FeatureUniqeCode= PackageTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query PackageTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PackageTypeTextCode_0.Id, NameTextCodeCode = PackageTypeTextCode_0.Code, ObjectTableName = "PackageType", Code = "Package Types",  QueryGroupCode = "PCKT", IndexOrder = 0, Tenant = 0, ObjectTableId = PackageTypeObjectTable.Id, QuerySection = "PackageType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PackageTypeFeature_0.Id,FeatureUniqeCode= PackageTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PackageTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PackageType.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PackageTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PackageType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PackageTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PackageType.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PackageTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PackageType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PackageTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PackageType.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PackageTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PackageType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PackageTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PackageType.IsAir" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PackageTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PackageType.IsAir" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PackageTypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PackageType.IsOcean" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PackageTypesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PackageType.IsOcean" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PackageTypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "PackageType.IsInland" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PackageTypesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "PackageType.IsInland" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PackageTypesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "PackageType.AddedManually" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PackageTypesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "PackageType.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PackageTypesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "PackageType.IsContainer" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PackageTypesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "PackageType.IsContainer" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PackageTypesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "PackageType.Notes" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn PackageTypesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackageTypesQuery.Id,QueryCode = PackageTypesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "PackageType.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1541,11 +1552,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable PackageTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PackageType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode PackageTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PackageTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PackageTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PackageTypeObjectTable);
  
                  
 			   TextCode PackageTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PackageTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PackageTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PackageTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1561,10 +1572,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable PackageTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PackageType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature PackageTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PackageTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PackageTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PackageTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.PackageFeature", NameTextCodeDefaultText = "PackageType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature PackageTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PackageTypeObjectTable);
+		   Feature PackageTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PackageTypeObjectTable);
+		   Feature PackageTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PackageTypeObjectTable);
+		   Feature PackageTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageType.Features.PackageFeature", NameTextCodeDefaultText = "PackageType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PackageTypeObjectTable);    
 	    
 		}
 

@@ -777,44 +777,55 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup StateQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "STAT", Name = "States" }, queryGroupRepository);
-						QueryGroup StateQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "6b0e", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup StateQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "STAT", Name = "States" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup StateQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "6b0e", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable StateObjectTable = objectTables.ContainsKey("State") ? objectTables["State"] : null;
             if (StateObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 StateObjectTable = objectContext.ObjectTables.Where(d => d.Name == "State" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> StateObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "State").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode StateTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.Q.States", DefaultText = @"States",LocalDefaultText = null, ObjectTableId = StateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature StateFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATES", ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.States", NameTextCodeDefaultText = "States", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode StateTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.Q.States", DefaultText = @"States",LocalDefaultText = null, ObjectTableId = StateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature StateFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATES", ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.States", NameTextCodeDefaultText = "States", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,StateObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query StatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = StateTextCode_0.Id, NameTextCodeCode = StateTextCode_0.Code, ObjectTableName = "State", Code = "States",  QueryGroupCode = "STAT", IndexOrder = 0, Tenant = 0, ObjectTableId = StateObjectTable.Id, QuerySection = "State", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = StateFeature_0.Id,FeatureUniqeCode= StateFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query StatesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = StateTextCode_0.Id, NameTextCodeCode = StateTextCode_0.Code, ObjectTableName = "State", Code = "States",  QueryGroupCode = "STAT", IndexOrder = 0, Tenant = 0, ObjectTableId = StateObjectTable.Id, QuerySection = "State", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = StateFeature_0.Id,FeatureUniqeCode= StateFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn StatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "State.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn StatesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "State.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn StatesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "State.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn StatesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "State.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn StatesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "State.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn StatesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "State.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn StatesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "State.CountryEnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn StatesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "State.CountryEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn StatesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "State.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn StatesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "State.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn StatesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "State.AddedManually" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn StatesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StatesQuery.Id,QueryCode = StatesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "State.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -862,11 +873,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable StateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "State" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode StateGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = StateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature StateGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature StateGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,StateObjectTable);
  
                  
 			   TextCode StateEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = StateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature StateEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature StateEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,StateObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -882,10 +893,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable StateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "State" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature StateFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature StateFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature StateFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature StateFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.PackageFeature", NameTextCodeDefaultText = "State Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature StateFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,StateObjectTable);
+		   Feature StateFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,StateObjectTable);
+		   Feature StateFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,StateObjectTable);
+		   Feature StateFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = StateObjectTable.Id, Tenant = 0, NameTextCodeCode = "State.Features.PackageFeature", NameTextCodeDefaultText = "State Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,StateObjectTable);    
 	    
 		}
 

@@ -394,39 +394,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup TaxWithholdingAssessOfficeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2822", Name = "TaxWithholdingAssessOffice Query Group" }, queryGroupRepository);
+	        QueryGroup TaxWithholdingAssessOfficeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2822", Name = "TaxWithholdingAssessOffice Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable TaxWithholdingAssessOfficeObjectTable = objectTables.ContainsKey("TaxWithholdingAssessOffice") ? objectTables["TaxWithholdingAssessOffice"] : null;
             if (TaxWithholdingAssessOfficeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 TaxWithholdingAssessOfficeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TaxWithholdingAssessOffice" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> TaxWithholdingAssessOfficeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TaxWithholdingAssessOffice").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode TaxWithholdingAssessOfficeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxWithholdingAssessOffice.Q.ALLTAXOFFICES", DefaultText = @"Tax Withholding Assessing Offices",LocalDefaultText = "פקיד שומה", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TaxWithholdingAssessOfficeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxWithholdingAssessOffice.Q.ALLTAXOFFICES", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.ALLTAXOFFICES", NameTextCodeDefaultText = "ALLTAXOFFICES", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TaxWithholdingAssessOfficeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxWithholdingAssessOffice.Q.ALLTAXOFFICES", DefaultText = @"Tax Withholding Assessing Offices",LocalDefaultText = "פקיד שומה", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TaxWithholdingAssessOfficeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxWithholdingAssessOffice.Q.ALLTAXOFFICES", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.ALLTAXOFFICES", NameTextCodeDefaultText = "ALLTAXOFFICES", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TaxWithholdingAssessOfficeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ALLTAXOFFICESQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxWithholdingAssessOfficeTextCode_0.Id, NameTextCodeCode = TaxWithholdingAssessOfficeTextCode_0.Code, ObjectTableName = "TaxWithholdingAssessOffice", Code = "ALLTAXOFFICES",  QueryGroupCode = "2822", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, QuerySection = "TaxWithholdingAssessOffice", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxWithholdingAssessOfficeFeature_0.Id,FeatureUniqeCode= TaxWithholdingAssessOfficeFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ALLTAXOFFICESQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TaxWithholdingAssessOfficeTextCode_0.Id, NameTextCodeCode = TaxWithholdingAssessOfficeTextCode_0.Code, ObjectTableName = "TaxWithholdingAssessOffice", Code = "ALLTAXOFFICES",  QueryGroupCode = "2822", IndexOrder = 0, Tenant = 0, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, QuerySection = "TaxWithholdingAssessOffice", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TaxWithholdingAssessOfficeFeature_0.Id,FeatureUniqeCode= TaxWithholdingAssessOfficeFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ALLTAXOFFICESQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TaxWithholdingAssessOffice.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXOFFICESQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TaxWithholdingAssessOffice.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALLTAXOFFICESQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TaxWithholdingAssessOffice.Name" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXOFFICESQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TaxWithholdingAssessOffice.Name" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALLTAXOFFICESQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TaxWithholdingAssessOffice.LocalName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXOFFICESQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TaxWithholdingAssessOffice.LocalName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn ALLTAXOFFICESQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TaxWithholdingAssessOffice.Inactive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ALLTAXOFFICESQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXOFFICESQuery.Id,QueryCode = ALLTAXOFFICESQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TaxWithholdingAssessOffice.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -466,11 +477,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable TaxWithholdingAssessOfficeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxWithholdingAssessOffice" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TaxWithholdingAssessOfficeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxWithholdingAssessOffice.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TaxWithholdingAssessOfficeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxWithholdingAssessOffice.Tab.General", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TaxWithholdingAssessOfficeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxWithholdingAssessOffice.Tab.General", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxWithholdingAssessOfficeObjectTable);
  
                  
 			   TextCode TaxWithholdingAssessOfficeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxWithholdingAssessOffice.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TaxWithholdingAssessOfficeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxWithholdingAssessOffice.Tab.Events", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TaxWithholdingAssessOfficeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxWithholdingAssessOffice.Tab.Events", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TaxWithholdingAssessOfficeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -486,14 +497,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TaxWithholdingAssessOfficeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxWithholdingAssessOffice" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TaxWithholdingAssessOfficeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TaxWithholdingAssessOfficeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TaxWithholdingAssessOfficeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TaxWithholdingAssessOfficeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.PackageFeature", NameTextCodeDefaultText = "TaxWithholdingAssessOffice Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature TaxWithholdingAssessOfficeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxWithholdingAssessOfficeObjectTable);
+		   Feature TaxWithholdingAssessOfficeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxWithholdingAssessOfficeObjectTable);
+		   Feature TaxWithholdingAssessOfficeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxWithholdingAssessOfficeObjectTable);
+		   Feature TaxWithholdingAssessOfficeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.PackageFeature", NameTextCodeDefaultText = "TaxWithholdingAssessOffice Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxWithholdingAssessOfficeObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature TaxWithholdingAssessOfficeFeature_TaxOfficesMenuFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxOfficesMenuFeature", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Menu", NameTextCodeDefaultText = @"TaxWithholdingAssessingOffice" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TaxWithholdingAssessOfficeFeature_TaxOfficesMenuFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxOfficesMenuFeature", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Menu", NameTextCodeDefaultText = @"TaxWithholdingAssessingOffice" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxWithholdingAssessOfficeObjectTable);
 
    
 	    

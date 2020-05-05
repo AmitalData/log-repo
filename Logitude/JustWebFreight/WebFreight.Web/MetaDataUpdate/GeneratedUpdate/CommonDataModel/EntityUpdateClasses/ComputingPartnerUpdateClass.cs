@@ -913,38 +913,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ComputingPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CMPR", Name = "Computing Partners" }, queryGroupRepository);
-						QueryGroup ComputingPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "79b9", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup ComputingPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CMPR", Name = "Computing Partners" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ComputingPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "79b9", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ComputingPartnerObjectTable = objectTables.ContainsKey("ComputingPartner") ? objectTables["ComputingPartner"] : null;
             if (ComputingPartnerObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ComputingPartnerObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ComputingPartner" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> ComputingPartnerObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ComputingPartner").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ComputingPartnerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.Q.AllComputingPartners", DefaultText = @"All Computing Partners",LocalDefaultText = null, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ComputingPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputingPartner.Q.AllQuery", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.AllComputingPartners", NameTextCodeDefaultText = "All Computing Partners", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ComputingPartnerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.Q.AllComputingPartners", DefaultText = @"All Computing Partners",LocalDefaultText = null, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ComputingPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputingPartner.Q.AllQuery", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.AllComputingPartners", NameTextCodeDefaultText = "All Computing Partners", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,ComputingPartnerObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllComputingPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ComputingPartnerTextCode_0.Id, NameTextCodeCode = ComputingPartnerTextCode_0.Code, ObjectTableName = "ComputingPartner", Code = "All Computing Partners",  QueryGroupCode = "CMPR", IndexOrder = 0, Tenant = 0, ObjectTableId = ComputingPartnerObjectTable.Id, QuerySection = "ComputingPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ComputingPartnerFeature_0.Id,FeatureUniqeCode= ComputingPartnerFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllComputingPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ComputingPartnerTextCode_0.Id, NameTextCodeCode = ComputingPartnerTextCode_0.Code, ObjectTableName = "ComputingPartner", Code = "All Computing Partners",  QueryGroupCode = "CMPR", IndexOrder = 0, Tenant = 0, ObjectTableId = ComputingPartnerObjectTable.Id, QuerySection = "ComputingPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ComputingPartnerFeature_0.Id,FeatureUniqeCode= ComputingPartnerFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllComputingPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllComputingPartnersQuery.Id,QueryCode = AllComputingPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ComputingPartner.Name" , ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllComputingPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllComputingPartnersQuery.Id,QueryCode = AllComputingPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ComputingPartner.Name" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllComputingPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllComputingPartnersQuery.Id,QueryCode = AllComputingPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ComputingPartner.CreatedByUserName" , ColumnWidth = 350 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllComputingPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllComputingPartnersQuery.Id,QueryCode = AllComputingPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ComputingPartner.CreatedByUserName" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn AllComputingPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllComputingPartnersQuery.Id,QueryCode = AllComputingPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ComputingPartner.UpdatedByUserName" , ColumnWidth = 350 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllComputingPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllComputingPartnersQuery.Id,QueryCode = AllComputingPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ComputingPartner.UpdatedByUserName" , ColumnWidth = 350 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -970,11 +981,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable ComputingPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ComputingPartner" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ComputingPartnerGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ComputingPartnerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputingPartner.Tab.General", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ComputingPartnerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputingPartner.Tab.General", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ComputingPartnerObjectTable);
  
                  
 			   TextCode ComputingPartnerEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ComputingPartnerEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ComputingPartnerEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ComputingPartnerObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -990,18 +1001,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable ComputingPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ComputingPartner" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature ComputingPartnerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ComputingPartnerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ComputingPartnerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ComputingPartnerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.PackageFeature", NameTextCodeDefaultText = "ComputingPartner Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature ComputingPartnerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ComputingPartnerObjectTable);
+		   Feature ComputingPartnerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ComputingPartnerObjectTable);
+		   Feature ComputingPartnerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ComputingPartnerObjectTable);
+		   Feature ComputingPartnerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.PackageFeature", NameTextCodeDefaultText = "ComputingPartner Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ComputingPartnerObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature ComputingPartnerFeature_ComputingPartner_M_ComputingPartner = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputingPartner.M.ComputingPartner", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.ComputingPartners", NameTextCodeDefaultText = @"Computing Partners" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ComputingPartnerFeature_ComputingPartner_M_ComputingPartner = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputingPartner.M.ComputingPartner", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.ComputingPartners", NameTextCodeDefaultText = @"Computing Partners" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ComputingPartnerObjectTable);
 
-		   Feature ComputingPartnerFeature_ComputingPartner_A_AllowAddEditTables = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputingPartner.A.AllowAddEditTables", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.AllowAddEditTables", NameTextCodeDefaultText = @"Allow Adding & Editing Tables" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ComputingPartnerFeature_ComputingPartner_A_AllowAddEditTables = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputingPartner.A.AllowAddEditTables", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.AllowAddEditTables", NameTextCodeDefaultText = @"Allow Adding & Editing Tables" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ComputingPartnerObjectTable);
 
-		   Feature ComputingPartnerFeature_ComputingPartner_A_AllowTranslation = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputingPartner.A.AllowTranslation", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.AllowTranslation", NameTextCodeDefaultText = @"Allow Translation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ComputingPartnerFeature_ComputingPartner_A_AllowTranslation = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputingPartner.A.AllowTranslation", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputingPartner.Features.AllowTranslation", NameTextCodeDefaultText = @"Allow Translation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ComputingPartnerObjectTable);
 
    
 	    

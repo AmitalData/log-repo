@@ -5234,56 +5234,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AirlineQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ARLN", Name = "Airlines" }, queryGroupRepository);
-						QueryGroup AirlineQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0e76", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup AirlineQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ARLN", Name = "Airlines" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AirlineQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0e76", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AirlineObjectTable = objectTables.ContainsKey("Airline") ? objectTables["Airline"] : null;
             if (AirlineObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 AirlineObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Airline" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> AirlineObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Airline").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode AirlineTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.Q.Airlines", DefaultText = @"Airlines",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AirlineFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIRLINES", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Airlines", NameTextCodeDefaultText = "Airlines", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AirlineTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.Q.Airlines", DefaultText = @"Airlines",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AirlineFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIRLINES", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Airlines", NameTextCodeDefaultText = "Airlines", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AirlineObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AirlinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineTextCode_0.Id, NameTextCodeCode = AirlineTextCode_0.Code, ObjectTableName = "Airline", Code = "Airlines",  QueryGroupCode = "ARLN", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineObjectTable.Id, QuerySection = "Airline", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AirlineFeature_0.Id,FeatureUniqeCode= AirlineFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AirlinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineTextCode_0.Id, NameTextCodeCode = AirlineTextCode_0.Code, ObjectTableName = "Airline", Code = "Airlines",  QueryGroupCode = "ARLN", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineObjectTable.Id, QuerySection = "Airline", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AirlineFeature_0.Id,FeatureUniqeCode= AirlineFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AirlinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Airline.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Airline.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Airline.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Airline.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Airline.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Airline.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Airline.Prefix" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Airline.Prefix" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Airline.ICAO" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Airline.ICAO" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Airline.ReceivablesAccountingCard" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Airline.ReceivablesAccountingCard" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Airline.AddedManually" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Airline.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Airline.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Airline.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Airline.AWBAccount" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Airline.AWBAccount" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Airline.VatNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Airline.VatNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Airline.Remark" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AirlinesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Airline.Remark" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AirlinesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Airline.CheckDigit" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AirlinesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirlinesQuery.Id,QueryCode = AirlinesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Airline.CheckDigit" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -5375,59 +5386,59 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable AirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Airline" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AirlineGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineBillingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineAccountingTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GeneralObjectTable);
  
                  
 			   TextCode AirlineStockTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Stack", DefaultText = "Stock",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineStockFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STACK", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Stack", NameTextCodeDefaultText = "Stack", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineStockFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STACK", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Stack", NameTextCodeDefaultText = "Stack", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineAddressesTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Addresses", DefaultText = "Addresses",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineAddressesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineAddressesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineContactsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Contacts", DefaultText = "Contacts",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineContactsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineContactsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineAreasTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Areas", DefaultText = "Areas",LocalDefaultText = "Areas", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineAreasFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Airline.Tab.Areas", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineFeatures.ALAR", NameTextCodeDefaultText = "Areas", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineAreasFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Airline.Tab.Areas", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineFeatures.ALAR", NameTextCodeDefaultText = "Areas", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineTariffTranslationsTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.TariffTranslations", DefaultText = "Tariff Translations",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineTariffTranslationsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Airline.Tab.TariffTranslations", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineFeatures.ATTR", NameTextCodeDefaultText = "Tariff Translations", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineTariffTranslationsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Airline.Tab.TariffTranslations", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineFeatures.ATTR", NameTextCodeDefaultText = "Tariff Translations", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineSurchargeTariffTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.SurchargeTariff", DefaultText = "Surcharge Tariff",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineSurchargeTariffFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SURCHARGETARRIF", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.SurchargeTariff", NameTextCodeDefaultText = "SurchargeTariff", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineSurchargeTariffFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SURCHARGETARRIF", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.SurchargeTariff", NameTextCodeDefaultText = "SurchargeTariff", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineCCSSettingsTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.CCSSettings", DefaultText = "CCS Settings",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineCCSSettingsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CCSSettings", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.CCSSettings", NameTextCodeDefaultText = "CCS Settings", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineCCSSettingsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CCSSettings", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.CCSSettings", NameTextCodeDefaultText = "CCS Settings", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineAdaptationsTextCode_TH10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Adaptations", DefaultText = "Adaptations",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineAdaptationsFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Adaptations", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Adaptations", NameTextCodeDefaultText = "Adaptations", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineAdaptationsFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Adaptations", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Adaptations", NameTextCodeDefaultText = "Adaptations", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineTenantTextCode_TH11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.AirlineTenant", DefaultText = "Tenant",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineTenantFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIRLINETENANT", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.AirlineTenant", NameTextCodeDefaultText = "Tenant", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineTenantFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIRLINETENANT", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.AirlineTenant", NameTextCodeDefaultText = "Tenant", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineDocsInTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineDocsInFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineDocsInFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
  
                  
 			   TextCode AirlineEventsTextCode_TH13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineEventsFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AirlineEventsFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -5467,18 +5478,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable AirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Airline" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature AirlineFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AirlineFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AirlineFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AirlineFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.PackageFeature", NameTextCodeDefaultText = "Airline Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature AirlineFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AirlineObjectTable);
+		   Feature AirlineFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AirlineObjectTable);
+		   Feature AirlineFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AirlineObjectTable);
+		   Feature AirlineFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.PackageFeature", NameTextCodeDefaultText = "Airline Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AirlineObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature AirlineFeature_CHAMP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHAMP", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Champ", NameTextCodeDefaultText = @"Champ" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature AirlineFeature_CHAMP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHAMP", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Champ", NameTextCodeDefaultText = @"Champ" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AirlineObjectTable);
 
-		   Feature AirlineFeature_NEWAIRLINE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWAIRLINE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.NewAirline", NameTextCodeDefaultText = @"New Airline" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature AirlineFeature_NEWAIRLINE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWAIRLINE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.NewAirline", NameTextCodeDefaultText = @"New Airline" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AirlineObjectTable);
 
-		   Feature AirlineFeature_RegistrationNotes = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RegistrationNotes", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.RegistrationNotes", NameTextCodeDefaultText = @"Registration Notes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature AirlineFeature_RegistrationNotes = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RegistrationNotes", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.RegistrationNotes", NameTextCodeDefaultText = @"Registration Notes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AirlineObjectTable);
 
    
 	    
@@ -5623,9 +5634,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable AirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Airline" && d.Tenant == 0).FirstOrDefault(); 			   Feature AirlineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable AirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Airline" && d.Tenant == 0).FirstOrDefault(); 			   Feature AirlineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AirlineObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

@@ -1088,42 +1088,53 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CountryQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "COUT", Name = "Countries" }, queryGroupRepository);
-						QueryGroup CountryQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ec1d", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CountryQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "COUT", Name = "Countries" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CountryQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ec1d", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CountryObjectTable = objectTables.ContainsKey("Country") ? objectTables["Country"] : null;
             if (CountryObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CountryObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Country" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> CountryObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Country").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CountryTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.Q.Countries", DefaultText = @"Countries",LocalDefaultText = null, ObjectTableId = CountryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CountryFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COUNTRIES", ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.Countries", NameTextCodeDefaultText = "Countries", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CountryTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.Q.Countries", DefaultText = @"Countries",LocalDefaultText = null, ObjectTableId = CountryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CountryFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COUNTRIES", ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.Countries", NameTextCodeDefaultText = "Countries", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CountryObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CountriesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CountryTextCode_0.Id, NameTextCodeCode = CountryTextCode_0.Code, ObjectTableName = "Country", Code = "Countries",  QueryGroupCode = "COUT", IndexOrder = 0, Tenant = 0, ObjectTableId = CountryObjectTable.Id, QuerySection = "Country", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CountryFeature_0.Id,FeatureUniqeCode= CountryFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CountriesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CountryTextCode_0.Id, NameTextCodeCode = CountryTextCode_0.Code, ObjectTableName = "Country", Code = "Countries",  QueryGroupCode = "COUT", IndexOrder = 0, Tenant = 0, ObjectTableId = CountryObjectTable.Id, QuerySection = "Country", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CountryFeature_0.Id,FeatureUniqeCode= CountryFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CountriesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Country.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CountriesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Country.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CountriesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Country.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CountriesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Country.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CountriesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Country.AddedManually" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CountriesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Country.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CountriesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Country.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CountriesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Country.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CountriesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Country.GlobalZoneName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CountriesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountriesQuery.Id,QueryCode = CountriesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Country.GlobalZoneName" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1179,11 +1190,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable CountryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Country" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CountryGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CountryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CountryGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CountryGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CountryObjectTable);
  
                  
 			   TextCode CountryEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = CountryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CountryEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CountryEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CountryObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1199,10 +1210,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable CountryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Country" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CountryFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CountryFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CountryFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CountryFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.PackageFeature", NameTextCodeDefaultText = "Country Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CountryFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CountryObjectTable);
+		   Feature CountryFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CountryObjectTable);
+		   Feature CountryFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CountryObjectTable);
+		   Feature CountryFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Country.Features.PackageFeature", NameTextCodeDefaultText = "Country Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CountryObjectTable);    
 	    
 		}
 

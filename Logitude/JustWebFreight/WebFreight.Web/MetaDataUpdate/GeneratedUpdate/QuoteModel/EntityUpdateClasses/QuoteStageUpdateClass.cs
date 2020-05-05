@@ -711,40 +711,51 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup QuoteStageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "QSQG", Name = "Quote Stage" }, queryGroupRepository);
-						QueryGroup QuoteStageQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a32b", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup QuoteStageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "QSQG", Name = "Quote Stage" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup QuoteStageQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a32b", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable QuoteStageObjectTable = objectTables.ContainsKey("QuoteStage") ? objectTables["QuoteStage"] : null;
             if (QuoteStageObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 QuoteStageObjectTable = objectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> QuoteStageObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuoteStage").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode QuoteStageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.Q.AllQuoteStages", DefaultText = @"Quote Stages",LocalDefaultText = null, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature QuoteStageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Q.AllQuery", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.AllQuoteStages", NameTextCodeDefaultText = "All Quote Stages", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode QuoteStageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.Q.AllQuoteStages", DefaultText = @"Quote Stages",LocalDefaultText = null, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature QuoteStageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Q.AllQuery", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.AllQuoteStages", NameTextCodeDefaultText = "All Quote Stages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,QuoteStageObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllQuoteStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteStageTextCode_0.Id, NameTextCodeCode = QuoteStageTextCode_0.Code, ObjectTableName = "QuoteStage", Code = "All Quote Stages",  QueryGroupCode = "QSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteStageObjectTable.Id, QuerySection = "QuoteStage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteStageFeature_0.Id,FeatureUniqeCode= QuoteStageFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllQuoteStagesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteStageTextCode_0.Id, NameTextCodeCode = QuoteStageTextCode_0.Code, ObjectTableName = "QuoteStage", Code = "All Quote Stages",  QueryGroupCode = "QSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = QuoteStageObjectTable.Id, QuerySection = "QuoteStage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteStageFeature_0.Id,FeatureUniqeCode= QuoteStageFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllQuoteStagesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteStage.Code" , ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuoteStagesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "QuoteStage.Code" , ColumnWidth = 60 }, addedQueryColumns);
 
-			 QueryColumn AllQuoteStagesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "QuoteStage.Name" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuoteStagesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "QuoteStage.Name" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllQuoteStagesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "QuoteStage.MaxDays" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllQuoteStagesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "QuoteStage.MaxDays" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllQuoteStagesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "QuoteStage.Rank" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllQuoteStagesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuoteStagesQuery.Id,QueryCode = AllQuoteStagesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "QuoteStage.Rank" , ColumnWidth = 70 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -774,11 +785,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   ObjectTable QuoteStageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode QuoteStageGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteStageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Tab.General", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature QuoteStageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Tab.General", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteStageObjectTable);
  
                  
 			   TextCode QuoteStageEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature QuoteStageEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Tab.Events", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature QuoteStageEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.Tab.Events", ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteStageObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -794,14 +805,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	    {  
 		   ObjectTable QuoteStageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature QuoteStageFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature QuoteStageFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature QuoteStageFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature QuoteStageFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.PackageFeature", NameTextCodeDefaultText = "QuoteStage Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature QuoteStageFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteStageObjectTable);
+		   Feature QuoteStageFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteStageObjectTable);
+		   Feature QuoteStageFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteStageObjectTable);
+		   Feature QuoteStageFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.PackageFeature", NameTextCodeDefaultText = "QuoteStage Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteStageObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature QuoteStageFeature_QuoteStage_M_QuoteStages = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.M.QuoteStages", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.QuoteStages", NameTextCodeDefaultText = @"Quote Stages" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature QuoteStageFeature_QuoteStage_M_QuoteStages = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteStage.M.QuoteStages", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteStage.Features.QuoteStages", NameTextCodeDefaultText = @"Quote Stages" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteStageObjectTable);
 
    
 	    

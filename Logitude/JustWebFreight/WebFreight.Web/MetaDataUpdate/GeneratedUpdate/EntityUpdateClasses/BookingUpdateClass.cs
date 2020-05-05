@@ -9836,259 +9836,270 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup BookingQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BKNG", Name = "Booking" }, queryGroupRepository);
-						QueryGroup BookingQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8178", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup BookingQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BKNG", Name = "Booking" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup BookingQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8178", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable BookingObjectTable = objectTables.ContainsKey("Booking") ? objectTables["Booking"] : null;
             if (BookingObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 BookingObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Booking" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> BookingObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Booking").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode BookingTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.WatingForResponseBookings", DefaultText = @"Waiting for Airline Confirmation",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BookingFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.WatingForResponseBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.WatingForResponseBookings", NameTextCodeDefaultText = "Waiting for Airline Confirmation", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BookingTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.WatingForResponseBookings", DefaultText = @"Waiting for Airline Confirmation",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BookingFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.WatingForResponseBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.WatingForResponseBookings", NameTextCodeDefaultText = "Waiting for Airline Confirmation", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BookingObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode BookingTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.ConfirmedBookings", DefaultText = @"Confirmed Without Shipment",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BookingFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.ConfirmedBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.ConfirmedBookings", NameTextCodeDefaultText = "Confirmed Without Shipment", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BookingTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.ConfirmedBookings", DefaultText = @"Confirmed Without Shipment",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BookingFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.ConfirmedBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.ConfirmedBookings", NameTextCodeDefaultText = "Confirmed Without Shipment", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BookingObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode BookingTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.RejectedBookings", DefaultText = @"Errors and Rejections",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BookingFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.RejectedBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.RejectedBookings", NameTextCodeDefaultText = "Errors and Rejections", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BookingTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.RejectedBookings", DefaultText = @"Errors and Rejections",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BookingFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.RejectedBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.RejectedBookings", NameTextCodeDefaultText = "Errors and Rejections", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BookingObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode BookingTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.InProgressBookings", DefaultText = @"In Progress",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BookingFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.InProgressBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.InProgressBookings", NameTextCodeDefaultText = "In progress", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BookingTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.InProgressBookings", DefaultText = @"In Progress",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BookingFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.InProgressBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.InProgressBookings", NameTextCodeDefaultText = "In progress", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BookingObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode BookingTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.CancelledBookings", DefaultText = @"Cancelled Bookings",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BookingFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.CancelledBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.CancelledBookings", NameTextCodeDefaultText = "Cancelled Bookings", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BookingTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.CancelledBookings", DefaultText = @"Cancelled Bookings",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BookingFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.CancelledBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.CancelledBookings", NameTextCodeDefaultText = "Cancelled Bookings", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BookingObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode BookingTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.CreatedBookings", DefaultText = @"Waiting for Transmission",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BookingFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.CreatedBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.CreatedBookings", NameTextCodeDefaultText = " Waiting for Transmission", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BookingTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.CreatedBookings", DefaultText = @"Waiting for Transmission",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BookingFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.CreatedBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.CreatedBookings", NameTextCodeDefaultText = " Waiting for Transmission", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BookingObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode BookingTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.AllBookings", DefaultText = @"All Bookings",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BookingFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.AllBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.AllBookings", NameTextCodeDefaultText = "All Bookings", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BookingTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.Q.AllBookings", DefaultText = @"All Bookings",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BookingFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Q.AllBookings", ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.AllBookings", NameTextCodeDefaultText = "All Bookings", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BookingObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
 			  Query WatingForResponseQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_0.Id, NameTextCodeCode = BookingTextCode_0.Code, ObjectTableName = "Booking", Code = "WatingForResponse",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
-			   QueryGroupCode = "BKNG", IndexOrder = 0, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_0.Id,FeatureUniqeCode= BookingFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "BKNG", IndexOrder = 0, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_0.Id,FeatureUniqeCode= BookingFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn WatingForResponseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WatingForResponseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn WatingForResponseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WatingForResponseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn WatingForResponseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WatingForResponseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WatingForResponseQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WatingForResponseQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WatingForResponseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WatingForResponseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WatingForResponseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WatingForResponseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WatingForResponseQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WatingForResponseQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WatingForResponseQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WatingForResponseQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WatingForResponseQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WatingForResponseQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn WatingForResponseQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WatingForResponseQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WatingForResponseQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WatingForResponseQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter WatingForResponseQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.WaitingBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter WatingForResponseQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.WaitingBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = WatingForResponseQuery.Id,QueryCode = WatingForResponseQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query ConfirmedBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_1.Id, NameTextCodeCode = BookingTextCode_1.Code, ObjectTableName = "Booking", Code = "ConfirmedBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
-			   QueryGroupCode = "BKNG", IndexOrder = 1, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_1.Id,FeatureUniqeCode= BookingFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "BKNG", IndexOrder = 1, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_1.Id,FeatureUniqeCode= BookingFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ConfirmedBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmedBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn ConfirmedBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmedBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn ConfirmedBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmedBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConfirmedBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmedBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConfirmedBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmedBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConfirmedBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmedBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConfirmedBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmedBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConfirmedBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmedBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConfirmedBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmedBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn ConfirmedBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmedBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ConfirmedBookingsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmedBookingsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter ConfirmedBookingsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.ConfirmedBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ConfirmedBookingsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.ConfirmedBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ConfirmedBookingsQuery.Id,QueryCode = ConfirmedBookingsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query RejectedBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_2.Id, NameTextCodeCode = BookingTextCode_2.Code, ObjectTableName = "Booking", Code = "RejectedBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
-			   QueryGroupCode = "BKNG", IndexOrder = 2, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_2.Id,FeatureUniqeCode= BookingFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "BKNG", IndexOrder = 2, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_2.Id,FeatureUniqeCode= BookingFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn RejectedBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RejectedBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn RejectedBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RejectedBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn RejectedBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RejectedBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RejectedBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RejectedBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RejectedBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RejectedBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RejectedBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RejectedBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RejectedBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RejectedBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RejectedBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RejectedBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RejectedBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RejectedBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn RejectedBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RejectedBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RejectedBookingsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RejectedBookingsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter RejectedBookingsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.RejectedBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter RejectedBookingsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.RejectedBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = RejectedBookingsQuery.Id,QueryCode = RejectedBookingsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query InProgressBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_3.Id, NameTextCodeCode = BookingTextCode_3.Code, ObjectTableName = "Booking", Code = "InProgressBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
-			   QueryGroupCode = "BKNG", IndexOrder = 3, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_3.Id,FeatureUniqeCode= BookingFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "BKNG", IndexOrder = 3, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_3.Id,FeatureUniqeCode= BookingFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn InProgressBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InProgressBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn InProgressBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InProgressBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn InProgressBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InProgressBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InProgressBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InProgressBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InProgressBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InProgressBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InProgressBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InProgressBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InProgressBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InProgressBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InProgressBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InProgressBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InProgressBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InProgressBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn InProgressBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InProgressBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InProgressBookingsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InProgressBookingsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter InProgressBookingsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.ProgressBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InProgressBookingsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.ProgressBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InProgressBookingsQuery.Id,QueryCode = InProgressBookingsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query CancelledBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_4.Id, NameTextCodeCode = BookingTextCode_4.Code, ObjectTableName = "Booking", Code = "CancelledBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
-			   QueryGroupCode = "BKNG", IndexOrder = 4, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_4.Id,FeatureUniqeCode= BookingFeature_4.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "BKNG", IndexOrder = 4, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_4.Id,FeatureUniqeCode= BookingFeature_4.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CancelledBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn CancelledBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn CancelledBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn CancelledBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CancelledBookingsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledBookingsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter CancelledBookingsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.CancelledBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CancelledBookingsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.CancelledBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CancelledBookingsQuery.Id,QueryCode = CancelledBookingsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query CreatedBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_5.Id, NameTextCodeCode = BookingTextCode_5.Code, ObjectTableName = "Booking", Code = "CreatedBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
-			   QueryGroupCode = "BKNG", IndexOrder = 5, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_5.Id,FeatureUniqeCode= BookingFeature_5.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "BKNG", IndexOrder = 5, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_5.Id,FeatureUniqeCode= BookingFeature_5.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CreatedBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn CreatedBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn CreatedBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Airline" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.Master" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.Master" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.SpaceAllocationName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn CreatedBookingsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Booking.FFRStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CreatedBookingsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedBookingsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Booking.FFRStatusDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-             AdvancedQueryFilter CreatedBookingsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.CreatedBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CreatedBookingsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Booking.CreatedBookings", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedBookingsQuery.Id,QueryCode = CreatedBookingsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query AllBookingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BookingTextCode_6.Id, NameTextCodeCode = BookingTextCode_6.Code, ObjectTableName = "Booking", Code = "AllBookings",  EditWizardName = "Logitude.BookingLib.Views.BookingWizard.BookingWizardEditControl",
-			   QueryGroupCode = "BKNG", IndexOrder = 6, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_6.Id,FeatureUniqeCode= BookingFeature_6.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "BKNG", IndexOrder = 6, Tenant = 0, ObjectTableId = BookingObjectTable.Id, QuerySection = "Booking", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BookingFeature_6.Id,FeatureUniqeCode= BookingFeature_6.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBookingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Booking.TransportModeCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn AllBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBookingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Booking.DirectionCode" , ColumnWidth = 25 }, addedQueryColumns);
 
-			 QueryColumn AllBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.CreateDate" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBookingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Booking.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBookingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Booking.BookingNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBookingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Booking.Routing" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBookingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Booking.LongMaster" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBookingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Booking.FirstFlight" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.MainCarriageETD" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBookingsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Booking.MainCarriageETD" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.BookingProductName" , ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBookingsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Booking.BookingProductName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllBookingsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBookingsQuery.Id,QueryCode = AllBookingsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Booking.BookingStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -10116,20 +10127,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable BookingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Booking" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature BookingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BookingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BookingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BookingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.PackageFeature", NameTextCodeDefaultText = "Booking Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature BookingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BookingObjectTable);
+		   Feature BookingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BookingObjectTable);
+		   Feature BookingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BookingObjectTable);
+		   Feature BookingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.PackageFeature", NameTextCodeDefaultText = "Booking Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BookingObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature BookingFeature_BOOKINGSENDRESPONSE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BOOKINGSENDRESPONSE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.SendResponse", NameTextCodeDefaultText = @"Send Response" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BookingFeature_BOOKINGSENDRESPONSE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BOOKINGSENDRESPONSE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.SendResponse", NameTextCodeDefaultText = @"Send Response" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BookingObjectTable);
 
-		   Feature BookingFeature_BOOKINGEVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BOOKINGEVENTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BookingFeature_BOOKINGEVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BOOKINGEVENTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BookingObjectTable);
 
-		   Feature BookingFeature_Booking_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.BookingMenu", NameTextCodeDefaultText = @"Bookings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BookingFeature_Booking_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.BookingMenu", NameTextCodeDefaultText = @"Bookings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BookingObjectTable);
 
-		   Feature BookingFeature_Booking_Action_SendToAirlineTenant = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Action.SendToAirlineTenant", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.SendToAirlineTenant", NameTextCodeDefaultText = @"Send to airline tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BookingFeature_Booking_Action_SendToAirlineTenant = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Action.SendToAirlineTenant", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.SendToAirlineTenant", NameTextCodeDefaultText = @"Send to airline tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BookingObjectTable);
 
    
 	    

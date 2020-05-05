@@ -2390,56 +2390,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ParticipantQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PPCT", Name = "Participants" }, queryGroupRepository);
-						QueryGroup ParticipantQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "636b", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup ParticipantQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PPCT", Name = "Participants" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ParticipantQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "636b", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ParticipantObjectTable = objectTables.ContainsKey("Participant") ? objectTables["Participant"] : null;
             if (ParticipantObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ParticipantObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Participant" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> ParticipantObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Participant").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ParticipantTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.Q.Participants", DefaultText = @"Participants",LocalDefaultText = null, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ParticipantFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTICIPANTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Participants", NameTextCodeDefaultText = "Participants", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ParticipantTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.Q.Participants", DefaultText = @"Participants",LocalDefaultText = null, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ParticipantFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTICIPANTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Participants", NameTextCodeDefaultText = "Participants", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ParticipantObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ParticipantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ParticipantTextCode_0.Id, NameTextCodeCode = ParticipantTextCode_0.Code, ObjectTableName = "Participant", Code = "Participants",  QueryGroupCode = "PPCT", IndexOrder = 0, Tenant = 0, ObjectTableId = ParticipantObjectTable.Id, QuerySection = "Participant", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ParticipantFeature_0.Id,FeatureUniqeCode= ParticipantFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ParticipantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ParticipantTextCode_0.Id, NameTextCodeCode = ParticipantTextCode_0.Code, ObjectTableName = "Participant", Code = "Participants",  QueryGroupCode = "PPCT", IndexOrder = 0, Tenant = 0, ObjectTableId = ParticipantObjectTable.Id, QuerySection = "Participant", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ParticipantFeature_0.Id,FeatureUniqeCode= ParticipantFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ParticipantsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Participant.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Participant.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Participant.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Participant.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Participant.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Participant.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Participant.ForwarderTenant" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Participant.ForwarderTenant" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Participant.TTY" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Participant.TTY" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Participant.VatNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Participant.VatNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Participant.ReceivablesAccountingCard" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Participant.ReceivablesAccountingCard" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Participant.PaymentTermEnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Participant.PaymentTermEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Participant.Registered" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Participant.Registered" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Participant.RegistrationRequested" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Participant.RegistrationRequested" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Participant.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ParticipantsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Participant.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ParticipantsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Participant.Notes" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ParticipantsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParticipantsQuery.Id,QueryCode = ParticipantsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Participant.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -2519,31 +2530,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable ParticipantObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Participant" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ParticipantGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ParticipantGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ParticipantGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ParticipantObjectTable);
  
                  
 			   TextCode ParticipantBillingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ParticipantBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ParticipantBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ParticipantObjectTable);
  
                  
 			   TextCode ParticipantAccountingTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GeneralObjectTable);
  
                  
 			   TextCode ParticipantAddressesTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Addresses", DefaultText = "Addresses",LocalDefaultText = null, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ParticipantAddressesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ParticipantAddressesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ParticipantObjectTable);
  
                  
 			   TextCode ParticipantContactsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Contacts", DefaultText = "Contacts",LocalDefaultText = null, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ParticipantContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ParticipantContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ParticipantObjectTable);
  
                  
 			   TextCode ParticipantNotifyTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Notify", DefaultText = "Notify",LocalDefaultText = null, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ParticipantNotifyFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFY", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Notify", NameTextCodeDefaultText = "Notify", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ParticipantNotifyFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFY", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Notify", NameTextCodeDefaultText = "Notify", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ParticipantObjectTable);
  
                  
 			   TextCode ParticipantDocsInTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ParticipantDocsInFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ParticipantDocsInFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ParticipantObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2569,14 +2580,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable ParticipantObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Participant" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature ParticipantFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ParticipantFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ParticipantFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ParticipantFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.PackageFeature", NameTextCodeDefaultText = "Participant Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature ParticipantFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ParticipantObjectTable);
+		   Feature ParticipantFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ParticipantObjectTable);
+		   Feature ParticipantFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ParticipantObjectTable);
+		   Feature ParticipantFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.PackageFeature", NameTextCodeDefaultText = "Participant Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ParticipantObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature ParticipantFeature_EVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ParticipantFeature_EVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ParticipantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Participant.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ParticipantObjectTable);
 
    
 	    

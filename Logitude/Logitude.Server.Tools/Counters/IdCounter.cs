@@ -113,7 +113,7 @@ namespace Logitude.Server.Tools.Counters
         //private static Queue<string> tableIdsQueue = new Queue<string>();
 
         // private static Dictionary<string, Queue<string>> TablesIdsRange = new Dictionary<string, Queue<string>>();
-        public static string GetIdFromIdsRangeFromDataBase(string tableName, int numberOfIds, int tenant)
+        public static string GetIdWithIdsRange(string tableName, int numberOfIds, int tenant)
         {
 
             if (TablesIdsRange.ContainsKey(tableName) && TablesIdsRange[tableName].Count > 0)

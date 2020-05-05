@@ -2041,54 +2041,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup LogitudeMessagesTransmissionLogQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LMTL", Name = "Transmission Logs" }, queryGroupRepository);
-						QueryGroup LogitudeMessagesTransmissionLogQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "bb97", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup LogitudeMessagesTransmissionLogQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LMTL", Name = "Transmission Logs" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup LogitudeMessagesTransmissionLogQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "bb97", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable LogitudeMessagesTransmissionLogObjectTable = objectTables.ContainsKey("LogitudeMessagesTransmissionLog") ? objectTables["LogitudeMessagesTransmissionLog"] : null;
             if (LogitudeMessagesTransmissionLogObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 LogitudeMessagesTransmissionLogObjectTable = objectContext.ObjectTables.Where(d => d.Name == "LogitudeMessagesTransmissionLog" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> LogitudeMessagesTransmissionLogObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LogitudeMessagesTransmissionLog").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode LogitudeMessagesTransmissionLogTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.Q.AllTransmissionLogs", DefaultText = @"All Logitude Messages Transmission Logs",LocalDefaultText = null, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature LogitudeMessagesTransmissionLogFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTRANSMISSIONLOG", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.LogitudeMessagesTransmissionLogs", NameTextCodeDefaultText = "Logitude Messages Transmission Logs", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode LogitudeMessagesTransmissionLogTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.Q.AllTransmissionLogs", DefaultText = @"All Logitude Messages Transmission Logs",LocalDefaultText = null, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature LogitudeMessagesTransmissionLogFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTRANSMISSIONLOG", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.LogitudeMessagesTransmissionLogs", NameTextCodeDefaultText = "Logitude Messages Transmission Logs", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,LogitudeMessagesTransmissionLogObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllLogitudeTransmissionLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeMessagesTransmissionLogTextCode_0.Id, NameTextCodeCode = LogitudeMessagesTransmissionLogTextCode_0.Code, ObjectTableName = "LogitudeMessagesTransmissionLog", Code = "All Logitude Transmission Logs",  QueryGroupCode = "LMTL", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, QuerySection = "LogitudeMessagesTransmissionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeMessagesTransmissionLogFeature_0.Id,FeatureUniqeCode= LogitudeMessagesTransmissionLogFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllLogitudeTransmissionLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeMessagesTransmissionLogTextCode_0.Id, NameTextCodeCode = LogitudeMessagesTransmissionLogTextCode_0.Code, ObjectTableName = "LogitudeMessagesTransmissionLog", Code = "All Logitude Transmission Logs",  QueryGroupCode = "LMTL", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, QuerySection = "LogitudeMessagesTransmissionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeMessagesTransmissionLogFeature_0.Id,FeatureUniqeCode= LogitudeMessagesTransmissionLogFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LogitudeMessagesTransmissionLog.CCS" , ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LogitudeMessagesTransmissionLog.CCS" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LogitudeMessagesTransmissionLog.AirlineCode" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LogitudeMessagesTransmissionLog.AirlineCode" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Prefix" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Prefix" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "LogitudeMessagesTransmissionLog.MessageTypeCode" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "LogitudeMessagesTransmissionLog.MessageTypeCode" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "LogitudeMessagesTransmissionLog.AWBNumber" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "LogitudeMessagesTransmissionLog.AWBNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "LogitudeMessagesTransmissionLog.SentDate" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "LogitudeMessagesTransmissionLog.SentDate" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Participant" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Participant" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Origin" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Origin" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Destination" , ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Destination" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "LogitudeMessagesTransmissionLog.UserName" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "LogitudeMessagesTransmissionLog.UserName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "LogitudeMessagesTransmissionLog.DirectParticipant" , ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "LogitudeMessagesTransmissionLog.DirectParticipant" , ColumnWidth = 120 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -2160,11 +2171,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable LogitudeMessagesTransmissionLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeMessagesTransmissionLog" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode LogitudeMessagesTransmissionLogGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature LogitudeMessagesTransmissionLogGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature LogitudeMessagesTransmissionLogGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,LogitudeMessagesTransmissionLogObjectTable);
  
                  
 			   TextCode LogitudeMessagesTransmissionLogAuditTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature LogitudeMessagesTransmissionLogAuditFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUDIT", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.Audit", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature LogitudeMessagesTransmissionLogAuditFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUDIT", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.Audit", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,LogitudeMessagesTransmissionLogObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2183,7 +2194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature LogitudeMessagesTransmissionLogFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.Automation", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature LogitudeMessagesTransmissionLogFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.Automation", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LogitudeMessagesTransmissionLogObjectTable);
 
    
 	    

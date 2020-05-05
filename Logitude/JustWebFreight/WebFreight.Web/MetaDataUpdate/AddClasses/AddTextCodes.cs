@@ -36,7 +36,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     DefaultTextPlural = textCodeDetails.DefaultTextPlural,
                     DefaultText = textCodeDetails.DefaultText,
                     Code = textCodeDetails.Code,
-                    Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode", 100, textCodeDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode",textCodeDetails.Tenant).ToString(),
+                    Id = IdCounter.GetIdWithIdsRange("TextCode", 100, textCodeDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode",textCodeDetails.Tenant).ToString(),
                     ObjectTableId = textCodeDetails.ObjectTableId,
                     Tenant = textCodeDetails.Tenant,
                     LocalDefaultText = textCodeDetails.LocalDefaultText,
@@ -48,23 +48,30 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
         }
 
 
-        public static TextCode AddTextCode(TextCodeDetails textCodeDetails, List<TextCode> addedTextCodes)
+        public static TextCode AddTextCode(TextCodeDetails textCodeDetails, Dictionary<string, TextCode> textCodes, List<TextCode> addedTextCodes)
         {
-            TextCode newTextCode = new TextCode()
+            if (textCodes.Keys.Contains(textCodeDetails.Code + textCodeDetails.Tenant + textCodeDetails.ObjectTableId))
             {
-                TextCodeTypeCode = textCodeDetails.TextCodeTypeCode,
-                DefaultTextPlural = textCodeDetails.DefaultTextPlural,
-                DefaultText = textCodeDetails.DefaultText,
-                Code = textCodeDetails.Code,
-                Id = IdCounter.GetIdFromIdsRangeFromDataBase("TextCode", 100, textCodeDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode",textCodeDetails.Tenant).ToString(),
-                ObjectTableId = textCodeDetails.ObjectTableId,
-                Tenant = textCodeDetails.Tenant,
-                LocalDefaultText = textCodeDetails.LocalDefaultText,
-                IsSpellChecked = textCodeDetails.IsSpellChecked,
-            };
-            addedTextCodes.Add(newTextCode);
-            return newTextCode;
-
+                TextCode textCode = textCodes[textCodeDetails.Code + textCodeDetails.Tenant + textCodeDetails.ObjectTableId];
+                return textCode;
+            }
+            else
+            {
+                TextCode newTextCode = new TextCode()
+                {
+                    TextCodeTypeCode = textCodeDetails.TextCodeTypeCode,
+                    DefaultTextPlural = textCodeDetails.DefaultTextPlural,
+                    DefaultText = textCodeDetails.DefaultText,
+                    Code = textCodeDetails.Code,
+                    Id = IdCounter.GetIdWithIdsRange("TextCode", 100, textCodeDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode",textCodeDetails.Tenant).ToString(),
+                    ObjectTableId = textCodeDetails.ObjectTableId,
+                    Tenant = textCodeDetails.Tenant,
+                    LocalDefaultText = textCodeDetails.LocalDefaultText,
+                    IsSpellChecked = textCodeDetails.IsSpellChecked,
+                };
+                addedTextCodes.Add(newTextCode);
+                return newTextCode;
+            }
         }
 
     }

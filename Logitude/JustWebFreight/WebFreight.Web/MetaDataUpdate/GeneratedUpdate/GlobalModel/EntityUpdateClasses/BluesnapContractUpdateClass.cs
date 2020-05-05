@@ -568,42 +568,53 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup BluesnapContractQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BSCR", Name = "Bluesnap Contract" }, queryGroupRepository);
-						QueryGroup BluesnapContractQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c493", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup BluesnapContractQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BSCR", Name = "Bluesnap Contract" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup BluesnapContractQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c493", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable BluesnapContractObjectTable = objectTables.ContainsKey("BluesnapContract") ? objectTables["BluesnapContract"] : null;
             if (BluesnapContractObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 BluesnapContractObjectTable = objectContext.ObjectTables.Where(d => d.Name == "BluesnapContract" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> BluesnapContractObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BluesnapContract").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode BluesnapContractTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.Q.AllBluesnapContracts", DefaultText = @"Bluesnap Contracts",LocalDefaultText = null, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BluesnapContractFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLBLUESNAPCONTRACTS", ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.AllBluesnapContracts", NameTextCodeDefaultText = "All Bluesnap Contracts", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BluesnapContractTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.Q.AllBluesnapContracts", DefaultText = @"Bluesnap Contracts",LocalDefaultText = null, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BluesnapContractFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLBLUESNAPCONTRACTS", ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.AllBluesnapContracts", NameTextCodeDefaultText = "All Bluesnap Contracts", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,BluesnapContractObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllBluesnapContractQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BluesnapContractTextCode_0.Id, NameTextCodeCode = BluesnapContractTextCode_0.Code, ObjectTableName = "BluesnapContract", Code = "All Bluesnap Contract",  QueryGroupCode = "BSCR", IndexOrder = 0, Tenant = 0, ObjectTableId = BluesnapContractObjectTable.Id, QuerySection = "BluesnapContract", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BluesnapContractFeature_0.Id,FeatureUniqeCode= BluesnapContractFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllBluesnapContractQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BluesnapContractTextCode_0.Id, NameTextCodeCode = BluesnapContractTextCode_0.Code, ObjectTableName = "BluesnapContract", Code = "All Bluesnap Contract",  QueryGroupCode = "BSCR", IndexOrder = 0, Tenant = 0, ObjectTableId = BluesnapContractObjectTable.Id, QuerySection = "BluesnapContract", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BluesnapContractFeature_0.Id,FeatureUniqeCode= BluesnapContractFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllBluesnapContractQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBluesnapContractQuery.Id,QueryCode = AllBluesnapContractQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BluesnapContract.Code" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBluesnapContractQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBluesnapContractQuery.Id,QueryCode = AllBluesnapContractQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BluesnapContract.Code" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllBluesnapContractQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBluesnapContractQuery.Id,QueryCode = AllBluesnapContractQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BluesnapContract.BluesnapContractTypeName" , ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBluesnapContractQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBluesnapContractQuery.Id,QueryCode = AllBluesnapContractQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BluesnapContract.BluesnapContractTypeName" , ColumnWidth = 127 }, addedQueryColumns);
 
-			 QueryColumn AllBluesnapContractQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBluesnapContractQuery.Id,QueryCode = AllBluesnapContractQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BluesnapContract.Name" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBluesnapContractQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBluesnapContractQuery.Id,QueryCode = AllBluesnapContractQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BluesnapContract.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllBluesnapContractQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBluesnapContractQuery.Id,QueryCode = AllBluesnapContractQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BluesnapContract.ContractId" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBluesnapContractQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBluesnapContractQuery.Id,QueryCode = AllBluesnapContractQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BluesnapContract.ContractId" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllBluesnapContractQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBluesnapContractQuery.Id,QueryCode = AllBluesnapContractQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BluesnapContract.InActive" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllBluesnapContractQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBluesnapContractQuery.Id,QueryCode = AllBluesnapContractQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BluesnapContract.InActive" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -647,11 +658,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   ObjectTable BluesnapContractObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BluesnapContract" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode BluesnapContractGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BluesnapContractGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BluesnapContract.Tab.General", ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BluesnapContractGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BluesnapContract.Tab.General", ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BluesnapContractObjectTable);
  
                  
 			   TextCode BluesnapContractEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BluesnapContract.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BluesnapContractEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BluesnapContract.Tab.Events", ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BluesnapContractEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BluesnapContract.Tab.Events", ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BluesnapContractObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -667,14 +678,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    {  
 		   ObjectTable BluesnapContractObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BluesnapContract" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature BluesnapContractFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BluesnapContractFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BluesnapContractFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BluesnapContractFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.PackageFeature", NameTextCodeDefaultText = "BluesnapContract Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature BluesnapContractFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BluesnapContractObjectTable);
+		   Feature BluesnapContractFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BluesnapContractObjectTable);
+		   Feature BluesnapContractFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BluesnapContractObjectTable);
+		   Feature BluesnapContractFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.PackageFeature", NameTextCodeDefaultText = "BluesnapContract Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BluesnapContractObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature BluesnapContractFeature_PaymentSettingButton = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentSettingButton", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.PaymentSettingButton", NameTextCodeDefaultText = @"Payment Settings Button" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BluesnapContractFeature_PaymentSettingButton = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentSettingButton", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BluesnapContractObjectTable.Id, Tenant = 0, NameTextCodeCode = "BluesnapContract.Features.PaymentSettingButton", NameTextCodeDefaultText = @"Payment Settings Button" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BluesnapContractObjectTable);
 
    
 	    

@@ -3101,52 +3101,63 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ShippingLineQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "SHLN", Name = "Shipping Lines" }, queryGroupRepository);
-						QueryGroup ShippingLineQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5c63", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup ShippingLineQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "SHLN", Name = "Shipping Lines" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ShippingLineQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5c63", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ShippingLineObjectTable = objectTables.ContainsKey("ShippingLine") ? objectTables["ShippingLine"] : null;
             if (ShippingLineObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ShippingLineObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> ShippingLineObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ShippingLine").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ShippingLineTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.Q.ShippingLines", DefaultText = @"Shipping Lines",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPINGLINE", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Shippinglines", NameTextCodeDefaultText = "Shipping lines", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ShippingLineTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.Q.ShippingLines", DefaultText = @"Shipping Lines",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ShippingLineFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPINGLINE", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Shippinglines", NameTextCodeDefaultText = "Shipping lines", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ShippingLineObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ShippinglinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShippingLineTextCode_0.Id, NameTextCodeCode = ShippingLineTextCode_0.Code, ObjectTableName = "ShippingLine", Code = "Shipping lines",  QueryGroupCode = "SHLN", IndexOrder = 0, Tenant = 0, ObjectTableId = ShippingLineObjectTable.Id, QuerySection = "ShippingLine", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShippingLineFeature_0.Id,FeatureUniqeCode= ShippingLineFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ShippinglinesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShippingLineTextCode_0.Id, NameTextCodeCode = ShippingLineTextCode_0.Code, ObjectTableName = "ShippingLine", Code = "Shipping lines",  QueryGroupCode = "SHLN", IndexOrder = 0, Tenant = 0, ObjectTableId = ShippingLineObjectTable.Id, QuerySection = "ShippingLine", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShippingLineFeature_0.Id,FeatureUniqeCode= ShippingLineFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ShippinglinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ShippingLine.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ShippingLine.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ShippingLine.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ShippingLine.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ShippingLine.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ShippingLine.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ShippingLine.ShippingAgentEnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ShippingLine.ShippingAgentEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ShippingLine.ReceivablesAccountingCard" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ShippingLine.ReceivablesAccountingCard" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ShippingLine.AddedManually" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ShippingLine.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ShippingLine.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ShippingLine.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ShippingLine.OurCreditNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ShippingLine.OurCreditNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ShippingLine.VatNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippinglinesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ShippingLine.VatNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippinglinesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ShippingLine.Remark" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ShippinglinesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippinglinesQuery.Id,QueryCode = ShippinglinesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ShippingLine.Remark" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -3234,43 +3245,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ShippingLineGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShippingLineGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShippingLineObjectTable);
  
                  
 			   TextCode ShippingLineBillingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShippingLineBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShippingLineObjectTable);
  
                  
 			   TextCode ShippingLineAccountingTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GeneralObjectTable);
  
                  
 			   TextCode ShippingLineINTTRATextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.INTTRA", DefaultText = "INTTRA",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineINTTRAFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTTRA", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.INTTRA", NameTextCodeDefaultText = "INTTRA", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShippingLineINTTRAFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTTRA", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.INTTRA", NameTextCodeDefaultText = "INTTRA", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShippingLineObjectTable);
  
                  
 			   TextCode ShippingLineAddressesTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Addresses", DefaultText = "Addresses",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineAddressesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShippingLineAddressesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShippingLineObjectTable);
  
                  
 			   TextCode ShippingLineContactsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Contacts", DefaultText = "Contacts",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineContactsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShippingLineContactsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShippingLineObjectTable);
  
                  
 			   TextCode ShippingLineAreasTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Areas", DefaultText = "Areas",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineAreasFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShippingLine.Tab.Areas", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLineFeatures.SLAR", NameTextCodeDefaultText = "Areas", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShippingLineAreasFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShippingLine.Tab.Areas", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLineFeatures.SLAR", NameTextCodeDefaultText = "Areas", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShippingLineObjectTable);
  
                  
 			   TextCode ShippingLineTariffTranslationsTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.TariffTranslations", DefaultText = "Tariff Translations",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineTariffTranslationsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShippingLine.Tab.TariffTranslations", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLineFeatures.STTR", NameTextCodeDefaultText = "Tariff Translations", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShippingLineTariffTranslationsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShippingLine.Tab.TariffTranslations", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLineFeatures.STTR", NameTextCodeDefaultText = "Tariff Translations", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShippingLineObjectTable);
  
                  
 			   TextCode ShippingLineDocsInTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineDocsInFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShippingLineDocsInFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShippingLineObjectTable);
  
                  
 			   TextCode ShippingLineEventsTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ShippingLineEventsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ShippingLineEventsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShippingLineObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -3302,14 +3313,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature ShippingLineFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ShippingLineFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ShippingLineFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ShippingLineFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.PackageFeature", NameTextCodeDefaultText = "ShippingLine Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature ShippingLineFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShippingLineObjectTable);
+		   Feature ShippingLineFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShippingLineObjectTable);
+		   Feature ShippingLineFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShippingLineObjectTable);
+		   Feature ShippingLineFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.PackageFeature", NameTextCodeDefaultText = "ShippingLine Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShippingLineObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature ShippingLineFeature_NEWSHIPPINGLINE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWSHIPPINGLINE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.NewShippingline", NameTextCodeDefaultText = @"New Shipping line" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ShippingLineFeature_NEWSHIPPINGLINE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWSHIPPINGLINE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.NewShippingline", NameTextCodeDefaultText = @"New Shipping line" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShippingLineObjectTable);
 
    
 	    
@@ -3378,9 +3389,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault(); 			   Feature ShippingLineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault(); 			   Feature ShippingLineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ShippingLineObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

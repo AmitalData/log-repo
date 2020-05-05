@@ -2713,44 +2713,55 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup WarehouseQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "WARH", Name = "WarHouses" }, queryGroupRepository);
-						QueryGroup WarehouseQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4d67", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup WarehouseQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "WARH", Name = "WarHouses" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup WarehouseQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4d67", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable WarehouseObjectTable = objectTables.ContainsKey("Warehouse") ? objectTables["Warehouse"] : null;
             if (WarehouseObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 WarehouseObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Warehouse" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> WarehouseObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Warehouse").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode WarehouseTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.Q.Warehouses", DefaultText = @"Warehouses",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature WarehouseFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAREHOUSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Warehouses", NameTextCodeDefaultText = "Warehouses", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode WarehouseTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.Q.Warehouses", DefaultText = @"Warehouses",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature WarehouseFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAREHOUSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Warehouses", NameTextCodeDefaultText = "Warehouses", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,WarehouseObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query WarehousesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseTextCode_0.Id, NameTextCodeCode = WarehouseTextCode_0.Code, ObjectTableName = "Warehouse", Code = "Warehouses",  QueryGroupCode = "WARH", IndexOrder = 0, Tenant = 0, ObjectTableId = WarehouseObjectTable.Id, QuerySection = "Warehouse", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WarehouseFeature_0.Id,FeatureUniqeCode= WarehouseFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query WarehousesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseTextCode_0.Id, NameTextCodeCode = WarehouseTextCode_0.Code, ObjectTableName = "Warehouse", Code = "Warehouses",  QueryGroupCode = "WARH", IndexOrder = 0, Tenant = 0, ObjectTableId = WarehouseObjectTable.Id, QuerySection = "Warehouse", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = WarehouseFeature_0.Id,FeatureUniqeCode= WarehouseFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn WarehousesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Warehouse.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WarehousesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Warehouse.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WarehousesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Warehouse.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WarehousesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Warehouse.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WarehousesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Warehouse.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WarehousesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Warehouse.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WarehousesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Warehouse.AddedManually" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WarehousesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Warehouse.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WarehousesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Warehouse.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn WarehousesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Warehouse.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn WarehousesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Warehouse.Notes" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn WarehousesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WarehousesQuery.Id,QueryCode = WarehousesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Warehouse.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -2814,31 +2825,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable WarehouseObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Warehouse" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode WarehouseGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
  
                  
 			   TextCode WarehouseBillingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
  
                  
 			   TextCode WarehouseAccountingTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GeneralObjectTable);
  
                  
 			   TextCode WarehouseAddressTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseAddressFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Address", NameTextCodeDefaultText = "Address", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseAddressFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Address", NameTextCodeDefaultText = "Address", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
  
                  
 			   TextCode WarehouseContactsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Contacts", DefaultText = "Contacts",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
  
                  
 			   TextCode WarehouseDocsInTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
  
                  
 			   TextCode WarehouseEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature WarehouseEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature WarehouseEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WarehouseObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2864,10 +2875,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable WarehouseObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Warehouse" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature WarehouseFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.PackageFeature", NameTextCodeDefaultText = "Warehouse Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature WarehouseFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseObjectTable);
+		   Feature WarehouseFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseObjectTable);
+		   Feature WarehouseFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseObjectTable);
+		   Feature WarehouseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, NameTextCodeCode = "Warehouse.Features.PackageFeature", NameTextCodeDefaultText = "Warehouse Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WarehouseObjectTable);    
 	    
 		}
 

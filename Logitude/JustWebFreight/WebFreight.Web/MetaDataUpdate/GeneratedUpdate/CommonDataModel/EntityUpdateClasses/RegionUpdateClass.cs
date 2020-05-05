@@ -393,36 +393,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup RegionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "RGQG", Name = "Region" }, queryGroupRepository);
-						QueryGroup RegionQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d55a", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup RegionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "RGQG", Name = "Region" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup RegionQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d55a", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable RegionObjectTable = objectTables.ContainsKey("Region") ? objectTables["Region"] : null;
             if (RegionObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 RegionObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Region" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> RegionObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Region").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode RegionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.Q.AllRegions", DefaultText = @"All Regions",LocalDefaultText = "All Regions", ObjectTableId = RegionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature RegionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLREGIONS", ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.AllRegions", NameTextCodeDefaultText = "All Regions", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode RegionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.Q.AllRegions", DefaultText = @"All Regions",LocalDefaultText = "All Regions", ObjectTableId = RegionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature RegionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLREGIONS", ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.AllRegions", NameTextCodeDefaultText = "All Regions", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,RegionObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllRegionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RegionTextCode_0.Id, NameTextCodeCode = RegionTextCode_0.Code, ObjectTableName = "Region", Code = "All Regions",  QueryGroupCode = "RGQG", IndexOrder = 0, Tenant = 0, ObjectTableId = RegionObjectTable.Id, QuerySection = "Region", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RegionFeature_0.Id,FeatureUniqeCode= RegionFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllRegionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RegionTextCode_0.Id, NameTextCodeCode = RegionTextCode_0.Code, ObjectTableName = "Region", Code = "All Regions",  QueryGroupCode = "RGQG", IndexOrder = 0, Tenant = 0, ObjectTableId = RegionObjectTable.Id, QuerySection = "Region", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RegionFeature_0.Id,FeatureUniqeCode= RegionFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllRegionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRegionsQuery.Id,QueryCode = AllRegionsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Region.Name" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllRegionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRegionsQuery.Id,QueryCode = AllRegionsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Region.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllRegionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRegionsQuery.Id,QueryCode = AllRegionsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Region.LocalName" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllRegionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRegionsQuery.Id,QueryCode = AllRegionsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Region.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -460,11 +471,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable RegionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Region" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode RegionGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = RegionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature RegionGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature RegionGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,RegionObjectTable);
  
                  
 			   TextCode RegionEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = RegionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature RegionEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature RegionEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,RegionObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -480,10 +491,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable RegionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Region" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature RegionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature RegionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature RegionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature RegionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.PackageFeature", NameTextCodeDefaultText = "Region Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature RegionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,RegionObjectTable);
+		   Feature RegionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,RegionObjectTable);
+		   Feature RegionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,RegionObjectTable);
+		   Feature RegionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = RegionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Region.Features.PackageFeature", NameTextCodeDefaultText = "Region Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,RegionObjectTable);    
 	    
 		}
 

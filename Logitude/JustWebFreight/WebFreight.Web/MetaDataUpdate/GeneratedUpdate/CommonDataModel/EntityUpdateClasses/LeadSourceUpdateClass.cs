@@ -397,36 +397,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup LeadSourceQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LDSR", Name = "LeadSource" }, queryGroupRepository);
-						QueryGroup LeadSourceQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "17af", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup LeadSourceQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LDSR", Name = "LeadSource" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup LeadSourceQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "17af", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable LeadSourceObjectTable = objectTables.ContainsKey("LeadSource") ? objectTables["LeadSource"] : null;
             if (LeadSourceObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 LeadSourceObjectTable = objectContext.ObjectTables.Where(d => d.Name == "LeadSource" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> LeadSourceObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LeadSource").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode LeadSourceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.Q.AllLeadSources", DefaultText = @"Lead Sources",LocalDefaultText = null, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature LeadSourceFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLLEADSOURCES", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.AllLeadSources", NameTextCodeDefaultText = "All Lead Sources", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode LeadSourceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.Q.AllLeadSources", DefaultText = @"Lead Sources",LocalDefaultText = null, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature LeadSourceFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLLEADSOURCES", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.AllLeadSources", NameTextCodeDefaultText = "All Lead Sources", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LeadSourceObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllLeadSourcesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LeadSourceTextCode_0.Id, NameTextCodeCode = LeadSourceTextCode_0.Code, ObjectTableName = "LeadSource", Code = "All Lead Sources",  QueryGroupCode = "LDSR", IndexOrder = 0, Tenant = 0, ObjectTableId = LeadSourceObjectTable.Id, QuerySection = "LeadSource", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LeadSourceFeature_0.Id,FeatureUniqeCode= LeadSourceFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllLeadSourcesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LeadSourceTextCode_0.Id, NameTextCodeCode = LeadSourceTextCode_0.Code, ObjectTableName = "LeadSource", Code = "All Lead Sources",  QueryGroupCode = "LDSR", IndexOrder = 0, Tenant = 0, ObjectTableId = LeadSourceObjectTable.Id, QuerySection = "LeadSource", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = LeadSourceFeature_0.Id,FeatureUniqeCode= LeadSourceFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllLeadSourcesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LeadSource.Name" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLeadSourcesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LeadSource.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllLeadSourcesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LeadSource.InActive" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllLeadSourcesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LeadSource.InActive" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -462,11 +473,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable LeadSourceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LeadSource" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode LeadSourceGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature LeadSourceGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LeadSource.Tab.General", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature LeadSourceGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LeadSource.Tab.General", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,LeadSourceObjectTable);
  
                  
 			   TextCode LeadSourceEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadSource.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature LeadSourceEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LeadSource.Tab.Events", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature LeadSourceEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LeadSource.Tab.Events", ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,LeadSourceObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -482,10 +493,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable LeadSourceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LeadSource" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature LeadSourceFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LeadSourceFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LeadSourceFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LeadSourceFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.PackageFeature", NameTextCodeDefaultText = "LeadSource Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature LeadSourceFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LeadSourceObjectTable);
+		   Feature LeadSourceFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LeadSourceObjectTable);
+		   Feature LeadSourceFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LeadSourceObjectTable);
+		   Feature LeadSourceFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = LeadSourceObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadSource.Features.PackageFeature", NameTextCodeDefaultText = "LeadSource Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LeadSourceObjectTable);    
 	    
 		}
 

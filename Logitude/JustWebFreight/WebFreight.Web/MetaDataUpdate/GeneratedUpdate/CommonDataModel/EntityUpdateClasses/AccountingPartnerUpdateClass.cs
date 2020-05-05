@@ -2360,48 +2360,59 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AccountingPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACGP", Name = "AccountingPartners" }, queryGroupRepository);
-						QueryGroup AccountingPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "35d6", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup AccountingPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACGP", Name = "AccountingPartners" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AccountingPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "35d6", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AccountingPartnerObjectTable = objectTables.ContainsKey("AccountingPartner") ? objectTables["AccountingPartner"] : null;
             if (AccountingPartnerObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 AccountingPartnerObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AccountingPartner" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> AccountingPartnerObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingPartner").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode AccountingPartnerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.Q.AccountingPartners", DefaultText = @"Accounting Partners",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGPARTNERS", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.AccountingPartners", NameTextCodeDefaultText = "AccountingPartners", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AccountingPartnerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.Q.AccountingPartners", DefaultText = @"Accounting Partners",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AccountingPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGPARTNERS", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.AccountingPartners", NameTextCodeDefaultText = "AccountingPartners", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AccountingPartnerObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AccountingPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingPartnerTextCode_0.Id, NameTextCodeCode = AccountingPartnerTextCode_0.Code, ObjectTableName = "AccountingPartner", Code = "AccountingPartners",  QueryGroupCode = "ACGP", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingPartnerObjectTable.Id, QuerySection = "AccountingPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AccountingPartnerFeature_0.Id,FeatureUniqeCode= AccountingPartnerFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AccountingPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingPartnerTextCode_0.Id, NameTextCodeCode = AccountingPartnerTextCode_0.Code, ObjectTableName = "AccountingPartner", Code = "AccountingPartners",  QueryGroupCode = "ACGP", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingPartnerObjectTable.Id, QuerySection = "AccountingPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AccountingPartnerFeature_0.Id,FeatureUniqeCode= AccountingPartnerFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AccountingPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingPartner.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingPartner.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingPartner.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingPartner.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingPartner.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingPartner.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AccountingPartner.VatNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AccountingPartner.VatNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AccountingPartner.ReceivablesAccountingCard" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AccountingPartner.ReceivablesAccountingCard" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AccountingPartner.PaymentTermEnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AccountingPartner.PaymentTermEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AccountingPartner.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AccountingPartner.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AccountingPartner.Notes" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AccountingPartnersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AccountingPartner.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -2471,31 +2482,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable AccountingPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPartner" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AccountingPartnerGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.TH.GENERAL", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.TH.GENERAL", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerBillingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Billing", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACBL", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Billing", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACBL", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerAccountingTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Accounting", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.APAC", NameTextCodeDefaultText = "Accounting", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Accounting", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.APAC", NameTextCodeDefaultText = "Accounting", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerAddressesTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Addresses", DefaultText = "Addresses",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerAddressesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Addresses", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACAD", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerAddressesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Addresses", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACAD", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerContactsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Contacts", DefaultText = "Contacts",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Contacts", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACCO", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Contacts", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACCO", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerDocsInTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.DocsIn", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACDI", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.DocsIn", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACDI", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Events", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.APET", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Events", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.APET", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2521,14 +2532,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable AccountingPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPartner" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature AccountingPartnerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingPartnerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingPartnerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingPartnerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.PackageFeature", NameTextCodeDefaultText = "AccountingPartner Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature AccountingPartnerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingPartnerObjectTable);
+		   Feature AccountingPartnerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingPartnerObjectTable);
+		   Feature AccountingPartnerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingPartnerObjectTable);
+		   Feature AccountingPartnerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.PackageFeature", NameTextCodeDefaultText = "AccountingPartner Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingPartnerObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature AccountingPartnerFeature_ACCOUNTINGPARTNERSMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGPARTNERSMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.ACCOUNTINGPARTNERSMENU", NameTextCodeDefaultText = @"Accounting Partners " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature AccountingPartnerFeature_ACCOUNTINGPARTNERSMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGPARTNERSMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.ACCOUNTINGPARTNERSMENU", NameTextCodeDefaultText = @"Accounting Partners " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingPartnerObjectTable);
 
    
 	    

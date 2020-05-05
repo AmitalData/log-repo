@@ -1474,64 +1474,75 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AccountingSystemQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACCS", Name = "Accounting System" }, queryGroupRepository);
-						QueryGroup AccountingSystemQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3956", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup AccountingSystemQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACCS", Name = "Accounting System" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AccountingSystemQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3956", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AccountingSystemObjectTable = objectTables.ContainsKey("AccountingSystem") ? objectTables["AccountingSystem"] : null;
             if (AccountingSystemObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 AccountingSystemObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AccountingSystem" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> AccountingSystemObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingSystem").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode AccountingSystemTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.Q.AllAccountingSystems", DefaultText = @"Accounting Systems",LocalDefaultText = null, ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingSystemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLACCOUNTINGSYSTEMS", ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingSystem.Features.AllAccountingSystems", NameTextCodeDefaultText = "All Accounting Systems", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AccountingSystemTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.Q.AllAccountingSystems", DefaultText = @"Accounting Systems",LocalDefaultText = null, ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AccountingSystemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLACCOUNTINGSYSTEMS", ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingSystem.Features.AllAccountingSystems", NameTextCodeDefaultText = "All Accounting Systems", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,AccountingSystemObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAccountingSystemsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingSystemTextCode_0.Id, NameTextCodeCode = AccountingSystemTextCode_0.Code, ObjectTableName = "AccountingSystem", Code = "All Accounting Systems",  QueryGroupCode = "ACCS", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingSystemObjectTable.Id, QuerySection = "AccountingSystem", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingSystemFeature_0.Id,FeatureUniqeCode= AccountingSystemFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllAccountingSystemsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingSystemTextCode_0.Id, NameTextCodeCode = AccountingSystemTextCode_0.Code, ObjectTableName = "AccountingSystem", Code = "All Accounting Systems",  QueryGroupCode = "ACCS", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingSystemObjectTable.Id, QuerySection = "AccountingSystem", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AccountingSystemFeature_0.Id,FeatureUniqeCode= AccountingSystemFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllAccountingSystemsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingSystem.Code" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingSystem.Code" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingSystem.Name" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingSystem.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingSystem.IsExternalCodesFromTable" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingSystem.IsExternalCodesFromTable" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AccountingSystem.IsExternalCodesSyncEnabled" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AccountingSystem.IsExternalCodesSyncEnabled" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AccountingSystem.IsSingleTaxPerInvoice" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AccountingSystem.IsSingleTaxPerInvoice" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AccountingSystem.IsSingleCurrencyAccount" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AccountingSystem.IsSingleCurrencyAccount" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AccountingSystem.AllowManuallyDueDate" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AccountingSystem.AllowManuallyDueDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AccountingSystem.IsJournalMode" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AccountingSystem.IsJournalMode" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AccountingSystem.IsTaxItemManaged" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "AccountingSystem.IsTaxItemManaged" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AccountingSystem.AllowMinusInvoiceLines" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "AccountingSystem.AllowMinusInvoiceLines" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AccountingSystem.ShowDownloadScreen" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "AccountingSystem.ShowDownloadScreen" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "AccountingSystem.AllowARInvoicesTransfer" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "AccountingSystem.AllowARInvoicesTransfer" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AccountingSystem.AllowAPInvoicesTransfer" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "AccountingSystem.AllowAPInvoicesTransfer" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "AccountingSystem.AllowPositiveAmountsInTheCreditNote" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "AccountingSystem.AllowPositiveAmountsInTheCreditNote" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "AccountingSystem.InActive" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllAccountingSystemsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "AccountingSystem.InActive" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllAccountingSystemsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "AccountingSystem.IsExternalCodesFromAPI" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllAccountingSystemsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAccountingSystemsQuery.Id,QueryCode = AllAccountingSystemsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "AccountingSystem.IsExternalCodesFromAPI" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1561,7 +1572,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable AccountingSystemObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingSystem" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AccountingSystemGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSystem.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingSystemGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingSystem.Tab.General", ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingSystem.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingSystemGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingSystem.Tab.General", ObjectTableId = AccountingSystemObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingSystem.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingSystemObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 

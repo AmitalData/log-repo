@@ -2513,48 +2513,59 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CustomAgentQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CAGT", Name = "Custom Agents" }, queryGroupRepository);
-						QueryGroup CustomAgentQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cf6e", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CustomAgentQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CAGT", Name = "Custom Agents" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CustomAgentQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cf6e", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CustomAgentObjectTable = objectTables.ContainsKey("CustomAgent") ? objectTables["CustomAgent"] : null;
             if (CustomAgentObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CustomAgentObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CustomAgent" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> CustomAgentObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomAgent").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CustomAgentTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.Q.CustomAgents", DefaultText = @"Custom Agents",LocalDefaultText = null, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomAgentFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMAGENT", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.CustomAgents", NameTextCodeDefaultText = "Custom Agents", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomAgentTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.Q.CustomAgents", DefaultText = @"Custom Agents",LocalDefaultText = null, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomAgentFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMAGENT", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.CustomAgents", NameTextCodeDefaultText = "Custom Agents", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomAgentObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomagentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomAgentTextCode_0.Id, NameTextCodeCode = CustomAgentTextCode_0.Code, ObjectTableName = "CustomAgent", Code = "Custom agents",  QueryGroupCode = "CAGT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomAgentObjectTable.Id, QuerySection = "CustomAgent", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomAgentFeature_0.Id,FeatureUniqeCode= CustomAgentFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query CustomagentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomAgentTextCode_0.Id, NameTextCodeCode = CustomAgentTextCode_0.Code, ObjectTableName = "CustomAgent", Code = "Custom agents",  QueryGroupCode = "CAGT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomAgentObjectTable.Id, QuerySection = "CustomAgent", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomAgentFeature_0.Id,FeatureUniqeCode= CustomAgentFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomagentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomAgent.Code" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomAgent.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomAgent.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomAgent.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomAgent.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomAgent.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomAgent.VatNumber" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomAgent.VatNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomAgent.ReceivablesAccountingCard" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomAgent.ReceivablesAccountingCard" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomAgent.PaymentTermEnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomAgent.PaymentTermEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "CustomAgent.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomagentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "CustomAgent.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomagentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "CustomAgent.Notes" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CustomagentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomagentsQuery.Id,QueryCode = CustomagentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "CustomAgent.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -2632,31 +2643,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable CustomAgentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomAgent" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomAgentGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomAgentGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomAgentGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomAgentObjectTable);
  
                  
 			   TextCode CustomAgentBillingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomAgentBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Billing", NameTextCodeDefaultText = "Edit Custom Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomAgentBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Billing", NameTextCodeDefaultText = "Edit Custom Billing", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomAgentObjectTable);
  
                  
 			   TextCode CustomAgentAccountingTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GeneralObjectTable);
  
                  
 			   TextCode CustomAgentAddressesTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Addresses", DefaultText = "Addresses",LocalDefaultText = null, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomAgentAddressesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Addresses", NameTextCodeDefaultText = "Edit Custom Addresses", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomAgentAddressesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Addresses", NameTextCodeDefaultText = "Edit Custom Addresses", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomAgentObjectTable);
  
                  
 			   TextCode CustomAgentContactsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Contacts", DefaultText = "Contacts",LocalDefaultText = null, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomAgentContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Contacts", NameTextCodeDefaultText = "Edit Custom Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomAgentContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Contacts", NameTextCodeDefaultText = "Edit Custom Contacts", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomAgentObjectTable);
  
                  
 			   TextCode CustomAgentDocsInTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomAgentDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomAgentDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomAgentObjectTable);
  
                  
 			   TextCode CustomAgentEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomAgentEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Events", NameTextCodeDefaultText = "Edit Custom Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomAgentEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Events", NameTextCodeDefaultText = "Edit Custom Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomAgentObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2682,10 +2693,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable CustomAgentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomAgent" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CustomAgentFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomAgentFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomAgentFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomAgentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.PackageFeature", NameTextCodeDefaultText = "CustomAgent Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CustomAgentFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomAgentObjectTable);
+		   Feature CustomAgentFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomAgentObjectTable);
+		   Feature CustomAgentFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomAgentObjectTable);
+		   Feature CustomAgentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.PackageFeature", NameTextCodeDefaultText = "CustomAgent Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomAgentObjectTable);    
 	    
 		}
 
@@ -2752,9 +2763,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable CustomAgentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomAgent" && d.Tenant == 0).FirstOrDefault(); 			   Feature CustomAgentFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable CustomAgentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomAgent" && d.Tenant == 0).FirstOrDefault(); 			   Feature CustomAgentFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomAgentObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

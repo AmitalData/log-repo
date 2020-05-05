@@ -1268,42 +1268,53 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup PaymentTermQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PMTR", Name = "PaymentTerms" }, queryGroupRepository);
-						QueryGroup PaymentTermQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c57a", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup PaymentTermQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PMTR", Name = "PaymentTerms" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup PaymentTermQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c57a", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable PaymentTermObjectTable = objectTables.ContainsKey("PaymentTerm") ? objectTables["PaymentTerm"] : null;
             if (PaymentTermObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 PaymentTermObjectTable = objectContext.ObjectTables.Where(d => d.Name == "PaymentTerm" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> PaymentTermObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "PaymentTerm").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode PaymentTermTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.Q.PaymentTerms", DefaultText = @"Payment terms",LocalDefaultText = null, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PaymentTermFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTTERMS", ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.PaymentTerms", NameTextCodeDefaultText = "PaymentTerms", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PaymentTermTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.Q.PaymentTerms", DefaultText = @"Payment terms",LocalDefaultText = null, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature PaymentTermFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTTERMS", ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.PaymentTerms", NameTextCodeDefaultText = "PaymentTerms", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PaymentTermObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query PaymenttermsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentTermTextCode_0.Id, NameTextCodeCode = PaymentTermTextCode_0.Code, ObjectTableName = "PaymentTerm", Code = "Payment terms",  QueryGroupCode = "PMTR", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentTermObjectTable.Id, QuerySection = "PaymentTerm", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentTermFeature_0.Id,FeatureUniqeCode= PaymentTermFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query PaymenttermsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentTermTextCode_0.Id, NameTextCodeCode = PaymentTermTextCode_0.Code, ObjectTableName = "PaymentTerm", Code = "Payment terms",  QueryGroupCode = "PMTR", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentTermObjectTable.Id, QuerySection = "PaymentTerm", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentTermFeature_0.Id,FeatureUniqeCode= PaymentTermFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PaymenttermsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id,QueryCode = PaymenttermsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PaymentTerm.EnglishName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PaymenttermsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id,QueryCode = PaymenttermsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PaymentTerm.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PaymenttermsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id,QueryCode = PaymenttermsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PaymentTerm.LocalName" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PaymenttermsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id,QueryCode = PaymenttermsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PaymentTerm.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PaymenttermsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id,QueryCode = PaymenttermsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PaymentTerm.AddedManually" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PaymenttermsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id,QueryCode = PaymenttermsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PaymentTerm.AddedManually" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PaymenttermsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id,QueryCode = PaymenttermsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PaymentTerm.Days" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PaymenttermsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id,QueryCode = PaymenttermsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PaymentTerm.Days" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PaymenttermsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id,QueryCode = PaymenttermsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PaymentTerm.InActive" , ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn PaymenttermsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id,QueryCode = PaymenttermsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PaymentTerm.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1355,15 +1366,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable PaymentTermObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentTerm" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode PaymentTermGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PaymentTermGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PaymentTermGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentTermObjectTable);
  
                  
 			   TextCode PaymentTermAccountingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PaymentTermAccountingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTING", ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Accounting", NameTextCodeDefaultText = "Accounting", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PaymentTermAccountingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTING", ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Accounting", NameTextCodeDefaultText = "Accounting", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentTermObjectTable);
  
                  
 			   TextCode PaymentTermEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PaymentTermEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PaymentTermEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentTermObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1381,10 +1392,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable PaymentTermObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentTerm" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature PaymentTermFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentTermFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentTermFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentTermFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.PackageFeature", NameTextCodeDefaultText = "PaymentTerm Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature PaymentTermFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PaymentTermObjectTable);
+		   Feature PaymentTermFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PaymentTermObjectTable);
+		   Feature PaymentTermFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PaymentTermObjectTable);
+		   Feature PaymentTermFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.PackageFeature", NameTextCodeDefaultText = "PaymentTerm Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PaymentTermObjectTable);    
 	    
 		}
 

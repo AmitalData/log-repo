@@ -1,5 +1,7 @@
-﻿using Intuit.Ipp.Data;
+﻿using Devart.Data.Oracle;
+using Intuit.Ipp.Data;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,88 +17,140 @@ namespace WebFreight.Web.Helpers
     {
         public static void BulkInsert<T>(string tableName, IList<T> list)
         {
-            
-          
+
+            if (list == null || list.Count() == 0)
+
+                return;
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                RunOracleSqlInsert(tableName, list);
+            }
+            else
+                RunSqlInsert(tableName, list);
+        }
+
+        private static void RunSqlInsert<T>(string tableName, IList<T> list)
+        {
+           
+            PropertyDescriptor[] entityProperties = GetEntitySystemProperties<T>();
+            string strConnString = TenantServerConfigration.GetDbConnection(0);
+            StringBuilder sqlStringBuilder = new StringBuilder();
+            string insertCommand = "insert into " + BuildInsertCommandColumnsString(tableName, entityProperties) +" values";
+            sqlStringBuilder.AppendLine(insertCommand);
+            //sqlStringBuilder.AppendLine("values");
+            int allRowsCount = list.Count();
+            int bulkInsertedRowsCount = 0;
+            int insertedRowsCount = 0;
+            using (SqlConnection connection = new SqlConnection(strConnString))
+            {
+                connection.Open();
+                foreach (var item in list)
+                {
+                    string valuesString = BuildValuesSqlString(entityProperties, item) + "),";
+                    sqlStringBuilder.AppendLine(valuesString);
+                    bulkInsertedRowsCount++;
+                    insertedRowsCount++;
+                    if (bulkInsertedRowsCount == 100 || insertedRowsCount == allRowsCount)
+                    {
+                        string sqlCommandString = sqlStringBuilder.ToString();
+                        sqlCommandString = sqlCommandString.Substring(0, sqlCommandString.LastIndexOf(","));
+                        SqlCommand cmd = new SqlCommand(sqlCommandString, connection);
+                        cmd.CommandTimeout = 1200;
+                        var output = cmd.ExecuteNonQuery();
+
+                        sqlStringBuilder = new StringBuilder();
+                        sqlStringBuilder.AppendLine(insertCommand);
+                        bulkInsertedRowsCount = 0;
+                    }
+                }
+                connection.Close();
+            }
+        }
+
+        private static void RunOracleSqlInsert<T>(string tableName, IList<T> list)
+        {
+
+            PropertyDescriptor[] entityProperties = GetEntitySystemProperties<T>();
+            string strConnString = TenantServerConfigration.GetDbConnection(0);
+            string insertCommand = BuildInsertCommandColumnsString(tableName, entityProperties);
+            int allRowsCount = list.Count();
+            int bulkInsertedRowsCount = 0;
+            int insertedRowsCount = 0;
+            using (OracleConnection connection = new OracleConnection(strConnString))
+            {
+                connection.Open();
+                StringBuilder sqlStringBuilder = new StringBuilder();
+                sqlStringBuilder.AppendLine("insert all");
+
+                foreach (var item in list)
+                {
+                    string valuesString = "values" + BuildValuesSqlString(entityProperties, item) + ")";
+                    string commandString = "into " + insertCommand + " " + valuesString;
+                    sqlStringBuilder.AppendLine(commandString);
+                    bulkInsertedRowsCount++;
+                    insertedRowsCount++;
+                    if (bulkInsertedRowsCount == 100 || insertedRowsCount == allRowsCount)
+                    {
+                        sqlStringBuilder.AppendLine("Subquery;");
+
+                        string sqlCommandString = sqlStringBuilder.ToString();
+                        OracleCommand cmd = new OracleCommand(sqlCommandString, connection);
+                        cmd.CommandTimeout = 1200;
+                        var output = cmd.ExecuteNonQuery();
+
+                        sqlStringBuilder = new StringBuilder();
+                        sqlStringBuilder.AppendLine("insert all");
+                        bulkInsertedRowsCount = 0;
+                    }
+                }
+                connection.Close();
+            }
+        }
+        private static PropertyDescriptor[] GetEntitySystemProperties<T>()
+        {
             var props = TypeDescriptor.GetProperties(typeof(T))
                                        //Dirty hack to make sure we only have system data types 
                                        //i.e. filter out the relationships/collections
                                        .Cast<PropertyDescriptor>()
                                        .Where(propertyInfo => propertyInfo.PropertyType.Namespace.Equals("System"))
                                        .ToArray();
-            //insert into shipments(id,ShipmentNumber) values ('1','dsd'),('12','sdsd')
-            string insertCommand = "insert into " + tableName + "(";
-            foreach (var propertyInfo in props)
+            return props;
+        }
+
+        private static string BuildInsertCommandColumnsString(string tableName, PropertyDescriptor[] entityProperties)
+        {
+            string insertCommand = tableName + "(";
+            foreach (var propertyInfo in entityProperties)
             {
                 insertCommand += propertyInfo.Name + ",";
-                   
+
             }
 
 
-            insertCommand = insertCommand.TrimEnd(',') + ") values";
+            insertCommand = insertCommand.TrimEnd(',') + ")";
+            return insertCommand;
+        }
 
-            StringBuilder sqlStringBuilder = new StringBuilder();
-            sqlStringBuilder.AppendLine(insertCommand);
-            //var values = new object[props.Length];
-            int rowsCount = 0;
-            int allRowsCount = list.Count();
-            int insertedRowsCount = 0;
-            string strConnString = TenantServerConfigration.GetDbConnection(0);
-            using (SqlConnection cn = new SqlConnection(strConnString))
+        private static string BuildValuesSqlString<T>(PropertyDescriptor[] entityProperties, T item)
+        {
+            string valuesString = "(";
+            for (var i = 0; i < entityProperties.Length; i++)
             {
-                cn.Open();
-
-                foreach (var item in list)
+                object propValue = entityProperties[i].GetValue(item);
+                if (entityProperties[i].PropertyType != typeof(int) && entityProperties[i].PropertyType != typeof(decimal)
+                                       && entityProperties[i].PropertyType != typeof(float) && entityProperties[i].PropertyType != typeof(double))
                 {
-                    string valuesString = "(";
-                    for (var i = 0; i < props.Length; i++)
-                    {
-                        object propValue = props[i].GetValue(item);
-                        if (props[i].PropertyType != typeof(int) && props[i].PropertyType != typeof(decimal)
-                                               && props[i].PropertyType != typeof(float) && props[i].PropertyType != typeof(double))
-                        {
-                            if (propValue != null)
-                                propValue = "'" + propValue.ToString().Replace("'", "") + "'";
-                            else
-                                propValue = "NULL";
-                        }
-
-                        valuesString += propValue + ",";
-                        //values[i] = props[i].GetValue(item);
-                    }
-                    valuesString = valuesString.TrimEnd(',') + "),";
-                    sqlStringBuilder.AppendLine(valuesString);
-
-                    rowsCount++;
-                    insertedRowsCount++;
-
-                    if (rowsCount == 100 || insertedRowsCount == allRowsCount)
-                    {
-                        string sqlCommandString = sqlStringBuilder.ToString();
-                        sqlCommandString = sqlCommandString.Substring(0, sqlCommandString.LastIndexOf(","));
-                        //sqlCommandString = sqlCommandString.TrimEnd(',',' ');
-
-                        //using (SqlConnection cn = new SqlConnection(strConnString))
-                        //{
-                            SqlCommand cmd = new SqlCommand(sqlCommandString, cn);
-                            cmd.CommandTimeout = 1200;
-
-                            //cn.Open();
-                            var output = cmd.ExecuteNonQuery();
-                        //    cn.Close();
-                        //}
-
-
-                        sqlStringBuilder = new StringBuilder();
-                        sqlStringBuilder.AppendLine(insertCommand);
-                        rowsCount = 0;
-                    }
+                    if (propValue != null)
+                        propValue = "'" + propValue.ToString().Replace("'", "") + "'";
+                    else
+                        propValue = "NULL";
                 }
 
-                cn.Close();
-                //table.Rows.Add(values);
+                valuesString += propValue + ",";
+                //values[i] = props[i].GetValue(item);
             }
-
-            
+            valuesString = valuesString.TrimEnd(',');
+            return valuesString;
         }
 
 

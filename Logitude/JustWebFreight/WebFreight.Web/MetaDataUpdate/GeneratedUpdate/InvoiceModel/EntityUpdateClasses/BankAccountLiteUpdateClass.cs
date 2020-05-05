@@ -1101,40 +1101,51 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup BankAccountLiteQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BALT", Name = "BankAccountLite" }, queryGroupRepository);
-						QueryGroup BankAccountLiteQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "faa3", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup BankAccountLiteQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BALT", Name = "BankAccountLite" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup BankAccountLiteQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "faa3", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable BankAccountLiteObjectTable = objectTables.ContainsKey("BankAccountLite") ? objectTables["BankAccountLite"] : null;
             if (BankAccountLiteObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 BankAccountLiteObjectTable = objectContext.ObjectTables.Where(d => d.Name == "BankAccountLite" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> BankAccountLiteObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BankAccountLite").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode BankAccountLiteTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccountLite.Q.BankAccountLites", DefaultText = @"Bank Accounts",LocalDefaultText = null, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BankAccountLiteFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccountLites", ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.BankAccountLites", NameTextCodeDefaultText = "Bank Accounts", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BankAccountLiteTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccountLite.Q.BankAccountLites", DefaultText = @"Bank Accounts",LocalDefaultText = null, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BankAccountLiteFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccountLites", ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.BankAccountLites", NameTextCodeDefaultText = "Bank Accounts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BankAccountLiteObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query BankAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankAccountLiteTextCode_0.Id, NameTextCodeCode = BankAccountLiteTextCode_0.Code, ObjectTableName = "BankAccountLite", Code = "Bank Accounts",  QueryGroupCode = "BALT", IndexOrder = 0, Tenant = 0, ObjectTableId = BankAccountLiteObjectTable.Id, QuerySection = "BankAccountLite", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankAccountLiteFeature_0.Id,FeatureUniqeCode= BankAccountLiteFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query BankAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankAccountLiteTextCode_0.Id, NameTextCodeCode = BankAccountLiteTextCode_0.Code, ObjectTableName = "BankAccountLite", Code = "Bank Accounts",  QueryGroupCode = "BALT", IndexOrder = 0, Tenant = 0, ObjectTableId = BankAccountLiteObjectTable.Id, QuerySection = "BankAccountLite", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankAccountLiteFeature_0.Id,FeatureUniqeCode= BankAccountLiteFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn BankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankAccountLite.AccountNumber" , ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankAccountLite.AccountNumber" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn BankAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankAccountLite.BankCode" , ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BankAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankAccountLite.BankCode" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn BankAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankAccountLite.BranchNumber" , ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BankAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankAccountLite.BranchNumber" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn BankAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankAccountLite.Inactive" , ColumnWidth = 60 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn BankAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankAccountsQuery.Id,QueryCode = BankAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankAccountLite.Inactive" , ColumnWidth = 60 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -1192,11 +1203,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   ObjectTable BankAccountLiteObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankAccountLite" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode BankAccountLiteGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccountLite.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BankAccountLiteGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BankAccountLiteGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountLiteObjectTable);
  
                  
 			   TextCode BankAccountLiteEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccountLite.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BankAccountLiteEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BankAccountLiteEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountLiteObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1212,14 +1223,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    {  
 		   ObjectTable BankAccountLiteObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankAccountLite" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature BankAccountLiteFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BankAccountLiteFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BankAccountLiteFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BankAccountLiteFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.PackageFeature", NameTextCodeDefaultText = "BankAccountLite Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature BankAccountLiteFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountLiteObjectTable);
+		   Feature BankAccountLiteFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountLiteObjectTable);
+		   Feature BankAccountLiteFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountLiteObjectTable);
+		   Feature BankAccountLiteFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccountLite.Features.PackageFeature", NameTextCodeDefaultText = "BankAccountLite Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountLiteObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature BankAccountLiteFeature_BANKACCOUNTLITE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKACCOUNTLITE", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.BankAccountLiteMenu", NameTextCodeDefaultText = @"Bank Accounts Lite" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BankAccountLiteFeature_BANKACCOUNTLITE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKACCOUNTLITE", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankAccountLiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.BankAccountLiteMenu", NameTextCodeDefaultText = @"Bank Accounts Lite" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountLiteObjectTable);
 
    
 	    

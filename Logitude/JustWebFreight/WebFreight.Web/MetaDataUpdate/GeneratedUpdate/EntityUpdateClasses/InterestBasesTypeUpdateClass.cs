@@ -814,38 +814,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup InterestBasesTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a37b", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup InterestBasesTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8df3", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup InterestBasesTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a37b", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup InterestBasesTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8df3", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable InterestBasesTypeObjectTable = objectTables.ContainsKey("InterestBasesType") ? objectTables["InterestBasesType"] : null;
             if (InterestBasesTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 InterestBasesTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> InterestBasesTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InterestBasesType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode InterestBasesTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestBasesType.Q.InterestBases", DefaultText = @"Interest Bases",LocalDefaultText = "בסיסי ריבית", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature InterestBasesTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Q.InterestBases", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.InterestBases", NameTextCodeDefaultText = "Interest Bases", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode InterestBasesTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestBasesType.Q.InterestBases", DefaultText = @"Interest Bases",LocalDefaultText = "בסיסי ריבית", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature InterestBasesTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Q.InterestBases", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.InterestBases", NameTextCodeDefaultText = "Interest Bases", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InterestBasesTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query InterestBasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestBasesTypeTextCode_0.Id, NameTextCodeCode = InterestBasesTypeTextCode_0.Code, ObjectTableName = "InterestBasesType", Code = "Interest Bases",  QueryGroupCode = "a37b", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestBasesTypeObjectTable.Id, QuerySection = "InterestBasesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestBasesTypeFeature_0.Id,FeatureUniqeCode= InterestBasesTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query InterestBasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestBasesTypeTextCode_0.Id, NameTextCodeCode = InterestBasesTypeTextCode_0.Code, ObjectTableName = "InterestBasesType", Code = "Interest Bases",  QueryGroupCode = "a37b", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestBasesTypeObjectTable.Id, QuerySection = "InterestBasesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestBasesTypeFeature_0.Id,FeatureUniqeCode= InterestBasesTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn InterestBasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InterestBasesType.Code" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestBasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InterestBasesType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InterestBasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InterestBasesType.LocalName" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestBasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InterestBasesType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InterestBasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InterestBasesType.InActive" , ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn InterestBasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InterestBasesType.InActive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -877,11 +888,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode InterestBasesTypeDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestBasesType.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature InterestBasesTypeDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Tab.Details", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.IBTD", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature InterestBasesTypeDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Tab.Details", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.IBTD", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestBasesTypeObjectTable);
  
                  
 			   TextCode InterestBasesTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestBasesType.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature InterestBasesTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Tab.Events", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.IBEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature InterestBasesTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Tab.Events", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.IBEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestBasesTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -897,10 +908,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature InterestBasesTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InterestBasesTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InterestBasesTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InterestBasesTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.PackageFeature", NameTextCodeDefaultText = "InterestBasesType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature InterestBasesTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable);
+		   Feature InterestBasesTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable);
+		   Feature InterestBasesTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable);
+		   Feature InterestBasesTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.PackageFeature", NameTextCodeDefaultText = "InterestBasesType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable);    
 	    
 		}
 
@@ -1001,9 +1012,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault(); 			   Feature InterestBasesTypeFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesTypeInactive", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault(); 			   Feature InterestBasesTypeFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesTypeInactive", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestBasesTypeObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

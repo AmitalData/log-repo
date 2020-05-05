@@ -641,38 +641,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ProductTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PRTP", Name = "Product Type" }, queryGroupRepository);
-						QueryGroup ProductTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0721", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup ProductTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PRTP", Name = "Product Type" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ProductTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0721", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ProductTypeObjectTable = objectTables.ContainsKey("ProductType") ? objectTables["ProductType"] : null;
             if (ProductTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ProductTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ProductType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        //List<ObjectField> ProductTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ProductType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ProductTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.Q.AllProductTypes", DefaultText = @"All Active Product Types",LocalDefaultText = null, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ProductTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLPRODUCTTYPES", ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.AllProductTypes", NameTextCodeDefaultText = "All Product Types", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ProductTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.Q.AllProductTypes", DefaultText = @"All Active Product Types",LocalDefaultText = null, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ProductTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLPRODUCTTYPES", ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.AllProductTypes", NameTextCodeDefaultText = "All Product Types", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,ProductTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllActiveProductTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ProductTypeTextCode_0.Id, NameTextCodeCode = ProductTypeTextCode_0.Code, ObjectTableName = "ProductType", Code = "All Active Product Types",  QueryGroupCode = "PRTP", IndexOrder = 0, Tenant = 0, ObjectTableId = ProductTypeObjectTable.Id, QuerySection = "ProductType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ProductTypeFeature_0.Id,FeatureUniqeCode= ProductTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllActiveProductTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ProductTypeTextCode_0.Id, NameTextCodeCode = ProductTypeTextCode_0.Code, ObjectTableName = "ProductType", Code = "All Active Product Types",  QueryGroupCode = "PRTP", IndexOrder = 0, Tenant = 0, ObjectTableId = ProductTypeObjectTable.Id, QuerySection = "ProductType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ProductTypeFeature_0.Id,FeatureUniqeCode= ProductTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllActiveProductTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllActiveProductTypesQuery.Id,QueryCode = AllActiveProductTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ProductType.Code" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllActiveProductTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllActiveProductTypesQuery.Id,QueryCode = AllActiveProductTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ProductType.Code" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllActiveProductTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllActiveProductTypesQuery.Id,QueryCode = AllActiveProductTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ProductType.Name" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllActiveProductTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllActiveProductTypesQuery.Id,QueryCode = AllActiveProductTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ProductType.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllActiveProductTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllActiveProductTypesQuery.Id,QueryCode = AllActiveProductTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ProductType.InActive" , ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllActiveProductTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllActiveProductTypesQuery.Id,QueryCode = AllActiveProductTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ProductType.InActive" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -716,11 +727,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable ProductTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ProductType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ProductTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ProductTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ProductType.Tab.General", ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ProductTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ProductType.Tab.General", ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ProductTypeObjectTable);
  
                  
 			   TextCode ProductTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ProductTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ProductType.Tab.Events", ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ProductTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ProductType.Tab.Events", ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ProductTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -736,10 +747,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable ProductTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ProductType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature ProductTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ProductTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ProductTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ProductTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.PackageFeature", NameTextCodeDefaultText = "ProductType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature ProductTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ProductTypeObjectTable);
+		   Feature ProductTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ProductTypeObjectTable);
+		   Feature ProductTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ProductTypeObjectTable);
+		   Feature ProductTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductType.Features.PackageFeature", NameTextCodeDefaultText = "ProductType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ProductTypeObjectTable);    
 	    
 		}
 
