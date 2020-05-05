@@ -63,6 +63,7 @@ export class ReferantSpotlightDataTemplate
         if (this.showBusyIndicator != value) {
             this.showBusyIndicator = value;
             this.CurrentSession.FireEvent("SpotLightDetectChanges");
+            this.spotlightSharedDataService.IsDirty = false;
         }
     }
     spotLightViewContainerRef: ViewContainerRef;
@@ -71,6 +72,7 @@ export class ReferantSpotlightDataTemplate
         this.spotLightViewContainerRef = SpotLightViewContainerRef;
         this.LoadReferantException();
         this.IsDisplayOnly = false;
+        this.spotlightSharedDataService.IsDirty = false;
 
     }
     private LoadReferantException() {
@@ -80,7 +82,6 @@ export class ReferantSpotlightDataTemplate
         this.ShowBusyIndicator = false;
         this.DeletedCodeList = [];  // list of items need to be deleted
         this._IsReady = true;
-
     }
 
     private ReferantExceptionListPM : ReferantExceptionPM[] = [];
@@ -89,7 +90,6 @@ export class ReferantSpotlightDataTemplate
             this._referantExceptionPMService.get(this.EntityPM.DeclarationId, exceptionReasonsCode)
                 .subscribe((response: any) => {
                     this.ReferantExceptionListPM.push = response.Result;
-                    this._IsReady = true;
                     this.ReferantExceptionItemsSource.Insert(new ExceptionReason(response.Result, this, this.spotlightSharedDataService));
                 });
         }
@@ -102,6 +102,7 @@ export class ReferantSpotlightDataTemplate
         this.ReferantExceptionListPM.includes(item);
         var _exceptionReason = new ExceptionReason(item, this.EntityPM, this.spotlightSharedDataService);
         _exceptionReason.IsNew = true;
+        _exceptionReason.ShowCode = false;
         this.ReferantExceptionItemsSource.Insert(_exceptionReason);
 
 
@@ -170,8 +171,7 @@ export class ReferantSpotlightDataTemplate
     }
 
     OkButtonClicked() {
-        
-        if (this.spotlightSharedDataService.IsDirty) {
+        if (this.spotlightSharedDataService.IsDirty) { 
             this.ValidationErrorsList = [];
             this.errors = [];
             this.existCodeList = [];
@@ -181,7 +181,9 @@ export class ReferantSpotlightDataTemplate
             } if (this.errors.length == 0) {
                 this.ShowBusyIndicator = true;
                 this.BuildExceptionReasonsList();
-                this._declarationReferantDataPMService.update(this.EntityPM).subscribe();
+                this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
+                    SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                });
                 this.DeletedCodeList.forEach((item: string) => {
                     this._referantExceptionExtendedPMService.Delete(this.EntityPM.DeclarationId, item).subscribe((response: any) => {
                         this.DeletedCodeList.splice(this.DeletedCodeList.indexOf(item), 1);
@@ -191,15 +193,17 @@ export class ReferantSpotlightDataTemplate
                     if (item.IsNew == true) {
                         this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
                             item.IsNew = false;
+                            item.ShowCode = true;
                         });
                     } else if (item.EntityPM.IsDirty == true) {
                         this._referantExceptionPMService.update(item.EntityPM).subscribe();
                     }
-                });
+                }); 
             }
-            this.ShowBusyIndicator = false;
+            
             this.spotlightSharedDataService.IsDirty = false;
-            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+            this.ShowBusyIndicator = false;
+
         }
     }
     DeleteButtonClicked(item) {
@@ -216,6 +220,7 @@ export class ReferantSpotlightDataTemplate
                     this.ReferantExceptionListPM.splice(this.ReferantExceptionListPM.indexOf(item), 1);
                     if (!this.ExceptionsList.includes(item.ExceptionReasonsCode)) {
                         this.DeletedCodeList.push(item.ExceptionReasonsCode);
+                        this.spotlightSharedDataService.IsDirty = true;
                     }
                 }
             });
@@ -229,6 +234,7 @@ export class ExceptionReason extends BaseComponent {
     public EntityPM: ReferantExceptionPM;
     public IsNew: boolean=false;
     public parent: ReferantSpotlightDataTemplate;
+    public ShowCode: boolean = true;
     _StatusItems: KeyValuePair[] = [];
     constructor(entity: ReferantExceptionPM, Parent: ReferantSpotlightDataTemplate,public spotlightSharedDataService: SpotlightSharedDataService) {
         super();
@@ -236,8 +242,9 @@ export class ExceptionReason extends BaseComponent {
         this.EntityPM = entity;
         this._StatusItems.push({ 'Key': "A", 'Value': "Active" });
         this._StatusItems.push({ 'Key': "S", 'Value': "Solved" });
-        spotlightSharedDataService.IsDirty = true;
-
+        if (this.EntityPM.ExceptionReasonsCode == null) {
+            this.ShowCode = false;
+        }
     }
     
     _SelectedItemStatus: KeyValuePair;
@@ -271,12 +278,12 @@ export class ExceptionReason extends BaseComponent {
     }
     get ExceptionReasonsCode() { return this.EntityPM.ExceptionReasonsCode; }
     set ExceptionReasonsCode(value: string) {
-        if (this.EntityPM.ExceptionReasonsCode != null) {
-            this.IsNew = true;
+        if (this.EntityPM.ExceptionReasonsCode != null ) {
         }
         if (this.EntityPM.ExceptionReasonsCode != value) {
             this.EntityPM.ExceptionReasonsCode = value;
             this.spotlightSharedDataService.IsDirty = true;
+
         }
 
     }
