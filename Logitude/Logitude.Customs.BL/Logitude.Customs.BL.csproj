@@ -1894,6 +1894,7 @@
     <Compile Include="PatchDistribution\Patches\P19R03_0022_AutonomyKeywords.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0024_DocIndex.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0027_ReferantException.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0028_AvailabilityDate.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0026_ExceptionReason.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0025_ReferantData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

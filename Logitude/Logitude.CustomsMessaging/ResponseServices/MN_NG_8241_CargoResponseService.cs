@@ -213,6 +213,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _MyDeclarationPM.CurrentContextTag = _cargoContext;
 
                         OpenUnifreighTask();
+                        if (_status == "SST" || _status == "SMG")
+                            _MyDeclarationPM.AvailabilityDate = DateTime.Now;
+
                         myDeclarationUpdateService.SuppressNewConcurrencyGUID = true;
                         myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                         if (_status == "SST" || _status == "SMG")
@@ -344,6 +347,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         StatusDate = statusDate,
                         FileAdditionalData = myFileAdditionalData
                     };
+                    if (status == "SST" || status == "SMG")
+                        _MyDeclarationPM.AvailabilityDate = DateTime.Now;
+
                     _MyDeclarationPM.CurrentContextTag = cargoContext;
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                     if(status=="SST" || status=="SMG")
