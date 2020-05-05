@@ -32,6 +32,11 @@ namespace Logitude.DBMigrations.Models
 
         public void RunTool()
         {
+            if(IsArgumentProvided("-exe") && IsArgumentProvided("-clob"))
+            {
+                ExitTool("Error: You Cannot Use -exe And -clob Arguments Together");
+            }
+
             if (IsArgumentProvided("-root") || RunSettings.DebugMode)
             {
                 string root = !RunSettings.DebugMode ? GetRoot() : RunSettings.Root;
@@ -496,9 +501,12 @@ namespace Logitude.DBMigrations.Models
 
         private void PrintMissingIndexesWarnings()
         {
-            if (!String.IsNullOrEmpty(MissingIndexesWarnings))
+            if (!IsArgumentProvided("-clob"))
             {
-                Console.WriteLine(MissingIndexesWarnings.TrimEnd('\n'));
+                if (!String.IsNullOrEmpty(MissingIndexesWarnings))
+                {
+                    Console.WriteLine(MissingIndexesWarnings.TrimEnd('\n'));
+                }
             }
         }
 
@@ -592,7 +600,8 @@ namespace Logitude.DBMigrations.Models
 
             if (DatabaseType.ToLower() == "oracle")
             {
-                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTablesDefinitions, dxmlFileName);
+                bool isClobArgumentProvided = IsArgumentProvided("-clob");
+                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTablesDefinitions, dxmlFileName, isClobArgumentProvided);
                 return oracleDatabaseMigrations;
             }
 

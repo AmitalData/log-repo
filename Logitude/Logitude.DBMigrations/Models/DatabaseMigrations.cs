@@ -696,9 +696,9 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_") || name.ToLower().StartsWith("uq_") || name.ToLower().StartsWith("fk_"))
+                    if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("cdrop_") || name.ToLower().StartsWith("temp_") || name.ToLower().StartsWith("pk_") || name.ToLower().StartsWith("ix_") || name.ToLower().StartsWith("uq_") || name.ToLower().StartsWith("fk_"))
                     {
-                        if (name.ToLower().StartsWith("drop_"))
+                        if (name.ToLower().StartsWith("drop_") || name.ToLower().StartsWith("cdrop_") || name.ToLower().StartsWith("temp_"))
                         {
                             return name.Substring(0, maxLength);
                         }
