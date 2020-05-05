@@ -213,10 +213,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _MyDeclarationPM.CurrentContextTag = _cargoContext;
 
                         OpenUnifreighTask();
+                    
+                        myDeclarationUpdateService.SuppressNewConcurrencyGUID = true;
                         if (_status == "SST" || _status == "SMG")
                             _MyDeclarationPM.AvailabilityDate = DateTime.Now;
-
-                        myDeclarationUpdateService.SuppressNewConcurrencyGUID = true;
                         myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                         if (_status == "SST" || _status == "SMG")
                             SendPayment(_MyDeclarationPM, context, requestParams);
@@ -347,10 +347,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         StatusDate = statusDate,
                         FileAdditionalData = myFileAdditionalData
                     };
+ 
+                    _MyDeclarationPM.CurrentContextTag = cargoContext;
                     if (status == "SST" || status == "SMG")
                         _MyDeclarationPM.AvailabilityDate = DateTime.Now;
-
-                    _MyDeclarationPM.CurrentContextTag = cargoContext;
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                     if(status=="SST" || status=="SMG")
                         SendPayment(_MyDeclarationPM, context, requestParams);
@@ -391,6 +391,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
 
+            //var myDeclarationQueryService = new DeclarationQueryService(dbContext);
+            //var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+            //myDeclarationQueryService.GetSingle(requestParams.DeclarationId, true, false);
+            //_MyDeclarationPM.AvailabilityDate = DateTime.Now;
+            //_MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            //using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+            //{
+            //    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+
+            //    scopeNewCRS.Complete();
+            //}
             if (declarationPaymentPM != null)
             {
                 if (declarationPaymentPM.AutomaticPayment == 1)

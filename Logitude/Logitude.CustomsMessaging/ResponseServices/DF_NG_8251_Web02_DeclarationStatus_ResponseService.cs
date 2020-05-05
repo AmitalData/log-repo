@@ -217,20 +217,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     if (availableStatus != "SMG" && declarationPM.TransportModeId=="A")
                                     {
                                         RaiseStatus(declarationPM, "", "SMG");
-                                        declarationPM.AvailabilityDate = DateTime.Now;
+                                        //declarationPM.AvailabilityDate = DateTime.Now;
                                         isAutoPayment = true;
                                     }
 
                                     else if (availableStatus != "SST" &&  declarationPM.TransportModeId == "O")
                                     {
                                         RaiseStatus(declarationPM, "", "SST");
-                                        declarationPM.AvailabilityDate = DateTime.Now;
+                                       // declarationPM.AvailabilityDate = DateTime.Now;
                                         isAutoPayment = true;
                                     }
 
                                   else   if(availableStatus=="SMG" || availableStatus == "SST")
                                     {
-                                        declarationPM.AvailabilityDate = DateTime.Now;
+                                       // declarationPM.AvailabilityDate = DateTime.Now;
                                         isAutoPayment = true;
                                     }
                                 }
@@ -578,6 +578,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
             var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
 
+            var myDeclarationQueryService = new DeclarationQueryService(dbContext);
+            var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+              var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
+            _declarationPM.AvailabilityDate = DateTime.Now;
+            _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+            {
+                myDeclarationUpdateService.Update(_declarationPM, true);
+
+                scopeNewCRS.Complete();
+            }
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
 
             if (declarationPaymentPM != null)
