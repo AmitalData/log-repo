@@ -22,10 +22,11 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
 
         public override void CreateUpScripts()
         {
-            this.AddUpSqlScript(@" ALTER TABLE Declarations MODIFY AvailabilityDate TIMESTAMP(7)  NULL ");
-
-            this.AddUpSqlScript(@" ALTER TABLE Declarations MODIFY AvailabilityDate TIMESTAMP(7) DEFAULT NULL ");
-
+            this.AddUpSqlScript(@"ALTER TABLE Declarations MODIFY AvailabilityDate NULL");
+            this.AddUpSqlScript(@"ALTER TABLE Declarations
+MODIFY AvailabilityDate TIMESTAMP(7) DEFAULT NULL");
+     
+         
 
 
         }
