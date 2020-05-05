@@ -322,7 +322,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             _DocumentsFilingPM,
                             myDocumentTypeCustomsData.CustomsDoucumentTypeCode);
                         logData = LogMessagingUtil.Instance.ToString();
-                        LogitudeSettings.HandleLogMe(crs + " " + logData, false, "CreateUCBNDCDService.OK" + _DocumentsFilingPM.Code, stopLogAt);
+                        LogitudeSettings.HandleLogMe(crs + " " + logData + _DocumentsFilingPM.Code, false, "CreateUCBNDCDService.OK" , stopLogAt);
 
                     }
                 }
@@ -331,7 +331,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             catch (Exception E)
             {
                 logData = LogMessagingUtil.Instance.ToString();
-                LogitudeSettings.HandleLogMe(E.ToString() + logData, true, "SendBondedCustomDocument" + _DocumentsFilingPM.Code, stopLogAt);
+                LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "SendBondedCustomDocument" , stopLogAt);
                 throw;
             }
             finally
