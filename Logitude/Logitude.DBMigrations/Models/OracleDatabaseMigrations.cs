@@ -722,7 +722,6 @@ namespace Logitude.DBMigrations.Models
             string tableName = FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper();
 
             bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
-            alterSizeScript += "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
 
             if (IsCLOBAlterSize(columnMigration) && IsClobArgumentProvided)
             {
@@ -731,6 +730,7 @@ namespace Logitude.DBMigrations.Models
                 string droppedColumnName = FormatNameLength("cdrop_" + columnMigration.CurrentColumn.Name, null).ToUpper();
                 string tempColumnDataType = GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size, 0, 0);
 
+                alterSizeScript += "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
                 alterSizeScript += "ALTER TABLE \"" + tableName + "\" ADD \"" + tempColumnName + "\" " + tempColumnDataType + " NULL;\n";
                 alterSizeScript += "UPDATE \"" + tableName + "\" SET \"" + tempColumnName + "\" = \"" + columnName + "\";\n";
                 if (!columnMigration.CurrentColumn.Constraints.Nullable)
@@ -739,12 +739,13 @@ namespace Logitude.DBMigrations.Models
                     alterSizeScript += "ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL;\n";
                 }
                 alterSizeScript += "ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnName + "\" TO \"" + droppedColumnName + "\";\n";
-                alterSizeScript += "ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + tempColumnName + "\" TO \"" + columnName + "\";\n";
+                alterSizeScript += "ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + tempColumnName + "\" TO \"" + columnName + "\";\n\n\n";
             }
             else
             {
                 if (!IsClobArgumentProvided)
                 {
+                    alterSizeScript += "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
                     alterSizeScript += "ALTER TABLE " + "\"" + tableName + "\"" + " ";
                     alterSizeScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " ";
                     alterSizeScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size, 0, 0);
@@ -1013,8 +1014,9 @@ namespace Logitude.DBMigrations.Models
             if (relation.ParentTable.ToLower() == CurrentTable.Name.ToLower())
             {
                 IndexDefinition relationIndex = CurrentTable.AllIndexes.Where(i => i.Columns == relation.ForeignKeyColumn).FirstOrDefault();
+                string tablePrimaryKeyColumns = string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => c.Name).ToArray());
                 IndexDefinition dxmlIndex = DXMLTable.Indexes.Where(i => (!i.Columns.Contains(",") ? FormatNameLength(i.Columns, DXMLTable.Columns.Where(c => c.Name == i.Columns).First().ShortName) : string.Join(",", i.Columns.Split(',').Select(fc => FormatNameLength(fc, DXMLTable.Columns.Where(c => c.Name == fc).First().ShortName)).ToArray())) == relation.ForeignKeyColumn).FirstOrDefault();// && FormatNameLength(r.ReferencedTable, DXMLTables.Where(t => t.Name.ToLower() == r.ReferencedTable).First().ShortName).ToLower() == relation.ReferencedTable && (!r.ReferencedColumn.Contains(",") ? FormatNameLength(r.ReferencedColumn, DXMLTables.Where(t => t.Name.ToLower() == r.ReferencedTable).First().Columns.Where(c => c.Name.ToLower() == r.ReferencedColumn).First().ShortName).ToLower() : string.Join(",", r.ReferencedColumn.Split(',').Select(rc => FormatNameLength(rc, DXMLTables.Where(t => t.Name.ToLower() == r.ReferencedTable).First().Columns.Where(c => c.Name.ToLower() == rc).First().ShortName).ToLower()).ToArray())) == relation.ReferencedColumn).FirstOrDefault();
-                if (relationIndex != null && dxmlIndex == null)
+                if (relationIndex != null && dxmlIndex == null && tablePrimaryKeyColumns != relation.ForeignKeyColumn)
                 {
                     dropIndexScript = GetDropIndexScript(relationIndex);
                 }
@@ -1136,6 +1138,15 @@ namespace Logitude.DBMigrations.Models
             {
                 string dxmlPrimaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => FormatNameLength(c.Name, c.ShortName)).ToArray());
                 if (dxmlPrimaryKeyColumns == index.Columns)
+                {
+                    createIndex = false;
+                }
+            }
+
+            if(CurrentTable != null && CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
+            {
+                string tablePrimaryKeyColumns = string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => c.Name).ToArray());
+                if (tablePrimaryKeyColumns == index.Columns)
                 {
                     createIndex = false;
                 }

@@ -48,7 +48,7 @@
   <Column
     Name="CustomsMetaDataCode"
     Type="nvarchar"
-    Size="-1">
+    Size="6">
     <Constraints
       Nullable="true" />
   </Column>
