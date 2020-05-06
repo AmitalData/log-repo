@@ -1127,6 +1127,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
   SetUIProperties_ValueDate() {
     this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, this.ValueDate != null ? false: true);
+
   }
     get ChequeOrPaymentRef() {
         if (this.EntityPM == null) {

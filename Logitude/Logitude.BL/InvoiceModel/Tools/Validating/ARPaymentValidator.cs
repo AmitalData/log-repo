@@ -155,6 +155,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 ValidateChequeForCashBook(entityPM);
             }
 
+            if (!IsFullAccounting(tenant) && entityPM.AccountingPaymentMethodCode != "CA" && entityPM.AccountingPaymentMethodCode != "FS" && entityPM.ValueDate == null)
+            {
+                throw new ApplicationException(rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ValueDate", tenant)));
+            }
 
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(entityPM.Tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(entityPM.Tenant);
@@ -196,27 +200,21 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
                 }
             }
-            ValidateValueDate(entityPM);
             ValidateAccountingSetting(entityPM);
             ValidateFullAccounting(entityPM.ARPaymentChequeReplicas, entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account, entityPM.Bank );
             ValidateUnUpdateFields(entityPM,entityPOCO, isNew);
         }
 
-        private static void ValidateValueDate(ARPaymentPM entityPM)
+        private static bool IsFullAccounting(int tenant)
         {
-            int tenant = entityPM.Tenant;
-            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
-            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
-
+            var isFullAccounting = false;
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             if (tenantPOCO != null && !tenantPOCO.AccountingActivated)
             {
-                if (entityPM.AccountingPaymentMethodCode != "CA" && entityPM.AccountingPaymentMethodCode != "FS" && entityPM.ValueDate == null)
-                {
-                    throw new ApplicationException(rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ValueDate", tenant)));
-                }
+                isFullAccounting = true;
             }
+            return isFullAccounting;
         }
 
         private static void ValidateUnUpdateFields(ARPaymentPM entityPM, ARPayment entityPOCO, bool isNew)
