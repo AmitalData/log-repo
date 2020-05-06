@@ -500,6 +500,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountEnglishName = acc.EnglishName,
                          AccountLocalName = acc.LocalName,
                          AccountCurrencyCode = acc.ReconcileMethodCode == "0" ? tenant.CurrencyCode : acc.CurrencyCode,
+                         AccountPhone = card.Phone,
+
                      }
 
                  );
@@ -598,6 +600,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                       AccountDisplayNumber = account.AccountDisplayNumber,
                                                       AccountCurrencyCode = account.AccountCurrencyCode,
                                                       AccountTermName = account.AccountTermName,
+
                                                       CreditLimitAmount = account.CreditLimitAmount,
                                                       CreditStatusAmount_AsIs = account.CreditStatusAmount_AsIs,
                                                       BalanceInLocalCurrency = splitAccount!=null ? splitAccount.BalanceInLocalCurrency: account.BalanceInLocalCurrency,
@@ -1280,6 +1283,7 @@ Period	Acc	Currency	Total
          */
 
 
+        public string AccountPhone { get; set; }
 
 
         //ccountCardlist?accountCardlist.CreditLimitAmount:0>>entityList.CreditLimitAmount = entityPOCO.Customer.CreditLimitAmount;
