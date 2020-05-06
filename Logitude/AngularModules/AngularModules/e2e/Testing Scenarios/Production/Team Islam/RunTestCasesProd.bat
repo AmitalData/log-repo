@@ -10,31 +10,31 @@ cd C:\Program Files (x86)\Jenkins\workspace\2019.R3.DevOps\Logitude\AngularModul
 FOR /L %%A IN (1,1,1) DO (
 
 
- cmd /c call  npm run e2e -- --params.Env="Prod_Staging" --params.Team="islamProd" --suite=login,Reports
+ cmd /c call  npm run do-e2e -- --params.Env="Prod_Staging" --params.Team="islamProd" --suite=login,Reports
  CALL :CheckError "Run Report"
  
-cmd /c call  npm run e2e -- --params.Env="Prod_Staging" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --params.ShipParams.ShipmentEditTabs="docs" --params.Team="islamProd" --suite=login,DocOut
+cmd /c call  npm run do-e2e -- --params.Env="Prod_Staging" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --params.ShipParams.ShipmentEditTabs="docs" --params.Team="islamProd" --suite=login,DocOut
   CALL :CheckError "Print Document"
   
   
 --ShipmentView-- 
-  cmd /c call  npm run e2e -- --params.Env="Prod_Staging" --params.Team="islamProd" --suite=login,ShipmentView
+  cmd /c call  npm run do-e2e -- --params.Env="Prod_Staging" --params.Team="islamProd" --suite=login,ShipmentView
 CALL :CheckError "ShipmentView"
    
 --CompanyAddressSetting
- cmd /c call npm run e2e -- --params.Env="Prod_Staging" --params.Team="islamProd" --suite=login,CompanyAddressSetting
+ cmd /c call npm run do-e2e -- --params.Env="Prod_Staging" --params.Team="islamProd" --suite=login,CompanyAddressSetting
   CALL :CheckError "CompanyAddressSetting"
   
 --NewAgent
-  cmd /c call npm run e2e -- --params.Env="Prod_Staging" --params.Team="islamProd" --suite=login,NewAgent
+  cmd /c call npm run do-e2e -- --params.Env="Prod_Staging" --params.Team="islamProd" --suite=login,NewAgent
  CALL :CheckError "NewAgent"
    
 --NewUser--
- cmd /c call npm run e2e -- --params.Env="Prod_Staging" --params.Team="islamProd" --suite=login,NewUser
+ cmd /c call npm run do-e2e -- --params.Env="Prod_Staging" --params.Team="islamProd" --suite=login,NewUser
  CALL :CheckError "NewUser"
  
 --NewShipper--
-rem cmd /c call npm run e2e -- --params.Env="Prod_Staging" --params.Team="islam" --suite=login,NewShipper>D:\E2ETeamIslamReport\Report.log
+rem cmd /c call npm run do-e2e -- --params.Env="Prod_Staging" --params.Team="islam" --suite=login,NewShipper>D:\E2ETeamIslamReport\Report.log
 rem  CALL :CheckError "NewShipper"
  
 
