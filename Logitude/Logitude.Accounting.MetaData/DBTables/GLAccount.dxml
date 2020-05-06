@@ -175,7 +175,6 @@
   </Column>
   <Column
     Name="PreviousChartOfAccountsChangeDate"
-    ShortName="PreviousChartOfAccountsChangeD"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -348,12 +347,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="MinimumInterestInvoiceBilling"
-    Type="int">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="InterestCreditLimit"
     Type="decimal"
     Precision="18"
@@ -373,6 +366,12 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="MinimumInterestInvoiceBilling"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
