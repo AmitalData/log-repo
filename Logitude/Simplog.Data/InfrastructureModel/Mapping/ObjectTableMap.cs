@@ -40,7 +40,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DownloadToExcelFeatureCode).HasMaxLength(120).IsUnicode(false);
             this.Property(t => t.DescriptionTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.NewButtonTextCodeCode).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.SplitComponentPath).IsMaxLength().IsUnicode(true);
+            this.Property(t => t.SplitComponentPath).HasMaxLength(500).IsUnicode(true);
 
 
             //this.Property(t => t.FilterMenuComponentPath).HasMaxLength(250).IsUnicode(false);
