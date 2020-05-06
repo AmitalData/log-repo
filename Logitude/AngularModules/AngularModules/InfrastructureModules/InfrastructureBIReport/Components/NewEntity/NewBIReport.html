@@ -172,7 +172,7 @@
                         <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <ComboBox (SelectedItemChanged)="FactTableSelectionChanged($event)" [SelectedItem]="SelectdFactTableName" [ItemsSource]="FactTables"></ComboBox>
+                        <ComboBox [IsDisabled]="true" (SelectedItemChanged)="FactTableSelectionChanged($event)" [SelectedItem]="SelectdFactTableName" [ItemsSource]="FactTables"></ComboBox>
                     </td>
                 </tr>
 
