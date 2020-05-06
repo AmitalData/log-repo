@@ -469,9 +469,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true
         });
         this.columns.push({
-            FieldName: 'VatableInvoiceAmount',
+          FieldName: 'TotalInvoiceAmount',
             DataTypeCode: 'Number',
-            Display: TextCodeTranslator.Translate("TaxReportLine.F.VatableInvoiceAmount"),
+          Display: TextCodeTranslator.Translate("TaxReportLine.F.TotalInvoiceAmount"),
             Styles: { width: '100px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
