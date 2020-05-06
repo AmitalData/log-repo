@@ -37,7 +37,7 @@ namespace Logitude.HybridTest.WcfFactory
         }
         public static QuotePM GetQuotePMWithNewNumber()
         {
-            quotePM.QuoteNumber = TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "QUOT", quotePM.DirectionId, quotePM.TransportModeId);
+            quotePM.QuoteNumber = Guid.NewGuid().ToString().Substring(0, 6) + Guid.NewGuid().ToString().Substring(0, 6); //TableCounter.GetNumberWithTransaction(EnvironmentGlobalParams.MainTenant, "QUOT", quotePM.DirectionId, quotePM.TransportModeId);
             return quotePM;
         }
     }
