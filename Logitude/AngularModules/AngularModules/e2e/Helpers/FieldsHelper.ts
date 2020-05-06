@@ -36,7 +36,7 @@ export class FieldsHelper {
     }
     WaitByIdAndClick(Id: string) {
         var EC = protractor.ExpectedConditions;
-        this.ItemsPresent(Id);
+        this.ItemsPresentWithOutClick(Id);
         console.log('Item Presents in Dom');
         this.ItemsVisibility(Id);
         console.log('Item is Visible);
