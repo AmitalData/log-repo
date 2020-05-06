@@ -127,6 +127,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 else
                 {
                     var declarationPendingCode = _LogitudeScheduler.Param2;
+                    MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
                     if (String.IsNullOrWhiteSpace(declarationPendingCode))
                     {
                         throw new BusinessErrorException("Pending code is missing");
