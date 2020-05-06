@@ -178,14 +178,14 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public DateTime? InterestCalculationStartDate { get; set; }
         [Column("ActiveForInterestCreditInvoice")]
 	    public bool? ActiveForInterestCreditInvoice { get; set; }
-        [Column("MinimumInterestInvoiceBilling")]
-	    public int? MinimumInterestInvoiceBilling { get; set; }
         [Column("InterestCreditLimit")]
 	    public decimal? InterestCreditLimit { get; set; }
         [Column("NameForPrintingCheques")]
 	    public string NameForPrintingCheques { get; set; }
         [Column("Smallcashbook")]
 	    public bool Smallcashbook { get; set; }
+        [Column("MinimumInterestInvoiceBilling")]
+	    public int? MinimumInterestInvoiceBilling { get; set; }
     }
 }
 	 
