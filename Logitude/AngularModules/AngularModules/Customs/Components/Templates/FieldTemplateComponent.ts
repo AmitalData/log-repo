@@ -122,9 +122,8 @@ export class FieldTemplateComponent {
         //});
 
     }
-    OpenRemarks() {
+    OpenClassificationRemarks() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
-
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
         var windowArgs: any = {};
         var logitudeWindow = new LogitudeWindow();
@@ -143,9 +142,17 @@ export class FieldTemplateComponent {
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
                 });
         }
-
-        else {
-            if (this.Entity.IsControllerRemarks) {
+    }
+    OpenControllerRemarks() {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
+        var windowArgs: any = {};
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.ShowHeaderButtons = true;
+        logitudeWindow.Height = 525;
+        logitudeWindow.Width = 750;
+        logitudeWindow.ShowCloseButton = true;
+        if (this.Entity.IsControllerRemarks) {
                 _declarationRemarksService.GetINCorINAtatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
                     .subscribe((response: any) => {
                         windowArgs.EntityPM = response.Result;
@@ -154,9 +161,9 @@ export class FieldTemplateComponent {
                         logitudeWindow.WindowArgs = windowArgs;
                         logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
                     });
-            }
-        }
+         }
     }
+    
 
 
     DeleteAutonomyKey(value: number) {
