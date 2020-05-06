@@ -136,8 +136,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     OnCheckedAutomaticPayment(event) {
          if (event.target.checked && this.FuturePaymentDateTime != null) {
            this.AutomaticPayment = 0;
-             event.preventDefault()
-        var myMessageWindow = new MessageWindow
+             event.preventDefault();
+             var myMessageWindow = new MessageWindow();
         myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
        
     }
@@ -299,7 +299,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     public get FuturePaymentDateTime() { return this.paymentPM.FuturePaymentDateTime; }
     public set FuturePaymentDateTime(newValue: Date) {
-        this.paymentPM.FuturePaymentDateTime = newValue;
+         this.paymentPM.FuturePaymentDateTime = newValue;
     }
 
     public get AutomaticPayment() { return this.paymentPM.AutomaticPayment; }
@@ -310,25 +310,26 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     _FuturePaymentTime: Date;
     public get FuturePaymentTime() { return this._FuturePaymentTime; }
     public set FuturePaymentTime(newValue: Date) {
+             if (newValue) {
+                var date: Date = this.FuturePaymentDateTime;
+                if (this.paymentPM.FuturePaymentDateTime && typeof (this.paymentPM.FuturePaymentDateTime) == 'string') {
+                    date = this.GetDateFromString(this.paymentPM.FuturePaymentDateTime);
+                }
 
-        if (newValue) {
-            var date: Date = this.FuturePaymentDateTime;
-            if (this.paymentPM.FuturePaymentDateTime && typeof (this.paymentPM.FuturePaymentDateTime) == 'string') {
-                date = this.GetDateFromString(this.paymentPM.FuturePaymentDateTime);
+                // var date = new Date(Date.parse(this.paymentPM.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
+                //else
+                //    var date = this.GetTodaysDate();// new Date();
+                if (date = null) {
+                    var datetime = this.GetDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds());//new Date(date.getFullYear(), date.getMonth(), date.getDate(), newValue.getHours(), newValue.getMinutes(), newValue.getSeconds());
+                    this.FuturePaymentDateTime = datetime;
+                    this._FuturePaymentTime = datetime;
+                }
+
             }
-
-            // var date = new Date(Date.parse(this.paymentPM.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
-            //else
-            //    var date = this.GetTodaysDate();// new Date();
-
-            var datetime = this.GetDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds());//new Date(date.getFullYear(), date.getMonth(), date.getDate(), newValue.getHours(), newValue.getMinutes(), newValue.getSeconds());
-            this.FuturePaymentDateTime = datetime;
-            this._FuturePaymentTime = datetime;
+            else {
+                this._FuturePaymentTime = newValue;
+            
         }
-        else {
-            this._FuturePaymentTime = newValue;
-        }
-
     }
 
     private _GetCreditInternalBankId: string;
@@ -1334,16 +1335,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     FuturePaymentDateTimeOnBlur(event) {
         // WI 32593
-        this.IsFuturePaymentDateValid();
+        this.IsFuturePaymentDateValid(event);
 
 
     }
-    IsFuturePaymentDateValid() {
-        if (this.AutomaticPayment && this.FuturePaymentDateTime != null) {
+    IsFuturePaymentDateValid(event) {
+         if (this.AutomaticPayment && event!= null) {
             var myMessageWindow = new MessageWindow
             myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
             this.FuturePaymentDateTime = null;
-            return false;
+            this.paymentPM.FuturePaymentDateTime = null;
+            this.FuturePaymentTime = null;
+             return false;
         }
         if (this.FuturePaymentDateTime && !this.AutomaticPayment) {
 
@@ -1400,7 +1403,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             return;
         }
         
-        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(); // WI 32593
+        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(null); // WI 32593
         var isPaymentDateValid = this.IsPaymentDateValid();
         var isBlockTime = false;
         if (!isFuturePaymentDateValid || !isPaymentDateValid) {
@@ -1627,7 +1630,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //#endregion
 
         //#region Validate dates
-        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(); // WI 32593
+        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(null); // WI 32593
         var isPaymentDateValid = this.IsPaymentDateValid();
         if (isFuturePaymentDateValid && isPaymentDateValid) {
             this.ValidationErrorsList = [];
