@@ -28,8 +28,15 @@ namespace Logitude.HybridTest.ServicesTest
                 DocumentFilingInbox = "HybridInbox"
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(userPM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            if (serviceResponse.HasError && serviceResponse.ErrorMessage.Contains("Sorry You reached the maximum number of users!"))
+            {
+                Assert.Inconclusive("Sorry You reached the maximum number of users!");
+            }
+            else
+            {
+                Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
+                Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            }
         }
 
         [TestMethod]
@@ -55,7 +62,14 @@ namespace Logitude.HybridTest.ServicesTest
             UserPM user = (UserPM)serviceOutcome.Result;
             Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.Result);
-            Assert.AreEqual(user.EnglishName, "Hybrid User", "Get Hybrid User From Users Failed!");
+            if (user == null) 
+            {
+                Assert.Inconclusive("Sorry this user not exist!");
+            }
+            else
+            {
+                Assert.AreEqual(user.EnglishName, "Hybrid User", "Get Hybrid User From Users Failed!");
+            }
         }
     }
 }

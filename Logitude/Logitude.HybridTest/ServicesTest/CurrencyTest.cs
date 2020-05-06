@@ -30,6 +30,7 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Currency_GETLIST()
         {
+            Test_Currency_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Currency",
