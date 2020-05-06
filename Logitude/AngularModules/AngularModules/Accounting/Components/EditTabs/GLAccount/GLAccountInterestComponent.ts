@@ -125,11 +125,16 @@ export class GLAccountInterestComponent extends BaseComponent {
         confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.Areyousuredeleteline") + " ?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                //this.EntityPM.RemoveGLAccountInterestPeriod(line.EntityPM);
-                line.EntityPM.ChangeSetOp = "Delete"; //Delete
+                if(line.EntityPM.UniqueKey==null){
+                this.EntityPM.RemoveGLAccountInterestPeriod(line.EntityPM);
+                }
+                
+               line.EntityPM.ChangeSetOp = "Delete"; //Delete
+               this.GLAccountInterestPeriodsList.Remove(line);
+                
+              
                 this.EntityPM.MarkAsDirty();
-                //this.EntityPM.AddGLAccountInterestPeriod(line.EntityPM);
-                this.GLAccountInterestPeriodsList.Remove(line);
+               
             }
         });
 
