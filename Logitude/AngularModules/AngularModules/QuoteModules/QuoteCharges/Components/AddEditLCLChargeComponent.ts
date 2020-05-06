@@ -227,107 +227,111 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         }
     }
 
-    OkButtonClicked() {
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+  OkButtonClicked() {
+    var errors: string[] = [];
+    Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+    var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        this.CheckChargeTypeDuplication();
+    this.CheckChargeTypeDuplication();
 
-        if (this.IsHyprid && this.CheckChargeTypeDuplicationFlag) {
-            var quoteValidator: QuoteValidator = new QuoteValidator();
-            quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, errors);
-        }
-
-        if (this.DataContext.IsChargeBySteps) {
-            this.StepsItemsSource.Collection.forEach(priceStep => {
-
-                Validator.TryValidateObject(priceStep, this.QuotePriceObjectTableName, errors);
-
-                this.DataContext.EntityPM.QuoteChargePriceSteps.filter(d => d.Step != null && d.Step == priceStep.Step).forEach((item) => {
-                    if (item != priceStep.EntityPM) {
-                        errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
-                    }
-                });
-
-
-                var duplicates = this.StepsItemsSource.Collection.filter(d => d.Step != null && d.Step == priceStep.Step);
-                if (duplicates && duplicates.length > 1) {
-                    errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
-                }
-            });
-        }
-
-        if (this.EntityPM.ChargesGroupCode == "FRT") {
-            if (this.DataContext.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
-                errors.push("Freight Charge already added");
-            }
-        }
-
-        if (this.QuotePM.IsChargesByVAT) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.VatTypeId)) {
-
-                if (this.EntityPM.VatIsMultiPercentage) {
-                    if (!SessionLocator.AccountingSettingPM.EnableMultiPercentageVATTypes) {
-                        errors.push(VatTypesValidator.GetError());
-                    }
-                }
-
-                else {
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.VatPercentage)) {
-                        var field = TextCodeTranslator.Translate("QuoteCharge.F.VatPercentage");
-                        errors.push(msg.replace("%FieldName", field));
-                    }
-                }
-            }
-        }
-
-        var freightLineCostCurrencyId: string = "";
-        var freightLineSaleCurrencyId: string = "";
-        if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
-            var quoteCharge = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0];
-            if (quoteCharge) {
-                freightLineCostCurrencyId = quoteCharge.CostCurrencyId;
-                freightLineSaleCurrencyId = quoteCharge.SaleCurrencyId;
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.CostMeasurementCode)) {
-            if (this.EntityPM.CostMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.CostCurrencyId) && !AppTool.IsNullOrEmpty(freightLineCostCurrencyId)) {
-                if (this.EntityPM.CostCurrencyId != freightLineCostCurrencyId) {
-                    errors.push("Cost currency must be the same as the freight currency in the case of Percent of Freight");
-                }
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.SaleMeasurementCode)) {
-            if (this.EntityPM.SaleMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.SaleCurrencyId) && !AppTool.IsNullOrEmpty(freightLineSaleCurrencyId)) {
-                if (this.EntityPM.SaleCurrencyId != freightLineSaleCurrencyId) {
-                    errors.push("Sale currency must be the same as the freight currency in the case of Percent of Freight");
-                }
-            }
-        }
-
-        this.ValidationErrorsList = errors;
-
-        if (errors.length == 0) {
-            if (this.DataContext.CostMeasurementCode == "FIXD" && this.DataContext.SaleMeasurementCode == "FIXD" && this.DataContext.IsChargeBySteps) {
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Show("Steps will be erased since the UOM is fixed");
-                confirmWindow.WindowClosed.subscribe((event: any) => {
-                    if (confirmWindow.Yes) {
-                        this.DataContext.IsChargeBySteps = false;
-                        this.FinishOkButton();
-                    }
-                });
-            }
-
-            else {
-                this.FinishOkButton();
-            }
-        }
+    if (this.IsHyprid && this.CheckChargeTypeDuplicationFlag) {
+      var quoteValidator: QuoteValidator = new QuoteValidator();
+      quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, errors);
     }
+
+    if (this.DataContext.IsChargeBySteps) {
+      this.StepsItemsSource.Collection.forEach(priceStep => {
+
+        Validator.TryValidateObject(priceStep, this.QuotePriceObjectTableName, errors);
+
+        if (AppTool.IsNullOrEmpty(priceStep.SaleUnitPrice)) {
+          errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("QuotePriceSteps.F.SaleUnitPrice")));
+        }
+
+        this.DataContext.EntityPM.QuoteChargePriceSteps.filter(d => d.Step != null && d.Step == priceStep.Step).forEach((item) => {
+          if (item != priceStep.EntityPM) {
+            errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
+          }
+        });
+
+
+        var duplicates = this.StepsItemsSource.Collection.filter(d => d.Step != null && d.Step == priceStep.Step);
+        if (duplicates && duplicates.length > 1) {
+          errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
+        }
+      });
+    }
+
+    if (this.EntityPM.ChargesGroupCode == "FRT") {
+      if (this.DataContext.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
+        errors.push("Freight Charge already added");
+      }
+    }
+
+    if (this.QuotePM.IsChargesByVAT) {
+      if (!AppTool.IsNullOrEmpty(this.EntityPM.VatTypeId)) {
+
+        if (this.EntityPM.VatIsMultiPercentage) {
+          if (!SessionLocator.AccountingSettingPM.EnableMultiPercentageVATTypes) {
+            errors.push(VatTypesValidator.GetError());
+          }
+        }
+
+        else {
+          if (AppTool.IsNullOrEmpty(this.EntityPM.VatPercentage)) {
+            var field = TextCodeTranslator.Translate("QuoteCharge.F.VatPercentage");
+            errors.push(msg.replace("%FieldName", field));
+          }
+        }
+      }
+    }
+
+    var freightLineCostCurrencyId: string = "";
+    var freightLineSaleCurrencyId: string = "";
+    if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
+      var quoteCharge = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d.Id != this.EntityPM.Id)[0];
+      if (quoteCharge) {
+        freightLineCostCurrencyId = quoteCharge.CostCurrencyId;
+        freightLineSaleCurrencyId = quoteCharge.SaleCurrencyId;
+      }
+    }
+
+    if (!AppTool.IsNullOrEmpty(this.EntityPM.CostMeasurementCode)) {
+      if (this.EntityPM.CostMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.CostCurrencyId) && !AppTool.IsNullOrEmpty(freightLineCostCurrencyId)) {
+        if (this.EntityPM.CostCurrencyId != freightLineCostCurrencyId) {
+          errors.push("Cost currency must be the same as the freight currency in the case of Percent of Freight");
+        }
+      }
+    }
+
+    if (!AppTool.IsNullOrEmpty(this.EntityPM.SaleMeasurementCode)) {
+      if (this.EntityPM.SaleMeasurementCode == "PRFR" && !AppTool.IsNullOrEmpty(this.EntityPM.SaleCurrencyId) && !AppTool.IsNullOrEmpty(freightLineSaleCurrencyId)) {
+        if (this.EntityPM.SaleCurrencyId != freightLineSaleCurrencyId) {
+          errors.push("Sale currency must be the same as the freight currency in the case of Percent of Freight");
+        }
+      }
+    }
+
+    this.ValidationErrorsList = errors;
+
+    if (errors.length == 0) {
+      if (this.DataContext.CostMeasurementCode == "FIXD" && this.DataContext.SaleMeasurementCode == "FIXD" && this.DataContext.IsChargeBySteps) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Steps will be erased since the UOM is fixed");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+          if (confirmWindow.Yes) {
+            this.DataContext.IsChargeBySteps = false;
+            this.FinishOkButton();
+          }
+        });
+      }
+
+      else {
+        this.FinishOkButton();
+      }
+    }
+  }
 
     FinishOkButton() {
         this.StepsItemsSource.Collection.forEach(item => {
