@@ -1754,6 +1754,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     Width = this.GetDefultColumWidthForBIReport(item.DisplayName),
                                     DataTypeCode = item.DataTypeCode,
                                     Index = bITabularViewSettings.Columns.Count == 0 ? 0 : bITabularViewSettings.Columns.Max(a => a.Index) + 1,
+                                    FieldCode = item.Code,
                                 });
                             }
                         }
@@ -1789,6 +1790,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 IsChecked = true,
                                 Width  = GetDefultColumWidthForBIReport(item.DisplayName.Replace("[", "").Replace("]", "")),
                                 DataTypeCode = item.DataTypeCode,
+                                FieldCode = item.Code,
+
                             });
                         }
                         QueryData.BITabularViewSettings = bITabularViewSettings;
@@ -1817,6 +1820,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             IsChecked = true,
                             Width = GetDefultColumWidthForBIReport(item.DisplayName.Replace("[", "").Replace("]", "")),
                             DataTypeCode = item.DataTypeCode,
+                            FieldCode = item.Code,
+
                         });
                     }
                     QueryData.BITabularViewSettings = bITabularViewSettings;

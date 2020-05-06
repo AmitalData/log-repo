@@ -259,7 +259,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
                         });
                     }
-                    else if (columns[i].Code == "Shipment Number") {
+                    else if (columns[i].Code == "Shipment Number" || columns[i].FieldCode == "[Shipment Number]" ) {
                         if (this.isParentTenant) {
                             this.columnDefs.push({
                                 colId: columns[i].Code,
