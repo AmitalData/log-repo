@@ -125,8 +125,8 @@ namespace Logitude.Accounting.BL.DataContract
                     join j in accountingContext.Journals on a.JournalId equals j.Id
                     where (a.DocumentDate >= startDate && a.DocumentDate <= endDate)
                     && a.Tenant == Tenant &&  a.AccountId == setting.TaxWithholdingGLAccountId
-                    && j.ExternalSystem != null
-                    select a).ToList();
+                    && j.ExternalSystem != null && a.LocalAmountCredit != 0
+                   select a).ToList();
             List<string> journalIds = transactions.Select(d => d.JournalId).ToList();
             journalLines = GetJournalLinesByJournalds();
             List<string> accountsIds = transactions.Where(d=> d.OppositeAccountId != null).Select(d => d.OppositeAccountId ).ToList(); 
@@ -326,7 +326,7 @@ namespace Logitude.Accounting.BL.DataContract
             {
                 List<JournalLine> selectedJournalLines = journalLines.Where(d => d.JournalId == transaction.JournalId && d.ActionCode == "2" && d.Reference1 == transaction.Reference1).ToList();
                 List<string> debitAccountIds = selectedJournalLines.Select(d => d.DebitAccountId).ToList();
-                GLAccountList gLAccount = transactionsGLAccounts.Where(d => d.ChartOfAccountsTypeCode != "5" && debitAccountIds.Contains(d.Id) && d.Id != setting.TaxWithholdingGLAccountId).FirstOrDefault();
+                GLAccountList gLAccount = transactionsGLAccounts.Where(d => d.ChartOfAccountsTypeCode != "5" && debitAccountIds.Contains(d.Id) && d.Id != setting.TaxWithholdingGLAccountId && !d.ExcludeFromDeductionReport).FirstOrDefault();
                 if (gLAccount != null)
                 {
                     vendorId= gLAccount.Id;// vendors.Where(d => d.GLAccountId == gLAccount.Id).FirstOrDefault();
