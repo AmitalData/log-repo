@@ -572,7 +572,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LoggingUserId = user,
                 RequestName = "Send to check credit request",
                 ResponseName = "Get check credit Response",
-                Mode = "GetCredit",
+                Mode = "Check",
                 RequestVIA = SendRequestVIA.WebServiceBatch,
             };
             var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);

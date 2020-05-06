@@ -470,13 +470,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+
               DCAInUCB9999ReAnAnalysis_MsgMessagingService>
               ((new DCAInUCB9999ReAnAnalysis_MsgMessagingService()).MainInterfaceCode);
 
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-               DCAInUCSBondedDocument_MessagingServoce>
-               ((new DCAInUCSBondedDocument_MessagingServoce()).MainInterfaceCode);
+
+               DCAInUCSBondedDocument_MessagingService>
+               ((new DCAInUCSBondedDocument_MessagingService()).MainInterfaceCode);
+
 
 
         }

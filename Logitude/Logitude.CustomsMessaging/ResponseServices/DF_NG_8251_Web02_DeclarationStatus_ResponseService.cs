@@ -590,6 +590,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 scopeNewCRS.Complete();
             }
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
+            
 
             if (declarationPaymentPM != null)
             {
@@ -765,7 +766,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LoggingUserId = user,
                 RequestName = "Send to check credit request",
                 ResponseName = "Get check credit Response",
-                Mode = "GetCredit",
+                Mode = "Check",
                 RequestVIA = SendRequestVIA.WebServiceBatch,
             };
             var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);
