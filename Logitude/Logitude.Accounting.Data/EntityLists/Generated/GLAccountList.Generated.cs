@@ -207,13 +207,13 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public bool? ActiveForInterestCreditInvoice  { get; set; }
        [DataMember]
-       public int? MinimumInterestInvoiceBilling  { get; set; }
-       [DataMember]
        public decimal? InterestCreditLimit  { get; set; }
        [DataMember]
        public string NameForPrintingCheques  { get; set; }
        [DataMember]
        public bool Smallcashbook  { get; set; }
+       [DataMember]
+       public int? MinimumInterestInvoiceBilling  { get; set; }
    }
 
 }

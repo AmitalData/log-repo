@@ -3889,8 +3889,9 @@ User/Pass",
 
                         if (bytesData != null)
                         {
+                            string extension = image.Extension.TrimStart('.');
                             string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
-                            result = this.UploadImage(image.Name, bytesData, image.Length, image.Length, blockIdlist, 0, tenant, image.Extension, airline.Id, null);
+                            result = this.UploadImage(image.Name, bytesData, image.Length, image.Length, blockIdlist, 0, tenant, extension, airline.Id, null);
 
                             if (!string.IsNullOrEmpty(result))
                             {
@@ -3953,8 +3954,9 @@ User/Pass",
 
                         if (bytesData != null)
                         {
+                            string extension = image.Extension.TrimStart('.');
                             string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
-                            result = this.UploadImage(image.Name, bytesData, image.Length, image.Length, blockIdlist, 0, airline.Tenant, image.Extension, airline.Id, null);
+                            result = this.UploadImage(image.Name, bytesData, image.Length, image.Length, blockIdlist, 0, airline.Tenant, extension, airline.Id, null);
 
                             if (!string.IsNullOrEmpty(result))
                             {

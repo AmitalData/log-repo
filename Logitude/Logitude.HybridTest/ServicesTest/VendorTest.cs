@@ -16,6 +16,8 @@ namespace Logitude.HybridTest.ServicesTest
                 Code = HybridData.VendorCodeHVEN,
                 EnglishName = "Hybrid Vendor",
                 LocalName = "Hybrid Vendor",
+                ComputedLocalName = "Hybrid Vendor",
+                //CardPMId = HybridData.AgentCodeHAgent,
                 CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "VD",
                 Tenant = EnvironmentGlobalParams.MainTenant,

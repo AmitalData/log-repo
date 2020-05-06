@@ -57,6 +57,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     ShowCancelled: boolean = false;
     RequestedCount: number = 0;
     SignRequiredCount: number = 0;
+    StopLoading: boolean = false;
     @Output() ArchiveDone = new EventEmitter();
     DataContext: LogBoxDocumentsComponent = this;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
@@ -107,17 +108,18 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         }
         this.ShipmentSelectedEvent.subscribe((res) => {
             //this.CurrentSession.StartBusyIndicator("Loading ...");//
-            if (res == null)
-            {
-                this.externalDocs = [];
-                this.SignReqDocs = [];
-                this.externalRequestedDocs = [];
-                this.AllHeader = "By Category (0)";
-                this.RequestedCount = 0;
-                this.SignRequiredCount = 0;
-                return;
-            }
-             
+          this.StopLoading = false;
+          if (res == null) {
+            this.StopLoading = true;
+            this.externalDocs = [];
+            this.SignReqDocs = [];
+            this.externalRequestedDocs = [];
+            this.AllHeader = "By Category (0)";
+            this.RequestedCount = 0;
+            this.SignRequiredCount = 0;
+            return;
+          }
+          
             //this.DisableAddDocumentButton = true;
             this.StartBusyIndicator("Loading ...");
             var div = document.getElementById("DocsTab");
@@ -127,36 +129,41 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             //    clearTimeout(this.RefreshTimer);
             //}
             //this.RefreshTimer = setInterval(() => this.ReloadDocuments(false), 5000);//setTimeout(() => this.CheckIfSignDone(EntityPm.Id), 2000);
-            this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myResult:any) => {
-                if (!myResult.HasError) {
-                    this.ShipmentPM = myResult.Result;
-                    this.ShipmentTypeId = myResult.Result.ShipmentTypeId;
-                    this.DocsSentToAgent = myResult.Result.DocsSentToAgent;
-                    this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
-                        if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
-                            this.DisableAddDocumentButton = true;
-                        }
-                        else {
-                            this.DisableAddDocumentButton = false;
-                        }
-                        this.ReloadDocuments(true);
-                    });
-                    this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe((theResult:any) => {
-                        if (!theResult.HasError) {
-                            this.AllowSendingDocsToAgent = theResult.Result.AllowSendingDocsToAgent;
-                        }
-                    });
-                    //this._HybridPartnerPMService.get(myResult.Result.ForwardingPartnerId).subscribe(theResult => {
-                    //    if (!theResult.HasError) {
-                    //        this.ForwardingPartner = theResult.Result;
-                    //    }
-                    //});
+            this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myResult: any) => {
+              if (!myResult.HasError) {
+                if (this.StopLoading) {
+                  this.StopBusyIndicator();
                 }
                 else {
+                  this.ShipmentPM = myResult.Result;
+                  this.ShipmentTypeId = myResult.Result.ShipmentTypeId;
+                  this.DocsSentToAgent = myResult.Result.DocsSentToAgent;
+                  this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
+                    if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
+                      this.DisableAddDocumentButton = true;
+                    }
+                    else {
+                      this.DisableAddDocumentButton = false;
+                    }
                     this.ReloadDocuments(true);
+                  });
+                  this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe((theResult: any) => {
+                    if (!theResult.HasError) {
+                      this.AllowSendingDocsToAgent = theResult.Result.AllowSendingDocsToAgent;
+                    }
+                  });
+                  //this._HybridPartnerPMService.get(myResult.Result.ForwardingPartnerId).subscribe(theResult => {
+                  //    if (!theResult.HasError) {
+                  //        this.ForwardingPartner = theResult.Result;
+                  //    }
+                  //});
                 }
+              }
+              else {
+                this.ReloadDocuments(true);
+              }
             });
-            
+          
 
             //this.ReloadDocuments(true);
 

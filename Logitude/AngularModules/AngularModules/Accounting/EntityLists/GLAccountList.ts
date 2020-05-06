@@ -104,10 +104,10 @@ export class GLAccountList {
 	ActiveForInterest: boolean;
 	InterestCalculationStartDate: Date;
 	ActiveForInterestCreditInvoice: boolean;
-	MinimumInterestInvoiceBilling: number;
 	InterestCreditLimit: number;
 	NameForPrintingCheques: string;
 	Smallcashbook: boolean;
+	MinimumInterestInvoiceBilling: number;
 	
 }
  
