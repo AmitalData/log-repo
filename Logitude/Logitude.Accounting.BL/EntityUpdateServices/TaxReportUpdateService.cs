@@ -40,13 +40,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
             entityPM.TaxReportMonth = new DateTime(entityPM.TaxReportMonth.Year, entityPM.TaxReportMonth.Month, 1);
             DateTime date = entityPM.TaxReportMonth.AddMonths(1);
-          
-        
+            FullAccountingSettingPM setting = GetFullAccountingSetting(entityPM.Tenant);
             entityPM.LastUpdateDate = new DateTime(date.Year, date.Month, 15);
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-            entityPM.VatNumber = tenantPM.VatNumber;
+            entityPM.VatNumber = setting.ConsolidationVAT != null ? setting.ConsolidationVAT : tenantPM.VatNumber;
             entityPM.TaxableOutputsWithDiffPercent = 0;
             entityPM.NeedsRebulid = true;
             entityPM.StatusCode = "P";
@@ -55,10 +54,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.IsNew = true;
             Validate(entityPM);
         }
-
+        private FullAccountingSettingPM GetFullAccountingSetting(int tenant)
+        {
+            FullAccountingSettingQueryService settingQueryService = new FullAccountingSettingQueryService(tenant);
+            return settingQueryService.GetSingleFullAccountingSetting(tenant);
+        }
         //protected override void UpdateComposition(TaxReportPM entityPM)
         //{
-           
+
         //    var taxReportLineUpdateService = new TaxReportLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
         //    taxReportLineUpdateService.UpdateMulti(entityPM.TaxReportLines, entityPM.DeletedTaxReportLines, entityPM, true);
 
