@@ -194,68 +194,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     case "customs":
                         {
-                            GlobalModelUpdateClass modelUpdateClass = new GlobalModelUpdateClass();
-                            modelUpdateClass.LoadObjectTablesMetadata(context,false);
 
-                            UpdateInfrasturtureAndLogModules(context,false);
-
-                            UpdateCRMModule(context,false);
-                            MetaDataUpdateClass metaDataUpdateClass = new MetaDataUpdateClass();
-                            UpdateAllOldModules(metaDataUpdateClass,context);
-
-                            CustomsUpdateClass customUpdate = new CustomsUpdateClass();//generated
-                            customUpdate.LoadObjectTablesMetadata(context,true);//generated
-
-
-                            ForCourier();
-
-
-                            CustomUpdate updateClass = new CustomUpdate();
-
-                            updateClass.UpgradeClosedTablesForTenantZero();
-                            updateClass.LoadUpdateTenantZero(context);
-                            //updateClass.LoadOtherFields(context);
-                            //updateClass.loadQueries();
-                            //updateClass.loadScreens();
-                            //updateClass.LoadObjectTableTabs();
-                            updateClass.LoadObjectTableHelperControls();
-                            updateClass.LoadMenustables();
-                           // updateClass.LoadEventTypes();
-                            updateClass.FillTransportModeTable();
-                            updateClass.FillTapagTypeTable();
-
-
-                            updateClass.FillCustomsRequestsSheetStatusTable();
-                            updateClass.FillCustomsNotificationDefinitions();
-
-                            updateClass.FillCustomsInterfaceSendOptions();
-                            updateClass.FillSchedulerProcedure();
-                            updateClass.FillCustomsInterfaceManagements();
-
-
-                            updateClass.FillAssigneeNotificationTypeTable();
-                            updateClass.FillLastReleaseFromWarehouseTable();
-                            updateClass.FillVehicleStatusTable();
-                            updateClass.FillVehicleSafetyAccessoryInstallationTypeTable();
-                            updateClass.FillCustomerIdentifyType();
-                            updateClass.FillCustomsVerificationStatusTypes();
-                            updateClass.FillSignatureTypeTable();
-                            updateClass.FillCertificateStatus();
-                            updateClass.FillAccumalationStateTable();
-                            updateClass.FillStorageStatus();
-                            updateClass.FillMAWBTypeTable();
-                            updateClass.FillCourierCustomStatus();
-                            updateClass.FillManifestCargoStatusTable();
-                            updateClass.FillAcceptanceStatus();
-                            updateClass.FillMamanStatus();
-                            updateClass.FillPendingErrorPlaceTable();
-                            //updateClass.FillCourierDeclarationStatus();
-                            //updateClass.FillCourierManifestStatus();
-                            //updateClass.FillCourierPaymentStatus();
-                            updateClass.FillMamanSpecialActionTable();
-                            updateClass.FillMamanSpecialActionStatusTable();
-                            updateClass.FillCourierPendingReasonTable();
-
+                            UpdateCustomsRelatedModels(context);
 
                             break;
                         }
@@ -574,6 +514,90 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 UpdateTenantData(tenant);
             }
+        }
+
+        private static void UpdateCustomsRelatedModels(IWebFreightContext context)
+        {
+            InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+            SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
+            CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+            GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+            InfrastructureUpdateClass businessInfraUpdateClass = new InfrastructureUpdateClass();
+            CustomsUpdateClass customUpdate = new CustomsUpdateClass();
+            if (runOldUpdateCode)
+            {
+
+                inframodelUpdateClass.LoadObjectsTenantZero(context);
+                systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
+                commonmodelUpdateClass.LoadObjectsTenantZero(context);
+                globalmodelUpdateClass.LoadObjectsTenantZero(context);
+                businessInfraUpdateClass.LoadObjectsTenantZero(context);
+                customUpdate.LoadObjectsTenantZero(context);
+            }
+            else
+            {
+                inframodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
+                systemLogsModelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",MasterModelUpdateClass");
+                commonmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",CommonDataModelUpdateClass");
+                globalmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",GlobalModelUpdateClass");
+                businessInfraUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",InfrastructureUpdateClass");
+                customUpdate.LoadObjectTablesMetadata(context, true);
+                performanceTimerLogger.LogMessage("Generated" + ",CustomsUpdateClass");
+            }
+
+            ForCourier();
+
+
+            CustomUpdate updateClass = new CustomUpdate();
+
+            updateClass.UpgradeClosedTablesForTenantZero();
+            updateClass.LoadUpdateTenantZero(context);
+            //updateClass.LoadOtherFields(context);
+            //updateClass.loadQueries();
+            //updateClass.loadScreens();
+            //updateClass.LoadObjectTableTabs();
+            updateClass.LoadObjectTableHelperControls();
+            updateClass.LoadMenustables();
+            // updateClass.LoadEventTypes();
+            updateClass.FillTransportModeTable();
+            updateClass.FillTapagTypeTable();
+
+
+            updateClass.FillCustomsRequestsSheetStatusTable();
+            updateClass.FillCustomsNotificationDefinitions();
+
+            updateClass.FillCustomsInterfaceSendOptions();
+            updateClass.FillSchedulerProcedure();
+            updateClass.FillCustomsInterfaceManagements();
+
+
+            updateClass.FillAssigneeNotificationTypeTable();
+            updateClass.FillLastReleaseFromWarehouseTable();
+            updateClass.FillVehicleStatusTable();
+            updateClass.FillVehicleSafetyAccessoryInstallationTypeTable();
+            updateClass.FillCustomerIdentifyType();
+            updateClass.FillCustomsVerificationStatusTypes();
+            updateClass.FillSignatureTypeTable();
+            updateClass.FillCertificateStatus();
+            updateClass.FillAccumalationStateTable();
+            updateClass.FillStorageStatus();
+            updateClass.FillMAWBTypeTable();
+            updateClass.FillCourierCustomStatus();
+            updateClass.FillManifestCargoStatusTable();
+            updateClass.FillAcceptanceStatus();
+            updateClass.FillMamanStatus();
+            updateClass.FillPendingErrorPlaceTable();
+            //updateClass.FillCourierDeclarationStatus();
+            //updateClass.FillCourierManifestStatus();
+            //updateClass.FillCourierPaymentStatus();
+            updateClass.FillMamanSpecialActionTable();
+            updateClass.FillMamanSpecialActionStatusTable();
+            updateClass.FillCourierPendingReasonTable();
         }
 
         private static void UpdateTenantData(int tenant)
