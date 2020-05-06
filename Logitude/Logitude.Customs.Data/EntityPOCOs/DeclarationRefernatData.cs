@@ -31,9 +31,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	      
         public virtual CustomsVendor CustomsVendor { get; set; }
         [Column("ArrivalDate")]
-	    public DateTime ArrivalDate { get; set; }
+	    public DateTime? ArrivalDate { get; set; }
         [Column("EstimatedArrivalDate")]
-	    public DateTime EstimatedArrivalDate { get; set; }
+	    public DateTime? EstimatedArrivalDate { get; set; }
         [Column("Weight")]
 	    public decimal? Weight { get; set; }
         [Column("ClassificationStatus")]

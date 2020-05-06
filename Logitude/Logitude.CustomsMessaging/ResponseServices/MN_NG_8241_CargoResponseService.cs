@@ -416,7 +416,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             EventDateTime = DateTime.Now,
                             Entname = "CFIFILEM",
                             PrimaryNum = declarationPM.CustomFileNo,
-                            EventRemarks = "",
+                            EventRemarks = "לא אושר בבקרת אשראי",
                         };
                         LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
                         var myOpenUnifreighTask = new UnifreightEventTaskService();
@@ -467,7 +467,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 EventDateTime = DateTime.Now,
                                 Entname = "CFIFILEM",
                                 PrimaryNum = declarationPM.CustomFileNo,
-                                EventRemarks = "",
+                                EventRemarks = "כשלון בשליחת הגשת תשלום",
                             };
                             LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
                             var myOpenUnifreighTask = new UnifreightEventTaskService();
