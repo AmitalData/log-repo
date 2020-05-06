@@ -14,6 +14,7 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_User_UPSERT()
         {
+            Assert.Inconclusive("Upsert!");
             UserPM userPM = new UserPM()
             {
                 Code = HybridData.UserCodeHU,

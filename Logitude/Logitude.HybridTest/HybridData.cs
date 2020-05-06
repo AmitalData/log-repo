@@ -10,7 +10,7 @@ namespace Logitude.HybridTest
     {
         #region ShipmentVars
         //Currency
-        public const string CurrencyCodeEUR = "HCR";
+        public const string CurrencyCodeEUR = "EUR";
         //Incoterm
         public const string IncotermCodeCIF = "CIF";
         public const string IncotermCodeLDE = "LDE";

@@ -185,7 +185,7 @@ namespace Logitude.HybridTest.ServicesTest
 
                 Shipment_DeleteShipmentEvent(shipmentPM.ShipmentNumber, customClearedExternalId);
                 shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
-                if (shipment != null)
+                //if (shipment != null)
                     //Assert.AreEqual(shipment.StatusName, "Arrived", "Status Must Be Arrived!");
             }
         }
