@@ -33,7 +33,10 @@ namespace Logitude.HybridTest
                     if (serviceOutcome.Result is Response)
                         serviceOutcome.Response = (Response)serviceOutcome.Result;
                     else
-                        serviceOutcome.Response = (Response)serviceParameters[serviceProperties.ServiceResponseIndex];
+                    {
+                        if(serviceProperties.ServiceResponseIndex != -1)
+                            serviceOutcome.Response = (Response)serviceParameters[serviceProperties.ServiceResponseIndex];
+                    }
                     return serviceOutcome;
                 }
             }
