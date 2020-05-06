@@ -106,10 +106,10 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     private SetDatesDefaultValues() {
         if (this.AccountingDate == null)
             this.AccountingDate = new Date();
-        if (this.DocumentDate == null)
-            this.DocumentDate = new Date();
-        if (this.DueDate == null)
-            this.DueDate = new Date();
+        //if (this.DocumentDate == null)
+        //    this.DocumentDate = new Date();
+        //if (this.DueDate == null)
+        //    this.DueDate = new Date();
 
     }
     public CurrentEditComponentId: string;
