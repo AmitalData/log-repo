@@ -23,7 +23,7 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
         public override void CreateUpScripts()
         {
             this.AddUpSqlScript(@"ALTER TABLE Declarations DROP COLUMN AvailabilityDate");
-            this.AddUpSqlScript(@"ALTER TABLE CustomsAutonomyKeywords ADD  AvailabilityDate TIMESTAMP(7) NULL");
+            this.AddUpSqlScript(@"ALTER TABLE Declarations ADD  AvailabilityDate TIMESTAMP(7) NULL");
 
         }
     }
