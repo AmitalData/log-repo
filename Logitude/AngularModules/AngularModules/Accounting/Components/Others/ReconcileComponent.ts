@@ -604,17 +604,17 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         if (this.SelectedLines.Length > 0) {
 
             // 1- prepare transactions
-            var transactionsList = [];
+            var transactionsIds = [];
             this.SelectedLines.Collection.forEach((lineModel: LineModel) => {
                 var transaction = lineModel.LedgerTransactionPM;
                 //transaction.Mark = !transaction.Mark; // the service will take this misson
 
-                transactionsList.push(transaction);
+                transactionsIds.push(transaction.Id);
             });
 
             // 2- call the service
             this.CurrentSession.StartBusyIndicatorSaving();
-            this._ReconciliationExtendedPMService.delsertDraftLedgerTransaction(transactionsList).subscribe((serviceResponse: ServiceResponse) => {
+            this._ReconciliationExtendedPMService.delsertDraftLedgerTransaction(transactionsIds).subscribe((serviceResponse: ServiceResponse) => {
                 console.log("_ReconciliationExtendedPMService.delsertDraftLedgerTransaction", serviceResponse);
                 this.CurrentSession.StopBusyIndicator();
 
