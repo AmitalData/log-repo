@@ -2376,6 +2376,11 @@
       <DependentUpon>202005031054228_FixReferenceLengthInTransferLine_Samar.cs</DependentUpon>
     </Compile>
 
+    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs" />
+    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.Designer.cs">
+      <DependentUpon>202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs</DependentUpon>
+    </Compile>
+
 
     <Compile Include="Migrations\202005031303293_TaxReportLineTotalInvoiceAmountMigration.cs" />
     <Compile Include="Migrations\202005031303293_TaxReportLineTotalInvoiceAmountMigration.Designer.cs">
