@@ -5198,15 +5198,6 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;PACKAGETYSPES&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.PackageTypes&quot;"
-      FeatureDefaultText="&quot;Package Types&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
       Code="&quot;VESSELS&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.Vessels&quot;"
@@ -5558,15 +5549,6 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;General.Features.Signature&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.Signature&quot;"
-      FeatureDefaultText="&quot;Signature&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
       Code="&quot;SIGNATURESETTING&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.Signature&quot;"
@@ -5578,15 +5560,6 @@
     <Feature
       Code="&quot;CHANGEPASSWORDSETTING&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.ChangePassword&quot;"
-      FeatureDefaultText="&quot;Change Password&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;General.Features.ChangePassword&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.ChangePassword&quot;"
       FeatureDefaultText="&quot;Change Password&quot;"
       IsPackagable="true"
@@ -5881,15 +5854,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;General.Features.BusinessHour&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.BusinessHour&quot;"
-      FeatureDefaultText="&quot;Business Hours&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+    
     <Feature
       Code="&quot;BUSINESSHOUR&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -6268,15 +6233,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;CUSTOMSINTERFACESETTINGS&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CUSTOMSINTERFACESETTINGS&quot;"
-      FeatureDefaultText="&quot;Customs Interface Settings&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+    
     <Feature
       Code="&quot;SATINTERFACE&quot;"
       FeatureTypeCode="&quot;MENU&quot;"

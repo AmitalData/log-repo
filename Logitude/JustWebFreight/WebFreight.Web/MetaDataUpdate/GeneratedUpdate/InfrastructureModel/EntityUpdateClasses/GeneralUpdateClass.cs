@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "c1f9f827c9982cf4306343482245e54d";
+		public const string HashString = "600a9f0ecf4167f3d3b708f3fac751b9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -232,8 +232,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_PACKAGETYPES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKAGETYPES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.PackageTypes", NameTextCodeDefaultText = @"Package Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature GeneralFeature_PACKAGETYSPES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKAGETYSPES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.PackageTypes", NameTextCodeDefaultText = @"Package Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
 		   Feature GeneralFeature_VESSELS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VESSELS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Vessels", NameTextCodeDefaultText = @"Vessels" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_WAREHOUSES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAREHOUSES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Warehouses", NameTextCodeDefaultText = @"Warehouses" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
@@ -312,13 +310,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_General_Features_InvoiceSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.InvoiceSettings", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.InvoiceSettings", NameTextCodeDefaultText = @"Invoice Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature GeneralFeature_General_Features_Signature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.Signature", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Signature", NameTextCodeDefaultText = @"Signature" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
 		   Feature GeneralFeature_SIGNATURESETTING = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SIGNATURESETTING", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Signature", NameTextCodeDefaultText = @"Signature" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_CHANGEPASSWORDSETTING = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHANGEPASSWORDSETTING", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ChangePassword", NameTextCodeDefaultText = @"Change Password" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature GeneralFeature_General_Features_ChangePassword = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.ChangePassword", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ChangePassword", NameTextCodeDefaultText = @"Change Password" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_ADDITIONALSERVICES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDITIONALSERVICES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AdditionalServices", NameTextCodeDefaultText = @"Additional Services" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
@@ -383,8 +377,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_CUSTOMERTENANTACCESSREQUESTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERTENANTACCESSREQUESTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CustomerTenantAccessRequests", NameTextCodeDefaultText = @"Customer Tenant Access Requests" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_HYBRIDPARTNERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HYBRIDPARTNERS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.HybridPartners", NameTextCodeDefaultText = @"Hybrid Partners" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature GeneralFeature_General_Features_BusinessHour = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.BusinessHour", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.BusinessHour", NameTextCodeDefaultText = @"Business Hours" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_BUSINESSHOUR = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BUSINESSHOUR", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.BusinessHour", NameTextCodeDefaultText = @"Business Hours" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
@@ -469,8 +461,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_DROPBOX = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DROPBOX", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DropBox", NameTextCodeDefaultText = @"DropBox" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_DROPBOXTESTFILE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DROPBOXTESTFILE", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DropBoxTestFile", NameTextCodeDefaultText = @"DropBoxTestFile" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature GeneralFeature_CUSTOMSINTERFACESETTINGS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSINTERFACESETTINGS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMSINTERFACESETTINGS", NameTextCodeDefaultText = @"Customs Interface Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_SATINTERFACE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATINTERFACE", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SATInterface", NameTextCodeDefaultText = @"SAT Interface" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 

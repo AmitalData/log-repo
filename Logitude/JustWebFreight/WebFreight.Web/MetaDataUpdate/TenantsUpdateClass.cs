@@ -524,6 +524,7 @@ namespace WebFreight.Web.MetaDataUpdate
             GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
             InfrastructureUpdateClass businessInfraUpdateClass = new InfrastructureUpdateClass();
             CustomsUpdateClass customUpdate = new CustomsUpdateClass();
+            MetaDataUpdateClass metaDataUpdateClass = new MetaDataUpdateClass();
             if (runOldUpdateCode)
             {
 
@@ -546,8 +547,10 @@ namespace WebFreight.Web.MetaDataUpdate
                 performanceTimerLogger.LogMessage("Generated" + ",GlobalModelUpdateClass");
                 businessInfraUpdateClass.LoadObjectTablesMetadata(context, false);
                 performanceTimerLogger.LogMessage("Generated" + ",InfrastructureUpdateClass");
+                metaDataUpdateClass.LoadUpdateTenantZero(context, false);
                 customUpdate.LoadObjectTablesMetadata(context, true);
                 performanceTimerLogger.LogMessage("Generated" + ",CustomsUpdateClass");
+
             }
 
             ForCourier();

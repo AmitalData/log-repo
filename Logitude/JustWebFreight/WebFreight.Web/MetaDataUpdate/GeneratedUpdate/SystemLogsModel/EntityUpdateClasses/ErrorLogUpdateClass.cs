@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 {
    public class ErrorLogUpdateClass
    {  		
-		public const string HashString = "7a76dba2a6f52e5fd570816528eb3875";
+		public const string HashString = "85675d1f4a41c5dab8254082fc7e6337";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -901,13 +901,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 		   Feature ErrorLogFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLog.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ErrorLogFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLog.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ErrorLogFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLog.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ErrorLogFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLog.Features.PackageFeature", NameTextCodeDefaultText = "ErrorLog Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ErrorLogFeature_ALLERRORLOGS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLERRORLOGS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLogObjectTable.Features.AllErrorLog", NameTextCodeDefaultText = @"All Error Log" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   Feature ErrorLogFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ErrorLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ErrorLog.Features.PackageFeature", NameTextCodeDefaultText = "ErrorLog Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 

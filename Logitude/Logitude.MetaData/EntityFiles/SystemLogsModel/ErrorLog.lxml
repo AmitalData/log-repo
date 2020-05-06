@@ -1112,14 +1112,6 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature
-      Code="&quot;ALLERRORLOGS&quot;"
-      FeatureTypeCode="&quot;QUER&quot;"
-      IsPackagable="true"
-      IsBusinessUnitEnabled="false"
-      IsOld="false"
-      IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;ErrorLogObjectTable.Features.AllErrorLog&quot;"
-      FeatureDefaultText="&quot;All Error Log&quot;" />
+   
   </AdditionalFeatures>
 </entity>
