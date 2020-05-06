@@ -1464,6 +1464,30 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                     #endregion
+
+                    #region Warehouse Entry
+                    Counter counter_WE = counterRepository.GetCounterByCode("WAEC", entityId);
+                    if (counter_WE != null)
+                    {
+                        List<CounterStat> counterStat_WE = counterStatRep.GetCounterCounterStats(counter_WE.Id, entityId);
+                        foreach (CounterStat item in counterStat_WE)
+                        {
+                            counterStatRep.Remove(item);
+                        }
+                    }
+                    #endregion
+
+                    #region Warehouse Release
+                    Counter counter_WR = counterRepository.GetCounterByCode("WARC", entityId);
+                    if (counter_WR != null)
+                    {
+                        List<CounterStat> counterStat_WR = counterStatRep.GetCounterCounterStats(counter_WR.Id, entityId);
+                        foreach (CounterStat item in counterStat_WR)
+                        {
+                            counterStatRep.Remove(item);
+                        }
+                    }
+                    #endregion
                 }
 
                 else if (code == "P")
