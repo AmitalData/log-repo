@@ -39,7 +39,7 @@ using Exception = System.Exception;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
-    public class DCAInUCSBondedDocument_MessagingServoce
+    public class DCAInUCSBondedDocument_MessagingService
         : MessagingServiceBase<
         GenericRequestParams,
         INF_MSG_GenericResponseData,
@@ -315,7 +315,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         "UCBNDCD.CRS", true)
                         )
                     {
-                        var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCSBondedDocument_MessagingServoce();
+                        var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCSBondedDocument_MessagingService();
                         string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(
                             _DocumentsFilingPM.Tenant, 
                             loggingUserId,
@@ -387,13 +387,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 Debug.WriteLine("_DocumentsFilingPM == null");
                 return false;
             }
-            if (!_DocumentsFilingPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeCode == "ENDOC"))
-            {
+            
+            //if (!_DocumentsFilingPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeCode == "ENDOC"))
+            //{
 
-                LogitudeSettings.HandleLogMe(" refernce where DocumentsMetaDataTypeCode is ENDOC not found "+_DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
-                Debug.WriteLine("refernce where DocumentsMetaDataTypeCode is ENDOC not found ");
-                return false;
-            }
+            //    LogitudeSettings.HandleLogMe(" refernce where DocumentsMetaDataTypeCode is ENDOC not found "+_DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
+            //    Debug.WriteLine("refernce where DocumentsMetaDataTypeCode is ENDOC not found ");
+            //    return false;
+            //}
             return true;
         }
 
