@@ -112,12 +112,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime arrivalDate ;
+	  private DateTime? arrivalDate ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime ArrivalDate  
+       public DateTime? ArrivalDate  
 	   {
 	    
 	     get
@@ -128,19 +128,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(arrivalDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ArrivalDate",OldValue=arrivalDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ArrivalDate",OldValue=arrivalDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   arrivalDate=value;
 		   }
 			
 		 }
 	   }
-	  private DateTime estimatedArrivalDate ;
+	  private DateTime? estimatedArrivalDate ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime EstimatedArrivalDate  
+       public DateTime? EstimatedArrivalDate  
 	   {
 	    
 	     get
@@ -151,7 +151,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(estimatedArrivalDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EstimatedArrivalDate",OldValue=estimatedArrivalDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EstimatedArrivalDate",OldValue=estimatedArrivalDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   estimatedArrivalDate=value;
 		   }

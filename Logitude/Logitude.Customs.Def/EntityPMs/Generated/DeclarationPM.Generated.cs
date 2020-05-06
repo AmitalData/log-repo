@@ -3789,12 +3789,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime availabilityDate ;
+	  private DateTime? availabilityDate ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime AvailabilityDate  
+       public DateTime? AvailabilityDate  
 	   {
 	    
 	     get
@@ -3805,7 +3805,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(availabilityDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AvailabilityDate",OldValue=availabilityDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AvailabilityDate",OldValue=availabilityDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   availabilityDate=value;
 		   }

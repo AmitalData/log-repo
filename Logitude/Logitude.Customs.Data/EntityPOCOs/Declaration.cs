@@ -323,7 +323,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("IsValidTicketsDiamond")]
 	    public bool IsValidTicketsDiamond { get; set; }
         [Column("AvailabilityDate")]
-	    public DateTime AvailabilityDate { get; set; }
+	    public DateTime? AvailabilityDate { get; set; }
     }
 }
 	 

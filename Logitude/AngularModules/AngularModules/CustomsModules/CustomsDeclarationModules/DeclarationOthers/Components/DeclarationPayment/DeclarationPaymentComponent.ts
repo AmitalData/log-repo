@@ -1345,7 +1345,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.FuturePaymentDateTime = null;
             return false;
         }
-        if (this.FuturePaymentDateTime) {
+        if (this.FuturePaymentDateTime && !this.AutomaticPayment) {
 
             var newDate = new Date();
             var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0);
