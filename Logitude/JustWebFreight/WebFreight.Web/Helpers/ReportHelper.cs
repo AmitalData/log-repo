@@ -100,7 +100,7 @@ namespace WebFreight.Web.Helpers
                                     FeatureId = report.FeatureId,
                                     FeatureUniqeCode = report.FeatureUniqeCode,
                                     AvailableForScheduling = report.AvailableForScheduling,
-                                    ExcelOnly = report.ExcelOnly,
+                                    DisablePreview = report.DisablePreview,
                                     
                                 };
                                 reportRepository.Add(newReport);
@@ -1936,7 +1936,7 @@ namespace WebFreight.Web.Helpers
         {
             SaveStimulReportUsingFileStreamByFileType(reportFliter, report, "mdc");
 
-            if (!reportFliter.ExcelOnly)
+            if (!reportFliter.DisablePreview)
             {
                 SaveStimulReportUsingFileStreamByFileType(reportFliter, report,"tiff");
             }
@@ -2179,7 +2179,7 @@ namespace WebFreight.Web.Helpers
                             LocalName = report.LocalName,
                             FeatureUniqeCode = report.FeatureUniqeCode,
                             AvailableForScheduling = report.AvailableForScheduling,
-                            ExcelOnly = report.ExcelOnly,
+                            DisablePreview = report.DisablePreview,
                             
                         };
                         reportRepository.Add(newReport);
@@ -2290,7 +2290,7 @@ namespace WebFreight.Web.Helpers
                 StatusCode = "W",
                 ReportId = reportFliter.ReportId,
                 ReportTemplateId = reportFliter.DefaultTemplateId,
-                ExcelOnly = reportFliter.ExcelOnly,
+                DisablePreview = reportFliter.DisablePreview,
 
             };
 
