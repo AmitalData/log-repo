@@ -10,7 +10,7 @@ SELECT        Id, Tenant, InvoiceNumber, GETDATE() AS CurrentDate, DueDate, CONV
                          THEN 3 ELSE (CASE WHEN (((GETDATE()) - DueDate) < 90) THEN 2 ELSE (CASE WHEN (((GETDATE()) - DueDate) > 90) THEN 1 ELSE '' END) END) END) END) 
                          ELSE 5 END) AS IndexOrder, StatusCode,BranchId
 FROM            dbo.APInvoices
-where IsClosed=0 
+where IsClosed=0
     ]]>
   </SqlScript>
   <OracleScript>
