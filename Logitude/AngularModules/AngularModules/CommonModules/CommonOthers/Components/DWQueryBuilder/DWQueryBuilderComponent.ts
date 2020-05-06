@@ -112,6 +112,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
     constructor(private CD: ChangeDetectorRef) {
         super();
 
+        this.InitializeService();
+
         this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("Master").subscribe((response: any) => {
                 this._entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => {
@@ -141,13 +143,6 @@ export class DWQueryBuilderComponent extends BaseComponent {
         console.log("AbedHeighty", this.HeightPreviewArea);
 
 
-        this._DWObjectTablePMService = new DWObjectTablePMService();
-        this._DWQueryPMService = new DWQueryPMService();
-        this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
-        this._DWQueryBuilderService = new DWQueryBuilderService();
-        this._DWSubQueryPMService = new DWSubQueryPMService();
-        this._DWObjectTableListService = new DWObjectTableListService();
-        this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         if (this.CurrentSession == null) {
             this.SearchFieldsId = "SearchFields_-1_-1";
         }
@@ -265,6 +260,23 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
 
 
+
+
+    InitializeService() {
+        this._DWObjectTablePMService = new DWObjectTablePMService();
+      this._DWQueryPMService = new DWQueryPMService();
+        this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
+         this._DWQueryBuilderService = new DWQueryBuilderService();
+        this._DWSubQueryPMService = new DWSubQueryPMService();
+        this._DWObjectTableListService = new DWObjectTableListService();
+       this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
+
+
+
+    }
+
+
+
     SetWindowArgs(args: any) {
         this.QID = args.DWQueryId;
         this.IsBIReportWorkspace = args.IsBIReportWorkspace;
@@ -275,6 +287,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.BackCompleted = args.BackCompleted;
         this.CopyBIReportsFromTenant = args.BIReportsTenant;
         this.FactTableName = args.FactTableName;
+
+
         //this.AllFieldsWithChildrenDataSource = args.DWObjectFieldsWithChildren;
         if (this.QID) {
             if (this.CopyBIReportsFromTenant || this.CopyBIReportsFromTenant == 0) {
@@ -1259,6 +1273,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
         BaseFilter.FilterItems.forEach((field) => {
             var view = new DWObjectFieldsDetails(field, this);
+            view.DisplayName = field.DisplayName;
             if (view.HasTree) {
                 var defaultItem: any = window.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
                 if (defaultItem) {
