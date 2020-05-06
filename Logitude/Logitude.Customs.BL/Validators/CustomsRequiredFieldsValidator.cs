@@ -1164,7 +1164,7 @@ namespace Logitude.Customs.BL.Validators
 
                 PropertyInfo propCasualSupplierName = properties.Where(d => d.Name == "CasualSupplierName").FirstOrDefault();
 
-                if (propCasualSupplierName.GetValue(declaration) == null)
+                if (string.IsNullOrWhiteSpace(toString(propCasualSupplierName.GetValue(declaration))))
                 {
                     requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = propCasualSupplierName.Name, TableName = "Customs.Declaration" });
                 }
@@ -1175,7 +1175,7 @@ namespace Logitude.Customs.BL.Validators
 
                 PropertyInfo propCasualSupplierAddress = properties.Where(d => d.Name == "CasualSupplierAddress").FirstOrDefault();
 
-                if (propCasualSupplierAddress.GetValue(declaration) == null)
+                if (string.IsNullOrWhiteSpace(toString(propCasualSupplierAddress.GetValue(declaration))))
                 {
                     requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = propCasualSupplierAddress.Name, TableName = "Customs.Declaration" });
                 }
@@ -1245,6 +1245,15 @@ namespace Logitude.Customs.BL.Validators
 
          
             return requiredErrors;
+        }
+
+        private static string toString(object obj)
+        {
+            if (obj==null)
+            {
+                return "";
+            }
+            return obj.ToString();
         }
 
         public static CustomsRequiredFieldErrors GetCourierMasterRequiredFieldErrorsForCourierDeclaration(string courierMasterId, int tenant)
