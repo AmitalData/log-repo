@@ -1103,7 +1103,10 @@ namespace Logitude.Customs.BL.Validators
             //    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { CustomMessageError = error, });
             //}
 
-            foreach (SupplierInvoicePM supplierInvoice in supplierInvoices)//declaration.SupplierInvoices)//mohammad fix wi 20751
+            //foreach (SupplierInvoicePM supplierInvoice in supplierInvoices)//declaration.SupplierInvoices)//mohammad fix wi 20751
+            SupplierInvoicePM supplierInvoice = supplierInvoices.FirstOrDefault();
+            bool vendorFromFirstSI = false;
+            if (supplierInvoice!=null)
             {
                 foreach (PropertyInfo info in SupplierInvoiceProperties)
                 {
@@ -1115,22 +1118,23 @@ namespace Logitude.Customs.BL.Validators
                             CustomsVendorPM vendor = vendorQueryService.GetSingle(vendorId, false, false);
                             if(vendor != null)
                             {
-                                if(vendor.VendorName == null)
+                                vendorFromFirstSI = true;
+                                if (vendor.VendorName == null)
                                 {
                                     PropertyInfo prop = properties.Where(d => d.Name == "CasualSupplierName").FirstOrDefault();
-                                   
-                                        if (prop.GetValue(declaration) == null)
-                                        {
-                                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = prop.Name, TableName = "Customs.Declaration" });
-                                        }
-                                    
+
+                                    //if (prop.GetValue(declaration) == null)
+                                    {
+                                        requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = prop.Name, TableName = "Customs.Declaration" });
+                                    }
+
                                 }
 
                                 if (vendor.MainAddressLine == null)
                                 {
                                     PropertyInfo prop = properties.Where(d => d.Name == "CasualSupplierAddress").FirstOrDefault();
 
-                                    if (prop.GetValue(declaration) == null)
+                                    //if (prop.GetValue(declaration) == null)
                                     {
                                         requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = prop.Name, TableName = "Customs.Declaration" });
                                     }
@@ -1154,12 +1158,36 @@ namespace Logitude.Customs.BL.Validators
                 
 
             }
-            
+            if (!vendorFromFirstSI)
+            {
+
+
+                PropertyInfo propCasualSupplierName = properties.Where(d => d.Name == "CasualSupplierName").FirstOrDefault();
+
+                if (propCasualSupplierName.GetValue(declaration) == null)
+                {
+                    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = propCasualSupplierName.Name, TableName = "Customs.Declaration" });
+                }
+
+
+
+
+
+                PropertyInfo propCasualSupplierAddress = properties.Where(d => d.Name == "CasualSupplierAddress").FirstOrDefault();
+
+                if (propCasualSupplierAddress.GetValue(declaration) == null)
+                {
+                    requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = propCasualSupplierAddress.Name, TableName = "Customs.Declaration" });
+                }
+
+
+
+            }
 
             #endregion
 
             #region Consignment
-     
+
             List<ConsignmentPackagePM> ConsignmentPackages = new List<ConsignmentPackagePM>();
 
             ObjectTable consignmentTable = objectTabelRepository.GetObjectTableByName("Customs.Consignment", 0, fromCache);
