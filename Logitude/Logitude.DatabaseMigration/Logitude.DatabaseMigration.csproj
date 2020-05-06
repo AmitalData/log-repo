@@ -2359,6 +2359,10 @@
     <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.Designer.cs">
       <DependentUpon>202005031054228_FixReferenceLengthInTransferLine_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs" />
+    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.Designer.cs">
+      <DependentUpon>202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4261,6 +4265,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.resx">
       <DependentUpon>202005031054228_FixReferenceLengthInTransferLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.resx">
+      <DependentUpon>202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
