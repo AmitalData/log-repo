@@ -209,29 +209,31 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 #region Tenant Details
+                string tenantAgent = null;
+
                 if (tenantpm != null)
                 {
                     prealertDataProvider.FMCNumber = tenantpm.FMCNumber;
-                    prealertDataProvider.OriginAgent = tenantpm.Company;
+                    tenantAgent = tenantpm.Company;
                     Address tenantAddress = addressRepository.GetSingleAddress(tenantpm.AddressId, tenant);
 
                     if (tenantAddress != null)
                     {
                         if (!string.IsNullOrEmpty(tenantAddress.City))
                         {
-                            prealertDataProvider.OriginAgent = prealertDataProvider.OriginAgent + Environment.NewLine + tenantAddress.City;
+                            tenantAgent = tenantAgent + Environment.NewLine + tenantAddress.City;
                         }
 
                         if (tenantAddress.Country != null)
                         {
                             if (tenantAddress.IsLocalLanguage)
                             {
-                                prealertDataProvider.OriginAgent = prealertDataProvider.OriginAgent + " " + tenantAddress.Country.Code + " " + tenantAddress.Country.LocalName;
+                                tenantAgent = tenantAgent + " " + tenantAddress.Country.Code + " " + tenantAddress.Country.LocalName;
                             }
 
                             else
                             {
-                                prealertDataProvider.OriginAgent = prealertDataProvider.OriginAgent + " " + tenantAddress.Country.Code + " " + tenantAddress.Country.EnglishName;
+                                tenantAgent = tenantAgent + " " + tenantAddress.Country.Code + " " + tenantAddress.Country.EnglishName;
                             }
                         }
                     }
@@ -239,12 +241,13 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 #region Agent
+                string shipmentAgent = null;
                 if (!string.IsNullOrEmpty(shipmentpm.AgentId))
                 {
                     CardPM agent = cardQuery.GetSinglePM(shipmentpm.AgentId, tenant);
                     if (agent != null)
                     {
-                        prealertDataProvider.DestinationAgent = agent.EnglishName;
+                        shipmentAgent = agent.EnglishName;
 
                         Address agentAddress = addressRepository.GetSingleAddress(shipmentpm.AgentAddressId, tenant);
 
@@ -252,14 +255,26 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             if (agentAddress.IsLocalLanguage && !string.IsNullOrEmpty(agent.LocalName))
                             {
-                                prealertDataProvider.DestinationAgent = agent.LocalName;
+                                shipmentAgent = agent.LocalName;
                             }
 
-                            prealertDataProvider.DestinationAgent = prealertDataProvider.DestinationAgent + Environment.NewLine + DataProviders.General.GetAddress(agentAddress);
+                            shipmentAgent = shipmentAgent + Environment.NewLine + DataProviders.General.GetAddress(agentAddress);
                         }
                     }
                 }
                 #endregion
+
+                if(shipmentpm.DirectionId == "E")
+                {
+                    prealertDataProvider.OriginAgent = tenantAgent;
+                    prealertDataProvider.DestinationAgent = shipmentAgent;
+                }
+
+                else if (shipmentpm.DirectionId == "I")
+                {
+                    prealertDataProvider.OriginAgent = shipmentAgent;
+                    prealertDataProvider.DestinationAgent = tenantAgent;
+                }
 
                 #region CustomAgent
                 if (shipmentpm.DirectionId == "E" || shipmentpm.DirectionId == "D")
@@ -1231,8 +1246,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
                 #endregion
-
-
+                
                 #region Assemblies
                 if (shipmentpm.ShipmentAssemblies.Count > 0)
                 {

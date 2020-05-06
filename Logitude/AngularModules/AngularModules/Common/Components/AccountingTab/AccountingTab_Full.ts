@@ -18,6 +18,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
     templateUrl: './AccountingTab_Full.html',
 })
 
+ 
 export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnInit,AfterViewInit {
     @ViewChild("TabPlaceholder", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 

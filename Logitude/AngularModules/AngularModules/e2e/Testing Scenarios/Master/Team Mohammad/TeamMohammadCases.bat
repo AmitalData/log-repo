@@ -27,7 +27,7 @@ rem CALL :CheckError "Create RevGLAccount"
  cmd /c call npm run do-e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,ARPayment
  CALL :CheckError "Create ARPayment"
 
-rem call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,PaymentCheque
+rem call npm run do-e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,PaymentCheque
 rem CALL :CheckError "Create PaymentCheque"
 )
 cd /
