@@ -2483,6 +2483,15 @@ using System.Diagnostics;
                             {
                                 return true;
                             }
+                            else
+                            {
+                                if (entityPOCO.CasualSupplierName != entityPM.CasualSupplierName ||
+                                    entityPOCO.CasualSupplierAddress != entityPM.CasualSupplierAddress)
+                                {
+                                    return true;
+                                }
+
+                            }
                             break;
                         }
                     }

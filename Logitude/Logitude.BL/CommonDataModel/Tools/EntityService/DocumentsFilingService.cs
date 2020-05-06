@@ -392,8 +392,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private void TrySendBondedCustomDocument(DocumentsFilingPM extDocPM)
         {
-            ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
-            myISendBondedCustomDocumentService.JustDoIt(extDocPM);
+            DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(extDocPM.Tenant);
+            var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", extDocPM.Tenant);
+            if (ENDOC != null)
+            {
+                if (extDocPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeCode == "ENDOC")
+                    ||
+                    extDocPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeId == ENDOC.Id))
+                { 
+
+                ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", tenant)) as ISendBondedCustomDocumentService;
+                myISendBondedCustomDocumentService.JustDoIt(extDocPM);
+            }
+            }
 
         }
         private void AddDocumentBackupLog()
