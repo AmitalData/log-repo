@@ -312,6 +312,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsSettingMap());
 	
+            modelBuilder.Configurations.Add(new CustomsShipMap());
+	
             modelBuilder.Configurations.Add(new CustomsTransportModeMap());
 	
             modelBuilder.Configurations.Add(new CustomsVendorMap());
@@ -1874,6 +1876,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsSetting> CustomsSettings 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsShip> CustomsShips 
 	 {
 	      get; set;
 	 
