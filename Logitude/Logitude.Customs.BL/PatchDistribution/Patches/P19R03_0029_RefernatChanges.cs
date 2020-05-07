@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    class P19R03_0028_AvailabilityDate : PatchDistributionBase
+    class P19R03_0029_RefernatChanges : PatchDistributionBase
     {
-        public P19R03_0028_AvailabilityDate()
-         : base(" enable null AvailabilityDate  ", new DateTime(2020, 05, 03))
+        public P19R03_0029_RefernatChanges()
+         : base(" enable null AvailabilityDate  ", new DateTime(2020, 05, 06))
         {
 
         }
@@ -22,8 +22,8 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
 
         public override void CreateUpScripts()
         {
-            this.AddUpSqlScript(@"ALTER TABLE Declarations DROP COLUMN AvailabilityDate");
-            this.AddUpSqlScript(@"ALTER TABLE Declarations ADD  AvailabilityDate TIMESTAMP(7) NULL");
+            this.AddUpSqlScript(@"ALTER TABLE DECLARATIONREFERANTDATAS MODIFY ARRIVALDATE NULL");
+            this.AddUpSqlScript(@"ALTER TABLE  DECLARATIONREFERANTDATAS MODIFY ESTIMATEDARRIVALDATE NULL");
 
         }
     }

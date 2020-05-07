@@ -39,7 +39,7 @@ using Exception = System.Exception;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
-    public class DCAInUCSBondedDocument_MessagingServoce
+    public class DCAInUCSBondedDocument_MessagingService
         : MessagingServiceBase<
         GenericRequestParams,
         INF_MSG_GenericResponseData,
@@ -264,7 +264,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public void
             JustDoIt(object documentsFilingPM)
         {
-            DateTime stopLogAt = new DateTime(2020, 06, 01);
+            DateTime stopLogAt = new DateTime(2020, 09, 01);
 
             Debug.WriteLine("SendBondedCustomDocument");
             string logData = "";
@@ -315,14 +315,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         "UCBNDCD.CRS", true)
                         )
                     {
-                        var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCSBondedDocument_MessagingServoce();
+                        var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCSBondedDocument_MessagingService();
                         string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(
                             _DocumentsFilingPM.Tenant, 
                             loggingUserId,
                             _DocumentsFilingPM,
                             myDocumentTypeCustomsData.CustomsDoucumentTypeCode);
                         logData = LogMessagingUtil.Instance.ToString();
-                        LogitudeSettings.HandleLogMe(crs + " " + logData, false, "CreateUCBNDCDService.OK", stopLogAt);
+                        LogitudeSettings.HandleLogMe(crs + " " + logData + _DocumentsFilingPM.Code, false, "CreateUCBNDCDService.OK" , stopLogAt);
 
                     }
                 }
@@ -331,7 +331,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             catch (Exception E)
             {
                 logData = LogMessagingUtil.Instance.ToString();
-                LogitudeSettings.HandleLogMe(E.ToString() + logData, true, "SendBondedCustomDocument", stopLogAt);
+                LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "SendBondedCustomDocument" , stopLogAt);
                 throw;
             }
             finally
@@ -350,7 +350,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
 
 
-                LogitudeSettings.HandleLogMe("HaveTransDocumentTypeCode():DocumentTypeCustomsData  " + this._DocumentsFilingPM.DocumentTypeCode + " but not found", false, "SendBondedCustomDocument", stopLogAt);
+                LogitudeSettings.HandleLogMe("HaveTransDocumentTypeCode():DocumentTypeCustomsData  " + this._DocumentsFilingPM.DocumentTypeCode + " but not found" + _DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
                 return false;
             }
             return true;
@@ -365,7 +365,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 if (!String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
                 {
-                    LogitudeSettings.HandleLogMe("IscustomsDocumentSent(): myCustomsDocument already send !!", false, "SendBondedCustomDocument", stopLogAt);
+                    LogitudeSettings.HandleLogMe("IscustomsDocumentSent(): myCustomsDocument already send !!"+_DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
                     Debug.WriteLine("myCustomsDocument already send !!");
                     return false;
                 }
@@ -387,13 +387,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 Debug.WriteLine("_DocumentsFilingPM == null");
                 return false;
             }
-            if (!_DocumentsFilingPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeCode == "ENDOC"))
-            {
+            
+            //if (!_DocumentsFilingPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeCode == "ENDOC"))
+            //{
 
-                LogitudeSettings.HandleLogMe(" refernce where DocumentsMetaDataTypeCode is ENDOC not found ", false, "SendBondedCustomDocument", stopLogAt);
-                Debug.WriteLine("refernce where DocumentsMetaDataTypeCode is ENDOC not found ");
-                return false;
-            }
+            //    LogitudeSettings.HandleLogMe(" refernce where DocumentsMetaDataTypeCode is ENDOC not found "+_DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
+            //    Debug.WriteLine("refernce where DocumentsMetaDataTypeCode is ENDOC not found ");
+            //    return false;
+            //}
             return true;
         }
 

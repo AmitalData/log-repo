@@ -2353,6 +2353,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             {
                                 return true;
                             }
+                            else
+                            {
+                                if (entityPOCO.CasualSupplierName != entityPM.CasualSupplierName ||
+                                    entityPOCO.CasualSupplierAddress != entityPM.CasualSupplierAddress)
+                                {
+                                    return true;
+                                }
+
+                            }
                             break;
                         }
                     }

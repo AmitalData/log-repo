@@ -317,11 +317,11 @@
                                     <td style="width: 200px; padding-right: 15px;text-align:left">
                                         <dropdown-button [Dropdownbutton_TextCode]="'Customs.RequestSheet.O.AddRemove'">
                                             <div class="class-dropdown-content">
-                                                <div style="width:170px;height:410px">
+                                                <div style="width:170px" [ngStyle]="{'height': selectStatusesHeight}">
                                                     <table>
                                                         <tr style="height:5px;"><td><div></div></td></tr>
 
-                                                        <tr class="FormFieldRow">
+                                                        <tr class="FormFieldRow" *ngIf="!isReAnAnalysis">
                                                             <td>
                                                                 <div style="margin-right:5px;">
                                                                     <CheckBox style="margin-right:5px;float:right;"
@@ -341,7 +341,7 @@
                                                             <td>
                                                                 <div style="margin-right:5px;">
                                                                     <CheckBox style="margin-right:5px;float:right;"
-                                                                              [IsChecked]="customsRequestsSheetStatusListVM.IsChecked"
+                                                                              [IsChecked]="customsRequestsSheetStatusListVM.IsChecked && !isReAnAnalysis"
                                                                               (Checked)="customsRequestsSheetStatusListVM.IsChecked = $event;AllCRSSChecked = false"></CheckBox>
                                                                     <span [class.my-checkbox-class]="customsRequestsSheetStatusListVM.IsChecked"
                                                                           style="margin-right:5px;float:right;">{{customsRequestsSheetStatusListVM.MyItem.LocalName}}</span>
