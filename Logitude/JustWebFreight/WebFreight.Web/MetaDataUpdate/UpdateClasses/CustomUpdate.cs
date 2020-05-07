@@ -15388,13 +15388,25 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 #endif
 
             #region ExportCustomsDeclarationFeature
-
-            Feature ExportCustomsDeclarationFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONNEW", ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.NewExportDeclaration", NameTextCodeDefaultText = "New Export Declaration", FeatureTypeCode = "NEW" /*"ACT"*/, FullLocalDefaultText = "הצהרת יצוא חדשה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            
+            Feature ExportCustomsDeclarationFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONNEW", ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.NewExportDeclaration", NameTextCodeDefaultText = "New Export Declaration", FeatureTypeCode = /*"NEW"*/ "ACT", FullLocalDefaultText = "הצהרת יצוא חדשה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature ExportCustomsDeclarationFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONPSCREEN", Packagable = true, ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.ExportDecPilotScreen", NameTextCodeDefaultText = "Export Declaration Pilot Screens ", FeatureTypeCode = "AREA" , FullLocalDefaultText ="הצהרת יצוא מסכים פיילוט"
             }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-           
 
+            Feature ExportCustomsDeclarationFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails()
+            {
+                Code = "EXPORTDECLARATIONPMENU",
+                Packagable = true,
+                ObjectTableId = CustomsDeclarationObjectTable.Id,
+                Tenant = tenant,
+                NameTextCodeCode = "Customs.Declaration.Features.ExportDecPilotScreen",
+                NameTextCodeDefaultText = "Export Declaration Screens ",
+                FeatureTypeCode = "MENU",
+                FullLocalDefaultText = "הצהרת יצוא"
+            }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            
             #endregion
 
             #endregion
