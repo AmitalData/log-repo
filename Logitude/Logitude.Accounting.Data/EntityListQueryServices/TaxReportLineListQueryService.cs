@@ -58,7 +58,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                        StatusLocalName = a.TaxReportLineStatus != null ? a.TaxReportLineStatus.LocalName : null,
                                                        JournalNumber = a.Journal != null ? a.Journal.JournalNumber : null,
 
-
+                                                       TotalInvoiceAmount = a.TotalInvoiceAmount,
                                                        TransmitStatusCode = a.TransmitStatusCode,
 
                                                        JournalId = a.JournalId,
