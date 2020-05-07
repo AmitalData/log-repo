@@ -827,7 +827,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
@@ -2676,11 +2676,11 @@
     <Feature
       Code="&quot;APILogs&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.APILogs&quot;"
+      FeatureDefaultText="&quot;API Logs&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;General.Features.APILogs&quot;"
-      FeatureDefaultText="&quot;API Logs&quot;" />
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
