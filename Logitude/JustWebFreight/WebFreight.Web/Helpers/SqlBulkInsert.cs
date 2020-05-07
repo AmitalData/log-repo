@@ -17,9 +17,7 @@ namespace WebFreight.Web.Helpers
     {
         public static void BulkInsert<T>(string tableName, IList<T> list)
         {
-
             if (list == null || list.Count() == 0)
-
                 return;
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
@@ -69,7 +67,6 @@ namespace WebFreight.Web.Helpers
 
         private static void RunOracleSqlInsert<T>(string tableName, IList<T> list)
         {
-
             PropertyDescriptor[] entityProperties = GetEntitySystemProperties<T>();
             string strConnString = TenantServerConfigration.GetDbConnection(0);
             string insertCommand = BuildInsertCommandColumnsString(tableName, entityProperties);
@@ -123,10 +120,7 @@ namespace WebFreight.Web.Helpers
             foreach (var propertyInfo in entityProperties)
             {
                 insertCommand += propertyInfo.Name + ",";
-
             }
-
-
             insertCommand = insertCommand.TrimEnd(',') + ")";
             return insertCommand;
         }
@@ -147,7 +141,6 @@ namespace WebFreight.Web.Helpers
                 }
 
                 valuesString += propValue + ",";
-                //values[i] = props[i].GetValue(item);
             }
             valuesString = valuesString.TrimEnd(',');
             return valuesString;
