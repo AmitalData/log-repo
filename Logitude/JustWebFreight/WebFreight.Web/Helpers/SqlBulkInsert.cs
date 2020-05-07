@@ -141,7 +141,7 @@ namespace WebFreight.Web.Helpers
                                        && entityProperties[i].PropertyType != typeof(float) && entityProperties[i].PropertyType != typeof(double))
                 {
                     if (propValue != null)
-                        propValue = "'" + propValue.ToString().Replace("'", "") + "'";
+                        propValue = "'" + propValue.ToString().Replace("'", "''") + "'";
                     else
                         propValue = "NULL";
                 }
