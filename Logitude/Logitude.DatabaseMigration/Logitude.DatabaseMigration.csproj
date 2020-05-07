@@ -2390,8 +2390,6 @@
     </Compile>
 
 
-    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs" />
-
     <Compile Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.cs" />
     <Compile Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.Designer.cs">
       <DependentUpon>202005061012001_Remove_MinimumInterestInvoiceBilling.cs</DependentUpon>
@@ -2400,10 +2398,11 @@
     <Compile Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.Designer.cs">
       <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
     </Compile>
+ master
 
-    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs" />
-    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.Designer.cs">
-      <DependentUpon>202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs</DependentUpon>
+    <Compile Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.cs" />
+    <Compile Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.Designer.cs">
+      <DependentUpon>202005070955065_UpdatePickupDeliveryNumberLength.cs</DependentUpon>
     </Compile>
 
 
@@ -4336,6 +4335,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.resx">
       <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.resx">
+      <DependentUpon>202005070955065_UpdatePickupDeliveryNumberLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
