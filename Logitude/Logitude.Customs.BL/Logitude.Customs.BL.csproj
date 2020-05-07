@@ -405,6 +405,7 @@
     <Compile Include="EntityDataMappings\DeclarationCourierStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationErrorMappingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeclarationExportRecipientDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationMamanSpecialActionDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPaymentDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPaymentMethodDataMapping.cs" />
@@ -579,6 +580,7 @@
     <Compile Include="EntityDataMappings\Generated\DeclarationCourierStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationErrorMappingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeclarationExportRecipientDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationMamanSpecialActionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentMethodDataMapping.Generated.cs" />
@@ -931,6 +933,7 @@
     <Compile Include="EntityQueryServices\Generated\DBMigrationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DBMigrationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DecDangersContactsQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeclarationExportRecipientQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationPendingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationReferantDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeficitDecisionQueryService.Generated.cs" />
@@ -1373,6 +1376,7 @@
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DeclarationExportRecipientUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationReferantDataUpdateService.cs" />
