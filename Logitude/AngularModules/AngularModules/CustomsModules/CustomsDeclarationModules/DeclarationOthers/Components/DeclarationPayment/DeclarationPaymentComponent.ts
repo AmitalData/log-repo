@@ -318,13 +318,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
                 // var date = new Date(Date.parse(this.paymentPM.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
                 //else
-                //    var date = this.GetTodaysDate();// new Date();
-                 if (date != null) {
+                 //    var date = this.GetTodaysDate();// new Date();
+                 if (date != null && !this.AutomaticPayment) {
                      var datetime = this.GetDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds());//new Date(date.getFullYear(), date.getMonth(), date.getDate(), newValue.getHours(), newValue.getMinutes(), newValue.getSeconds());
                      this.FuturePaymentDateTime = datetime;
                      this._FuturePaymentTime = datetime;
                  }
-                 else { this._FuturePaymentTime = newValue; }
+                 else if (date == null && !this.AutomaticPayment) {
+                     this._FuturePaymentTime = newValue;
+                 }
+               
             }
             else {
                 this._FuturePaymentTime = newValue;
@@ -1335,12 +1338,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     FuturePaymentDateTimeOnBlur(event) {
         // WI 32593
+        this.IsFuturePaymentDateValid(null);
+
+
+    }
+    FuturePaymentTimeOnBlur(event) {
+        // WI 32593
         this.IsFuturePaymentDateValid(event);
 
 
     }
     IsFuturePaymentDateValid(event) {
-         if (this.AutomaticPayment && event!= null) {
+        if (this.AutomaticPayment && event != null ) {
             var myMessageWindow = new MessageWindow
             myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
             this.FuturePaymentDateTime = null;
