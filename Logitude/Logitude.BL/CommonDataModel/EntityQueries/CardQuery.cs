@@ -18,6 +18,14 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.Azure;
+using Logitude.Server.Tools.StorageService;
+using Microsoft.Practices.Unity;
+using Logitude.Server.Tools;
+using System.IO;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -1334,8 +1342,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     GLAccountId = oldTenantCard.GLAccountId,
                     StateName = oldTenantCard.StateName,
                     IsInternationalPartner = oldTenantCard.IsInternationalPartner,
-                    IsAutonomy = oldTenantCard.IsAutonomy,
-                    ImageDetailId = oldTenantCard.ImageDetailId,
+                    IsAutonomy = oldTenantCard.IsAutonomy,                    
                 };
 
                 #region PaymentTerm
@@ -1421,6 +1428,55 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         newTenantCard.CountryId = newCountry.Id;
                         newTenantCard.CountryCode = newCountry.Code;
                         newTenantCard.CountryName = newCountry.EnglishName;
+                    }
+                }
+                #endregion
+
+                #region Image Detail
+                if (oldTenantCard.ImageDetailId != null)
+                {
+                    IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+                    ImageDetailRepository imageDetailRepository = new ImageDetailRepository(webFreightContext);
+                    ImageDetail oldImageDetail = imageDetailRepository.GetSingleImageDetail(oldTenantCard.ImageDetailId, 0);
+                    if (oldImageDetail != null)
+                    {
+                        string fileName = oldImageDetail.Id + "." + oldImageDetail.Extension;
+                        string filePath = "tenant0/" + StorageAcountDetails.GetBlobNameByLocation(fileName.ToLower(), "images");
+                        IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                        BlobFileInfo fileInfo = new BlobFileInfo()
+                        {
+                            FileName = oldImageDetail.Id,
+                            FolderName = "images",
+                            Extension = oldImageDetail.Extension,
+                            Tenant = 0,
+                        };
+
+                        byte[] datainByte = storageservice.Read(fileInfo);
+
+                        ImageDetail newImageDetail = new ImageDetail()
+                        {
+                            Id = IdCounter.GetNumber("ImageDetail", tenant),
+                            Tenant = tenant,
+                            Extension = oldImageDetail.Extension,
+                            Size = datainByte.Length
+                        };
+
+                        imageDetailRepository.Add(newImageDetail);
+                        imageDetailRepository.SubmitChanges();
+                        newTenantCard.ImageDetailId = newImageDetail.Id;
+
+                        MemoryStream memorystream = new MemoryStream(datainByte);
+                        BlobFileInfo fileInfo2 = new BlobFileInfo()
+                        {
+                            FileName = newImageDetail.Id,
+                            FolderName = "images",
+                            Extension = newImageDetail.Extension,
+                            Tenant = tenant,
+                            FileSize = datainByte.Length,
+                        };
+
+                        string[] blockIdsList = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
+                        storageservice.WriteBlock(datainByte, datainByte.Length, blockIdsList, 0, fileInfo2);                        
                     }
                 }
                 #endregion
