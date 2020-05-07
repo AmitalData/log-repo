@@ -46,8 +46,19 @@ export class AccountingTabComponent implements OnInit,AfterViewInit {
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { 
             this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => {  
                 this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => {
+                        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) => {
+                            this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => {
+                                this._entityResourceService.getEntityResourceByTableName("GLAccountInterestPeriod").subscribe((response: any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe((response: any) => {
+
                      
                     this.LoadComponent();
+                });
+                });
+               }); 
+            });
+           }); 
           }); 
         });
        });
