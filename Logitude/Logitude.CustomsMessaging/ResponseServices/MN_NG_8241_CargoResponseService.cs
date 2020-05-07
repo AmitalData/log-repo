@@ -455,16 +455,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                     requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
                                     requestParams2755.FutureSendDateTime = requestDate;
-                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+                                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
 
                                 }
-                                myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                                else
+                                {
 
-                                SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                }
+                           
 
                                 scopeNewCRS.Complete();
                             }
+                            //using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                            //{=
+                            //    myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                            //    scopeNewCRS.Complete();
 
+                            //}
+                            myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
                         }
                         catch (System.Exception)
                         {

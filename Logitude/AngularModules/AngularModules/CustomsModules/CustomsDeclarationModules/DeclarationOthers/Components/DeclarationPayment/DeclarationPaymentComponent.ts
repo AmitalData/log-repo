@@ -319,12 +319,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 // var date = new Date(Date.parse(this.paymentPM.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
                 //else
                 //    var date = this.GetTodaysDate();// new Date();
-                if (date = null) {
-                    var datetime = this.GetDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds());//new Date(date.getFullYear(), date.getMonth(), date.getDate(), newValue.getHours(), newValue.getMinutes(), newValue.getSeconds());
-                    this.FuturePaymentDateTime = datetime;
-                    this._FuturePaymentTime = datetime;
-                }
-
+                 if (date != null) {
+                     var datetime = this.GetDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds());//new Date(date.getFullYear(), date.getMonth(), date.getDate(), newValue.getHours(), newValue.getMinutes(), newValue.getSeconds());
+                     this.FuturePaymentDateTime = datetime;
+                     this._FuturePaymentTime = datetime;
+                 }
+                 else { this._FuturePaymentTime = newValue; }
             }
             else {
                 this._FuturePaymentTime = newValue;
