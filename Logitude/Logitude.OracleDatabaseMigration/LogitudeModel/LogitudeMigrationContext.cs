@@ -1875,7 +1875,13 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             set;
 
         }
+        
+            public IDbSet<CustomsShip> CustomsShips
+        {
+            get;
+            set;
 
+        }
 
         public IDbSet<LeadDocumentExceptionType> LeadDocumentExceptionTypes
         {
@@ -3779,6 +3785,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CustomsRequiredFieldMap());
 
             modelBuilder.Configurations.Add(new CustomsSettingMap());
+            modelBuilder.Configurations.Add(new CustomsShipMap());
 
             modelBuilder.Configurations.Add(new CustomsTransportModeMap());
 

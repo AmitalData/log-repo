@@ -140,6 +140,8 @@
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsShipDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsShipStruct.Generated.cs" />
     <Compile Include="CloseTables\SincroTestCaseDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AcceptanceStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActionCodeDetails.Generated.cs" />
@@ -383,6 +385,7 @@
     <Compile Include="EntityDataMappings\CustomsRequestsSheetStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsRequiredFieldDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsShipDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsTransportModeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsVendorDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsVerificationStatusTypeDataMapping.cs" />
@@ -556,6 +559,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomsRequestsSheetStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsRequiredFieldDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsShipDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsTransportModeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsVendorDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsVerificationStatusTypeDataMapping.Generated.cs" />
@@ -923,6 +927,7 @@
     <Compile Include="EntityQueryServices\Generated\ContinuousRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CurrencyTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsAutonomyKeywordQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsShipQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DBMigrationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DBMigrationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DecDangersContactsQueryService.Generated.cs" />
@@ -1367,6 +1372,7 @@
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationReferantDataUpdateService.cs" />

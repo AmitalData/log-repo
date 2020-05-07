@@ -139,6 +139,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsRequestsSheetStatus> CustomsRequestsSheetStatuses { get; }
 		 IDbSet<CustomsRequiredField> CustomsRequiredFields { get; }
 		 IDbSet<CustomsSetting> CustomsSettings { get; }
+		 IDbSet<CustomsShip> CustomsShips { get; }
 		 IDbSet<CustomsTransportMode> CustomsTransportModes { get; }
 		 IDbSet<CustomsVendor> CustomsVendors { get; }
 		 IDbSet<CustomsVerificationStatusType> CustomsVerificationStatusTypes { get; }
