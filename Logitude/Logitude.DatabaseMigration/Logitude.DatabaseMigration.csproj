@@ -2372,9 +2372,7 @@
     <Compile Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.Designer.cs">
       <DependentUpon>202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.cs" />
-
-
+     
     <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.cs" />
     <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.Designer.cs">
       <DependentUpon>202005031054228_FixReferenceLengthInTransferLine_Samar.cs</DependentUpon>
@@ -2390,8 +2388,7 @@
     </Compile>
 
 
-    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs" />
-
+     
     <Compile Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.cs" />
     <Compile Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.Designer.cs">
       <DependentUpon>202005061012001_Remove_MinimumInterestInvoiceBilling.cs</DependentUpon>
@@ -2401,10 +2398,7 @@
       <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
     </Compile>
 
-    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs" />
-    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.Designer.cs">
-      <DependentUpon>202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs</DependentUpon>
-    </Compile>
+   
 
 
 
