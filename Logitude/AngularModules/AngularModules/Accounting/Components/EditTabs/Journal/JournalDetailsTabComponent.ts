@@ -28,7 +28,7 @@ import {GLAccountListService} from '../../../Services/StandardLists/GLAccountLis
 
 
 @Component({
-    
+
     templateUrl: './JournalDetailsTabComponent.html',
     providers:
         [CurrencyListService,
@@ -84,10 +84,10 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         this.EntityPM = entityArgs.EntityPM;
 
         this.SetDatesDefaultValues();
-      
+
         this.FillGrid();
         this.SetUIProperties();
-        
+
         // redraw
         this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
             if (isSuccess) {
@@ -147,6 +147,11 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 });
             }
         }
+
+        this.EntityPM.PropertyChanged.subscribe(changes=>{
+          console.log("JournalPM changed",changes);
+
+        });
     }
 
     SetUIProperties() {
@@ -319,7 +324,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         if (this.EntityPM.AccountingDate != value) {
 
             if (value != null) {
-                this.ValidateDates(value,"AccountingDate");                
+                this.ValidateDates(value,"AccountingDate");
 
             }
 
@@ -369,7 +374,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                     this.UIProperties.SetValidity(fieldName, this.ObjectTableName, true, "OK");
                 }
             }
-        
+
     }
     accountingPeriod: AccountingPeriodList;
     get AccountingPeriod() { return this.accountingPeriod; }
