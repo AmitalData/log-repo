@@ -1,7 +1,7 @@
 <style>
     .tab-footer {
         background: #f7f7f7;
-        height: 115px;
+        height: 87px;
         border-radius: 7px;
         border-bottom-left-radius: unset;
         margin-right: -1px;
@@ -331,8 +331,10 @@
     <tr>
         <td>
             <div class="TableHolder">
+                <div *ngIf="isControlAccount" class="Warning" style="width: 300px;">{{
+                                'GLAccounts.O.GLAccountIsControl' | TextCodeTranslationPipe }}</div>
                 <table>
-                    <tr class="TabTitleRow">
+                    <!-- <tr class="TabTitleRow">
                         <td style="width: 300px;">{{'Accounting.General.O.Transactions' | TextCodeTranslationPipe}}</td>
                         <td>
                             <div *ngIf="isControlAccount" class="Warning" style="width: 300px;">{{
@@ -340,18 +342,12 @@
                             <div *ngIf="!isControlAccount" style="width: 300px;"></div>
                         </td>
                         <td style="width: 220px;">
-                            <!--<div class="Warning" style="text-align: center;width: 220px; margin: 5px;">
-                                {{OpenReconciliationMessage}}
-                            </div>-->
                         </td>
                         <td style="width: 120px;">
-                            <!--<div style="width: 110px; float: right;">
-                                <button class="Button" [disabled]="isControlAccount || reconciliationCount == 0" (click)="ReconcileButtonClicked()">{{'Accounting.General.O.Reconcile' | TextCodeTranslationPipe}} {{ '(' + reconciliationCount + ')'}}</button>
-                            </div>-->
                         </td>
 
 
-                    </tr>
+                    </tr> -->
 
                     <!-- Filters and Balance -->
                     <tr style="height: 0px;">
@@ -617,7 +613,7 @@
 
                     <!-- Transactions Grid -->
                     <tr>
-                        <td colspan="5" style="height: 100%; padding-bottom: 115px;">
+                        <td colspan="5" style="height: 100%; padding-bottom: 87px;">
                             <div class="GeneratedGridContainer">
                                 <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
                                     [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"

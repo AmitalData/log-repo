@@ -39,32 +39,41 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 TransportModePM entity;
                 if (HttpContext.Current != null)
                 {
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
-                    {
-                        var transmodes = (from a in repository.context.TransportModes
+                    entity = (from a in repository.context.TransportModes
+                              where a.Id == id
+                              select new TransportModePM()
+                              {
+                                  Id = a.Id,
+                                  Name = a.Name,
+                                  SearchFields = a.SearchFields,
+                              }).FirstOrDefault();
 
-                                          select new TransportModePM()
-                                          {
-                                              Id = a.Id,
-                                              Name = a.Name,
-                                              SearchFields = a.SearchFields,
-                                          });
-                        foreach (var s in transmodes)
-                        {
-                            string name = "TransportModePM" + s.Id;
-                            if (CacheManager.CacheWrapper.Get(name) == null)
-                            {
-                                CacheManager.CacheWrapper.Insert(name, s, null, System.DateTime.UtcNow.AddHours(30), TimeSpan.Zero);
-                            }
-                        }
-                        entity = (TransportModePM)CacheManager.CacheWrapper.Get(entityName);
+                    //if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    //{
+                    //    var transmodes = (from a in repository.context.TransportModes
 
-                    }
-                    else
-                    {
-                        entity = (TransportModePM)CacheManager.CacheWrapper.Get(entityName);
+                    //                      select new TransportModePM()
+                    //                      {
+                    //                          Id = a.Id,
+                    //                          Name = a.Name,
+                    //                          SearchFields = a.SearchFields,
+                    //                      });
+                    //    foreach (var s in transmodes)
+                    //    {
+                    //        string name = "TransportModePM" + s.Id;
+                    //        if (CacheManager.CacheWrapper.Get(name) == null)
+                    //        {
+                    //            CacheManager.CacheWrapper.Insert(name, s, null, System.DateTime.UtcNow.AddHours(30), TimeSpan.Zero);
+                    //        }
+                    //    }
+                    //    entity = (TransportModePM)CacheManager.CacheWrapper.Get(entityName);
 
-                    }
+                    //}
+                    //else
+                    //{
+                    //    entity = (TransportModePM)CacheManager.CacheWrapper.Get(entityName);
+
+                    //}
                 }
                 else
                 {

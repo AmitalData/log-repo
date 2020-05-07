@@ -1,7 +1,9 @@
-import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnInit, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
     template:
@@ -24,20 +26,36 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
     `,
 })
 
-export class AccountingTabComponent implements OnInit {
+export class AccountingTabComponent implements OnInit,AfterViewInit {
     public EntityPM: any = null;
     public ObjectTableName: string;
     public TabTitleTextCode: string = null;
-    @ViewChild("Child", { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
-    constructor(private entityArgs: EntityArgs) {
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+   // @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+   @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+   constructor(private entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.TabTitleTextCode = this.ObjectTableName + ".TH.Accounting";
-        this.InitializeComponent();
+        
+                    this.InitializeComponent();
+             
+
+    }
+    ngAfterViewInit(): void {
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { 
+            this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => {  
+                this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
+                     
+                    this.LoadComponent();
+          }); 
+        });
+       });
+
     }
 
     ngOnInit() {
-        this.LoadComponent();
+    
         this.Listen();
     }
 
@@ -133,7 +151,13 @@ export class AccountingTabComponent implements OnInit {
             && this.ObjectTableName != 'AccountingPaymentMethod'
             && this.ObjectTableName != 'APPaymentMethod'
             && !this.isQuickBooksOnline) {
-            myComponentPath = "./Common/Components/AccountingTab/AccountingTab_Full";
+                // this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { 
+                //     this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { 
+                //         this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { 
+                    myComponentPath = "./Common/Components/AccountingTab/AccountingTab_Full";
+                //   });
+                //  });
+                // });
         }
         else if (this.isQuickBooksOnline) {
             myComponentPath = "./Common/Components/AccountingTab/AccountingTab_QuickBooksOnline";
@@ -181,7 +205,7 @@ export class AccountingTabComponent implements OnInit {
             }
         }
 
-        if (!AppTool.IsNullOrEmpty(myComponentPath)) {
+        if (!AppTool.IsNullOrEmpty(myComponentPath) && this.viewContainerRef) {
             SessionLocator.DynamicLoader.Load(myComponentPath, this.viewContainerRef)
                 .then(cmpRef => {
                     //cmpRef.instance

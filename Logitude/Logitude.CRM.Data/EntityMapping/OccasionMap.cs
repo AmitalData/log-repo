@@ -53,7 +53,7 @@ namespace Logitude.CRM.Data.EntityMapping
 
             this.Property(t => t.OccasionTypeId).HasColumnName("OccasionTypeId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.OccasionStatusId).HasColumnName("OccasionStatusId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OccasionStatusId).HasColumnName("OccasionStatusId").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.ParticipatedCustomers).HasColumnName("ParticipatedCustomers");
 

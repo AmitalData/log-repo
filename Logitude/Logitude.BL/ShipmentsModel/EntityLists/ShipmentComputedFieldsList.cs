@@ -42,5 +42,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string PickupFrom { get; set; }
         public string PickupTo { get; set; }
         public string OperationallyClosedByUserName { get; set; }
+        public bool CreatedFromDigital { get; set; }
     }
 }

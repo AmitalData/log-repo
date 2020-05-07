@@ -26,6 +26,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
         private string businessUnitId = null;
         private string leadSources = null;
         private string resellerId = null;
+        private string stageCount = null;
         private List<string> myLeadSourcesList = new List<string>();
         public MonthlyConversionManager(byte[] xmlFilters, int tenant)
         {
@@ -43,6 +44,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
             QueryFilterItem filterItem_BusinessUnitId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BusinessUnitId").FirstOrDefault();
             QueryFilterItem filterItem_LeadSources = queryOperations.QueryFilterItems.Where(d => d.FieldName == "LeadSources").FirstOrDefault();
             QueryFilterItem filterItem_Reseller = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ResellerId").FirstOrDefault();
+            QueryFilterItem filterItem_StageCount = queryOperations.QueryFilterItems.Where(d => d.FieldName == "StageCount").FirstOrDefault();
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             fromDate = todayDate;
@@ -120,6 +122,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                 if (filterItem_Reseller.FieldValue != null)
                 {
                     resellerId = filterItem_Reseller.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_StageCount != null)
+            {
+                if (filterItem_StageCount.FieldValue != null)
+                {
+                    stageCount = filterItem_StageCount.FieldValue.ToString();
                 }
             }
         }
@@ -251,6 +261,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                 numberOfMonths++;
 
                 List<MonthItemClass> closeWonAndUpList = new List<MonthItemClass>();
+                
                 #region
                 index = 0;
 
@@ -341,7 +352,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
                 #endregion
 
                 #region Sort
-                this.CorrectListValues(closeWonAndUpList);
+                if (stageCount == "Adjusted")
+                {
+                    this.CorrectListValues(closeWonAndUpList);
+                }
                 #endregion
 
                 foreach (MonthItemClass item in closeWonAndUpList)

@@ -59,7 +59,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
+  IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -524,9 +524,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                     this.StopBusyIndicator();
                                     var messageWindow = new MessageWindow();
                                    
-                                    if(result.ExceptionMessage=='Number of aging months is not set in Full Accounting Settings'){
-                                        result.ExceptionMessage= TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet");
-                                    }
+                                    // if(result.ExceptionMessage=='Number of aging months is not set in Full Accounting Settings'){
+                                    //     result.ExceptionMessage= TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet");
+                                    // }
                                     messageWindow.Show(result.ExceptionMessage);
                                 }
                                 else if (result.StatusCode == "D") {

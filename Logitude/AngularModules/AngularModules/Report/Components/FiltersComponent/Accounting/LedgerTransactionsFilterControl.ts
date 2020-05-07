@@ -58,11 +58,13 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
   }
 
   SetRunReportTitle() {
-    if (this.IsSchedulerReport) {
-      this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-    }
-    else {
-      this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+    if (this.isReady) {
+      if (this.IsSchedulerReport) {
+        this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+      }
+      else {
+        this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+      }
     }
   }
 

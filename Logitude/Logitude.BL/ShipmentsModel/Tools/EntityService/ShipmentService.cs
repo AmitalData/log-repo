@@ -1160,7 +1160,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
-                            queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                            if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
+                            {
+                                queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
+                            }
+                            else
+                            {
+                                queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                            }
                             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", entityPM.CustomerId } }, null, entityPM.CustomerId);
                         }
                     }
@@ -1196,7 +1203,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
-                            queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                            if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
+                            {
+                                queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
+                            }
+                            else
+                            {
+                                queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                            }
                             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, null, entityPM.CustomerId);
                         }
                         else if ((customerTenantAccessInfo == null || customerTenantAccessInfo.HasAccess == false) && !string.IsNullOrEmpty(entityPoco.CustomerShipmentNumber) && !string.IsNullOrEmpty(OldCustomerId))
@@ -1205,7 +1219,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             if (IsImporterTenantHasExportFeatureForExportShipments((int)entityPoco.CustomerTenantNumber, entityPM))
                             {
                                 IQueueService queueservice = new DbQueueService();
-                                queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                                if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
+                                {
+                                    queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
+                                }
+                                else
+                                {
+                                    queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                                }
                                 queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", entityPoco.CustomerTenantNumber.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, null, entityPM.CustomerId);
 
                             }
@@ -1214,7 +1235,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             var ImporterTenant = entityPM.CustomerTenantNumber;
                             IQueueService queueservice = new DbQueueService();
-                            queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                            if (entityPM.CreatedFromDigital && entityPM.IsHybrid)
+                            {
+                                queueservice.InitializeQueue("ImportersDigitalShipmentQueue", 0);
+                            }
+                            else
+                            {
+                                queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                            }
                             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, null, entityPM.CustomerId);
                         }
                     }
@@ -2984,91 +3012,93 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (entityPM.IsHybrid || loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
                     shipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(entityPM.Id, entityPM.Tenant);
-                    IsImporterApprovalRequiredOldValue = shipmentAdditionalCloudData.IsImporterApprovalRequried;
-                    if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                    if (shipmentAdditionalCloudData != null)
                     {
-                        shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
-                    }
-                    if (entityPM.UpdateSendUpdatesToAgentEnabledField)
-                    {
-                        shipmentAdditionalCloudData.SendUpdatesToAgentEnabled = entityPM.SendUpdatesToAgentEnabled;
-                    }
-                    if (entityPM.ApproveDateTime != null)
-                    {
-                        shipmentAdditionalCloudData.ApproveDateTime = entityPM.ApproveDateTime;
-                    }
-
-                    //if (!string.IsNullOrEmpty(entityPM.DeclarationXMLData))
-                    //{
-                    //    shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
-                    //}
-                    if (!string.IsNullOrEmpty(entityPM.ApprovedBy))
-                    {
-                        shipmentAdditionalCloudData.ApprovedByUserName = entityPM.ApprovedBy;
-                    }
-
-
-                    if ((entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData)) && entityPM.CustomsClearanceDate == null)
-                    {
-                        //var tempShipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(entityPM.Id, entityPM.Tenant);
-                        if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (!IsImporterApprovalRequiredOldValue && entityPM.IsImporterApprovalRequired))
+                        IsImporterApprovalRequiredOldValue = shipmentAdditionalCloudData.IsImporterApprovalRequried;
+                        if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                         {
-                            AddImporterApprovalReceivedQueue();
+                            shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
                         }
-                        shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
-                        shipmentAdditionalCloudData.IsImporterApprovalRequried = true;
-                        shipmentAdditionalCloudData.ApprovedByUserName = null;
-                        shipmentAdditionalCloudData.ApproveDateTime = null;
-                        shipmentAdditionalCloudData.DenyReason = null;
-                        shipmentAdditionalCloudData.VersionApproved = null;
-                    }
-                    else if (entityPM.IsShipmentAdditionalCloudDataChange)
-                    {
-                        shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
-                        shipmentAdditionalCloudData.ApprovedByUserName = null;
-                        shipmentAdditionalCloudData.DenyReason = null;
-                        shipmentAdditionalCloudData.ApproveDateTime = null;
-                        //if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                        if (entityPM.UpdateSendUpdatesToAgentEnabledField)
+                        {
+                            shipmentAdditionalCloudData.SendUpdatesToAgentEnabled = entityPM.SendUpdatesToAgentEnabled;
+                        }
+                        if (entityPM.ApproveDateTime != null)
+                        {
+                            shipmentAdditionalCloudData.ApproveDateTime = entityPM.ApproveDateTime;
+                        }
+
+                        //if (!string.IsNullOrEmpty(entityPM.DeclarationXMLData))
                         //{
-                        shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
+                        //    shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
                         //}
-
-                    }
-
-                    if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml && !string.IsNullOrEmpty(entityPM.DeclarationWCOXml))
-                    {
-                        shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
-                        shipmentAdditionalCloudData.DeclarationXmlData = null;
-                    }
+                        if (!string.IsNullOrEmpty(entityPM.ApprovedBy))
+                        {
+                            shipmentAdditionalCloudData.ApprovedByUserName = entityPM.ApprovedBy;
+                        }
 
 
-                    if (!string.IsNullOrEmpty(entityPM.VersionApproved))
-                    {
-                        shipmentAdditionalCloudData.VersionApproved = entityPM.VersionApproved;
-                    }
-                    if (!string.IsNullOrEmpty(entityPM.ShipmentAddtionalDataXML))
-                    {
-                        shipmentAdditionalCloudData.ShipmentAddtionalDataXML = entityPM.ShipmentAddtionalDataXML;
-                    }
+                        if ((entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData)) && entityPM.CustomsClearanceDate == null)
+                        {
+                            //var tempShipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(entityPM.Id, entityPM.Tenant);
+                            if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (!IsImporterApprovalRequiredOldValue && entityPM.IsImporterApprovalRequired))
+                            {
+                                AddImporterApprovalReceivedQueue();
+                            }
+                            shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
+                            shipmentAdditionalCloudData.IsImporterApprovalRequried = true;
+                            shipmentAdditionalCloudData.ApprovedByUserName = null;
+                            shipmentAdditionalCloudData.ApproveDateTime = null;
+                            shipmentAdditionalCloudData.DenyReason = null;
+                            shipmentAdditionalCloudData.VersionApproved = null;
+                        }
+                        else if (entityPM.IsShipmentAdditionalCloudDataChange)
+                        {
+                            shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
+                            shipmentAdditionalCloudData.ApprovedByUserName = null;
+                            shipmentAdditionalCloudData.DenyReason = null;
+                            shipmentAdditionalCloudData.ApproveDateTime = null;
+                            //if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                            //{
+                            shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
+                            //}
 
-                    if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)
-                    {
-                        shipmentAdditionalCloudData.IsPaymentRequired = true;
-                        shipmentAdditionalCloudData.PaymentRequestXML = entityPM.PaymentRequestXML;
-                        shipmentAdditionalCloudData.PaymentDateTime = entityPM.PaymentDateTime;
-                        AddPaymentReceivedToQueue();
+                        }
+
+                        if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml && !string.IsNullOrEmpty(entityPM.DeclarationWCOXml))
+                        {
+                            shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
+                            shipmentAdditionalCloudData.DeclarationXmlData = null;
+                        }
+
+
+                        if (!string.IsNullOrEmpty(entityPM.VersionApproved))
+                        {
+                            shipmentAdditionalCloudData.VersionApproved = entityPM.VersionApproved;
+                        }
+                        if (!string.IsNullOrEmpty(entityPM.ShipmentAddtionalDataXML))
+                        {
+                            shipmentAdditionalCloudData.ShipmentAddtionalDataXML = entityPM.ShipmentAddtionalDataXML;
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.PaymentRequestXML) && shipmentAdditionalCloudData.PaymentRequestXML != entityPM.PaymentRequestXML)
+                        {
+                            shipmentAdditionalCloudData.IsPaymentRequired = true;
+                            shipmentAdditionalCloudData.PaymentRequestXML = entityPM.PaymentRequestXML;
+                            shipmentAdditionalCloudData.PaymentDateTime = entityPM.PaymentDateTime;
+                            AddPaymentReceivedToQueue();
+                        }
+                        if (true)
+                        {
+                            shipmentAdditionalCloudData.IsUserIDNumberRequired = entityPM.IsUserIDNumberRequired;
+                            shipmentAdditionalCloudData.UserIdNumberXMLData = entityPM.UserIdNumberXMLData;
+                            //shipmentAdditionalCloudData.UserIdNumberUpdateDate = entityPM.UserIdNumberUpdateDate;
+                            //shipmentAdditionalCloudData.UserIdNumber = entityPM.UserIdNumber;
+                        }
+                        shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
+                        //shipmentAdditionalCloudDataRepository.SubmitChanges();
                     }
-                    if (true)
-                    {
-                        shipmentAdditionalCloudData.IsUserIDNumberRequired = entityPM.IsUserIDNumberRequired;
-                        shipmentAdditionalCloudData.UserIdNumberXMLData = entityPM.UserIdNumberXMLData;
-                        //shipmentAdditionalCloudData.UserIdNumberUpdateDate = entityPM.UserIdNumberUpdateDate;
-                        //shipmentAdditionalCloudData.UserIdNumber = entityPM.UserIdNumber;
-                    }
-                    shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
-                    //shipmentAdditionalCloudDataRepository.SubmitChanges();
                 }
-
                 #endregion
             }
 

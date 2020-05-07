@@ -31,6 +31,7 @@ export class TaxReportLineList {
 	StatusEnglishName: string;
 	JournalNumber: string;
 	IsExternalLine: boolean;
+	TotalInvoiceAmount: number;
 	
 }
  

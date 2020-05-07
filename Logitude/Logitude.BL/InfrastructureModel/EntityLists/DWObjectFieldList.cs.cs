@@ -29,5 +29,10 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool CannotFilter { get; set; }
         public string HelpText { get; set; }
         public bool IsCustom { get; set; }
+        public string OriginalObjectFieldCode { get; set; }
+
+
+        public string FullNameTextCodeDefaultText { get; set; }
+
     }
 }

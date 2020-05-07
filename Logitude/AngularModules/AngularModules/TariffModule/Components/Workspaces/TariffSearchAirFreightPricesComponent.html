@@ -84,7 +84,7 @@
                                                         [LookUpTableName]="'Port'"
                                                         [DataContext]="DataContext"
                                                         (SelectedItemChanged)="OriginPortId"
-                                                        [DisplayMemberPath]="'Code'"
+                                                        [DisplayMemberPath]="PortDisplayMemberPath"
                                                         [SelectedValue]="OriginPortId"
                                                         [DependencyFilter1Value]="OriginDependencyFilterValue">
                                                 </LogLov>
@@ -104,7 +104,7 @@
                                                         [LookUpTableName]="'Port'"
                                                         [DataContext]="DataContext"
                                                         (SelectedItemChanged)="DestinationPortId"
-                                                        [DisplayMemberPath]="'Code'"
+                                                        [DisplayMemberPath]="PortDisplayMemberPath"
                                                         [SelectedValue]="DestinationPortId"
                                                         [DependencyFilter1Value]="DestinationDependencyFilterValue">
                                                 </LogLov>
@@ -495,7 +495,7 @@
                                                                     [LookUpTableName]="'Port'"
                                                                     [DataContext]="DataContext"
                                                                     (SelectedItemChanged)="OriginPortId"
-                                                                    [DisplayMemberPath]="'Code'"
+                                                                    [DisplayMemberPath]="PortDisplayMemberPath"
                                                                     [SelectedValue]="OriginPortId"
                                                                     [DependencyFilter1Value]="OriginDependencyFilterValue">
                                                             </LogLov>
@@ -515,7 +515,7 @@
                                                                     [LookUpTableName]="'Port'"
                                                                     [DataContext]="DataContext"
                                                                     (SelectedItemChanged)="DestinationPortId"
-                                                                    [DisplayMemberPath]="'Code'"
+                                                                    [DisplayMemberPath]="PortDisplayMemberPath"
                                                                     [SelectedValue]="DestinationPortId"
                                                                     [DependencyFilter1Value]="DestinationDependencyFilterValue">
                                                             </LogLov>
@@ -1168,9 +1168,10 @@
                                                                                 </tr>
 
                                                                                 <tr class="FormFieldRow">
-                                                                                    <td (click)="ViewSurchargesClicked(item)">
-                                                                                        <p class="hyperlink">View Tariff</p>
-                                                                                    </td>
+                                                                                  <td>
+                                                                                    <Hyperlink [IsEnabled]="item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length != 0" (click)="ViewSurchargesClicked(item)">View Tariff</Hyperlink>
+                                                                                    <!--<p class="hyperlink" [class.HyperlinkDisabled]="!IsViewSurchargesClickedEnabled">View Tariff</p>-->
+                                                                                  </td>
                                                                                 </tr>
 
                                                                                 <tr>

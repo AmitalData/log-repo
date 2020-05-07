@@ -142,6 +142,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="OriginalObjectFieldCode"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DWObjectTableCode"
     ReferencedTable="DWObjectTables"

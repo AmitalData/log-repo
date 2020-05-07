@@ -2447,29 +2447,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private int? minimumInterestInvoiceBilling ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int? MinimumInterestInvoiceBilling  
-	   {
-	    
-	     get
-		{
-		   return minimumInterestInvoiceBilling;
-		 }
-		 set
-		 {
-		   if(minimumInterestInvoiceBilling != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinimumInterestInvoiceBilling",OldValue=minimumInterestInvoiceBilling,NewValue=value,PropertyType="int?"};
-		    NotifyPropertyChanged(values);
-		   minimumInterestInvoiceBilling=value;
-		   }
-			
-		 }
-	   }
 
 	   private List<GLAccountInterestPeriodPM> gLAccountInterestPeriods;
 	    
@@ -2570,6 +2547,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Smallcashbook",OldValue=smallcashbook,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   smallcashbook=value;
+		   }
+			
+		 }
+	   }
+	  private int? minimumInterestInvoiceBilling ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? MinimumInterestInvoiceBilling  
+	   {
+	    
+	     get
+		{
+		   return minimumInterestInvoiceBilling;
+		 }
+		 set
+		 {
+		   if(minimumInterestInvoiceBilling != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinimumInterestInvoiceBilling",OldValue=minimumInterestInvoiceBilling,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   minimumInterestInvoiceBilling=value;
 		   }
 			
 		 }

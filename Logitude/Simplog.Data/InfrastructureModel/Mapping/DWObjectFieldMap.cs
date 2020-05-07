@@ -26,7 +26,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Category2).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.LOVAdditionalColumns).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.HelpText).HasMaxLength(2000).IsUnicode(false);
-             
+
+            this.Property(t => t.OriginalObjectFieldCode).HasMaxLength(200).IsUnicode(false);
+
+
             this.ToTable("DWObjectFields");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -49,6 +52,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.HelpText).HasColumnName("HelpText");
             this.Property(t => t.CannotFilter).HasColumnName("CannotFilter");
             this.Property(t => t.IsCustom).HasColumnName("IsCustom");
+            this.Property(t => t.OriginalObjectFieldCode).HasColumnName("OriginalObjectFieldCode");
+
 
             this.HasRequired(t => t.DWObjectTable).WithMany().HasForeignKey(d => d.DWObjectTableCode);
             this.HasOptional(t => t.DimensionTable).WithMany().HasForeignKey(d => d.DimensionTableCode);

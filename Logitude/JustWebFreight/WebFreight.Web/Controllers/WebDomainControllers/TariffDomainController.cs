@@ -92,7 +92,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        //public HttpResponseMessage GetAvailableAirlineFreightTariffs(string FromPort, string ToPort, string BetweenDate, double Weight, string Weightcode, double? GrossWeight, string GrossWeightCode, double? Volume, string VolumeCode, string currencyId, string tariffType)
         [ActionName("PostAvailableAirlineFreightTariffs")]
         public HttpResponseMessage PostAvailableAirlineFreightTariffs(TariffSearchArgs args)
         {
@@ -1537,9 +1536,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 filter.Tenant = authToken.Tenant;
 
                 UploadTariffHelper uploadTariffHelper = new UploadTariffHelper(filter);
-                List<ExcelTariffLines> tariffLinesResult = uploadTariffHelper.Upload();
+                uploadTariffHelper.Upload();
 
-                return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
+                return Request.CreateResponse(HttpStatusCode.OK, "OK");
             }
 
             catch (Exception ex)
@@ -3507,5 +3506,94 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string ContainerCode { get; set; }
         public string ChargeId { get; set; }
         public string ContainerId { get; set; }
+    }
+
+    public class ExcelTariffLines
+    {
+        public string FromPortId { get; set; }
+        public string FromPortCode { get; set; }
+        public string FromPortCombinedCode { get; set; }
+        public string FromPortName { get; set; }
+        public string ToPortId { get; set; }
+        public string ToPortCode { get; set; }
+        public string ToPortCombinedCode { get; set; }
+        public string ToPortName { get; set; }
+        public decimal? MinPrice { get; set; }
+        public decimal? Step1Price { get; set; }
+        public decimal? Step2Price { get; set; }
+        public decimal? Step3Price { get; set; }
+        public decimal? Step4Price { get; set; }
+        public decimal? Step5Price { get; set; }
+        public decimal? Step6Price { get; set; }
+        public decimal? Step7Price { get; set; }
+        public decimal? Step8Price { get; set; }
+
+        public bool FromPortIsNotAir { get; set; }
+        public bool ToPortIsNotAir { get; set; }
+
+        public string FromPortText { get; set; }
+        public string ToPortText { get; set; }
+        public string MinPriceText { get; set; }
+        public string Step1PriceText { get; set; }
+        public string Step2PriceText { get; set; }
+        public string Step3PriceText { get; set; }
+        public string Step4PriceText { get; set; }
+        public string Step5PriceText { get; set; }
+        public string Step6PriceText { get; set; }
+        public string Step7PriceText { get; set; }
+        public string Step8PriceText { get; set; }
+
+        public bool IsMinPriceMinus { get; set; }
+        public bool IsStep1PriceMinus { get; set; }
+        public bool IsStep2PriceMinus { get; set; }
+        public bool IsStep3PriceMinus { get; set; }
+        public bool IsStep4PriceMinus { get; set; }
+        public bool IsStep5PriceMinus { get; set; }
+        public bool IsStep6PriceMinus { get; set; }
+        public bool IsStep7PriceMinus { get; set; }
+        public bool IsStep8PriceMinus { get; set; }
+
+        public bool HasErrors { get; set; }
+        public string ErrorText { get; set; }
+
+        public decimal? Surcharge1Price { get; set; }
+        public decimal? Surcharge2Price { get; set; }
+        public decimal? Surcharge3Price { get; set; }
+        public decimal? Surcharge4Price { get; set; }
+        public decimal? Surcharge5Price { get; set; }
+        public decimal? Surcharge6Price { get; set; }
+        public decimal? Surcharge7Price { get; set; }
+        public decimal? Surcharge8Price { get; set; }
+        public decimal? Surcharge9Price { get; set; }
+        public decimal? Surcharge10Price { get; set; }
+
+        public string Surcharge1PriceText { get; set; }
+        public string Surcharge2PriceText { get; set; }
+        public string Surcharge3PriceText { get; set; }
+        public string Surcharge4PriceText { get; set; }
+        public string Surcharge5PriceText { get; set; }
+        public string Surcharge6PriceText { get; set; }
+        public string Surcharge7PriceText { get; set; }
+        public string Surcharge8PriceText { get; set; }
+        public string Surcharge9PriceText { get; set; }
+        public string Surcharge10PriceText { get; set; }
+
+        public bool IsSurcharge1PriceMinus { get; set; }
+        public bool IsSurcharge2PriceMinus { get; set; }
+        public bool IsSurcharge3PriceMinus { get; set; }
+        public bool IsSurcharge4PriceMinus { get; set; }
+        public bool IsSurcharge5PriceMinus { get; set; }
+        public bool IsSurcharge6PriceMinus { get; set; }
+        public bool IsSurcharge7PriceMinus { get; set; }
+        public bool IsSurcharge8PriceMinus { get; set; }
+        public bool IsSurcharge9PriceMinus { get; set; }
+        public bool IsSurcharge10PriceMinus { get; set; }
+
+        public int Index { get; set; }
+
+        public string Notes { get; set; }
+        public DateTime? StartDate { get; set; }
+        public string StartDateText { get; set; }
+        public string TransitTime { get; set; }
     }
 }

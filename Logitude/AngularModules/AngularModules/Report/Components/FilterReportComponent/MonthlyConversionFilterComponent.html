@@ -19,50 +19,68 @@
                             <tr>
                                 <td>
                                     <table>
-                                        <tr>
-                                            <td style="width:100px;">Create Date:</td>
-                                            <td style="width:50px">From:</td>
-                                            <td style="width:120px">
-                                                <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
-                                            </td>
+                                      <tr>
+                                        <td style="width:100px;">Create Date:</td>
+                                        <td style="width:50px">From:</td>
+                                        <td style="width:120px">
+                                          <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                        </td>
 
-                                            <td style="width:15px"></td>
-                                            <td style="width:90px">To:</td>
-                                            <td style="width:120px">
-                                                <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
-                                            </td>
+                                        <td style="width:15px"></td>
+                                        <td style="width:90px">To:</td>
+                                        <td style="width:120px">
+                                          <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                        </td>
 
-                                            <td style="width:15px"></td>
-                                            <td style="width:120px;">Opportunities Type:</td>
-                                            <td style="width:200px;">
-                                                <LogLov [ObjectFieldName]="'OpportunityTypeId'"
-                                                        [ObjectTableName]="'Opportunity'"
-                                                        [DataContext]="DataContext"
-                                                        [LookUpTableName]="'OpportunityType'"
-                                                        [HideAddLink]="true"
-                                                        [HideAdd]="true"
-                                                        [HideEdit]="true"
-                                                        [HideMaintenanceIcon]="true">
-                                                </LogLov>
-                                            </td>
+                                        <td style="width:15px"></td>
+                                        <td style="width:120px;">Opportunities Type:</td>
+                                        <td style="width:200px;">
+                                          <LogLov [ObjectFieldName]="'OpportunityTypeId'"
+                                                  [ObjectTableName]="'Opportunity'"
+                                                  [DataContext]="DataContext"
+                                                  [LookUpTableName]="'OpportunityType'"
+                                                  [HideAddLink]="true"
+                                                  [HideAdd]="true"
+                                                  [HideEdit]="true"
+                                                  [HideMaintenanceIcon]="true">
+                                          </LogLov>
+                                        </td>
 
-                                            <td style="width:15px"></td>
-                                            <td style="width:90px">Business Unit: </td>
-                                            <td style="width:200px">
-                                                <LogLov [ObjectFieldName]="'BusinessUnitId'"
-                                                        [ObjectTableName]="'Opportunity'"
-                                                        [DataContext]="DataContext"
-                                                        [LookUpTableName]="'BusinessUnit'"
-                                                        [HideMaintenanceIcon]="true">
-                                                </LogLov>
-                                            </td>
+                                        <td style="width:15px"></td>
+                                        <td style="width:90px">Business Unit: </td>
+                                        <td style="width:200px">
+                                          <LogLov [ObjectFieldName]="'BusinessUnitId'"
+                                                  [ObjectTableName]="'Opportunity'"
+                                                  [DataContext]="DataContext"
+                                                  [LookUpTableName]="'BusinessUnit'"
+                                                  [HideMaintenanceIcon]="true">
+                                          </LogLov>
+                                        </td>
 
-                                            <td style="width:90px;">
-                                                <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
-                                            </td>
+                                        <td style="width:15px"></td>
+                                        <td style="width:100px;">
+                                          <label>Stage Count:</label>
+                                        </td>
 
-                                            <td></td>
-                                        </tr>
+                                        <td style="width:80px">
+                                          <RadioButton [Name]="'StageCountRadioFilter'" [IsChecked]="StageCountRadio == 'Actual'" (Checked)="SetStageCountRadio('Actual')" [Text]="'Actual Data'"></RadioButton>
+                                        </td>
+
+                                        <td style="width:5px;">
+                                          <div></div>
+                                        </td>
+
+                                        <td style="width:70px">
+                                          <RadioButton [Name]="'StageCountRadioFilter'" [IsChecked]="StageCountRadio == 'Adjusted'" (Checked)="SetStageCountRadio('Adjusted')" [Text]="'Adjusted'"></RadioButton>
+                                        </td>
+
+                                        <td style="width:15px"></td>
+                                        <td style="width:90px;">
+                                          <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
+                                        </td>
+
+                                        <td></td>
+                                      </tr>
                                     </table>
                                 </td>                               
                             </tr>

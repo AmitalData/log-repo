@@ -15,7 +15,7 @@ using System.Reflection;
 using System.Threading;
 using System.Reflection.Emit;
 using Simplog.Server.Infrastructure.Helpers;
-using System.Data.Entity;
+
 using Logitude.Accounting.Data.DataContract;
 
 namespace Logitude.Accounting.Data.Repositories
@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.Repositories
                 {
                     try
                     {
-                        (context as DbContext).Database.ExecuteSqlCommand(
+                        (context as System.Data.Entity.DbContext).Database.ExecuteSqlCommand(
   String.Format(
 @"UPDATE LedgerTransactions SET Mark='false',AmountToReconcile=0
 WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
@@ -91,12 +91,12 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             }
             return currencyId;
         }
-        public List<LedgerTransaction> GetByJournalId(string journalId, int tenant)
+        public IQueryable<LedgerTransaction> GetByJournalId(string journalId, int tenant)
         {
 
             return (from a in context.LedgerTransactions
                     where a.JournalId == journalId && a.Tenant == tenant
-                    select a).ToList();
+                    select a);
 
         }
         public IQueryable<LedgerTransaction> GetByJournalAndReference1(string journalId, string reference1, int tenant)
@@ -1152,7 +1152,7 @@ on record.JournalId equals j.Id
         {
 
           
-            return (from a in context.LedgerTransactions
+            return (from a in context.LedgerTransactions.Include("Account")
                     where journalIds.Contains(a.JournalId) && a.Tenant==tenant
 
                     select a

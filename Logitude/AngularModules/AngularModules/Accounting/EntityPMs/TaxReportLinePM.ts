@@ -144,6 +144,11 @@ export class TaxReportLinePM {
     public set IsExternalLine(newValue: boolean) { if (this.isExternalLine != newValue) { this.isExternalLine = newValue; this.MarkAsDirty("IsExternalLine"); } }
        
 	 
+    private totalInvoiceAmount: number;
+    public get TotalInvoiceAmount() { return this.totalInvoiceAmount; }
+    public set TotalInvoiceAmount(newValue: number) { if (this.totalInvoiceAmount != newValue) { this.totalInvoiceAmount = newValue; this.MarkAsDirty("TotalInvoiceAmount"); } }
+       
+	 
 
     public OldEntityPM: TaxReportLinePM;
 		

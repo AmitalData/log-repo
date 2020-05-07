@@ -43,6 +43,22 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return pms;
         }
+        public List<ReconciliationPM> GetLightReconciliationsByIds(List<string> recoIds, int tenant)
+        {
+            List<Reconciliation> recoLines = (from a in context.Reconciliations
+                                              where recoIds.Contains(a.Id) && a.Tenant == tenant
+                                              select a).ToList();
+
+            List<ReconciliationPM> pms = recoLines.Select(reco => new ReconciliationPM()
+            {
+                Id = reco.Id,
+                Number = reco.Number,
+                AccountId = reco.AccountId
+
+            }).ToList();
+
+            return pms;
+        }
         public ReconciliationPM GetByNumber(string number, int tenant)
         {
             Reconciliation reco = (from a in context.Reconciliations

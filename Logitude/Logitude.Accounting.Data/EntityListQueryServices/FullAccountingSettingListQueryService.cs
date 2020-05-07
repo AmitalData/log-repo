@@ -25,6 +25,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            select new FullAccountingSettingList()
                                                            {
                                                                Id = a.Id,
+                                                               NumberOfAgingMonths = a.NumberOfAgingMonths,
                                                                AutomaticReconcileMethodId = a.AutomaticReconcileMethodId,
                                                                ConsolidationVAT = a.ConsolidationVAT,
                                                                DeductionFileNumber = a.DeductionFileNumber,

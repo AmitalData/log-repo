@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffSettingUpdateClass
    {  		
-		public const string HashString = "7c79d18992767cdaec2df0174a096d36";
+		public const string HashString = "dce48ebbe4b847696b59b492e0d19598";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "TariffSetting",
 			      				    IsNew =  true,
 			      				    DBTableName =  "TariffSettings",
-			      				    OldDBTableName =  "TariffSettings",
 			      				    ObjectTableSingular =  "Tariff Setting",
 			      				    ObjectTablePlural =  "Tariff Settings",
 			      				    HasCustomFilter =  false,
@@ -111,13 +110,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tariff Setting",
-			      				    Code =  "99ca",
+			      				    Code =  "6dbc",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "TariffModule",
@@ -142,7 +141,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DefaultPriceSteps",
-					  						OldFieldName =  "DefaultPriceSteps",
 					  						ObjectTableName =  "TariffSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -199,7 +197,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DefaultWarningPercentage",
-					  						OldFieldName =  "DefaultWarningPercentage",
 					  						ObjectTableName =  "TariffSetting",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -257,7 +254,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AirDefaultStepsId",
-					  						OldFieldName =  "AirDefaultStepsId",
 					  						ObjectTableName =  "TariffSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -314,7 +310,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LCLDefaultStepsId",
-					  						OldFieldName =  "LCLDefaultStepsId",
 					  						ObjectTableName =  "TariffSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -371,7 +366,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AirDefaultSteps",
-					  						OldFieldName =  "AirDefaultSteps",
 					  						ObjectTableName =  "TariffSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -428,7 +422,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LCLDefaultSteps",
-					  						OldFieldName =  "LCLDefaultSteps",
 					  						ObjectTableName =  "TariffSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -504,6 +497,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ContainerDefaults",
 					  						ListPropertyPath =  "ContainerDefaults",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

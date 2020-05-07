@@ -8,6 +8,9 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { FullAccountingSettingListService } from 'Accounting/Services/StandardLists/FullAccountingSettingListService';
+import { FullAccountingSettingList } from 'Accounting/EntityLists/FullAccountingSettingList';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     templateUrl: './CustomerStatusReportFilterComponent.html',
@@ -21,10 +24,12 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
     public SalesmanFilterItems: ApiQueryFilters;
+    public _FullAccountingSettingListService: FullAccountingSettingListService = new FullAccountingSettingListService();
 
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     public showLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+    private CurrentSession = SessionLocator.SelectedSession;
 
 
     constructor() {
@@ -37,7 +42,6 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         // salesman lov field filtera
         this.SalesmanFilterItems = new ApiQueryFilters();
         this.SalesmanFilterItems.addAdditionalFilter("IsSalesman", true, null, null, "Equals", false, false, false, "boolean", false, false);
-
         // set default value for no of months
         // var newDate = new Date();
         // var currentMonth = newDate.getMonth()+1;
@@ -245,11 +249,33 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         }
     }
 
-
+    public  accSettings: FullAccountingSettingList;
+            LoadAccSettings() {
+              return new Promise(resolve => {
+                // Full Accounting Settings
+                this.CurrentSession.StartBusyIndicatorLoading();
+                this._FullAccountingSettingListService.getAll().subscribe((myResponse: ServiceResponse) => {
+                    this.CurrentSession.StopBusyIndicator();
+                    if (!myResponse.HasError) {
+                        var res = myResponse.Result;
+                      if (res != null && res.length > 0) {
+                        var list: FullAccountingSettingList[];
+                        list = res;
+                        this.accSettings = list[0]; // because there is only one record for each tenant
+                        resolve(this.accSettings);
+                      }
+                      else {
+                      //  reject();
+                      }
+                    }
+                });
+              });
+            }
     //#endregion
 
     RunButtonClicked() {
         this.SetUIProperties();
+      this.LoadAccSettings().then(res => { 
 
         var errors: string[] = [];
         var categoryValue = null;
@@ -268,6 +294,12 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
         //#endregion
 
+
+
+
+        if (!this.accSettings.NumberOfAgingMonths){
+            errors.push(TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet"));
+        }
 
         if(this.SelectedBalanceTypeCode == "debt" && !this.Balance)
             errors.push(this.showLocals ? "נא לבחור סכום לשדה ''מעל חוב" : "Please enter an amount for the 'Debt Above' field");
@@ -319,6 +351,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             }
             this.ValidationErrorsList = errors;
         }
+      }); 
     }
 
     IsBalanceTypeDisabled = false;

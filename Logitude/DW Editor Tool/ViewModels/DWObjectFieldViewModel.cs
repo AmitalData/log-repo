@@ -147,6 +147,18 @@ namespace DW_Editor_Tool.ViewModels
         }
         // is Measurement , Aggregation Type
 
+        string originalObjectFieldCode;
+        public string OriginalObjectFieldCode
+        {
+            get { return originalObjectFieldCode; }
+            set { originalObjectFieldCode = value; FirePropertyChanged("OriginalObjectFieldCode"); }
+        }
+        
+
+
+
+
+
         public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension", "SqlVariant" }; } }
         public List<string> AggregationTypesList { get { return new List<string>() { "SUM", "COUNT" }; } }
 

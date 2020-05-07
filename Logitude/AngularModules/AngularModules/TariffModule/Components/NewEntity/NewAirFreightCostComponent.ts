@@ -949,18 +949,36 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
     public AllInChargesText: string;
     private BuildAllInChargesText() {
-        var myText: string = null;
+    var allInCharges: string = null;
 
-        this.firstVersion.TariffAllInCharges.forEach((item: TariffVersionAllInChargePM) => {
-            if (AppTool.IsNullOrEmpty(myText)) {
-                myText = item.ChargesTypeCode;
-            }
+    if (this.firstVersion != null) {
+      var codesList: TariffVersionAllInChargePM[] = [];
+      var addDots:boolean = false;
 
-            else {
-                myText = myText + ", " + item.ChargesTypeCode;
-            }
-        });
+      if(this.firstVersion.TariffAllInCharges.length > 4){
+        codesList = this.firstVersion.TariffAllInCharges.slice(0, 4);
+        addDots = true;
+      }
 
-        this.AllInChargesText = myText;
+      else {
+        codesList = this.firstVersion.TariffAllInCharges;
+      }
+
+      codesList.forEach((item: TariffVersionAllInChargePM) => {
+        if (AppTool.IsNullOrEmpty(allInCharges)) {
+          allInCharges = item.ChargesTypeCode;
+        }
+
+        else {
+          allInCharges = allInCharges + ", " + item.ChargesTypeCode;
+        }
+      });
     }
+
+    if(addDots) {
+      allInCharges = allInCharges + "...";
+    }
+
+    this.AllInChargesText = allInCharges;
+  }
 }

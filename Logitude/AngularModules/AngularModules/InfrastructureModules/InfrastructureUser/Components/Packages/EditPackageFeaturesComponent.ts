@@ -79,29 +79,29 @@ export class EditPackageFeaturesComponent {
         this.BuildOthersList();
         this.BuildSettingsList();
     }
-    private BuildTablesLists() {
+  private BuildTablesLists() {
 
-        var items: ObjectTablePM[] = window.ObjectTables.filter(d => d.IsMain == true && d.IsClosed == false && d.IsComposition == false);
+    var items: ObjectTablePM[] = window.ObjectTables.filter(d => d.IsMain == true && d.EnableSecurity == true && d.IsClosed == false && d.IsComposition == false);
 
-        if (!AppTool.IsNullOrEmpty(this.mySearchText)) {
-            items = items.filter(f => f.Name != null && f.Name.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1);
-        }
-
-        items = items.sort(function (a, b) { return a.Name.toLowerCase() == b.Name.toLowerCase() ? 0 : a.Name.toLowerCase() < b.Name.toLowerCase() ? -1 : 1; });
-
-        var allTablesItems: TablePackageFeatureClass[] = [];
-
-        items.forEach(item => {
-            if (allTablesItems.filter(f => f.ObjectTableId == item.Id).length == 0) {
-                if (this.allFeatures.filter(d => d.ObjectTableId == item.Id && d.FeatureTypeCode == "MODL").length > 0) {
-                    allTablesItems.push(new TablePackageFeatureClass(item, this.allFeatures.filter(d => d.ObjectTableId == item.Id), this));;
-                }
-            }
-        });
-
-        this.ItemsSource1 = allTablesItems.filter(f => f.ObjectTableTypeCode != "MD");
-        this.ItemsSource2 = allTablesItems.filter(f => f.ObjectTableTypeCode == "MD");
+    if (!AppTool.IsNullOrEmpty(this.mySearchText)) {
+      items = items.filter(f => f.Name != null && f.Name.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1);
     }
+
+    items = items.sort(function (a, b) { return a.Name.toLowerCase() == b.Name.toLowerCase() ? 0 : a.Name.toLowerCase() < b.Name.toLowerCase() ? -1 : 1; });
+
+    var allTablesItems: TablePackageFeatureClass[] = [];
+
+    items.forEach(item => {
+      if (allTablesItems.filter(f => f.ObjectTableId == item.Id).length == 0) {
+        if (this.allFeatures.filter(d => d.ObjectTableId == item.Id && d.FeatureTypeCode == "MODL").length > 0) {
+          allTablesItems.push(new TablePackageFeatureClass(item, this.allFeatures.filter(d => d.ObjectTableId == item.Id), this));;
+        }
+      }
+    });
+
+    this.ItemsSource1 = allTablesItems.filter(f => f.ObjectTableTypeCode != "MD");
+    this.ItemsSource2 = allTablesItems.filter(f => f.ObjectTableTypeCode == "MD");
+  }
     private BuildMenusList() {
 
         var items: PackageFeatureClass[] = [];

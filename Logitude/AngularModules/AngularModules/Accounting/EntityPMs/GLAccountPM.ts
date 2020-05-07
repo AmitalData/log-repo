@@ -580,11 +580,6 @@ export class GLAccountPM {
     public set ActiveForInterestCreditInvoice(newValue: boolean) { if (this.activeForInterestCreditInvoice != newValue) { this.activeForInterestCreditInvoice = newValue; this.MarkAsDirty("ActiveForInterestCreditInvoice"); } }
        
 	 
-    private minimumInterestInvoiceBilling: number;
-    public get MinimumInterestInvoiceBilling() { return this.minimumInterestInvoiceBilling; }
-    public set MinimumInterestInvoiceBilling(newValue: number) { if (this.minimumInterestInvoiceBilling != newValue) { this.minimumInterestInvoiceBilling = newValue; this.MarkAsDirty("MinimumInterestInvoiceBilling"); } }
-       
-	 
      
 	private gLAccountInterestPeriods: GLAccountInterestPeriodPM[];
     get  GLAccountInterestPeriods() {
@@ -632,6 +627,11 @@ export class GLAccountPM {
     private smallcashbook: boolean;
     public get Smallcashbook() { return this.smallcashbook; }
     public set Smallcashbook(newValue: boolean) { if (this.smallcashbook != newValue) { this.smallcashbook = newValue; this.MarkAsDirty("Smallcashbook"); } }
+       
+	 
+    private minimumInterestInvoiceBilling: number;
+    public get MinimumInterestInvoiceBilling() { return this.minimumInterestInvoiceBilling; }
+    public set MinimumInterestInvoiceBilling(newValue: number) { if (this.minimumInterestInvoiceBilling != newValue) { this.minimumInterestInvoiceBilling = newValue; this.MarkAsDirty("MinimumInterestInvoiceBilling"); } }
        
 	 
 

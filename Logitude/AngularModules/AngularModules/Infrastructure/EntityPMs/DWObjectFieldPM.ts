@@ -155,6 +155,19 @@ export class DWObjectFieldPM {
     public set CustomPickListCode(newValue: string) { if (this.customPickListCode != newValue) { this.customPickListCode = newValue; this.MarkAsDirty("CustomPickListCode"); } }
        
 	 
+    private originalObjectFieldCode: string;
+    public get OriginalObjectFieldCode() { return this.originalObjectFieldCode; }
+    public set OriginalObjectFieldCode(newValue: string) { if (this.originalObjectFieldCode != newValue) { this.originalObjectFieldCode = newValue; this.MarkAsDirty("OriginalObjectFieldCode"); } }
+       
+	 
+    private fullNameTextCodeCode: string;
+    public get FullNameTextCodeCode() { return this.fullNameTextCodeCode; }
+    public set FullNameTextCodeCode(newValue: string) { if (this.fullNameTextCodeCode != newValue) { this.fullNameTextCodeCode = newValue; this.MarkAsDirty("FullNameTextCodeCode"); } }
+
+    private partnerFullNameTextCodeCode: string;
+    public get PartnerFullNameTextCodeCode() { return this.partnerFullNameTextCodeCode; }
+    public set PartnerFullNameTextCodeCode(newValue: string) { if (this.partnerFullNameTextCodeCode != newValue) { this.partnerFullNameTextCodeCode = newValue; this.MarkAsDirty("PartnerFullNameTextCodeCode"); } }
+
 
     public OldEntityPM: DWObjectFieldPM;
 		

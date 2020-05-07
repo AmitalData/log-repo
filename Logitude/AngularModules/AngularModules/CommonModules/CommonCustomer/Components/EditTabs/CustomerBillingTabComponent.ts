@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -16,7 +16,7 @@ import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainS
     templateUrl: './CustomerBillingTabComponent.html',
 })
 
-export class CustomerBillingTabComponent extends BaseComponent implements OnInit {
+export class CustomerBillingTabComponent extends BaseComponent implements OnInit,AfterViewInit {
     public EntityPM: CustomerPM;
     public ObjectTableName: string = "Customer";
     public DataContext = this;
@@ -49,11 +49,18 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         this.Listen();
     }
 
-    ngOnInit() {
+    ngAfterViewInit(): void {
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.SetUIProperties();
         this.RunComponent();
         this.LoadCreditLimitData();
+    }
+
+    ngOnInit() {
+        // this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        // this.SetUIProperties();
+        // this.RunComponent();
+        // this.LoadCreditLimitData();
     }
 
     RunComponent() {

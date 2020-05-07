@@ -7668,6 +7668,9 @@
   <ItemGroup>
     <Content Include="browserslist" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="extra-webpack.config.js" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
