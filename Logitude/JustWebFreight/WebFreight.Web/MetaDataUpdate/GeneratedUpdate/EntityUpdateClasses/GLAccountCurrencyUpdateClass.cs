@@ -583,7 +583,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {   
 
 		   ObjectTable GLAccountCurrencyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GLAccountCurrency" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> GLAccountCurrencyObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "GLAccountCurrency").ToList();
+		   //List<ObjectField> GLAccountCurrencyObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "GLAccountCurrency").ToList();
 		       
 	      
 

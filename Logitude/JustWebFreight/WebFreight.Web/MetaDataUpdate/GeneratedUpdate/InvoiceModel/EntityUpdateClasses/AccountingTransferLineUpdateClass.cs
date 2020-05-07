@@ -389,7 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    {   
 
 		   ObjectTable AccountingTransferLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingTransferLine" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> AccountingTransferLineObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingTransferLine").ToList();
+		   //List<ObjectField> AccountingTransferLineObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingTransferLine").ToList();
 		       
 	      
 
