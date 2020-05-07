@@ -31,7 +31,7 @@ import { BankDepositPMService } from '../../../Services/StandardPMs/BankDepositP
 import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
 
 @Component({
-    
+
     templateUrl: './BankDepositDetailsTabComponent.html',
 })
 
@@ -702,6 +702,10 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             for (let line of this.CashbookLines.Collection) {
                 this.PushBankDeposit(line);
             }
+        }else{
+          for (let line of this.CashbookLines.Collection) {
+            line.IsSelected = false;
+        }
         }
         this.CalculateTotals();
     }
