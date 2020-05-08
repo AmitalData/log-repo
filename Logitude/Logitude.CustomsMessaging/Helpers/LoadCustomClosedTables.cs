@@ -972,6 +972,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(CustomsShip, hazardousSubstanceObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(hazardousSubstance);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomerRoleType = closedSystemTables.Where(d => d.id == "1432").FirstOrDefault();
+            ObjectTable CustomerRoleTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerRoleType", 0, false);
+            InsertClosedTableRecord(CustomerRoleType, CustomerRoleTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CustomerRoleType);
+
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);
