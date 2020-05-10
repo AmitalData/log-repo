@@ -575,6 +575,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.GetAll = true;
         filters.GetCount = true;
 
+        
         filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
         // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
         filters.addAdditionalFilter("DueDate", new Date(), null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
@@ -582,7 +583,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if(this.ObjectTableName == "BankAccount")
             filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
+        if (!this.showInProgessLines){
+                filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
+                filters.addAdditionalFilter("InProgressExternalReconcile", false, null, null, "Equals", false, false, false, "boolean");
 
+        }
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
 
@@ -855,8 +860,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
 
-        if (!this.showInProgessLines)
+        if (!this.showInProgessLines){
             filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
+            filters.addAdditionalFilter("InProgressExternalReconcile", false, null, null, "Equals", false, false, false, "boolean");
+        }
 
         return this.entityListService.getExternalReoncilioationsByFilter("ReconcileExternalPage", objectTable.Id, this.EntityPM.Id, filters);
     }
