@@ -17,6 +17,12 @@ BEGIN
     ----MetaData All Scripts: Never Apply these scripts
     --*--After Delete--*--
     --ObjectFields
+    UPDATE CUSTOMSREQUIREDFIELDS
+    SET ObjectFieldId =
+      (SELECT Id
+      FROM objectfields
+      WHERE FieldCode = CUSTOMSREQUIREDFIELDS.ObjectFieldCode
+      );
     UPDATE querycolumns
     SET ObjectFieldId =
       ( SELECT Id FROM objectfields WHERE FieldCode = querycolumns.ObjectFieldCode
