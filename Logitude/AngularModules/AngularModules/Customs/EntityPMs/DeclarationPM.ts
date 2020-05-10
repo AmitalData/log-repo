@@ -1159,6 +1159,56 @@ export class DeclarationPM {
     public set AutomaticPayment(newValue: number) { if (this.automaticPayment != newValue) { this.automaticPayment = newValue; this.MarkAsDirty("AutomaticPayment"); } }
        
 	 
+    private direction: string;
+    public get Direction() { return this.direction; }
+    public set Direction(newValue: string) { if (this.direction != newValue) { this.direction = newValue; this.MarkAsDirty("Direction"); } }
+       
+	 
+    private exportFile: string;
+    public get ExportFile() { return this.exportFile; }
+    public set ExportFile(newValue: string) { if (this.exportFile != newValue) { this.exportFile = newValue; this.MarkAsDirty("ExportFile"); } }
+       
+	 
+    private declarationTypeCode: string;
+    public get DeclarationTypeCode() { return this.declarationTypeCode; }
+    public set DeclarationTypeCode(newValue: string) { if (this.declarationTypeCode != newValue) { this.declarationTypeCode = newValue; this.MarkAsDirty("DeclarationTypeCode"); } }
+       
+	 
+    private agentRoleCode: string;
+    public get AgentRoleCode() { return this.agentRoleCode; }
+    public set AgentRoleCode(newValue: string) { if (this.agentRoleCode != newValue) { this.agentRoleCode = newValue; this.MarkAsDirty("AgentRoleCode"); } }
+       
+	 
+    private destinationCountryCode: string;
+    public get DestinationCountryCode() { return this.destinationCountryCode; }
+    public set DestinationCountryCode(newValue: string) { if (this.destinationCountryCode != newValue) { this.destinationCountryCode = newValue; this.MarkAsDirty("DestinationCountryCode"); } }
+       
+	 
+    private loadingDateTime: Date;
+    public get LoadingDateTime() { return this.loadingDateTime; }
+    public set LoadingDateTime(newValue: Date) { if (this.loadingDateTime != newValue) { this.loadingDateTime = newValue; this.MarkAsDirty("LoadingDateTime"); } }
+       
+	 
+    private shipCode: string;
+    public get ShipCode() { return this.shipCode; }
+    public set ShipCode(newValue: string) { if (this.shipCode != newValue) { this.shipCode = newValue; this.MarkAsDirty("ShipCode"); } }
+       
+	 
+    private isExporterConfirmation: boolean;
+    public get IsExporterConfirmation() { return this.isExporterConfirmation; }
+    public set IsExporterConfirmation(newValue: boolean) { if (this.isExporterConfirmation != newValue) { this.isExporterConfirmation = newValue; this.MarkAsDirty("IsExporterConfirmation"); } }
+       
+	 
+    private shipName: string;
+    public get ShipName() { return this.shipName; }
+    public set ShipName(newValue: string) { if (this.shipName != newValue) { this.shipName = newValue; this.MarkAsDirty("ShipName"); } }
+       
+	 
+    private destinationCountryName: string;
+    public get DestinationCountryName() { return this.destinationCountryName; }
+    public set DestinationCountryName(newValue: string) { if (this.destinationCountryName != newValue) { this.destinationCountryName = newValue; this.MarkAsDirty("DestinationCountryName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

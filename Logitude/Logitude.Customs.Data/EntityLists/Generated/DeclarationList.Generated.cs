@@ -328,6 +328,24 @@ namespace Logitude.Customs.Data.EntityLists
        public int AmendmentNumber  { get; set; }
        [DataMember]
        public string CourierPendingReasonName  { get; set; }
+       [DataMember]
+       public string Direction  { get; set; }
+       [DataMember]
+       public string ExportFile  { get; set; }
+       [DataMember]
+       public string AgentRoleCode  { get; set; }
+       [DataMember]
+       public string DestinationCountryCode  { get; set; }
+       [DataMember]
+       public DateTime LoadingDateTime  { get; set; }
+       [DataMember]
+       public string ShipCode  { get; set; }
+       [DataMember]
+       public bool IsExporterConfirmation  { get; set; }
+       [DataMember]
+       public string ShipName  { get; set; }
+       [DataMember]
+       public string DestinationCountryName  { get; set; }
    }
 
 }
