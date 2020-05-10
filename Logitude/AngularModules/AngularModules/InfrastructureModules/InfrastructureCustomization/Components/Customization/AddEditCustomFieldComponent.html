@@ -46,6 +46,18 @@
                                     </label>
                                 </td>
                             </tr>
+
+
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Date' || objectField.DataTypeCode == 'DateTime'">
+                                <td style="height: 22px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Read Only
+                                    </label>
+                                </td>
+                            </tr>
+
+
+
                             
                             <tr style="height: 30px;">
                                 <td style="height: 22px;">
@@ -54,6 +66,13 @@
                                     </label>
                                 </td>
                             </tr>
+
+
+
+                   
+
+
+
                             <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'LookUp'">
                                 <td style="height: 22px;">
                                     <label style="padding-left:10px;color: rgb(110, 113, 114);">
@@ -136,6 +155,16 @@
                                 </td>
                             </tr>
                           
+
+                            <tr style="height: 30px;" *ngIf="objectField.DataTypeCode == 'Date' || objectField.DataTypeCode == 'DateTime'">
+                                <td style="height: 22px;">
+                                    <CheckBox [IsChecked]="DisplayOnly" (Checked)="DisplayOnly = $event"></CheckBox>
+                                </td>
+                            </tr>
+
+
+
+
                             <tr style="height: 30px;">
                                 <td style="height: 22px;">
                                     <LogTextBox [ObjectFieldName]="'HelpText'" [DataContext]="DataContext"></LogTextBox>
