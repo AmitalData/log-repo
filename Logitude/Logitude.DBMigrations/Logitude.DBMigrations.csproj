@@ -90,6 +90,7 @@
     <None Include="Reports\DBMigrationsPerformance.csv" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="GeneratedScript\NotExecutedScripts.sql" />
     <Content Include="GeneratedScript\SystemLogsScript.sql" />
     <Content Include="GeneratedScript\MainScript.sql" />
     <Content Include="GeneratedScript\GlobalScript.sql" />

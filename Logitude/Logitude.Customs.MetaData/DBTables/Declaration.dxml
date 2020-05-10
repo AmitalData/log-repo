@@ -272,7 +272,7 @@
   <Column
     Name="StorageSiteCode"
     Type="varchar"
-    Size="17">
+    Size="20">
     <Constraints
       Nullable="true" />
   </Column>
@@ -280,7 +280,7 @@
     Name="PlatformFee"
     Type="decimal"
     Precision="18"
-    Scale="3">
+    Scale="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -628,7 +628,7 @@
   <Column
     Name="AcceptanceStatusCode"
     Type="varchar"
-    Size="1">
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -731,7 +731,7 @@
   <Column
     Name="AmendmentStatus"
     Type="varchar"
-    Size="2">
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>

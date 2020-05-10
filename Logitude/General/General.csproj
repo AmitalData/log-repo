@@ -257,6 +257,9 @@
     <Content Include="Customs2020\5 after update.sql" />
     <Content Include="Customs2020\delete from metadata bad records.sql" />
     <Content Include="Customs2020\DeleteObjectTableMetadataSP.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForGlobalDB.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForMainDB.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForSystemLogsDB.sql" />
     <Content Include="Customs2020\PreDeleteMetadata.sql" />
     <Content Include="Customs2020\ReconnectObjectMetaData.sql" />
     <Content Include="Customs2020\SELECT CONSTRAINTS.sql" />
@@ -2152,6 +2155,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Customs2020\PreDatabaseMigrationScripts\Fix Local Oracle Database.docx" />
     <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceappSettings.config" />
     <None Include="Jenkins\ConnectionStrings\563\JustAmitalCustomsWindowsServiceConnectionStrings.config" />
     <None Include="Jenkins\ConnectionStrings\563\JustConfig\Customs.appSettings.config" />
