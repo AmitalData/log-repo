@@ -490,7 +490,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
     private timeDifferencecalCulationMethod(toHour: Date, fromHour: Date, isEnable: boolean) {
         var time = "0";
         var dateDiff;
-        if (isEnable) {
+      if (isEnable && toHour && fromHour) {
             var d1 = DateTool.GetDateFormats(new Date(toHour.toString())).DateParts.DateObject;
             var d2 = DateTool.GetDateFormats(new Date(fromHour.toString())).DateParts.DateObject;
             var timeDiff = Math.abs(DateTool.GetDateFromDate(toHour).getTime() - DateTool.GetDateFromDate(fromHour).getTime());
