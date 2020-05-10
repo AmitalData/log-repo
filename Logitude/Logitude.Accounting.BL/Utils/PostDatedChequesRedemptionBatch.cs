@@ -114,60 +114,64 @@ namespace Logitude.Accounting.BL.Utils
                         }
 
                         bool useLocal = true;
-                    //    var user = GetLoggedContact(tenant);
-                    //    if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
-
-                        JournalUpdateService journalUpdateService = new JournalUpdateService(context, new Dictionary<string, IContext>(), tenant);
-                        List<JournalLineList> lineList = new List<JournalLineList>();
-                        JournalLineList journalLine_credit = new JournalLineList
+                        bool doJournal = true;
+                        if (bankAccount.DeferredGLAccountId == bankAccount.GLAccountId)
+                            doJournal = false;
+                        //    var user = GetLoggedContact(tenant);
+                        //    if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+                        if (doJournal)
                         {
-                            ActionCode = "1", // Credit
-                            AccountingDate = DateTime.Now.Date,
-                            Tenant = aRPaymentCheque.Tenant,
-                            CreditAccountId = bankAccount.DeferredGLAccountId,
-                            DocumentDate = aRPaymentCheque.ValueDate.Date,
-                            DueDate = aRPaymentCheque.ValueDate.Date,
-                            LocalAmount = aRPaymentCheque.LocalAmount,
-                            // CurrencyId = aRPaymentCheque.CurrencyId,
-                            CurrencyCode = aRPaymentCheque.CurrencyCode,
-                            ForeignAmount = aRPaymentCheque.ForeignAmount, 
-                            Reference1 = aRPaymentCheque.ChequeNumber,
-                            Reference2 = bankDeposit.DepositNumber.ToString(),
-                            Reference3 = aRPaymentCheque.PaymentNumber,
-                            Notes = TranslateTextsClassTranslate("Accounting.General.O.PostdatedChequeRedemption", 0, useLocal),
-                    };
-                        AccountingLogger.LogMe("Credit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
-                        lineList.Add(journalLine_credit);
+                            JournalUpdateService journalUpdateService = new JournalUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                            List<JournalLineList> lineList = new List<JournalLineList>();
+                            JournalLineList journalLine_credit = new JournalLineList
+                            {
+                                ActionCode = "1", // Credit
+                                AccountingDate = DateTime.Now.Date,
+                                Tenant = aRPaymentCheque.Tenant,
+                                CreditAccountId = bankAccount.DeferredGLAccountId,
+                                DocumentDate = aRPaymentCheque.ValueDate.Date,
+                                DueDate = aRPaymentCheque.ValueDate.Date,
+                                LocalAmount = aRPaymentCheque.LocalAmount,
+                                // CurrencyId = aRPaymentCheque.CurrencyId,
+                                CurrencyCode = aRPaymentCheque.CurrencyCode,
+                                ForeignAmount = aRPaymentCheque.ForeignAmount,
+                                Reference1 = aRPaymentCheque.ChequeNumber,
+                                Reference2 = bankDeposit.DepositNumber.ToString(),
+                                Reference3 = aRPaymentCheque.PaymentNumber,
+                                Notes = TranslateTextsClassTranslate("Accounting.General.O.PostdatedChequeRedemption", 0, useLocal),
+                            };
+                            AccountingLogger.LogMe("Credit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
+                            lineList.Add(journalLine_credit);
 
-                        JournalLineList journalLine_debit = new JournalLineList
-                        {
-                            ActionCode = "2", // Debit
-                            AccountingDate = DateTime.Now.Date,
-                            Tenant = aRPaymentCheque.Tenant,
-                            DebitAccountId = bankAccount.GLAccountId,
-                            //  DebitControlAccountId = gLAccountPM.ControlAccountId,
-                            DocumentDate = aRPaymentCheque.ValueDate.Date,
-                            DueDate = aRPaymentCheque.ValueDate.Date,
-                            LocalAmount = aRPaymentCheque.LocalAmount,
-                            // CurrencyId = aRPaymentCheque.CurrencyId,
-                            CurrencyCode = aRPaymentCheque.CurrencyCode,
-                            ForeignAmount = aRPaymentCheque.ForeignAmount,
-                            Reference1 = aRPaymentCheque.ChequeNumber,
-                            Reference2 = bankDeposit.DepositNumber.ToString(),
-                            Reference3 = aRPaymentCheque.PaymentNumber,
-                            Notes = TranslateTextsClassTranslate("Accounting.General.O.PostdatedChequeRedemption", 0, useLocal),
-                };
-                        AccountingLogger.LogMe("Debit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
-                        lineList.Add(journalLine_debit);
+                            JournalLineList journalLine_debit = new JournalLineList
+                            {
+                                ActionCode = "2", // Debit
+                                AccountingDate = DateTime.Now.Date,
+                                Tenant = aRPaymentCheque.Tenant,
+                                DebitAccountId = bankAccount.GLAccountId,
+                                //  DebitControlAccountId = gLAccountPM.ControlAccountId,
+                                DocumentDate = aRPaymentCheque.ValueDate.Date,
+                                DueDate = aRPaymentCheque.ValueDate.Date,
+                                LocalAmount = aRPaymentCheque.LocalAmount,
+                                // CurrencyId = aRPaymentCheque.CurrencyId,
+                                CurrencyCode = aRPaymentCheque.CurrencyCode,
+                                ForeignAmount = aRPaymentCheque.ForeignAmount,
+                                Reference1 = aRPaymentCheque.ChequeNumber,
+                                Reference2 = bankDeposit.DepositNumber.ToString(),
+                                Reference3 = aRPaymentCheque.PaymentNumber,
+                                Notes = TranslateTextsClassTranslate("Accounting.General.O.PostdatedChequeRedemption", 0, useLocal),
+                            };
+                            AccountingLogger.LogMe("Debit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
+                            lineList.Add(journalLine_debit);
 
-                        if (aRPaymentCheque != null && aRPaymentCheque.ValueDate != null)
-                        {
+                            if (aRPaymentCheque != null && aRPaymentCheque.ValueDate != null)
+                            {
 
-                            WriteJournal(journalUpdateService, lineList, aRPaymentCheque, bankDeposit);
-                            lineList.Clear();
+                                WriteJournal(journalUpdateService, lineList, aRPaymentCheque, bankDeposit);
+                                lineList.Clear();
 
+                            }
                         }
-
                     }
                     UpdateARPaymentChequeStatus(id, tenant, "3", context);
 
