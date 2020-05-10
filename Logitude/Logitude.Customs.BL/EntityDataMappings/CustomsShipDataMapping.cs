@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -20,6 +21,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPMToPOCO(CustomsShipPM entityPM, CustomsShip entityPOCO)
         {
             //throw new NotImplementedException();
+            AddPOCOPropertyName(POCOPropertyNames.Code);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPOCO.Code = entityPM.Code ;
+            }
         }
 
         public void CustomPOCOToPM(CustomsShipPM entityPM, CustomsShip entityPOCO)
