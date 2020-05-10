@@ -356,6 +356,7 @@ import { ApprovedProfessionListService } from './Services/StandardLists/Approved
 import { RequestTypeListService } from './Services/StandardLists/RequestTypeListService'
 import { CustomsAutonomyKeywordPMService } from './Services/StandardPMs/CustomsAutonomyKeywordPMService';
 import { CurrencyTypePMService } from './Services/StandardPMs/CurrencyTypePMService';
+import { CustomsShipListService } from './Services/StandardLists/CustomsShipListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -592,6 +593,7 @@ export class ModuleProviders {
             case "DeclarationReferantDataListService": { myResult = new DeclarationReferantDataListService(); break; }
             case "ExceptionReasonListService": { myResult = new ExceptionReasonListService(); break;}
 
+            case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
              //#endregion                
 
             //#region StandardPMs
