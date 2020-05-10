@@ -150,7 +150,13 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ARInvoices = shipment.ARInvoices;
                 myDataProvider.IsDangerous = shipment.IsDangerous;
                 myDataProvider.SpecialServicesTypeName = shipment.SpecialServicesTypeName;
-                
+                myDataProvider.Transhipment3ETA = shipment.Transshipment3ETA;
+                myDataProvider.Transhipment1ETD = shipment.Transshipment1ETD;
+                myDataProvider.Transhipment3ETD = shipment.Transshipment3ETD;
+                myDataProvider.Transhipment1Vessel = shipment.Transshipment1VesselName;
+                myDataProvider.Transhipment2Vessel = shipment.Transshipment2VesselName;
+                myDataProvider.Transhipment3Vessel = shipment.Transshipment3VesselName;
+
                 if (shipment.DocumentsClosingDate != null)
                 {
                     myDataProvider.DocumentsClosingDate = shipment.DocumentsClosingDate;
