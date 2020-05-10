@@ -770,7 +770,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ExcelOnly",
+					 						FieldName =  "DisablePreview",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -788,8 +788,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ExcelOnly",
-					  						ListPropertyPath =  "ExcelOnly",
+					  						PMPropertyPath =  "DisablePreview",
+					  						ListPropertyPath =  "DisablePreview",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -806,7 +806,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ExcelOnly",
+					  						FullFieldLable =  "DisablePreview",
 					  						DefaultText =  "Excel Only",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,

@@ -29,7 +29,7 @@ namespace WebFreight.Web.Helpers
         public string UserId { get; set; }
         public string ReportId { get; set; }
         public int NumberOfRequests { get; set; }
-        public bool ExcelOnly { get; set; }
+        public bool DisablePreview { get; set; }
 
         
     }

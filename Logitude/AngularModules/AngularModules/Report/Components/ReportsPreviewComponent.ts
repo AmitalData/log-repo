@@ -320,7 +320,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.IsRunReportSucceeded = false;
         this.IsRunReportFailed = false;
 
-        if (!this.Report.ExcelOnly) {
+        if (!this.Report.DisablePreview) {
             this.StartBusyIndicator("Generating...");
             this.ReportFliter = this.FillReportFilter(filter);
             this.ValiditySelectedTemplate();
@@ -395,7 +395,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         filter.DefaultTemplateVsersion = 1;
         filter.UserId = SessionLocator.LoggedUserId;
         filter.ReportId = this.Report.Id;
-        filter.ExcelOnly = this.Report.ExcelOnly;
+        filter.DisablePreview = this.Report.DisablePreview;
 
         if (this.ReportsTemplateLists) {
             var reportTemplate: any = this.ReportsTemplateLists.filter(d => d.Id == filter.DefaultTemplateId)[0];

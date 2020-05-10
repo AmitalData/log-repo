@@ -143,13 +143,13 @@ export class StimulsoftViewerComponent implements OnInit {
     IsShowStimulImage: boolean = true;
     SetStimualData() {
 
-        var isExcelOnly = this.StimulsoftArgData.ReportFliter ? this.StimulsoftArgData.ReportFliter.ExcelOnly : false;
+        var isDisablePreview = this.StimulsoftArgData.ReportFliter ? this.StimulsoftArgData.ReportFliter.DisablePreview : false;
 
-        this.IsShowStimulImage = !isExcelOnly;
+        this.IsShowStimulImage = !isDisablePreview;
         if (this.StimulsoftArgData.ShowStimulHeader) this.Headervisibility = "block";
         if (this.StimulsoftArgData.ShowStimulFooter) this.Footervisibility = "block";
 
-        if (!isExcelOnly) this.BuildStimulImage(this.StimulsoftArgData.BuildStimulReportResult, this);
+        if (!isDisablePreview) this.BuildStimulImage(this.StimulsoftArgData.BuildStimulReportResult, this);
         this.IsShowExportMicrosoftExcel = this.StimulsoftArgData.IsShowExportMicrosoftExcel;
         this.IsShowExportPrinttoPDF = this.StimulsoftArgData.IsShowExportPrinttoPDF;
 
@@ -165,7 +165,7 @@ export class StimulsoftViewerComponent implements OnInit {
         if (this.PagesCount == null) this.PagesCount = 0;
         this.NumberOfPage = this.StimulsoftArgData.NumberOfPage;
 
-        if (isExcelOnly) this.IsEditingEnabled = true;
+        if (isDisablePreview) this.IsEditingEnabled = true;
         this.SetEnableButtonPager();
 
 
@@ -811,8 +811,8 @@ export class StimulsoftViewerComponent implements OnInit {
         }
     }
 
-    DownloadExcelOnly() {
-        //var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=ExcelOnly"
+    DownloadDisablePreview() {
+        //var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=DisablePreview"
         //window.open(url);
 
     }
