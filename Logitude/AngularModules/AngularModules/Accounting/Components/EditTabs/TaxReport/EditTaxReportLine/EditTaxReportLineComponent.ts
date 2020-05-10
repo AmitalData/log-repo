@@ -31,6 +31,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     public DataContext = this;
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
+    public TypeFilterItems: ApiQueryFilters = new ApiQueryFilters();
 
     _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
@@ -51,6 +52,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
             this.OldReference = this.Reference;
             this.OldReferecneGroup = this.ReferecneGroup;
             this.OldReferenceDate = this.ReferenceDate;
+            this.TypeFilterItems.addAdditionalFilter("Code", "I,S", null, null, "InListExact", false, false, false, "string", false, true);
 
             this.SetUIProperties();
         }
@@ -72,6 +74,16 @@ export class EditTaxReportLineComponent extends BaseComponent {
             this.SetUIProperties();
         }
     }
+
+  //type 
+  get LineTypeCode() { return this.TaxReportLinePM.LineTypeCode; }
+  set LineTypeCode(value: string) {
+    if (this.TaxReportLinePM.LineTypeCode != value) {
+      this.TaxReportLinePM.LineTypeCode = value;
+      this.SetUIProperties();
+    }
+  }
+
 
     //VatNumber
     get VatNumber() { return this.TaxReportLinePM.VatNumber; }
@@ -130,6 +142,13 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
         }
         this.UIProperties.SetRequired("TransmitStatusCode", this.ObjectTableName, !this.TransmitStatusCode);
+
+      if (this.LineTypeCode == "I") {
+        this.UIProperties.SetEnabled("Reference", this.ObjectTableName, true);
+
+      } else { this.Reference = this.OldReference;}
+
+
     }
 
     //#region Buttons
