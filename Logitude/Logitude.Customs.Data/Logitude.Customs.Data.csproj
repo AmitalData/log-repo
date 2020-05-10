@@ -139,6 +139,7 @@
     <Compile Include="EntityKeys\DeclarationCargoSplitKeys.cs" />
     <Compile Include="EntityKeys\DeclarationConsAcceptanceKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCourierStatusKeys.cs" />
+    <Compile Include="EntityKeys\DeclarationExportRecipientKeys.cs" />
     <Compile Include="EntityKeys\DeclarationMamanSpecialActionKeys.cs" />
     <Compile Include="EntityKeys\DeclarationPendingKeys.cs" />
     <Compile Include="EntityKeys\DeclarationReferantDataKeys.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="EntityListQueryServices\DeclarationCargoSplitListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationConsAcceptanceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCourierStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DeclarationExportRecipientListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationMamanSpecialActionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationPendingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationReferantDataListQueryService.cs" />
@@ -263,6 +265,7 @@
     <Compile Include="EntityListQueryServices\Generated\DeclarationCargoSplitListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationConsAcceptanceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCourierStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DeclarationExportRecipientListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationMamanSpecialActionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationPendingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationReferantDataListQueryService.Generated.cs" />
@@ -361,6 +364,7 @@
     <Compile Include="EntityLists\Generated\DeclarationCargoSplitList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationConsAcceptanceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCourierStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DeclarationExportRecipientList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationMamanSpecialActionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationPendingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationReferantDataList.Generated.cs" />
@@ -436,6 +440,7 @@
     <Compile Include="EntityMapping\DeclarationCargoSplitMap.cs" />
     <Compile Include="EntityMapping\DeclarationConsAcceptanceMap.cs" />
     <Compile Include="EntityMapping\DeclarationCourierStatusMap.cs" />
+    <Compile Include="EntityMapping\DeclarationExportRecipientMap.cs" />
     <Compile Include="EntityMapping\DeclarationMamanSpecialActionMap.cs" />
     <Compile Include="EntityMapping\DeclarationPendingMap.cs" />
     <Compile Include="EntityMapping\DeclarationReferantDataMap.cs" />
@@ -510,6 +515,7 @@
     <Compile Include="EntityPOCOs\DeclarationCargoSplit.cs" />
     <Compile Include="EntityPOCOs\DeclarationConsAcceptance.cs" />
     <Compile Include="EntityPOCOs\DeclarationCourierStatus.cs" />
+    <Compile Include="EntityPOCOs\DeclarationExportRecipient.cs" />
     <Compile Include="EntityPOCOs\DeclarationMamanSpecialAction.cs" />
     <Compile Include="EntityPOCOs\DeclarationPending.cs" />
     <Compile Include="EntityPOCOs\DeclarationReferantData.cs" />
@@ -585,6 +591,7 @@
     <Compile Include="Repsitories\DeclarationCargoSplitRepository.cs" />
     <Compile Include="Repsitories\DeclarationConsAcceptanceRepository.cs" />
     <Compile Include="Repsitories\DeclarationCourierStatusRepository.cs" />
+    <Compile Include="Repsitories\DeclarationExportRecipientRepository.cs" />
     <Compile Include="Repsitories\DeclarationMamanSpecialActionRepository.cs" />
     <Compile Include="Repsitories\DeclarationPendingRepository.cs" />
     <Compile Include="Repsitories\DeclarationReferantDataRepository.cs" />
@@ -635,6 +642,7 @@
     <Compile Include="Repsitories\Generated\DeclarationCargoSplitRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationConsAcceptanceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCourierStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DeclarationExportRecipientRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationMamanSpecialActionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationPendingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationReferantDataRepository.Generated.cs" />

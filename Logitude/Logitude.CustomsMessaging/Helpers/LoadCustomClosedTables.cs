@@ -969,8 +969,8 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomsShip = closedSystemTables.Where(d => d.id == "1308").FirstOrDefault();
             ObjectTable CustomsShipObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsShip", 0, false);
-            InsertClosedTableRecord(CustomsShip, hazardousSubstanceObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(hazardousSubstance);
+            InsertClosedTableRecord(CustomsShip, CustomsShipObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CustomsShip);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomerRoleType = closedSystemTables.Where(d => d.id == "1432").FirstOrDefault();
             ObjectTable CustomerRoleTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerRoleType", 0, false);
