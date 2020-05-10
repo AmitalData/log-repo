@@ -917,6 +917,7 @@
     <Compile Include="EntityQueryServices\CurrencyTypeTenantQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomDocumentTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsAutonomyKeywordQueryService.cs" />
+    <Compile Include="EntityQueryServices\CustomsShipQueryService.cs" />
     <Compile Include="EntityQueryServices\DBMigrationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
     <Compile Include="EntityQueryServices\ExceptionReasonQueryService.cs" />
@@ -1353,6 +1354,7 @@
     <Compile Include="EntityUpdateServices\CustomsAirlineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsAutonomyKeywordUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsPartnerFtpUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CustomsShipUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DecCargoSplitCargoIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DecDangersContactUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.Amital.cs" />
