@@ -163,4 +163,5 @@ SELECT
       ,[Pickup To]
       ,[Freight Release]
 	  ,@CustomFields
+	  ,[Dangerous Goods]
   FROM [dbo].[Fact_Shipments]
