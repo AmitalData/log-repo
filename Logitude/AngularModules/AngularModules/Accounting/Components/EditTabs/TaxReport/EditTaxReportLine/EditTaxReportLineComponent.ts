@@ -120,7 +120,9 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
     //#endregion
 
-    SetUIProperties() {
+  SetUIProperties() {
+       this.UIProperties.SetEnabled("LineTypeCode", this.ObjectTableName, false);
+
         if (this.TaxReportLinePM.OutputOrInput == "O") {
             if (this.TaxReportLinePM.StatusCode == "7") {
                 this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, true);
@@ -143,10 +145,15 @@ export class EditTaxReportLineComponent extends BaseComponent {
         }
         this.UIProperties.SetRequired("TransmitStatusCode", this.ObjectTableName, !this.TransmitStatusCode);
 
-      if (this.LineTypeCode == "I") {
-        this.UIProperties.SetEnabled("Reference", this.ObjectTableName, true);
-
-      } else { this.Reference = this.OldReference;}
+      if (this.LineTypeCode == "I" || this.LineTypeCode == "S") {
+        this.UIProperties.SetEnabled("LineTypeCode", this.ObjectTableName, true);
+        if (this.LineTypeCode == "I") {
+          this.UIProperties.SetEnabled("Reference", this.ObjectTableName, true);
+        }
+        else { this.Reference = this.OldReference; }
+      }
+      
+        
 
 
     }
