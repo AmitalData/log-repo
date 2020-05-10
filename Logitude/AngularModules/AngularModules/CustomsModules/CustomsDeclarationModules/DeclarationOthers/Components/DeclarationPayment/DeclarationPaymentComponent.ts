@@ -134,9 +134,10 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     	
     OnCheckedAutomaticPayment(event) {
-         if (event.target.checked && this.FuturePaymentDateTime != null) {
+          if (event.target.checked && this.FuturePaymentDateTime != null) {
            this.AutomaticPayment = 0;
              event.preventDefault();
+             event.target.checked = false;
              var myMessageWindow = new MessageWindow();
         myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
        
