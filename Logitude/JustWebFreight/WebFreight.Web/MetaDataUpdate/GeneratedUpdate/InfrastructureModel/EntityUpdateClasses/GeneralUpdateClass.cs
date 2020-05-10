@@ -1070,8 +1070,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralMHDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Declarations", DefaultText = "Declarations",LocalDefaultText = @"הצהרות יבוא", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMHPaymentOrders = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.PaymentOrders", DefaultText = "Payment Orders",LocalDefaultText = @"הוראות תשלום", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_GeneralMHReferantScreen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ReferantScreen", DefaultText = "Referant Screen", LocalDefaultText = @"מסך רפרנט", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMHCustomsMaintenance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CustomsMaintenance", DefaultText = "Customs Tables",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_GeneralMHCustomsMaintenance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CustomsMaintenance", DefaultText = "Customs Tables",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMHCRM = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CRM", DefaultText = "CRM",LocalDefaultText = @"CRM", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2112,6 +2113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralOWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Warning", DefaultText = "Warning",LocalDefaultText = @"אזהרה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
             TextCode GeneralTextCode_GeneralMCTablesPendingByKeyword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.PendingByKeyword", DefaultText = "Pending By Keywords", LocalDefaultText = @"מילות מפתח לקודי עיכוב", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
             TextCode GeneralTextCode_GeneralMCTablesAutonomyKeyword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.AutonomyKeyword", DefaultText = "Autonomy By Keywords", LocalDefaultText = @"מילות מפתח להצהרת אוטונומיה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_GeneralMCTablesExceptionReason = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.ExceptionReason", DefaultText = "Exception Reasons", LocalDefaultText = @"חריגות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 
 

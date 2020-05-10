@@ -47,7 +47,7 @@ import { CustomsSettingListService } from '../../../Customs/Services/StandardLis
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
-import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
+import { AmitalGatewayUtil, UnifreightMessageM } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
 
 @Component({
@@ -776,8 +776,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                     let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "MNH")[0];
                     if (myLocation != null) {
 
-                        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + this.ObjectTable.Name + "FiltersMenuComponent";
-
+                        let myObjectTableName = this.ObjectTable.Name;
+                        if (myObjectTableName.startsWith(this.ObjectTable.ClientModuleName + '.')) {
+                            myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
+                        }
+                        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                         SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)
                             .then(cmpRef => {
 
@@ -1497,9 +1500,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case "Customs.CourierPendingReason":
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
+                    case "Customs.ExceptionReason":
                     //case "Customs.InternationalSite":
                         selectedEntityId = $event.rowData.Code;
                         break;
+                    case "Customs.DeclarationReferantData":
+                        selectedEntityId = $event.rowData.DeclarationId;
                     default:
 
                         break;
@@ -2020,7 +2026,52 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 });
                             });
                     }
+                    else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
+                        var customFile = "";
+                        if ($event != null) customFile = $event.rowData.CustomFileNo;
+                        let myViewModelName = "FieldTemplateComponent.ts-ShowCFIUFILEFromDeclarationReferantData";
+                        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+                            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                                .subscribe(
+                                    (mess: UnifreightMessageM) => {
+                                        var IsMatchUnifreightCallbackCommand = (
+                                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                                            mess.LogitudeEntityNumber == selectedEntityId &&
+                                            mess.LogitudeViewModel == myViewModelName);
+                                        if (IsMatchUnifreightCallbackCommand) {
+                                            sub.unsubscribe();
+                                            SessionLocator.SelectedSession.StopBusyIndicator();
+                                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                                            this.isEditControlOpened = false;
+                                            this.OnBackFromEdit(selectedEntityId, $event)
+                                            //this.CurrentSession.PseventRowSelectEvent.emit({ Name: 'btnComponentComputingPartnerEdit', Value: this.rowData, RowIndex: this.AdditionalData.rowIndex });
 
+                                            //alert("reload");
+                                        }
+                                    }
+                                );
+
+                            SessionLocator.SelectedSession.StartBusyIndicator("");
+                            var unifreightMessageM =
+                                AmitalGatewayUtil.Instance.
+                                    DeclarationMessaging.GetMessage(customFile, selectedEntityId,
+                                        myViewModelName);
+
+
+                            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                                "ScriptableGatewayUtil.ShowCFIUFILEFromDeclarationReferantDataList",
+                                "CFIHMAIN.LogitudeTask",
+                                "ShowCustomFileOPCFromDeclaration",
+                                unifreightMessageM,
+                                " הצגת מסך :הזנת תיק כללי עמילות מכס");
+
+                        }
+                        else {
+                            alert("ShowCustomFileOPCFromDeclaration");
+                        }
+                    }
                     else {
 
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -2357,7 +2408,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                         } else if (this.ObjectTableName == "AccountingIntegrityCheck") {
                             this.RunNewAccountingIntegrityCheckWizard();
                         }
-
+                        else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
+                            this.RunNewCustomsFileWizard(); 
+                        }
                         else {
 
                             this.RunNewGenaricEntity();
@@ -2627,6 +2680,20 @@ export class ListComponent implements OnInit, AfterViewInit {
             messageWindow.Show("Fill NewWizard Component Path and Name in ObjectTable !!");
         }
     }
+
+    RunNewCustomsFileWizard() {
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            AmitalGatewayUtil.Instance.NewCustomsFileScreen(
+                "ShowCFIFILEMMoveSIToOCRScreen");
+        } else {
+            var myMessageWindow = new MessageWindow();
+            let mess = "NewCustomsFileScreen";
+            myMessageWindow.Show(mess);
+            this.RefreshBtnClick();
+        }
+    }
+
+
     private RunNewGenaricEntity() {
 
         var componentPath = "./Infrastructure/GenericComponents/NewEntityComponent";

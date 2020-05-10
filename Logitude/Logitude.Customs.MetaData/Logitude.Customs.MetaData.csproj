@@ -111,6 +111,9 @@
     </None>
     <None Include="EntityFiles\DBMigration.lxml" />
     <None Include="EntityFiles\DBMigrationLine.lxml" />
+    <None Include="EntityFiles\DeclarationRefernatData.lxml" />
+    <None Include="EntityFiles\ExceptionReason.lxml" />
+    <None Include="EntityFiles\ReferantException.lxml" />
     <None Include="EntityFiles\RequestType.lxml">
       <SubType>Designer</SubType>
     </None>
