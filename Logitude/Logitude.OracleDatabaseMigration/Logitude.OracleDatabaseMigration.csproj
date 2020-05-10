@@ -567,6 +567,11 @@
       <DependentUpon>202005100716392_CngSFCustomsShip2.cs</DependentUpon>
     </Compile>
 
+    <Compile Include="Migrations\202005101414116_CngExpDec.cs" />
+    <Compile Include="Migrations\202005101414116_CngExpDec.Designer.cs">
+      <DependentUpon>202005101414116_CngExpDec.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -982,6 +987,12 @@
 ========================================================================
     <EmbeddedResource Include="Migrations\202005100716392_CngSFCustomsShip2.resx">
       <DependentUpon>202005100716392_CngSFCustomsShip2.cs</DependentUpon>
+    </EmbeddedResource>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Customs
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 66487_EXPDEC
+========================================================================
+    <EmbeddedResource Include="Migrations\202005101414116_CngExpDec.resx">
+      <DependentUpon>202005101414116_CngExpDec.cs</DependentUpon>
     </EmbeddedResource>
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 66487_EXPDEC
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />

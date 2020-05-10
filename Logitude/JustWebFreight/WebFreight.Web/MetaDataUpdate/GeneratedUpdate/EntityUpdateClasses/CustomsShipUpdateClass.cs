@@ -488,7 +488,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomsShipObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsShip" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomsShipObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsShip").ToList();   
 
-			   TextCode CustomsShipTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsShip.Q.CustomsShipQ", DefaultText = "Hazardous Substance Query",LocalDefaultText = "Hazardous Substance Query", ObjectTableId = CustomsShipObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CustomsShipTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsShip.Q.CustomsShipQ", DefaultText = "Customs Ship Query",LocalDefaultText = "Customs Ship Query", ObjectTableId = CustomsShipObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CustomsShipFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsShip.Q.CustomsShipQ", ObjectTableId = CustomsShipObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsShip.Features.CustomsShipQ", NameTextCodeDefaultText = "CustomsShipQ", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

@@ -165,6 +165,15 @@ export class DeclarationList {
 	DeclarationNoAmendment: string;
 	AmendmentNumber: number;
 	CourierPendingReasonName: string;
+	Direction: string;
+	ExportFile: string;
+	AgentRoleCode: string;
+	DestinationCountryCode: string;
+	LoadingDateTime: Date;
+	ShipCode: string;
+	IsExporterConfirmation: boolean;
+	ShipName: string;
+	DestinationCountryName: string;
 	
 }
  
