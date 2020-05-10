@@ -84,6 +84,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AmendmentTypeMap());
 	
+            modelBuilder.Configurations.Add(new AmountTypeMap());
+	
             modelBuilder.Configurations.Add(new ApprovedProfessionMap());
 	
             modelBuilder.Configurations.Add(new AssigneeNotificationTypeMap());
@@ -140,6 +142,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ClaimImporterDeclarsPage3BMap());
 	
+            modelBuilder.Configurations.Add(new ClaimReasonTypeMap());
+	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesAmountMap());
 	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesReasonMap());
@@ -153,6 +157,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ClaimsRelatedEntsExpDeclarMap());
 	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntsReasonsExpMap());
+	
+            modelBuilder.Configurations.Add(new ClassificationTypeMap());
 	
             modelBuilder.Configurations.Add(new ClientMap());
 	
@@ -488,6 +494,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ParagraphTypeMap());
 	
+            modelBuilder.Configurations.Add(new PartyRelationshipTypeMap());
+	
             modelBuilder.Configurations.Add(new PassportTypeMap());
 	
             modelBuilder.Configurations.Add(new PayerActivityTypeMap());
@@ -643,6 +651,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new TradeAgreementMap());
 	
             modelBuilder.Configurations.Add(new TradeLevyExamptTypeMap());
+	
+            modelBuilder.Configurations.Add(new TransactionNatureTypeMap());
 	
             modelBuilder.Configurations.Add(new TransferCargoMethodTypeMap());
 	
@@ -1197,6 +1207,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<AmountType> AmountTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ApprovedProfession> ApprovedProfessions 
 	 {
 	      get; set;
@@ -1365,6 +1381,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ClaimReasonType> ClaimReasonTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ClaimsRelatedEntitiesAmount> ClaimsRelatedEntitiesAmounts 
 	 {
 	      get; set;
@@ -1402,6 +1424,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ClaimsRelatedEntsReasonsExp> ClaimsRelatedEntsReasonsExps 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ClassificationType> ClassificationTypes 
 	 {
 	      get; set;
 	 
@@ -2409,6 +2437,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<PartyRelationshipType> PartyRelationshipTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<PassportType> PassportTypes 
 	 {
 	      get; set;
@@ -2872,6 +2906,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<TradeLevyExamptType> TradeLevyExamptTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TransactionNatureType> TransactionNatureTypes 
 	 {
 	      get; set;
 	 

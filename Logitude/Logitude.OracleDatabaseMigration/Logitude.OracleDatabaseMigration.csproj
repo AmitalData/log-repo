@@ -556,6 +556,10 @@
     <Compile Include="Migrations\202005071033444_AddCustomsShip.Designer.cs">
       <DependentUpon>202005071033444_AddCustomsShip.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005100616033_AddedCustomTablesForExport.cs" />
+    <Compile Include="Migrations\202005100616033_AddedCustomTablesForExport.Designer.cs">
+      <DependentUpon>202005100616033_AddedCustomTablesForExport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -963,6 +967,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005071033444_AddCustomsShip.resx">
       <DependentUpon>202005071033444_AddCustomsShip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005100616033_AddedCustomTablesForExport.resx">
+      <DependentUpon>202005100616033_AddedCustomTablesForExport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

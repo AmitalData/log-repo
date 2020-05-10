@@ -25,6 +25,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses { get; }
 		 IDbSet<AmendmentStatus> AmendmentStatuses { get; }
 		 IDbSet<AmendmentType> AmendmentTypes { get; }
+		 IDbSet<AmountType> AmountTypes { get; }
 		 IDbSet<ApprovedProfession> ApprovedProfessions { get; }
 		 IDbSet<AssigneeNotificationType> AssigneeNotificationTypes { get; }
 		 IDbSet<AttachmentType> AttachmentTypes { get; }
@@ -53,6 +54,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ClaimImporterDeclarsPage3> ClaimImporterDeclarsPage3s { get; }
 		 IDbSet<ClaimImporterDeclarsPage3A> ClaimImporterDeclarsPage3As { get; }
 		 IDbSet<ClaimImporterDeclarsPage3B> ClaimImporterDeclarsPage3Bs { get; }
+		 IDbSet<ClaimReasonType> ClaimReasonTypes { get; }
 		 IDbSet<ClaimsRelatedEntitiesAmount> ClaimsRelatedEntitiesAmounts { get; }
 		 IDbSet<ClaimsRelatedEntitiesReason> ClaimsRelatedEntitiesReasons { get; }
 		 IDbSet<ClaimsRelatedEntitiesRefund> ClaimsRelatedEntitiesRefunds { get; }
@@ -60,6 +62,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ClaimsRelatedEntity> ClaimsRelatedEntities { get; }
 		 IDbSet<ClaimsRelatedEntsExpDeclar> ClaimsRelatedEntsExpDeclars { get; }
 		 IDbSet<ClaimsRelatedEntsReasonsExp> ClaimsRelatedEntsReasonsExps { get; }
+		 IDbSet<ClassificationType> ClassificationTypes { get; }
 		 IDbSet<Client> Clients { get; }
 		 IDbSet<ClientAddress> ClientAddresses { get; }
 		 IDbSet<ClientDrivingLicense> ClientDrivingLicenses { get; }
@@ -227,6 +230,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<PackageMeasureQualifier> PackageMeasureQualifiers { get; }
 		 IDbSet<PackingType> PackingTypes { get; }
 		 IDbSet<ParagraphType> ParagraphTypes { get; }
+		 IDbSet<PartyRelationshipType> PartyRelationshipTypes { get; }
 		 IDbSet<PassportType> PassportTypes { get; }
 		 IDbSet<PayerActivityType> PayerActivityTypes { get; }
 		 IDbSet<PayerType> PayerTypes { get; }
@@ -305,6 +309,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<TPGFileType> TPGFileTypes { get; }
 		 IDbSet<TradeAgreement> TradeAgreements { get; }
 		 IDbSet<TradeLevyExamptType> TradeLevyExamptTypes { get; }
+		 IDbSet<TransactionNatureType> TransactionNatureTypes { get; }
 		 IDbSet<TransferCargoMethodType> TransferCargoMethodTypes { get; }
 		 IDbSet<TreatmentWay> TreatmentWays { get; }
 		 IDbSet<UIMessage> UIMessages { get; }
