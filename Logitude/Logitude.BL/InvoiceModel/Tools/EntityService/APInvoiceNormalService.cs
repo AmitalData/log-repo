@@ -2346,7 +2346,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             DueDate = theEntityPm.DueDate.Value,
 
                                                             LocalAmount =(decimal)g.Sum(a => 
-                                                            (a.VatRecognizedPercentage == null || a.VatRecognizedPercentage==0) ? a.LocalCurrencyAmount :
+                                                            (a.VatRecognizedPercentage == null) ? a.LocalCurrencyAmount :
                                                                Math.Round( (double) (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2))),2)),
 
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
@@ -2374,7 +2374,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     FullAccountingSettingPM accountingSettings = getFullAccountingSettings(theEntityPm.Tenant);
                     foreach (APInvoiceTotalVATPM vat in totalVats)
                     {
-                        vat.LocalVatAmountWithVatRecognized =Math.Round( (vat.VatRecognizedPercentage != null && vat.VatRecognizedPercentage != 0) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,2);
+                        vat.LocalVatAmountWithVatRecognized =Math.Round( (vat.VatRecognizedPercentage != null ) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,2);
                           
                         journalLine = new JournalLinePM()
                         {
