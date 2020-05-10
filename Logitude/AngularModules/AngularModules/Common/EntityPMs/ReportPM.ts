@@ -130,9 +130,9 @@ export class ReportPM {
     public set AvailableForScheduling(newValue: boolean) { if (this.availableForScheduling != newValue) { this.availableForScheduling = newValue; this.MarkAsDirty("AvailableForScheduling"); } }
        
 	 
-    private DisablePreview: boolean;
-    public get DisablePreview() { return this.DisablePreview; }
-    public set DisablePreview(newValue: boolean) { if (this.DisablePreview != newValue) { this.DisablePreview = newValue; this.MarkAsDirty("DisablePreview"); } }
+    private disablePreview: boolean;
+    public get DisablePreview() { return this.disablePreview; }
+    public set DisablePreview(newValue: boolean) { if (this.disablePreview != newValue) { this.disablePreview = newValue; this.MarkAsDirty("DisablePreview"); } }
        
 	 
 
