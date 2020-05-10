@@ -93,23 +93,25 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     });
   }
 
-  private FillContainersIds() {
-    if (!AppTool.IsNullOrEmpty(this.ContainerDefaults)) {
-      var containersArray: string[] = this.ContainerDefaults.split(',');
+    private FillContainersIds() {
+        if (!this.IsShipment && !this.IsQuote) {
+            if (!AppTool.IsNullOrEmpty(this.ContainerDefaults)) {
+                var containersArray: string[] = this.ContainerDefaults.split(',');
 
-      if (containersArray.length > 0) {
-        var index: number = 1;
+                if (containersArray.length > 0) {
+                    var index: number = 1;
 
-        containersArray.forEach(item => {
-          var packageType: PackageTypeList = this.allPackageTypes.filter(d => d.Code == item.trim())[0];
-          if (packageType != null) {
-            this['ContainerType' + index + 'Id'] = packageType.Id;
-          }
+                    containersArray.forEach(item => {
+                        var packageType: PackageTypeList = this.allPackageTypes.filter(d => d.Code == item.trim())[0];
+                        if (packageType != null) {
+                            this['ContainerType' + index + 'Id'] = packageType.Id;
+                        }
 
-          index++;
-        });
-      }
-    }
+                        index++;
+                    });
+                }
+            }
+        }
   }
 
   private GetTariffProducts() {
@@ -156,15 +158,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
   set CurrencyId(newValue: string) {
     if (this.currencyId != newValue) {
       this.currencyId = newValue;
-      this.CalculatePriceByCurrency();
     }
   }
-  private CalculatePriceByCurrency() {
-
-  }
-
+  
   SetWindowArgs(args: any) {
-    if (args != null) {
+      if (args != null) {
       var isAutorun = false;
       if (args['IsShipment'] || args['IsQuote']) {
         this.IsGeneratePayablesVisible = true;
@@ -217,11 +215,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.SearchButtonClicked();
       }
     }
-  }
+    }
+   
   SetContainersInitialValues(): any {
-    if (this.TariffType == "OFC") {
+      if ((this.IsShipment || this.IsQuote)  && this.TariffType == "OFC") {
       this.BCNTGrouped = ShipmentTool.GetByPckageTypeGrouped(this.FatherComponent.EntityPM);
-
       this.ContainerType1Id = this.BCNTGrouped[0] != null ? this.BCNTGrouped[0].PackageTypeId : null;
       this.ContainerType2Id = this.BCNTGrouped[1] != null ? this.BCNTGrouped[1].PackageTypeId : null;
       this.ContainerType3Id = this.BCNTGrouped[2] != null ? this.BCNTGrouped[2].PackageTypeId : null;
@@ -716,31 +714,56 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
   }
 
-  private SetUIProperties() {
-    this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
-    this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
-    this.UIProperties.SetRequired("Date", null, AppTool.IsNullOrEmpty(this.Date));
-    this.UIProperties.SetRequired("Weight", null, AppTool.IsNullOrEmpty(this.Weight));
+    private SetUIProperties() {
+        this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
+        this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
+        this.UIProperties.SetRequired("Date", null, AppTool.IsNullOrEmpty(this.Date));
+        this.UIProperties.SetRequired("Weight", null, AppTool.IsNullOrEmpty(this.Weight));
 
-    if (this.IsPickedFromWizard) {
-      this.UIProperties.SetEnabled("Weight", this.ObjectTableName, false);
-      this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, false);
-      this.UIProperties.SetEnabled("Volume", this.ObjectTableName, false);
-      this.UIProperties.SetEnabled("GrossWeightCode", this.ObjectTableName, false);
-      this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, false);
-      this.UIProperties.SetEnabled("WeightCode", this.ObjectTableName, false);
+        if (this.IsPickedFromWizard || this.IsShipment || this.IsQuote) {
+            this.UIProperties.SetEnabled("Weight", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Volume", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("GrossWeightCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("WeightCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("OriginPortId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("DestinationPortId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ContainerType1Id", null, false);
+            this.UIProperties.SetEnabled("ContainerType2Id", null, false);
+            this.UIProperties.SetEnabled("ContainerType3Id", null, false);
+            this.UIProperties.SetEnabled("ContainerType4Id", null, false);
+            this.UIProperties.SetEnabled("ContainerType5Id", null, false);
+            this.UIProperties.SetEnabled("Quantity1", null, false);
+            this.UIProperties.SetEnabled("Quantity2", null, false);
+            this.UIProperties.SetEnabled("Quantity3", null, false);
+            this.UIProperties.SetEnabled("Quantity4", null, false);
+            this.UIProperties.SetEnabled("Quantity5", null, false);
+            this.UIProperties.SetEnabled("TariffProductId","Tariff", false);
 
+        }
+        else {
+            this.UIProperties.SetEnabled("Weight", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("Volume", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("GrossWeightCode", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("OriginPortId", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("DestinationPortId", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("ContainerType1Id", null, true);
+            this.UIProperties.SetEnabled("ContainerType2Id", null, true);
+            this.UIProperties.SetEnabled("ContainerType3Id", null, true);
+            this.UIProperties.SetEnabled("ContainerType4Id", null, true);
+            this.UIProperties.SetEnabled("ContainerType5Id", null, true);
+            this.UIProperties.SetEnabled("Quantity1", null, true);
+            this.UIProperties.SetEnabled("Quantity2", null, true);
+            this.UIProperties.SetEnabled("Quantity3", null, true);
+            this.UIProperties.SetEnabled("Quantity4", null, true);
+            this.UIProperties.SetEnabled("Quantity5", null, true);
+            this.UIProperties.SetEnabled("TariffProductId", "Tariff", true);
+
+        }
     }
-    else {
-      this.UIProperties.SetEnabled("Weight", this.ObjectTableName, true);
-      this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, true);
-      this.UIProperties.SetEnabled("Volume", this.ObjectTableName, true);
-      this.UIProperties.SetEnabled("GrossWeightCode", this.ObjectTableName, true);
-      this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, true);
-      this.UIProperties.SetEnabled("WeightCode", this.ObjectTableName, true);
-
-    }
-  }
 
   CloseButtonClicked() {
     this.CurrentSession.CloseCurrentWindow();
