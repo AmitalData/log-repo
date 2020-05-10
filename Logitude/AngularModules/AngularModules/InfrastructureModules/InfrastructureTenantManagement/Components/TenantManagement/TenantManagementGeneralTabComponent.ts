@@ -72,6 +72,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
+                    this.BuildPackagesList();
                     this.BuildAddOnsList();
                     this.SetUIProperties();
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
@@ -82,6 +83,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
+                    this.BuildPackagesList();
                     this.BuildAddOnsList();
                     this.SetUIProperties();
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
@@ -878,7 +880,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     EditAddOn(itemViewModel: AddOnItem) {
         this.entityResourceService.getEntityResourceByTableName("TenantAddOn").subscribe((res1: any) => {
             itemViewModel.SetOldData();
-
             var logeWindow = new LogitudeWindow();
             logeWindow.Title = "Edit Add-On";
             logeWindow.DataContext = itemViewModel;
