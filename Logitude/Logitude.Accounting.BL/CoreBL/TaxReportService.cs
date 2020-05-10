@@ -105,7 +105,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             transmitStatus = "0";
                             }
                            VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
-                            InvoiceAmount = invoice.TotalAmountForTaxReport != null ? invoice.TotalAmountForTaxReport : 0;
+                            InvoiceAmount = invoice.TotaVatableAmountForTaxReport != null ? invoice.TotaVatableAmountForTaxReport : 0;
                             if (invoice.InvoiceNumber.Length > 9)
                             {
                                 outputreference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
@@ -130,6 +130,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 OutputOrInput = "O",
                                 VatAmount = Math.Round(VatAmount.Value, MidpointRounding.AwayFromZero),
                                 VatableInvoiceAmount = Math.Round(InvoiceAmount.Value, MidpointRounding.AwayFromZero),
+                                TotalInvoiceAmount = invoice.TotalAmountForTaxReport != null ? Math.Round(invoice.TotalAmountForTaxReport.Value, MidpointRounding.AwayFromZero) : 0,
                                 IsManuallyChanged = false,
                                 TransmitStatusCode = transmitStatus ,
                                 TaxReportId = taxReport.Id,
