@@ -2373,9 +2373,6 @@
     <Compile Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.Designer.cs">
       <DependentUpon>202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.cs" />
-
-    <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.cs" />
 
 
     <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.cs" />
@@ -2403,7 +2400,7 @@
     <Compile Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.Designer.cs">
       <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
     </Compile>
- master
+ 
 
     <Compile Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.cs" />
     <Compile Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.Designer.cs">
