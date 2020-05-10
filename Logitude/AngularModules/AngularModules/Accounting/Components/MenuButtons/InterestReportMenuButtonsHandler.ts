@@ -170,11 +170,14 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     OpenConfirmWindow() {
         var confirmMessage: string = null;
         let confirmWindow = new ConfirmWindow();
-        if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4") {
+        if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4" || this.EntityPM.InterestReportStatusCode == "6") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ConfirmCancelling");
            
         } else if (this.EntityPM.InterestReportStatusCode == "2") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.CancelingInvoicedReportMessage");
+        }
+        else if (this.EntityPM.InterestReportStatusCode == "5") {
+            confirmMessage = TextCodeTranslator.Translate("InterestReport.O.TheReportisinProgress");
         }
        
         confirmWindow.Width = 400;

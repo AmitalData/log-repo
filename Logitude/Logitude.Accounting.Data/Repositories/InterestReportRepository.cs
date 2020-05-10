@@ -24,7 +24,7 @@ namespace Logitude.Accounting.Data.Repositories
         public InterestReport GetSingleByCusstomerAndStatudDraft(string CustomerId,int tenant)
         {
             InterestReport interestReport = (from a in context.InterestReports
-                                      where a.Tenant == tenant && a.InterestReportStatusCode == "1"  &&a.CustomerId== CustomerId
+                                      where a.Tenant == tenant && (a.InterestReportStatusCode == "1" || a.InterestReportStatusCode == "5") && a.CustomerId== CustomerId
                                       select a ).FirstOrDefault();
             return interestReport;
         }
