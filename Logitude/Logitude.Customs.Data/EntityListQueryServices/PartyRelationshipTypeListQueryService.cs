@@ -24,7 +24,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<PartyRelationshipTypeList> query = (from a in iQueryable
                                             select new PartyRelationshipTypeList()
 											{
-                     
+                     Code= a.Code,
+                     LocalName= a.LocalName,
+                     EnglishName= a.EnglishName,
 					                          SearchFields = a.SearchFields,
 					
 					                          Inactive = a.Inactive,
@@ -35,8 +37,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<PartyRelationshipType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<PartyRelationshipType> iQueryable)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 			}
 
 

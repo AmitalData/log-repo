@@ -24,8 +24,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<AmountTypeList> query = (from a in iQueryable
                                             select new AmountTypeList()
 											{
-                     
-					                          SearchFields = a.SearchFields,
+                                                Code = a.Code,
+                                                LocalName = a.LocalName,
+                                                EnglishName = a.EnglishName,
+                                                SearchFields = a.SearchFields,
 					
 					                          Inactive = a.Inactive,
 					
@@ -35,8 +37,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<AmountType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AmountType> iQueryable)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;       }
 			}
 
 
