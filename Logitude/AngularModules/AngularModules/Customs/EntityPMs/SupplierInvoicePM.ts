@@ -349,6 +349,46 @@ export class SupplierInvoicePM {
     public set InvoiceCurrencyTypeName(newValue: string) { if (this.invoiceCurrencyTypeName != newValue) { this.invoiceCurrencyTypeName = newValue; this.MarkAsDirty("InvoiceCurrencyTypeName"); } }
        
 	 
+    private buyerName: string;
+    public get BuyerName() { return this.buyerName; }
+    public set BuyerName(newValue: string) { if (this.buyerName != newValue) { this.buyerName = newValue; this.MarkAsDirty("BuyerName"); } }
+       
+	 
+    private buyerAddress: string;
+    public get BuyerAddress() { return this.buyerAddress; }
+    public set BuyerAddress(newValue: string) { if (this.buyerAddress != newValue) { this.buyerAddress = newValue; this.MarkAsDirty("BuyerAddress"); } }
+       
+	 
+    private buyerCountryCode: string;
+    public get BuyerCountryCode() { return this.buyerCountryCode; }
+    public set BuyerCountryCode(newValue: string) { if (this.buyerCountryCode != newValue) { this.buyerCountryCode = newValue; this.MarkAsDirty("BuyerCountryCode"); } }
+       
+	 
+    private buyerRoleCode: string;
+    public get BuyerRoleCode() { return this.buyerRoleCode; }
+    public set BuyerRoleCode(newValue: string) { if (this.buyerRoleCode != newValue) { this.buyerRoleCode = newValue; this.MarkAsDirty("BuyerRoleCode"); } }
+       
+	 
+    private partyRelationshipCode: string;
+    public get PartyRelationshipCode() { return this.partyRelationshipCode; }
+    public set PartyRelationshipCode(newValue: string) { if (this.partyRelationshipCode != newValue) { this.partyRelationshipCode = newValue; this.MarkAsDirty("PartyRelationshipCode"); } }
+       
+	 
+    private partyRelationshipName: string;
+    public get PartyRelationshipName() { return this.partyRelationshipName; }
+    public set PartyRelationshipName(newValue: string) { if (this.partyRelationshipName != newValue) { this.partyRelationshipName = newValue; this.MarkAsDirty("PartyRelationshipName"); } }
+       
+	 
+    private buyerRoleName: string;
+    public get BuyerRoleName() { return this.buyerRoleName; }
+    public set BuyerRoleName(newValue: string) { if (this.buyerRoleName != newValue) { this.buyerRoleName = newValue; this.MarkAsDirty("BuyerRoleName"); } }
+       
+	 
+    private buyerCountryName: string;
+    public get BuyerCountryName() { return this.buyerCountryName; }
+    public set BuyerCountryName(newValue: string) { if (this.buyerCountryName != newValue) { this.buyerCountryName = newValue; this.MarkAsDirty("BuyerCountryName"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoicePM;
 		

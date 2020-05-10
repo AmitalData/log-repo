@@ -1139,6 +1139,190 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string buyerName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerName  
+	   {
+	    
+	     get
+		{
+		   return buyerName;
+		 }
+		 set
+		 {
+		   if(buyerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerName",OldValue=buyerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerName=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerAddress ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerAddress  
+	   {
+	    
+	     get
+		{
+		   return buyerAddress;
+		 }
+		 set
+		 {
+		   if(buyerAddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerAddress",OldValue=buyerAddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerAddress=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerCountryCode  
+	   {
+	    
+	     get
+		{
+		   return buyerCountryCode;
+		 }
+		 set
+		 {
+		   if(buyerCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerCountryCode",OldValue=buyerCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerRoleCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerRoleCode  
+	   {
+	    
+	     get
+		{
+		   return buyerRoleCode;
+		 }
+		 set
+		 {
+		   if(buyerRoleCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerRoleCode",OldValue=buyerRoleCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerRoleCode=value;
+		   }
+			
+		 }
+	   }
+	  private string partyRelationshipCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartyRelationshipCode  
+	   {
+	    
+	     get
+		{
+		   return partyRelationshipCode;
+		 }
+		 set
+		 {
+		   if(partyRelationshipCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartyRelationshipCode",OldValue=partyRelationshipCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   partyRelationshipCode=value;
+		   }
+			
+		 }
+	   }
+	  private string partyRelationshipName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartyRelationshipName  
+	   {
+	    
+	     get
+		{
+		   return partyRelationshipName;
+		 }
+		 set
+		 {
+		   if(partyRelationshipName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartyRelationshipName",OldValue=partyRelationshipName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   partyRelationshipName=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerRoleName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerRoleName  
+	   {
+	    
+	     get
+		{
+		   return buyerRoleName;
+		 }
+		 set
+		 {
+		   if(buyerRoleName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerRoleName",OldValue=buyerRoleName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerRoleName=value;
+		   }
+			
+		 }
+	   }
+	  private string buyerCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BuyerCountryName  
+	   {
+	    
+	     get
+		{
+		   return buyerCountryName;
+		 }
+		 set
+		 {
+		   if(buyerCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuyerCountryName",OldValue=buyerCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   buyerCountryName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -121,6 +121,25 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal? InvoiceAmountInUSD { get; set; }
         [Column("ChangeInSupplierInvoice")]
 	    public string ChangeInSupplierInvoice { get; set; }
+        [Column("BuyerName")]
+	    public string BuyerName { get; set; }
+        [Column("BuyerAddress")]
+	    public string BuyerAddress { get; set; }
+        [ForeignKey("BuyerCountry")]
+        [Column("BuyerCountryCode")]
+	    public string BuyerCountryCode { get; set; }
+	      
+        public virtual CustomsCountry BuyerCountry { get; set; }
+        [ForeignKey("BuyerRoleCode")]
+        [Column("BuyerRoleCode")]
+	    public string BuyerRoleCode { get; set; }
+	      
+        public virtual CustomerRoleType BuyerRoleCode { get; set; }
+        [ForeignKey("PartyRelationshipCode")]
+        [Column("PartyRelationshipCode")]
+	    public string PartyRelationshipCode { get; set; }
+	      
+        public virtual PartyRelationshipType PartyRelationshipCode { get; set; }
     }
 }
 	 
