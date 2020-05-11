@@ -1,0 +1,43 @@
+﻿<table *ngIf="IsDataReady">
+    <tr>
+        <td style="width:100%;">
+
+            <!--[style.pointer-events]="IsDisable ? 'none':''"  [style.opacity]="IsDisable ? '0.5':'1'"-->  
+
+            <div style="width:185px">
+                <LogLov *ngIf="!IsRefreshComponent" (SelectedItemChanged)="CustomObjectFieldChange($event)"
+                        [ObjectFieldName]="'CustomField'"
+                        [QueryFilterItems]="ObjectFieldFilterItems"
+                        [ObjectTableName]="'ObjectField'"
+                        [DataContext]="EntityPM"
+                        [LookUpTableName]="'ObjectField'"
+                        [NoValidation]="true"
+                        [IsFreeText]="true"
+                        [SelectedValue]="CustomField"
+                        [HideColumns]="true"
+                        [HideLastColumn]="true"
+                        [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
+                </LogLov>
+
+
+                <LogLov *ngIf="IsRefreshComponent" (SelectedItemChanged)="CustomObjectFieldChange($event)"
+                        [ObjectFieldName]="'CustomField'"
+                        [QueryFilterItems]="ObjectFieldFilterItems"
+                        [ObjectTableName]="'ObjectField'"
+                        [DataContext]="EntityPM"
+                        [LookUpTableName]="'ObjectField'"
+                        [NoValidation]="true"
+                        [IsFreeText]="true"
+                        [SelectedValue]="CustomField"
+                        [HideColumns]="true"
+                        [HideLastColumn]="true"
+                        [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
+                </LogLov>
+
+            </div>
+        </td>
+
+       
+    </tr>
+</table>
+

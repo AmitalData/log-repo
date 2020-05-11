@@ -13,7 +13,7 @@
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
-  HasCustomValidator="false"
+  HasCustomValidator="true"
   IsEditable="true"
   IsNewWizard="false"
   LookUp1="&quot;Code&quot;"
@@ -2294,6 +2294,7 @@
   <field
     Id="&quot;35cb40e7-68ae-499c-8d2e-87dd19da05ce&quot;"
     FieldName="&quot;CustomField&quot;"
+    GeneratedComponentPath="&quot;./InfrastructureModules/InfrastructureOthers/Components/EventType/CustomEventTypeComponent&quot;"
     OldNames="CustomField"
     IsNew="true"
     IsChecked="true"
@@ -2318,6 +2319,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CustomField&quot;"
     ListPropertyPath="&quot;CustomField&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2344,7 +2346,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -2461,7 +2463,7 @@
       <ScreenField
         Column="0"
         Row="5"
-        ObjectFieldName="&quot;InActive&quot;"
+        ObjectFieldName="&quot;CustomField&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="1"
@@ -2487,6 +2489,11 @@
         Column="1"
         Row="4"
         ObjectFieldName="&quot;IsAgentView&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="1"
+        Row="5"
+        ObjectFieldName="&quot;InActive&quot;"
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>
