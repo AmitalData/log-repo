@@ -1323,7 +1323,77 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<SupplierInvoicePaymentPM> supplierInvoicePayments;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("SupplierInvoicePayment", "DeclarationId, InvoiceCounterKey","DeclarationId, InvoiceCounterKey")]
+	   [DataMember]
+	   public virtual List<SupplierInvoicePaymentPM> SupplierInvoicePayments  
+	   {
+	        get
+             {
+                 if (supplierInvoicePayments == null)
+                 {
+                     supplierInvoicePayments = new List<SupplierInvoicePaymentPM>();
+                 }
+                 return supplierInvoicePayments;
+              }
+             set { supplierInvoicePayments = value; }
+	    }
+		   
+	   private List<SupplierInvoicePaymentPM>  deletedSupplierInvoicePayments;
+	   public virtual List<SupplierInvoicePaymentPM> DeletedSupplierInvoicePayments  
+	   {
+	        get
+             {
+                 if ( deletedSupplierInvoicePayments == null)
+                 {
+                      deletedSupplierInvoicePayments = new List<SupplierInvoicePaymentPM>();
+                 }
+                 return  deletedSupplierInvoicePayments;
+              }
+             set {  deletedSupplierInvoicePayments = value; }
+	    }
+	  
+	   private List<SupplierInvoiceUCRPM> supplierInvoiceUCRs;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("SupplierInvoiceUCR", "DeclarationId, InvoiceCounterKey","DeclarationId, InvoiceCounterKey")]
+	   [DataMember]
+	   public virtual List<SupplierInvoiceUCRPM> SupplierInvoiceUCRs  
+	   {
+	        get
+             {
+                 if (supplierInvoiceUCRs == null)
+                 {
+                     supplierInvoiceUCRs = new List<SupplierInvoiceUCRPM>();
+                 }
+                 return supplierInvoiceUCRs;
+              }
+             set { supplierInvoiceUCRs = value; }
+	    }
+		   
+	   private List<SupplierInvoiceUCRPM>  deletedSupplierInvoiceUCRs;
+	   public virtual List<SupplierInvoiceUCRPM> DeletedSupplierInvoiceUCRs  
+	   {
+	        get
+             {
+                 if ( deletedSupplierInvoiceUCRs == null)
+                 {
+                      deletedSupplierInvoiceUCRs = new List<SupplierInvoiceUCRPM>();
+                 }
+                 return  deletedSupplierInvoiceUCRs;
+              }
+             set {  deletedSupplierInvoiceUCRs = value; }
+	    }
+	     }
    
 }
 	 

@@ -42,8 +42,12 @@ import {SupplierInvoiceItemVehiclePM} from '../../EntityPMs/SupplierInvoiceItemV
 import {SupplierInvoiceItemVehicleModPM} from '../../EntityPMs/SupplierInvoiceItemVehicleModPM';
 import {SupplierInvoiceItemVehicleAddPM} from '../../EntityPMs/SupplierInvoiceItemVehicleAddPM';
 import {SupplierInvoiceItemModVehiclePM} from '../../EntityPMs/SupplierInvoiceItemModVehiclePM';
+import {SupplierInvoiceItemsPricePM} from '../../EntityPMs/SupplierInvoiceItemsPricePM';
+import {SuppInvoiceItemsAbachStatementPM} from '../../EntityPMs/SuppInvoiceItemsAbachStatementPM';
 import {SupplierInvoiceModificationPM} from '../../EntityPMs/SupplierInvoiceModificationPM';
 import {SupplierInvoiceFreightAmountPM} from '../../EntityPMs/SupplierInvoiceFreightAmountPM';
+import {SupplierInvoicePaymentPM} from '../../EntityPMs/SupplierInvoicePaymentPM';
+import {SupplierInvoiceUCRPM} from '../../EntityPMs/SupplierInvoiceUCRPM';
 import {DeclarationTaxPM} from '../../EntityPMs/DeclarationTaxPM';
 import {DeclarationConstraintPM} from '../../EntityPMs/DeclarationConstraintPM';
 import {DeclarationErrorViewPM} from '../../EntityPMs/DeclarationErrorViewPM';
@@ -397,6 +401,20 @@ export class DeclarationPMService {
                     newSupplierInvoiceItemPM.SupplierInvoiceItemModVehicles.push(newSupplierInvoiceItemModVehiclePM);
 
 					                 }
+                newSupplierInvoiceItemPM.SupplierInvoiceItemsPrices = [];
+                for (var k in mySupplierInvoiceItemPM.SupplierInvoiceItemsPrices) {
+				    var mySupplierInvoiceItemsPricePM =mySupplierInvoiceItemPM.SupplierInvoiceItemsPrices[k];
+				    var newSupplierInvoiceItemsPricePM=this.clone(mySupplierInvoiceItemPM.SupplierInvoiceItemsPrices[k]);
+                    newSupplierInvoiceItemPM.SupplierInvoiceItemsPrices.push(newSupplierInvoiceItemsPricePM);
+
+					                 }
+                newSupplierInvoiceItemPM.SuppInvoiceItemsAbachStatements = [];
+                for (var k in mySupplierInvoiceItemPM.SuppInvoiceItemsAbachStatements) {
+				    var mySuppInvoiceItemsAbachStatementPM =mySupplierInvoiceItemPM.SuppInvoiceItemsAbachStatements[k];
+				    var newSuppInvoiceItemsAbachStatementPM=this.clone(mySupplierInvoiceItemPM.SuppInvoiceItemsAbachStatements[k]);
+                    newSupplierInvoiceItemPM.SuppInvoiceItemsAbachStatements.push(newSuppInvoiceItemsAbachStatementPM);
+
+					                 }
                 }
                 newSupplierInvoicePM.SupplierInvoiceModifications = [];
                 for (var k in mySupplierInvoicePM.SupplierInvoiceModifications) {
@@ -410,6 +428,20 @@ export class DeclarationPMService {
 				    var mySupplierInvoiceFreightAmountPM =mySupplierInvoicePM.SupplierInvoiceFreightAmounts[k];
 				    var newSupplierInvoiceFreightAmountPM=this.clone(mySupplierInvoicePM.SupplierInvoiceFreightAmounts[k]);
                     newSupplierInvoicePM.SupplierInvoiceFreightAmounts.push(newSupplierInvoiceFreightAmountPM);
+
+					                 }
+                newSupplierInvoicePM.SupplierInvoicePayments = [];
+                for (var k in mySupplierInvoicePM.SupplierInvoicePayments) {
+				    var mySupplierInvoicePaymentPM =mySupplierInvoicePM.SupplierInvoicePayments[k];
+				    var newSupplierInvoicePaymentPM=this.clone(mySupplierInvoicePM.SupplierInvoicePayments[k]);
+                    newSupplierInvoicePM.SupplierInvoicePayments.push(newSupplierInvoicePaymentPM);
+
+					                 }
+                newSupplierInvoicePM.SupplierInvoiceUCRs = [];
+                for (var k in mySupplierInvoicePM.SupplierInvoiceUCRs) {
+				    var mySupplierInvoiceUCRPM =mySupplierInvoicePM.SupplierInvoiceUCRs[k];
+				    var newSupplierInvoiceUCRPM=this.clone(mySupplierInvoicePM.SupplierInvoiceUCRs[k]);
+                    newSupplierInvoicePM.SupplierInvoiceUCRs.push(newSupplierInvoiceUCRPM);
 
 					                 }
 							 

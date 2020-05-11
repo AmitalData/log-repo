@@ -10,6 +10,8 @@
 import {SupplierInvoiceItemPM} from './SupplierInvoiceItemPM';
 import {SupplierInvoiceModificationPM} from './SupplierInvoiceModificationPM';
 import {SupplierInvoiceFreightAmountPM} from './SupplierInvoiceFreightAmountPM';
+import {SupplierInvoicePaymentPM} from './SupplierInvoicePaymentPM';
+import {SupplierInvoiceUCRPM} from './SupplierInvoiceUCRPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -389,7 +391,75 @@ export class SupplierInvoicePM {
     public set BuyerCountryName(newValue: string) { if (this.buyerCountryName != newValue) { this.buyerCountryName = newValue; this.MarkAsDirty("BuyerCountryName"); } }
        
 	 
+     
+	private supplierInvoicePayments: SupplierInvoicePaymentPM[];
+    get  SupplierInvoicePayments() {
+        if (this.supplierInvoicePayments == null) {
+            this.supplierInvoicePayments = [];
+        }
 
+        return this.supplierInvoicePayments;
+    }
+    set  SupplierInvoicePayments(newValue: SupplierInvoicePaymentPM[]) {
+        if (this.supplierInvoicePayments != newValue) {
+            this.supplierInvoicePayments = newValue;
+        }
+    }
+    public AddSupplierInvoicePayment(item: SupplierInvoicePaymentPM) {
+        if (item != null) {
+            var index = this. SupplierInvoicePayments.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. SupplierInvoicePayments.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveSupplierInvoicePayment(item: SupplierInvoicePaymentPM) {
+        if (item != null) {
+            var index = this. SupplierInvoicePayments.indexOf(item);
+            if (index > -1) {
+                this. SupplierInvoicePayments.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public SupplierInvoicePayments: Array<SupplierInvoicePaymentPM>= [];
+      
+	private supplierInvoiceUCRs: SupplierInvoiceUCRPM[];
+    get  SupplierInvoiceUCRs() {
+        if (this.supplierInvoiceUCRs == null) {
+            this.supplierInvoiceUCRs = [];
+        }
+
+        return this.supplierInvoiceUCRs;
+    }
+    set  SupplierInvoiceUCRs(newValue: SupplierInvoiceUCRPM[]) {
+        if (this.supplierInvoiceUCRs != newValue) {
+            this.supplierInvoiceUCRs = newValue;
+        }
+    }
+    public AddSupplierInvoiceUCR(item: SupplierInvoiceUCRPM) {
+        if (item != null) {
+            var index = this. SupplierInvoiceUCRs.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. SupplierInvoiceUCRs.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveSupplierInvoiceUCR(item: SupplierInvoiceUCRPM) {
+        if (item != null) {
+            var index = this. SupplierInvoiceUCRs.indexOf(item);
+            if (index > -1) {
+                this. SupplierInvoiceUCRs.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public SupplierInvoiceUCRs: Array<SupplierInvoiceUCRPM>= [];
+ 
     public OldEntityPM: SupplierInvoicePM;
 		
     public IsDirty: boolean;

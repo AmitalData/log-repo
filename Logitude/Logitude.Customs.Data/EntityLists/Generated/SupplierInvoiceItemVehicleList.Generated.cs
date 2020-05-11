@@ -44,6 +44,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string RichbitFileStatus  { get; set; }
        [DataMember]
        public bool ExcludeFromInterface  { get; set; }
+       [DataMember]
+       public string IdentifierID  { get; set; }
+       [DataMember]
+       public string VehicleIDTypeCode  { get; set; }
+       [DataMember]
+       public string VehicleIDTypeName  { get; set; }
    }
 
 }

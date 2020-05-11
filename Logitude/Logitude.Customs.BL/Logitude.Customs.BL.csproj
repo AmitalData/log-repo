@@ -718,6 +718,7 @@
     <Compile Include="EntityDataMappings\Generated\StorageMessageTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\StorageStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SubCountryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SuppInvoiceItemsAbachStatementDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvioceItemCertificatDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceDataMapping.Generated.cs">
       <SubType>Code</SubType>
@@ -732,6 +733,7 @@
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsLevyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsModDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemProcesTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsPriceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsProdIdentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsSerialNumDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsTaxDataMapping.Generated.cs" />
@@ -739,6 +741,8 @@
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemVehicleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemVehicleModDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceModificationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SupplierInvoicePaymentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SupplierInvoiceUCRDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TapagConnectionTableDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TapagDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TapagTypeDataMapping.Generated.cs" />
@@ -866,6 +870,7 @@
     <Compile Include="EntityDataMappings\StorageMessageTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\StorageStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\SubCountryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SuppInvoiceItemsAbachStatementDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvioceItemCertificatDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceDataMapping.cs">
       <SubType>Code</SubType>
@@ -880,6 +885,7 @@
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsLevyDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsModDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemProcesTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SupplierInvoiceItemsPriceDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsProdIdentDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsSerialNumDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsTaxDataMapping.cs" />
@@ -887,6 +893,8 @@
     <Compile Include="EntityDataMappings\SupplierInvoiceItemVehicleDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemVehicleModDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceModificationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SupplierInvoicePaymentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SupplierInvoiceUCRDataMapping.cs" />
     <Compile Include="EntityDataMappings\TapagConnectionTableDataMapping.cs" />
     <Compile Include="EntityDataMappings\TapagDataMapping.cs" />
     <Compile Include="EntityDataMappings\TapagTypeDataMapping.cs" />
@@ -966,6 +974,10 @@
     <Compile Include="EntityQueryServices\Generated\SealCompletenesQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SealTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SealUpdateReasonTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SuppInvoiceItemsAbachStatementQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierInvoiceItemsPriceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierInvoicePaymentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierInvoiceUCRQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TransactionNatureTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\PendingByKeywordQueryService.cs" />
     <Compile Include="EntityQueryServices\ConsignmentQueryService.cs" />
@@ -1404,6 +1416,10 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationExportRecipientUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PartyRelationshipTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SuppInvoiceItemsAbachStatementUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceItemsPriceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SupplierInvoicePaymentUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceUCRUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransactionNatureTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.cs" />
