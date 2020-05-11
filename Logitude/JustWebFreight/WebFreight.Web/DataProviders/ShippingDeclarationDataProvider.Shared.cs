@@ -447,5 +447,12 @@ namespace WebFreight.Web.DataProviders
         public string TrailerNumber { get; set; }
         public DateTime? MainCarriageATADateTime { get; set; }
         public string OriginCountryName { get; set; }
+
+        public string Transhipment1Vessel { get; set; }
+        public string Transhipment2Vessel { get; set; }
+        public string Transhipment3Vessel { get; set; }
+        public DateTime? Transhipment3ETA { get; set; }
+        public DateTime? Transhipment1ETD { get; set; }
+        public DateTime? Transhipment3ETD { get; set; }
     }
 }
