@@ -545,18 +545,21 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         }
         private void UpdateVersionPreviousLineSatrtDate(TariffLinePM tariffLinePM, TariffLine previousLine)
         {
-            bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "start", TariffLinePM = tariffLinePM, PreviousLine = previousLine });
-
-            if (isExpirationDateValid)
+            if (tariffLinePM.ChangeSetOp != ChangeSetOperation.Delete && tariffLinePM.ChangeSetOp != ChangeSetOperation.None)
             {
-                previousLine.ExpirationDate = tariffLinePM.StartDate.Value.AddDays(-1);
-                iTariffLineRepository.Update(previousLine);
-            }
+                bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "start", TariffLinePM = tariffLinePM, PreviousLine = previousLine });
 
-            else
-            {
-                string msg = "Line (" + tariffLinePM.OriginPortCode + " > " + tariffLinePM.DestinationPortCode + ") Start Date is less than or equal the previous version line";
-                throw new ApplicationException(msg);
+                if (isExpirationDateValid)
+                {
+                    previousLine.ExpirationDate = tariffLinePM.StartDate.Value.AddDays(-1);
+                    iTariffLineRepository.Update(previousLine);
+                }
+
+                else
+                {
+                    string msg = "Line (" + tariffLinePM.OriginPortCode + " > " + tariffLinePM.DestinationPortCode + ") Start Date is less than or equal the previous version line";
+                    throw new ApplicationException(msg);
+                }
             }
         }
         private bool ValidatePreviousLineDates(dynamic previousLineDatesArgs)
