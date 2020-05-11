@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.Validators
                 }
                 else
                 {
-                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CustomeralreadyhasaDraftinterest", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
+                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasaninprogress", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
                 }
             }
 
