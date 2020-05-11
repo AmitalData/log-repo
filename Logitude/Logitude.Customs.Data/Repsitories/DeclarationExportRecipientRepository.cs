@@ -17,8 +17,12 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<DeclarationExportRecipient> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            DeclarationKeys declarationKeys = entityKeys as DeclarationKeys;
+
+            return (from a in context.DeclarationExportRecipients
+                    where a.DeclarationId == declarationKeys.Id
+                    select a).ToList();
         }
 
         public int? GetMaxCounterKey(string declarationId, int tenant)
