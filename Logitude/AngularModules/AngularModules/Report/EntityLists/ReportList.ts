@@ -16,5 +16,5 @@ export class ReportList {
     FilterHtmlComponentUrl: string;
     DefaultTemplateId: string;
     AvailableForScheduling: boolean;
-    ExcelOnly: boolean;
+    DisablePreview: boolean;
 }
