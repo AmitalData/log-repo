@@ -36,10 +36,12 @@
 </div>-->
 <!---->
 
-<span class="LeftTop buttonelipsis"
-      style="background-color: white;color: black;border: 2px solid #e7e7e7;width: 30px;text-align: center;font-weight: bold;" click="ShowExportDecScreen()">...</span>
+<span *ngIf="VisibleExportDecScreen"
+      class="LeftTop buttonelipsis"
+      style="background-color: white;color: black;border: 2px solid #e7e7e7;width: 30px;text-align: center;font-weight: bold;cursor: pointer;"
+      click="EditExportDecScreen()">...</span>
 <table>
-    <tr *ngIf="XMLErrors != null && XMLErrors.length > 0" style="height:1px;">
+    <tr *ngIf="XMLErrors != null && XMLErrors.length > 0" style="height: 1px;">
         <td>
             <ValidationSummary [ItemsSource]="XMLErrors" [SingleLine]="false"></ValidationSummary>
         </td>

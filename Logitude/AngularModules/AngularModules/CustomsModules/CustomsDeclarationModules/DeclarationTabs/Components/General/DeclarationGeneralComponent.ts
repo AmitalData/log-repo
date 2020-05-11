@@ -117,9 +117,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     //#region XML Errors
     XMLErrors: string[] = [];
     IsWindowMode: boolean = false;
-    ShowExportDecScreen() {
-
-    }
+    
     // used in show XML errors process in Customs Answers
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
@@ -845,6 +843,31 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
     }
+
+
+    public get VisibleExportDecScreen() { return this.EntityPM.Direction == "E" && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN"); }
+    EditExportDecScreen() {
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
+
+        var logWindow = new LogitudeWindow();
+        windowArgs.Type = "Importer";
+        this.Type = "Importer";
+        logWindow.Width = 550;
+        logWindow.Height = this.EntityPM.IsCourierDeclaration ? 550 : 350;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ExportDeclarationComponent');
+    }
+
+
 
     SearchImporter(type, item) {
 

@@ -58,7 +58,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             //******getting all compositionTables for response service purposes only *****///
             entityPM.Consignments = consignmentService.GetMulti(declarationKeys, true);
             // if (LoadSupplierInvoices)
-
+            var DeclarationExportRecipientQueryService = new DeclarationExportRecipientQueryService(context);
+            EntityPM.DeclarationExportRecipients = DeclarationExportRecipientQueryService
+                .GetMulti(declarationKeys, false);
 
             {
                 if (loadSupplierInvoicesItemsParentsOnly == true)

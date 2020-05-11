@@ -4859,7 +4859,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<DeclarationExportRecipientPM> declarationExportRecipients;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DeclarationExportRecipients", "id","DeclarationId")]
+	   [DataMember]
+	   public virtual List<DeclarationExportRecipientPM> DeclarationExportRecipients  
+	   {
+	        get
+             {
+                 if (declarationExportRecipients == null)
+                 {
+                     declarationExportRecipients = new List<DeclarationExportRecipientPM>();
+                 }
+                 return declarationExportRecipients;
+              }
+             set { declarationExportRecipients = value; }
+	    }
+		   
+	   private List<DeclarationExportRecipientPM>  deletedDeclarationExportRecipients;
+	   public virtual List<DeclarationExportRecipientPM> DeletedDeclarationExportRecipients  
+	   {
+	        get
+             {
+                 if ( deletedDeclarationExportRecipients == null)
+                 {
+                      deletedDeclarationExportRecipients = new List<DeclarationExportRecipientPM>();
+                 }
+                 return  deletedDeclarationExportRecipients;
+              }
+             set {  deletedDeclarationExportRecipients = value; }
+	    }
+	     }
    
 }
 	 

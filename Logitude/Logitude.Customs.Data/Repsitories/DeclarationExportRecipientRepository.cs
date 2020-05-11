@@ -21,7 +21,13 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public int? GetMaxCounterKey(string declarationId, int tenant)
+        {
+            return (from a in context.DeclarationExportRecipients
+                    where a.DeclarationId == declarationId && a.Tenant == tenant
+                    select a).Max(d => (int?)d.LineNumber) ?? 0;
+        }
+    }
 
 }
    

@@ -20,6 +20,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPMToPOCO(DeclarationExportRecipientPM entityPM, DeclarationExportRecipient entityPOCO)
         {
             //throw new NotImplementedException();
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.DeclarationId);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.LineNumber);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+
+                entityPOCO.DeclarationId = entityPM.DeclarationId;
+                entityPOCO.LineNumber = entityPM.LineNumber;
+                entityPOCO.Tenant = entityPM.Tenant;
+            }
         }
 
         public void CustomPOCOToPM(DeclarationExportRecipientPM entityPM, DeclarationExportRecipient entityPOCO)
