@@ -1230,6 +1230,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\PriceStepPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Validators\EventTypeValidator.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentCancelationDetailsComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.ts" />
