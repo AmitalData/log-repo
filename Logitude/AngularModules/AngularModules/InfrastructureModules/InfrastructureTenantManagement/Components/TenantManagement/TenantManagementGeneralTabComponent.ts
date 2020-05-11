@@ -1350,7 +1350,7 @@ export class PackageItem extends BaseComponent{
         this.IsNew = isNew;
         this.IsMainPackage = isMainPackage;
         this.TenantManagementPM = fatherComponent.EntityPM;
-
+        this.SetUIProperties_NumberOfUsers();
         this.SetUIProperties_TotalPrice();
         this.GetPackageName();
     }
@@ -1384,8 +1384,13 @@ export class PackageItem extends BaseComponent{
     set NumberOfUsers(newValue: number) {
         if (this.EntityPM.NumberOfUsers != newValue) {
             this.EntityPM.NumberOfUsers = newValue;
+            this.SetUIProperties_NumberOfUsers();
             this.ComputeTotalPrice();
         }
+    }
+    private SetUIProperties_NumberOfUsers() {
+        this.UIProperties.SetRequired("NumberOfUsers", this.ObjectTableName, AppTool.IsNullOrZero(this.NumberOfUsers));
+
     }
 
     get FreeUsers() { return this.EntityPM.FreeUsers; }

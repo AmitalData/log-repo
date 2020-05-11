@@ -66,6 +66,7 @@ export class AddEditLicenceComponent extends BaseComponent {
         this.UIProperties.SetEnabled("NumberOfUsers", this.ObjectTableName, isEditable);
         this.UIProperties.SetEnabled("FreeUsers", this.ObjectTableName, isEditable);
         this.UIProperties.SetEnabled("LicensePrice", this.ObjectTableName, true);
+        this.UIProperties.SetRequired("NumberOfUsers", this.ObjectTableName, AppTool.IsNullOrZero(this.NumberOfUsers));
     }
     SetUIProperties_TotalPrice() {
         this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, false);
@@ -137,6 +138,13 @@ export class AddEditLicenceComponent extends BaseComponent {
             }
         }
 
+        if (AppTool.IsNullOrZero(this.DataContext.NumberOfUsers)) {
+            if (this.DataContext.NumberOfUsers == 0) {
+                errors.push("Number Of Users should not be zero");
+            }
+            else
+                errors.push("Number Of Users is Required");
+        }
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
