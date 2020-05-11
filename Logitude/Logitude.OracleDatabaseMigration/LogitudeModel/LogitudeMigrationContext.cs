@@ -2713,6 +2713,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatements
+        {
+            get; set;
+
+        }
+
         public IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats
         {
             get;
@@ -2762,6 +2768,13 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<SupplierInvoiceItemsPrice> SupplierInvoiceItemsPrices
+        {
+            get; set;
+
+        }
+
+
         public IDbSet<SupplierInvoiceItemProcesType> SupplierInvoiceItemProcesTypes
         {
             get;
@@ -2802,6 +2815,18 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         {
             get;
             set;
+
+        }
+
+        public IDbSet<SupplierInvoicePayment> SupplierInvoicePayments
+        {
+            get; set;
+
+        }
+
+        public IDbSet<SupplierInvoiceUCR> SupplierInvoiceUCRs
+        {
+            get; set;
 
         }
 
@@ -4020,6 +4045,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new SubCountryMap());
 
+            modelBuilder.Configurations.Add(new SuppInvoiceItemsAbachStatementMap());
+
             modelBuilder.Configurations.Add(new SupplierInvioceItemCertificatMap());
 
             modelBuilder.Configurations.Add(new SupplierInvoiceMap());
@@ -4042,11 +4069,17 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsSerialNumMap());
 
+            modelBuilder.Configurations.Add(new SupplierInvoiceItemsPriceMap());
+
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsTaxMap());
 
             //modelBuilder.Configurations.Add(new SupplierInvoiceItemsTaxesModMap());
 
             modelBuilder.Configurations.Add(new SupplierInvoiceModificationMap());
+
+            modelBuilder.Configurations.Add(new SupplierInvoicePaymentMap());
+
+            modelBuilder.Configurations.Add(new SupplierInvoiceUCRMap());
 
             modelBuilder.Configurations.Add(new TapagMap());
 
