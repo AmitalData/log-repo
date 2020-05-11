@@ -58,6 +58,13 @@ export class ExportDeclarationComponent extends BaseComponent {
         this.EntityPM.DestinationCountryCode = newValue;
     }
 
+    
+
+    public get IsExporterConfirmation() { return this.EntityPM.IsExporterConfirmation; }
+    public set IsExporterConfirmation(newValue: boolean) {
+        this.EntityPM.IsExporterConfirmation = newValue;
+    }
+
 
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
