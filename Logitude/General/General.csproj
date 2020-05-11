@@ -264,6 +264,7 @@
     <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate ports.sql" />
     <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate states.sql" />
     <Content Include="Customs2020\PreDatabaseMigrationScripts\null column must have a value %28Tenants%29.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\package type print as nullable.sql" />
     <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForGlobalDB.sql" />
     <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForMainDB.sql" />
     <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForSystemLogsDB.sql" />
