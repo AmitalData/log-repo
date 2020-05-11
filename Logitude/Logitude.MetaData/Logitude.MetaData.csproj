@@ -197,6 +197,9 @@
     <None Include="DBOthers\ShipmentsModel\Procedures\UpdateShipmentProfitProcedure.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\UpdateShipmentRegistryDateProcedure.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\AutomaticLastUpdateDateShipmentsTrigger.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\ShipmentsCustomersDashboardView.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\ShipmentDirectionTransmodeView.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\ShipmentCountryDashboardView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\MessagingStockDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
