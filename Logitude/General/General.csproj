@@ -257,6 +257,13 @@
     <Content Include="Customs2020\5 after update.sql" />
     <Content Include="Customs2020\delete from metadata bad records.sql" />
     <Content Include="Customs2020\DeleteObjectTableMetadataSP.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\Color Index Script.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate countries.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate country cities.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate incoterms.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate ports.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\duplicate states.sql" />
+    <Content Include="Customs2020\PreDatabaseMigrationScripts\null column must have a value %28Tenants%29.sql" />
     <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForGlobalDB.sql" />
     <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForMainDB.sql" />
     <Content Include="Customs2020\PreDatabaseMigrationScripts\ScriptsForSystemLogsDB.sql" />

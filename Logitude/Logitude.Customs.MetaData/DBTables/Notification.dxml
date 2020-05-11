@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="Notifications"
+  Name="Customs.Notifications"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
@@ -107,7 +107,7 @@
   <Column
     Name="SearchFields"
     Type="nvarchar"
-    Size="2000">
+    Size="4000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -148,7 +148,7 @@
   <Column
     Name="Description"
     Type="nvarchar"
-    Size="2000">
+    Size="4000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -176,7 +176,7 @@
     ForeignKeyColumn="NotificationDefinitionCode"
     ReferencedTable="NotificationDefinitions"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="AssigneToId"
     ReferencedTable="Users"
@@ -186,12 +186,12 @@
     ForeignKeyColumn="AssigneToNotificationTypeCode"
     ReferencedTable="AssigneeNotificationTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="DeclarationOfficeCode"
     ReferencedTable="CustomsHouseTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
@@ -201,7 +201,7 @@
     ForeignKeyColumn="CreatedByRequestID"
     ReferencedTable="CustomsRequestsSheets"
     ReferencedColumn="Id"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="DepartmentId"
     ReferencedTable="Departments"

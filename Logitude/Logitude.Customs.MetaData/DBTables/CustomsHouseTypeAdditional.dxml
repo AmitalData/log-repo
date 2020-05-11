@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="CustomsHouseTypeAdditionals"
+  Name="Customs.CustomsHouseTypeAdditionals"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
@@ -50,15 +50,15 @@
     ForeignKeyColumn="Code"
     ReferencedTable="CustomsHouseTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="TransportModeId"
     ReferencedTable="CustomsTransportModes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="UnloadPortCode"
     ReferencedTable="UnloadingSiteType"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
 </Table>

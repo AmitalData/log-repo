@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="CustomsSettings"
+  Name="Customs.CustomsSettings"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
@@ -161,5 +161,5 @@
     ForeignKeyColumn="CustomsEnvoirmentTypeCode"
     ReferencedTable="CustomsEnvoirmentTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
 </Table>
