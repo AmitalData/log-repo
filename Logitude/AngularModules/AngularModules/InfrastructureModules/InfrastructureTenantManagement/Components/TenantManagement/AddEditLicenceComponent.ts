@@ -138,8 +138,15 @@ export class AddEditLicenceComponent extends BaseComponent {
             }
         }
 
-        if (AppTool.IsNullOrZero(this.DataContext.NumberOfUsers)) {
-            if (this.DataContext.NumberOfUsers == 0) {
+        var numberOfUser; 
+        if (this.IsMainPackage) {
+            numberOfUser = this.NumberOfUsers;
+        }
+        else {
+            numberOfUser = this.DataContext.NumberOfUsers;
+        }
+        if (AppTool.IsNullOrZero(numberOfUser)) {
+            if (numberOfUser == 0) {
                 errors.push("Number Of Users should not be zero");
             }
             else
