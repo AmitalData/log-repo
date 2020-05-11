@@ -62,6 +62,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string ReceiverWarehouseName  { get; set; }
        [DataMember]
        public string DeliveryPlaceName  { get; set; }
+       [DataMember]
+       public bool IsDangerousGoods  { get; set; }
+       [DataMember]
+       public string FinalDestinationPortCode  { get; set; }
+       [DataMember]
+       public string FinalDestinationPortName  { get; set; }
    }
 
 }

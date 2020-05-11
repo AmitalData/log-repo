@@ -80,6 +80,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual RegisteredWarehouseSiteType RegisteredWarehouseSiteType { get; set; }
         [Column("DeliveryPlaceName")]
 	    public string DeliveryPlaceName { get; set; }
+        [Column("IsDangerousGoods")]
+	    public bool IsDangerousGoods { get; set; }
+        [ForeignKey("FinalDestinationPort")]
+        [Column("FinalDestinationPortCode")]
+	    public string FinalDestinationPortCode { get; set; }
+	      
+        public virtual InternationalSite FinalDestinationPort { get; set; }
     }
 }
 	 

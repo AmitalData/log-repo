@@ -572,6 +572,11 @@
       <DependentUpon>202005101414116_CngExpDec.cs</DependentUpon>
     </Compile>
 
+    <Compile Include="Migrations\202005110650112_CngExpDecCon.cs" />
+    <Compile Include="Migrations\202005110650112_CngExpDecCon.Designer.cs">
+      <DependentUpon>202005110650112_CngExpDecCon.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -980,21 +985,23 @@
     <EmbeddedResource Include="Migrations\202005071033444_AddCustomsShip.resx">
       <DependentUpon>202005071033444_AddCustomsShip.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Customs
+
     <EmbeddedResource Include="Migrations\202005100616033_AddedCustomTablesForExport.resx">
       <DependentUpon>202005100616033_AddedCustomTablesForExport.cs</DependentUpon>
     </EmbeddedResource>
-========================================================================
+
     <EmbeddedResource Include="Migrations\202005100716392_CngSFCustomsShip2.resx">
       <DependentUpon>202005100716392_CngSFCustomsShip2.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Customs
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 66487_EXPDEC
-========================================================================
+
     <EmbeddedResource Include="Migrations\202005101414116_CngExpDec.resx">
       <DependentUpon>202005101414116_CngExpDec.cs</DependentUpon>
     </EmbeddedResource>
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 66487_EXPDEC
+
+    <EmbeddedResource Include="Migrations\202005110650112_CngExpDecCon.resx">
+      <DependentUpon>202005110650112_CngExpDecCon.cs</DependentUpon>
+    </EmbeddedResource>
+
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

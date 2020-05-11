@@ -39,7 +39,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OriginCountryCode, 
 	         StorageSiteCode, 
 	         ReceiverWarehouseCode, 
-	         DeliveryPlaceName,
+	         DeliveryPlaceName, 
+	         IsDangerousGoods, 
+	         FinalDestinationPortCode,
 	      }
 
 
@@ -69,7 +71,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReceiverWarehouseCode, 
 	         ReceiverWarehouseName, 
 	         CargoDate, 
-	         DeliveryPlaceName,
+	         DeliveryPlaceName, 
+	         IsDangerousGoods, 
+	         FinalDestinationPortCode, 
+	         FinalDestinationPortName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -156,6 +161,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryPlaceName))
             {
 				entityPOCO.DeliveryPlaceName = entityPM.DeliveryPlaceName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDangerousGoods))
+            {
+				entityPOCO.IsDangerousGoods = entityPM.IsDangerousGoods;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalDestinationPortCode))
+            {
+				entityPOCO.FinalDestinationPortCode = entityPM.FinalDestinationPortCode;
 			}
 			}
 
@@ -252,6 +267,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DeliveryPlaceName = entityPOCO.DeliveryPlaceName;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDangerousGoods))
+            {
+					entityPM.IsDangerousGoods = entityPOCO.IsDangerousGoods;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FinalDestinationPortCode))
+            {
+					entityPM.FinalDestinationPortCode = entityPOCO.FinalDestinationPortCode;
+            }
+
 		}
 
 		public void PMToOldPM(ConsignmentPM entityPM, ConsignmentPM oldEntityPM)
@@ -336,6 +361,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryPlaceName))
             {
                 oldEntityPM.DeliveryPlaceName = entityPM.DeliveryPlaceName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDangerousGoods))
+            {
+                oldEntityPM.IsDangerousGoods = entityPM.IsDangerousGoods;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalDestinationPortCode))
+            {
+                oldEntityPM.FinalDestinationPortCode = entityPM.FinalDestinationPortCode;
             }
 			
 		}
