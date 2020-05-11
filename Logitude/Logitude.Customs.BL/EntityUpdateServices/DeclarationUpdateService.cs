@@ -204,6 +204,8 @@ using System.Diagnostics;
             DecDangersContactUpdateService decDangersContactUpdateService = new DecDangersContactUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             decDangersContactUpdateService.UpdateMulti(entityPM.DecDangersContacts, entityPM.DeletedDecDangersContacts, entityPM, false);
 
+            var DeclarationExportRecipientUpdateService = new DeclarationExportRecipientUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            DeclarationExportRecipientUpdateService.UpdateMulti(entityPM.DeclarationExportRecipients, entityPM.DeletedDeclarationExportRecipients, entityPM, false);
 
 
             //DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);

@@ -49,6 +49,7 @@ import {DeclarationConstraintPM} from '../../EntityPMs/DeclarationConstraintPM';
 import {DeclarationErrorViewPM} from '../../EntityPMs/DeclarationErrorViewPM';
 import {DeclarationConsAcceptancePM} from '../../EntityPMs/DeclarationConsAcceptancePM';
 import {DecDangersContactPM} from '../../EntityPMs/DecDangersContactPM';
+import {DeclarationExportRecipientPM} from '../../EntityPMs/DeclarationExportRecipientPM';
 import {DeclarationValidator} from '../../Validators/DeclarationValidator';
 
 @Injectable()
@@ -259,6 +260,7 @@ export class DeclarationPMService {
                this.MapDeclarationErrorViews2(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapDeclarationConsAcceptances(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapDecDangersContacts(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapDeclarationExportRecipients(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -459,6 +461,15 @@ export class DeclarationPMService {
 						
 							 
             entityPM.OldEntityPM.DecDangersContacts.push(newDecDangersContactPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.DeclarationExportRecipients = [];
+            for (var item in entityPM.DeclarationExportRecipients) {
+            var myDeclarationExportRecipientPM = entityPM.DeclarationExportRecipients[item];
+            var newDeclarationExportRecipientPM: DeclarationExportRecipientPM = this.clone(myDeclarationExportRecipientPM);
+						
+							 
+            entityPM.OldEntityPM.DeclarationExportRecipients.push(newDeclarationExportRecipientPM);
             }
 			   
 		}
@@ -1307,6 +1318,96 @@ export class DeclarationPMService {
         }
     }
 //file not found! for child composition DecDangersContact
+    MapDeclarationExportRecipients(entityPM: DeclarationPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldDeclarationExportRecipients: DeclarationExportRecipientPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldDeclarationExportRecipients = entityPM.OldEntityPM.DeclarationExportRecipients;
+        }
+
+        entityPM.DeclarationExportRecipients = new Array<DeclarationExportRecipientPM>();
+        for (var item in jsonPM.DeclarationExportRecipients) {
+            var jItem = jsonPM.DeclarationExportRecipients[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newDeclarationExportRecipientPM: DeclarationExportRecipientPM;
+	  
+            if (mapParent) {
+                newDeclarationExportRecipientPM = new DeclarationExportRecipientPM(entityPM);
+            }
+            else
+            {
+                newDeclarationExportRecipientPM = new DeclarationExportRecipientPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newDeclarationExportRecipientPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newDeclarationExportRecipientPM.UniqueKey = Guid.newGuid();
+                newDeclarationExportRecipientPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newDeclarationExportRecipientPM.OldEntityPM = this.clone(newDeclarationExportRecipientPM);
+
+				
+            }
+            else {
+                if (newDeclarationExportRecipientPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newDeclarationExportRecipientPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newDeclarationExportRecipientPM.ChangeSetOp = "Insert";
+                }
+ 
+                newDeclarationExportRecipientPM.OldEntityPM = null;
+                newDeclarationExportRecipientPM.EntityParentPM = null;
+            }
+			
+			 newDeclarationExportRecipientPM.IsDirty = false;
+            entityPM.DeclarationExportRecipients.push(newDeclarationExportRecipientPM);
+        }
+        if (oldDeclarationExportRecipients) {
+            
+            for (var itemKey in oldDeclarationExportRecipients) {
+                if (entityPM.DeclarationExportRecipients.filter(p=> p.UniqueKey === oldDeclarationExportRecipients[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldDeclarationExportRecipients[itemKey]) {
+                        //oldDeclarationExportRecipients[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.DeclarationExportRecipients.push(oldDeclarationExportRecipients[itemKey]);
+						var oldItemJson = oldDeclarationExportRecipients[itemKey];
+                        var deletedPM: DeclarationExportRecipientPM = new DeclarationExportRecipientPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.DeclarationExportRecipients.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

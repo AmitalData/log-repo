@@ -14,6 +14,7 @@ import {DeclarationConstraintPM} from './DeclarationConstraintPM';
 import {DeclarationErrorViewPM} from './DeclarationErrorViewPM';
 import {DeclarationConsAcceptancePM} from './DeclarationConsAcceptancePM';
 import {DecDangersContactPM} from './DecDangersContactPM';
+import {DeclarationExportRecipientPM} from './DeclarationExportRecipientPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -1209,7 +1210,41 @@ export class DeclarationPM {
     public set DestinationCountryName(newValue: string) { if (this.destinationCountryName != newValue) { this.destinationCountryName = newValue; this.MarkAsDirty("DestinationCountryName"); } }
        
 	 
+     
+	private declarationExportRecipients: DeclarationExportRecipientPM[];
+    get  DeclarationExportRecipients() {
+        if (this.declarationExportRecipients == null) {
+            this.declarationExportRecipients = [];
+        }
 
+        return this.declarationExportRecipients;
+    }
+    set  DeclarationExportRecipients(newValue: DeclarationExportRecipientPM[]) {
+        if (this.declarationExportRecipients != newValue) {
+            this.declarationExportRecipients = newValue;
+        }
+    }
+    public AddDeclarationExportRecipient(item: DeclarationExportRecipientPM) {
+        if (item != null) {
+            var index = this. DeclarationExportRecipients.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DeclarationExportRecipients.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDeclarationExportRecipient(item: DeclarationExportRecipientPM) {
+        if (item != null) {
+            var index = this. DeclarationExportRecipients.indexOf(item);
+            if (index > -1) {
+                this. DeclarationExportRecipients.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DeclarationExportRecipients: Array<DeclarationExportRecipientPM>= [];
+ 
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;

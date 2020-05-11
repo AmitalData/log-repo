@@ -333,6 +333,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ExportFile  { get; set; }
        [DataMember]
+       public string DeclarationTypeCode  { get; set; }
+       [DataMember]
        public string AgentRoleCode  { get; set; }
        [DataMember]
        public string DestinationCountryCode  { get; set; }

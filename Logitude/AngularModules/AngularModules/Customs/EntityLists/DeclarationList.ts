@@ -167,6 +167,7 @@ export class DeclarationList {
 	CourierPendingReasonName: string;
 	Direction: string;
 	ExportFile: string;
+	DeclarationTypeCode: string;
 	AgentRoleCode: string;
 	DestinationCountryCode: string;
 	LoadingDateTime: Date;

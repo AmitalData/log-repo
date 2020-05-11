@@ -282,6 +282,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                  //.Include("CreatedByUser.Contact")
                                                  .Include("Importer").Include("EntitleImporter").Include("TransferImporter").Include("ImporterType").Include("TransferImporterType").Include("EntitleImporterType").Include("StorageStatus").Include("FreightPaymentMethod")
+                                                 .Include("CustomsCountry").Include("CustomsShip")
 
                                                  join recJoin in qMyJoin
                                                               on a.Id equals recJoin.DeclarationId
@@ -297,7 +298,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  join recOriginalDeclarations in qOriginalDeclarations
                                                  on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
                                                  into originalDeclarations
-                                                 from myJoinOriginalDeclaration  in originalDeclarations.DefaultIfEmpty()
+                                                 from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
 
                                                      /*
                                                      join pr in qCourierPendingReasonLocalName
@@ -419,7 +420,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DepositionStatusCode = a.DepositionStatusCode,
                                                      //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
                                                      //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
-                                                     AmendmentDontDisplayInList =a.AmendmentDontDisplayInList,
+                                                     AmendmentDontDisplayInList = a.AmendmentDontDisplayInList,
 
 
 
@@ -441,12 +442,24 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
                                                      IsPaymentProtested = a.IsPaymentProtested,
-                                                     DeclarationNoAmendment= myJoinOriginalDeclaration.DeclarationNumber,
+                                                     DeclarationNoAmendment = myJoinOriginalDeclaration.DeclarationNumber,
                                                      CustomFileAmendment = myJoinOriginalDeclaration.CustomFileNo,
-                                                     AmendmentStatus= a.AmendmentStatus,
-                                                     AmendmentRequestNumber=a.AmendmentRequestNumber,
-                                                     AmendmentCorrectedByUserName = a.AmendmentCorrectedByUser != null ? a.AmendmentCorrectedByUser.Code :null,
+                                                     AmendmentStatus = a.AmendmentStatus,
+                                                     AmendmentRequestNumber = a.AmendmentRequestNumber,
+                                                     AmendmentCorrectedByUserName = a.AmendmentCorrectedByUser != null ? a.AmendmentCorrectedByUser.Code : null,
                                                      AmendmentissueDate = a.AmendmentissueDate
+                                                     ,
+                                                     Direction = a.Direction,
+                                                     ExportFile = a.ExportFile,
+                                                     DeclarationTypeCode = a.DeclarationTypeCode,
+                                                     AgentRoleCode = a.AgentRoleCode,
+                                                     DestinationCountryCode = a.DestinationCountryCode,
+                                                     DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.EnglishName : "",
+
+                                                     LoadingDateTime = a.LoadingDateTime,
+                                                     ShipCode = a.ShipCode,
+                                                     ShipName = a.CustomsShip != null ? a.CustomsShip.EnglishName : "",
+                                                     IsExporterConfirmation = a.IsExporterConfirmation
                                                  });
 
 
