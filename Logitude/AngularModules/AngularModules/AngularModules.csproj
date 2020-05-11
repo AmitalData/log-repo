@@ -1031,6 +1031,10 @@
     <TypeScriptCompile Include="Customs\EntityPMs\SealUpdateReasonTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SeizureFactorTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SeizureMethodTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\SuppInvoiceItemAbachStatementPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\SupplierInvoiceItemsPricePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\SupplierInvoicePaymentPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\SupplierInvoiceUCRPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransactionNatureTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransferCargoMethodTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\UpdateCodePM.ts" />

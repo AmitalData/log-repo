@@ -19,6 +19,8 @@ import {SupplierInvoiceItemProcesTypePM} from './SupplierInvoiceItemProcesTypePM
 import {SupplierInvoiceItemsLevyPM} from './SupplierInvoiceItemsLevyPM';
 import {SupplierInvoiceItemVehiclePM} from './SupplierInvoiceItemVehiclePM';
 import {SupplierInvoiceItemModVehiclePM} from './SupplierInvoiceItemModVehiclePM';
+import {SupplierInvoiceItemsPricePM} from './SupplierInvoiceItemsPricePM';
+import {SuppInvoiceItemsAbachStatementPM} from './SuppInvoiceItemsAbachStatementPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -722,7 +724,105 @@ export class SupplierInvoiceItemPM {
     public set OcrPageNumber(newValue: number) { if (this.ocrPageNumber != newValue) { this.ocrPageNumber = newValue; this.MarkAsDirty("OcrPageNumber"); } }
        
 	 
+    private classificationTypeCode: string;
+    public get ClassificationTypeCode() { return this.classificationTypeCode; }
+    public set ClassificationTypeCode(newValue: string) { if (this.classificationTypeCode != newValue) { this.classificationTypeCode = newValue; this.MarkAsDirty("ClassificationTypeCode"); } }
+       
+	 
+    private transactionNatureCode: string;
+    public get TransactionNatureCode() { return this.transactionNatureCode; }
+    public set TransactionNatureCode(newValue: string) { if (this.transactionNatureCode != newValue) { this.transactionNatureCode = newValue; this.MarkAsDirty("TransactionNatureCode"); } }
+       
+	 
+    private claimReasonCode: string;
+    public get ClaimReasonCode() { return this.claimReasonCode; }
+    public set ClaimReasonCode(newValue: string) { if (this.claimReasonCode != newValue) { this.claimReasonCode = newValue; this.MarkAsDirty("ClaimReasonCode"); } }
+       
+	 
+    private classificationTypeName: string;
+    public get ClassificationTypeName() { return this.classificationTypeName; }
+    public set ClassificationTypeName(newValue: string) { if (this.classificationTypeName != newValue) { this.classificationTypeName = newValue; this.MarkAsDirty("ClassificationTypeName"); } }
+       
+	 
+    private transactionNatureName: string;
+    public get TransactionNatureName() { return this.transactionNatureName; }
+    public set TransactionNatureName(newValue: string) { if (this.transactionNatureName != newValue) { this.transactionNatureName = newValue; this.MarkAsDirty("TransactionNatureName"); } }
+       
+	 
+    private claimReasonName: string;
+    public get ClaimReasonName() { return this.claimReasonName; }
+    public set ClaimReasonName(newValue: string) { if (this.claimReasonName != newValue) { this.claimReasonName = newValue; this.MarkAsDirty("ClaimReasonName"); } }
+       
+	 
+     
+	private supplierInvoiceItemsPrices: SupplierInvoiceItemsPricePM[];
+    get  SupplierInvoiceItemsPrices() {
+        if (this.supplierInvoiceItemsPrices == null) {
+            this.supplierInvoiceItemsPrices = [];
+        }
 
+        return this.supplierInvoiceItemsPrices;
+    }
+    set  SupplierInvoiceItemsPrices(newValue: SupplierInvoiceItemsPricePM[]) {
+        if (this.supplierInvoiceItemsPrices != newValue) {
+            this.supplierInvoiceItemsPrices = newValue;
+        }
+    }
+    public AddSupplierInvoiceItemsPrice(item: SupplierInvoiceItemsPricePM) {
+        if (item != null) {
+            var index = this. SupplierInvoiceItemsPrices.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. SupplierInvoiceItemsPrices.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveSupplierInvoiceItemsPrice(item: SupplierInvoiceItemsPricePM) {
+        if (item != null) {
+            var index = this. SupplierInvoiceItemsPrices.indexOf(item);
+            if (index > -1) {
+                this. SupplierInvoiceItemsPrices.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public SupplierInvoiceItemsPrices: Array<SupplierInvoiceItemsPricePM>= [];
+      
+	private suppInvoiceItemsAbachStatements: SuppInvoiceItemsAbachStatementPM[];
+    get  SuppInvoiceItemsAbachStatements() {
+        if (this.suppInvoiceItemsAbachStatements == null) {
+            this.suppInvoiceItemsAbachStatements = [];
+        }
+
+        return this.suppInvoiceItemsAbachStatements;
+    }
+    set  SuppInvoiceItemsAbachStatements(newValue: SuppInvoiceItemsAbachStatementPM[]) {
+        if (this.suppInvoiceItemsAbachStatements != newValue) {
+            this.suppInvoiceItemsAbachStatements = newValue;
+        }
+    }
+    public AddSuppInvoiceItemsAbachStatement(item: SuppInvoiceItemsAbachStatementPM) {
+        if (item != null) {
+            var index = this. SuppInvoiceItemsAbachStatements.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. SuppInvoiceItemsAbachStatements.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveSuppInvoiceItemsAbachStatement(item: SuppInvoiceItemsAbachStatementPM) {
+        if (item != null) {
+            var index = this. SuppInvoiceItemsAbachStatements.indexOf(item);
+            if (index > -1) {
+                this. SuppInvoiceItemsAbachStatements.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public SuppInvoiceItemsAbachStatements: Array<SuppInvoiceItemsAbachStatementPM>= [];
+ 
     public OldEntityPM: SupplierInvoiceItemPM;
 	
     private entityParentPM: any;

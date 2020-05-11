@@ -606,6 +606,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SubCountryMap());
 	
+            modelBuilder.Configurations.Add(new SuppInvoiceItemsAbachStatementMap());
+	
             modelBuilder.Configurations.Add(new SupplierInvioceItemCertificatMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceMap());
@@ -626,6 +628,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsModMap());
 	
+            modelBuilder.Configurations.Add(new SupplierInvoiceItemsPriceMap());
+	
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsProdIdentMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsSerialNumMap());
@@ -639,6 +643,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new SupplierInvoiceItemVehicleModMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceModificationMap());
+	
+            modelBuilder.Configurations.Add(new SupplierInvoicePaymentMap());
+	
+            modelBuilder.Configurations.Add(new SupplierInvoiceUCRMap());
 	
             modelBuilder.Configurations.Add(new TapagMap());
 	
@@ -851,6 +859,8 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<SupplierInvoiceItemsMod>().Property(x => x.Amount).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<SupplierInvoiceItemsPrice>().Property(x => x.AdditionalPrice).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.TaxRate).HasPrecision(17, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.TaxBaseAmount).HasPrecision(16, 2);
@@ -864,6 +874,8 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<SupplierInvoiceItemVehicleMod>().Property(x => x.DeductAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceModification>().Property(x => x.Amount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<SupplierInvoicePayment>().Property(x => x.PaymentAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<Vehicle>().Property(x => x.GreenIndex).HasPrecision(9, 3);
 				
@@ -2775,6 +2787,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatements 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats 
 	 {
 	      get; set;
@@ -2835,6 +2853,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<SupplierInvoiceItemsPrice> SupplierInvoiceItemsPrices 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<SupplierInvoiceItemsProdIdent> SupplierInvoiceItemsProdIdents 
 	 {
 	      get; set;
@@ -2872,6 +2896,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SupplierInvoiceModification> SupplierInvoiceModifications 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupplierInvoicePayment> SupplierInvoicePayments 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupplierInvoiceUCR> SupplierInvoiceUCRs 
 	 {
 	      get; set;
 	 

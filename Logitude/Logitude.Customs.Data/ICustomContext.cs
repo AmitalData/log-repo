@@ -286,6 +286,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<StorageMessageType> StorageMessageTypes { get; }
 		 IDbSet<StorageStatus> StorageStatuses { get; }
 		 IDbSet<SubCountry> SubCountries { get; }
+		 IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatements { get; }
 		 IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats { get; }
 		 IDbSet<SupplierInvoice> SupplierInvoices { get; }
 		 IDbSet<SupplierInvoiceFreightAmount> SupplierInvoiceFreightAmounts { get; }
@@ -296,6 +297,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<SupplierInvoiceItemsDescript> SupplierInvoiceItemsDescripts { get; }
 		 IDbSet<SupplierInvoiceItemsLevy> SupplierInvoiceItemsLevies { get; }
 		 IDbSet<SupplierInvoiceItemsMod> SupplierInvoiceItemsMods { get; }
+		 IDbSet<SupplierInvoiceItemsPrice> SupplierInvoiceItemsPrices { get; }
 		 IDbSet<SupplierInvoiceItemsProdIdent> SupplierInvoiceItemsProdIdents { get; }
 		 IDbSet<SupplierInvoiceItemsSerialNum> SupplierInvoiceItemsSerialNums { get; }
 		 IDbSet<SupplierInvoiceItemsTax> SupplierInvoiceItemsTaxes { get; }
@@ -303,6 +305,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<SupplierInvoiceItemVehicleAdd> SupplierInvoiceItemVehicleAdds { get; }
 		 IDbSet<SupplierInvoiceItemVehicleMod> SupplierInvoiceItemVehicleMods { get; }
 		 IDbSet<SupplierInvoiceModification> SupplierInvoiceModifications { get; }
+		 IDbSet<SupplierInvoicePayment> SupplierInvoicePayments { get; }
+		 IDbSet<SupplierInvoiceUCR> SupplierInvoiceUCRs { get; }
 		 IDbSet<Tapag> Tapags { get; }
 		 IDbSet<TapagConnectionTable> TapagConnectionTables { get; }
 		 IDbSet<TapagType> TapagTypes { get; }

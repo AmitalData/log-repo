@@ -110,6 +110,10 @@
     <None Include="EntityFiles\AmountType.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemsPrice.lxml" />
+    <None Include="EntityFiles\SuppInvoiceItemsAbachStatement.lxml" />
+    <None Include="EntityFiles\SupplierInvoicePayment.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceUCR.lxml" />
     <None Include="EntityFiles\TransactionNatureType.lxml" />
     <None Include="EntityFiles\ClaimReasonType.lxml" />
     <None Include="EntityFiles\ContinuousRequestType.lxml" />
