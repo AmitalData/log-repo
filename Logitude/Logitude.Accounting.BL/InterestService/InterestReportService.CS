@@ -190,15 +190,15 @@ namespace Logitude.Accounting.BL.InterestService
 
             InterestReportUpdateService InterestReportUpdate = new InterestReportUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
 
-            interestReportPM.CloseBalance = 0;
-            if (interestReportPM.OpenBalance != null)
-            {
-                interestReportPM.CloseBalance += interestReportPM.OpenBalance;
-            }
-            if (interestReportPM.TotalAmount != null)
-            {
-                interestReportPM.CloseBalance += interestReportPM.TotalAmount;
-            }
+            //interestReportPM.CloseBalance = 0;
+            //if (interestReportPM.OpenBalance != null)
+            //{
+            //    interestReportPM.CloseBalance += interestReportPM.OpenBalance;
+            //}
+            //if (interestReportPM.TotalAmount != null)
+            //{
+            //    interestReportPM.CloseBalance += interestReportPM.TotalAmount;
+            //}
             if (interestReportPM.InterestReportStatusCode != "2")
             {
                 interestReportPM.InterestReportStatusCode = "4";

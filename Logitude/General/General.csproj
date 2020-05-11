@@ -245,7 +245,6 @@
     <Content Include="2020.R1\03 - 2020\Day 11 [Samar] update main carriage ATA query columns.sql" />
     <Content Include="2020.R1\04 - 2020\Day 13 [Maheera] Add QuoteAutomaticallyClosingDataHistory Table.sql" />
     <Content Include="2020.R2\04\Day 26 [Samar] Add New Help Resources.sql" />
-
     <Content Include="2020.R2\04\Day 30 [Wesam] Add ImporterDigitalShipments To BatchServicesDef.sql" />
     <Content Include="2020.R2\05\Day 03[Wesam] AddColumnAutomaticLastUpdateDate.sql" />
     <Content Include="2020.R2\04\Set Event Types Local Names To English Names.sql" />
@@ -724,6 +723,7 @@
     <Content Include="Main Branch\2020\04 - 2020\Day 28 [Wesam] Add ImporterDigitalShipments To BatchServicesDef.sql" />
     <Content Include="Main Branch\2020\04 - 2020\Day 19 [Abed] Fixed Cross Docks Releases Counters.sql" />
     <Content Include="Main Branch\2020\04 - 2020\Day 27 [Abed] UpdateAddedManuallOnDocumentType.sql" />
+    <Content Include="Main Branch\2020\05 - 2020\Day 5 [Mutaz] AddInterestInvoiceRecordToOldAccountingPeriodRecords.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 12 [Mutaz] Delete Constraint between SharedUserQueries and Query.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 22 [Abed] update Help Center.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 31 [Mutaz] Add Constraint UniqCode In Query.sql" />
