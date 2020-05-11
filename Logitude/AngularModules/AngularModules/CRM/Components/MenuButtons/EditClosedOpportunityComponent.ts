@@ -258,9 +258,12 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
                 this.GeneratedComponent = cmpRef.instance;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, "Opportunity.AdditionalFields");
-                    this.SetUIProperties_GeneratedComponent(true);
 
+                cmpRef.instance.LoadCompleted.subscribe(s => {
+                    this.SetUIProperties_GeneratedComponent(true);
+                });
+
+                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, "Opportunity.AdditionalFields");
             });
     }
     private GeneratedComponent: any;
