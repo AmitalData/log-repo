@@ -739,7 +739,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.UIProperties.SetEnabled("Quantity3", null, false);
             this.UIProperties.SetEnabled("Quantity4", null, false);
             this.UIProperties.SetEnabled("Quantity5", null, false);
-            this.UIProperties.SetEnabled("TariffProductId","Tariff", false);
 
         }
         else {
@@ -760,7 +759,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.UIProperties.SetEnabled("Quantity3", null, true);
             this.UIProperties.SetEnabled("Quantity4", null, true);
             this.UIProperties.SetEnabled("Quantity5", null, true);
-            this.UIProperties.SetEnabled("TariffProductId", "Tariff", true);
 
         }
     }
