@@ -260,7 +260,7 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
                 this.GeneratedComponent = cmpRef.instance;
 
                 cmpRef.instance.LoadCompleted.subscribe(s => {
-                    //this.SetUIProperties_GeneratedComponent(true);
+                    this.SetUIProperties_GeneratedComponent(true);
                 });
 
                 cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, "Opportunity.AdditionalFields");
