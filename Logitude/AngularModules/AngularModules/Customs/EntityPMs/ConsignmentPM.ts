@@ -217,6 +217,21 @@ export class ConsignmentPM {
     public set DeliveryPlaceName(newValue: string) { if (this.deliveryPlaceName != newValue) { this.deliveryPlaceName = newValue; this.MarkAsDirty("DeliveryPlaceName"); } }
        
 	 
+    private isDangerousGoods: boolean;
+    public get IsDangerousGoods() { return this.isDangerousGoods; }
+    public set IsDangerousGoods(newValue: boolean) { if (this.isDangerousGoods != newValue) { this.isDangerousGoods = newValue; this.MarkAsDirty("IsDangerousGoods"); } }
+       
+	 
+    private finalDestinationPortCode: string;
+    public get FinalDestinationPortCode() { return this.finalDestinationPortCode; }
+    public set FinalDestinationPortCode(newValue: string) { if (this.finalDestinationPortCode != newValue) { this.finalDestinationPortCode = newValue; this.MarkAsDirty("FinalDestinationPortCode"); } }
+       
+	 
+    private finalDestinationPortName: string;
+    public get FinalDestinationPortName() { return this.finalDestinationPortName; }
+    public set FinalDestinationPortName(newValue: string) { if (this.finalDestinationPortName != newValue) { this.finalDestinationPortName = newValue; this.MarkAsDirty("FinalDestinationPortName"); } }
+       
+	 
 
     public OldEntityPM: ConsignmentPM;
 	

@@ -564,6 +564,10 @@
     <Compile Include="Migrations\202005101414116_CngExpDec.Designer.cs">
       <DependentUpon>202005101414116_CngExpDec.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005110650112_CngExpDecCon.cs" />
+    <Compile Include="Migrations\202005110650112_CngExpDecCon.Designer.cs">
+      <DependentUpon>202005110650112_CngExpDecCon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -977,6 +981,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005101414116_CngExpDec.resx">
       <DependentUpon>202005101414116_CngExpDec.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005110650112_CngExpDecCon.resx">
+      <DependentUpon>202005110650112_CngExpDecCon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
