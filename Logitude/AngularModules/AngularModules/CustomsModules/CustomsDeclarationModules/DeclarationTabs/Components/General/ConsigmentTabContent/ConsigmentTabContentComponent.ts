@@ -96,6 +96,9 @@ export class ConsigmentTabContentComponent
             this._SubConsignmentsChanged = null;
         }
     }
+    ShowExportConsScreen() {
+
+    }
     private Listen() {
         this._SubDisplayModeChanged=
         DeclarationEventManager.DisplayModeChanged.subscribe((IsDisplayOnly: any) => {

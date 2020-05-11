@@ -117,7 +117,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     //#region XML Errors
     XMLErrors: string[] = [];
     IsWindowMode: boolean = false;
+    ShowExportDecScreen() {
 
+    }
     // used in show XML errors process in Customs Answers
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
