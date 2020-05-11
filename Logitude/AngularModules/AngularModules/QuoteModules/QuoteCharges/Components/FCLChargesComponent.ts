@@ -75,9 +75,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             this.IsShowTotalPerContainer = true;
         }
 
-
-        this.IsPriceCheckVisible = QuoteUtilities.IsPriceCheckVisible(this.EntityPM);
-
+        if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck")) {
+            this.IsPriceCheckVisible = true;
+        }
+     
         this.InitializeServices();
         this.LoadRequiredData();
         this.SetLabels();
@@ -717,14 +718,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 betweenDate = this.EntityPM.ETD;
             }
 
-            var tariffType = "";
-            if (this.EntityPM.TransportModeId == "A") {
-                tariffType = "AFC";
-            }
-            else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
-                tariffType = "OLC";
-            }
-
+            var tariffType = "OFC";
             var WindowArgs: any =
             {
                 BetweenDate: betweenDate,
