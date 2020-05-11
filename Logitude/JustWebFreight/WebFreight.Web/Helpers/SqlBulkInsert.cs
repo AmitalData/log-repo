@@ -88,7 +88,7 @@ namespace WebFreight.Web.Helpers
                     insertedRowsCount++;
                     if (bulkInsertedRowsCount == 100 || insertedRowsCount == allRowsCount)
                     {
-                        sqlStringBuilder.AppendLine("Subquery;");
+                        sqlStringBuilder.AppendLine("SELECT 1 FROM dual;");
 
                         string sqlCommandString = sqlStringBuilder.ToString();
                         OracleCommand cmd = new OracleCommand(sqlCommandString, connection);
@@ -135,7 +135,12 @@ namespace WebFreight.Web.Helpers
                                        && entityProperties[i].PropertyType != typeof(float) && entityProperties[i].PropertyType != typeof(double))
                 {
                     if (propValue != null)
-                        propValue = "'" + propValue.ToString().Replace("'", "''") + "'";
+                    {
+                        if (entityProperties[i].PropertyType == typeof(bool))
+                            propValue = propValue.ToString().ToLower() == "true" ? 1 : 0;
+                        else
+                            propValue = "'" + propValue.ToString().Replace("'", "''") + "'";
+                    }
                     else
                         propValue = "NULL";
                 }

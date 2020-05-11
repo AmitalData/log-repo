@@ -130,7 +130,7 @@ namespace Logitude.Server.Tools.Counters
 
                 if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                 {
-                    string number = null;
+                     
                     lock (thisLock)
                         using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                         using (OracleConnection cn = new OracleConnection(strConnString))
@@ -142,18 +142,12 @@ namespace Logitude.Server.Tools.Counters
                             DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdsRange", LogitudeDBSchema.LOGITUDE_MAIN,
                             cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
-                            /*
-                              v_pLastNumber OUT VARCHAR2,
-                   --                    v_pTableName IN VARCHAR2 
-                             * */
-
-
-
-                            OracleParameter startNumberPar = new OracleParameter("@pStartNumber", OracleDbType.Integer);
-                            OracleParameter endNumberPar = new OracleParameter("@pEndNumber", OracleDbType.Integer);
-                            OracleParameter dbStringNumber = new OracleParameter("@DBStringNumber", OracleDbType.VarChar, 50);
-                            OracleParameter tableNamePar = new OracleParameter("@pTableName", OracleDbType.VarChar);
-                            OracleParameter numberOfIdsPar = new OracleParameter("@pNumberOfIds", OracleDbType.VarChar);
+                           
+                            OracleParameter startNumberPar = new OracleParameter("v_pStartNumber", OracleDbType.Integer);
+                            OracleParameter endNumberPar = new OracleParameter("v_pEndNumber", OracleDbType.Integer);
+                            OracleParameter dbStringNumber = new OracleParameter("v_DBStringNumber", OracleDbType.VarChar, 50);
+                            OracleParameter tableNamePar = new OracleParameter("v_pTableName", OracleDbType.VarChar);
+                            OracleParameter numberOfIdsPar = new OracleParameter("v_pNumberOfId", OracleDbType.VarChar);
 
 
                             startNumberPar.Direction = ParameterDirection.Output;
@@ -177,9 +171,9 @@ namespace Logitude.Server.Tools.Counters
                                 cn.Open();
                                 cmd.ExecuteNonQuery();
 
-                                startNumber = (int)cmd.Parameters["@pStartNumber"].Value;
-                                endNumber = (int)cmd.Parameters["@pEndNumber"].Value;
-                                dbString = (string)cmd.Parameters["@DBStringNumber"].Value;
+                                startNumber = (int)cmd.Parameters["v_pStartNumber"].Value;
+                                endNumber = (int)cmd.Parameters["v_pEndNumber"].Value;
+                                dbString = (string)cmd.Parameters["v_DBStringNumber"].Value;
 
 
                             }
