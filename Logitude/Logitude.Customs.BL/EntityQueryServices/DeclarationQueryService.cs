@@ -59,7 +59,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             entityPM.Consignments = consignmentService.GetMulti(declarationKeys, true);
             // if (LoadSupplierInvoices)
             var DeclarationExportRecipientQueryService = new DeclarationExportRecipientQueryService(context);
-            EntityPM.DeclarationExportRecipients = DeclarationExportRecipientQueryService
+            entityPM.DeclarationExportRecipients = DeclarationExportRecipientQueryService
                 .GetMulti(declarationKeys, false);
 
             {
