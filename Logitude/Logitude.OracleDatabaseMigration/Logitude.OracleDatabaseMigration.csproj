@@ -576,10 +576,6 @@
     <Compile Include="Migrations\202005111320113_AddExportTables.Designer.cs">
       <DependentUpon>202005111320113_AddExportTables.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005111354074_AddExportTables2.cs" />
-    <Compile Include="Migrations\202005111354074_AddExportTables2.Designer.cs">
-      <DependentUpon>202005111354074_AddExportTables2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1002,9 +998,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005111320113_AddExportTables.resx">
       <DependentUpon>202005111320113_AddExportTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005111354074_AddExportTables2.resx">
-      <DependentUpon>202005111354074_AddExportTables2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
