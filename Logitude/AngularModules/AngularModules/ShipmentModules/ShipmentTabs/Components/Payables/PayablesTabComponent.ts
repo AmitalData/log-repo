@@ -286,7 +286,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.IsDeleteAllPayablesVisible = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentPriceCheck") && (this.IsLCLEntity || this.IsFCLEntity)) {
+        if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentPriceCheck") && (this.IsLCLEntity || this.IsFCLEntity) && this.EntityPM.TransportModeId != "I") {
             this.IsPriceCheckVisible = true;
         }
 
