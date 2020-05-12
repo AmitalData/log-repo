@@ -57,6 +57,21 @@
                                         </td>
                                     </tr>
 
+                                    <!-- EnableEnteringTotalVAT -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 220px;">
+                                            <LogLabel [ObjectFieldName]="'EnableEnteringTotalVAT'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width: 250px;">
+                                            <LogCheckBox [ObjectFieldName]="'EnableEnteringTotalVAT'" [Checked]="DataContext.EnableEnteringTotalVAT" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
                                     <tr>
                                         <td colspan="3">
                                             <div></div>

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AccountingSettingUpdateClass
    {  		
-		public const string HashString = "d27f8812b553dacd0ec9e48807346d8c";
+		public const string HashString = "be28203fe02fdf9986d884de0301a83c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Accounting Setting",
-			      				    Code =  "1531",
+			      				    Code =  "6efb",
 			      				    Name =  "AccountingSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -3273,6 +3273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EnableEnteringTotalVAT",
 					  						ListPropertyPath =  "EnableEnteringTotalVAT",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3290,6 +3291,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnableEnteringTotalVAT",
 					  						DefaultText =  "Enable Entering Total VAT",
+					  						HelpTextCode =  "EnableEnteringTotalVAT",
+					  						HelpTextDefaultText =  "This parameter allows entering VAT totals for the AP Invoice without specifying the VAT percentage of each line in the invoice ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

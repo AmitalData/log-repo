@@ -1537,8 +1537,7 @@
       IsOld="false"
       IsCoreFeature="false"
       FeatureTextCodeCode="&quot;AccountingTransferHeader.Features.QuickbooksConnectAuth1&quot;"
-      FeatureDefaultText="&quot;Quickbooks Connect Auth1&quot;"
-      IsBusinessUnitEnabled="false" />
+      FeatureDefaultText="&quot;Quickbooks Connect Auth1&quot;" />
     <Feature
       Code="&quot;DisableFTPSettings&quot;"
       FeatureTypeCode="&quot;AREA&quot;"

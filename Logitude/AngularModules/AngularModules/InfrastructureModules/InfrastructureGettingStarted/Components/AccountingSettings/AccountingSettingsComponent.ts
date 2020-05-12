@@ -409,6 +409,13 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
     }
 
+    get EnableEnteringTotalVAT() { return this.EntityPM.EnableEnteringTotalVAT; }
+    set EnableEnteringTotalVAT(value: boolean) {
+        if (this.EntityPM.EnableEnteringTotalVAT != value) {
+            this.EntityPM.EnableEnteringTotalVAT = value;
+        }
+    }
+
     //Commands 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();

@@ -20,7 +20,6 @@ import {PaymentTermListService} from '../../../../Common/Services/StandardLists/
 import {PaymentTermList} from '../../../../Common/EntityLists/PaymentTermList';
 import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
 import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
-import {UpdateCurrencyRateComponent} from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {VatTypeList} from '../../../../Common/EntityLists/VatTypeList';
@@ -50,10 +49,15 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public todayDate: Date;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
+    public IsTotalVatVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
+        if (ObjectsLocator.GlobalSetting) {
+            this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        }
+
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.todayDate = DateTool.GetCurrentDateAsUtc();
@@ -65,6 +69,10 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
+        }
+
+        if (ObjectsLocator.AccountingSettingPM.EnableEnteringTotalVAT || this.EntityPM.TotalVATOnly) {
+            this.IsTotalVatVisible = true;
         }
     }
 
@@ -1143,6 +1151,14 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             logWindow.Show('./InvoiceModules/APInvoice/Components/EditTabs/AddEditAPInvoiceLineComponent');
         }
     }
+
+    EnterVATOnlyClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Enter VAT Totals";
+        logWindow.WindowArgs = { EntityPM: this.EntityPM, PercentagesList: this.VatTypePercentagesList };
+        logWindow.Show('./InvoiceModules/APInvoice/Components/Others/APInvoiceTotalVATOnlyComponent');
+    }
+
 }
 export class APInvoiceLineItem extends BaseComponent {
     public invoiceLinePM: APInvoiceLinePM = null;
