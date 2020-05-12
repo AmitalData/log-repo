@@ -73,6 +73,7 @@ namespace Logitude.XSD.INTTRA_Booking
         private Country FinalPortCountry;
         public ShippingLine MainShippingLine;
         public List<ShipmentOrderPackage> ShipmentOrderPackages = new List<ShipmentOrderPackage>();
+        public List<ShipmentPackage> ShipmentPackages = new List<ShipmentPackage>();
         private List<InsideShipmentPackage> InsidePackages = new List<InsideShipmentPackage>();
         private List<ShipmentPackageHarmonize> AllHarmonizes = new List<ShipmentPackageHarmonize>();
         public IShipmentsContext shipmentContext;
@@ -224,19 +225,25 @@ namespace Logitude.XSD.INTTRA_Booking
         }
         private void GetObjects_ShipmentOrderPackages()
         {
-            this.ShipmentOrderPackages = (from d in shipmentContext.ShipmentOrderPackages
-                                          where d.Tenant == this.Tenant
-                                          && d.ShipmentId == this.ShipmentId
-                                          select d).ToList();
-
             if (string.IsNullOrEmpty(this.ShipmentPM.DescriptionOfGoods))
             {
                 this.Errors.Add("Shipment Description  of Goods is required");
             }
 
-            if (this.ShipmentOrderPackages == null || (this.ShipmentOrderPackages!= null && this.ShipmentOrderPackages.Count() == 0))
+            this.ShipmentOrderPackages = (from d in shipmentContext.ShipmentOrderPackages
+                                          where d.Tenant == this.Tenant
+                                          && d.ShipmentId == this.ShipmentId
+                                          select d).ToList();
+            this.ShipmentPackages = (from d in shipmentContext.ShipmentPackages
+                                     where d.Tenant == this.Tenant
+                                     && d.ShipmentId == this.ShipmentId
+                                     select d).ToList();
+
+            if ((this.ShipmentPackages == null || (this.ShipmentPackages != null && this.ShipmentPackages.Count() == 0))
+                &&
+                (this.ShipmentOrderPackages == null || (this.ShipmentOrderPackages != null && this.ShipmentOrderPackages.Count() == 0)))
             {
-                this.Errors.Add("Shipment Order Packages is required");
+                this.Errors.Add("Shipment Order Packages or Shipment Packages are required");
             }
         }
 
@@ -803,17 +810,26 @@ namespace Logitude.XSD.INTTRA_Booking
         }
         private void BuildMessageDetails_EquipmentDetails()
         {
-       
-            var groupedOrders = (from d in this.ShipmentOrderPackages
-                                 group d by new { d.PackageTypeId } into g
-                                 select new
-                                 {
-                                     PackageTypeId = g.Key.PackageTypeId,
-                                     Quantity = g.Sum(s => s.Quantity),
-                                 });
+            var groupedPackages = (from d in this.ShipmentOrderPackages
+                               group d by new { d.PackageTypeId } into g
+                               select new
+                               {
+                                   PackageTypeId = g.Key.PackageTypeId,
+                                   Quantity = g.Sum(s => s.Quantity),
+                               });
 
-           
-            List<string> ids = groupedOrders.Select(s => s.PackageTypeId).ToList();
+            if (ShipmentPackages != null)
+            {
+                groupedPackages = (from d in this.ShipmentPackages
+                                   group d by new { d.PackageTypeId } into g
+                                   select new
+                                   {
+                                       PackageTypeId = g.Key.PackageTypeId,
+                                       Quantity = g.Sum(s => s.Quantity),
+                                   });
+            }
+ 
+            List<string> ids = groupedPackages.Select(s => s.PackageTypeId).ToList();
             this.AllPackageTypes = (from d in CommonContext.PackageTypes
                                     where d.Tenant == this.Tenant
                                     && ids.Contains(d.Id)
@@ -828,7 +844,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 }
             }
 
-            foreach (var item in groupedOrders)
+            foreach (var item in groupedPackages)
             {
                 INTTRA_Booking.EquipmentDetailsType itemDetails = new INTTRA_Booking.EquipmentDetailsType()
                 {
