@@ -1,4 +1,4 @@
-import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
+﻿import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {CourierMasterService} from '../../Services/Others/CourierMasterService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,6 +11,7 @@ import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/U
 
 @Component({   
     templateUrl: './FieldTemplateComponent.html',
+    providers:[ListComponentArgs],
 })
 
 export class FieldTemplateComponent {

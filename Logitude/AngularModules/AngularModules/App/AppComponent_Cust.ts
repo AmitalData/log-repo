@@ -17,7 +17,7 @@ import { ChildDirective } from './Directives/ChildDirective';
     `,
 })
 
-export class AppComponent_Cust implements AfterViewInit {
+export class AppComponent implements AfterViewInit {
   public IsLoginScreenLoaded: boolean = false;
 
   @ViewChild(ChildDirective) Child: ChildDirective;

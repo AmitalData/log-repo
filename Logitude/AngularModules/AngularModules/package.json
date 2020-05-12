@@ -6,16 +6,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start": "node --max_old_space_size=3000 node_modules/@angular/cli/bin/ng serve",
-    "build": "node --max_old_space_size=3000 node_modules/@angular/cli/bin/ng build --show-circular-dependencies=false",
-    "start-aot": "node --max_old_space_size=9000 node_modules/@angular/cli/bin/ng serve --prod --aot --optimization=false",
-    "buildAOT": "node --max_old_space_size=9000 node_modules/@angular/cli/bin/ng build --prod --aot --optimization=false --show-circular-dependencies=false",
+    "start": "node --max_old_space_size=4000 node_modules/@angular/cli/bin/ng serve",
+    "build": "node --max_old_space_size=4000 node_modules/@angular/cli/bin/ng build --show-circular-dependencies=false",
+    "start-aot": "node --max_old_space_size=10000 node_modules/@angular/cli/bin/ng serve --prod --aot --optimization=false",
+    "buildAOT": "node --max_old_space_size=10000 node_modules/@angular/cli/bin/ng build --prod --aot --optimization=false --show-circular-dependencies=false",
     "do-e2e": "protractor e2e/protractor.conf.js",
-    "start-e2e": "node --max_old_space_size=3000 node_modules/@angular/cli/bin/ng e2e",
-    "start-customs": "node --max_old_space_size=3000 node_modules/@angular/cli/bin/ng serve --configuration=customs",
-    "build-customs": "node --max_old_space_size=3000 node_modules/@angular/cli/bin/ng build --configuration=customs --show-circular-dependencies=false",
-    "start-customs-aot": "node --max_old_space_size=9000 node_modules/@angular/cli/bin/ng serve --prod --aot --optimization=false --configuration=customs",
-    "build-customs-aot": "node --max_old_space_size=9000 node_modules/@angular/cli/bin/ng build --prod --aot --optimization=false --configuration=customs --show-circular-dependencies=false"
+    "start-e2e": "node --max_old_space_size=4000 node_modules/@angular/cli/bin/ng e2e"
   },
   "private": true,
   "dependencies": {
