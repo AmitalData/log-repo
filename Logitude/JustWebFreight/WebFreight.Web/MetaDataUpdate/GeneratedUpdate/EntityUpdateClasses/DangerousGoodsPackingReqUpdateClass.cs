@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -227,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -278,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -326,7 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -376,43 +376,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup DangerousGoodsPackingReqQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DGPR", Name = "Customs.DangerousGoodsPackingReq" }, queryGroupRepository);
+	        QueryGroup DangerousGoodsPackingReqQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DGPR", Name = "Customs.DangerousGoodsPackingReq" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable DangerousGoodsPackingReqObjectTable = objectTables.ContainsKey("Customs.DangerousGoodsPackingReq") ? objectTables["Customs.DangerousGoodsPackingReq"] : null;
             if (DangerousGoodsPackingReqObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 DangerousGoodsPackingReqObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DangerousGoodsPackingReq" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> DangerousGoodsPackingReqObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DangerousGoodsPackingReq").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode DangerousGoodsPackingReqTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DangerousGoodsPackingReq.Q.DangerousGoodsPackingReqQuery", DefaultText = @"Dangerous Goods Packing Reqs",LocalDefaultText = "רמת סיכון חומר מסוכן במטען", ObjectTableId = DangerousGoodsPackingReqObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DangerousGoodsPackingReqFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DANGEROUSGOODSPACKINGREQ", ObjectTableId = DangerousGoodsPackingReqObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DangerousGoodsPackingReq.Features.DangerousGoodsPackingReqs", NameTextCodeDefaultText = "Dangerous Goods Packing Reqs", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DangerousGoodsPackingReqTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DangerousGoodsPackingReq.Q.DangerousGoodsPackingReqQuery", DefaultText = @"Dangerous Goods Packing Reqs",LocalDefaultText = "רמת סיכון חומר מסוכן במטען", ObjectTableId = DangerousGoodsPackingReqObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DangerousGoodsPackingReqFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DANGEROUSGOODSPACKINGREQ", ObjectTableId = DangerousGoodsPackingReqObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DangerousGoodsPackingReq.Features.DangerousGoodsPackingReqs", NameTextCodeDefaultText = "Dangerous Goods Packing Reqs", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DangerousGoodsPackingReqObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query DangerousGoodsPackingReqQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DangerousGoodsPackingReqTextCode_0.Id, NameTextCodeCode = DangerousGoodsPackingReqTextCode_0.Code, ObjectTableName = "Customs.DangerousGoodsPackingReq", Code = "DangerousGoodsPackingReq",  QueryGroupCode = "DGPR", IndexOrder = 0, Tenant = 0, ObjectTableId = DangerousGoodsPackingReqObjectTable.Id, QuerySection = "Customs.DangerousGoodsPackingReq", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DangerousGoodsPackingReqFeature_0.Id,FeatureUniqeCode= DangerousGoodsPackingReqFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query DangerousGoodsPackingReqQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DangerousGoodsPackingReqTextCode_0.Id, NameTextCodeCode = DangerousGoodsPackingReqTextCode_0.Code, ObjectTableName = "Customs.DangerousGoodsPackingReq", Code = "DangerousGoodsPackingReq",  QueryGroupCode = "DGPR", IndexOrder = 0, Tenant = 0, ObjectTableId = DangerousGoodsPackingReqObjectTable.Id, QuerySection = "Customs.DangerousGoodsPackingReq", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DangerousGoodsPackingReqFeature_0.Id,FeatureUniqeCode= DangerousGoodsPackingReqFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DangerousGoodsPackingReqQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DangerousGoodsPackingReqQuery.Id,QueryCode = DangerousGoodsPackingReqQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DangerousGoodsPackingReqObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DangerousGoodsPackingReqObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DangerousGoodsPackingReqObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DangerousGoodsPackingReqObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DangerousGoodsPackingReqQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DangerousGoodsPackingReqQuery.Id,QueryCode = DangerousGoodsPackingReqQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DangerousGoodsPackingReq.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DangerousGoodsPackingReqQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DangerousGoodsPackingReqQuery.Id,QueryCode = DangerousGoodsPackingReqQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DangerousGoodsPackingReqObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DangerousGoodsPackingReqObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DangerousGoodsPackingReqObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DangerousGoodsPackingReqObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DangerousGoodsPackingReqQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DangerousGoodsPackingReqQuery.Id,QueryCode = DangerousGoodsPackingReqQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DangerousGoodsPackingReq.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DangerousGoodsPackingReqQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DangerousGoodsPackingReqQuery.Id,QueryCode = DangerousGoodsPackingReqQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DangerousGoodsPackingReqObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DangerousGoodsPackingReqObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DangerousGoodsPackingReqObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DangerousGoodsPackingReqObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DangerousGoodsPackingReqQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DangerousGoodsPackingReqQuery.Id,QueryCode = DangerousGoodsPackingReqQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DangerousGoodsPackingReq.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DangerousGoodsPackingReqQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DangerousGoodsPackingReqQuery.Id,QueryCode = DangerousGoodsPackingReqQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DangerousGoodsPackingReqObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == DangerousGoodsPackingReqObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DangerousGoodsPackingReqObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == DangerousGoodsPackingReqObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn DangerousGoodsPackingReqQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DangerousGoodsPackingReqQuery.Id,QueryCode = DangerousGoodsPackingReqQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DangerousGoodsPackingReq.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

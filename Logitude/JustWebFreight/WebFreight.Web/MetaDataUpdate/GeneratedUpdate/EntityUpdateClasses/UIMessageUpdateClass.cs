@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -183,7 +183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -235,7 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -287,7 +287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -339,7 +339,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -391,7 +391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -440,60 +440,71 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup UIMessageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ea48", Name = "Customs.UIMessage Query Group" }, queryGroupRepository);
+	        QueryGroup UIMessageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ea48", Name = "Customs.UIMessage Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable UIMessageObjectTable = objectTables.ContainsKey("Customs.UIMessage") ? objectTables["Customs.UIMessage"] : null;
             if (UIMessageObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 UIMessageObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.UIMessage" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> UIMessageObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.UIMessage").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode UIMessageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UIMessage.Q.UIMessage", DefaultText = @"UIMessageQuery",LocalDefaultText = null, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature UIMessageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Q.UIMessage", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.UIMessage", NameTextCodeDefaultText = "UIMessage", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode UIMessageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UIMessage.Q.UIMessage", DefaultText = @"UIMessageQuery",LocalDefaultText = null, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature UIMessageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Q.UIMessage", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.UIMessage", NameTextCodeDefaultText = "UIMessage", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,UIMessageObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query UIMessageQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UIMessageTextCode_0.Id, NameTextCodeCode = UIMessageTextCode_0.Code, ObjectTableName = "Customs.UIMessage", Code = "UIMessage",  QueryGroupCode = "ea48", IndexOrder = 0, Tenant = 0, ObjectTableId = UIMessageObjectTable.Id, QuerySection = "Customs.UIMessage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = UIMessageFeature_0.Id,FeatureUniqeCode= UIMessageFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query UIMessageQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UIMessageTextCode_0.Id, NameTextCodeCode = UIMessageTextCode_0.Code, ObjectTableName = "Customs.UIMessage", Code = "UIMessage",  QueryGroupCode = "ea48", IndexOrder = 0, Tenant = 0, ObjectTableId = UIMessageObjectTable.Id, QuerySection = "Customs.UIMessage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = UIMessageFeature_0.Id,FeatureUniqeCode= UIMessageFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn UIMessageQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = UIMessageObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == UIMessageObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = UIMessageObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == UIMessageObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UIMessageQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "UIMessage.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn UIMessageQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = UIMessageObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == UIMessageObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = UIMessageObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == UIMessageObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UIMessageQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "UIMessage.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UIMessageQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = UIMessageObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == UIMessageObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = UIMessageObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == UIMessageObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UIMessageQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "UIMessage.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UIMessageQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = UIMessageObjectFields.Where(d => d.FieldName == "Sort" && d.ObjectTableId == UIMessageObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = UIMessageObjectFields.Where(d => d.FieldName == "Sort" && d.ObjectTableId == UIMessageObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn UIMessageQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "UIMessage.Sort" , ColumnWidth = 50 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable UIMessageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.UIMessage" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> UIMessageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.UIMessage").ToList();
+		   //List<ObjectField> UIMessageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.UIMessage").ToList();
 		       
 	      
 
 	         Screen UIMessageGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "UIMessage.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = UIMessageObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField UIMessageUIMessageGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = UIMessageObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = UIMessageObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField UIMessageUIMessageGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = "UIMessage.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField UIMessageUIMessageGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = UIMessageObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = UIMessageObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField UIMessageUIMessageGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = "UIMessage.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField UIMessageUIMessageGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = UIMessageObjectFields.Where(d => d.FieldName == "Sort").FirstOrDefault().Id, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = UIMessageObjectFields.Where(d => d.FieldName == "Sort").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField UIMessageUIMessageGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = "UIMessage.Sort", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -504,11 +515,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable UIMessageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.UIMessage" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode UIMessageGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.UIMessage.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature UIMessageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Tab.General", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature UIMessageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Tab.General", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,UIMessageObjectTable);
  
                  
 			   TextCode UIMessageEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.UIMessage.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature UIMessageEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Tab.Events", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature UIMessageEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Tab.Events", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,UIMessageObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -524,10 +535,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable UIMessageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.UIMessage" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature UIMessageFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature UIMessageFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature UIMessageFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature UIMessageFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.PackageFeature", NameTextCodeDefaultText = "UIMessage Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature UIMessageFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UIMessageObjectTable);
+		   Feature UIMessageFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UIMessageObjectTable);
+		   Feature UIMessageFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UIMessageObjectTable);
+		   Feature UIMessageFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.PackageFeature", NameTextCodeDefaultText = "UIMessage Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,UIMessageObjectTable);    
 	    
 		}
 

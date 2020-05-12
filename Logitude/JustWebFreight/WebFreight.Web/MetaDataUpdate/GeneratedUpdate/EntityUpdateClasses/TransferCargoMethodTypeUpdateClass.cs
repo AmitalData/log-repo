@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -198,7 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -257,7 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -313,7 +313,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -372,7 +372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -431,44 +431,55 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup TransferCargoMethodTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cf95", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup TransferCargoMethodTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "38c6", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup TransferCargoMethodTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cf95", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup TransferCargoMethodTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "38c6", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable TransferCargoMethodTypeObjectTable = objectTables.ContainsKey("Customs.TransferCargoMethodType") ? objectTables["Customs.TransferCargoMethodType"] : null;
             if (TransferCargoMethodTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 TransferCargoMethodTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.TransferCargoMethodType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> TransferCargoMethodTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.TransferCargoMethodType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode TransferCargoMethodTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TransferCargoMethodType.Q.TransferCargoMethodType", DefaultText = @"TransferCargoMethodTypeQuery",LocalDefaultText = "סוג שיטת הובלה", ObjectTableId = TransferCargoMethodTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TransferCargoMethodTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TransferCargoMethodType.Q.TransferCargoMethodType", ObjectTableId = TransferCargoMethodTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TransferCargoMethodType.Features.TransferCargoMethodType", NameTextCodeDefaultText = "TransferCargoMethodType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TransferCargoMethodTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TransferCargoMethodType.Q.TransferCargoMethodType", DefaultText = @"TransferCargoMethodTypeQuery",LocalDefaultText = "סוג שיטת הובלה", ObjectTableId = TransferCargoMethodTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TransferCargoMethodTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TransferCargoMethodType.Q.TransferCargoMethodType", ObjectTableId = TransferCargoMethodTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TransferCargoMethodType.Features.TransferCargoMethodType", NameTextCodeDefaultText = "TransferCargoMethodType", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TransferCargoMethodTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TransferCargoMethodTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TransferCargoMethodTypeTextCode_0.Id, NameTextCodeCode = TransferCargoMethodTypeTextCode_0.Code, ObjectTableName = "Customs.TransferCargoMethodType", Code = "TransferCargoMethodType",  QueryGroupCode = "cf95", IndexOrder = 0, Tenant = 0, ObjectTableId = TransferCargoMethodTypeObjectTable.Id, QuerySection = "Customs.TransferCargoMethodType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TransferCargoMethodTypeFeature_0.Id,FeatureUniqeCode= TransferCargoMethodTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query TransferCargoMethodTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TransferCargoMethodTypeTextCode_0.Id, NameTextCodeCode = TransferCargoMethodTypeTextCode_0.Code, ObjectTableName = "Customs.TransferCargoMethodType", Code = "TransferCargoMethodType",  QueryGroupCode = "cf95", IndexOrder = 0, Tenant = 0, ObjectTableId = TransferCargoMethodTypeObjectTable.Id, QuerySection = "Customs.TransferCargoMethodType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TransferCargoMethodTypeFeature_0.Id,FeatureUniqeCode= TransferCargoMethodTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn TransferCargoMethodTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransferCargoMethodTypeQuery.Id,QueryCode = TransferCargoMethodTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TransferCargoMethodTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TransferCargoMethodTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TransferCargoMethodTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TransferCargoMethodTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TransferCargoMethodTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransferCargoMethodTypeQuery.Id,QueryCode = TransferCargoMethodTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TransferCargoMethodType.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn TransferCargoMethodTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransferCargoMethodTypeQuery.Id,QueryCode = TransferCargoMethodTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TransferCargoMethodTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == TransferCargoMethodTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TransferCargoMethodTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == TransferCargoMethodTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TransferCargoMethodTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransferCargoMethodTypeQuery.Id,QueryCode = TransferCargoMethodTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TransferCargoMethodType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TransferCargoMethodTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransferCargoMethodTypeQuery.Id,QueryCode = TransferCargoMethodTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TransferCargoMethodTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == TransferCargoMethodTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TransferCargoMethodTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == TransferCargoMethodTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TransferCargoMethodTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransferCargoMethodTypeQuery.Id,QueryCode = TransferCargoMethodTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TransferCargoMethodType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TransferCargoMethodTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransferCargoMethodTypeQuery.Id,QueryCode = TransferCargoMethodTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TransferCargoMethodTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TransferCargoMethodTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TransferCargoMethodTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TransferCargoMethodTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn TransferCargoMethodTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TransferCargoMethodTypeQuery.Id,QueryCode = TransferCargoMethodTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TransferCargoMethodType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

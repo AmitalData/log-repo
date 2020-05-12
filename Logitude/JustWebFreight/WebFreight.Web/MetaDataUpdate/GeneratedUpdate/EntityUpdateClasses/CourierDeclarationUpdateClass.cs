@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -177,7 +177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -227,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -278,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -330,7 +330,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -381,7 +381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -432,7 +432,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -484,7 +484,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -535,7 +535,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -587,7 +587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -637,7 +637,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -688,39 +688,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    {    
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CourierDeclarationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CourierDeclaration" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CourierDeclarationObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CourierDeclaration").ToList();
+		   //List<ObjectField> CourierDeclarationObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CourierDeclaration").ToList();
 		       
 	      
 
 	         Screen CourierDeclarationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CourierDeclaration.HeaderScreen", Name = "Header Screen", ObjectTableId = CourierDeclarationObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CourierDeclarationObjectFields.Where(d => d.FieldName == "DeclarationNumberandVersionId").FirstOrDefault().Id, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = CourierDeclarationObjectFields.Where(d => d.FieldName == "DeclarationNumberandVersionId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "CourierDeclaration.DeclarationNumberandVersionId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CourierDeclarationObjectFields.Where(d => d.FieldName == "ProcedureCurrentName").FirstOrDefault().Id, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = CourierDeclarationObjectFields.Where(d => d.FieldName == "ProcedureCurrentName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "CourierDeclaration.ProcedureCurrentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CourierDeclarationObjectFields.Where(d => d.FieldName == "ExternalDeclarationNumber").FirstOrDefault().Id, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = CourierDeclarationObjectFields.Where(d => d.FieldName == "ExternalDeclarationNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "CourierDeclaration.ExternalDeclarationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CourierDeclarationObjectFields.Where(d => d.FieldName == "CourierData").FirstOrDefault().Id, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = CourierDeclarationObjectFields.Where(d => d.FieldName == "CourierData").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "CourierDeclaration.CourierData", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CourierDeclarationObjectFields.Where(d => d.FieldName == "CourierCustomStatusName").FirstOrDefault().Id, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = CourierDeclarationObjectFields.Where(d => d.FieldName == "CourierCustomStatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "CourierDeclaration.CourierCustomStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = CourierDeclarationObjectFields.Where(d => d.FieldName == "HatraDate").FirstOrDefault().Id, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = CourierDeclarationObjectFields.Where(d => d.FieldName == "HatraDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "CourierDeclaration.HatraDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = CourierDeclarationObjectFields.Where(d => d.FieldName == "DeclarationStatusTypeName").FirstOrDefault().Id, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = CourierDeclarationObjectFields.Where(d => d.FieldName == "DeclarationStatusTypeName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "CourierDeclaration.DeclarationStatusTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = CourierDeclarationObjectFields.Where(d => d.FieldName == "ManifestCargoStatusName").FirstOrDefault().Id, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = CourierDeclarationObjectFields.Where(d => d.FieldName == "ManifestCargoStatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierDeclarationCustomsCourierDeclarationHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = CourierDeclarationHeaderScreenScreen0.Id,ScreenCode = CourierDeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "CourierDeclaration.ManifestCargoStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CourierDeclarationObjectTable.HeaderScreenId = CourierDeclarationHeaderScreenScreen0.Id;
 		    CourierDeclarationObjectTable.HeaderScreenCode = CourierDeclarationHeaderScreenScreen0.Code;
@@ -737,10 +737,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable CourierDeclarationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CourierDeclaration" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CourierDeclarationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CourierDeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierDeclaration.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CourierDeclarationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CourierDeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierDeclaration.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CourierDeclarationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CourierDeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierDeclaration.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CourierDeclarationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CourierDeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierDeclaration.Features.PackageFeature", NameTextCodeDefaultText = "CourierDeclaration Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CourierDeclarationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CourierDeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierDeclaration.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierDeclarationObjectTable);
+		   Feature CourierDeclarationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CourierDeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierDeclaration.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierDeclarationObjectTable);
+		   Feature CourierDeclarationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CourierDeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierDeclaration.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierDeclarationObjectTable);
+		   Feature CourierDeclarationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CourierDeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierDeclaration.Features.PackageFeature", NameTextCodeDefaultText = "CourierDeclaration Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierDeclarationObjectTable);    
 	    
 		}
 

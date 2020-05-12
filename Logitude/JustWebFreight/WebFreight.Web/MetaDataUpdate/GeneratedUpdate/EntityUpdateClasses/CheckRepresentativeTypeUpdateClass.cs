@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -227,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -278,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -329,7 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -379,43 +379,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CheckRepresentativeTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CHRT", Name = "Customs.CheckRepresentativeType" }, queryGroupRepository);
+	        QueryGroup CheckRepresentativeTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CHRT", Name = "Customs.CheckRepresentativeType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CheckRepresentativeTypeObjectTable = objectTables.ContainsKey("Customs.CheckRepresentativeType") ? objectTables["Customs.CheckRepresentativeType"] : null;
             if (CheckRepresentativeTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CheckRepresentativeTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CheckRepresentativeType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CheckRepresentativeTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CheckRepresentativeType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CheckRepresentativeTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CheckRepresentativeType.Q.CheckRepresentativeTypeQuery", DefaultText = @"Check Representative Types",LocalDefaultText = "בדקו סוג הנציג", ObjectTableId = CheckRepresentativeTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CheckRepresentativeTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKREPRESENTATIVETYPE", ObjectTableId = CheckRepresentativeTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.checkRepresentativeType.Features.Read", NameTextCodeDefaultText = "Check Representative Type", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CheckRepresentativeTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CheckRepresentativeType.Q.CheckRepresentativeTypeQuery", DefaultText = @"Check Representative Types",LocalDefaultText = "בדקו סוג הנציג", ObjectTableId = CheckRepresentativeTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CheckRepresentativeTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKREPRESENTATIVETYPE", ObjectTableId = CheckRepresentativeTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.checkRepresentativeType.Features.Read", NameTextCodeDefaultText = "Check Representative Type", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,CheckRepresentativeTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CheckRepresentativeTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CheckRepresentativeTypeTextCode_0.Id, NameTextCodeCode = CheckRepresentativeTypeTextCode_0.Code, ObjectTableName = "Customs.CheckRepresentativeType", Code = "CheckRepresentativeType",  QueryGroupCode = "CHRT", IndexOrder = 0, Tenant = 0, ObjectTableId = CheckRepresentativeTypeObjectTable.Id, QuerySection = "Customs.CheckRepresentativeType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CheckRepresentativeTypeFeature_0.Id,FeatureUniqeCode= CheckRepresentativeTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CheckRepresentativeTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CheckRepresentativeTypeTextCode_0.Id, NameTextCodeCode = CheckRepresentativeTypeTextCode_0.Code, ObjectTableName = "Customs.CheckRepresentativeType", Code = "CheckRepresentativeType",  QueryGroupCode = "CHRT", IndexOrder = 0, Tenant = 0, ObjectTableId = CheckRepresentativeTypeObjectTable.Id, QuerySection = "Customs.CheckRepresentativeType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CheckRepresentativeTypeFeature_0.Id,FeatureUniqeCode= CheckRepresentativeTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CheckRepresentativeTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckRepresentativeTypeQuery.Id,QueryCode = CheckRepresentativeTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CheckRepresentativeTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CheckRepresentativeTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CheckRepresentativeTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CheckRepresentativeTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CheckRepresentativeTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckRepresentativeTypeQuery.Id,QueryCode = CheckRepresentativeTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CheckRepresentativeType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckRepresentativeTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckRepresentativeTypeQuery.Id,QueryCode = CheckRepresentativeTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CheckRepresentativeTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CheckRepresentativeTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CheckRepresentativeTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CheckRepresentativeTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CheckRepresentativeTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckRepresentativeTypeQuery.Id,QueryCode = CheckRepresentativeTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CheckRepresentativeType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckRepresentativeTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckRepresentativeTypeQuery.Id,QueryCode = CheckRepresentativeTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CheckRepresentativeTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CheckRepresentativeTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CheckRepresentativeTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CheckRepresentativeTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CheckRepresentativeTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckRepresentativeTypeQuery.Id,QueryCode = CheckRepresentativeTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CheckRepresentativeType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckRepresentativeTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckRepresentativeTypeQuery.Id,QueryCode = CheckRepresentativeTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CheckRepresentativeTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CheckRepresentativeTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CheckRepresentativeTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CheckRepresentativeTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CheckRepresentativeTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckRepresentativeTypeQuery.Id,QueryCode = CheckRepresentativeTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CheckRepresentativeType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

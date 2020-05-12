@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -276,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -320,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -370,43 +370,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CheckTypeLookupQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CLQG", Name = "Customs.CheckTypeLookup" }, queryGroupRepository);
+	        QueryGroup CheckTypeLookupQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CLQG", Name = "Customs.CheckTypeLookup" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CheckTypeLookupObjectTable = objectTables.ContainsKey("Customs.CheckTypeLookup") ? objectTables["Customs.CheckTypeLookup"] : null;
             if (CheckTypeLookupObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CheckTypeLookupObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CheckTypeLookup" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CheckTypeLookupObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CheckTypeLookup").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CheckTypeLookupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CheckTypeLookup.Q.CheckTypeLookupQuery", DefaultText = @"CheckTypeLookup",LocalDefaultText = "סוג בדיקה", ObjectTableId = CheckTypeLookupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CheckTypeLookupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKTYPELOOKUP", ObjectTableId = CheckTypeLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CheckTypeLookup.Features.CheckTypeLookup", NameTextCodeDefaultText = "CheckTypeLookup", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CheckTypeLookupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CheckTypeLookup.Q.CheckTypeLookupQuery", DefaultText = @"CheckTypeLookup",LocalDefaultText = "סוג בדיקה", ObjectTableId = CheckTypeLookupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CheckTypeLookupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKTYPELOOKUP", ObjectTableId = CheckTypeLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CheckTypeLookup.Features.CheckTypeLookup", NameTextCodeDefaultText = "CheckTypeLookup", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CheckTypeLookupObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CheckTypeLookupQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CheckTypeLookupTextCode_0.Id, NameTextCodeCode = CheckTypeLookupTextCode_0.Code, ObjectTableName = "Customs.CheckTypeLookup", Code = "CheckTypeLookup",  QueryGroupCode = "CLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CheckTypeLookupObjectTable.Id, QuerySection = "Customs.CheckTypeLookup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CheckTypeLookupFeature_0.Id,FeatureUniqeCode= CheckTypeLookupFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CheckTypeLookupQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CheckTypeLookupTextCode_0.Id, NameTextCodeCode = CheckTypeLookupTextCode_0.Code, ObjectTableName = "Customs.CheckTypeLookup", Code = "CheckTypeLookup",  QueryGroupCode = "CLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CheckTypeLookupObjectTable.Id, QuerySection = "Customs.CheckTypeLookup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CheckTypeLookupFeature_0.Id,FeatureUniqeCode= CheckTypeLookupFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CheckTypeLookupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CheckTypeLookupObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CheckTypeLookupObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CheckTypeLookupObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CheckTypeLookupObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CheckTypeLookupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CheckTypeLookup.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckTypeLookupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CheckTypeLookupObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CheckTypeLookupObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CheckTypeLookupObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CheckTypeLookupObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CheckTypeLookupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CheckTypeLookup.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckTypeLookupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CheckTypeLookupObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CheckTypeLookupObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CheckTypeLookupObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CheckTypeLookupObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CheckTypeLookupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CheckTypeLookup.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckTypeLookupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CheckTypeLookupObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CheckTypeLookupObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CheckTypeLookupObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CheckTypeLookupObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CheckTypeLookupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CheckTypeLookup.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

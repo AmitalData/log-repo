@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -276,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -320,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -369,43 +369,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup RansomViolationTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "RVQG", Name = "Customs.RansomViolationType" }, queryGroupRepository);
+	        QueryGroup RansomViolationTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "RVQG", Name = "Customs.RansomViolationType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable RansomViolationTypeObjectTable = objectTables.ContainsKey("Customs.RansomViolationType") ? objectTables["Customs.RansomViolationType"] : null;
             if (RansomViolationTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 RansomViolationTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.RansomViolationType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> RansomViolationTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.RansomViolationType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode RansomViolationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RansomViolationType.Q.RansomViolationTypeQuery", DefaultText = @"Ransom Violation Type",LocalDefaultText = "סוג הפרה", ObjectTableId = RansomViolationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature RansomViolationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RANSOMVIOLATIONTYPE", ObjectTableId = RansomViolationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.RansomViolationType.Features.RansomViolationType", NameTextCodeDefaultText = "Ransom Violation Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode RansomViolationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RansomViolationType.Q.RansomViolationTypeQuery", DefaultText = @"Ransom Violation Type",LocalDefaultText = "סוג הפרה", ObjectTableId = RansomViolationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature RansomViolationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RANSOMVIOLATIONTYPE", ObjectTableId = RansomViolationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.RansomViolationType.Features.RansomViolationType", NameTextCodeDefaultText = "Ransom Violation Type", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,RansomViolationTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query RansomViolationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RansomViolationTypeTextCode_0.Id, NameTextCodeCode = RansomViolationTypeTextCode_0.Code, ObjectTableName = "Customs.RansomViolationType", Code = "RansomViolationType",  QueryGroupCode = "RVQG", IndexOrder = 0, Tenant = 0, ObjectTableId = RansomViolationTypeObjectTable.Id, QuerySection = "Customs.RansomViolationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RansomViolationTypeFeature_0.Id,FeatureUniqeCode= RansomViolationTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query RansomViolationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RansomViolationTypeTextCode_0.Id, NameTextCodeCode = RansomViolationTypeTextCode_0.Code, ObjectTableName = "Customs.RansomViolationType", Code = "RansomViolationType",  QueryGroupCode = "RVQG", IndexOrder = 0, Tenant = 0, ObjectTableId = RansomViolationTypeObjectTable.Id, QuerySection = "Customs.RansomViolationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RansomViolationTypeFeature_0.Id,FeatureUniqeCode= RansomViolationTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn RansomViolationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = RansomViolationTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == RansomViolationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RansomViolationTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == RansomViolationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RansomViolationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "RansomViolationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RansomViolationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = RansomViolationTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == RansomViolationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RansomViolationTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == RansomViolationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RansomViolationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "RansomViolationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RansomViolationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = RansomViolationTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == RansomViolationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RansomViolationTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == RansomViolationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RansomViolationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "RansomViolationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RansomViolationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = RansomViolationTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == RansomViolationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RansomViolationTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == RansomViolationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn RansomViolationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "RansomViolationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

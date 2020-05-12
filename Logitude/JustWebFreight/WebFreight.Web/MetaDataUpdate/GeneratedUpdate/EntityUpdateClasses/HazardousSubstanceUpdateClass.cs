@@ -142,7 +142,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -203,7 +203,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -265,7 +265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -327,7 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -389,7 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -451,44 +451,55 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup HazardousSubstanceQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cee3", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup HazardousSubstanceQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1bab", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup HazardousSubstanceQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cee3", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup HazardousSubstanceQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1bab", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable HazardousSubstanceObjectTable = objectTables.ContainsKey("Customs.HazardousSubstance") ? objectTables["Customs.HazardousSubstance"] : null;
             if (HazardousSubstanceObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 HazardousSubstanceObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.HazardousSubstance" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> HazardousSubstanceObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.HazardousSubstance").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode HazardousSubstanceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", DefaultText = @"Hazardous Substance Query",LocalDefaultText = "Hazardous Substance Query", ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature HazardousSubstanceFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HazardousSubstance.Features.HazardousSubstanceQ", NameTextCodeDefaultText = "HazardousSubstanceQ", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode HazardousSubstanceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", DefaultText = @"Hazardous Substance Query",LocalDefaultText = "Hazardous Substance Query", ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature HazardousSubstanceFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HazardousSubstance.Features.HazardousSubstanceQ", NameTextCodeDefaultText = "HazardousSubstanceQ", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,HazardousSubstanceObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query HazardousSubstanceQQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HazardousSubstanceTextCode_0.Id, NameTextCodeCode = HazardousSubstanceTextCode_0.Code, ObjectTableName = "Customs.HazardousSubstance", Code = "HazardousSubstanceQ",  QueryGroupCode = "cee3", IndexOrder = 0, Tenant = 0, ObjectTableId = HazardousSubstanceObjectTable.Id, QuerySection = "Customs.HazardousSubstance", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = HazardousSubstanceFeature_0.Id,FeatureUniqeCode= HazardousSubstanceFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query HazardousSubstanceQQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HazardousSubstanceTextCode_0.Id, NameTextCodeCode = HazardousSubstanceTextCode_0.Code, ObjectTableName = "Customs.HazardousSubstance", Code = "HazardousSubstanceQ",  QueryGroupCode = "cee3", IndexOrder = 0, Tenant = 0, ObjectTableId = HazardousSubstanceObjectTable.Id, QuerySection = "Customs.HazardousSubstance", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = HazardousSubstanceFeature_0.Id,FeatureUniqeCode= HazardousSubstanceFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn HazardousSubstanceQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = HazardousSubstanceObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HazardousSubstanceObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HazardousSubstanceQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "HazardousSubstance.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn HazardousSubstanceQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = HazardousSubstanceObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HazardousSubstanceObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HazardousSubstanceQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "HazardousSubstance.EnglishName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn HazardousSubstanceQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = HazardousSubstanceObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HazardousSubstanceObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn HazardousSubstanceQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "HazardousSubstance.LocalName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn HazardousSubstanceQQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = HazardousSubstanceObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = HazardousSubstanceObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn HazardousSubstanceQQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "HazardousSubstance.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

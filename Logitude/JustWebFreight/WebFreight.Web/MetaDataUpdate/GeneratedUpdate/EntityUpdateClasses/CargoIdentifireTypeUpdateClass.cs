@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -227,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -278,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -329,7 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -379,43 +379,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CargoIdentifireTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CAIT", Name = "Customs.CargoIdentifireType" }, queryGroupRepository);
+	        QueryGroup CargoIdentifireTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CAIT", Name = "Customs.CargoIdentifireType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CargoIdentifireTypeObjectTable = objectTables.ContainsKey("Customs.CargoIdentifireType") ? objectTables["Customs.CargoIdentifireType"] : null;
             if (CargoIdentifireTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CargoIdentifireTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CargoIdentifireType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CargoIdentifireTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CargoIdentifireType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CargoIdentifireTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoIdentifireType.Q.CargoIdentifireTypeQuery", DefaultText = @"Cargo Identifier Types",LocalDefaultText = "סוג מזהה מטען", ObjectTableId = CargoIdentifireTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CargoIdentifireTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CARGOIDENTIFIRETYPE", ObjectTableId = CargoIdentifireTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CargoIdentifireType.Features.CargoIdentifireTypes", NameTextCodeDefaultText = "Cargo Identifire Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CargoIdentifireTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoIdentifireType.Q.CargoIdentifireTypeQuery", DefaultText = @"Cargo Identifier Types",LocalDefaultText = "סוג מזהה מטען", ObjectTableId = CargoIdentifireTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CargoIdentifireTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CARGOIDENTIFIRETYPE", ObjectTableId = CargoIdentifireTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CargoIdentifireType.Features.CargoIdentifireTypes", NameTextCodeDefaultText = "Cargo Identifire Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CargoIdentifireTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CargoIdentifireTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CargoIdentifireTypeTextCode_0.Id, NameTextCodeCode = CargoIdentifireTypeTextCode_0.Code, ObjectTableName = "Customs.CargoIdentifireType", Code = "CargoIdentifireType",  QueryGroupCode = "CAIT", IndexOrder = 0, Tenant = 0, ObjectTableId = CargoIdentifireTypeObjectTable.Id, QuerySection = "Customs.CargoIdentifireType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CargoIdentifireTypeFeature_0.Id,FeatureUniqeCode= CargoIdentifireTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CargoIdentifireTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CargoIdentifireTypeTextCode_0.Id, NameTextCodeCode = CargoIdentifireTypeTextCode_0.Code, ObjectTableName = "Customs.CargoIdentifireType", Code = "CargoIdentifireType",  QueryGroupCode = "CAIT", IndexOrder = 0, Tenant = 0, ObjectTableId = CargoIdentifireTypeObjectTable.Id, QuerySection = "Customs.CargoIdentifireType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CargoIdentifireTypeFeature_0.Id,FeatureUniqeCode= CargoIdentifireTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CargoIdentifireTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentifireTypeQuery.Id,QueryCode = CargoIdentifireTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CargoIdentifireTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CargoIdentifireTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CargoIdentifireTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CargoIdentifireTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CargoIdentifireTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentifireTypeQuery.Id,QueryCode = CargoIdentifireTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CargoIdentifireType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CargoIdentifireTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentifireTypeQuery.Id,QueryCode = CargoIdentifireTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CargoIdentifireTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CargoIdentifireTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CargoIdentifireTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CargoIdentifireTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CargoIdentifireTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentifireTypeQuery.Id,QueryCode = CargoIdentifireTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CargoIdentifireType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CargoIdentifireTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentifireTypeQuery.Id,QueryCode = CargoIdentifireTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CargoIdentifireTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CargoIdentifireTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CargoIdentifireTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CargoIdentifireTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CargoIdentifireTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentifireTypeQuery.Id,QueryCode = CargoIdentifireTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CargoIdentifireType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CargoIdentifireTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentifireTypeQuery.Id,QueryCode = CargoIdentifireTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CargoIdentifireTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CargoIdentifireTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CargoIdentifireTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CargoIdentifireTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CargoIdentifireTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentifireTypeQuery.Id,QueryCode = CargoIdentifireTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CargoIdentifireType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

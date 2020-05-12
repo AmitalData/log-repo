@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -276,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -321,7 +321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -365,41 +365,52 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ContinuousMessagesTypeCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "6b46", Name = "Customs.ContinuousMessagesTypeCode Query Group" }, queryGroupRepository);
+	        QueryGroup ContinuousMessagesTypeCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "6b46", Name = "Customs.ContinuousMessagesTypeCode Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ContinuousMessagesTypeCodeObjectTable = objectTables.ContainsKey("Customs.ContinuousMessagesTypeCode") ? objectTables["Customs.ContinuousMessagesTypeCode"] : null;
             if (ContinuousMessagesTypeCodeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ContinuousMessagesTypeCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ContinuousMessagesTypeCode" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> ContinuousMessagesTypeCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ContinuousMessagesTypeCode").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ContinuousMessagesTypeCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContinuousMessagesTypeCode.Q.ContinuousMessagesType", DefaultText = @"ContinuousMessagesTypeQuery",LocalDefaultText = null, ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ContinuousMessagesTypeCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContinuousMessagesTypeCode.Q.ContinuousMessagesType", ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContinuousMessagesTypeCode.Features.ContinuousMessagesType", NameTextCodeDefaultText = "ContinuousMessagesType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ContinuousMessagesTypeCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContinuousMessagesTypeCode.Q.ContinuousMessagesType", DefaultText = @"ContinuousMessagesTypeQuery",LocalDefaultText = null, ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContinuousMessagesTypeCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContinuousMessagesTypeCode.Q.ContinuousMessagesType", ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContinuousMessagesTypeCode.Features.ContinuousMessagesType", NameTextCodeDefaultText = "ContinuousMessagesType", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContinuousMessagesTypeCodeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ContinuousMessagesTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContinuousMessagesTypeCodeTextCode_0.Id, NameTextCodeCode = ContinuousMessagesTypeCodeTextCode_0.Code, ObjectTableName = "Customs.ContinuousMessagesTypeCode", Code = "ContinuousMessagesType",  QueryGroupCode = "6b46", IndexOrder = 0, Tenant = 0, ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, QuerySection = "Customs.ContinuousMessagesTypeCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContinuousMessagesTypeCodeFeature_0.Id,FeatureUniqeCode= ContinuousMessagesTypeCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ContinuousMessagesTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContinuousMessagesTypeCodeTextCode_0.Id, NameTextCodeCode = ContinuousMessagesTypeCodeTextCode_0.Code, ObjectTableName = "Customs.ContinuousMessagesTypeCode", Code = "ContinuousMessagesType",  QueryGroupCode = "6b46", IndexOrder = 0, Tenant = 0, ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, QuerySection = "Customs.ContinuousMessagesTypeCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContinuousMessagesTypeCodeFeature_0.Id,FeatureUniqeCode= ContinuousMessagesTypeCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ContinuousMessagesTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContinuousMessagesTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContinuousMessagesTypeCode.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ContinuousMessagesTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContinuousMessagesTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContinuousMessagesTypeCode.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContinuousMessagesTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContinuousMessagesTypeCodeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ContinuousMessagesTypeCodeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ContinuousMessagesTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContinuousMessagesTypeCode.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

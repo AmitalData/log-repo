@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -276,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -323,7 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -373,43 +373,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup GenderQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "GNDR", Name = "Customs.Gender" }, queryGroupRepository);
+	        QueryGroup GenderQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "GNDR", Name = "Customs.Gender" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable GenderObjectTable = objectTables.ContainsKey("Customs.Gender") ? objectTables["Customs.Gender"] : null;
             if (GenderObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 GenderObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.Gender" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> GenderObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.Gender").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode GenderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Gender.Q.GenderQuery", DefaultText = @"Gender",LocalDefaultText = "מין", ObjectTableId = GenderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature GenderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENDER", ObjectTableId = GenderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Gender.Features.Genders", NameTextCodeDefaultText = "Gender", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode GenderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Gender.Q.GenderQuery", DefaultText = @"Gender",LocalDefaultText = "מין", ObjectTableId = GenderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature GenderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENDER", ObjectTableId = GenderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Gender.Features.Genders", NameTextCodeDefaultText = "Gender", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GenderObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query GenderQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GenderTextCode_0.Id, NameTextCodeCode = GenderTextCode_0.Code, ObjectTableName = "Customs.Gender", Code = "Gender",  QueryGroupCode = "GNDR", IndexOrder = 0, Tenant = 0, ObjectTableId = GenderObjectTable.Id, QuerySection = "Customs.Gender", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GenderFeature_0.Id,FeatureUniqeCode= GenderFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query GenderQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GenderTextCode_0.Id, NameTextCodeCode = GenderTextCode_0.Code, ObjectTableName = "Customs.Gender", Code = "Gender",  QueryGroupCode = "GNDR", IndexOrder = 0, Tenant = 0, ObjectTableId = GenderObjectTable.Id, QuerySection = "Customs.Gender", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GenderFeature_0.Id,FeatureUniqeCode= GenderFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn GenderQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = GenderObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == GenderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GenderObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == GenderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GenderQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Gender.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GenderQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = GenderObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GenderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GenderObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GenderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GenderQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Gender.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GenderQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = GenderObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GenderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GenderObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GenderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GenderQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Gender.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GenderQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = GenderObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GenderObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GenderObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GenderObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn GenderQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Gender.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

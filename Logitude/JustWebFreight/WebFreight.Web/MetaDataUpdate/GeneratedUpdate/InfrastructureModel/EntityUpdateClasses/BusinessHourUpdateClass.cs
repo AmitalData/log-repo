@@ -1939,7 +1939,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    {   
 
 		   ObjectTable BusinessHourObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessHour" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> BusinessHourObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BusinessHour").ToList();
+		   //List<ObjectField> BusinessHourObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BusinessHour").ToList();
 		       
 	      
 

@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -198,7 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -257,7 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -320,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -381,7 +381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -442,7 +442,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -503,7 +503,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -563,59 +563,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CustomsHouseTypeAdditionalQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CHQG", Name = "Customs.CustomsHouseTypeAdditional" }, queryGroupRepository);
-						QueryGroup CustomsHouseTypeAdditionalQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "eaef", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CustomsHouseTypeAdditionalQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CHQG", Name = "Customs.CustomsHouseTypeAdditional" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CustomsHouseTypeAdditionalQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "eaef", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CustomsHouseTypeAdditionalObjectTable = objectTables.ContainsKey("Customs.CustomsHouseTypeAdditional") ? objectTables["Customs.CustomsHouseTypeAdditional"] : null;
             if (CustomsHouseTypeAdditionalObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CustomsHouseTypeAdditionalObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsHouseTypeAdditional" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CustomsHouseTypeAdditionalObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsHouseTypeAdditional").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CustomsHouseTypeAdditionalTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.HouseTypeAdditional.Q.HouseTypeAdditionalQuery", DefaultText = @"Customs House Type Additional",LocalDefaultText = "סוג בית מכס נוסף", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsHouseTypeAdditionalFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HOUSETYPEADDITIONAL", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsHouseTypeAdditional.Features.CustomsSetting", NameTextCodeDefaultText = "Customs Settings", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsHouseTypeAdditionalTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.HouseTypeAdditional.Q.HouseTypeAdditionalQuery", DefaultText = @"Customs House Type Additional",LocalDefaultText = "סוג בית מכס נוסף", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomsHouseTypeAdditionalFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HOUSETYPEADDITIONAL", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsHouseTypeAdditional.Features.CustomsSetting", NameTextCodeDefaultText = "Customs Settings", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomsHouseTypeAdditionalObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomsHouseTypeAdditionalQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsHouseTypeAdditionalTextCode_0.Id, NameTextCodeCode = CustomsHouseTypeAdditionalTextCode_0.Code, ObjectTableName = "Customs.CustomsHouseTypeAdditional", Code = "CustomsHouseTypeAdditional",  QueryGroupCode = "CHQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, QuerySection = "CustomsHouseTypeAdditional", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsHouseTypeAdditionalFeature_0.Id,FeatureUniqeCode= CustomsHouseTypeAdditionalFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CustomsHouseTypeAdditionalQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsHouseTypeAdditionalTextCode_0.Id, NameTextCodeCode = CustomsHouseTypeAdditionalTextCode_0.Code, ObjectTableName = "Customs.CustomsHouseTypeAdditional", Code = "CustomsHouseTypeAdditional",  QueryGroupCode = "CHQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, QuerySection = "CustomsHouseTypeAdditional", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsHouseTypeAdditionalFeature_0.Id,FeatureUniqeCode= CustomsHouseTypeAdditionalFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomsHouseTypeAdditionalQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsHouseTypeAdditionalQuery.Id,QueryCode = CustomsHouseTypeAdditionalQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomsHouseTypeAdditionalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomsHouseTypeAdditionalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsHouseTypeAdditionalQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsHouseTypeAdditionalQuery.Id,QueryCode = CustomsHouseTypeAdditionalQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsHouseTypeAdditional.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsHouseTypeAdditionalQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsHouseTypeAdditionalQuery.Id,QueryCode = CustomsHouseTypeAdditionalQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CustomsHouseTypeAdditionalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CustomsHouseTypeAdditionalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsHouseTypeAdditionalQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsHouseTypeAdditionalQuery.Id,QueryCode = CustomsHouseTypeAdditionalQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsHouseTypeAdditional.Name" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsHouseTypeAdditionalQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsHouseTypeAdditionalQuery.Id,QueryCode = CustomsHouseTypeAdditionalQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "TransportModeName" && d.ObjectTableId == CustomsHouseTypeAdditionalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "TransportModeName" && d.ObjectTableId == CustomsHouseTypeAdditionalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsHouseTypeAdditionalQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsHouseTypeAdditionalQuery.Id,QueryCode = CustomsHouseTypeAdditionalQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsHouseTypeAdditional.TransportModeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsHouseTypeAdditionalQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsHouseTypeAdditionalQuery.Id,QueryCode = CustomsHouseTypeAdditionalQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "UnloadPortName" && d.ObjectTableId == CustomsHouseTypeAdditionalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "UnloadPortName" && d.ObjectTableId == CustomsHouseTypeAdditionalObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CustomsHouseTypeAdditionalQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsHouseTypeAdditionalQuery.Id,QueryCode = CustomsHouseTypeAdditionalQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsHouseTypeAdditional.UnloadPortName" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CustomsHouseTypeAdditionalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsHouseTypeAdditional" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CustomsHouseTypeAdditionalObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsHouseTypeAdditional").ToList();
+		   //List<ObjectField> CustomsHouseTypeAdditionalObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsHouseTypeAdditional").ToList();
 		       
 	      
 
 	         Screen CustomsHouseTypeAdditionalHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.HouseTypeAdditional.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomsHouseTypeAdditionalCustomsHouseTypeAdditionalHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CustomsHouseTypeAdditionalHeaderScreenScreen0.Id,ScreenCode = CustomsHouseTypeAdditionalHeaderScreenScreen0.Code, ObjectFieldCode = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsHouseTypeAdditionalCustomsHouseTypeAdditionalHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsHouseTypeAdditionalHeaderScreenScreen0.Id,ScreenCode = CustomsHouseTypeAdditionalHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsHouseTypeAdditional.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsHouseTypeAdditionalCustomsHouseTypeAdditionalHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CustomsHouseTypeAdditionalHeaderScreenScreen0.Id,ScreenCode = CustomsHouseTypeAdditionalHeaderScreenScreen0.Code, ObjectFieldCode = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsHouseTypeAdditionalCustomsHouseTypeAdditionalHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsHouseTypeAdditionalHeaderScreenScreen0.Id,ScreenCode = CustomsHouseTypeAdditionalHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsHouseTypeAdditional.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomsHouseTypeAdditionalObjectTable.HeaderScreenId = CustomsHouseTypeAdditionalHeaderScreenScreen0.Id;
 		    CustomsHouseTypeAdditionalObjectTable.HeaderScreenCode = CustomsHouseTypeAdditionalHeaderScreenScreen0.Code;
@@ -625,11 +636,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CustomsHouseTypeAdditionalGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsHouseTypeAdditional.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomsHouseTypeAdditionalCustomsCustomsHouseTypeAdditionalGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Id,ScreenCode = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsHouseTypeAdditionalCustomsCustomsHouseTypeAdditionalGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Id,ScreenCode = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsHouseTypeAdditional.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsHouseTypeAdditionalCustomsCustomsHouseTypeAdditionalGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "TransportModeId").FirstOrDefault().Id, ScreenId = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Id,ScreenCode = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "TransportModeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsHouseTypeAdditionalCustomsCustomsHouseTypeAdditionalGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Id,ScreenCode = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsHouseTypeAdditional.TransportModeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsHouseTypeAdditionalCustomsCustomsHouseTypeAdditionalGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "UnloadPortCode").FirstOrDefault().Id, ScreenId = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Id,ScreenCode = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsHouseTypeAdditionalObjectFields.Where(d => d.FieldName == "UnloadPortCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsHouseTypeAdditionalCustomsCustomsHouseTypeAdditionalGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Id,ScreenCode = CustomsHouseTypeAdditionalGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsHouseTypeAdditional.UnloadPortCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -640,11 +651,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable CustomsHouseTypeAdditionalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsHouseTypeAdditional" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomsHouseTypeAdditionalGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsHouseTypeAdditional.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsHouseTypeAdditionalGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsHouseTypeAdditional.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsHouseTypeAdditionalGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsHouseTypeAdditional.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsHouseTypeAdditionalObjectTable);
  
                  
 			   TextCode CustomsHouseTypeAdditionalEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsHouseTypeAdditional.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsHouseTypeAdditionalEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsHouseTypeAdditional.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsHouseTypeAdditionalEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsHouseTypeAdditional.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsHouseTypeAdditionalObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -660,10 +671,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable CustomsHouseTypeAdditionalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsHouseTypeAdditional" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CustomsHouseTypeAdditionalFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseTypeAdditional.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsHouseTypeAdditionalFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseTypeAdditional.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsHouseTypeAdditionalFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseTypeAdditional.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsHouseTypeAdditionalFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseTypeAdditional.Features.PackageFeature", NameTextCodeDefaultText = "CustomsHouseTypeAdditional Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CustomsHouseTypeAdditionalFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseTypeAdditional.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsHouseTypeAdditionalObjectTable);
+		   Feature CustomsHouseTypeAdditionalFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseTypeAdditional.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsHouseTypeAdditionalObjectTable);
+		   Feature CustomsHouseTypeAdditionalFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseTypeAdditional.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsHouseTypeAdditionalObjectTable);
+		   Feature CustomsHouseTypeAdditionalFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeAdditionalObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseTypeAdditional.Features.PackageFeature", NameTextCodeDefaultText = "CustomsHouseTypeAdditional Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsHouseTypeAdditionalObjectTable);    
 	    
 		}
 

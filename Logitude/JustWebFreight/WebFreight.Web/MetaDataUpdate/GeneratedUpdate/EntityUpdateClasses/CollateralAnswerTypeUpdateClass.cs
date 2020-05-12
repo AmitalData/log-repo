@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -174,7 +174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -222,7 +222,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -270,7 +270,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -317,7 +317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -367,43 +367,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CollateralAnswerTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "COAT", Name = "Customs.CollateralAnswerType" }, queryGroupRepository);
+	        QueryGroup CollateralAnswerTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "COAT", Name = "Customs.CollateralAnswerType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CollateralAnswerTypeObjectTable = objectTables.ContainsKey("Customs.CollateralAnswerType") ? objectTables["Customs.CollateralAnswerType"] : null;
             if (CollateralAnswerTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CollateralAnswerTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CollateralAnswerType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CollateralAnswerTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CollateralAnswerType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CollateralAnswerTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CollateralAnswerType.Q.CollateralAnswerTypeQuery", DefaultText = @"Collateral Answer Types",LocalDefaultText = "סוג מענה לבטוחה", ObjectTableId = CollateralAnswerTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CollateralAnswerTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERALANSWERTYPE", ObjectTableId = CollateralAnswerTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CollateralAnswerType.Features.CollateralAnswerTypes", NameTextCodeDefaultText = "Collateral Answer Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CollateralAnswerTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CollateralAnswerType.Q.CollateralAnswerTypeQuery", DefaultText = @"Collateral Answer Types",LocalDefaultText = "סוג מענה לבטוחה", ObjectTableId = CollateralAnswerTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CollateralAnswerTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERALANSWERTYPE", ObjectTableId = CollateralAnswerTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CollateralAnswerType.Features.CollateralAnswerTypes", NameTextCodeDefaultText = "Collateral Answer Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CollateralAnswerTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CollateralAnswerTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CollateralAnswerTypeTextCode_0.Id, NameTextCodeCode = CollateralAnswerTypeTextCode_0.Code, ObjectTableName = "Customs.CollateralAnswerType", Code = "CollateralAnswerType",  QueryGroupCode = "COAT", IndexOrder = 0, Tenant = 0, ObjectTableId = CollateralAnswerTypeObjectTable.Id, QuerySection = "Customs.CollateralAnswerType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CollateralAnswerTypeFeature_0.Id,FeatureUniqeCode= CollateralAnswerTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CollateralAnswerTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CollateralAnswerTypeTextCode_0.Id, NameTextCodeCode = CollateralAnswerTypeTextCode_0.Code, ObjectTableName = "Customs.CollateralAnswerType", Code = "CollateralAnswerType",  QueryGroupCode = "COAT", IndexOrder = 0, Tenant = 0, ObjectTableId = CollateralAnswerTypeObjectTable.Id, QuerySection = "Customs.CollateralAnswerType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CollateralAnswerTypeFeature_0.Id,FeatureUniqeCode= CollateralAnswerTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CollateralAnswerTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CollateralAnswerTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CollateralAnswerTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralAnswerTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CollateralAnswerTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CollateralAnswerTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CollateralAnswerType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CollateralAnswerTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CollateralAnswerTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CollateralAnswerTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralAnswerTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CollateralAnswerTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CollateralAnswerTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CollateralAnswerType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CollateralAnswerTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CollateralAnswerTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CollateralAnswerTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralAnswerTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CollateralAnswerTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CollateralAnswerTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CollateralAnswerType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CollateralAnswerTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CollateralAnswerTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CollateralAnswerTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CollateralAnswerTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CollateralAnswerTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CollateralAnswerTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CollateralAnswerType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

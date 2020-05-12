@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -197,7 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -258,7 +258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -320,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -382,7 +382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -444,7 +444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -506,7 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -568,7 +568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -631,7 +631,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -693,7 +693,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -755,7 +755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -818,7 +818,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -879,7 +879,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -939,7 +939,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -999,7 +999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1060,7 +1060,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1122,7 +1122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1179,7 +1179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1236,7 +1236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1293,7 +1293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1355,7 +1355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1417,7 +1417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1477,65 +1477,76 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CustomsSettingQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CSQG", Name = "Customs.CustomsSetting" }, queryGroupRepository);
-						QueryGroup CustomsSettingQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "80e5", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CustomsSettingQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CSQG", Name = "Customs.CustomsSetting" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CustomsSettingQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "80e5", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CustomsSettingObjectTable = objectTables.ContainsKey("Customs.CustomsSetting") ? objectTables["Customs.CustomsSetting"] : null;
             if (CustomsSettingObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CustomsSettingObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsSetting" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CustomsSettingObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsSetting").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CustomsSettingTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.Q.CustomsSettingQuery", DefaultText = @"Customs Settings",LocalDefaultText = "הגדרת מכס", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsSettingFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSETTING", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.CustomsSetting", NameTextCodeDefaultText = "Customs Settings", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsSettingTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.Q.CustomsSettingQuery", DefaultText = @"Customs Settings",LocalDefaultText = "הגדרת מכס", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomsSettingFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSETTING", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.CustomsSetting", NameTextCodeDefaultText = "Customs Settings", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomsSettingObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomsSettingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsSettingTextCode_0.Id, NameTextCodeCode = CustomsSettingTextCode_0.Code, ObjectTableName = "Customs.CustomsSetting", Code = "CustomsSettings",  QueryGroupCode = "CSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsSettingObjectTable.Id, QuerySection = "CustomsSetting", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsSettingFeature_0.Id,FeatureUniqeCode= CustomsSettingFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CustomsSettingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsSettingTextCode_0.Id, NameTextCodeCode = CustomsSettingTextCode_0.Code, ObjectTableName = "Customs.CustomsSetting", Code = "CustomsSettings",  QueryGroupCode = "CSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsSettingObjectTable.Id, QuerySection = "CustomsSetting", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsSettingFeature_0.Id,FeatureUniqeCode= CustomsSettingFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomsSettingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "SignServiceAddress" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "SignServiceAddress" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsSetting.SignServiceAddress" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsSettingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "IIGServiceAddress" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "IIGServiceAddress" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsSetting.IIGServiceAddress" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsSettingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "DCAServiceAddress" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "DCAServiceAddress" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsSetting.DCAServiceAddress" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsSettingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "DCAPartnerVault" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "DCAPartnerVault" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsSetting.DCAPartnerVault" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsSettingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "UServerServiceAddress" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "UServerServiceAddress" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomsSetting.UServerServiceAddress" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsSettingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "DefaultNotificationAssigneeName" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "DefaultNotificationAssigneeName" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomsSetting.DefaultNotificationAssigneeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsSettingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "IsConnectedToUniFreight" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "IsConnectedToUniFreight" && d.ObjectTableId == CustomsSettingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CustomsSettingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "CustomsSetting.IsConnectedToUniFreight" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CustomsSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsSetting" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CustomsSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsSetting").ToList();
+		   //List<ObjectField> CustomsSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsSetting").ToList();
 		       
 	      
 
 	         Screen CustomsSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsSetting.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomsSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomsSettingCustomsCustomsSettingHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "CustomsAgentId").FirstOrDefault().Id, ScreenId = CustomsSettingHeaderScreenScreen0.Id,ScreenCode = CustomsSettingHeaderScreenScreen0.Code, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "CustomsAgentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsSettingCustomsCustomsSettingHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsSettingHeaderScreenScreen0.Id,ScreenCode = CustomsSettingHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsSetting.CustomsAgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsSettingCustomsCustomsSettingHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "DCAPartnerVault").FirstOrDefault().Id, ScreenId = CustomsSettingHeaderScreenScreen0.Id,ScreenCode = CustomsSettingHeaderScreenScreen0.Code, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "DCAPartnerVault").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsSettingCustomsCustomsSettingHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsSettingHeaderScreenScreen0.Id,ScreenCode = CustomsSettingHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsSetting.DCAPartnerVault", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomsSettingObjectTable.HeaderScreenId = CustomsSettingHeaderScreenScreen0.Id;
 		    CustomsSettingObjectTable.HeaderScreenCode = CustomsSettingHeaderScreenScreen0.Code;
@@ -1545,23 +1556,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CustomsSettingGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsSetting.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomsSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "CustomsAgentId").FirstOrDefault().Id, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "CustomsAgentId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsSetting.CustomsAgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "DCAPartnerVault").FirstOrDefault().Id, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "DCAPartnerVault").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsSetting.DCAPartnerVault", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "DefaultNotificationAssignee").FirstOrDefault().Id, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "DefaultNotificationAssignee").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsSetting.DefaultNotificationAssignee", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "CustomsEnvoirmentTypeCode").FirstOrDefault().Id, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "CustomsEnvoirmentTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsSetting.CustomsEnvoirmentTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "IsConnectedToUniFreight").FirstOrDefault().Id, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "IsConnectedToUniFreight").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsSetting.IsConnectedToUniFreight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "SignServiceAddress").FirstOrDefault().Id, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "SignServiceAddress").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsSetting.SignServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "IIGServiceAddress").FirstOrDefault().Id, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "IIGServiceAddress").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsSetting.IIGServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "DCAServiceAddress").FirstOrDefault().Id, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "DCAServiceAddress").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsSetting.DCAServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = CustomsSettingObjectFields.Where(d => d.FieldName == "UServerServiceAddress").FirstOrDefault().Id, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsSettingObjectFields.Where(d => d.FieldName == "UServerServiceAddress").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsSetting.UServerServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -1572,11 +1583,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable CustomsSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsSetting" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomsSettingGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsSettingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsSettingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsSettingObjectTable);
  
                  
 			   TextCode CustomsSettingEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsSettingEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsSettingEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsSettingObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1592,10 +1603,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable CustomsSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsSetting" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CustomsSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.PackageFeature", NameTextCodeDefaultText = "CustomsSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CustomsSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable);
+		   Feature CustomsSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable);
+		   Feature CustomsSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable);
+		   Feature CustomsSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.PackageFeature", NameTextCodeDefaultText = "CustomsSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable);    
 	    
 		}
 

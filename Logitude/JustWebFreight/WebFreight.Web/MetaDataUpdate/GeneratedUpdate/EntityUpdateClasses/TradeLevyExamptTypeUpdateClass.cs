@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -276,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -322,7 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -372,43 +372,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup TradeLevyExamptTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TLQG", Name = "Customs.TradeLevyExamptType" }, queryGroupRepository);
+	        QueryGroup TradeLevyExamptTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TLQG", Name = "Customs.TradeLevyExamptType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable TradeLevyExamptTypeObjectTable = objectTables.ContainsKey("Customs.TradeLevyExamptType") ? objectTables["Customs.TradeLevyExamptType"] : null;
             if (TradeLevyExamptTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 TradeLevyExamptTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.TradeLevyExamptType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> TradeLevyExamptTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.TradeLevyExamptType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode TradeLevyExamptTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.TradeLevyExamptType.Q.TradeLevyExamptTypeQuery", DefaultText = @"Trade Levy Exampt Type",LocalDefaultText = "סוג פטור מהיטל", ObjectTableId = TradeLevyExamptTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TradeLevyExamptTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRADELEVYEXAMPT", ObjectTableId = TradeLevyExamptTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.TradeLevyExamptType.Features.TradeLevyExamptType", NameTextCodeDefaultText = "Trade Levy Exampt Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TradeLevyExamptTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.TradeLevyExamptType.Q.TradeLevyExamptTypeQuery", DefaultText = @"Trade Levy Exampt Type",LocalDefaultText = "סוג פטור מהיטל", ObjectTableId = TradeLevyExamptTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TradeLevyExamptTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRADELEVYEXAMPT", ObjectTableId = TradeLevyExamptTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.TradeLevyExamptType.Features.TradeLevyExamptType", NameTextCodeDefaultText = "Trade Levy Exampt Type", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TradeLevyExamptTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TradeLevyExamptTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TradeLevyExamptTypeTextCode_0.Id, NameTextCodeCode = TradeLevyExamptTypeTextCode_0.Code, ObjectTableName = "Customs.TradeLevyExamptType", Code = "TradeLevyExamptType",  QueryGroupCode = "TLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TradeLevyExamptTypeObjectTable.Id, QuerySection = "Customs.TradeLevyExamptType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TradeLevyExamptTypeFeature_0.Id,FeatureUniqeCode= TradeLevyExamptTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query TradeLevyExamptTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TradeLevyExamptTypeTextCode_0.Id, NameTextCodeCode = TradeLevyExamptTypeTextCode_0.Code, ObjectTableName = "Customs.TradeLevyExamptType", Code = "TradeLevyExamptType",  QueryGroupCode = "TLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TradeLevyExamptTypeObjectTable.Id, QuerySection = "Customs.TradeLevyExamptType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TradeLevyExamptTypeFeature_0.Id,FeatureUniqeCode= TradeLevyExamptTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn TradeLevyExamptTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TradeLevyExamptTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TradeLevyExamptTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TradeLevyExamptTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TradeLevyExamptTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TradeLevyExamptTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TradeLevyExamptType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TradeLevyExamptTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TradeLevyExamptTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == TradeLevyExamptTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TradeLevyExamptTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == TradeLevyExamptTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TradeLevyExamptTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TradeLevyExamptType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TradeLevyExamptTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TradeLevyExamptTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == TradeLevyExamptTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TradeLevyExamptTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == TradeLevyExamptTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TradeLevyExamptTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TradeLevyExamptType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TradeLevyExamptTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TradeLevyExamptTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TradeLevyExamptTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TradeLevyExamptTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TradeLevyExamptTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn TradeLevyExamptTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TradeLevyExamptType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

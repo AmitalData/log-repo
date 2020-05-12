@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -185,7 +185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -239,7 +239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -293,7 +293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -345,7 +345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -398,43 +398,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AttachmentTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ATTT", Name = "Customs.AttachmentType" }, queryGroupRepository);
+	        QueryGroup AttachmentTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ATTT", Name = "Customs.AttachmentType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AttachmentTypeObjectTable = objectTables.ContainsKey("Customs.AttachmentType") ? objectTables["Customs.AttachmentType"] : null;
             if (AttachmentTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 AttachmentTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AttachmentType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> AttachmentTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AttachmentType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode AttachmentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AttachmentType.Q.AttachmentTypeQuery", DefaultText = @"Attachment Types",LocalDefaultText = "סוג צרופה", ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AttachmentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATTACHMENTTYPE", ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AttachmentType.Features.AttachmentTypes", NameTextCodeDefaultText = "Attachment Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AttachmentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AttachmentType.Q.AttachmentTypeQuery", DefaultText = @"Attachment Types",LocalDefaultText = "סוג צרופה", ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AttachmentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATTACHMENTTYPE", ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AttachmentType.Features.AttachmentTypes", NameTextCodeDefaultText = "Attachment Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AttachmentTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AttachmentTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AttachmentTypeTextCode_0.Id, NameTextCodeCode = AttachmentTypeTextCode_0.Code, ObjectTableName = "Customs.AttachmentType", Code = "AttachmentType",  QueryGroupCode = "ATTT", IndexOrder = 0, Tenant = 0, ObjectTableId = AttachmentTypeObjectTable.Id, QuerySection = "Customs.AttachmentType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AttachmentTypeFeature_0.Id,FeatureUniqeCode= AttachmentTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AttachmentTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AttachmentTypeTextCode_0.Id, NameTextCodeCode = AttachmentTypeTextCode_0.Code, ObjectTableName = "Customs.AttachmentType", Code = "AttachmentType",  QueryGroupCode = "ATTT", IndexOrder = 0, Tenant = 0, ObjectTableId = AttachmentTypeObjectTable.Id, QuerySection = "Customs.AttachmentType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AttachmentTypeFeature_0.Id,FeatureUniqeCode= AttachmentTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AttachmentTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AttachmentTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AttachmentTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AttachmentTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AttachmentType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AttachmentTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AttachmentTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AttachmentTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AttachmentTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AttachmentType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AttachmentTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AttachmentTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AttachmentTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AttachmentTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AttachmentType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AttachmentTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = AttachmentTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AttachmentTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == AttachmentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AttachmentTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AttachmentType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

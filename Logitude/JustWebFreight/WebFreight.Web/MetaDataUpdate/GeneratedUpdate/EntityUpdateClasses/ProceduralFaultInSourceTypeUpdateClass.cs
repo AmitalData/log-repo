@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -276,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -320,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -370,43 +370,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ProceduralFaultInSourceTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PIQG", Name = "Customs.ProceduralFaultInSourceType" }, queryGroupRepository);
+	        QueryGroup ProceduralFaultInSourceTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PIQG", Name = "Customs.ProceduralFaultInSourceType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ProceduralFaultInSourceTypeObjectTable = objectTables.ContainsKey("Customs.ProceduralFaultInSourceType") ? objectTables["Customs.ProceduralFaultInSourceType"] : null;
             if (ProceduralFaultInSourceTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ProceduralFaultInSourceTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ProceduralFaultInSourceType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> ProceduralFaultInSourceTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ProceduralFaultInSourceType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ProceduralFaultInSourceTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ProceduralFaultInSourceType.Q.InputSourceTypeQuery", DefaultText = @"Procedural Fault Input Source Type",LocalDefaultText = "אופן רישום הליקוי", ObjectTableId = ProceduralFaultInSourceTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ProceduralFaultInSourceTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULTINPUTSOURCE", ObjectTableId = ProceduralFaultInSourceTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProceduralFaultInputSource.Features.ProceduralFaultInputSource", NameTextCodeDefaultText = "Procedural Fault Input Source", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ProceduralFaultInSourceTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ProceduralFaultInSourceType.Q.InputSourceTypeQuery", DefaultText = @"Procedural Fault Input Source Type",LocalDefaultText = "אופן רישום הליקוי", ObjectTableId = ProceduralFaultInSourceTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ProceduralFaultInSourceTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULTINPUTSOURCE", ObjectTableId = ProceduralFaultInSourceTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProceduralFaultInputSource.Features.ProceduralFaultInputSource", NameTextCodeDefaultText = "Procedural Fault Input Source", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ProceduralFaultInSourceTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ProceduralFaultInSourceTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ProceduralFaultInSourceTypeTextCode_0.Id, NameTextCodeCode = ProceduralFaultInSourceTypeTextCode_0.Code, ObjectTableName = "Customs.ProceduralFaultInSourceType", Code = "ProceduralFaultInSourceType",  QueryGroupCode = "PIQG", IndexOrder = 0, Tenant = 0, ObjectTableId = ProceduralFaultInSourceTypeObjectTable.Id, QuerySection = "Customs.ProceduralFaultInSourceType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ProceduralFaultInSourceTypeFeature_0.Id,FeatureUniqeCode= ProceduralFaultInSourceTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ProceduralFaultInSourceTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ProceduralFaultInSourceTypeTextCode_0.Id, NameTextCodeCode = ProceduralFaultInSourceTypeTextCode_0.Code, ObjectTableName = "Customs.ProceduralFaultInSourceType", Code = "ProceduralFaultInSourceType",  QueryGroupCode = "PIQG", IndexOrder = 0, Tenant = 0, ObjectTableId = ProceduralFaultInSourceTypeObjectTable.Id, QuerySection = "Customs.ProceduralFaultInSourceType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ProceduralFaultInSourceTypeFeature_0.Id,FeatureUniqeCode= ProceduralFaultInSourceTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ProceduralFaultInSourceTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInSourceTypeQuery.Id,QueryCode = ProceduralFaultInSourceTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ProceduralFaultInSourceTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ProceduralFaultInSourceTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProceduralFaultInSourceTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ProceduralFaultInSourceTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ProceduralFaultInSourceTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInSourceTypeQuery.Id,QueryCode = ProceduralFaultInSourceTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ProceduralFaultInSourceType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ProceduralFaultInSourceTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInSourceTypeQuery.Id,QueryCode = ProceduralFaultInSourceTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ProceduralFaultInSourceTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ProceduralFaultInSourceTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProceduralFaultInSourceTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ProceduralFaultInSourceTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ProceduralFaultInSourceTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInSourceTypeQuery.Id,QueryCode = ProceduralFaultInSourceTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ProceduralFaultInSourceType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ProceduralFaultInSourceTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInSourceTypeQuery.Id,QueryCode = ProceduralFaultInSourceTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ProceduralFaultInSourceTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ProceduralFaultInSourceTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProceduralFaultInSourceTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ProceduralFaultInSourceTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ProceduralFaultInSourceTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInSourceTypeQuery.Id,QueryCode = ProceduralFaultInSourceTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ProceduralFaultInSourceType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ProceduralFaultInSourceTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInSourceTypeQuery.Id,QueryCode = ProceduralFaultInSourceTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ProceduralFaultInSourceTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ProceduralFaultInSourceTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ProceduralFaultInSourceTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ProceduralFaultInSourceTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ProceduralFaultInSourceTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultInSourceTypeQuery.Id,QueryCode = ProceduralFaultInSourceTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ProceduralFaultInSourceType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

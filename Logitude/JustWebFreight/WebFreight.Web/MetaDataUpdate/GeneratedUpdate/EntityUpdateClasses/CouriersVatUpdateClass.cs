@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -198,7 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -257,7 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -316,7 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -375,7 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -433,59 +433,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CouriersVatQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "77f9", Name = "Customs.CouriersVat Query Group" }, queryGroupRepository);
-						QueryGroup CouriersVatQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c1c6", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CouriersVatQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "77f9", Name = "Customs.CouriersVat Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CouriersVatQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c1c6", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CouriersVatObjectTable = objectTables.ContainsKey("Customs.CouriersVat") ? objectTables["Customs.CouriersVat"] : null;
             if (CouriersVatObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CouriersVatObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CouriersVat" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CouriersVatObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CouriersVat").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CouriersVatTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CouriersVat.Q.AllCouriersVats", DefaultText = @"All Couriers Vat",LocalDefaultText = "רשימת בלדרים", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CouriersVatFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Q.AllCouriersVats", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.AllCouriersVats", NameTextCodeDefaultText = "AllCouriersVats", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CouriersVatTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CouriersVat.Q.AllCouriersVats", DefaultText = @"All Couriers Vat",LocalDefaultText = "רשימת בלדרים", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CouriersVatFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Q.AllCouriersVats", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.AllCouriersVats", NameTextCodeDefaultText = "AllCouriersVats", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CouriersVatObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCouriersVatsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CouriersVatTextCode_0.Id, NameTextCodeCode = CouriersVatTextCode_0.Code, ObjectTableName = "Customs.CouriersVat", Code = "AllCouriersVats",  QueryGroupCode = "77f9", IndexOrder = 0, Tenant = 0, ObjectTableId = CouriersVatObjectTable.Id, QuerySection = "Customs.CouriersVat", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CouriersVatFeature_0.Id,FeatureUniqeCode= CouriersVatFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCouriersVatsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CouriersVatTextCode_0.Id, NameTextCodeCode = CouriersVatTextCode_0.Code, ObjectTableName = "Customs.CouriersVat", Code = "AllCouriersVats",  QueryGroupCode = "77f9", IndexOrder = 0, Tenant = 0, ObjectTableId = CouriersVatObjectTable.Id, QuerySection = "Customs.CouriersVat", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CouriersVatFeature_0.Id,FeatureUniqeCode= CouriersVatFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCouriersVatsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CouriersVatObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == CouriersVatObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CouriersVatObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == CouriersVatObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCouriersVatsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CouriersVat.VatNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllCouriersVatsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CouriersVatObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CouriersVatObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CouriersVatObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CouriersVatObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 240 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCouriersVatsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CouriersVat.LocalName" , ColumnWidth = 240 }, addedQueryColumns);
 
-			 QueryColumn AllCouriersVatsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CouriersVatObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CouriersVatObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CouriersVatObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CouriersVatObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 220 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCouriersVatsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CouriersVat.EnglishName" , ColumnWidth = 220 }, addedQueryColumns);
 
-			 QueryColumn AllCouriersVatsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CouriersVatObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CouriersVatObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CouriersVatObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CouriersVatObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllCouriersVatsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CouriersVat.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CouriersVatObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CouriersVat" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CouriersVatObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CouriersVat").ToList();
+		   //List<ObjectField> CouriersVatObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CouriersVat").ToList();
 		       
 	      
 
 	         Screen CouriersVatCustomsCouriersVatHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CouriersVat.Customs.CouriersVatHeaderScreen", Name = "Customs.CouriersVatHeaderScreen", ObjectTableId = CouriersVatObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CouriersVatCouriersVatCustomsCouriersVatHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CouriersVatObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().Id, ScreenId = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Id,ScreenCode = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Code, ObjectFieldCode = CouriersVatObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CouriersVatCouriersVatCustomsCouriersVatHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Id,ScreenCode = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Code, ObjectFieldCode = "CouriersVat.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CouriersVatCouriersVatCustomsCouriersVatHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CouriersVatObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Id,ScreenCode = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Code, ObjectFieldCode = CouriersVatObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CouriersVatCouriersVatCustomsCouriersVatHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Id,ScreenCode = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Code, ObjectFieldCode = "CouriersVat.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CouriersVatObjectTable.HeaderScreenId = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Id;
 		    CouriersVatObjectTable.HeaderScreenCode = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Code;
@@ -495,13 +506,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CouriersVatGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CouriersVat.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CouriersVatObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CouriersVatObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().Id, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = CouriersVatObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "CouriersVat.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CouriersVatObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = CouriersVatObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "CouriersVat.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CouriersVatObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = CouriersVatObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "CouriersVat.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CouriersVatObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = CouriersVatObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "CouriersVat.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -512,11 +523,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable CouriersVatObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CouriersVat" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CouriersVatGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CouriersVat.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CouriersVatGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Tab.General", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CouriersVatGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Tab.General", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CouriersVatObjectTable);
  
                  
 			   TextCode CouriersVatEventTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CouriersVat.TH.Event", DefaultText = "Event",LocalDefaultText = "אירועים", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CouriersVatEventFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Tab.Event", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.Event", NameTextCodeDefaultText = "Event", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CouriersVatEventFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Tab.Event", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.Event", NameTextCodeDefaultText = "Event", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CouriersVatObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -532,10 +543,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable CouriersVatObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CouriersVat" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CouriersVatFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CouriersVatFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CouriersVatFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CouriersVatFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.PackageFeature", NameTextCodeDefaultText = "CouriersVat Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CouriersVatFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CouriersVatObjectTable);
+		   Feature CouriersVatFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CouriersVatObjectTable);
+		   Feature CouriersVatFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CouriersVatObjectTable);
+		   Feature CouriersVatFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.PackageFeature", NameTextCodeDefaultText = "CouriersVat Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CouriersVatObjectTable);    
 	    
 		}
 

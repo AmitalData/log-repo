@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -276,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -323,7 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -373,43 +373,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AddressPurposeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ADPU", Name = "Customs.AddressPurpose" }, queryGroupRepository);
+	        QueryGroup AddressPurposeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ADPU", Name = "Customs.AddressPurpose" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AddressPurposeObjectTable = objectTables.ContainsKey("Customs.AddressPurpose") ? objectTables["Customs.AddressPurpose"] : null;
             if (AddressPurposeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 AddressPurposeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AddressPurpose" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> AddressPurposeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AddressPurpose").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode AddressPurposeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AddressPurpose.Q.AddressPurposeQuery", DefaultText = @"Address Purposes",LocalDefaultText = "מטרת כתובת", ObjectTableId = AddressPurposeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AddressPurposeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSPURPOSE", ObjectTableId = AddressPurposeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AddressPurpose.Features.AddressPurposes", NameTextCodeDefaultText = "Address Purposes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AddressPurposeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AddressPurpose.Q.AddressPurposeQuery", DefaultText = @"Address Purposes",LocalDefaultText = "מטרת כתובת", ObjectTableId = AddressPurposeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AddressPurposeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSPURPOSE", ObjectTableId = AddressPurposeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AddressPurpose.Features.AddressPurposes", NameTextCodeDefaultText = "Address Purposes", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AddressPurposeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AddressPurposeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AddressPurposeTextCode_0.Id, NameTextCodeCode = AddressPurposeTextCode_0.Code, ObjectTableName = "Customs.AddressPurpose", Code = "AddressPurpose",  QueryGroupCode = "ADPU", IndexOrder = 0, Tenant = 0, ObjectTableId = AddressPurposeObjectTable.Id, QuerySection = "Customs.AddressPurpose", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AddressPurposeFeature_0.Id,FeatureUniqeCode= AddressPurposeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AddressPurposeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AddressPurposeTextCode_0.Id, NameTextCodeCode = AddressPurposeTextCode_0.Code, ObjectTableName = "Customs.AddressPurpose", Code = "AddressPurpose",  QueryGroupCode = "ADPU", IndexOrder = 0, Tenant = 0, ObjectTableId = AddressPurposeObjectTable.Id, QuerySection = "Customs.AddressPurpose", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AddressPurposeFeature_0.Id,FeatureUniqeCode= AddressPurposeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AddressPurposeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AddressPurposeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AddressPurposeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AddressPurposeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AddressPurposeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AddressPurposeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AddressPurpose.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AddressPurposeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AddressPurposeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AddressPurposeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AddressPurposeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AddressPurposeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AddressPurposeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AddressPurpose.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AddressPurposeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AddressPurposeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AddressPurposeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AddressPurposeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AddressPurposeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AddressPurposeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AddressPurpose.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AddressPurposeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = AddressPurposeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == AddressPurposeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AddressPurposeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == AddressPurposeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AddressPurposeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AddressPurpose.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

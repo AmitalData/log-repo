@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -276,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -323,7 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -373,43 +373,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ConstraintApprovalDecisionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CADG", Name = "Customs.ConstraintApprovalDecisions" }, queryGroupRepository);
+	        QueryGroup ConstraintApprovalDecisionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CADG", Name = "Customs.ConstraintApprovalDecisions" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ConstraintApprovalDecisionObjectTable = objectTables.ContainsKey("Customs.ConstraintApprovalDecision") ? objectTables["Customs.ConstraintApprovalDecision"] : null;
             if (ConstraintApprovalDecisionObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ConstraintApprovalDecisionObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ConstraintApprovalDecision" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> ConstraintApprovalDecisionObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ConstraintApprovalDecision").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ConstraintApprovalDecisionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConstraintApproval.Q.ConstraintApprovalDecisionQuery", DefaultText = @"Constraint Approval Decisions",LocalDefaultText = "סוג החלטה באילוץ", ObjectTableId = ConstraintApprovalDecisionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ConstraintApprovalDecisionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSTRAINTAPPROVALQUERY", ObjectTableId = ConstraintApprovalDecisionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConstraintApprovalDecision.Features.ConstraintApprovalDecisions", NameTextCodeDefaultText = "Constraint Approval Decisions", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ConstraintApprovalDecisionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConstraintApproval.Q.ConstraintApprovalDecisionQuery", DefaultText = @"Constraint Approval Decisions",LocalDefaultText = "סוג החלטה באילוץ", ObjectTableId = ConstraintApprovalDecisionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ConstraintApprovalDecisionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSTRAINTAPPROVALQUERY", ObjectTableId = ConstraintApprovalDecisionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConstraintApprovalDecision.Features.ConstraintApprovalDecisions", NameTextCodeDefaultText = "Constraint Approval Decisions", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ConstraintApprovalDecisionObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ConstraintApprovalDecisionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConstraintApprovalDecisionTextCode_0.Id, NameTextCodeCode = ConstraintApprovalDecisionTextCode_0.Code, ObjectTableName = "Customs.ConstraintApprovalDecision", Code = "ConstraintApprovalDecision",  QueryGroupCode = "CADG", IndexOrder = 0, Tenant = 0, ObjectTableId = ConstraintApprovalDecisionObjectTable.Id, QuerySection = "Customs.ConstraintApprovalDecision", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConstraintApprovalDecisionFeature_0.Id,FeatureUniqeCode= ConstraintApprovalDecisionFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ConstraintApprovalDecisionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConstraintApprovalDecisionTextCode_0.Id, NameTextCodeCode = ConstraintApprovalDecisionTextCode_0.Code, ObjectTableName = "Customs.ConstraintApprovalDecision", Code = "ConstraintApprovalDecision",  QueryGroupCode = "CADG", IndexOrder = 0, Tenant = 0, ObjectTableId = ConstraintApprovalDecisionObjectTable.Id, QuerySection = "Customs.ConstraintApprovalDecision", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConstraintApprovalDecisionFeature_0.Id,FeatureUniqeCode= ConstraintApprovalDecisionFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ConstraintApprovalDecisionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintApprovalDecisionQuery.Id,QueryCode = ConstraintApprovalDecisionQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ConstraintApprovalDecisionObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ConstraintApprovalDecisionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConstraintApprovalDecisionObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ConstraintApprovalDecisionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConstraintApprovalDecisionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintApprovalDecisionQuery.Id,QueryCode = ConstraintApprovalDecisionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConstraintApprovalDecision.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConstraintApprovalDecisionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintApprovalDecisionQuery.Id,QueryCode = ConstraintApprovalDecisionQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ConstraintApprovalDecisionObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ConstraintApprovalDecisionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConstraintApprovalDecisionObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ConstraintApprovalDecisionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConstraintApprovalDecisionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintApprovalDecisionQuery.Id,QueryCode = ConstraintApprovalDecisionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConstraintApprovalDecision.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConstraintApprovalDecisionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintApprovalDecisionQuery.Id,QueryCode = ConstraintApprovalDecisionQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ConstraintApprovalDecisionObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ConstraintApprovalDecisionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConstraintApprovalDecisionObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ConstraintApprovalDecisionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConstraintApprovalDecisionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintApprovalDecisionQuery.Id,QueryCode = ConstraintApprovalDecisionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ConstraintApprovalDecision.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConstraintApprovalDecisionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintApprovalDecisionQuery.Id,QueryCode = ConstraintApprovalDecisionQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ConstraintApprovalDecisionObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ConstraintApprovalDecisionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConstraintApprovalDecisionObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ConstraintApprovalDecisionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ConstraintApprovalDecisionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintApprovalDecisionQuery.Id,QueryCode = ConstraintApprovalDecisionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ConstraintApprovalDecision.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -201,7 +201,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -263,7 +263,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -325,7 +325,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -384,7 +384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -446,7 +446,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -509,7 +509,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -571,7 +571,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -632,7 +632,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -694,7 +694,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -756,73 +756,84 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CustomDocumentTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CUDT", Name = "Customs.CustomDocumentType" }, queryGroupRepository);
-						QueryGroup CustomDocumentTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8875", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CustomDocumentTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CUDT", Name = "Customs.CustomDocumentType" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CustomDocumentTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8875", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CustomDocumentTypeObjectTable = objectTables.ContainsKey("Customs.CustomDocumentType") ? objectTables["Customs.CustomDocumentType"] : null;
             if (CustomDocumentTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CustomDocumentTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomDocumentType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CustomDocumentTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomDocumentType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CustomDocumentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.Q.CustomDocumentTypeQuery", DefaultText = @"Document Types",LocalDefaultText = "סוגי מסמך", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomDocumentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDOCUMENTTYPE", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomDocumentType.Features.CustomDocumentTypes", NameTextCodeDefaultText = "Custom Document Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomDocumentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.Q.CustomDocumentTypeQuery", DefaultText = @"Document Types",LocalDefaultText = "סוגי מסמך", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomDocumentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDOCUMENTTYPE", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomDocumentType.Features.CustomDocumentTypes", NameTextCodeDefaultText = "Custom Document Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomDocumentTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomDocumentTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomDocumentTypeTextCode_0.Id, NameTextCodeCode = CustomDocumentTypeTextCode_0.Code, ObjectTableName = "Customs.CustomDocumentType", Code = "CustomDocumentType",  QueryGroupCode = "CUDT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomDocumentTypeObjectTable.Id, QuerySection = "Customs.CustomDocumentType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomDocumentTypeFeature_0.Id,FeatureUniqeCode= CustomDocumentTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CustomDocumentTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomDocumentTypeTextCode_0.Id, NameTextCodeCode = CustomDocumentTypeTextCode_0.Code, ObjectTableName = "Customs.CustomDocumentType", Code = "CustomDocumentType",  QueryGroupCode = "CUDT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomDocumentTypeObjectTable.Id, QuerySection = "Customs.CustomDocumentType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomDocumentTypeFeature_0.Id,FeatureUniqeCode= CustomDocumentTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomDocumentTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomDocumentTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomDocumentType.Code" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn CustomDocumentTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomDocumentTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomDocumentType.EnglishName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn CustomDocumentTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomDocumentTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomDocumentType.LocalName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn CustomDocumentTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomDocumentTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomDocumentType.Inactive" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn CustomDocumentTypeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "PointerLevelName" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "PointerLevelName" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomDocumentTypeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomDocumentType.PointerLevelName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn CustomDocumentTypeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "AutoSetOriginalDocumentTrue" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "AutoSetOriginalDocumentTrue" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomDocumentTypeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomDocumentType.AutoSetOriginalDocumentTrue" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn CustomDocumentTypeQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsCourierManadatory" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsCourierManadatory" && d.ObjectTableId == CustomDocumentTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CustomDocumentTypeQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomDocumentTypeQuery.Id,QueryCode = CustomDocumentTypeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomDocumentType.IsCourierManadatory" , ColumnWidth = 200 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CustomDocumentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomDocumentType" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CustomDocumentTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomDocumentType").ToList();
+		   //List<ObjectField> CustomDocumentTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomDocumentType").ToList();
 		       
 	      
 
 	         Screen CustomDocumentTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomDocumentType.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CustomDocumentTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CustomDocumentType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CustomDocumentType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "PointerLevel").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "PointerLevel").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CustomDocumentType.PointerLevel", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "AutoSetOriginalDocumentTrue").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "AutoSetOriginalDocumentTrue").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CustomDocumentType.AutoSetOriginalDocumentTrue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsCourierManadatory").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsCourierManadatory").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CustomDocumentType.IsCourierManadatory", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsDiamondManadatory").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsDiamondManadatory").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomDocumentTypeCustomDocumentTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id,ScreenCode = CustomDocumentTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CustomDocumentType.IsDiamondManadatory", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -833,11 +844,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable CustomDocumentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomDocumentType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomDocumentTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomDocumentTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomDocumentType.Tab.General", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomDocumentTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomDocumentType.Tab.General", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomDocumentTypeObjectTable);
  
                  
 			   TextCode CustomDocumentTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomDocumentTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomDocumentType.Tab.Events", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomDocumentTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomDocumentType.Tab.Events", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomDocumentTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -853,10 +864,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable CustomDocumentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomDocumentType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CustomDocumentTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomDocumentTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomDocumentTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomDocumentTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.PackageFeature", NameTextCodeDefaultText = "CustomDocumentType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CustomDocumentTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeObjectTable);
+		   Feature CustomDocumentTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeObjectTable);
+		   Feature CustomDocumentTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeObjectTable);
+		   Feature CustomDocumentTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.PackageFeature", NameTextCodeDefaultText = "CustomDocumentType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeObjectTable);    
 	    
 		}
 

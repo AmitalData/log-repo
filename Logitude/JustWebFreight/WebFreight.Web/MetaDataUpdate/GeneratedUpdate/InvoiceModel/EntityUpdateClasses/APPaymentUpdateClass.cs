@@ -5374,6 +5374,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  APPaymentFeature_MB23.Id,
 						Style = null,
 						LocalDefaultText = "Enter External Payment",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  APPaymentFeature_MB23.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
