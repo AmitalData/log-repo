@@ -76,6 +76,10 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool? IsManuallyChanged { get; set; }
         [Column("IsEquipment")]
 	    public bool IsEquipment { get; set; }
+        [Column("IsExternalLine")]
+	    public bool IsExternalLine { get; set; }
+        [Column("TotalInvoiceAmount")]
+	    public decimal? TotalInvoiceAmount { get; set; }
     }
 }
 	 

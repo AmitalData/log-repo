@@ -235,6 +235,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 ShipmentComputedFields.IsRequestedDocuments as IsRequestedDocuments,
 						 ShipmentComputedFields.IsDigitalSignRequired as IsDigitalSignRequired, 
 						 ShipmentComputedFields.IsDepositionRequired as IsDepositionRequired,
+						 ShipmentComputedFields.CreatedFromDigital as CreatedFromDigital,
 						 ShipmentComputedFields.ImporterDepositionRequestDetails as ImporterDepositionRequestDetails,
 						 ShipmentComputedFields.NumberOfHouses as NumberOfHouses, 
 						 ShipmentAdditionalCloudDatas.DeclarationXmlData as DeclarationXmlData, 

@@ -219,7 +219,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
-
+                ownerId = FixFilter(ownerId);
+                employeeGroupId = FixFilter(employeeGroupId);
                 CRMDomainService domain = new CRMDomainService();
                 List<TicketList> myResult = domain.GetRecentTickets(ownerId, employeeGroupId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -230,6 +231,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+      
         public HttpResponseMessage GetTicketCorrespondences(string entityId)
         {
             try

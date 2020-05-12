@@ -197,7 +197,10 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
 
         window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == objectTableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == objectTableName)[0]))).forEach((objectField) => {
-            this.AutomationEntityLists.push(new AutomationEntityList(objectField.FullNameTextCodeDefaultText, objectField.LookUpTableId, objectField.FieldCode));
+            var objectFieldName = objectField.FullNameTextCodeDefaultText;
+            if (objectFieldName == "Company")//this is for now. we need a new field to get the name of the entity(objectField.FullNameAutomationEntity)
+                objectFieldName = "Customer";
+            this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode));
         });
 
         this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldCode == this.PartnerObjectFieldCode)[0];

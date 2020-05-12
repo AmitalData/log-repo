@@ -44,5 +44,9 @@ namespace WebFreight.Web.DataContracts
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string Name { get; set; }
 
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string FieldCode { get; set; }
+
+
     }
 }

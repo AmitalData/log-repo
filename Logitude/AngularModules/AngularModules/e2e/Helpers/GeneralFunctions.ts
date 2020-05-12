@@ -7,11 +7,11 @@ export class GeneralFunctions {
         this.Helper = new FieldsHelper();
     }
     public GoToMainMenu(menuid: string) {
-        this.Helper.WaitByIdAndClick('PAR');
+        this.Helper.WaitByIdAndClick('General.MH.Maintenance');
         var selectMenu = this.Helper.WaitByIdAndClick(menuid);
     }
     public GoToMainMenu2(menuid: string) {
-        this.Helper.WaitByIdAndClick('PAR');
+        this.Helper.WaitByIdAndClick('General.MH.Maintenance');
         var selectMenu2 = this.Helper.ItemsVisibility(menuid);
         var selectMenu3 = this.Helper.ItemsPresent(menuid);
         var selectMenu = this.Helper.WaitByIdAndClick(menuid);

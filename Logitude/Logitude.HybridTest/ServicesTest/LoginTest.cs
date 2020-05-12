@@ -49,6 +49,7 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Login_With_ValidPassword()
         {
+            Assert.Inconclusive("Use correct email & password");
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Login",

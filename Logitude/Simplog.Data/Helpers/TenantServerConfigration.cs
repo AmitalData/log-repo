@@ -30,7 +30,8 @@ namespace Simplog.Data.Helpers
             //var stringDate = DateTime.Now.ToString(format);
             var dateTime = DateTime.UtcNow;//DateTime.ParseExact(stringDate, format, new CultureInfo("en-US"));
             string datetimeoffset = "datetimeoffset" + tenant;
-
+            if (CacheManager.CacheWrapper != null)
+            {
                 if (CacheManager.CacheWrapper.Get(datetimeoffset) == null)
                 {
 
@@ -45,7 +46,7 @@ namespace Simplog.Data.Helpers
                     offsetHours = (double)CacheManager.CacheWrapper.Get(datetimeoffset);
                     dateTime = dateTime.AddHours(offsetHours);
                 }
-
+            }
             
    
 

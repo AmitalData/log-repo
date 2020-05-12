@@ -989,7 +989,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 tenant = iQueryable.First().Tenant;
             }
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-
+            bool isFullAccounting = false;
+            Tenant myTenant = TenantRepository.GetSingleTenant(tenant, true);
+            if (myTenant != null)
+            {
+                isFullAccounting = myTenant.AccountingActivated;
+            }
             var result = from a in iQueryable.Include("Status").Include("LocalCurrency").Include("InvoiceCurrency").Include("ProfitCurrency").Include("VendorCard").Include("PaymentTerm").Include("TransferStatus").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("UpdatedByUser").Include("UpdatedByUser.Contact").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("Branch")
                          select new APInvoiceList()
                          {
@@ -1017,7 +1022,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              SubTotalInInvoiceCurrency = a.SubTotalInInvoiceCurrency,
                              SubTotalInLocalCurrency = a.SubTotalInLocalCurrency,
                              VendorId = a.VendorId,
-                             VendorName = a.VendorCard == null ? "" : (a.VendorCard.LocalName != null ? a.VendorCard.LocalName : a.VendorCard.EnglishName),
+                             VendorName = a.VendorCard == null ? "" : isFullAccounting == false ? a.VendorCard.EnglishName : (a.VendorCard.LocalName != null ? a.VendorCard.LocalName : a.VendorCard.EnglishName),
                              VendorCity = a.VendorCard == null ? "" : a.VendorCard.CityName,
                              VendorCountry = a.VendorCard == null ? "" : a.VendorCard.CountryName,
                              VendorCode = a.VendorCard == null ? null : a.VendorCard.Code,

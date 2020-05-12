@@ -2676,6 +2676,18 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
 
 
+        public List<ObjectFieldList> GetObjectFieldsUsedInDWData(int tenant)
+        {
+            List<ObjectFieldList> objectfields = (from a in repository.context.ObjectFields
+                                                where (a.Tenant == tenant || a.Tenant == 0) &&   a.CopyToDW
+
+                                                select new ObjectFieldList()
+                                                {
+                                                    FieldCode = a.FieldCode , 
+                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
+                                                }).ToList();
+            return objectfields;
+        }
 
 
 

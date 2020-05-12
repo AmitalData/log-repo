@@ -176,6 +176,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsAirDigitalSignRequired).HasColumnName("IsAirDigitalSignRequired");
             this.Property(t => t.IsOceanDigitalSignRequired).HasColumnName("IsOceanDigitalSignRequired");
             this.Property(t => t.IsInlandDigitalSignRequired).HasColumnName("IsInlandDigitalSignRequired");
+            this.Property(t => t.AddedManually).HasColumnName("AddedManually");
 
 
             this.Property(t => t.PrintingFieldsScreenCode).HasColumnName("PrintingFieldsScreenCode");

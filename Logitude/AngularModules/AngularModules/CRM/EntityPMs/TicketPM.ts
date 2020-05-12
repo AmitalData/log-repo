@@ -594,6 +594,11 @@ export class TicketPM {
     public set LastCorrespondence(newValue: string) { if (this.lastCorrespondence != newValue) { this.lastCorrespondence = newValue; this.MarkAsDirty("LastCorrespondence"); } }
        
 	 
+    private entityTypeName: string;
+    public get EntityTypeName() { return this.entityTypeName; }
+    public set EntityTypeName(newValue: string) { if (this.entityTypeName != newValue) { this.entityTypeName = newValue; this.MarkAsDirty("EntityTypeName"); } }
+       
+	 
 
     public OldEntityPM: TicketPM;
 		

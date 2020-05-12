@@ -12,7 +12,7 @@ namespace Logitude.HybridTest.WcfCallers
     {
         public static void PrepareShipmentVars()
         {
-            GetCurrencyCodeEUR();
+            //GetCurrencyCodeEUR();
             GetIncotermCodeCIF();
             GetChargeTypeCodeAFT();
             PreparePorts.PreparePortsVars();
@@ -41,7 +41,7 @@ namespace Logitude.HybridTest.WcfCallers
             ApiSearchFilters filters = new ApiSearchFilters
             {
                 Take = 10,
-                SearchFields = HybridData.CurrencyCodeEUR,
+                SearchFields = HybridData.CurrencyCodeEUR + ",Euro",
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };

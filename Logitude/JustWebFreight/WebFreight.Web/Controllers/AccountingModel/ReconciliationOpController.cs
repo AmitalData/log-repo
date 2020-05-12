@@ -411,7 +411,8 @@ tenant);
 
                         if (field.FieldName == "DueDate")
                         {
-                            value1 = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            var today = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            value1 = new DateTime(today.Year, today.Month, today.Day, 0, 0, 0, 0);
                         }
 
                         string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;

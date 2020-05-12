@@ -269,7 +269,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<AgentList> GetIQueryableEntityList(IQueryable<Agent> iQueryable)
         {
-            IQueryable<AgentList> result = from a in iQueryable.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.InvoiceCurrency")
+            IQueryable<AgentList> result = from a in iQueryable.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.InvoiceCurrency").Include("Card.PaymentTerm")
                                            select new AgentList()
                                            {
                                                Code = a.Card.Code,

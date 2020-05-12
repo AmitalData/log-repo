@@ -51,7 +51,7 @@ namespace Logitude.DBMigrations.Models
                     string[] dxmlFiles = GetDXMLFilesFromRoot(root);
                     string[] sxmlFiles = GetSXMLFilesFromRoot(root);
 
-                    if(!(RunSettings.DebugMode && !RunSettings.ValidateFiles))
+                    if (!(RunSettings.DebugMode && !RunSettings.ValidateFiles))
                     {
                         ValidateDXMLFiles(dxmlFiles);
                         ValidateSXMLFiles(sxmlFiles);
@@ -86,7 +86,7 @@ namespace Logitude.DBMigrations.Models
                             ExecuteGeneralScripts(sxmlFiles, true);
                         }
                     }
-                    
+
                     if (migrationDxmlFiles != null)
                     {
                         migrationsScript = GenerateScriptsFromDXMLFiles(migrationDxmlFiles);
@@ -180,7 +180,7 @@ namespace Logitude.DBMigrations.Models
 
                 if (dxmlFiles.Length > 0)
                 {
-                    if(RunSettings.DebugMode && !String.IsNullOrEmpty(RunSettings.SpecificDxmlFile))
+                    if (RunSettings.DebugMode && !String.IsNullOrEmpty(RunSettings.SpecificDxmlFile))
                     {
                         return dxmlFiles.Where(d => d.ToLower().Contains(@"\" + RunSettings.SpecificDxmlFile.ToLower())).ToArray();
                     }
@@ -244,7 +244,7 @@ namespace Logitude.DBMigrations.Models
             {
                 Console.WriteLine("Generating Script For " + dxmlTable.DXMLFileName + " ...");
 
-                if(dxmlTable.DXMLFileName.ToLower() == "DBMigrationsHistory.dxml".ToLower() || dxmlTable.DXMLFileName.ToLower() == "DBScriptsHistory.dxml".ToLower())
+                if (dxmlTable.DXMLFileName.ToLower() == "DBMigrationsHistory.dxml".ToLower() || dxmlTable.DXMLFileName.ToLower() == "DBScriptsHistory.dxml".ToLower())
                 {
                     string[] dbTypes = new string[] { "Global", "Main", "SystemLogs" };
 
@@ -463,7 +463,7 @@ namespace Logitude.DBMigrations.Models
 
         private void ValidateDXMLFiles(string[] dxmlFiles)
         {
-            if(dxmlFiles != null)
+            if (dxmlFiles != null)
             {
                 Console.WriteLine("Validating DXML Files ...");
 
@@ -597,15 +597,16 @@ namespace Logitude.DBMigrations.Models
         private DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTableDefinition, string dxmlFileName)
         {
             string connectonString = GetConnectionString(dxmlTableDefinition.DBType);
+            bool isBasicArgumentProvided = IsArgumentProvided("-basic");
 
             if (DatabaseType.ToLower() == "oracle")
             {
                 bool isDataTypeChangesArgumentProvided = IsArgumentProvided("-datatypechanges");
-                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTablesDefinitions, dxmlFileName, isDataTypeChangesArgumentProvided);
+                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTablesDefinitions, dxmlFileName, isBasicArgumentProvided, isDataTypeChangesArgumentProvided);
                 return oracleDatabaseMigrations;
             }
 
-            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTablesDefinitions, dxmlFileName);
+            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTableDefinition, connectonString, DXMLTablesDefinitions, dxmlFileName, isBasicArgumentProvided);
             return sqlDatabaseMigrations;
         }
 
@@ -628,7 +629,7 @@ namespace Logitude.DBMigrations.Models
                     using (OracleCommand oracleCommand = new OracleCommand())
                     {
                         oracleCommand.Connection = oracleConnection;
-                        
+
                         foreach (var command in commands)
                         {
                             oracleCommand.CommandText = (command.ToUpper().EndsWith(" END") || command.ToUpper().EndsWith("\nEND")) ? (command + ";") : command;
@@ -696,16 +697,16 @@ namespace Logitude.DBMigrations.Models
                 bool takeDxmlFile = true;
 
                 string dxmlString = File.ReadAllText(dxmlFile);
-                
+
                 if (checkDxmlHash)
                 {
                     DXMLHash dxmlHashFromDB = DXMLHashes.Where(d => d.FileName == Path.GetFileName(dxmlFile)).FirstOrDefault();
-                    if(dxmlHashFromDB != null)
+                    if (dxmlHashFromDB != null)
                     {
                         string dxmlHashStringFromFile = GenerateHashString(dxmlString);
                         string dxmlHashStringFromDB = dxmlHashFromDB.HashString;
 
-                        if(dxmlHashStringFromFile == dxmlHashStringFromDB)
+                        if (dxmlHashStringFromFile == dxmlHashStringFromDB)
                         {
                             takeDxmlFile = false;
                         }
@@ -1285,11 +1286,11 @@ namespace Logitude.DBMigrations.Models
                     {
                         sqlConnection.Open();
                     }
-                    catch(Exception exception)
+                    catch (Exception exception)
                     {
                         return "Error: " + exception.Message;
                     }
-                    
+
                     using (SqlTransaction sqlTransaction = sqlConnection.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
                     {
                         try
@@ -1330,7 +1331,7 @@ namespace Logitude.DBMigrations.Models
 
                 if (scriptDefinition != null)
                 {
-                    if(scriptDefinition.Pre == preScripts)
+                    if (scriptDefinition.Pre == preScripts)
                     {
                         bool includeScriptDefinition;
                         if (IncludedModules != null)
@@ -1574,7 +1575,7 @@ namespace Logitude.DBMigrations.Models
 
             string[] dbTypes = new string[] { "Global", "Main", "SystemLogs" };
 
-            foreach(var dbType in dbTypes)
+            foreach (var dbType in dbTypes)
             {
                 string connectionString = GetConnectionString(dbType);
 
@@ -1659,7 +1660,7 @@ namespace Logitude.DBMigrations.Models
 
         private ExecuteSxmlFileResult ShouldExecuteSxmlFile(string sxmlFileName, ScriptDefinition scriptDefinition)
         {
-            if(!ExecutedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
+            if (!ExecutedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
             {
                 return new ExecuteSxmlFileResult
                 {
@@ -1675,12 +1676,12 @@ namespace Logitude.DBMigrations.Models
                 string sxmlFileHashValue = GetScriptHashValue(scriptDefinition);
                 int sxmlFileVersion = GetScriptVersion(scriptDefinition);
 
-                if(executedSxmlFileHashValue != sxmlFileHashValue && sxmlFileVersion <= executedSxmlFileVersion)
+                if (executedSxmlFileHashValue != sxmlFileHashValue && sxmlFileVersion <= executedSxmlFileVersion)
                 {
                     ExitTool("Error: The Script Inside " + sxmlFileName + " File Has Been Changed, If You Are Sure You Want To Continue Executing The Script, You Should Change The Script Version");
                 }
 
-                if(executedSxmlFileHashValue != sxmlFileHashValue && sxmlFileVersion > executedSxmlFileVersion)
+                if (executedSxmlFileHashValue != sxmlFileHashValue && sxmlFileVersion > executedSxmlFileVersion)
                 {
                     return new ExecuteSxmlFileResult
                     {
@@ -1811,7 +1812,7 @@ namespace Logitude.DBMigrations.Models
 
         private DXMLDefinitions FilterDXMLDefinitions(DXMLDefinitions dxmlDefinitions)
         {
-            if(IncludedModules != null)
+            if (IncludedModules != null)
             {
                 if (IncludedModules.Include)
                 {

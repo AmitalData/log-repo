@@ -64,6 +64,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         DeliveryTo = a.DeliveryTo,
                         PickupFrom = a.PickupFrom,
                         PickupTo = a.PickupTo,
+                        CreatedFromDigital = a.CreatedFromDigital,
                     }).FirstOrDefault();
         }
 
@@ -105,6 +106,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                  PickupFrom = a.PickupFrom,
                                                                  PickupTo = a.PickupTo,
                                                                  OperationallyClosedByUserName = a.OperationallyClosedByUser.Contact.Name,
+                                                                 CreatedFromDigital = a.CreatedFromDigital,
                                                              });
             return result;
         }

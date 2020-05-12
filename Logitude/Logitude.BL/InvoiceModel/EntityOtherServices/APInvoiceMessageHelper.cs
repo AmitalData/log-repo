@@ -1883,10 +1883,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             if (invoice != null)
             {
                 entityId = invoice.Id;
-                FTPFileName = invoice.InvoiceNumber;
+                FTPFileName = ("APInvoice_" + invoice.InvoiceNumber).ToLower();
             }
 
-            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode, "APInvoice");
+            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode);
 
             this.myDocumentId = helper.DocumentId;
             this.myDocumentFolder = helper.DocumentFolder;

@@ -636,6 +636,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string TrailerNumber { get; set; }
 
         public bool IsDepositionRequired { get; set; }
+        public bool CreatedFromDigital { get; set; }
         public string ImporterDepositionRequestDetails { get; set; }
         
         public string DeclarationXmlData { get; set; }

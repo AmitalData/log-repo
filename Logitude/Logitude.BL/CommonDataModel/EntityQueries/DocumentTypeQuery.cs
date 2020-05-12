@@ -98,6 +98,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                     IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                     PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                    AddedManually = a.AddedManually,
                                 }).FirstOrDefault();
         }
 
@@ -157,6 +158,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                     IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                     PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                    AddedManually = a.AddedManually,
+
                                 }).FirstOrDefault();
 
             d.DocumentTypeCustomFields = documentTypeCustomFieldQuery.GetDocumentTypeCusotmFieldPMsByDocumentTypeId(d.Id, d.Tenant).ToList();
@@ -221,6 +224,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                     IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                     PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                    AddedManually = a.AddedManually,
+
                                 }).FirstOrDefault();
 
             d.DocumentTypeCustomFields = documentTypeCustomFieldQuery.GetDocumentTypeCusotmFieldPMsByDocumentTypeId(d.Id, d.Tenant).ToList();
@@ -284,6 +289,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                           IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                           PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                          AddedManually = a.AddedManually,
+
                                       }).ToList();
 
             foreach (DocumentTypePM doc in d)
@@ -351,6 +358,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                            AddedManually = a.AddedManually,
+
                                         }).FirstOrDefault();
 
             if (docTypePm != null)
@@ -417,6 +426,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                            AddedManually = a.AddedManually,
+
                                         }).FirstOrDefault();
 
             if (docTypePm != null)
@@ -511,6 +522,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                            AddedManually = a.AddedManually,
+
                                         }).FirstOrDefault();
 
             if (docTypePm != null)
@@ -538,6 +551,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           TemplateFormatCode = a.TemplateFormatCode,
                                           OrderBy = a.OrderBy,
                                           FileName = a.FileName,
+                                          AddedManually = a.AddedManually,
+
 
                                       }).ToList();
             return d;
@@ -559,6 +574,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             DocumentTypeDefaultHTMLTemplateId = a.DocumentTypeDefaultHTMLTemplateId,
                                             DocumentTypeDefaultReportTemplateId = a.DocumentTypeDefaultReportTemplateId,
                                             FileName = a.FileName,
+                                            AddedManually = a.AddedManually,
+
                                         }).ToList();
             return d;
         }
@@ -614,6 +631,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           SharedDocumentTypeCopyId = a.SharedDocumentTypeCopyId,
                                           IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                           PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                            AddedManually = a.AddedManually,
+
                                         }).ToList();
             return d;
         }
@@ -680,6 +699,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                 IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                 PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                AddedManually = a.AddedManually,
+
 
 
                             };
@@ -736,6 +757,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                 IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                 PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                AddedManually = a.AddedManually,
+
                             };
                         break;
                     }
@@ -790,6 +813,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                 IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                 PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                AddedManually = a.AddedManually,
+
                             };
                         break;
                     }
@@ -858,6 +883,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     SharedDocumentTypeCopyId = documentType.SharedDocumentTypeCopyId,
                     IsSystemAdditionalPrintingFields = documentType.IsSystemAdditionalPrintingFields,
                     PrintingFieldsScreenCode = documentType.PrintingFieldsScreenCode,
+                    AddedManually = documentType.AddedManually,
+
 
                 };
 
@@ -917,6 +944,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                            AddedManually = a.AddedManually,
+
                                         }).FirstOrDefault();
 
 
@@ -979,6 +1008,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                  IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                  PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                 AddedManually = a.AddedManually,
+
 
                              });
 
@@ -1104,6 +1135,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  SharedDocumentTypeCopyId = a.SharedDocumentTypeCopyId,
                                  IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                  PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                 AddedManually = a.AddedManually,
+
 
                              });
 
@@ -1229,6 +1262,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                           IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                           PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                          AddedManually = a.AddedManually,
+
                                       }).ToList();
             return d;
         }
@@ -1296,6 +1331,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                                            AddedManually = a.AddedManually,
+
 
                                                         }).ToList();
 
@@ -1350,6 +1387,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             SharedDocumentTypeCopyId = a.SharedDocumentTypeCopyId,
                                             IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                             PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                              AddedManually = a.AddedManually,
+
                                           }).FirstOrDefault();
 
 
@@ -1409,6 +1448,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                           IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                           PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                          AddedManually = a.AddedManually,
+
                                       }).Take(4).ToList();
             return d;
         }
@@ -1464,6 +1505,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsInlandDigitalSignRequired = a.IsInlandDigitalSignRequired,
                                           IsSystemAdditionalPrintingFields = a.IsSystemAdditionalPrintingFields,
                                           PrintingFieldsScreenCode = a.PrintingFieldsScreenCode,
+                                          AddedManually = a.AddedManually,
+
                                       }).ToList();
 
             DocumentTypeCopyQuery documentCopiesQuery = new DocumentTypeCopyQuery(tenant);
@@ -1495,6 +1538,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                   SharedDocumentTypeCopyId = a.SharedDocumentTypeCopyId,
                                                                   IsDocIn = a.IsDocIn,
                                                                   IsDocOut = a.IsDocOut,
+                                                                  AddedManually = a.AddedManually,
+
                                                               });
 
             if (shipmentLevelCode == "C") documentTypeLists = documentTypeLists.Where(d => d.IsAgentSharedInMaster || d.IsAgentSharedInHouse);
@@ -1889,6 +1934,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             DocumentTypeDefaultEditorTool = a.DocumentTypeDefaultEditorTool,
                                             DocumentTypeDefaultReportTemplateId = a.DocumentTypeDefaultReportTemplateId,
                                             DocumentTypeDefaultHTMLTemplateId = a.DocumentTypeDefaultHTMLTemplateId,
+                                            AddedManually = a.AddedManually,
+
                                         }).ToList();
             return documentTypeLists;
         }

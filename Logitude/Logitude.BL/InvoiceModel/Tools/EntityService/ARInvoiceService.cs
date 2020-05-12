@@ -1435,7 +1435,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (this.entityPM.SetApproved && string.IsNullOrEmpty(entityPM.TransferError))
             {
-                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
+                if (this.isTransferToDropbox && this.TransferToDropboxActivated)
                 {
                     this.entityPM.TransferStatusCode = "TR";
                 }
@@ -2350,7 +2350,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
                         sumOfVATsAmounts_Local += record.LocalVATAmount;
                         sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
-                        if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS" && (entityPM.StatusCode == "AD" || entityPM.StatusCode == "AC"))
+                        if (IsFullAccountingActivated(entityPM.Tenant) && entityPM.BillToPartnerTypeId == "CS" && (entityPM.StatusCode == "AD" || entityPM.StatusCode == "AC") && record.LocalVATAmount != 0)
                         {
                             CreateInterestTransactionLine(null, record);
                         }

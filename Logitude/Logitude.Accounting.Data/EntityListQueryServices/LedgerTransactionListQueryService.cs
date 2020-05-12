@@ -574,7 +574,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 .Where(rec =>
                 rec.AccountId == AccountId
             && (rec.SourceTypeCode == "5" || rec.SourceTypeCode == "9")
-            && rec.DueDate <= _today
+            && rec.DueDate < _today
             && rec.IsExternalReconcile == false
             && Math.Abs(rec.OpenAmount) == Math.Abs(rec.LocalAmountCredit + rec.LocalAmountDebit)
             )
@@ -844,7 +844,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                    where a.Tenant == tenant
                    && a.AccountId == transferAccountId
                     && (a.SourceTypeCode == "5" || a.SourceTypeCode == "9")
-                  && a.DueDate <= today
+                  && a.DueDate < today
                   && a.IsExternalReconcile == false
                   && Math.Abs(a.OpenAmount) == Math.Abs(a.LocalAmountCredit + a.LocalAmountDebit)
                    select a;

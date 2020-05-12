@@ -84,6 +84,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             shipmentPM.IsDepositionRequired = entity.IsDepositionRequired;
             shipmentPM.IsRequestedDocuments = entity.IsRequestedDocuments;
             shipmentPM.IsDigitalSignRequired = entity.IsDigitalSignRequired;
+            shipmentPM.CreatedFromDigital = entity.CreatedFromDigital;
         }
         private void SaveEntity()
         {
@@ -110,6 +111,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             //entity.ImportDeclarationNumber = shipmentPM.DeclarationNumber;
             entity.NumberOfDeliveries = shipmentPM.ShipmentDeliveries.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).Count();
             entity.LastDocumentDateTime = null;// new DateTime(1900, 1, 1);
+            entity.CreatedFromDigital = shipmentPM.CreatedFromDigital;
         }
         private void MapContainersNumbers()
         {

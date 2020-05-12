@@ -22,7 +22,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.UsingAzure).IsRequired();
             this.Property(t => t.IsLogEnabled).IsRequired();
             this.Property(t => t.ChampEnv).IsRequired().HasMaxLength(20).IsUnicode(false);
-            this.Property(t => t.CustomerCareIP).IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.CustomerCareIP).IsRequired().HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.TotangoServiceId).IsRequired().HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.StorageAccountName).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.StorageType).IsRequired().HasMaxLength(60).IsUnicode(false);

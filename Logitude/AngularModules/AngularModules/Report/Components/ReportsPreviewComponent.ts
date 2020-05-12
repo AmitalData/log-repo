@@ -18,6 +18,7 @@ import { ReportsTemplateListExtendedService } from '../../Common/Services/Extend
 import { QueryFilterItem } from './Filters/QueryFilterItem';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     selector: 'ReportsPreviewComponent',
@@ -58,7 +59,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
+  IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -319,7 +320,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.IsRunReportSucceeded = false;
         this.IsRunReportFailed = false;
 
-        if (!this.Report.ExcelOnly) {
+        if (!this.Report.DisablePreview) {
             this.StartBusyIndicator("Generating...");
             this.ReportFliter = this.FillReportFilter(filter);
             this.ValiditySelectedTemplate();
@@ -394,7 +395,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         filter.DefaultTemplateVsersion = 1;
         filter.UserId = SessionLocator.LoggedUserId;
         filter.ReportId = this.Report.Id;
-        filter.ExcelOnly = this.Report.ExcelOnly;
+        filter.DisablePreview = this.Report.DisablePreview;
 
         if (this.ReportsTemplateLists) {
             var reportTemplate: any = this.ReportsTemplateLists.filter(d => d.Id == filter.DefaultTemplateId)[0];
@@ -522,6 +523,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                 if (result.HasError) {
                                     this.StopBusyIndicator();
                                     var messageWindow = new MessageWindow();
+                                   
+                                    // if(result.ExceptionMessage=='Number of aging months is not set in Full Accounting Settings'){
+                                    //     result.ExceptionMessage= TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet");
+                                    // }
                                     messageWindow.Show(result.ExceptionMessage);
                                 }
                                 else if (result.StatusCode == "D") {

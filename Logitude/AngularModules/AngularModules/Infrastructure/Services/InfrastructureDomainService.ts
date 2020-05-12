@@ -897,4 +897,6 @@ export class Column {
     public Index: number;
     public IsChecked: boolean;
     public DataTypeCode: string; 
+    public FieldCode: string; 
+
 }

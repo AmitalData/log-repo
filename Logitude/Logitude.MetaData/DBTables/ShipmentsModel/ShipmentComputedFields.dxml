@@ -233,6 +233,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CreatedFromDigital"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Shipments"

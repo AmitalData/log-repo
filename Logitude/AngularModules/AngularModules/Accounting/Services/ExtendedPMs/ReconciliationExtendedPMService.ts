@@ -14,14 +14,14 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
- 
+
 @Injectable()
 
 export class ReconciliationExtendedPMService {
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-     
+
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconciliationOp';
     }
@@ -37,7 +37,7 @@ export class ReconciliationExtendedPMService {
                 if(_callBack)
                 {
                     serviceResponse.Result = _callBack;
-                    
+
                 }
                 else
                 {
@@ -46,10 +46,10 @@ export class ReconciliationExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        
+
     }
 
-    delsertDraftLedgerTransaction(transactions: LedgerTransactionPM[]) {
+    delsertDraftLedgerTransaction(transactions: string[]) {
         return this.httpClient .put(this._apiUrl + '/PutDelsertDraftLedgerTransaction/', JSON.stringify(transactions), ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
@@ -58,11 +58,11 @@ export class ReconciliationExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        
+
     }
 
     deleteResetDraftOpenReconciliation(gLAccountId: string) {
-        
+
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
 
@@ -72,11 +72,11 @@ export class ReconciliationExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        
+
     }
 
     getDraftReconciliations(gLAccountId: string) {
-  
+
 
         return this.httpClient.get(this._apiUrl + '/GetDraftReconciliations?gLAccountId=' + gLAccountId, ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
@@ -99,14 +99,14 @@ export class ReconciliationExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        
+
 
 
     }
 
     CreateJournalReconcile(
         myReconciliationLines: ReconciliationLinePM[],
-        
+
         TheAccountId: string, AdjustAccountId: string, AccountDate: string, Ref1: string, Ref2: string, Ref3: string, Remarks: string) {
             return this.httpClient.post(this._apiUrl + "/PostCreateJournalReconcile?"
             + "&TheAccountId=" + TheAccountId
@@ -132,7 +132,7 @@ export class ReconciliationExtendedPMService {
                     return serviceResponse;
                 }),
                 catchError(ServiceHelper.HandleServiceError));
-      
+
 
     }
 
@@ -151,7 +151,7 @@ export class ReconciliationExtendedPMService {
             }),
             catchError(ServiceHelper.HandleServiceError));
 
-        
+
     }
 
     GetSingleWithoutLines(id: string) {
@@ -170,7 +170,7 @@ export class ReconciliationExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-       
+
     }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReconciliationPM = null) {

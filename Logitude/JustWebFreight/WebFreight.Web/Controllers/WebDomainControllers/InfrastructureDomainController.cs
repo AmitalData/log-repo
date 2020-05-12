@@ -1464,6 +1464,30 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                     #endregion
+
+                    #region Warehouse Entry
+                    Counter counter_WE = counterRepository.GetCounterByCode("WAEC", entityId);
+                    if (counter_WE != null)
+                    {
+                        List<CounterStat> counterStat_WE = counterStatRep.GetCounterCounterStats(counter_WE.Id, entityId);
+                        foreach (CounterStat item in counterStat_WE)
+                        {
+                            counterStatRep.Remove(item);
+                        }
+                    }
+                    #endregion
+
+                    #region Warehouse Release
+                    Counter counter_WR = counterRepository.GetCounterByCode("WARC", entityId);
+                    if (counter_WR != null)
+                    {
+                        List<CounterStat> counterStat_WR = counterStatRep.GetCounterCounterStats(counter_WR.Id, entityId);
+                        foreach (CounterStat item in counterStat_WR)
+                        {
+                            counterStatRep.Remove(item);
+                        }
+                    }
+                    #endregion
                 }
 
                 else if (code == "P")
@@ -1749,11 +1773,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 bITabularViewSettings.Columns.Add(new Column
                                 {
                                     Code = item.DisplayName.Replace("[", "").Replace("]", ""),
-                                    Name = item.Name,
+                                    Name = item.DisplayName,
                                     IsChecked = true,
-                                    Width = 150,
+                                    Width = this.GetDefultColumWidthForBIReport(item.DisplayName),
                                     DataTypeCode = item.DataTypeCode,
                                     Index = bITabularViewSettings.Columns.Count == 0 ? 0 : bITabularViewSettings.Columns.Max(a => a.Index) + 1,
+                                    FieldCode = item.Code,
                                 });
                             }
                         }
@@ -1785,10 +1810,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             bITabularViewSettings.Columns.Add(new Column
                             {
                                 Code = item.DisplayName.Replace("[", "").Replace("]", ""),
-                                Name = item.Name,
+                                Name = item.DisplayName,
                                 IsChecked = true,
-                                Width = 150,
+                                Width  = GetDefultColumWidthForBIReport(item.DisplayName.Replace("[", "").Replace("]", "")),
                                 DataTypeCode = item.DataTypeCode,
+                                FieldCode = item.Code,
+
                             });
                         }
                         QueryData.BITabularViewSettings = bITabularViewSettings;
@@ -1813,10 +1840,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         bITabularViewSettings.Columns.Add(new Column
                         {
                             Code = item.DisplayName.Replace("[", "").Replace("]", ""),
-                            Name = item.Name,
+                            Name = item.DisplayName,
                             IsChecked = true,
-                            Width = 150,
+                            Width = GetDefultColumWidthForBIReport(item.DisplayName.Replace("[", "").Replace("]", "")),
                             DataTypeCode = item.DataTypeCode,
+                            FieldCode = item.Code,
+
                         });
                     }
                     QueryData.BITabularViewSettings = bITabularViewSettings;
@@ -1827,6 +1856,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private int GetDefultColumWidthForBIReport(string headerName)
+        {
+            int columWidth = 0;
+            int per =8;
+            foreach(char character in headerName)
+            {
+                columWidth += per;
+            }
+            if (columWidth < 150) columWidth = 150;
+
+            return columWidth;
+
         }
 
         public HttpResponseMessage PutBIReport(BIReportXMLData QueryData)

@@ -36,11 +36,14 @@ export class FieldsHelper {
     }
     WaitByIdAndClick(Id: string) {
         var EC = protractor.ExpectedConditions;
-        this.ItemsPresent(Id);
+        this.ItemsPresentWithOutClick(Id);
+        console.log('Item Presents in Dom');
         this.ItemsVisibility(Id);
+        console.log('Item is Visible');
         browser.wait(EC.elementToBeClickable(element(by.id(Id))), 180000).then(a => {
             element(by.id(Id)).click();
-        });
+            });
+        console.log('Item is Clicked');
     }
     ItemsPresentWithOutClick(Id: string) {
         var EC = protractor.ExpectedConditions;

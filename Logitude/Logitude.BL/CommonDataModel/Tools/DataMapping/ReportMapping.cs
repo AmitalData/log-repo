@@ -26,7 +26,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             report.DefaultTemplateId = reportPM.DefaultTemplateId;
             report.DefaultMessageTemplateId = reportPM.DefaultMessageTemplateId;
             report.FeatureUniqeCode = reportPM.FeatureUniqeCode;
-            report.ExcelOnly = reportPM.ExcelOnly;
+            report.DisablePreview = reportPM.DisablePreview;
 
         }
     }

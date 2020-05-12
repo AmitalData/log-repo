@@ -635,8 +635,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     InterestEntityTypeCode = "2",
                     EntityId = payment.Id,
                     OriginalEntityLineNumber = ++lineNumber,
-                    LocalAmount = (decimal)payment.AmountInLocalCurrency,
-                    ForeignAmount = (decimal?)payment.AmountInPaymentCurrency,
+                    LocalAmount = (decimal)payment.AmountInLocalCurrency *-1,
+                    ForeignAmount = (decimal?)payment.AmountInPaymentCurrency *-1,
                     InterestValueDate = (DateTime)dateForInterest,
                     Tenant = entityPM.Tenant,
                     GLAccountId = account!= null? account.Id:null,
@@ -1605,7 +1605,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (this.entityPM.SetApproved && string.IsNullOrEmpty(entityPM.TransferError))
             {
-                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
+                if (this.isTransferToDropbox && this.TransferToDropboxActivated)
                 {
                     this.entityPM.TransferStatusCode = "TR";
                 }

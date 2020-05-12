@@ -84,7 +84,7 @@
                                                         [LookUpTableName]="'Port'"
                                                         [DataContext]="DataContext"
                                                         (SelectedItemChanged)="OriginPortId"
-                                                        [DisplayMemberPath]="'Code'"
+                                                        [DisplayMemberPath]="PortDisplayMemberPath"
                                                         [SelectedValue]="OriginPortId"
                                                         [DependencyFilter1Value]="OriginDependencyFilterValue">
                                                 </LogLov>
@@ -104,7 +104,7 @@
                                                         [LookUpTableName]="'Port'"
                                                         [DataContext]="DataContext"
                                                         (SelectedItemChanged)="DestinationPortId"
-                                                        [DisplayMemberPath]="'Code'"
+                                                        [DisplayMemberPath]="PortDisplayMemberPath"
                                                         [SelectedValue]="DestinationPortId"
                                                         [DependencyFilter1Value]="DestinationDependencyFilterValue">
                                                 </LogLov>
@@ -495,7 +495,7 @@
                                                                     [LookUpTableName]="'Port'"
                                                                     [DataContext]="DataContext"
                                                                     (SelectedItemChanged)="OriginPortId"
-                                                                    [DisplayMemberPath]="'Code'"
+                                                                    [DisplayMemberPath]="PortDisplayMemberPath"
                                                                     [SelectedValue]="OriginPortId"
                                                                     [DependencyFilter1Value]="OriginDependencyFilterValue">
                                                             </LogLov>
@@ -515,7 +515,7 @@
                                                                     [LookUpTableName]="'Port'"
                                                                     [DataContext]="DataContext"
                                                                     (SelectedItemChanged)="DestinationPortId"
-                                                                    [DisplayMemberPath]="'Code'"
+                                                                    [DisplayMemberPath]="PortDisplayMemberPath"
                                                                     [SelectedValue]="DestinationPortId"
                                                                     [DependencyFilter1Value]="DestinationDependencyFilterValue">
                                                             </LogLov>
@@ -574,6 +574,7 @@
                                                 <div></div>
                                             </td>
                                         </tr>
+
                                         <tr style="height:15px" *ngIf="TariffType == 'OLC' || TariffType == 'AFC'">
                                             <td>
                                                 <table>
@@ -602,7 +603,7 @@
                                             <td>
                                                 <table>
                                                     <tr>
-                                                        <td style="width:120px">
+                                                        <td style="width:100px">
                                                             <LogLabel [NoObjectField]="true" [Text]="'Containers'" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
@@ -713,7 +714,7 @@
                                             <td>
                                                 <table>
                                                     <tr>
-                                                        <td style="width:90px">
+                                                        <td style="width:85px">
                                                             <LogLabel [ObjectFieldName]="'GrossWeight'" [NoObjectField]="true" [Text]="'Gross Weight'" [DataContext]="DataContext"></LogLabel>
                                                         </td>
                                                         <td style="width:30px">
@@ -743,7 +744,7 @@
                                                         <td style="width:25px">
                                                             <div></div>
                                                         </td>
-                                                        <td style="width:80px">
+                                                        <td style="width:70px">
                                                             <LogLabel [ObjectFieldName]="'Volume'" [NoObjectField]="true" [Text]="'Volume'" [DataContext]="DataContext"></LogLabel>
                                                         </td>
                                                         <td style="width:4px">
@@ -806,8 +807,9 @@
 
                                     </table>
                                 </td>
-                                <td style="width: 100px">
-                                    <button class="GreenButton" style="height:60px;font-size:14px;font-weight:bold" (click)="SearchButtonClicked()">Search</button>
+
+                                <td style="width:180px">
+                                    <button class="SearchButton" (click)="SearchButtonClicked()">Search</button>
                                 </td>
                             </tr>
 
@@ -1166,9 +1168,10 @@
                                                                                 </tr>
 
                                                                                 <tr class="FormFieldRow">
-                                                                                    <td (click)="ViewSurchargesClicked(item)">
-                                                                                        <p class="hyperlink">View Tariff</p>
-                                                                                    </td>
+                                                                                  <td>
+                                                                                    <Hyperlink [IsEnabled]="item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length != 0" (click)="ViewSurchargesClicked(item)">View Tariff</Hyperlink>
+                                                                                    <!--<p class="hyperlink" [class.HyperlinkDisabled]="!IsViewSurchargesClickedEnabled">View Tariff</p>-->
+                                                                                  </td>
                                                                                 </tr>
 
                                                                                 <tr>

@@ -72,7 +72,7 @@
   <Column
     Name="PickUpDeliveryNumber"
     Type="varchar"
-    Size="20">
+    Size="25">
     <Constraints
       Nullable="false" />
   </Column>

@@ -9,6 +9,11 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -235,6 +240,8 @@ namespace CommunicationWorkerRole
                         cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
                         communicationLogRep.Update(cl);
                         communicationLogRep.SubmitChanges();
+
+                        this.UpdateEntity(cl);
                     }
 
                 }
@@ -354,6 +361,7 @@ namespace CommunicationWorkerRole
                 communicationLogRep.Update(waitingCommLog);
                 communicationLogRep.SubmitChanges();
 
+                this.UpdateEntity(waitingCommLog);
             }
             else
             {
@@ -363,6 +371,76 @@ namespace CommunicationWorkerRole
 
         #endregion
 
+        private void UpdateEntity(CommunicationLog commLog)
+        {
+            string transferStatus = "TR";
+            if(commLog.CommunicationStatusTypeCode == "F")
+            {
+                transferStatus = "ET";
+            }
+
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
+            ObjectTable objectTable = objectTableRepository.GetSingleObjectTable(commLog.ObjectTableId, 0, false);
+            if(objectTable!= null)
+            {
+                IInvoiceContext invoiceContext = InvoiceContext.GetContext(commLog.Tenant);
+
+                switch(objectTable.Name)
+                {
+                    case "ARInvoice":
+                        {
+                            ARInvoiceRepository repository = new ARInvoiceRepository(invoiceContext);
+                            ARInvoice myEntity = repository.GetSingleARInvoice(commLog.EntityId, commLog.Tenant);
+                            if(myEntity != null)
+                            {
+                                myEntity.TransferStatusCode = transferStatus;
+                                repository.Update(myEntity);
+                                repository.SubmitChanges();
+                            }
+                            break;
+                        }
+
+                    case "APInvoice":
+                        {
+                            APInvoiceRepository repository = new APInvoiceRepository(invoiceContext);
+                            APInvoice myEntity = repository.GetSingleAPInvoice(commLog.EntityId, commLog.Tenant);
+                            if (myEntity != null)
+                            {
+                                myEntity.TransferStatusCode = transferStatus;
+                                repository.Update(myEntity);
+                                repository.SubmitChanges();
+                            }
+                            break;
+                        }
+
+                    case "ARPayment":
+                        {
+                            ARPaymentRepository repository = new ARPaymentRepository(invoiceContext);
+                            ARPayment myEntity = repository.GetSingleARPayment(commLog.EntityId, commLog.Tenant);
+                            if (myEntity != null)
+                            {
+                                myEntity.TransferStatusCode = transferStatus;
+                                repository.Update(myEntity);
+                                repository.SubmitChanges();
+                            }
+                            break;
+                        }
+
+                    case "APPayment":
+                        {
+                            APPaymentRepository repository = new APPaymentRepository(invoiceContext);
+                            APPayment myEntity = repository.GetSingleAPPayment(commLog.EntityId, commLog.Tenant);
+                            if (myEntity != null)
+                            {
+                                myEntity.TransferStatusCode = transferStatus;
+                                repository.Update(myEntity);
+                                repository.SubmitChanges();
+                            }
+                            break;
+                        }
+                }
+            }
+        }
 
         public void ConnectClient()
         {

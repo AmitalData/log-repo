@@ -31,7 +31,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
 
 
-        public bool ExcelOnly { get; set; }
+        public bool DisablePreview { get; set; }
 
 
 

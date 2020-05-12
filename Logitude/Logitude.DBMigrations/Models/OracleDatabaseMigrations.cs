@@ -9,13 +9,14 @@ namespace Logitude.DBMigrations.Models
     {
         protected bool IsDataTypeChangesArgumentProvided;
 
-        public OracleDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName, bool isDataTypeChangesArgumentProvided)
+        public OracleDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName, bool isBasicArgumentProvided, bool isDataTypeChangesArgumentProvided)
         {
             ConnectionString = connectionString;
             DXMLTable = FormatCaseSensitiveNames(dxmlTable);
             DXMLTables = dxmlTables;
             DXMLFileName = dxmlFileName;
             IsDataTypeChangesArgumentProvided = isDataTypeChangesArgumentProvided;
+            IsBasicArgumentProvided = isBasicArgumentProvided;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()

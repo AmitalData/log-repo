@@ -51,14 +51,17 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
      OpacityAreaHTMLDocument: string = "1";
      CountryLists: CountryList[] = [];
      DocumentTypeTemplates: DocumentTypeTemplatePM[];
-
+     IsDisableObjectTable: boolean = false;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, public entityArgs: EntityArgs, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService) {
         super();
         this.myForm = fb.group({});
-       this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+
+
     }
 
     ngOnInit() {
@@ -96,6 +99,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
 
 
     Run() {
+
         this.EntityPM.UIProperties.SetEnabled("Code", "DocumentType", false);
 
         if (this.EntityPM.Code == "SLCIN" || this.EntityPM.Code == "SLCRP") {
@@ -113,6 +117,20 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         else {
             this.IsEnableEdit = true;
         }
+
+
+
+
+
+        if (!this.EntityPM.AddedManually) {
+
+            if (!SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.Tenant != 0) {
+                this.IsDisableObjectTable = true;
+            }
+        } 
+
+
+
 
 
         var tempList: ObjectTablePM[] = [];

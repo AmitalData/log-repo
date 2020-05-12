@@ -32,6 +32,10 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
         this.ReportsPreview = myReportsPreview;
     }
 
+    SetRunReportTitle() {
+        this.RunReportTitle = "Preview";
+    }
+
     GetQueryFilterItems() {
         var queryFilterItems = new Array<QueryFilterItem>();
         var queryFilterItem: QueryFilterItem;

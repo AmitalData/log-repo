@@ -67,7 +67,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);           
             string vatNumber = tenantQuery.GetTenantVatNumber(entityPM.Tenant);         
             entityPM.StatusCode = "6";
-            entityPM.VatNumber = VatNumberModifications(entityPM.VatNumber);
+            entityPM.VatNumber = ModifyVatNumberToValidLength(entityPM.VatNumber);
             string trimmedZeros = entityPM.VatNumber != null ? entityPM.VatNumber.Trim('0') : null;
             bool zerosVatNumber;
             if (entityPM.OutputOrInput == "O")
@@ -218,7 +218,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
             }
-        private string VatNumberModifications(string vatnumber)
+        private string ModifyVatNumberToValidLength(string vatnumber)
         {
             string vatNumber = null;
             if (vatnumber != null ) {

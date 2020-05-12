@@ -29,6 +29,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
         {
             this.args = args;
 
+            this.FixFilters();
+
             dataSourceQuery =
                 (from d in context.Quotes
                  where d.Tenant == tenant
@@ -66,7 +68,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             dataSourceQuery = filter.RunFilter(dataSourceQuery);
             FilterOwner(args.OwnerId);
             FilterBusinessUnit(args.BusinessUnitId);
-            FilterCreateDate(args.FromDate, args.ToDate);
+            FilterCreateDate();
 
             if (args.ChartCode == "QOC")
             {
@@ -74,6 +76,19 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             }
 
             return dataSourceQuery;
+        }
+
+        private void FixFilters()
+        {
+            if(args.FromDate != null)
+            {
+                args.FromDate = args.FromDate.Value.Date;
+            }
+
+            if (args.ToDate != null)
+            {
+                args.ToDate = args.ToDate.Value.Date;
+            }
         }
 
         private IQueryable<Quote> FilterByAcceptedStage()
@@ -87,11 +102,11 @@ namespace Logitude.BL.QuoteModel.EntityQueries.Charts
             return dataSourceQuery;
         }
 
-        private void FilterCreateDate(DateTime? fromDate, DateTime? toDate)
+        private void FilterCreateDate()
         {
-            if (fromDate != null && toDate != null)
+            if (args.FromDate != null && args.ToDate != null)
             {
-                dataSourceQuery = dataSourceQuery.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= fromDate && DbFunctions.TruncateTime(d.OpenDate) <= toDate);
+                dataSourceQuery = dataSourceQuery.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= args.FromDate && DbFunctions.TruncateTime(d.OpenDate) <= args.ToDate);
             }
         }        
 

@@ -43,7 +43,7 @@
   <Column
     Name="EntityReference"
     Type="varchar"
-    Size="20">
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
