@@ -66,7 +66,7 @@ namespace WarehouseDataViews
                         string scriptView = GenerateScriptView(viewName, fieldName, tableCode);
                         scriptView = ConvertFieldsNameToCamelCase(scriptView);
                         ExecuteSql(scriptView, destinationConnectionString); 
-                        // GrantView(viewName, destinationConnectionString);
+                        GrantView(viewName, destinationConnectionString);
                     }
                 }
             }
@@ -93,7 +93,7 @@ namespace WarehouseDataViews
                 scriptView = scriptView.Replace("[Value]", "[Value] as ["+ fieldName + "Value]");
                 scriptView = ConvertFieldsNameToCamelCase(scriptView);
                 ExecuteSql(scriptView, destinationConnectionString);
-                //  GrantView(viewName, destinationConnectionString);
+                GrantView(viewName, destinationConnectionString);
 
             }
 
@@ -108,7 +108,7 @@ namespace WarehouseDataViews
             scriptView = scriptView.Replace(",@CustomFields", customFieldScript);
             scriptView = AppendDatesFieldToFactTable(scriptView);
             ExecuteSql(scriptView, destinationConnectionString);
-            // warehouseViewsService.GrantView("ShipmentView", destinationConnectionString);
+            GrantView("factShipment", destinationConnectionString);
         }
 
         private string AppendDatesFieldToFactTable(string scriptView)

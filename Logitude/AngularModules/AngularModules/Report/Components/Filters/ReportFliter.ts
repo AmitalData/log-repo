@@ -26,7 +26,7 @@ export class ReportFliter {
     ReportId: string;
     NumberOfRequests: number;
     Level: string;
-    ExcelOnly: boolean;
+    DisablePreview: boolean;
 
 
     constructor() {

@@ -17,6 +17,7 @@ export class AutomationTestReportFilterComponent extends BaseComponent {
     public DataContext: AutomationTestReportFilterComponent = this;
     public ObjectTableName: string = "Report";
     public RunReportTitle: string = "Run Report";
+    public IsReportScheduler: boolean = false;
     IsException: boolean = true;
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
 
@@ -25,6 +26,10 @@ export class AutomationTestReportFilterComponent extends BaseComponent {
     }
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
+    }
+
+    SetRunReportTitle() {
+        this.RunReportTitle = "Preview";
     }
 
     GetQueryFilterItems() {
@@ -45,6 +50,7 @@ export class AutomationTestReportFilterComponent extends BaseComponent {
 
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
         this.RunReportTitle = "Preview";
+        this.IsReportScheduler = true;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);

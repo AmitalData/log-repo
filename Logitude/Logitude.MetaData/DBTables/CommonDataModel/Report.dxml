@@ -122,7 +122,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ExcelOnly"
+    Name="DisablePreview"
+    OldNames="ExcelOnly"
     Type="bit">
     <Constraints
       Nullable="false" />

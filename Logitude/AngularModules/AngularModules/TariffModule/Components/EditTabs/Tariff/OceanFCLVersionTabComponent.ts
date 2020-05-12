@@ -323,25 +323,27 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
       this.ItemsCollection.push(new OceanFCLFreightTariffLineData(item, this));
     });
 
-    this.InitializePager();
-    this.FillGridPagerItems();
+    this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
+
+    //this.InitializePager();
+    //this.FillGridPagerItems();
     this.DoCompare();
   }
 
-FillGridPagerItems() {
+//FillGridPagerItems() {
 
-    var items: OceanFCLFreightTariffLineData[] = [];
+//    var items: OceanFCLFreightTariffLineData[] = [];
 
-    if (this.ItemsCollection) {
-      var start = (this.PageIndex - 1) * this.PageSize;
-      var end = start + this.PageSize;
+//    if (this.ItemsCollection) {
+//      var start = (this.PageIndex - 1) * this.PageSize;
+//      var end = start + this.PageSize;
 
-      items = this.ItemsCollection.slice(start, end);
-    }
+//      items = this.ItemsCollection.slice(start, end);
+//    }
 
-    this.TariffsLinesSource.Clear();
-    this.TariffsLinesSource.InsertCollection(items);
-  }
+//    this.TariffsLinesSource.Clear();
+//    this.TariffsLinesSource.InsertCollection(items);
+//  }
 
     private DoCompare() {
         this.DeletedTariffsLines = [];
@@ -778,105 +780,105 @@ FillGridPagerItems() {
   }
 
   //Pager
-  public PageSize: number = 50;
-  public PageIndex: number = 1;
-  public TotalPagesCount: number = 1;
-  InitializePager() {
-    this.PageIndex = 1;
+  //public PageSize: number = 50;
+  //public PageIndex: number = 1;
+  //public TotalPagesCount: number = 1;
+  //InitializePager() {
+  //  this.PageIndex = 1;
 
-    this.TotalPagesCount = Math.ceil(this.ItemsCollection.length / this.PageSize);
+  //  this.TotalPagesCount = Math.ceil(this.ItemsCollection.length / this.PageSize);
 
-    if (this.TotalPagesCount == 0) {
-      this.TotalPagesCount = 1;
-    }
+  //  if (this.TotalPagesCount == 0) {
+  //    this.TotalPagesCount = 1;
+  //  }
 
-    this.SetPagerButtonsStates();
-  }
+  //  this.SetPagerButtonsStates();
+  //}
 
-  FirstPageClick() {
-    this.PageIndex = 1;
-    this.SetPagerButtonsStates();
-    this.FillGridPagerItems();
-  }
-  PreviousPageClick() {
-    this.PageIndex = this.PageIndex - 1;
-    this.SetPagerButtonsStates();
-    this.FillGridPagerItems();
-  }
-  NextPageClick() {
-    this.PageIndex = this.PageIndex + 1;
-    this.SetPagerButtonsStates();
-    this.FillGridPagerItems();
-  }
-  LastPageClick() {
-    this.PageIndex = this.TotalPagesCount;
-    this.SetPagerButtonsStates();
-    this.FillGridPagerItems();
-  }
+  //FirstPageClick() {
+  //  this.PageIndex = 1;
+  //  this.SetPagerButtonsStates();
+  //  this.FillGridPagerItems();
+  //}
+  //PreviousPageClick() {
+  //  this.PageIndex = this.PageIndex - 1;
+  //  this.SetPagerButtonsStates();
+  //  this.FillGridPagerItems();
+  //}
+  //NextPageClick() {
+  //  this.PageIndex = this.PageIndex + 1;
+  //  this.SetPagerButtonsStates();
+  //  this.FillGridPagerItems();
+  //}
+  //LastPageClick() {
+  //  this.PageIndex = this.TotalPagesCount;
+  //  this.SetPagerButtonsStates();
+  //  this.FillGridPagerItems();
+  //}
 
-  private isHitStateFirstButton: boolean = false;
-  get IsHitState_FirstButton() {
-    return this.isHitStateFirstButton;
-  }
-  set IsHitState_FirstButton(value: boolean) {
-    this.isHitStateFirstButton = value;
-  }
+  //private isHitStateFirstButton: boolean = false;
+  //get IsHitState_FirstButton() {
+  //  return this.isHitStateFirstButton;
+  //}
+  //set IsHitState_FirstButton(value: boolean) {
+  //  this.isHitStateFirstButton = value;
+  //}
 
-  private isHitStatePrevButton: boolean = false;
-  get IsHitState_PrevButton() {
-    return this.isHitStatePrevButton;
-  }
-  set IsHitState_PrevButton(value: boolean) {
-    this.isHitStatePrevButton = value;
-  }
+  //private isHitStatePrevButton: boolean = false;
+  //get IsHitState_PrevButton() {
+  //  return this.isHitStatePrevButton;
+  //}
+  //set IsHitState_PrevButton(value: boolean) {
+  //  this.isHitStatePrevButton = value;
+  //}
 
-  private isHitStateNextButton: boolean = false;
-  get IsHitState_NextButton() {
-    return this.isHitStateNextButton;
-  }
-  set IsHitState_NextButton(value: boolean) {
-    this.isHitStateNextButton = value;
-  }
+  //private isHitStateNextButton: boolean = false;
+  //get IsHitState_NextButton() {
+  //  return this.isHitStateNextButton;
+  //}
+  //set IsHitState_NextButton(value: boolean) {
+  //  this.isHitStateNextButton = value;
+  //}
 
-  private isHitStateLastButton: boolean = false;
-  get IsHitState_LastButton() {
-    return this.isHitStateLastButton;
-  }
-  set IsHitState_LastButton(value: boolean) {
-    this.isHitStateLastButton = value;
-  }
+  //private isHitStateLastButton: boolean = false;
+  //get IsHitState_LastButton() {
+  //  return this.isHitStateLastButton;
+  //}
+  //set IsHitState_LastButton(value: boolean) {
+  //  this.isHitStateLastButton = value;
+  //}
 
-   private SetPagerButtonsStates() {
-    if (this.PageIndex == 1 && this.PageIndex == this.TotalPagesCount) {
-      this.IsHitState_FirstButton = false;
-      this.IsHitState_PrevButton = false;
-      this.IsHitState_NextButton = false;
-      this.IsHitState_LastButton = false;
-    }
+  // private SetPagerButtonsStates() {
+  //  if (this.PageIndex == 1 && this.PageIndex == this.TotalPagesCount) {
+  //    this.IsHitState_FirstButton = false;
+  //    this.IsHitState_PrevButton = false;
+  //    this.IsHitState_NextButton = false;
+  //    this.IsHitState_LastButton = false;
+  //  }
 
-    else if (this.PageIndex == 1 && this.PageIndex < this.TotalPagesCount) {
-      this.IsHitState_FirstButton = false;
-      this.IsHitState_PrevButton = false;
+  //  else if (this.PageIndex == 1 && this.PageIndex < this.TotalPagesCount) {
+  //    this.IsHitState_FirstButton = false;
+  //    this.IsHitState_PrevButton = false;
 
-      this.IsHitState_NextButton = true;
-      this.IsHitState_LastButton = true;
-    }
+  //    this.IsHitState_NextButton = true;
+  //    this.IsHitState_LastButton = true;
+  //  }
 
-    else if (this.PageIndex > 1 && this.PageIndex == this.TotalPagesCount) {
-      this.IsHitState_FirstButton = true;
-      this.IsHitState_PrevButton = true;
+  //  else if (this.PageIndex > 1 && this.PageIndex == this.TotalPagesCount) {
+  //    this.IsHitState_FirstButton = true;
+  //    this.IsHitState_PrevButton = true;
 
-      this.IsHitState_NextButton = false;
-      this.IsHitState_LastButton = false;
-    }
+  //    this.IsHitState_NextButton = false;
+  //    this.IsHitState_LastButton = false;
+  //  }
 
-    else if (this.PageIndex > 1 && this.PageIndex < this.TotalPagesCount) {
-      this.IsHitState_FirstButton = true;
-      this.IsHitState_PrevButton = true;
-      this.IsHitState_NextButton = true;
-      this.IsHitState_LastButton = true;
-    }
-  }
+  //  else if (this.PageIndex > 1 && this.PageIndex < this.TotalPagesCount) {
+  //    this.IsHitState_FirstButton = true;
+  //    this.IsHitState_PrevButton = true;
+  //    this.IsHitState_NextButton = true;
+  //    this.IsHitState_LastButton = true;
+  //  }
+  //}
 }
 
 export class VersionClass {

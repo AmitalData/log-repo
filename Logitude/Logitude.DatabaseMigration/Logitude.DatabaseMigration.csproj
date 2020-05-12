@@ -2368,10 +2368,13 @@
 
 
 
+
     <Compile Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs" />
     <Compile Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.Designer.cs">
       <DependentUpon>202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs</DependentUpon>
     </Compile>
+
+
      
     <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.cs" />
     <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.Designer.cs">
@@ -2381,14 +2384,16 @@
     <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.Designer.cs">
       <DependentUpon>202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202005031303293_TaxReportLineTotalInvoiceAmountMigration.cs" />
     <Compile Include="Migrations\202005031303293_TaxReportLineTotalInvoiceAmountMigration.Designer.cs">
       <DependentUpon>202005031303293_TaxReportLineTotalInvoiceAmountMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs" />
+    <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.Designer.cs">
+      <DependentUpon>202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs</DependentUpon>
+    </Compile>
 
 
-     
     <Compile Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.cs" />
     <Compile Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.Designer.cs">
       <DependentUpon>202005061012001_Remove_MinimumInterestInvoiceBilling.cs</DependentUpon>
@@ -2397,10 +2402,16 @@
     <Compile Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.Designer.cs">
       <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
     </Compile>
+ 
+
+    <Compile Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.cs" />
+    <Compile Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.Designer.cs">
+      <DependentUpon>202005070955065_UpdatePickupDeliveryNumberLength.cs</DependentUpon>
+    </Compile>
+
+
 
    
-
-
 
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
@@ -4307,6 +4318,7 @@
     <EmbeddedResource Include="Migrations\202004300503107_ChangeMinmumBillingDataType.resx">
       <DependentUpon>202004300503107_ChangeMinmumBillingDataType.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.resx">
       <DependentUpon>202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -4325,12 +4337,21 @@
     <EmbeddedResource Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.resx">
       <DependentUpon>202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.resx">
       <DependentUpon>202005061012001_Remove_MinimumInterestInvoiceBilling.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.resx">
       <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.resx">
+      <DependentUpon>202005070955065_UpdatePickupDeliveryNumberLength.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.resx">
+      <DependentUpon>202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

@@ -268,7 +268,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                         QuoteId = a.QuoteId,
                         QuoteNumber = a.QuoteNumber,
                         EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
-                        EntityType = a.ObjectTable.Name
+                        EntityType = a.EntityType,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);

@@ -251,7 +251,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
 
     filter.UploadMode = "ImageComponent";
 
-    if (this.EntityName == "Customer") {
+    if (this.EntityName == "Customer" || this.EntityName == "Airline") {
       filter.EntityId = this.EntityId;
       filter.ContactId = null;
       filter.Key = null;

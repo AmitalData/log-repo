@@ -4362,7 +4362,7 @@ User/Pass",
                         }
                         else
                         {
-                            missedStates = missedStates + item.StateCode + ", ";
+                            missedStates = missedStates + "Code/Tenant:" + item.StateCode + "/ " + tenant + ", ";
                         }
                     }
 

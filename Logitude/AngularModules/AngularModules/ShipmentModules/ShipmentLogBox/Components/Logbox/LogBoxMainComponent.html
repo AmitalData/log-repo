@@ -273,7 +273,7 @@
                                         <td>
                                             <div style="height: Calc(100% - 1px);background-color:white;border-radius: 0 0 0 7px;">
                                                 <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'Shipment'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" (rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"
-                                                               [columns]="columns" [autoLoad]="true" [rows]="items" [CustomColumnsReady]="CustomColumnsReady" [SelectFirstRow]="true" (FirstRowSelected)="OnFirstRowSelected($event)"
+                                                               [columns]="columns" [autoLoad]="false" [rows]="items" [CustomColumnsReady]="CustomColumnsReady" [SelectFirstRow]="true" (FirstRowSelected)="OnFirstRowSelected($event)"
                                                                [SearchFieldchangeevent]="SearchFieldchangeevent" [EnableRowHoverVisibility]="true" [RowHoverVisibilityQueryName]="SelectedFilter" (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)" [HoverTemplateIndex]="HoverTemplateIndex">
                                                 </logitude-grid>
                                             </div>
