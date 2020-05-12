@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="Customs.Notifications"
+  Name="Notifications"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
@@ -176,7 +176,7 @@
     ForeignKeyColumn="NotificationDefinitionCode"
     ReferencedTable="NotificationDefinitions"
     ReferencedColumn="Code"
-    ReferencedTableSchema="" />
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="AssigneToId"
     ReferencedTable="Users"
@@ -186,12 +186,12 @@
     ForeignKeyColumn="AssigneToNotificationTypeCode"
     ReferencedTable="AssigneeNotificationTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="" />
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="DeclarationOfficeCode"
     ReferencedTable="CustomsHouseTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="" />
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
@@ -201,7 +201,7 @@
     ForeignKeyColumn="CreatedByRequestID"
     ReferencedTable="CustomsRequestsSheets"
     ReferencedColumn="Id"
-    ReferencedTableSchema="" />
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="DepartmentId"
     ReferencedTable="Departments"

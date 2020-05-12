@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="Customs.CustomsPartnersItems"
+  Name="CustomsPartnersItems"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
@@ -64,10 +64,10 @@
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Clients"
     ReferencedColumn="Id"
-    ReferencedTableSchema="" />
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"
     ReferencedColumn="Id"
-    ReferencedTableSchema="" />
+    ReferencedTableSchema="Customs" />
 </Table>
