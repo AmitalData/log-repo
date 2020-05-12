@@ -2,8 +2,13 @@
 <Table
   Name="AccountingSystemsSyncStatuses"
   Schema="dbo"
-  DBType="Main"
-  Module="Invoice">
+  DBType="Main">
+  <Column
+    Name="LastErrorDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Column
     Name="Id"
     Type="varchar"
@@ -40,12 +45,6 @@
   <Column
     Name="SyncInterval"
     Type="int">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastErrorDate"
-    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>

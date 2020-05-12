@@ -140,7 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -202,7 +202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -265,7 +265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -327,7 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -390,7 +390,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -449,7 +449,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -511,7 +511,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -573,7 +573,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -635,7 +635,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -697,7 +697,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -759,7 +759,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -822,7 +822,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -884,7 +884,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -946,7 +946,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1009,7 +1009,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1071,7 +1071,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1134,7 +1134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1197,7 +1197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1259,7 +1259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1321,7 +1321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1380,7 +1380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1442,7 +1442,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1500,7 +1500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1561,119 +1561,130 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CashBookQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "e691", Name = "CashBook Query Group" }, queryGroupRepository);
-						QueryGroup CashBookQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "165d", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CashBookQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "e691", Name = "CashBook Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CashBookQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "165d", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CashBookObjectTable = objectTables.ContainsKey("CashBook") ? objectTables["CashBook"] : null;
             if (CashBookObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CashBookObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CashBook" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CashBookObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CashBook").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CashBookTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.Q.CashBooks", DefaultText = @"All Cashbooks",LocalDefaultText = "כל הקופות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CashBookFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Q.CashBooks", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.CashBooks", NameTextCodeDefaultText = "CashBooks", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CashBookTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.Q.CashBooks", DefaultText = @"All Cashbooks",LocalDefaultText = "כל הקופות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CashBookFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Q.CashBooks", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.CashBooks", NameTextCodeDefaultText = "CashBooks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CashBookObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CashBookTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.Q.CashbookCash", DefaultText = @"Cash Cashbooks",LocalDefaultText = "מזומן הקופות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CashBookFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Q.CashbookCash", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.CashbookCash", NameTextCodeDefaultText = "CashbookCash", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CashBookTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.Q.CashbookCash", DefaultText = @"Cash Cashbooks",LocalDefaultText = "מזומן הקופות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CashBookFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Q.CashbookCash", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.CashbookCash", NameTextCodeDefaultText = "CashbookCash", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CashBookObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CashBookTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.Q.CashbookCheque", DefaultText = @"Cheque Cashbooks",LocalDefaultText = "המחאה הקופות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CashBookFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Q.CashbookCheque", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.CashbookCheque", NameTextCodeDefaultText = "CashbookCheque", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CashBookTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.Q.CashbookCheque", DefaultText = @"Cheque Cashbooks",LocalDefaultText = "המחאה הקופות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CashBookFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Q.CashbookCheque", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.CashbookCheque", NameTextCodeDefaultText = "CashbookCheque", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CashBookObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CashBooksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_0.Id, NameTextCodeCode = CashBookTextCode_0.Code, ObjectTableName = "CashBook", Code = "CashBooks",  QueryGroupCode = "e691", IndexOrder = 0, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_0.Id,FeatureUniqeCode= CashBookFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query CashBooksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_0.Id, NameTextCodeCode = CashBookTextCode_0.Code, ObjectTableName = "CashBook", Code = "CashBooks",  QueryGroupCode = "e691", IndexOrder = 0, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_0.Id,FeatureUniqeCode= CashBookFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CashBooksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 270 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashBooksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CashBook.LocalName" , ColumnWidth = 270 }, addedQueryColumns);
 
-			 QueryColumn CashBooksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "BranchName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "BranchName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 141 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashBooksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CashBook.BranchName" , ColumnWidth = 141 }, addedQueryColumns);
 
-			 QueryColumn CashBooksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 270 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashBooksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CashBook.EnglishName" , ColumnWidth = 270 }, addedQueryColumns);
 
-			 QueryColumn CashBooksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashBooksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CashBook.CashBookTypeName" , ColumnWidth = 170 }, addedQueryColumns);
 
-			 QueryColumn CashBooksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 157 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashBooksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CashBook.CurrencyCode" , ColumnWidth = 157 }, addedQueryColumns);
 
-			 QueryColumn CashBooksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "TotalAmount" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "TotalAmount" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashBooksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashBooksQuery.Id,QueryCode = CashBooksQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CashBook.TotalAmount" , ColumnWidth = 140 }, addedQueryColumns);
   
 	      
 
-			  Query CashbookCashQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_1.Id, NameTextCodeCode = CashBookTextCode_1.Code, ObjectTableName = "CashBook", Code = "CashbookCash",  QueryGroupCode = "e691", IndexOrder = 1, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_1.Id,FeatureUniqeCode= CashBookFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query CashbookCashQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_1.Id, NameTextCodeCode = CashBookTextCode_1.Code, ObjectTableName = "CashBook", Code = "CashbookCash",  QueryGroupCode = "e691", IndexOrder = 1, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_1.Id,FeatureUniqeCode= CashBookFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CashbookCashQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 261 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookCashQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CashBook.LocalName" , ColumnWidth = 261 }, addedQueryColumns);
 
-			 QueryColumn CashbookCashQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "BranchName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "BranchName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookCashQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CashBook.BranchName" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn CashbookCashQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 293 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookCashQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CashBook.EnglishName" , ColumnWidth = 293 }, addedQueryColumns);
 
-			 QueryColumn CashbookCashQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 183 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookCashQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CashBook.CashBookTypeName" , ColumnWidth = 183 }, addedQueryColumns);
 
-			 QueryColumn CashbookCashQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 153 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookCashQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CashBook.CurrencyCode" , ColumnWidth = 153 }, addedQueryColumns);
 
-			 QueryColumn CashbookCashQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "TotalAmount" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "TotalAmount" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 156 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookCashQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CashBook.TotalAmount" , ColumnWidth = 156 }, addedQueryColumns);
 
-             AdvancedQueryFilter CashbookCashQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "1",PredefinedValue2 = null, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CashbookCashQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CashBook.CashBookTypeCode", PredefinedValue = "1",PredefinedValue2 = null, QueryId = CashbookCashQuery.Id,QueryCode = CashbookCashQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query CashbookChequeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_2.Id, NameTextCodeCode = CashBookTextCode_2.Code, ObjectTableName = "CashBook", Code = "CashbookCheque",  QueryGroupCode = "e691", IndexOrder = 2, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_2.Id,FeatureUniqeCode= CashBookFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query CashbookChequeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CashBookTextCode_2.Id, NameTextCodeCode = CashBookTextCode_2.Code, ObjectTableName = "CashBook", Code = "CashbookCheque",  QueryGroupCode = "e691", IndexOrder = 2, Tenant = 0, ObjectTableId = CashBookObjectTable.Id, QuerySection = "CashBook", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBookFeature_2.Id,FeatureUniqeCode= CashBookFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CashbookChequeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 291 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookChequeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CashBook.LocalName" , ColumnWidth = 291 }, addedQueryColumns);
 
-			 QueryColumn CashbookChequeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "BranchName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "BranchName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookChequeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CashBook.BranchName" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn CashbookChequeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 276 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookChequeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CashBook.EnglishName" , ColumnWidth = 276 }, addedQueryColumns);
 
-			 QueryColumn CashbookChequeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 155 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookChequeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CashBook.CurrencyCode" , ColumnWidth = 155 }, addedQueryColumns);
 
-			 QueryColumn CashbookChequeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 165 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookChequeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CashBook.CashBookTypeCode" , ColumnWidth = 165 }, addedQueryColumns);
 
-			 QueryColumn CashbookChequeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "TotalAmount" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "TotalAmount" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 134 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CashbookChequeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CashBook.TotalAmount" , ColumnWidth = 134 }, addedQueryColumns);
 
-             AdvancedQueryFilter CashbookChequeQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeCode" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "2",PredefinedValue2 = null, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CashbookChequeQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CashBook.CashBookTypeCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = CashbookChequeQuery.Id,QueryCode = CashbookChequeQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
-	   
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CashBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CashBook" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CashBookObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CashBook").ToList();
+		   //List<ObjectField> CashBookObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CashBook").ToList();
 		       
 	      
 
 	         Screen CashBookHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CashBook.HeaderScreen", Name = "HeaderScreen", ObjectTableId = CashBookObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CashBookCashBookHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = "CashBook.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CashBookCashBookHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "AccountName").FirstOrDefault().Id, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "AccountName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = "CashBook.AccountName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CashBookCashBookHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = "CashBook.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CashBookCashBookHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CurrencyCode").FirstOrDefault().Id, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CurrencyCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = "CashBook.CurrencyCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CashBookCashBookHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "TotalAmount").FirstOrDefault().Id, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "TotalAmount").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = "CashBook.TotalAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CashBookCashBookHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "BranchName").FirstOrDefault().Id, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "BranchName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = "CashBook.BranchName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CashBookCashBookHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeName").FirstOrDefault().Id, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = CashBookHeaderScreenScreen0.Id,ScreenCode = CashBookHeaderScreenScreen0.Code, ObjectFieldCode = "CashBook.CashBookTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CashBookObjectTable.HeaderScreenId = CashBookHeaderScreenScreen0.Id;
 		    CashBookObjectTable.HeaderScreenCode = CashBookHeaderScreenScreen0.Code;
@@ -1683,15 +1694,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CashBookGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CashBook.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CashBookObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CashBookCashBookGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeCode").FirstOrDefault().Id, ScreenId = CashBookGeneralTabScreenScreen1.Id,ScreenCode = CashBookGeneralTabScreenScreen1.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CashBookTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CashBookGeneralTabScreenScreen1.Id,ScreenCode = CashBookGeneralTabScreenScreen1.Code, ObjectFieldCode = "CashBook.CashBookTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CashBookCashBookGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = CashBookGeneralTabScreenScreen1.Id,ScreenCode = CashBookGeneralTabScreenScreen1.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CashBookGeneralTabScreenScreen1.Id,ScreenCode = CashBookGeneralTabScreenScreen1.Code, ObjectFieldCode = "CashBook.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CashBookCashBookGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CashBookGeneralTabScreenScreen1.Id,ScreenCode = CashBookGeneralTabScreenScreen1.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CashBookGeneralTabScreenScreen1.Id,ScreenCode = CashBookGeneralTabScreenScreen1.Code, ObjectFieldCode = "CashBook.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CashBookCashBookGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "CurrencyCode").FirstOrDefault().Id, ScreenId = CashBookGeneralTabScreenScreen1.Id,ScreenCode = CashBookGeneralTabScreenScreen1.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "CurrencyCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CashBookGeneralTabScreenScreen1.Id,ScreenCode = CashBookGeneralTabScreenScreen1.Code, ObjectFieldCode = "CashBook.CurrencyCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CashBookCashBookGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CashBookObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = CashBookGeneralTabScreenScreen1.Id,ScreenCode = CashBookGeneralTabScreenScreen1.Code, ObjectFieldCode = CashBookObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CashBookCashBookGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CashBookGeneralTabScreenScreen1.Id,ScreenCode = CashBookGeneralTabScreenScreen1.Code, ObjectFieldCode = "CashBook.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -1702,19 +1713,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable CashBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CashBook" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CashBookDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CashBookDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CashBookDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
  
                  
 			   TextCode CashBookGeneralTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CashBookGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Tab.General", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CashBookGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Tab.General", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
  
                  
 			   TextCode CashBookManageDepoTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.ManageDepo", DefaultText = "Manage Depo.",LocalDefaultText = "ניהול הפקדות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CashBookManageDepoFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MNGDEPO", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.MNGDEPO", NameTextCodeDefaultText = "Manage Depo.", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CashBookManageDepoFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MNGDEPO", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.MNGDEPO", NameTextCodeDefaultText = "Manage Depo.", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
  
                  
 			   TextCode CashBookEventsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CashBookEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Tab.Events", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CashBookEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Tab.Events", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1734,16 +1745,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable CashBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CashBook" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CashBookFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CashBookFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CashBookFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CashBookFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.PackageFeature", NameTextCodeDefaultText = "CashBook Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature CashBookFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CashBookObjectTable);
+		   Feature CashBookFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CashBookObjectTable);
+		   Feature CashBookFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CashBookObjectTable);
+		   Feature CashBookFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.PackageFeature", NameTextCodeDefaultText = "CashBook Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CashBookObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature CashBookFeature_CashbookMenuFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashbookMenuFeature", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.CashbookMenuFeature", NameTextCodeDefaultText = @"Cashbook" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CashBookFeature_CashbookMenuFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashbookMenuFeature", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.CashbookMenuFeature", NameTextCodeDefaultText = @"Cashbook" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CashBookObjectTable);
 
-		   Feature CashBookFeature_MORECASHBOOK = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MORECASHBOOK", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.More", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CashBookFeature_MORECASHBOOK = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MORECASHBOOK", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.More", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CashBookObjectTable);
 
    
 	    
@@ -1870,13 +1881,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable CashBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CashBook" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature CashBookFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DPSTCASHBOOK", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Deposite", NameTextCodeDefaultText = "Deposite", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CashBookFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DPSTCASHBOOK", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Deposite", NameTextCodeDefaultText = "Deposite", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
 
-			   Feature CashBookFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CashBookFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

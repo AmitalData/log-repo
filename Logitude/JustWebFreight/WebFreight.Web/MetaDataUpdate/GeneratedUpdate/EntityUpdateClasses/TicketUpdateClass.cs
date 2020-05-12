@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -194,7 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -255,7 +255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -314,7 +314,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -375,7 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -436,7 +436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -495,7 +495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -553,7 +553,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -612,7 +612,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -671,7 +671,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -730,7 +730,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -789,7 +789,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -849,7 +849,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -910,7 +910,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -970,7 +970,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1030,7 +1030,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1086,7 +1086,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1149,7 +1149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1208,7 +1208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1267,7 +1267,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1326,7 +1326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1385,7 +1385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1444,7 +1444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1504,7 +1504,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1563,7 +1563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1622,7 +1622,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1682,7 +1682,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1744,7 +1744,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1804,7 +1804,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1866,7 +1866,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1928,7 +1928,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1988,7 +1988,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2049,7 +2049,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2108,7 +2108,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2168,7 +2168,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2227,7 +2227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2288,7 +2288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2349,7 +2349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2407,7 +2407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2465,7 +2465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2523,7 +2523,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2581,7 +2581,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2639,7 +2639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2698,7 +2698,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2755,7 +2755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2816,7 +2816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2875,7 +2875,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2936,7 +2936,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2995,7 +2995,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3056,7 +3056,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3115,7 +3115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3174,7 +3174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3230,7 +3230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3287,7 +3287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3346,7 +3346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3405,7 +3405,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3464,7 +3464,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3523,7 +3523,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3582,7 +3582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3641,7 +3641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3698,7 +3698,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3755,7 +3755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3812,7 +3812,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3869,7 +3869,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3928,7 +3928,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3987,7 +3987,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4043,7 +4043,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4103,7 +4103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4160,7 +4160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4217,7 +4217,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4278,7 +4278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4335,7 +4335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4392,7 +4392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4449,7 +4449,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4506,7 +4506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4566,7 +4566,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4626,7 +4626,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4683,7 +4683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4741,7 +4741,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4799,7 +4799,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4860,7 +4860,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4921,7 +4921,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4980,7 +4980,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5039,7 +5039,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5100,7 +5100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5161,7 +5161,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5219,7 +5219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5276,7 +5276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5332,7 +5332,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5388,7 +5388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5444,7 +5444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5500,7 +5500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5556,7 +5556,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5612,7 +5612,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5668,7 +5668,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5724,7 +5724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5780,7 +5780,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5836,7 +5836,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5892,7 +5892,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5948,7 +5948,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6005,7 +6005,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6062,7 +6062,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6119,7 +6119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6176,7 +6176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6235,7 +6235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6292,7 +6292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6351,7 +6351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6407,7 +6407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6463,7 +6463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6519,7 +6519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6575,7 +6575,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6632,7 +6632,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6691,7 +6691,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6750,7 +6750,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6809,7 +6809,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6866,7 +6866,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6927,7 +6927,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6986,7 +6986,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7043,7 +7043,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7103,7 +7103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7162,398 +7162,409 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup TicketQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TKQG", Name = "Ticket" }, queryGroupRepository);
-						QueryGroup TicketQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f200", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup TicketQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TKQG", Name = "Ticket" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup TicketQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f200", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable TicketObjectTable = objectTables.ContainsKey("Ticket") ? objectTables["Ticket"] : null;
             if (TicketObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 TicketObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Ticket" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> TicketObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Ticket").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode TicketTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.AllOpenTickets", DefaultText = @"All Open Tickets",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TicketFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.AllOpenTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.AllOpenTickets", NameTextCodeDefaultText = "All Open Tickets", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TicketTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.AllOpenTickets", DefaultText = @"All Open Tickets",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TicketFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.AllOpenTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.AllOpenTickets", NameTextCodeDefaultText = "All Open Tickets", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TicketObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TicketTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.UnassignedTickets", DefaultText = @"Unassigned Tickets",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TicketFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.UnassignedTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.UnassignedTickets", NameTextCodeDefaultText = "Unassigned Tickets", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TicketTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.UnassignedTickets", DefaultText = @"Unassigned Tickets",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TicketFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.UnassignedTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.UnassignedTickets", NameTextCodeDefaultText = "Unassigned Tickets", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TicketObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TicketTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.AllTickets", DefaultText = @"All Tickets",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TicketFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.AllTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.AllTickets", NameTextCodeDefaultText = "All Tickets", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TicketTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.AllTickets", DefaultText = @"All Tickets",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TicketFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.AllTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.AllTickets", NameTextCodeDefaultText = "All Tickets", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TicketObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TicketTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.SolvedTickets", DefaultText = @"All Solved\Closed Tickets",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TicketFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.SolvedTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SolvedTickets", NameTextCodeDefaultText = "Solved Tickets", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TicketTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.SolvedTickets", DefaultText = @"All Solved\Closed Tickets",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TicketFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.SolvedTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SolvedTickets", NameTextCodeDefaultText = "Solved Tickets", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TicketObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TicketTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.SolvedSLAFailureTickets", DefaultText = @"SLA Solved\Closed Failures",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TicketFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.SolvedSLAFailureTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SolvedSLAFailures", NameTextCodeDefaultText = "Solved with SLA Failures", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TicketTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.SolvedSLAFailureTickets", DefaultText = @"SLA Solved\Closed Failures",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TicketFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.SolvedSLAFailureTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SolvedSLAFailures", NameTextCodeDefaultText = "Solved with SLA Failures", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TicketObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TicketTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.SLAFailureTickets", DefaultText = @"SLA Open Failures",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TicketFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.SLAFailureTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SLAFailures", NameTextCodeDefaultText = "SLA Failures Tickets", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TicketTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.SLAFailureTickets", DefaultText = @"SLA Open Failures",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TicketFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.SLAFailureTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SLAFailures", NameTextCodeDefaultText = "SLA Failures Tickets", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TicketObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TicketTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.AllCancelledTickets", DefaultText = @"Cancelled Tickets",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TicketFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.AllCancelledTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.AllCancelledTickets", NameTextCodeDefaultText = "All Cancelled Tickets", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TicketTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.AllCancelledTickets", DefaultText = @"Cancelled Tickets",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TicketFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.AllCancelledTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.AllCancelledTickets", NameTextCodeDefaultText = "All Cancelled Tickets", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TicketObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TicketTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.RecentlyUpdatedTickets", DefaultText = @"Recently Updated",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TicketFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.RecentlyUpdatedTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.RecentlyUpdated", NameTextCodeDefaultText = "Recently Updated Tickets", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TicketTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.Q.RecentlyUpdatedTickets", DefaultText = @"Recently Updated",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TicketFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Q.RecentlyUpdatedTickets", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.RecentlyUpdated", NameTextCodeDefaultText = "Recently Updated Tickets", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TicketObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllOpenTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_0.Id, NameTextCodeCode = TicketTextCode_0.Code, ObjectTableName = "Ticket", Code = "All Open Tickets",  QueryGroupCode = "TKQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_0.Id,FeatureUniqeCode= TicketFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllOpenTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_0.Id, NameTextCodeCode = TicketTextCode_0.Code, ObjectTableName = "Ticket", Code = "All Open Tickets",  QueryGroupCode = "TKQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_0.Id,FeatureUniqeCode= TicketFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllOpenTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Ticket.TicketNumber" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Ticket.EntityNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Ticket.UpdateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Ticket.CompanyName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Ticket.ContactName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Ticket.IsCancelled" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Ticket.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Ticket.MainClassificationName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Ticket.Subject" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Ticket.StageName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Ticket.TypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Ticket.SeverityName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Ticket.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Ticket.OwnerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 14, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Ticket.TicketFirstResponseTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 15, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Ticket.TicketFirstResolveTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Ticket.CreatedByContactName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 17, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Ticket.RankCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllOpenTicketsQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 18, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenTicketsQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "Ticket.ActivityWatch" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllOpenTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MyAllOpenTickets" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MyAllOpenTickets" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllOpenTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MyAllOpenTickets", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllOpenTicketsQuery.Id,QueryCode = AllOpenTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query UnassignedTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_1.Id, NameTextCodeCode = TicketTextCode_1.Code, ObjectTableName = "Ticket", Code = "Unassigned Tickets",  QueryGroupCode = "TKQG", IndexOrder = 1, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_1.Id,FeatureUniqeCode= TicketFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query UnassignedTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_1.Id, NameTextCodeCode = TicketTextCode_1.Code, ObjectTableName = "Ticket", Code = "Unassigned Tickets",  QueryGroupCode = "TKQG", IndexOrder = 1, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_1.Id,FeatureUniqeCode= TicketFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn UnassignedTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Ticket.TicketNumber" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Ticket.EntityNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Ticket.CompanyName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Ticket.ContactName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Ticket.MainClassificationName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Ticket.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Ticket.Subject" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Ticket.StageName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Ticket.TypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Ticket.SeverityName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Ticket.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Ticket.OwnerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Ticket.TicketFirstResponseTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Ticket.TicketFirstResolveTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 14, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Ticket.CreatedByContactName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 15, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Ticket.RankCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnassignedTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UnassignedTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Ticket.ActivityWatch" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter UnassignedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MyUnassignedTickets" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MyUnassignedTickets" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter UnassignedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MyUnassignedTickets", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnassignedTicketsQuery.Id,QueryCode = UnassignedTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query AllTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_2.Id, NameTextCodeCode = TicketTextCode_2.Code, ObjectTableName = "Ticket", Code = "All Tickets",  QueryGroupCode = "TKQG", IndexOrder = 2, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_2.Id,FeatureUniqeCode= TicketFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_2.Id, NameTextCodeCode = TicketTextCode_2.Code, ObjectTableName = "Ticket", Code = "All Tickets",  QueryGroupCode = "TKQG", IndexOrder = 2, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_2.Id,FeatureUniqeCode= TicketFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Ticket.TicketNumber" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Ticket.EntityNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Ticket.CompanyName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Ticket.ContactName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Ticket.MainClassificationName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Ticket.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Ticket.Subject" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Ticket.StageName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Ticket.TypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Ticket.SeverityName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Ticket.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Ticket.OwnerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Ticket.TicketFirstResponseTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Ticket.TicketFirstResolveTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 14, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Ticket.CreatedByContactName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 15, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Ticket.RankCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketsQuery.Id,QueryCode = AllTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Ticket.ActivityWatch" , ColumnWidth = 130 }, addedQueryColumns);
   
 	      
 
-			  Query SolvedTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_3.Id, NameTextCodeCode = TicketTextCode_3.Code, ObjectTableName = "Ticket", Code = "Solved Tickets",  QueryGroupCode = "TKQG", IndexOrder = 3, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_3.Id,FeatureUniqeCode= TicketFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query SolvedTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_3.Id, NameTextCodeCode = TicketTextCode_3.Code, ObjectTableName = "Ticket", Code = "Solved Tickets",  QueryGroupCode = "TKQG", IndexOrder = 3, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_3.Id,FeatureUniqeCode= TicketFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn SolvedTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Ticket.TicketNumber" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Ticket.EntityNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Ticket.CompanyName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Ticket.ContactName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Ticket.MainClassificationName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Ticket.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Ticket.Subject" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Ticket.StageName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Ticket.TypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Ticket.SeverityName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Ticket.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Ticket.OwnerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Ticket.TicketFirstResponseTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Ticket.TicketFirstResolveTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 14, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Ticket.CreatedByContactName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 15, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Ticket.RankCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SolvedTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Ticket.ActivityWatch" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter SolvedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MySolvedTickets" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MySolvedTickets" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-  
-	      
-
-			  Query SolvedwithSLAFailuresQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_4.Id, NameTextCodeCode = TicketTextCode_4.Code, ObjectTableName = "Ticket", Code = "Solved with SLA Failures",  QueryGroupCode = "TKQG", IndexOrder = 4, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_4.Id,FeatureUniqeCode= TicketFeature_4.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn SolvedwithSLAFailuresQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SolvedwithSLAFailuresQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SolvedwithSLAFailuresQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SolvedwithSLAFailuresQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SolvedwithSLAFailuresQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SolvedwithSLAFailuresQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SolvedwithSLAFailuresQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SolvedwithSLAFailuresQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SolvedwithSLAFailuresQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SolvedwithSLAFailuresQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SolvedwithSLAFailuresQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter SolvedwithSLAFailuresQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MySolvedSLATickets" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MySolvedSLATickets" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter SolvedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MySolvedTickets", PredefinedValue = "true",PredefinedValue2 = null, QueryId = SolvedTicketsQuery.Id,QueryCode = SolvedTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query SLAFailuresQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_5.Id, NameTextCodeCode = TicketTextCode_5.Code, ObjectTableName = "Ticket", Code = "SLA Failures",  QueryGroupCode = "TKQG", IndexOrder = 5, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_5.Id,FeatureUniqeCode= TicketFeature_5.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query SolvedwithSLAFailuresQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_4.Id, NameTextCodeCode = TicketTextCode_4.Code, ObjectTableName = "Ticket", Code = "Solved with SLA Failures",  QueryGroupCode = "TKQG", IndexOrder = 4, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_4.Id,FeatureUniqeCode= TicketFeature_4.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn SLAFailuresQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedwithSLAFailuresQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Ticket.TicketNumber" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn SLAFailuresQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedwithSLAFailuresQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Ticket.EntityNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn SLAFailuresQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedwithSLAFailuresQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Ticket.CompanyName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn SLAFailuresQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedwithSLAFailuresQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Ticket.ContactName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn SLAFailuresQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedwithSLAFailuresQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Ticket.MainClassificationName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SLAFailuresQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedwithSLAFailuresQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Ticket.Subject" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn SLAFailuresQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedwithSLAFailuresQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Ticket.StageName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SLAFailuresQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedwithSLAFailuresQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Ticket.SeverityName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SLAFailuresQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedwithSLAFailuresQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Ticket.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SLAFailuresQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedwithSLAFailuresQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Ticket.TicketFirstResponseTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn SLAFailuresQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SolvedwithSLAFailuresQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Ticket.TicketFirstResolveTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn SLAFailuresQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SLAFailuresQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SLAFailuresQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SLAFailuresQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 14, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SLAFailuresQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 15, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn SLAFailuresQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 16, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter SLAFailuresQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MySLAFailures" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MySLAFailures" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter SolvedwithSLAFailuresQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MySolvedSLATickets", PredefinedValue = "true",PredefinedValue2 = null, QueryId = SolvedwithSLAFailuresQuery.Id,QueryCode = SolvedwithSLAFailuresQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query AllCancelledTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_6.Id, NameTextCodeCode = TicketTextCode_6.Code, ObjectTableName = "Ticket", Code = "All Cancelled Tickets",  QueryGroupCode = "TKQG", IndexOrder = 6, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_6.Id,FeatureUniqeCode= TicketFeature_6.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query SLAFailuresQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_5.Id, NameTextCodeCode = TicketTextCode_5.Code, ObjectTableName = "Ticket", Code = "SLA Failures",  QueryGroupCode = "TKQG", IndexOrder = 5, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_5.Id,FeatureUniqeCode= TicketFeature_5.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCancelledTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Ticket.TicketNumber" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Ticket.EntityNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Ticket.CompanyName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Ticket.ContactName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Ticket.MainClassificationName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Ticket.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Ticket.Subject" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Ticket.StageName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Ticket.TypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TypeName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Ticket.SeverityName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Ticket.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Ticket.OwnerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "OwnerName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Ticket.TicketFirstResponseTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Ticket.TicketFirstResolveTime" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 14, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Ticket.CreatedByContactName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 15, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreatedByContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Ticket.RankCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SLAFailuresQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Ticket.ActivityWatch" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCancelledTicketsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 17, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ActivityWatch" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter AllCancelledTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "IsCancelled" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter SLAFailuresQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MySLAFailures", PredefinedValue = "true",PredefinedValue2 = null, QueryId = SLAFailuresQuery.Id,QueryCode = SLAFailuresQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query RecentlyUpdatedTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_7.Id, NameTextCodeCode = TicketTextCode_7.Code, ObjectTableName = "Ticket", Code = "Recently Updated Tickets",  QueryGroupCode = "TKQG", IndexOrder = 7, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_7.Id,FeatureUniqeCode= TicketFeature_7.FeatureUniqeCode, DefaultSortName = "UpdateDate", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCancelledTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_6.Id, NameTextCodeCode = TicketTextCode_6.Code, ObjectTableName = "Ticket", Code = "All Cancelled Tickets",  QueryGroupCode = "TKQG", IndexOrder = 6, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_6.Id,FeatureUniqeCode= TicketFeature_6.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn RecentlyUpdatedTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCancelledTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Ticket.TicketNumber" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn RecentlyUpdatedTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "EntityNumber" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCancelledTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Ticket.EntityNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn RecentlyUpdatedTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCancelledTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Ticket.CompanyName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn RecentlyUpdatedTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCancelledTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Ticket.IsCancelled" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn RecentlyUpdatedTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCancelledTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Ticket.ContactName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn RecentlyUpdatedTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCancelledTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Ticket.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RecentlyUpdatedTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "StageName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCancelledTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Ticket.MainClassificationName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RecentlyUpdatedTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "SeverityName" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCancelledTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Ticket.Subject" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn RecentlyUpdatedTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCancelledTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Ticket.StageName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RecentlyUpdatedTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCancelledTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Ticket.TypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RecentlyUpdatedTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCancelledTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Ticket.SeverityName" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter RecentlyUpdatedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MyRecentlyUpdatedTickets" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MyRecentlyUpdatedTickets" && d.ObjectTableId == TicketObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+			 QueryColumn AllCancelledTicketsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Ticket.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-	   
+			 QueryColumn AllCancelledTicketsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Ticket.OwnerName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllCancelledTicketsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Ticket.TicketFirstResponseTime" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllCancelledTicketsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Ticket.TicketFirstResolveTime" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn AllCancelledTicketsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Ticket.CreatedByContactName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllCancelledTicketsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Ticket.RankCode" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllCancelledTicketsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Ticket.ActivityWatch" , ColumnWidth = 130 }, addedQueryColumns);
+
+             AdvancedQueryFilter AllCancelledTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllCancelledTicketsQuery.Id,QueryCode = AllCancelledTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query RecentlyUpdatedTicketsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTextCode_7.Id, NameTextCodeCode = TicketTextCode_7.Code, ObjectTableName = "Ticket", Code = "Recently Updated Tickets",  QueryGroupCode = "TKQG", IndexOrder = 7, Tenant = 0, ObjectTableId = TicketObjectTable.Id, QuerySection = "Ticket", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketFeature_7.Id,FeatureUniqeCode= TicketFeature_7.FeatureUniqeCode, DefaultSortName = "UpdateDate", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
+	
+			 QueryColumn RecentlyUpdatedTicketsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Ticket.TicketNumber" , ColumnWidth = 250 }, addedQueryColumns);
+
+			 QueryColumn RecentlyUpdatedTicketsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Ticket.EntityNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn RecentlyUpdatedTicketsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Ticket.CompanyName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn RecentlyUpdatedTicketsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Ticket.ContactName" , ColumnWidth = 180 }, addedQueryColumns);
+
+			 QueryColumn RecentlyUpdatedTicketsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Ticket.MainClassificationName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn RecentlyUpdatedTicketsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Ticket.Subject" , ColumnWidth = 250 }, addedQueryColumns);
+
+			 QueryColumn RecentlyUpdatedTicketsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Ticket.StageName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn RecentlyUpdatedTicketsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Ticket.SeverityName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn RecentlyUpdatedTicketsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Ticket.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn RecentlyUpdatedTicketsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Ticket.TicketFirstResponseTime" , ColumnWidth = 200 }, addedQueryColumns);
+
+			 QueryColumn RecentlyUpdatedTicketsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Ticket.TicketFirstResolveTime" , ColumnWidth = 200 }, addedQueryColumns);
+
+             AdvancedQueryFilter RecentlyUpdatedTicketsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Ticket.MyRecentlyUpdatedTickets", PredefinedValue = "true",PredefinedValue2 = null, QueryId = RecentlyUpdatedTicketsQuery.Id,QueryCode = RecentlyUpdatedTicketsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable TicketObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Ticket" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> TicketObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Ticket").ToList();
+		   //List<ObjectField> TicketObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Ticket").ToList();
 		       
 	      
 
 	         Screen TicketHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Ticket.HeaderScreen", Name = "Header Screen", ObjectTableId = TicketObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TicketTicketHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "Subject").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTicketHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = "Ticket.Subject", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TicketTicketHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "OwnerName").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "OwnerName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTicketHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = "Ticket.OwnerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TicketTicketHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "MainClassificationName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTicketHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = "Ticket.MainClassificationName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TicketTicketHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "SecondaryClassificationName").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "SecondaryClassificationName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTicketHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = "Ticket.SecondaryClassificationName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TicketTicketHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "SeverityName").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "SeverityName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTicketHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = "Ticket.SeverityName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TicketTicketHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "StageName").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "StageName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTicketHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = "Ticket.StageName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TicketTicketHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "ContactTel").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "ContactTel").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTicketHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = "Ticket.ContactTel", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TicketTicketHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "SLAName").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "SLAName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTicketHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = "Ticket.SLAName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TicketTicketHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResponseTime").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTicketHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = "Ticket.TicketFirstResponseTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TicketTicketHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime").FirstOrDefault().Id, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = TicketObjectFields.Where(d => d.FieldName == "TicketFirstResolveTime").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TicketTicketHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = TicketHeaderScreenScreen0.Id,ScreenCode = TicketHeaderScreenScreen0.Code, ObjectFieldCode = "Ticket.TicketFirstResolveTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TicketObjectTable.HeaderScreenId = TicketHeaderScreenScreen0.Id;
 		    TicketObjectTable.HeaderScreenCode = TicketHeaderScreenScreen0.Code;
@@ -7572,39 +7583,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable TicketObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Ticket" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TicketMainTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.TH.Main", DefaultText = "Main",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TicketMainFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.Main", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Main", NameTextCodeDefaultText = "Main", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TicketMainFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.Main", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Main", NameTextCodeDefaultText = "Main", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
  
                  
 			   TextCode TicketOverviewTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.TH.Overview", DefaultText = "Overview",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TicketOverviewFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.Overview", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Overview", NameTextCodeDefaultText = "Overview", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TicketOverviewFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.Overview", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Overview", NameTextCodeDefaultText = "Overview", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
  
                  
 			   TextCode TicketDetailsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.TH.General", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TicketDetailsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.General", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TicketDetailsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.General", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
  
                  
 			   TextCode TicketDocsOutTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TicketDocsOutFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.DocsOut", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TicketDocsOutFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.DocsOut", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
  
                  
 			   TextCode TicketDocsInTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TicketDocsInFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.DocsIn", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TicketDocsInFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.DocsIn", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
  
                  
 			   TextCode TicketTicketEscalationsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.TH.TicketEscalation", DefaultText = "Ticket Escalations",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TicketTicketEscalationsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.TicketEscalation", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketEscalation", NameTextCodeDefaultText = "Ticket Escalation", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TicketTicketEscalationsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.TicketEscalation", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketEscalation", NameTextCodeDefaultText = "Ticket Escalation", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
  
                  
 			   TextCode TicketAuditTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TicketAuditFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.Audit", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Audit", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TicketAuditFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.Audit", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Audit", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
  
                  
 			   TextCode TicketCommunicationTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.TH.Communications", DefaultText = "Communication",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TicketCommunicationFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.Communication", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Communication", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TicketCommunicationFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.Communication", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Communication", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
  
                  
 			   TextCode TicketEventsTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Ticket.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = TicketObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TicketEventsFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.Events", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TicketEventsFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Tab.Events", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -7634,36 +7645,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TicketObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Ticket" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TicketFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TicketFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TicketFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TicketFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.PackageFeature", NameTextCodeDefaultText = "Ticket Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature TicketFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
+		   Feature TicketFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
+		   Feature TicketFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
+		   Feature TicketFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.PackageFeature", NameTextCodeDefaultText = "Ticket Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature TicketFeature_Ticket_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketMenu", NameTextCodeDefaultText = @"Tickets" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_Ticket_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Ticket.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketMenu", NameTextCodeDefaultText = @"Tickets" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
-		   Feature TicketFeature_TicketDashboard_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketDashboard.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketDashboard.Features.TicketMenu", NameTextCodeDefaultText = @"Tickets Dashboard" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_TicketDashboard_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketDashboard.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketDashboard.Features.TicketMenu", NameTextCodeDefaultText = @"Tickets Dashboard" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
-		   Feature TicketFeature_TicketReply = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketReply", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketReply", NameTextCodeDefaultText = @"Reply" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_TicketReply = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketReply", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketReply", NameTextCodeDefaultText = @"Reply" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
-		   Feature TicketFeature_TicketClosure = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketClosure", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketClosure", NameTextCodeDefaultText = @"Closure" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_TicketClosure = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketClosure", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketClosure", NameTextCodeDefaultText = @"Closure" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
-		   Feature TicketFeature_TicketActivities = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketActivities", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketActivities", NameTextCodeDefaultText = @"Activities" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_TicketActivities = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketActivities", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketActivities", NameTextCodeDefaultText = @"Activities" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
-		   Feature TicketFeature_TicketMore = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketMore", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketMore", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_TicketMore = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketMore", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.TicketMore", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
-		   Feature TicketFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Automation", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Automation", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
-		   Feature TicketFeature_SaveAsClosed = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaveAsClosed", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SaveAsClosed", NameTextCodeDefaultText = @"Save As Closed" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_SaveAsClosed = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaveAsClosed", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SaveAsClosed", NameTextCodeDefaultText = @"Save As Closed" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
-		   Feature TicketFeature_SaveAsOpen = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaveAsOpen", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SaveAsOpen", NameTextCodeDefaultText = @"Save As Open" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_SaveAsOpen = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaveAsOpen", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SaveAsOpen", NameTextCodeDefaultText = @"Save As Open" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
-		   Feature TicketFeature_SaveAsResolved = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaveAsResolved", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SaveAsResolved", NameTextCodeDefaultText = @"Save As Resolved" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_SaveAsResolved = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaveAsResolved", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.SaveAsResolved", NameTextCodeDefaultText = @"Save As Resolved" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
-		   Feature TicketFeature_OwnerLicenseUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OwnerLicenseUpdate", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.OwnerLicenseUpdate", NameTextCodeDefaultText = @"Owner License Update" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_OwnerLicenseUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OwnerLicenseUpdate", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.OwnerLicenseUpdate", NameTextCodeDefaultText = @"Owner License Update" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
-		   Feature TicketFeature_More = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "More", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.More", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TicketFeature_More = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "More", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.More", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketObjectTable);
 
    
 	    
@@ -7919,12 +7930,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable TicketObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Ticket" && d.Tenant == 0).FirstOrDefault(); 			   Feature TicketFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Cancel", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature TicketFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Activate", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Copy", NameTextCodeDefaultText = "Active", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature TicketFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Reactivate", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Reactivate", NameTextCodeDefaultText = "Reactivate", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature TicketFeature_MB03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ClosewithoutNotifying", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.ClosewithoutNotifying", NameTextCodeDefaultText = "Close without Notifying", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable TicketObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Ticket" && d.Tenant == 0).FirstOrDefault(); 			   Feature TicketFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Cancel", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
+             			   Feature TicketFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Activate", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Copy", NameTextCodeDefaultText = "Active", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
+             			   Feature TicketFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Reactivate", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.Reactivate", NameTextCodeDefaultText = "Reactivate", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
+             			   Feature TicketFeature_MB03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ClosewithoutNotifying", ObjectTableId = TicketObjectTable.Id, Tenant = 0, NameTextCodeCode = "Ticket.Features.ClosewithoutNotifying", NameTextCodeDefaultText = "Close without Notifying", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

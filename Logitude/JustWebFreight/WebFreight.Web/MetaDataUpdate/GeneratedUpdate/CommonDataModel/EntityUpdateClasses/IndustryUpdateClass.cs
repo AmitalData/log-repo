@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -200,7 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -266,7 +266,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -329,7 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SearchFields",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -393,57 +393,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup IndustryQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "IDST", Name = "Industry" }, queryGroupRepository);
-						QueryGroup IndustryQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7414", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup IndustryQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "IDST", Name = "Industry" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup IndustryQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7414", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable IndustryObjectTable = objectTables.ContainsKey("Industry") ? objectTables["Industry"] : null;
             if (IndustryObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 IndustryObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Industry" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> IndustryObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Industry").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode IndustryTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.Q.AllIndustries", DefaultText = @"All Industries",LocalDefaultText = null, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature IndustryFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLINDUSTRIES", ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.AllIndustries", NameTextCodeDefaultText = "All Industries", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode IndustryTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.Q.AllIndustries", DefaultText = @"All Industries",LocalDefaultText = null, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature IndustryFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLINDUSTRIES", ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.AllIndustries", NameTextCodeDefaultText = "All Industries", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,IndustryObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllLeadSourcesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IndustryTextCode_0.Id, NameTextCodeCode = IndustryTextCode_0.Code, ObjectTableName = "Industry", Code = "All Lead Sources",  QueryGroupCode = "IDST", IndexOrder = 0, Tenant = 0, ObjectTableId = IndustryObjectTable.Id, QuerySection = "Industry", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = IndustryFeature_0.Id,FeatureUniqeCode= IndustryFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllLeadSourcesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = IndustryTextCode_0.Id, NameTextCodeCode = IndustryTextCode_0.Code, ObjectTableName = "Industry", Code = "All Lead Sources",  QueryGroupCode = "IDST", IndexOrder = 0, Tenant = 0, ObjectTableId = IndustryObjectTable.Id, QuerySection = "Industry", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = IndustryFeature_0.Id,FeatureUniqeCode= IndustryFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllLeadSourcesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == IndustryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == IndustryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLeadSourcesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Industry.Code" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllLeadSourcesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == IndustryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == IndustryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLeadSourcesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Industry.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllLeadSourcesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == IndustryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == IndustryObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllLeadSourcesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLeadSourcesQuery.Id,QueryCode = AllLeadSourcesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Industry.InActive" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable IndustryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Industry" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> IndustryObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Industry").ToList();
+		   //List<ObjectField> IndustryObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Industry").ToList();
 		       
 	      
 
 	         Screen IndustryHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Industry.HeaderScreen", Name = "Header Screen", ObjectTableId = IndustryObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField IndustryIndustryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IndustryHeaderScreenScreen0.Id,ScreenCode = IndustryHeaderScreenScreen0.Code, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = IndustryHeaderScreenScreen0.Id,ScreenCode = IndustryHeaderScreenScreen0.Code, ObjectFieldCode = "Industry.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IndustryIndustryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IndustryHeaderScreenScreen0.Id,ScreenCode = IndustryHeaderScreenScreen0.Code, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = IndustryHeaderScreenScreen0.Id,ScreenCode = IndustryHeaderScreenScreen0.Code, ObjectFieldCode = "Industry.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    IndustryObjectTable.HeaderScreenId = IndustryHeaderScreenScreen0.Id;
 		    IndustryObjectTable.HeaderScreenCode = IndustryHeaderScreenScreen0.Code;
@@ -453,11 +464,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen IndustryGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Industry.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = IndustryObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField IndustryIndustryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = "Industry.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IndustryIndustryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = "Industry.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IndustryIndustryGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = IndustryGeneralTabScreenScreen1.Id,ScreenCode = IndustryGeneralTabScreenScreen1.Code, ObjectFieldCode = "Industry.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -468,11 +479,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable IndustryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Industry" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode IndustryGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature IndustryGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Industry.Tab.General", ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature IndustryGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Industry.Tab.General", ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,IndustryObjectTable);
  
                  
 			   TextCode IndustryEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature IndustryEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Industry.Tab.Events", ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature IndustryEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Industry.Tab.Events", ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,IndustryObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -488,10 +499,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable IndustryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Industry" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature IndustryFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature IndustryFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature IndustryFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature IndustryFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.PackageFeature", NameTextCodeDefaultText = "Industry Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature IndustryFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,IndustryObjectTable);
+		   Feature IndustryFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,IndustryObjectTable);
+		   Feature IndustryFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,IndustryObjectTable);
+		   Feature IndustryFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Industry.Features.PackageFeature", NameTextCodeDefaultText = "Industry Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,IndustryObjectTable);    
 	    
 		}
 

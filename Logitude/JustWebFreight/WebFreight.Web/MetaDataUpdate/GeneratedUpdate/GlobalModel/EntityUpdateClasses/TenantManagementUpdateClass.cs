@@ -134,7 +134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -199,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "EnableBranding",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -264,7 +264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TrialStartDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -329,7 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TrialEndDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -393,7 +393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ProductionEndDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -458,7 +458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PaidUntilDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -522,7 +522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsTrial",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -586,7 +586,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "NumberOfUsers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -650,7 +650,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -714,7 +714,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CountryName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -776,7 +776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TimeZone",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -840,7 +840,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -902,7 +902,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "GlobalDBId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -966,7 +966,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1030,7 +1030,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "FreeUsers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1091,7 +1091,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1152,7 +1152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapCRMContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1213,7 +1213,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapEAWBContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1274,7 +1274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapEAWBSContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1335,7 +1335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapOneTimeContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1399,7 +1399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsRecurring",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1463,7 +1463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LicensePrice",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1525,7 +1525,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ActiveTrail",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1587,7 +1587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PayingCustomers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1651,7 +1651,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Notes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1715,7 +1715,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastFWBSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1779,7 +1779,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastFHLSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1843,7 +1843,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "StatisticsUpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1907,7 +1907,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShipmentLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1971,7 +1971,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShipmentTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2035,7 +2035,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShipmentTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2099,7 +2099,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "QuoteLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2163,7 +2163,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "QuoteTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2227,7 +2227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "QuoteTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2291,7 +2291,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ARInvoiceLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2355,7 +2355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ARInvoiceTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2419,7 +2419,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ARInvoiceTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2483,7 +2483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "APInvoiceLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2547,7 +2547,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "APInvoiceTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2611,7 +2611,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "APInvoiceTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2675,7 +2675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CustomerLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2739,7 +2739,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CustomerTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2803,7 +2803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CustomerTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2865,7 +2865,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "NotRecuringTenants",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2930,7 +2930,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastLoginDateTime",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2994,7 +2994,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3058,7 +3058,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "UpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3120,7 +3120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "MainContract",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3183,7 +3183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TemporalStartDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3246,7 +3246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TemporalEndDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3311,7 +3311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "FirstPaymentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3373,7 +3373,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsAWBStockPrepaid",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3437,7 +3437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ManageLicencesPerUser",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3499,7 +3499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsCargonautEnabled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3563,7 +3563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsSystemSupportEnabled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3627,7 +3627,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsDistributorSupportEnabled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3689,7 +3689,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsEAWBOnlyDemo",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3751,7 +3751,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsRestrictedByAirline",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3813,7 +3813,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ManagesRegisteredAgent",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3877,7 +3877,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastFFRSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3941,7 +3941,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "OpportunityLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4005,7 +4005,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "OpportunityTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4069,7 +4069,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "OpportunityTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4133,7 +4133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ActivityLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4197,7 +4197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ActivityTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4261,7 +4261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ActivityTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4325,7 +4325,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "FSRLastSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4389,7 +4389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "FSULastReceivedDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4453,7 +4453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "FSALastReceivedDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4517,7 +4517,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ResellerCommission",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4581,7 +4581,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BillingByLogitude",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4643,7 +4643,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsDEXXConnectionEnabled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4707,7 +4707,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastFHLCargonautSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4771,7 +4771,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastFWBCargonautSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4835,7 +4835,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PaymentFailure",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4900,7 +4900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "SuspendDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4962,7 +4962,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "InternalNotes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5024,7 +5024,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapAccount",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5086,7 +5086,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PIMA",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5148,7 +5148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "SignupRequestRecipients",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5210,7 +5210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LoginPageNotes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5272,7 +5272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TenantConnectedToAirlineCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5334,7 +5334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "SupportActivated",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5396,7 +5396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "SupportEmail",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5458,7 +5458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsMultiPackage",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5522,7 +5522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Id",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5586,7 +5586,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5651,7 +5651,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PackageCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5713,7 +5713,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TemporalPackageCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5775,7 +5775,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "RecurringPeriodCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5838,7 +5838,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PaymentMethodCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5901,7 +5901,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PaymentChannelCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5966,7 +5966,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PaymentCurrencyCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6031,7 +6031,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "DistributorCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6095,7 +6095,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Technology",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6159,7 +6159,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapCRMContractId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6223,7 +6223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapEAWBContractId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6287,7 +6287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapEAWBSContractId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6350,7 +6350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapOneTimeContractId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6414,7 +6414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapContractId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6477,7 +6477,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "AWBMessagesCCSTypeCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6540,7 +6540,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TenantTypeCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6605,7 +6605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "HideSharedlogistics",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6676,7 +6676,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6744,7 +6744,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6808,7 +6808,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "SilverlightEndDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6872,7 +6872,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "AgentSharedLogisticsStatisticsLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6936,7 +6936,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "AgentSharedLogisticsStatisticsLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7000,7 +7000,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "AgentSharedLogisticsStatisticsLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7064,7 +7064,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PackageName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7128,7 +7128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "MobileLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7192,7 +7192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "MobileTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7256,7 +7256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "MobileTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7320,7 +7320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShardLogisticLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7384,7 +7384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShardLogisticTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7448,7 +7448,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShardLogisticTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7512,7 +7512,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "RequestedAirlines",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7576,7 +7576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "RegisteredAirlines",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7640,7 +7640,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PendingAirlines",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7702,7 +7702,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PrivateLabelId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7766,7 +7766,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsParentTenant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7828,7 +7828,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ParentTenantId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7890,7 +7890,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ChangeHeaderColor",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7947,7 +7947,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8007,7 +8007,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8065,7 +8065,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8123,7 +8123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8183,7 +8183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8240,7 +8240,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8299,7 +8299,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8357,7 +8357,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8419,7 +8419,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8475,7 +8475,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8534,7 +8534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8591,7 +8591,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8650,7 +8650,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8709,201 +8709,212 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup TenantManagementQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TNTS", Name = "Tenants" }, queryGroupRepository);
-						QueryGroup TenantManagementQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "678c", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup TenantManagementQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TNTS", Name = "Tenants" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup TenantManagementQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "678c", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable TenantManagementObjectTable = objectTables.ContainsKey("TenantManagement") ? objectTables["TenantManagement"] : null;
             if (TenantManagementObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 TenantManagementObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> TenantManagementObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TenantManagement").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode TenantManagementTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.AllTenants", DefaultText = @"All Tenant Managements",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTENANTMGS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.AllTenantManagements", NameTextCodeDefaultText = "All Tenant Managements", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TenantManagementTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.AllTenants", DefaultText = @"All Tenant Managements",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TenantManagementFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTENANTMGS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.AllTenantManagements", NameTextCodeDefaultText = "All Tenant Managements", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TenantManagementObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TenantManagementTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.InactiveTenants", DefaultText = @"Inactive Tenant Managements",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACTIVETENANTMGS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.InactiveTenantManagements", NameTextCodeDefaultText = "Inactive Tenant Managements", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TenantManagementTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.InactiveTenants", DefaultText = @"Inactive Tenant Managements",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TenantManagementFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACTIVETENANTMGS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.InactiveTenantManagements", NameTextCodeDefaultText = "Inactive Tenant Managements", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TenantManagementObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TenantManagementTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.TrialTenantManagements", DefaultText = @"Trial Tenant Managements",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRAILTENANTMGS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.TrailTenantManagements", NameTextCodeDefaultText = "Trail Tenant Managements", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TenantManagementTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.TrialTenantManagements", DefaultText = @"Trial Tenant Managements",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TenantManagementFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRAILTENANTMGS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.TrailTenantManagements", NameTextCodeDefaultText = "Trail Tenant Managements", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TenantManagementObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TenantManagementTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.PayingCustomers", DefaultText = @"Paying Customers",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYINGTENANTMGS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.PayingTenantManagements", NameTextCodeDefaultText = "Paying Tenant Managements", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TenantManagementTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.PayingCustomers", DefaultText = @"Paying Customers",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TenantManagementFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYINGTENANTMGS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.PayingTenantManagements", NameTextCodeDefaultText = "Paying Tenant Managements", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TenantManagementObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode TenantManagementTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.NotRecuringTenants", DefaultText = @"Not Recuring Tenant Managements",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTRECURRINGTENANTS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.NotRecurringTenantManagements", NameTextCodeDefaultText = "Not Recurring Tenant Managements", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TenantManagementTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.NotRecuringTenants", DefaultText = @"Not Recuring Tenant Managements",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TenantManagementFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTRECURRINGTENANTS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.NotRecurringTenantManagements", NameTextCodeDefaultText = "Not Recurring Tenant Managements", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TenantManagementObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_0.Id, NameTextCodeCode = TenantManagementTextCode_0.Code, ObjectTableName = "TenantManagement", Code = "All Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 0, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_0.Id,FeatureUniqeCode= TenantManagementFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_0.Id, NameTextCodeCode = TenantManagementTextCode_0.Code, ObjectTableName = "TenantManagement", Code = "All Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 0, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_0.Id,FeatureUniqeCode= TenantManagementFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TenantManagement.Id" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TenantManagement.Name" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TenantManagement.PackageCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TenantManagement.PackageName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TenantManagement.IsActive" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "TenantManagement.NumberOfUsers" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "TenantManagement.IsTrial" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "TenantManagement.TrialStartDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "TenantManagement.TrialEndDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "TenantManagement.FirstPaymentDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "TenantManagement.PaidUntilDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllTenantManagementsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTenantManagementsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTenantManagementsQuery.Id,QueryCode = AllTenantManagementsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "TenantManagement.TTY" , ColumnWidth = 130 }, addedQueryColumns);
   
 	      
 
-			  Query InactiveTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_1.Id, NameTextCodeCode = TenantManagementTextCode_1.Code, ObjectTableName = "TenantManagement", Code = "Inactive Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 1, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_1.Id,FeatureUniqeCode= TenantManagementFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query InactiveTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_1.Id, NameTextCodeCode = TenantManagementTextCode_1.Code, ObjectTableName = "TenantManagement", Code = "Inactive Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 1, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_1.Id,FeatureUniqeCode= TenantManagementFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn InactiveTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TenantManagement.Id" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TenantManagement.Name" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TenantManagement.PackageCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TenantManagement.PackageName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TenantManagement.IsActive" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "TenantManagement.NumberOfUsers" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "TenantManagement.IsTrial" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "TenantManagement.TrialStartDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "TenantManagement.TrialEndDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "TenantManagement.FirstPaymentDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "TenantManagement.PaidUntilDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InactiveTenantManagementsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InactiveTenantManagementsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "TenantManagement.TTY" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter InactiveTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
-
-  
-	      
-
-			  Query TrialTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_2.Id, NameTextCodeCode = TenantManagementTextCode_2.Code, ObjectTableName = "TenantManagement", Code = "Trial Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 2, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_2.Id,FeatureUniqeCode= TenantManagementFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn TrialTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsTrial" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialStartDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn TrialTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-
-             AdvancedQueryFilter TrialTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "ActiveTrail" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "ActiveTrail" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.IsActive", PredefinedValue = "false",PredefinedValue2 = null, QueryId = InactiveTenantManagementsQuery.Id,QueryCode = InactiveTenantManagementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query PayingTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_3.Id, NameTextCodeCode = TenantManagementTextCode_3.Code, ObjectTableName = "TenantManagement", Code = "Paying Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 3, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_3.Id,FeatureUniqeCode= TenantManagementFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query TrialTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_2.Id, NameTextCodeCode = TenantManagementTextCode_2.Code, ObjectTableName = "TenantManagement", Code = "Trial Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 2, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_2.Id,FeatureUniqeCode= TenantManagementFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PayingTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TenantManagement.Id" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TenantManagement.Name" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TenantManagement.PackageCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TenantManagement.PackageName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TenantManagement.IsActive" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "TenantManagement.NumberOfUsers" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "TenantManagement.IsTrial" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "TenantManagement.TrialStartDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PayingTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn TrialTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "TenantManagement.TrialEndDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter PayingTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PayingCustomers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PayingCustomers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TrialTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.ActiveTrail", PredefinedValue = "false",PredefinedValue2 = null, QueryId = TrialTenantManagementsQuery.Id,QueryCode = TrialTenantManagementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query NotRecuringTenantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_4.Id, NameTextCodeCode = TenantManagementTextCode_4.Code, ObjectTableName = "TenantManagement", Code = "Not Recuring Tenants",  QueryGroupCode = "TNTS", IndexOrder = 4, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_4.Id,FeatureUniqeCode= TenantManagementFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query PayingTenantManagementsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_3.Id, NameTextCodeCode = TenantManagementTextCode_3.Code, ObjectTableName = "TenantManagement", Code = "Paying Tenant Managements",  QueryGroupCode = "TNTS", IndexOrder = 3, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_3.Id,FeatureUniqeCode= TenantManagementFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn NotRecuringTenantsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TenantManagement.Id" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TenantManagement.Name" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageCode" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TenantManagement.PackageCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PackageName" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TenantManagement.PackageName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TenantManagement.IsActive" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "TenantManagement.NumberOfUsers" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "FirstPaymentDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "TenantManagement.FirstPaymentDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "PaidUntilDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "TenantManagement.PaidUntilDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn NotRecuringTenantsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PayingTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "TenantManagement.IsRecurring" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter NotRecuringTenantsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NotRecuringTenants" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "NotRecuringTenants" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter PayingTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.PayingCustomers", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PayingTenantManagementsQuery.Id,QueryCode = PayingTenantManagementsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
-	   
+  
+	      
+
+			  Query NotRecuringTenantsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagementTextCode_4.Id, NameTextCodeCode = TenantManagementTextCode_4.Code, ObjectTableName = "TenantManagement", Code = "Not Recuring Tenants",  QueryGroupCode = "TNTS", IndexOrder = 4, Tenant = 0, ObjectTableId = TenantManagementObjectTable.Id, QuerySection = "TenantManagement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TenantManagementFeature_4.Id,FeatureUniqeCode= TenantManagementFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+	
+			 QueryColumn NotRecuringTenantsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TenantManagement.Id" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TenantManagement.Name" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TenantManagement.PackageCode" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TenantManagement.PackageName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TenantManagement.IsActive" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "TenantManagement.NumberOfUsers" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "TenantManagement.FirstPaymentDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "TenantManagement.PaidUntilDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn NotRecuringTenantsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "TenantManagement.IsRecurring" , ColumnWidth = 130 }, addedQueryColumns);
+
+             AdvancedQueryFilter NotRecuringTenantsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TenantManagement.NotRecuringTenants", PredefinedValue = "false",PredefinedValue2 = null, QueryId = NotRecuringTenantsQuery.Id,QueryCode = NotRecuringTenantsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable TenantManagementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> TenantManagementObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TenantManagement").ToList();
+		   //List<ObjectField> TenantManagementObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TenantManagement").ToList();
 		       
 	      
 
 	         Screen TenantManagementHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TenantManagement.HeaderScreen", Name = "Header Screen", ObjectTableId = TenantManagementObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Id").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TenantManagementTenantManagementHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.Id", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TenantManagementTenantManagementHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TimeZone").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "TimeZone").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TenantManagementTenantManagementHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.TimeZone", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TenantManagementTenantManagementHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "GlobalDBId").FirstOrDefault().Id, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = TenantManagementObjectFields.Where(d => d.FieldName == "GlobalDBId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TenantManagementTenantManagementHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = TenantManagementHeaderScreenScreen0.Id,ScreenCode = TenantManagementHeaderScreenScreen0.Code, ObjectFieldCode = "TenantManagement.GlobalDBId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TenantManagementObjectTable.HeaderScreenId = TenantManagementHeaderScreenScreen0.Id;
 		    TenantManagementObjectTable.HeaderScreenCode = TenantManagementHeaderScreenScreen0.Code;
@@ -8918,35 +8929,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   ObjectTable TenantManagementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TenantManagementGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TenantManagementGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
 			   TextCode TenantManagementCCSSettingsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.CCSSettings", DefaultText = "CCS Settings",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementCCSSettingsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CCSSettings", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.CCSSettings", NameTextCodeDefaultText = "CCS Settings", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TenantManagementCCSSettingsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CCSSettings", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.CCSSettings", NameTextCodeDefaultText = "CCS Settings", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
 			   TextCode TenantManagementStatisticsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Statistics", DefaultText = "Statistics",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementStatisticsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Statistics", NameTextCodeDefaultText = "Statistics", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TenantManagementStatisticsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Statistics", NameTextCodeDefaultText = "Statistics", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
 			   TextCode TenantManagementAWBMessagingStockTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.AWBMessagingStock", DefaultText = "AWB Messaging Stock",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementAWBMessagingStockFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWB.MESSAGING.STOCK", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.AWBMessagingStock", NameTextCodeDefaultText = "AWB messaging Stock", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TenantManagementAWBMessagingStockFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWB.MESSAGING.STOCK", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.AWBMessagingStock", NameTextCodeDefaultText = "AWB messaging Stock", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
 			   TextCode TenantManagementSupportTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Support", DefaultText = "Support",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementSupportFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Support", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Support", NameTextCodeDefaultText = "Support", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TenantManagementSupportFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Support", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Support", NameTextCodeDefaultText = "Support", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
 			   TextCode TenantManagementBrandingTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Branding", DefaultText = "Branding",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementBrandingFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Branding", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Branding", NameTextCodeDefaultText = "Branding", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TenantManagementBrandingFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Branding", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Branding", NameTextCodeDefaultText = "Branding", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
 			   TextCode TenantManagementEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TenantManagementEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
  
                  
 			   TextCode TenantManagementConnectedAirlinesTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.TH.ConnectedAirlines", DefaultText = "Connected Airlines",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TenantManagementConnectedAirlinesFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONNECTEDAIRLINES", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.ConnectedAirlines", NameTextCodeDefaultText = "Connected Airlines", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TenantManagementConnectedAirlinesFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONNECTEDAIRLINES", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.ConnectedAirlines", NameTextCodeDefaultText = "Connected Airlines", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -8974,16 +8985,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    {  
 		   ObjectTable TenantManagementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TenantManagementFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TenantManagementFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TenantManagementFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TenantManagementFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.PackageFeature", NameTextCodeDefaultText = "TenantManagement Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature TenantManagementFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TenantManagementObjectTable);
+		   Feature TenantManagementFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TenantManagementObjectTable);
+		   Feature TenantManagementFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TenantManagementObjectTable);
+		   Feature TenantManagementFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.PackageFeature", NameTextCodeDefaultText = "TenantManagement Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TenantManagementObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature TenantManagementFeature_SYSDISENABLED = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SYSDISENABLED", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.SysDisEnabled", NameTextCodeDefaultText = @"System & Distributor Support" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TenantManagementFeature_SYSDISENABLED = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SYSDISENABLED", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.SysDisEnabled", NameTextCodeDefaultText = @"System & Distributor Support" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TenantManagementObjectTable);
 
-		   Feature TenantManagementFeature_EnableTenantManagementEdit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableTenantManagementEdit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.EnableTenantManagementEdit", NameTextCodeDefaultText = @"Enable Tenant Management Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TenantManagementFeature_EnableTenantManagementEdit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableTenantManagementEdit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.EnableTenantManagementEdit", NameTextCodeDefaultText = @"Enable Tenant Management Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TenantManagementObjectTable);
 
    
 	    
@@ -9300,11 +9311,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable TenantManagementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature TenantManagementFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TenantManagement.Action.EraseData", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.EraseData", NameTextCodeDefaultText = "Erase Data", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TenantManagementFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TenantManagement.Action.EraseData", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.EraseData", NameTextCodeDefaultText = "Erase Data", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TenantManagementObjectTable);
 
  
 

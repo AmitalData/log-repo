@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -206,7 +206,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -268,7 +268,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -332,7 +332,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "EnglishName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -395,7 +395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -456,7 +456,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ComputedLocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -516,7 +516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Remark",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -579,7 +579,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -635,7 +635,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -699,7 +699,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ExternalId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -764,7 +764,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -826,7 +826,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "INTTRAId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -889,7 +889,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "INTTRAContactId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -951,7 +951,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "INTTRAAlias",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1007,7 +1007,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1065,7 +1065,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1123,67 +1123,78 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup BranchQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BRCH", Name = "Branches" }, queryGroupRepository);
-						QueryGroup BranchQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d5b2", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup BranchQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BRCH", Name = "Branches" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup BranchQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d5b2", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable BranchObjectTable = objectTables.ContainsKey("Branch") ? objectTables["Branch"] : null;
             if (BranchObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 BranchObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Branch" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> BranchObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Branch").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode BranchTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.Q.Branches", DefaultText = @"Branches",LocalDefaultText = null, ObjectTableId = BranchObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BranchFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BRANCHES", ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.Branches", NameTextCodeDefaultText = "Branches", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BranchTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.Q.Branches", DefaultText = @"Branches",LocalDefaultText = null, ObjectTableId = BranchObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature BranchFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BRANCHES", ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.Branches", NameTextCodeDefaultText = "Branches", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,BranchObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query BranchesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BranchTextCode_0.Id, NameTextCodeCode = BranchTextCode_0.Code, ObjectTableName = "Branch", Code = "Branches",  QueryGroupCode = "BRCH", IndexOrder = 0, Tenant = 0, ObjectTableId = BranchObjectTable.Id, QuerySection = "Branch", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BranchFeature_0.Id,FeatureUniqeCode= BranchFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query BranchesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BranchTextCode_0.Id, NameTextCodeCode = BranchTextCode_0.Code, ObjectTableName = "Branch", Code = "Branches",  QueryGroupCode = "BRCH", IndexOrder = 0, Tenant = 0, ObjectTableId = BranchObjectTable.Id, QuerySection = "Branch", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BranchFeature_0.Id,FeatureUniqeCode= BranchFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn BranchesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id,QueryCode = BranchesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BranchesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id,QueryCode = BranchesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Branch.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn BranchesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id,QueryCode = BranchesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn BranchesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id,QueryCode = BranchesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Branch.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn BranchesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id,QueryCode = BranchesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == BranchObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn BranchesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BranchesQuery.Id,QueryCode = BranchesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Branch.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable BranchObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Branch" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> BranchObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Branch").ToList();
+		   //List<ObjectField> BranchObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Branch").ToList();
 		       
 	      
 
 	         Screen BranchGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Branch.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = BranchObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BranchBranchGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = "Branch.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BranchBranchGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = "Branch.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BranchBranchGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "CounterCode").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "CounterCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = "Branch.CounterCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BranchBranchGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = BranchGeneralTabScreenScreen0.Id,ScreenCode = BranchGeneralTabScreenScreen0.Code, ObjectFieldCode = "Branch.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen BranchHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Branch.HeaderScreen", Name = "Header Screen", ObjectTableId = BranchObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BranchBranchHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BranchHeaderScreenScreen1.Id,ScreenCode = BranchHeaderScreenScreen1.Code, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BranchHeaderScreenScreen1.Id,ScreenCode = BranchHeaderScreenScreen1.Code, ObjectFieldCode = "Branch.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BranchObjectTable.HeaderScreenId = BranchHeaderScreenScreen1.Id;
 		    BranchObjectTable.HeaderScreenCode = BranchHeaderScreenScreen1.Code;
@@ -1198,15 +1209,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable BranchObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Branch" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode BranchGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = BranchObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BranchGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BranchGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BranchObjectTable);
  
                  
 			   TextCode BranchAccountingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = BranchObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GeneralAccountingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature GeneralAccountingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GeneralObjectTable);
  
                  
 			   TextCode BranchEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Branch.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = BranchObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature BranchEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature BranchEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BranchObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1224,10 +1235,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable BranchObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Branch" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature BranchFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BranchFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BranchFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BranchFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.PackageFeature", NameTextCodeDefaultText = "Branch Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature BranchFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BranchObjectTable);
+		   Feature BranchFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BranchObjectTable);
+		   Feature BranchFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BranchObjectTable);
+		   Feature BranchFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Branch.Features.PackageFeature", NameTextCodeDefaultText = "Branch Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BranchObjectTable);    
 	    
 		}
 

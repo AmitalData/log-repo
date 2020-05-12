@@ -137,7 +137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -199,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -262,7 +262,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -324,7 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -383,7 +383,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -445,7 +445,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -507,7 +507,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -569,7 +569,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -632,7 +632,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -689,7 +689,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -750,7 +750,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -811,7 +811,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -867,7 +867,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -923,7 +923,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -979,7 +979,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1038,61 +1038,72 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup OpenFormatReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7d37", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup OpenFormatReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d1d0", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup OpenFormatReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7d37", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup OpenFormatReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d1d0", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable OpenFormatReportObjectTable = objectTables.ContainsKey("OpenFormatReport") ? objectTables["OpenFormatReport"] : null;
             if (OpenFormatReportObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 OpenFormatReportObjectTable = objectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> OpenFormatReportObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OpenFormatReport").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode OpenFormatReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", DefaultText = @"All Open Format Reports",LocalDefaultText = "כל הדוחות", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature OpenFormatReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReportFeatures.AllOpenFormats", NameTextCodeDefaultText = "AllOpenFormats", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode OpenFormatReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", DefaultText = @"All Open Format Reports",LocalDefaultText = "כל הדוחות", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature OpenFormatReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReportFeatures.AllOpenFormats", NameTextCodeDefaultText = "AllOpenFormats", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,OpenFormatReportObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllOpenFormatsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpenFormatReportTextCode_0.Id, NameTextCodeCode = OpenFormatReportTextCode_0.Code, ObjectTableName = "OpenFormatReport", Code = "AllOpenFormats",  QueryGroupCode = "7d37", IndexOrder = 0, Tenant = 0, ObjectTableId = OpenFormatReportObjectTable.Id, QuerySection = "OpenFormatReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpenFormatReportFeature_0.Id,FeatureUniqeCode= OpenFormatReportFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllOpenFormatsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpenFormatReportTextCode_0.Id, NameTextCodeCode = OpenFormatReportTextCode_0.Code, ObjectTableName = "OpenFormatReport", Code = "AllOpenFormats",  QueryGroupCode = "7d37", IndexOrder = 0, Tenant = 0, ObjectTableId = OpenFormatReportObjectTable.Id, QuerySection = "OpenFormatReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpenFormatReportFeature_0.Id,FeatureUniqeCode= OpenFormatReportFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllOpenFormatsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id,QueryCode = AllOpenFormatsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenFormatsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id,QueryCode = AllOpenFormatsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "OpenFormatReport.CreateDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllOpenFormatsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id,QueryCode = AllOpenFormatsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "ReportNumber" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "ReportNumber" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenFormatsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id,QueryCode = AllOpenFormatsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "OpenFormatReport.ReportNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllOpenFormatsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id,QueryCode = AllOpenFormatsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllOpenFormatsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id,QueryCode = AllOpenFormatsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "OpenFormatReport.CreatedByUserName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllOpenFormatsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id,QueryCode = AllOpenFormatsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllOpenFormatsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id,QueryCode = AllOpenFormatsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "OpenFormatReport.Status" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> OpenFormatReportObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OpenFormatReport").ToList();
+		   //List<ObjectField> OpenFormatReportObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OpenFormatReport").ToList();
 		       
 	      
 
 	         Screen OpenFormatReportOpenFormatReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpenFormatReport.HeaderScreen", Name = "OpenFormatReportHeaderScreen", ObjectTableId = OpenFormatReportObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().Id, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = "OpenFormatReport.ReportNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().Id, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "Status").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = "OpenFormatReport.Status", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpenFormatReportOpenFormatReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id,ScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code, ObjectFieldCode = "OpenFormatReport.CreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    OpenFormatReportObjectTable.HeaderScreenId = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Id;
 		    OpenFormatReportObjectTable.HeaderScreenCode = OpenFormatReportOpenFormatReportHeaderScreenScreen0.Code;
@@ -1102,9 +1113,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen OpenFormatReportGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpenFormatReport.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = OpenFormatReportObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField OpenFormatReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().Id, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id,ScreenCode = OpenFormatReportGeneralTabScreenScreen1.Code, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpenFormatReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id,ScreenCode = OpenFormatReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpenFormatReport.FromDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField OpenFormatReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().Id, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id,ScreenCode = OpenFormatReportGeneralTabScreenScreen1.Code, ObjectFieldCode = OpenFormatReportObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField OpenFormatReportGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = OpenFormatReportGeneralTabScreenScreen1.Id,ScreenCode = OpenFormatReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpenFormatReport.ToDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -1115,11 +1126,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode OpenFormatReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature OpenFormatReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenFormatReport.Tab.General", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReportFeatures.OFGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature OpenFormatReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenFormatReport.Tab.General", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReportFeatures.OFGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpenFormatReportObjectTable);
  
                  
 			   TextCode OpenFormatReportLogTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.TH.Log", DefaultText = "Log",LocalDefaultText = "לוג", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature OpenFormatReportLogFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenFormatReport.Tab.Log", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReportFeatures.OGLG", NameTextCodeDefaultText = "Log", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature OpenFormatReportLogFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenFormatReport.Tab.Log", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReportFeatures.OGLG", NameTextCodeDefaultText = "Log", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpenFormatReportObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1135,14 +1146,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature OpenFormatReportFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature OpenFormatReportFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature OpenFormatReportFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature OpenFormatReportFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.PackageFeature", NameTextCodeDefaultText = "OpenFormatReport Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature OpenFormatReportFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpenFormatReportObjectTable);
+		   Feature OpenFormatReportFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpenFormatReportObjectTable);
+		   Feature OpenFormatReportFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpenFormatReportObjectTable);
+		   Feature OpenFormatReportFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.PackageFeature", NameTextCodeDefaultText = "OpenFormatReport Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpenFormatReportObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature OpenFormatReportFeature_TestingMode = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TestingMode", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.TestingMode", NameTextCodeDefaultText = @"Testing Mode" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature OpenFormatReportFeature_TestingMode = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TestingMode", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.TestingMode", NameTextCodeDefaultText = @"Testing Mode" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpenFormatReportObjectTable);
 
    
 	    
@@ -1191,10 +1202,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault(); 			   Feature OpenFormatReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPDL", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.Download", NameTextCodeDefaultText = "Download", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature OpenFormatReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PDFD", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.DownloadPDFFile", NameTextCodeDefaultText = "Download PDF File", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault(); 			   Feature OpenFormatReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPDL", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.Download", NameTextCodeDefaultText = "Download", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpenFormatReportObjectTable);
+             			   Feature OpenFormatReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PDFD", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.DownloadPDFFile", NameTextCodeDefaultText = "Download PDF File", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpenFormatReportObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
