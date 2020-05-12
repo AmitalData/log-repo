@@ -32,7 +32,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool CannotFilter { get; set; }
         public string HelpText { get; set; }
         public bool IsCustom { get; set; }
-        
+        public string OriginalObjectFieldCode { get; set; }
+
 
         [ForeignKey("DWObjectTableCode")]
         public virtual DWObjectTable DWObjectTable { get; set; }

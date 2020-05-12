@@ -1,4 +1,4 @@
-import { Component, ViewChildren, QueryList} from '@angular/core';
+import { Component, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -15,72 +15,30 @@ import { UserList } from '../../../../Common/EntityLists/UserList';
 import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
 import { CRMUtilities } from '../../../CRMUtilities';
 
-@Component({
-    
+@Component({    
     templateUrl: './QuoteDashboardComponent.html',
 })
 
-export class QuoteDashboardComponent extends BaseComponent {
-
-    private isViewInited = false;
-    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-
+export class QuoteDashboardComponent extends BaseComponent implements AfterViewInit {
     private filterName_CreateDate: string = "CreateDate";
     private filterName_Owner: string = "Owner";
     private filterName_BusinessUnit: string = "BusinessUnit";
-    // need to change
     private filterControlNameSpace: string = "Logitude.CRM.Views.CRMPages.DashboardTabsControls.ByCreateDateControl";
     public DateFilterList: Array<CodeNameClass> = [];
     public DataContext: QuoteDashboardComponent = this;
     private myBusinessUnitListService: BusinessUnitListService;
     private myUserListService: UserListService;
-
-    private InitializeServices() {
-        this.myBusinessUnitListService = new BusinessUnitListService();
-        this.myUserListService = new UserListService();
-    }
+    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
 
     constructor() {
         super();
-        this.RunComponent();
-        this.InitializeServices();
-        this.BuildBusinessUnitFilter();
-        this.BuildDateFilters();
+
+        this.myUserListService = new UserListService();
+        this.myBusinessUnitListService = new BusinessUnitListService();
     }
 
-    RunComponent() {
-        if (this.AllLocations) {
-            if (this.AllLocations.length == 0) {
-                this.RunComponentTimer();
-            }
-            else {
-                this.isViewInited = true;
-                this.InitializeComponent();
-            }
-        }
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    private InitializeComponent() {
-        if (this.isViewInited) {
-            this.LoadComponents();
-        }
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
+    ngAfterViewInit() {
+        this.LoadComponents();
     }
 
     private Wizard: DashboardWorkspaceComponent;
@@ -89,21 +47,111 @@ export class QuoteDashboardComponent extends BaseComponent {
     }
 
     RefreshTab() {
-        this.LoadComponents();
+
+    }
+
+    private PageChild_OQS: any = null;
+    private PageChild_QOC: any = null;
+    private PageChild_QCV: any = null;
+    private PageChild_KPI: any = null;
+    private PageChild_TFS: any = null;
+    LoadComponents() {
+        let OQSLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "OQS")[0];
+        let QOCLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "QOC")[0];
+        let QCVLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "QCV")[0];
+        let KPILocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "KPI")[0];
+        let TFSLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "TFS")[0];
+
+        if (OQSLocation) {
+            if (!this.PageChild_OQS) {
+                SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/OpenQuotesByStageComponent', OQSLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        this.PageChild_OQS = cmpRef.instance;
+                        this.PageChild_OQS.InitTab(this);
+                        this.BuildFilters();
+                    });
+            }
+        }
+        if (QOCLocation) {
+            if (!this.PageChild_QOC) {
+                SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/QuotesByCountryComponent', QOCLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        this.PageChild_QOC = cmpRef.instance;
+                        this.PageChild_QOC.InitTab(this);
+                        this.BuildFilters();
+                    });
+            }
+        }
+        if (QCVLocation) {
+            if (!this.PageChild_QCV) {
+                SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/QuotesConversionComponent', QCVLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        this.PageChild_QCV = cmpRef.instance;
+                        this.PageChild_QCV.InitTab(this);
+                        this.BuildFilters();
+                    });
+            }
+        }
+        if (KPILocation) {
+            if (!this.PageChild_KPI) {
+                SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/SentQuotesKPIComponent', KPILocation.viewContainerRef)
+                    .then(cmpRef => {
+                        this.PageChild_KPI = cmpRef.instance;
+                        this.PageChild_KPI.InitTab(this);
+                        this.BuildFilters();
+                    });
+            }
+        }
+        if (TFSLocation) {
+            if (!this.PageChild_TFS) {
+                SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/TopFiveSalesmanProfitComponent', TFSLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        this.PageChild_TFS = cmpRef.instance;
+                        this.PageChild_TFS.InitTab(this);
+                        this.BuildFilters();
+                    });
+            }
+        }
+    }
+
+    BuildFilters() {
+        if (this.PageChild_OQS && this.PageChild_QOC && this.PageChild_QCV && this.PageChild_KPI && this.PageChild_TFS) {
+            this.BuildBusinessUnitFilter();
+            this.BuildDateFilters();
+        }
+    }
+
+    RefreshComponents() {
+        if (this.PageChild_OQS) {
+            this.PageChild_OQS.RefreshTab(this);
+        }
+
+        if (this.PageChild_QOC) {
+            this.PageChild_QOC.RefreshTab(this);
+        }
+
+        if (this.PageChild_QCV) {
+            this.PageChild_QCV.RefreshTab(this);
+        }
+
+        if (this.PageChild_KPI) {
+            this.PageChild_KPI.RefreshTab(this);
+        }
+
+        if (this.PageChild_TFS) {
+            this.PageChild_TFS.RefreshTab(this);
+        }
     }
 
     RefreshButtonClicked() {
         this.LoadFilteredQueries();
-        //this.LoadComponents();
     }
 
     LoadFilteredQueries() {
-        if (this.SelectedDateFilter != null) {
-            var days: number = parseInt(this.SelectedDateFilter.Code);
+        if (this.SelectedDateFilter != null) {            
             this.ComputeDays();
+            this.RefreshComponents();
         }
-        this.LoadComponents();
-
     }
     private BuildDateFilters() {
         this.DateFilterList = CRMUtilities.GetDateFilterList();
@@ -133,10 +181,7 @@ export class QuoteDashboardComponent extends BaseComponent {
                 ActivityDate.setFullYear(ActivityToDateString[0], ActivityToDateString[1] - 1, ActivityToDateString[2]);
                 this.toDate = DateTool.GetDateParts(ActivityDate).DateObject;
             }
-
         }
-
-
     }
 
     private selectedBusinessUnitFilter: CodeNameClass;
@@ -422,7 +467,6 @@ export class QuoteDashboardComponent extends BaseComponent {
         }
     }
 
-
     private selectedDateFilter: CodeNameClass;
     public get SelectedDateFilter() { return this.selectedDateFilter; }
     public set SelectedDateFilter(value: CodeNameClass) {
@@ -436,6 +480,7 @@ export class QuoteDashboardComponent extends BaseComponent {
                 LastFilterClass.UpdateFilter(this.filterControlNameSpace, "ByCreateToDate", (value == null ? null : ServiceHelper.GetDateString(this.ToDate)));
             }
         }
+
         this.LoadFilteredQueries();
     }
 
@@ -469,91 +514,5 @@ export class QuoteDashboardComponent extends BaseComponent {
                 this.BuildUsersFilters(false);
             }
         });
-        this.LoadComponents();
-    }
-
-    private PageChild_OQS: any = null;
-    private PageChild_QOC: any = null;
-    private PageChild_QCV: any = null;
-    private PageChild_KPI: any = null;
-    private PageChild_TFS: any = null;
-
-    LoadComponents() {
-        if (this.isViewInited) {
-
-            let OQSLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "OQS")[0];
-            let QOCLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "QOC")[0];
-            let QCVLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "QCV")[0];
-            let KPILocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "KPI")[0];
-            let TFSLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "TFS")[0];
-
-            if (OQSLocation != null) {
-                if (this.PageChild_OQS == null) {
-                    SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/OpenQuotesByStageComponent', OQSLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            this.PageChild_OQS = cmpRef.instance;
-                            this.PageChild_OQS.InitTab(this);
-                        });
-                }
-
-                else {
-                    this.PageChild_OQS.RefreshTab(this);
-                }
-            }
-
-            if (QOCLocation != null) {
-                if (this.PageChild_QOC == null) {
-                    SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/QuotesByCountryComponent', QOCLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            this.PageChild_QOC = cmpRef.instance;
-                            this.PageChild_QOC.InitTab(this);
-                        });
-                }
-
-                else {
-                    this.PageChild_QOC.RefreshTab(this);
-                }
-            }
-
-            if (QCVLocation != null) {
-                if (this.PageChild_QCV == null) {
-                    SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/QuotesConversionComponent', QCVLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            this.PageChild_QCV = cmpRef.instance;
-                            this.PageChild_QCV.InitTab(this);
-                        });
-                }
-
-                else {
-                    this.PageChild_QCV.RefreshTab(this);
-                }
-            }
-            if (KPILocation != null) {
-                if (this.PageChild_KPI == null) {
-                    SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/SentQuotesKPIComponent', KPILocation.viewContainerRef)
-                        .then(cmpRef => {
-                            this.PageChild_KPI = cmpRef.instance;
-                            this.PageChild_KPI.InitTab(this);
-                        });
-                }
-
-                else {
-                    this.PageChild_KPI.RefreshTab(this);
-                }
-            }
-            if (TFSLocation != null) {
-                if (this.PageChild_TFS == null) {
-                    SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/TopFiveSalesmanProfitComponent', TFSLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            this.PageChild_TFS = cmpRef.instance;
-                            this.PageChild_TFS.InitTab(this);
-                        });
-                }
-
-                else {
-                    this.PageChild_TFS.RefreshTab(this);
-                }
-            }
-        }
     }
 }

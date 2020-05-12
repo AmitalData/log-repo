@@ -35,7 +35,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
 
             DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-            IQueryable<TicketList> query = (from a in iQueryable.Include("Owner").Include("Company").Include("Contact").Include("Stage").Include("TicketType").Include("Severity").Include("MainClassification").Include("SecondaryClassification").Include("BusinessUnit").Include("NextActivityType").Include("ActivityType")
+            IQueryable<TicketList> query = (from a in iQueryable.Include("ObjectTable").Include("Owner").Include("Company").Include("Contact").Include("Stage").Include("TicketType").Include("Severity").Include("MainClassification").Include("SecondaryClassification").Include("BusinessUnit").Include("NextActivityType").Include("ActivityType")
                                             select new TicketList()
                                                  {
                                                      Id = a.Id,
@@ -136,7 +136,8 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      SLAId = a.SLAId,
                                                      EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber: a.QuoteNumber,
                                                      LastCorrespondence = a.LastCorrespondence,
-                                                     EntityType = a.ObjectTable.Name
+                                                     EntityType = a.EntityType,
+                                                     EntityTypeName = a.ObjectTable.Name,
                                             });
             return query;
 		}
@@ -267,7 +268,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                         QuoteId = a.QuoteId,
                         QuoteNumber = a.QuoteNumber,
                         EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
-                        EntityType = a.ObjectTable.Name
+                        EntityType = a.EntityType,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);

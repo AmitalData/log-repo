@@ -22,7 +22,7 @@ SELECT
 			 dbo.Tenants.Company as TenantName
 
 FROM         dbo.MessagingStocks Inner join
-             dbo.Tenants ON  dbo.MessagingStocks.TenantNumber = dbo.Tenants.Id 
+             dbo.Tenants ON  dbo.MessagingStocks.TenantNumber = dbo.Tenants.Id
     ]]>
   </SqlScript>
   <OracleScript>

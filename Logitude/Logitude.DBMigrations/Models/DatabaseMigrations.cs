@@ -22,6 +22,9 @@ namespace Logitude.DBMigrations.Models
 
         protected string MissingIndexesWarnings = "";
 
+        protected bool IsBasicArgumentProvided;
+
+
         public string GetScript()
         {
             CurrentTable = GetCurrentTableDefinitionFromDB();
@@ -466,11 +469,14 @@ namespace Logitude.DBMigrations.Models
 
             BuildAlterSizeMigration(currentTableColumn, dxmlTableColumn);
 
-            BuildAlterDefaultMigration(currentTableColumn, dxmlTableColumn);
+            if (!IsBasicArgumentProvided)
+            {
+                BuildAlterDefaultMigration(currentTableColumn, dxmlTableColumn);
 
-            BuildUnsetNullableMigration(currentTableColumn, dxmlTableColumn);
+                BuildUnsetNullableMigration(currentTableColumn, dxmlTableColumn);
 
-            BuildSetNullableMigration(currentTableColumn, dxmlTableColumn);
+                BuildSetNullableMigration(currentTableColumn, dxmlTableColumn);
+            }
 
             BuildRenameMigration(currentTableColumn, dxmlTableColumn);
 

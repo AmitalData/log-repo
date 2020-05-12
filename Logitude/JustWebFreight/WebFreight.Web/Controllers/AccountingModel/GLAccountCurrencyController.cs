@@ -94,8 +94,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        GLAccountCurrencyRepository gLAccountCurrencyRepository = new GLAccountCurrencyRepository(entityPM.Tenant);
-                        GLAccountCurrency accountCurrency = gLAccountCurrencyRepository.GetEntityByCurrencyAndGLAccountId(entityPM.MainGLAccountId, entityPM.CurrencyId, entityPM.Tenant);
+                        GLAccountCurrencyQueryService GLAccountCurrencyQuery = new GLAccountCurrencyQueryService(entityPM.Tenant);
+                        GLAccountCurrencyPM accountCurrency = GLAccountCurrencyQuery.GetEntityByCurrencyAndGLAccountId(entityPM.MainGLAccountId, entityPM.CurrencyId, entityPM.Tenant);
                         entityPM.Id = accountCurrency.Id;
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         GLAccountCurrencyUpdateService service = new GLAccountCurrencyUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

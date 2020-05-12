@@ -18,6 +18,8 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import {TaxReportExtendedPMService} from '../../../Services/ExtendedPMs/TaxReportExtendedPMService';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
+declare var window: any;
 
 @Component({
     
@@ -38,7 +40,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     private _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     private _TaxReportLineStatusListService: TaxReportLineStatusListService = new TaxReportLineStatusListService();
     public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
-
+  IsTesterButtonVisibile: boolean = false;
     ReportLines: ObservableCollection;
     OriginalReportLines: ObservableCollection;
     isReady: boolean = false;
@@ -48,8 +50,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     constructor(private entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
 
+      var table = window.ObjectTables.filter(d => d.Name === 'TaxReport')[0];
 
-
+      this.IsTesterButtonVisibile =  FeatureLocator.Features.filter(f => (f.Code == "TaxReport.Features.TestButton") && f.ObjectTableId == table.Id)[0]? true : false;
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -93,7 +96,19 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
     }
+  NewLineButtonClicked() {
+    this.CurrentSession.StartBusyIndicator("Loading...");
+    this._TaxReportExtendedPMService.CreateNewTaxReportLine(this.EntityPM).subscribe((myResult: ServiceResponse) => {
+      this.CurrentSession.StopBusyIndicator();
+      this.EntityPM = myResult.Result;
+      
+      this.ReloadScreen();
+   
+    });
 
+
+
+  }
     ngOnInit() {
         this._entityResourceService.getEntityResourceByTableName("TaxReport").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("TaxReportLine").subscribe((response: any) => {
@@ -125,7 +140,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
     }
-
+   
 
     SetUIProperty() {
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, false);
@@ -393,7 +408,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     BuildColumns() {
         this.columns = [];
-
+     
         this.columns.push({
             FieldName: 'TransmitStatusCode',
             DataTypeCode: 'String',
@@ -498,7 +513,17 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
             ServerSideSortable: true,
             IsCustomTemplate: true,
-        });
+      });
+
+      this.columns.push({
+        FieldName: 'IsExternalLine',
+        DataTypeCode: 'String',
+      //  Display: TextCodeTranslator.Translate("TaxReportLine.F.IsExternalLine"),
+        Styles: { width: '40px' },
+        HtmlListComponentName: 'TaxReportListTemplate',
+        HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
+        IsCustomTemplate: true
+      });
         this.TaxReportColumnsReady.emit(this.columns);
         //this.CustomColumnsReady.emit(this.columns);
     }

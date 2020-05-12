@@ -65,6 +65,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
     <None Include="DBTables\AccountingCompanyType.dxml" />
     <None Include="DBTables\AccountingEntity.dxml" />
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />

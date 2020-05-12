@@ -529,6 +529,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string CreatedByPartner { get; set; }
         public DateTime? FirstARInvoiceApprovalDate { get; set; }
         public string SLAC { get; set; }
+        public bool CreatedFromDigital { get; set; }
 
     }
 }

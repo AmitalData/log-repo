@@ -2471,7 +2471,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
         }
-
         private void ReadINTTRABookingXMLDates(ShipmentPM shipmentPM)
         {
             XmlDocument xmlDoc = new XmlDocument();
@@ -2482,7 +2481,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             PortRepository portsRep = new PortRepository(commonContext);
             foreach (XmlNode xn in xnList)
             {
-                if (xn["Type"] != null && xn["Type"].InnerText== "PortOfLoad")
+                if (xn["Type"] != null && xn["Type"].InnerText == "PortOfLoad")
                 {
                     Port port = portsRep.GetSinglePortIdByCombinedCode(xn["Identifier"].InnerText, shipmentPM.Tenant);
                     if (port != null)
@@ -2492,7 +2491,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.INTTRABookingResponse_POFCCode = port.Country != null ? port.Country.Code : "";
                         shipmentPM.INTTRABookingResponse_POFCName = port.Country != null ? port.Country.EnglishName : "";
                     }
-                    shipmentPM.INTTRABookingResponse_POLDate = DateTime.Parse(xn["DateTime"].InnerText);
+                    shipmentPM.INTTRABookingResponse_POLDate = xn["DateTime"] != null ? DateTime.Parse(xn["DateTime"].InnerText) : shipmentPM.INTTRABookingResponse_POLDate;
                 }
 
                 if (xn["Type"] != null && xn["Type"].InnerText == "PortOfDischarge")
@@ -2505,11 +2504,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.INTTRABookingResponse_PODCCode = port.Country != null ? port.Country.Code : "";
                         shipmentPM.INTTRABookingResponse_PODCName = port.Country != null ? port.Country.EnglishName : "";
                     }
-                    shipmentPM.INTTRABookingResponse_PODDate = DateTime.Parse(xn["DateTime"].InnerText);
+                    shipmentPM.INTTRABookingResponse_PODDate = xn["DateTime"] != null ? DateTime.Parse(xn["DateTime"].InnerText) : shipmentPM.INTTRABookingResponse_PODDate;
                 }
             }
         }
-
         private void ReadINTTRABookingXMLShippingLine(ShipmentPM shipmentPM)
         {
             XmlDocument xmlDoc = new XmlDocument();
@@ -2520,7 +2518,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 if (xn["Role"] != null && xn["Role"].InnerText == "Carrier")
                 {
-                    shipmentPM.INTTRABookingResponse_ShippingLine = xn["Identifier"].InnerText;
+                    shipmentPM.INTTRABookingResponse_ShippingLine = xn["Identifier"] != null ? xn["Identifier"].InnerText : "";
                 }
             }
         }
@@ -11622,6 +11620,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ProjectNumber = f.ProjectNumber,
                                ContainerLastStatusDate = f.ContainerLastStatusDate,
                                IsDepositionRequired = f.IsDepositionRequired,
+                               CreatedFromDigital = f.CreatedFromDigital,
                                ImporterDepositionRequestDetails = f.ImporterDepositionRequestDetails,
                                ForwarderPartnerId = f.ForwarderPartnerId,
                                From = f.From,
@@ -11983,6 +11982,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CreatedByPartner= f.CreatedByPartner,
                     MainCarriageFinalDestinationATA = f.MainCarriageFinalDestinationATA,
                     MainCarriageFinalDestinationETA = f.MainCarriageFinalDestinationETA,
+                    CreatedFromDigital = f.CreatedFromDigital
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

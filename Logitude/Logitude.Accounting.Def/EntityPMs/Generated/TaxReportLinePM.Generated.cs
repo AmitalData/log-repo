@@ -551,6 +551,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isExternalLine ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsExternalLine  
+	   {
+	    
+	     get
+		{
+		   return isExternalLine;
+		 }
+		 set
+		 {
+		   if(isExternalLine != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExternalLine",OldValue=isExternalLine,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isExternalLine=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? totalInvoiceAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalInvoiceAmount  
+	   {
+	    
+	     get
+		{
+		   return totalInvoiceAmount;
+		 }
+		 set
+		 {
+		   if(totalInvoiceAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalInvoiceAmount",OldValue=totalInvoiceAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalInvoiceAmount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

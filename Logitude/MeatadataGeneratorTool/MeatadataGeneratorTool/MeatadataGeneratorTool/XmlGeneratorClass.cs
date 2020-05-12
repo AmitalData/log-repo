@@ -2062,7 +2062,7 @@ namespace MeatadataGeneratorTool
                         string dxmlColumnDataType = GetDataTypeForDXMLColumn(fieldDataType, fieldIsFixedLength);
                         bool dxmlColumnNullable;
 
-                        if(entityName.ToLower() == "Address".ToLower() && (fieldName.ToLower() == "City".ToLower() || fieldName.ToLower() == "CountryId".ToLower()))
+                        if((entityName.ToLower() == "Address".ToLower() && (fieldName.ToLower() == "City".ToLower() || fieldName.ToLower() == "CountryId".ToLower())))
                         {
                             dxmlColumnNullable = true;
                         }

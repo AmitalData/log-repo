@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class AccountingTransferHeaderUpdateClass
    {  		
-		public const string HashString = "588da3444f52f231f930e672c46377e5";
+		public const string HashString = "351708e965cacff32d7a4ffa4b412910";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	             				    ObjectTableName =  "AccountingTransferHeader",
 			      				    IsNew =  false,
 			      				    DBTableName =  "AccountingTransferHeaders",
-			      				    OldDBTableName =  "AccountingTransferHeaders",
 			      				    ObjectTableSingular =  "Accounting Transfer",
 			      				    ObjectTablePlural =  "Accounting Transfers",
 			      				    HasCustomFilter =  true,
@@ -142,7 +141,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "TransferNumber",
-					  						OldFieldName =  "TransferNumber",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -193,6 +191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TransferNumber",
@@ -205,7 +204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "TransferDate",
-					  						OldFieldName =  "TransferDate",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -257,6 +255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TransferDate",
@@ -269,7 +268,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "FileName",
-					  						OldFieldName =  "FileName",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -320,6 +318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "FileName",
@@ -332,7 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "UserId",
-					  						OldFieldName =  "UserId",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
@@ -381,6 +379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UserId",
@@ -393,7 +392,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "AccountingTransferTypeCode",
-					  						OldFieldName =  "AccountingTransferTypeCode",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
@@ -442,6 +440,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AccountingTransferTypeCode",
@@ -454,7 +453,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -503,6 +501,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SearchFields",
@@ -515,7 +514,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "UserName",
-					  						OldFieldName =  "UserName",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -566,6 +564,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UserName",
@@ -578,7 +577,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "AccountingTransferTypeName",
-					  						OldFieldName =  "AccountingTransferTypeName",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -627,6 +625,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AccountingTransferTypeName",
@@ -639,7 +638,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ARInvoiceTransferHistory",
-					  						OldFieldName =  "ARInvoiceTransferHistory",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -688,6 +686,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ARInvoiceTransferHistory",
@@ -700,7 +699,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "APInvoiceTransferHistory",
-					  						OldFieldName =  "APInvoiceTransferHistory",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -749,6 +747,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "APInvoiceTransferHistory",
@@ -761,7 +760,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -813,6 +811,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
@@ -825,7 +824,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "APPaymentTransferHistory",
-					  						OldFieldName =  "APPaymentTransferHistory",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -874,6 +872,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "APPaymentTransferHistory",
@@ -886,7 +885,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ARPaymentTransferHistory",
-					  						OldFieldName =  "ARPaymentTransferHistory",
 					  						ObjectTableName =  "AccountingTransferHeader",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -935,6 +933,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ARPaymentTransferHistory",
@@ -1095,6 +1094,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		   Feature AccountingTransferHeaderFeature_REBUILD = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REBUILD", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.Rebuild", NameTextCodeDefaultText = @"Rebuild" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature AccountingTransferHeaderFeature_QuickbooksConnectAuth1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuickbooksConnectAuth1", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.QuickbooksConnectAuth1", NameTextCodeDefaultText = @"Quickbooks Connect Auth1" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature AccountingTransferHeaderFeature_DisableFTPSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DisableFTPSettings", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.DisableFTPSettings", NameTextCodeDefaultText = @"Enable FTP Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

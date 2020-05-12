@@ -2407,6 +2407,75 @@
     <Compile Include="Migrations\202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.Designer.cs">
       <DependentUpon>202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.cs" />
+    <Compile Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.Designer.cs">
+      <DependentUpon>202004231311231_JournalIsExternalLineFieldMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.cs" />
+    <Compile Include="Migrations\202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.Designer.cs">
+      <DependentUpon>202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs" />
+    <Compile Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.Designer.cs">
+      <DependentUpon>202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="Migrations\202004291007569_AbedAddOriginalObjectFieldCodeToDWObjectField.cs" />
+    <Compile Include="Migrations\202004291007569_AbedAddOriginalObjectFieldCodeToDWObjectField.Designer.cs">
+      <DependentUpon>202004291007569_AbedAddOriginalObjectFieldCodeToDWObjectField.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="Migrations\202004300503107_ChangeMinmumBillingDataType.cs" />
+    <Compile Include="Migrations\202004300503107_ChangeMinmumBillingDataType.Designer.cs">
+      <DependentUpon>202004300503107_ChangeMinmumBillingDataType.cs</DependentUpon>
+    </Compile>
+
+
+
+
+    <Compile Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs" />
+    <Compile Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.Designer.cs">
+      <DependentUpon>202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs</DependentUpon>
+    </Compile>
+
+
+    <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.cs" />
+    <Compile Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.Designer.cs">
+      <DependentUpon>202005031054228_FixReferenceLengthInTransferLine_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs" />
+    <Compile Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.Designer.cs">
+      <DependentUpon>202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005031303293_TaxReportLineTotalInvoiceAmountMigration.cs" />
+    <Compile Include="Migrations\202005031303293_TaxReportLineTotalInvoiceAmountMigration.Designer.cs">
+      <DependentUpon>202005031303293_TaxReportLineTotalInvoiceAmountMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs" />
+    <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.Designer.cs">
+      <DependentUpon>202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs</DependentUpon>
+    </Compile>
+
+
+    <Compile Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.cs" />
+    <Compile Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.Designer.cs">
+      <DependentUpon>202005061012001_Remove_MinimumInterestInvoiceBilling.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.cs" />
+    <Compile Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.Designer.cs">
+      <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
+    </Compile>
+ 
+
+    <Compile Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.cs" />
+    <Compile Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.Designer.cs">
+      <DependentUpon>202005070955065_UpdatePickupDeliveryNumberLength.cs</DependentUpon>
+    </Compile>
+
+
+
+   
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4363,6 +4432,54 @@
     <EmbeddedResource Include="Migrations\202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.resx">
       <DependentUpon>202004261333564_WesamChangeLengthOfCreatedUpdateFieldsForTasksSchedulerTable.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202004231311231_JournalIsExternalLineFieldMigration.resx">
+      <DependentUpon>202004231311231_JournalIsExternalLineFieldMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004271011023_AbedAddAddedManuallToDocumentTypeTable.resx">
+      <DependentUpon>202004271011023_AbedAddAddedManuallToDocumentTypeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.resx">
+      <DependentUpon>202004281208417_ModifyIsRequiredPropertyOfCostMeasurementIdFieldOfQuoteChargeTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202004300503107_ChangeMinmumBillingDataType.resx">
+      <DependentUpon>202004300503107_ChangeMinmumBillingDataType.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.resx">
+      <DependentUpon>202004281428061_AddCreatedFromDigitalFieldToShipmentComputedFieldsTable.cs</DependentUpon>
+    </EmbeddedResource>
+
+
+    <EmbeddedResource Include="Migrations\202004291007569_AbedAddOriginalObjectFieldCodeToDWObjectField.resx">
+      <DependentUpon>202004291007569_AbedAddOriginalObjectFieldCodeToDWObjectField.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202005031054228_FixReferenceLengthInTransferLine_Samar.resx">
+      <DependentUpon>202005031054228_FixReferenceLengthInTransferLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005031303293_TaxReportLineTotalInvoiceAmountMigration.resx">
+      <DependentUpon>202005031303293_TaxReportLineTotalInvoiceAmountMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.resx">
+      <DependentUpon>202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.resx">
+      <DependentUpon>202005061012001_Remove_MinimumInterestInvoiceBilling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.resx">
+      <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.resx">
+      <DependentUpon>202005070955065_UpdatePickupDeliveryNumberLength.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.resx">
+      <DependentUpon>202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs</DependentUpon>
+    </EmbeddedResource>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

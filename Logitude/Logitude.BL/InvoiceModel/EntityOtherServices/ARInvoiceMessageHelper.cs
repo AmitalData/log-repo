@@ -2005,10 +2005,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             if (invoice != null)
             {
                 entityId = invoice.Id;
-                FTPFileName = invoice.InvoiceNumber;
+                FTPFileName = ("ARInvoice_" + invoice.InvoiceNumber).ToLower();
             }
             
-            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode, "ARInvoice");
+            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode);
 
             this.myDocumentId = helper.DocumentId;
             this.myDocumentFolder = helper.DocumentFolder;
@@ -2029,7 +2029,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
             try
             {
-                //helper.Test(commLog, tenant);
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(commLog.QueueName, 0);
                 queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } });

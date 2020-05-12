@@ -10,7 +10,6 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_ContactPassword_ChangeContactPassword()
         {
-
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "ContactPassword",

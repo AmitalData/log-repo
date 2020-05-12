@@ -94,6 +94,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     }
     ShowFinalMessage: boolean = false;
+    ShowErrorMessage: boolean = false;
     SecurityKey: string = "";
     Tenant: number = null;
     RunComponent() {
@@ -170,8 +171,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
-                this.FinalMessage = "התיק לם קיים בסביבה הזו";
+                this.FinalMessage = "התיק לא קיים בסביבה הזו";
                 this.ShowFinalMessage = true;
+                this.ShowErrorMessage = true;
+                this.StopBusyIndicator();
             }
         });
 
@@ -213,8 +216,9 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
                 }
                 else {
-                    this.FinalMessage = "התיק לם קיים בסביבה הזו";
+                    this.FinalMessage = "התיק לא קיים בסביבה הזו";
                     this.ShowFinalMessage = true;
+                    this.ShowErrorMessage = true;
                 }
             });
         }

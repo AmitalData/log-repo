@@ -595,16 +595,16 @@ export class MaintenanceComponent {
         //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         //}
 
-        if (FeatureLocator.HasFeaturePermession("General", "TARIFFPRODUCTS")) {
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "OTH";
-            item.Icon = "List"
-            item.Code = "MTPR";
-            item.ObjectTableName = "TariffProduct";
-            item.TextCode = "General.MC.Others.TariffProducts";
-            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TariffProduct")[0].Id
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        }
+        //if (FeatureLocator.HasFeaturePermession("General", "TARIFFPRODUCTS")) {
+        //    var item = new MenusTablePM();
+        //    item.CategoryTypeCode = "OTH";
+        //    item.Icon = "List"
+        //    item.Code = "MTPR";
+        //    item.ObjectTableName = "TariffProduct";
+        //    item.TextCode = "General.MC.Others.TariffProducts";
+        //    item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TariffProduct")[0].Id
+        //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        //}
 
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();

@@ -5,6 +5,12 @@
   DBType="Main"
   Module="Accounting">
   <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="LineNumber"
     Type="int">
     <Constraints
@@ -17,12 +23,6 @@
     Size="15">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
       Nullable="false" />
   </Column>
   <Column

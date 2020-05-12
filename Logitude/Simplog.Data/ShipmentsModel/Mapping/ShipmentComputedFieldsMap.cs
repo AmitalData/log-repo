@@ -49,6 +49,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.NumberOfHouses).HasColumnName("NumberOfHouses");
             this.Property(t => t.IsDigitalSignRequired).HasColumnName("IsDigitalSignRequired");
             this.Property(t => t.IsDepositionRequired).HasColumnName("IsDepositionRequired");
+            this.Property(t => t.CreatedFromDigital).HasColumnName("CreatedFromDigital");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

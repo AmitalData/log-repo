@@ -732,7 +732,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="100"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"

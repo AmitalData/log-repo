@@ -447,6 +447,61 @@ export class TariffLinePM {
     public set TransitTime(newValue: string) { if (this.transitTime != newValue) { this.transitTime = newValue; this.MarkAsDirty("TransitTime"); } }
        
 	 
+    private originPortHasWrongTransMode: boolean;
+    public get OriginPortHasWrongTransMode() { return this.originPortHasWrongTransMode; }
+    public set OriginPortHasWrongTransMode(newValue: boolean) { if (this.originPortHasWrongTransMode != newValue) { this.originPortHasWrongTransMode = newValue; this.MarkAsDirty("OriginPortHasWrongTransMode"); } }
+       
+	 
+    private destinationPortHasWrongTransMode: boolean;
+    public get DestinationPortHasWrongTransMode() { return this.destinationPortHasWrongTransMode; }
+    public set DestinationPortHasWrongTransMode(newValue: boolean) { if (this.destinationPortHasWrongTransMode != newValue) { this.destinationPortHasWrongTransMode = newValue; this.MarkAsDirty("DestinationPortHasWrongTransMode"); } }
+       
+	 
+    private isMinPriceMinus: boolean;
+    public get IsMinPriceMinus() { return this.isMinPriceMinus; }
+    public set IsMinPriceMinus(newValue: boolean) { if (this.isMinPriceMinus != newValue) { this.isMinPriceMinus = newValue; this.MarkAsDirty("IsMinPriceMinus"); } }
+       
+	 
+    private isPrice1Minus: boolean;
+    public get IsPrice1Minus() { return this.isPrice1Minus; }
+    public set IsPrice1Minus(newValue: boolean) { if (this.isPrice1Minus != newValue) { this.isPrice1Minus = newValue; this.MarkAsDirty("IsPrice1Minus"); } }
+       
+	 
+    private isPrice2Minus: boolean;
+    public get IsPrice2Minus() { return this.isPrice2Minus; }
+    public set IsPrice2Minus(newValue: boolean) { if (this.isPrice2Minus != newValue) { this.isPrice2Minus = newValue; this.MarkAsDirty("IsPrice2Minus"); } }
+       
+	 
+    private isPrice3Minus: boolean;
+    public get IsPrice3Minus() { return this.isPrice3Minus; }
+    public set IsPrice3Minus(newValue: boolean) { if (this.isPrice3Minus != newValue) { this.isPrice3Minus = newValue; this.MarkAsDirty("IsPrice3Minus"); } }
+       
+	 
+    private isPrice4Minus: boolean;
+    public get IsPrice4Minus() { return this.isPrice4Minus; }
+    public set IsPrice4Minus(newValue: boolean) { if (this.isPrice4Minus != newValue) { this.isPrice4Minus = newValue; this.MarkAsDirty("IsPrice4Minus"); } }
+       
+	 
+    private isPrice5Minus: boolean;
+    public get IsPrice5Minus() { return this.isPrice5Minus; }
+    public set IsPrice5Minus(newValue: boolean) { if (this.isPrice5Minus != newValue) { this.isPrice5Minus = newValue; this.MarkAsDirty("IsPrice5Minus"); } }
+       
+	 
+    private isPrice6Minus: boolean;
+    public get IsPrice6Minus() { return this.isPrice6Minus; }
+    public set IsPrice6Minus(newValue: boolean) { if (this.isPrice6Minus != newValue) { this.isPrice6Minus = newValue; this.MarkAsDirty("IsPrice6Minus"); } }
+       
+	 
+    private isPrice7Minus: boolean;
+    public get IsPrice7Minus() { return this.isPrice7Minus; }
+    public set IsPrice7Minus(newValue: boolean) { if (this.isPrice7Minus != newValue) { this.isPrice7Minus = newValue; this.MarkAsDirty("IsPrice7Minus"); } }
+       
+	 
+    private isPrice8Minus: boolean;
+    public get IsPrice8Minus() { return this.isPrice8Minus; }
+    public set IsPrice8Minus(newValue: boolean) { if (this.isPrice8Minus != newValue) { this.isPrice8Minus = newValue; this.MarkAsDirty("IsPrice8Minus"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	

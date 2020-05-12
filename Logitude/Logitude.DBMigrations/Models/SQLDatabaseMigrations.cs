@@ -7,12 +7,13 @@ namespace Logitude.DBMigrations.Models
 {
     public class SQLDatabaseMigrations : DatabaseMigrations
     {
-        public SQLDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName)
+        public SQLDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName, bool isBasicArgumentProvided)
         {
             ConnectionString = connectionString;
             DXMLTable = dxmlTable;
             DXMLTables = dxmlTables;
             DXMLFileName = dxmlFileName;
+            IsBasicArgumentProvided = isBasicArgumentProvided;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
@@ -453,7 +454,7 @@ namespace Logitude.DBMigrations.Models
                 if (IsColumnInCurrentTable(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames))
                 {
                     ColumnDefinition dbForeignKeyColumn = GetCurrentTableColumn(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames);
-                    isForeignKeyDataTypeChanged = (dbForeignKeyColumn.Constraints.Nullable && !dxmlForeignKeyColumn.Constraints.Nullable) || (dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale));
+                    isForeignKeyDataTypeChanged = (dbForeignKeyColumn.Constraints.Nullable && !dxmlForeignKeyColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale));
                 }
             }
             else
@@ -465,7 +466,7 @@ namespace Logitude.DBMigrations.Models
                     if (IsColumnInCurrentTable(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames))
                     {
                         ColumnDefinition dbForeignKeyColumn = GetCurrentTableColumn(dxmlForeignKeyColumn.Name, dxmlForeignKeyColumn.ShortName, dxmlForeignKeyColumn.OldNames);
-                        if ((dbForeignKeyColumn.Constraints.Nullable && !dxmlForeignKeyColumn.Constraints.Nullable) || (dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale)))
+                        if ((dbForeignKeyColumn.Constraints.Nullable && !dxmlForeignKeyColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbForeignKeyColumn.Type != dxmlForeignKeyColumn.Type) || (dbForeignKeyColumn.Size != FormatColumnSize(dxmlForeignKeyColumn.Size, dxmlForeignKeyColumn.Type) && dxmlForeignKeyColumn.Size != 0) || (dbForeignKeyColumn.Type == "decimal" && dxmlForeignKeyColumn.Type == "decimal" && (dbForeignKeyColumn.Precision != dxmlForeignKeyColumn.Precision || dbForeignKeyColumn.Scale != dxmlForeignKeyColumn.Scale)))
                         {
                             isForeignKeyDataTypeChanged = true;
                         }
@@ -499,7 +500,7 @@ namespace Logitude.DBMigrations.Models
                 if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
                 {
                     ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
-                    isIndexColumnDataTypeChanged = (dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale));
+                    isIndexColumnDataTypeChanged = (dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale));
                 }
             }
             else
@@ -511,7 +512,7 @@ namespace Logitude.DBMigrations.Models
                     if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
                     {
                         ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
-                        if ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)))
+                        if ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)))
                         {
                             isIndexColumnDataTypeChanged = true;
                         }
@@ -540,7 +541,7 @@ namespace Logitude.DBMigrations.Models
                 if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
                 {
                     ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
-                    isUniqueConstraintColumnDataTypeChanged = (dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale));
+                    isUniqueConstraintColumnDataTypeChanged = (dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale));
                 }
             }
             else
@@ -552,7 +553,7 @@ namespace Logitude.DBMigrations.Models
                     if (IsColumnInCurrentTable(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames))
                     {
                         ColumnDefinition dbColumn = GetCurrentTableColumn(dxmlColumn.Name, dxmlColumn.ShortName, dxmlColumn.OldNames);
-                        if ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)))
+                        if ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !IsBasicArgumentProvided) || (dbColumn.Type != dxmlColumn.Type) || (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) || (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)))
                         {
                             isUniqueConstraintColumnDataTypeChanged = true;
                         }
@@ -1050,7 +1051,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string columnName, string script)
         {
-            if (DXMLFileName.ToLower() == "DBMigrationsHistory.dxml".ToLower())
+            if(DXMLFileName.ToLower() == "DBMigrationsHistory.dxml".ToLower())
             {
                 return null;
             }

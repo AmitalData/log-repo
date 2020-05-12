@@ -11,7 +11,7 @@
                             <td style="width: 1px;">
                                 <BackButton [Text]="'Reports List'" (click)="BackButtonClicked()"></BackButton>
                             </td>
-                          <td style="width:10px"></td>
+                            <td style="width:10px"></td>
                             <td *ngIf="Report.Code != 'CUAD' && Report.Code != 'CUPA'" style="padding-left: 10px; font-size:18px; color:#1B90CB;">{{Title}}</td>
 
                             <td *ngIf="Report.Code == 'CUAD' || Report.Code == 'CUPA'" style="width:270px; padding-left: 10px; font-size:18px; color:#1B90CB;">{{Title}}</td>
@@ -29,12 +29,14 @@
             </tr>
 
             <!-- Filters -->
-            <tr style="height: 1px;" [attr.Id]="FiltersAreaId">
-                <td>
-                    <div #FiltersLocation class="LocationDirective"></div>
+            <tr style="height:1px;" [attr.Id]="FiltersAreaId">
+                <td style="width:100%;max-width: 500px;">
+                    <div [ngStyle]="{'height':FilterConrolHeight>110 ? '110px' : FilterConrolHeight}" style="overflow-x:auto;overflow-y:auto">
+                        <div #FiltersLocation class="LocationDirective"></div>
+                    </div>
                 </td>
             </tr>
-
+            
             <tr style="height: 5px;">
                 <td></td>
             </tr>
@@ -43,13 +45,13 @@
                 <td>
                     <div id="{{'RunReportSucceededDiv ' | IdGeneratorPipe}}" *ngIf="IsRunReportSucceeded" style="width:0px;height:0px;"></div>
                     <div id="{{'RunReportFailedDiv ' | IdGeneratorPipe}}" *ngIf="IsRunReportFailed" style="width:0px;height:0px;"></div>
-                    
+
                     <div class="MediaFill" *ngIf="IsResourcesReady">
                         <StimulsoftViewer style="text-align:center;" [StimulsoftArgData]="StimulsoftArg"></StimulsoftViewer>
                     </div>
 
                     <div class="MediaFill" *ngIf="Report.Code == 'CUPA'">
-                        <div class="LocationDirective" #CustomerChild></div>                     
+                        <div class="LocationDirective" #CustomerChild></div>
                     </div>
                 </td>
             </tr>
@@ -58,4 +60,4 @@
 </div>
 
 
-<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="WidthBusyIndicator" ></BusyIndicator>
+<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="WidthBusyIndicator"></BusyIndicator>

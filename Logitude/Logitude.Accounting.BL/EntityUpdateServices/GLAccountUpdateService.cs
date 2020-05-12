@@ -426,7 +426,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
-            if (entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
+            if (entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete && s.PeriodStartDate !=null).GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
             {
 
                 throw new Exception(TextCodesTranslator.TranslateText("GLAccount.O.LineDateExist", entityPM.Tenant, showLocals));

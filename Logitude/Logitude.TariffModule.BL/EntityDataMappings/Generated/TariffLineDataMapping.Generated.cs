@@ -173,7 +173,18 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         CurrencyCode, 
 	         OriginPortCombinedCode, 
 	         DestinationPortCombinedCode, 
-	         TransitTime,
+	         TransitTime, 
+	         OriginPortHasWrongTransMode, 
+	         DestinationPortHasWrongTransMode, 
+	         IsMinPriceMinus, 
+	         IsPrice1Minus, 
+	         IsPrice2Minus, 
+	         IsPrice3Minus, 
+	         IsPrice4Minus, 
+	         IsPrice5Minus, 
+	         IsPrice6Minus, 
+	         IsPrice7Minus, 
+	         IsPrice8Minus,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

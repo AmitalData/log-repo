@@ -127,6 +127,7 @@ export class TicketList {
 	EntityNumber: string;
 	SupportMailboxId: string;
 	LastCorrespondence: string;
+	EntityTypeName: string;
 	
 }
  

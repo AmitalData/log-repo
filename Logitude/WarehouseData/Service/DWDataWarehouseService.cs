@@ -427,11 +427,13 @@ namespace WarehouseData.Service
 
                     if (!string.IsNullOrEmpty(table.RefreshIds))
                     {
-                        DateTime automaticLastUpdateDate = (DateTime)dataTable.Rows
-                                      .Cast<DataRow>()
-                                      .Max(d => d["AutomaticLastUpdateDate"]);
-
-
+                        DateTime automaticLastUpdateDate = DateTime.Now;
+                        if (!buildDWArgs.IsChildentity)
+                        {
+                            automaticLastUpdateDate = (DateTime)dataTable.Rows
+                            .Cast<DataRow>()
+                            .Max(d => d["AutomaticLastUpdateDate"]);
+                        }
 
                         using (SqlConnection destinationConnection =
                                    new SqlConnection(buildDWArgs.DestinationConnectionString))

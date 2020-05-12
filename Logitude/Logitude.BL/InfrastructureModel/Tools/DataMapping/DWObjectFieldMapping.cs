@@ -37,6 +37,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.CannotFilter = entityPM.CannotFilter;
             entityPOCO.HelpText = entityPM.HelpText;
             entityPOCO.IsCustom = entityPM.IsCustom;
+            entityPOCO.OriginalObjectFieldCode = entityPM.OriginalObjectFieldCode;
+
+
+
+
 
         }
     }

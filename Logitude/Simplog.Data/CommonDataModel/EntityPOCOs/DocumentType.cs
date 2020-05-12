@@ -68,8 +68,14 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public bool IsSystemAdditionalPrintingFields { get; set; }
         public string PrintingFieldsScreenCode { get; set; }
+        public bool AddedManually { get; set; }
 
-    
+
+
+
+
+
+
         [ForeignKey("CustomerRoleId")]
         public Role CustomerRole { get; set; }
         [ForeignKey("AgentRoleId")]

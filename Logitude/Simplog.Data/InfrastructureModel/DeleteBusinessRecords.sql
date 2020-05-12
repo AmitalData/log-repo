@@ -16,6 +16,13 @@ update Shipments set MasterShipmentDataId = NULL where Tenant = @Tenant
 
 delete from FollowUps where Tenant = @Tenant
 
+delete from FlightsSchedulesResponses where Tenant = @Tenant
+delete from FlightsSchedulesRequests where Tenant = @Tenant
+delete from BookingAnswers where Tenant = @Tenant
+delete from BookingLastRequests where Tenant = @Tenant
+delete from BookingPackages where Tenant = @Tenant
+delete from Bookings where Tenant = @Tenant
+
 delete from QuotePriceSteps where Tenant = @Tenant
 delete from QuoteCharges where Tenant = @Tenant
 delete from QuoteDocumentVersions where Tenant = @Tenant

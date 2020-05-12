@@ -1183,7 +1183,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
 
-                        myResult = (from d in context.Contacts
+                        myResult = (from d in context.Contacts.GroupBy(c => c.Email).Select(c => c.FirstOrDefault())
                                     where d.Tenant == tenant
                                     && d.Email != null
                                     && emailsList.Contains(d.Email.ToLower())

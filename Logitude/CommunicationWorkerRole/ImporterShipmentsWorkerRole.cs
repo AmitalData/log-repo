@@ -49,14 +49,28 @@ namespace CommunicationWorkerRole
         string URI = "";//"http://localhost:9996";
         APILogsService apiLogsService;
         IWebFreightContext webFreightContext;
+        private string queueName;
 
-        public ImporterShipmentsWorkerRole(string tenant)
+        public ImporterShipmentsWorkerRole(string tenant, string priority)
         {
             Tenant = int.Parse(tenant);
             IGlobalContext objectContext = GlobalContext.GetContext();
             SettingRepository SettingRepository = new SettingRepository(objectContext);
             SettingQuery SettingQuery = new SettingQuery(SettingRepository);
             URI = SettingQuery.GetSinglePM().CustomerTenantsURL.TrimEnd('/') + "/api/";
+            switch (priority)
+            {
+                case "Low":
+                    {
+                        queueName = "ImportersShipmentQueue";
+                        break;
+                    }
+                case "Digital":
+                    {
+                        queueName = "ImportersDigitalShipmentQueue";
+                        break;
+                    }
+            }
         }
 
         public override bool OnStart()
@@ -101,8 +115,8 @@ namespace CommunicationWorkerRole
                         {
                             //int tenant = 0;
 
-                            queueservice = new DbQueueService();
-                            queueservice.InitializeQueue("ImportersShipmentQueue", Tenant);
+                            queueservice = new DbQueueService(queueName, 0);
+                            //queueservice.InitializeQueue("ImportersShipmentQueue", Tenant);
                             var response = queueservice.Receive();
                             LastActivity = DateTime.UtcNow;
                             int tenant = 0;
