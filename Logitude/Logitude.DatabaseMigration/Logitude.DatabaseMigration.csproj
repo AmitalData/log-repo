@@ -2392,6 +2392,7 @@
       <DependentUpon>202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs</DependentUpon>
     </Compile>
 
+
     <Compile Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.cs" />
     <Compile Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.Designer.cs">
       <DependentUpon>202005061012001_Remove_MinimumInterestInvoiceBilling.cs</DependentUpon>
@@ -2408,6 +2409,8 @@
     </Compile>
 
 
+
+   
 
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
