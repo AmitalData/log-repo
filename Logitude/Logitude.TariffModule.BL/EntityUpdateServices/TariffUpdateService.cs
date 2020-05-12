@@ -480,7 +480,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                                 {
                                     if (tariffLinePM.StartDate != null)
                                     {
-                                        this.UpdateVersionPreviousLineSatrtDate(tariffLinePM, previousLine);
+                                        this.UpdateVersionPreviousLineSatrtDate(tariffLinePM, previousLine, entityPM.TypeCode);
                                     }
                                 }
                             }
@@ -543,9 +543,9 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 throw new ApplicationException("Expiration date can't be less than start date in the previous version line");
             }
         }
-        private void UpdateVersionPreviousLineSatrtDate(TariffLinePM tariffLinePM, TariffLine previousLine)
+        private void UpdateVersionPreviousLineSatrtDate(TariffLinePM tariffLinePM, TariffLine previousLine, string type)
         {
-            if (tariffLinePM.ChangeSetOp != ChangeSetOperation.Delete && tariffLinePM.ChangeSetOp != ChangeSetOperation.None)
+            if (tariffLinePM.LineEdited)
             {
                 bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "start", TariffLinePM = tariffLinePM, PreviousLine = previousLine });
 
@@ -557,7 +557,16 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                 else
                 {
-                    string msg = "Line (" + tariffLinePM.OriginPortCode + " > " + tariffLinePM.DestinationPortCode + ") Start Date is less than or equal the previous version line";
+                    string fromPort = tariffLinePM.OriginPortCode;
+                    string toPort = tariffLinePM.DestinationPortCode;
+
+                    if(type != "ASC")
+                    {
+                        fromPort = tariffLinePM.OriginPortCombinedCode;
+                        toPort = tariffLinePM.DestinationPortCombinedCode;
+                    }
+
+                    string msg = "Line (" + fromPort + " > " + toPort + ") Start Date is less than or equal the previous version line";
                     throw new ApplicationException(msg);
                 }
             }
