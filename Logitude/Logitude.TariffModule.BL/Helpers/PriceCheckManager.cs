@@ -972,6 +972,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
                         tariffsSummary.AllInSurcharges = surchargesList.Where(a => a.IsAllIn).ToList();
                         tariffsSummary.SurchargesWithoutAllIn = surchargesList.Where(a => !a.IsAllIn).ToList();
+                        tariffsSummary.SurchargesPrice = tariffsSummary.SurchargesWithoutAllIn.Sum(s => s.Price).ToString();
                     }
                 }
             }
