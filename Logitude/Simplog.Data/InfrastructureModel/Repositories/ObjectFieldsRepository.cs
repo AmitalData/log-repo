@@ -279,6 +279,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
 
 
+
         public List<ObjectField> GetPMObjectFieldsByObjectTableId(string objectTableId, int tenant)
         {
             IQueryable<ObjectField> objectfields = from a in context.ObjectFields
@@ -460,6 +461,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
+
+        public ObjectField GetSingleObjectFieldByFieldCode(string fieldCode, int tenant)
+        {
+            return (from a in context.ObjectFields
+                    where a.FieldCode == fieldCode
+                    select a).FirstOrDefault();
+        }
         public ObjectField GetSingleObjectFieldByCode(string code, string objectTableId, int tenant)
         {
             return (from a in context.ObjectFields
@@ -501,7 +509,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
 
 
-
+    
 
     }
 }

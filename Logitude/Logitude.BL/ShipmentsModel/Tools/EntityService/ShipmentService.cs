@@ -842,6 +842,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 UserId = contact.Id,
                                 EntityId = item.Id,
                                 ObjectTableName = "Activity",
+                                Entity = item,
+
                             });
                         }
 
@@ -1934,6 +1936,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             EntityId = this.entityPM.Id,
                             ObjectTableName = "Shipment",
                             Notes = itemPM.EventTypeFollowUpName,
+                            Entity = entityPM,
                         });
 
                     }
@@ -1954,6 +1957,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             EntityId = this.entityPM.Id,
                             ObjectTableName = "Shipment",
                             Notes = itemPM.EventTypeFollowUpName,
+                            Entity = entityPM,
+
                         });
 
                     }
@@ -2008,6 +2013,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 EntityId = this.entityPM.Id,
                                 ObjectTableName = "Shipment",
                                 Notes = itemPM.EventTypeFollowUpName,
+                                Entity = entityPM,
                             });
                         }
 
@@ -3181,6 +3187,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     EntityId = entityPM.Id,
                     ObjectTableName = "Shipment",
                     Notes = "Old Number: " + entityPM.ShipmentNumber,
+                    Entity = entityPM,
+
+
+
                 });
             }
 

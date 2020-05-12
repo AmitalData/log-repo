@@ -8,6 +8,10 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
+using System.Reflection;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -130,7 +134,7 @@ namespace Logitude.Server.Tools.Helpers
                             }
                         }
                     }
-
+      
                     TraceEvent myTraceEvent = new TraceEvent()
                     {
                         Id = Guid.NewGuid().ToString(),
@@ -157,8 +161,40 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant);
                     }
+
+
+                    if (!string.IsNullOrEmpty(eventType.CustomField) && objectTable.AllowCustomFields)
+                    {
+                        SetCustomFieldValue(args, myTraceEvent , eventType);
+                    }
+
                 }
             }
+        }
+
+        private static void SetCustomFieldValue(EventTracerArgs args, TraceEvent traceEvent , EventType eventType)
+        {
+
+            ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(args.Tenant);
+            ObjectField objectField = objectFieldRepository.GetSingleObjectFieldByFieldCode(eventType.CustomField, args.Tenant);
+            if (objectField!=null)
+            {
+                CustomFieldClass customFieldClass = new CustomFieldClass();
+                customFieldClass.SetFieldDataType(objectField.DataTypeCode, traceEvent.EventDateTime);
+                object entity = args.Entity;
+                if(entity == null) entity = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(args.ObjectTableName, args.EntityId, args.Tenant);
+                if (entity != null)
+                {
+                    PropertyInfo propInfo = entity.GetType().GetProperty(objectField.FieldName);
+                    if (propInfo != null) propInfo.SetValue(entity, "value", null);
+                }
+
+                if (args.Entity==null)
+                {
+
+                }
+            }
+
         }
 
         public static Response CreateTraceEventsList(List<TraceEventParams> traceEventParamsList, int tenant, string objectTableName, string currentStatusId, string param = null)
@@ -346,7 +382,7 @@ namespace Logitude.Server.Tools.Helpers
         public string ExternalId { get; set; }
         public string NewStatusId { get; set; }
         public string CurrentStatusId { get; set; }
-        public object EntityPM { get; set; }
+        public object Entity { get; set; }
 
 
     }

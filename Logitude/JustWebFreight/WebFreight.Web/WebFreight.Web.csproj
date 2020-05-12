@@ -2438,6 +2438,7 @@
     <Compile Include="Helpers\DepositionRequestHelper.cs" />
     <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
+    <Compile Include="Helpers\EntityUpdateReflectorService.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
     <Compile Include="Helpers\FirstChanceExceptionEventArgsLogger.cs" />
