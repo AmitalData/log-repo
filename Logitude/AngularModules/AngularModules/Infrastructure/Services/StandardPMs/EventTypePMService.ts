@@ -22,6 +22,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
 import {EventTypePM} from '../../EntityPMs/EventTypePM';
 
 import {EventTypePMInitService} from '../../EntityPMInitServices/EventTypePMInitService';
+import {EventTypeValidator} from '../../Validators/EventTypeValidator';
 
 @Injectable()
 
@@ -74,6 +75,12 @@ export class EventTypePMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
 			var errorsArray = validator.Validate("EventType", entityPM);
 
+			var customValidator :EventTypeValidator = new EventTypeValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
 			if (errorsArray.length == 0) {
 
@@ -116,6 +123,12 @@ export class EventTypePMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
 			var errorsArray = validator.Validate("EventType", entityPM);
 
+			var customValidator :EventTypeValidator = new EventTypeValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
 			if (errorsArray.length == 0) {
 

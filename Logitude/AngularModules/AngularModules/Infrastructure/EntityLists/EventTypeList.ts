@@ -31,5 +31,6 @@ export class EventTypeList {
 		IsSharedLogisticsEnabled: boolean;
 		EventDateTime: Date;
 		AllowedInAutomation: boolean;
+		CustomField: string;
 	
 }
