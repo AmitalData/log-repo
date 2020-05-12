@@ -628,26 +628,28 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (index < 0) { // DNE
 
 
+            var ledger = new TransactionLineModel(row, this, RowIndex);
 
-            var r = new TransactionLineModel(row, this, RowIndex);
-
-            // if(r.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId)
-            //     this.selectedTransferTransactionsCount++;
-            var isTransferTransaction = r.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId;
-            if (isTransferTransaction && this.selectedTransferTransactionsCount >= 1 && this.ExtPageSelectedLines.Length > 0) {
-                // this.ValidationErrorsList = ["Cannot Reconcile two transfer account transactions at a time"];
-                this.ValidationErrorsList = [TextCodeTranslator.Translate("ExternalReconciliation.O.CantReconcileTwoTransfer")];
-                this.TransactionFireCheckBoxChecked.emit({ rowData: r.LedgerTransactionPM, IsChecked: false, RowIndex: RowIndex, ById: true });
+            var isTransferTransaction = ledger.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId;
+            if (isTransferTransaction && this.selectedTransferTransactionsCount >= 1 && this.ExtPageSelectedLines.Length > 0)
+            {
+                this.ValidationErrorsList = [TextCodeTranslator.Translate("ExternalReconciliation.O.OnlyOneTransferTransactionCanReconciledWithOnePageLine")];
+                // this.ValidationErrorsList = [TextCodeTranslator.Translate("ExternalReconciliation.O.CantReconcileTwoTransfer")];
+                this.TransactionFireCheckBoxChecked.emit({ rowData: ledger.LedgerTransactionPM, IsChecked: false, RowIndex: RowIndex, ById: true });
             }
-            else {
-                this.TransactionSelectedLines.Insert(r);
+            else if (isTransferTransaction && this.selectedTransferTransactionsCount == 0 && this.ExtPageSelectedLines.Length > 1)
+            {
+                // this.ValidationErrorsList = ["When transfer transaction selected, only one line should be marked on the external page with the deferred check amount."];
+                this.ValidationErrorsList = [TextCodeTranslator.Translate("ExternalReconciliation.O.OnlyOneTransferTransactionCanReconciledWithOnePageLine")];
+                this.TransactionFireCheckBoxChecked.emit({ rowData: ledger.LedgerTransactionPM, IsChecked: false, RowIndex: RowIndex, ById: true });
+            }
+            else
+            {
+                this.TransactionSelectedLines.Insert(ledger);
                 this.CalculateTotals();
                 this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: true, RowIndex: RowIndex });
                 this.ValidationErrorsList = [];
             }
-
-
-
 
         }
     }
@@ -669,6 +671,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
 
     }
+
+
 
     CheckBoxValueChanged(Row) {
         this.TransactionFireCheckBoxChecked.emit({ rowData: Row.LedgerTransactionPM, IsChecked: false, RowIndex: Row.RowIndex, ById: true });
@@ -794,8 +798,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                     this.ExtPagePushLine(row, RowIndex);
                 } else {
                     this.ExtPagePopLine(rowId);
+                    this.ExtPageFireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
                 }
-                this.ExtPageFireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
 
 
             }
@@ -865,11 +869,27 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         var index = this.ExtPageSelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
              row.AmountToReconcile = row.CreditAmount!=0?row.CreditAmount:row.DebitAmount;
-            // row.AmountToReconcile = row.CreditAmount!=0?row.CreditAmount*-1:row.DebitAmount;
-            // row.Amount = row.AmountToReconcile;
-            var r = new ExtPageLineModel(row, this, RowIndex);
-            this.ExtPageSelectedLines.Insert(r);
-            this.CalculateExtPageTotals();
+
+                var r = new ExtPageLineModel(row, this, RowIndex);
+
+            if (this.selectedTransferTransactionsCount > 1)
+            {
+                this.ValidationErrorsList = [TextCodeTranslator.Translate("ExternalReconciliation.O.OnlyOneTransferTransactionCanReconciledWithOnePageLine")];
+                // this.ValidationErrorsList = ["There is two transfer transactions selected, you can select page line only if one transfer ledger is selected"];
+                this.ExtPageFireCheckBoxChecked.emit({ rowData: r.PageLinePM, IsChecked: false, RowIndex: Number(RowIndex), ById: true });
+            }else if(this.selectedTransferTransactionsCount == 1 && this.ExtPageSelectedLines.Length == 1){
+                this.ValidationErrorsList = [TextCodeTranslator.Translate("ExternalReconciliation.O.OnlyOneTransferTransactionCanReconciledWithOnePageLine")];
+                // this.ValidationErrorsList = ["When transfer transaction selected, only one line should be marked on the external page with the deferred check amount"];
+                this.ExtPageFireCheckBoxChecked.emit({ rowData: r.PageLinePM, IsChecked: false, RowIndex: Number(RowIndex), ById: true });
+            }
+            else
+            {
+                this.ExtPageSelectedLines.Insert(r);
+                this.CalculateExtPageTotals();
+                this.ExtPageFireCheckBoxChecked.emit({ rowData: row, IsChecked: true, RowIndex: RowIndex });
+                this.ValidationErrorsList = [];
+            }
+
         }
     }
 
