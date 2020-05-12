@@ -125,7 +125,7 @@ namespace Logitude.Accounting.BL.DataContract
                     join j in accountingContext.Journals on a.JournalId equals j.Id
                     where (a.DocumentDate >= startDate && a.DocumentDate <= endDate)
                     && a.Tenant == Tenant &&  a.AccountId == setting.TaxWithholdingGLAccountId
-                    && j.ExternalSystem != null && a.LocalAmountCredit != 0
+                    && j.ExternalSystem != null && a.LocalAmountDebit == 0
                    select a).ToList();
             List<string> journalIds = transactions.Select(d => d.JournalId).ToList();
             journalLines = GetJournalLinesByJournalds();
@@ -305,7 +305,7 @@ namespace Logitude.Accounting.BL.DataContract
                 taxDeductionReportLine.VendorId = vendorId; 
                 taxDeductionReportLine.MonthOfRegisterDate = transaction.DocumentDate.Month;
                 LedgerTransaction oppositeTransaction = oppositeAccountTransactions.Where(d => d.JournalId == transaction.JournalId && d.AccountId == transaction.OppositeAccountId && d.Reference1 == transaction.Reference1).FirstOrDefault();
-                taxDeductionReportLine.AmountInLocalCurrency = oppositeTransaction != null ? (double?)oppositeTransaction.LocalAmountCredit: 0;
+                taxDeductionReportLine.AmountInLocalCurrency = oppositeTransaction != null ? (double?)oppositeTransaction.LocalAmountDebit: 0;
                 taxDeductionReportLine.TaxDeductionLocalAmount = transaction.LocalAmountCredit;
                 taxDeductionReportLine.TaxDeductionPercentage =(int?) ( transaction.LocalAmountCredit == 0 ? 0 : Math.Round( (transaction.LocalAmountCredit / (transaction.LocalAmountCredit * 2)),2));
                 GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == transaction.OppositeAccountId).FirstOrDefault();
