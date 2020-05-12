@@ -73,6 +73,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.EnableAPPaymentExternalPayment).HasColumnName("EnableAPPaymentExternalPayment");
             this.Property(t => t.TransferToFTPActivated).HasColumnName("TransferToFTPActivated");
             this.Property(t => t.TransferFTPDetailId).HasColumnName("TransferFTPDetailId");
+            this.Property(t => t.EnableEnteringTotalVAT).HasColumnName("EnableEnteringTotalVAT");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
