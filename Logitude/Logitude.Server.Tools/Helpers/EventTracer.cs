@@ -346,6 +346,9 @@ namespace Logitude.Server.Tools.Helpers
         public string ExternalId { get; set; }
         public string NewStatusId { get; set; }
         public string CurrentStatusId { get; set; }
+        public object EntityPM { get; set; }
+
+
     }
 
 }
