@@ -26,6 +26,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsAgentView).IsRequired();
             this.Property(t => t.IsCustomerView).IsRequired();
             this.Property(t => t.IsSharedLogisticsEnabled).IsRequired();
+            this.Property(t => t.Code).IsRequired().HasMaxLength(200).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("EventTypes");
@@ -51,7 +52,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsCustomerView).HasColumnName("IsCustomerView");
             this.Property(t => t.IsSharedLogisticsEnabled).HasColumnName("IsSharedLogisticsEnabled");
             this.Property(t => t.AllowedInAutomation).HasColumnName("AllowedInAutomation");
-            
+            this.Property(t => t.CustomField).HasColumnName("CustomField");
+
             this.HasOptional(t => t.AgentRole).WithMany().HasForeignKey(d => d.AgentRoleId);
             this.HasOptional(t => t.CustomerRole).WithMany().HasForeignKey(d => d.CustomerRoleId);
         }

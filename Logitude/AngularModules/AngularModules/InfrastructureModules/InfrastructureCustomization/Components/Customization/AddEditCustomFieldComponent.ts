@@ -180,6 +180,22 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.objectField.LookUpTableId = value;
         }
     }
+
+
+    public get DisplayOnly() {
+        return this.objectField.DisplayOnly;
+    }
+    public set DisplayOnly(value: boolean) {
+        this.objectField.DisplayOnly = value;
+
+    }
+
+
+
+
+
+
+
     lookUpTable: any;
     public get LookUpTable() {
         return this.lookUpTable;
