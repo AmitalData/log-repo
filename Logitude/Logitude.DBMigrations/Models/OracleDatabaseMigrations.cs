@@ -7,15 +7,15 @@ namespace Logitude.DBMigrations.Models
 {
     public class OracleDatabaseMigrations : DatabaseMigrations
     {
-        protected bool IsClobArgumentProvided;
+        protected bool IsDataTypeChangesArgumentProvided;
 
-        public OracleDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName, bool isClobArgumentProvided)
+        public OracleDatabaseMigrations(TableDefinition dxmlTable, string connectionString, List<TableDefinition> dxmlTables, string dxmlFileName, bool isDataTypeChangesArgumentProvided)
         {
             ConnectionString = connectionString;
             DXMLTable = FormatCaseSensitiveNames(dxmlTable);
             DXMLTables = dxmlTables;
             DXMLFileName = dxmlFileName;
-            IsClobArgumentProvided = isClobArgumentProvided;
+            IsDataTypeChangesArgumentProvided = isDataTypeChangesArgumentProvided;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
@@ -69,6 +69,7 @@ namespace Logitude.DBMigrations.Models
                                  "SELECT COL.COLUMN_NAME AS \"ColumnName\", COL.NULLABLE AS \"Nullable\", COL.DATA_TYPE AS \"DataType\", COL.CHAR_LENGTH AS \"Size\", COL.DATA_PRECISION AS \"Precision\", COL.DATA_SCALE AS \"Scale\", COL.DATA_DEFAULT AS \"DefaultValue\" " +
                                  "FROM USER_TAB_COLUMNS COL " +
                                  "WHERE COL.TABLE_NAME = :tableName " +
+                                 "ORDER BY COL.COLUMN_ID " +
                                  ") \"Q1\" " +
                                  "LEFT JOIN( " +
                                  "SELECT CON.COLUMN_NAME AS \"ColumnName\", TCON.CONSTRAINT_TYPE AS \"ConstraintType\", TCON.CONSTRAINT_NAME AS \"ConstraintName\" " +
@@ -310,7 +311,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateTableScript()
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -475,10 +476,10 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            if (DXMLTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") ? FormatNameLength(u.Columns, DXMLTable.Columns.Where(c => c.Name == u.Columns).First().ShortName) : string.Join(",", u.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())) == index.Columns).Any())
-            {
-                return true;
-            }
+            //if (DXMLTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") ? FormatNameLength(u.Columns, DXMLTable.Columns.Where(c => c.Name == u.Columns).First().ShortName) : string.Join(",", u.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())) == index.Columns).Any())
+            //{
+            //    return true;
+            //}
 
             return DXMLTable.Indexes.Where(i => (!i.Columns.Contains(",") ? FormatNameLength(i.Columns, DXMLTable.Columns.Where(c => c.Name == i.Columns).First().ShortName) : string.Join(",", i.Columns.Split(',').Select(ic => FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName)).ToArray())) == index.Columns).Any();
         }
@@ -587,7 +588,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetRenameTableScript()
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -619,7 +620,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetAddColumnScript(ColumnMigration columnMigration)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -642,7 +643,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetRenameColumnScript(ColumnMigration columnMigration)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -661,7 +662,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropColumnScript(ColumnMigration columnMigration)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -679,11 +680,6 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetAlterTypeScript(ColumnMigration columnMigration)
         {
-            if (IsClobArgumentProvided)
-            {
-                return null;
-            }
-
             string alterTypeScript = "";
             string dropRelationsScript = "";
 
@@ -696,11 +692,39 @@ namespace Logitude.DBMigrations.Models
 
             string tableName = FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper();
 
-            alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
-            alterTypeScript += "ALTER TABLE " + "\"" + tableName + "\"" + " ";
-            alterTypeScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " ";
-            alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? -1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
-            alterTypeScript += ";\n\n";
+            if (IsVARCHARAlterType(columnMigration) && IsDataTypeChangesArgumentProvided)
+            {
+                string columnName = columnMigration.CurrentColumn.Name.ToUpper();
+                string tempColumnName = FormatNameLength("temp_" + columnMigration.CurrentColumn.Name, null).ToUpper();
+                string droppedColumnName = FormatNameLength("cdrop_" + columnMigration.CurrentColumn.Name, null).ToUpper();
+                string tempColumnDataType = GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? -1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
+
+                alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
+                alterTypeScript += "ALTER TABLE \"" + tableName + "\" ADD \"" + tempColumnName + "\" " + tempColumnDataType + " NULL;\n";
+                alterTypeScript += "UPDATE \"" + tableName + "\" SET \"" + tempColumnName + "\" = \"" + columnName + "\";\n";
+                if (!columnMigration.CurrentColumn.Constraints.Nullable)
+                {
+                    alterTypeScript += "ALTER TABLE \"" + tableName + "\" MODIFY \"" + tempColumnName + "\" NOT NULL;\n";
+                    alterTypeScript += "ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL;\n";
+                }
+                alterTypeScript += "ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnName + "\" TO \"" + droppedColumnName + "\";\n";
+                alterTypeScript += "ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + tempColumnName + "\" TO \"" + columnName + "\";\n\n\n";
+            }
+            else
+            {
+                if (!IsDataTypeChangesArgumentProvided)
+                {
+                    alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
+                    alterTypeScript += "ALTER TABLE " + "\"" + tableName + "\"" + " ";
+                    alterTypeScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name.ToUpper() + "\"" + " ";
+                    alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? -1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
+                    alterTypeScript += ";\n\n";
+                }
+                else
+                {
+                    return null;
+                }
+            }
 
             string alterTypeWithHistoryScript = dropRelationsScript + alterTypeScript + GetInsertScriptForMigrationsHistory("Alter Column Type", tableName, columnMigration.CurrentColumn.Name.ToUpper(), alterTypeScript);
 
@@ -723,7 +747,7 @@ namespace Logitude.DBMigrations.Models
 
             bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE && m.CurrentColumn.Name == columnMigration.CurrentColumn.Name).Any();
 
-            if (IsCLOBAlterSize(columnMigration) && IsClobArgumentProvided)
+            if (IsCLOBAlterSize(columnMigration) && IsDataTypeChangesArgumentProvided)
             {
                 string columnName = columnMigration.CurrentColumn.Name.ToUpper();
                 string tempColumnName = FormatNameLength("temp_" + columnMigration.CurrentColumn.Name, null).ToUpper();
@@ -743,7 +767,7 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                if (!IsClobArgumentProvided)
+                if (!IsDataTypeChangesArgumentProvided)
                 {
                     alterSizeScript += "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
                     alterSizeScript += "ALTER TABLE " + "\"" + tableName + "\"" + " ";
@@ -764,7 +788,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetAddPrimaryKeyScript(ColumnMigration columnMigration)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -791,7 +815,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropPrimaryKeyScript(ColumnMigration columnMigration)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -813,12 +837,17 @@ namespace Logitude.DBMigrations.Models
 
             string dropPrimaryKeyWithHistoryScript = dropRelationsScript + dropPrimaryKeyScript + GetInsertScriptForMigrationsHistory("Drop Primary Key", tableName, null, dropPrimaryKeyScript);
 
-            return dropPrimaryKeyWithHistoryScript;
+            string dropIndexScript = GetDropIndexScript(new IndexDefinition
+            {
+                IndexName = primaryKeyConstraintName
+            });
+
+            return dropPrimaryKeyWithHistoryScript + dropIndexScript;
         }
 
         protected override string GetSetNullableScript(ColumnMigration columnMigration)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -842,7 +871,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetUnsetNullableScript(ColumnMigration columnMigration)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -866,7 +895,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -896,7 +925,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetPrimaryKeyConstraintScript()
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -917,7 +946,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -934,12 +963,17 @@ namespace Logitude.DBMigrations.Models
 
             string dropPrimaryKeyScript = "-- Drop Primary Key Constraint\n";
             dropPrimaryKeyScript += "DECLARE ConstraintCount NUMBER; BEGIN SELECT COUNT(*) INTO ConstraintCount FROM USER_CONSTRAINTS WHERE CONSTRAINT_NAME = '" + primaryKeyConstraintName + "'; IF (ConstraintCount <> 0) THEN EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"'; END IF; END;";
-            return dropRelationsScript + dropPrimaryKeyScript + "\n\n" + GetInsertScriptForMigrationsHistory("Drop Primary Key Constraint", tableName, null, dropPrimaryKeyScript);
+            string dropIndexScript = GetDropIndexScript(new IndexDefinition
+            {
+                IndexName = primaryKeyConstraintName
+            });
+
+            return dropRelationsScript + dropPrimaryKeyScript + "\n\n" + GetInsertScriptForMigrationsHistory("Drop Primary Key Constraint", tableName, null, dropPrimaryKeyScript) + dropIndexScript;
         }
 
         protected override string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -953,7 +987,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateRelationScript(RelationDefinition relation)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -998,7 +1032,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropRelationScript(RelationDefinition relation)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -1027,7 +1061,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetInsertScriptForMigrationsHistory(string migrationType, string tableName, string columnName, string script)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -1091,7 +1125,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetAddDefaultScript(ColumnMigration columnMigration)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -1110,7 +1144,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropDefaultScript(ColumnMigration columnMigration)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -1128,16 +1162,18 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateIndexScript(IndexDefinition index)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
 
+            string indexColumns = (!index.Columns.Contains(",") ? "\"" + FormatNameLength(index.Columns, DXMLTable.Columns.Where(c => c.Name == index.Columns).First().ShortName) + "\"" : string.Join(",", index.Columns.Split(',').Select(ic => "\"" + FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName) + "\"").ToArray())).ToUpper();
             bool createIndex = true;
+
             if (CurrentTable == null && DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
             {
                 string dxmlPrimaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => FormatNameLength(c.Name, c.ShortName)).ToArray());
-                if (dxmlPrimaryKeyColumns == index.Columns)
+                if (dxmlPrimaryKeyColumns == indexColumns.Replace("\"", String.Empty).ToLower())
                 {
                     createIndex = false;
                 }
@@ -1146,7 +1182,18 @@ namespace Logitude.DBMigrations.Models
             if(CurrentTable != null && CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
             {
                 string tablePrimaryKeyColumns = string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => c.Name).ToArray());
-                if (tablePrimaryKeyColumns == index.Columns)
+                if (tablePrimaryKeyColumns == indexColumns.Replace("\"", String.Empty).ToLower())
+                {
+                    createIndex = false;
+                }
+            }
+
+
+            if (CurrentTable != null && DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any() && CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
+            {
+                string dxmlPrimaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => FormatNameLength(c.Name, c.ShortName)).ToArray());
+                string tablePrimaryKeyColumns = string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => c.Name).ToArray());
+                if (tablePrimaryKeyColumns != dxmlPrimaryKeyColumns && dxmlPrimaryKeyColumns == indexColumns.Replace("\"", String.Empty).ToLower())
                 {
                     createIndex = false;
                 }
@@ -1155,7 +1202,6 @@ namespace Logitude.DBMigrations.Models
             if (createIndex)
             {
                 string tableName = FormatNameLength(DXMLTable.Name, DXMLTable.ShortName).ToUpper();
-                string indexColumns = (!index.Columns.Contains(",") ? "\"" + FormatNameLength(index.Columns, DXMLTable.Columns.Where(c => c.Name == index.Columns).First().ShortName) + "\"" : string.Join(",", index.Columns.Split(',').Select(ic => "\"" + FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName) + "\"").ToArray())).ToUpper();
                 string createIndexScript = "-- Create Index On " + tableName + " Table\n";
                 string indexName = FormatNameLength("IX_" + tableName + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("\"", String.Empty), null).ToUpper();
 
@@ -1172,7 +1218,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -1192,7 +1238,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -1209,7 +1255,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropIndexScript(IndexDefinition index)
         {
-            if (IsClobArgumentProvided)
+            if (IsDataTypeChangesArgumentProvided)
             {
                 return null;
             }
@@ -1239,6 +1285,15 @@ namespace Logitude.DBMigrations.Models
                 return true;
             }
             if (columnMigration.CurrentColumn.Type == "nvarchar" && columnMigration.CurrentColumn.Size == -1 && columnMigration.NewColumn.Type == "varchar" && columnMigration.NewColumn.Size != -1)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        protected bool IsVARCHARAlterType(ColumnMigration columnMigration)
+        {
+            if(columnMigration.CurrentColumn.Type == "nvarchar" && columnMigration.CurrentColumn.Size != -1 && columnMigration.NewColumn.Type == "varchar" && columnMigration.NewColumn.Size != -1)
             {
                 return true;
             }

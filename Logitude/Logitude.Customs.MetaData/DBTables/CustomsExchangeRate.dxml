@@ -28,7 +28,7 @@
   <Column
     Name="ExchangeRate"
     Type="decimal"
-    Precision="12"
+    Precision="15"
     Scale="10">
     <Constraints
       Nullable="true" />
