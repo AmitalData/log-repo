@@ -36,6 +36,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             eventType.IsCustomerView = eventTypePM.IsCustomerView;
             eventType.IsSharedLogisticsEnabled = eventTypePM.IsSharedLogisticsEnabled;
             eventType.AllowedInAutomation = eventTypePM.AllowedInAutomation;
+            eventType.CustomField = eventTypePM.CustomField;
+
         }
     }
 }

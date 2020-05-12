@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EventTypeUpdateClass
    {  		
-		public const string HashString = "e454e40111c6b4478ae13f950e42749b";
+		public const string HashString = "cd320c6c7a6f2fea0fefb0c977426c23";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1422,6 +1422,63 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomField",
+					  						GeneratedComponentPath =  "./InfrastructureModules/InfrastructureOthers/Components/EventType/CustomEventTypeComponent",
+					  						ObjectTableName =  "EventType",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  200,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomField",
+					  						ListPropertyPath =  "CustomField",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomField",
+					  						DefaultText =  "Custom Field",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -1502,6 +1559,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             ScreenField EventTypeEventTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.EntityStatusId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
             ScreenField EventTypeEventTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField EventTypeEventTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = EventTypeObjectFields.Where(d => d.FieldName == "CustomField").FirstOrDefault().Id, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = EventTypeObjectFields.Where(d => d.FieldName == "CustomField").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
             ScreenField EventTypeEventTypeGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsFollowUp", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
@@ -1512,6 +1570,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             ScreenField EventTypeEventTypeGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsCustomerView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
             ScreenField EventTypeEventTypeGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "EventType.IsAgentView", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+           
+            ScreenField EventTypeEventTypeGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = EventTypeObjectFields.Where(d => d.FieldName == "IsAgentView").FirstOrDefault().Id, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = EventTypeObjectFields.Where(d => d.FieldName == "IsAgentView").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField EventTypeEventTypeGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ObjectFieldId = EventTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = EventTypeGeneralTabScreenScreen0.Id,ScreenCode = EventTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = EventTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
