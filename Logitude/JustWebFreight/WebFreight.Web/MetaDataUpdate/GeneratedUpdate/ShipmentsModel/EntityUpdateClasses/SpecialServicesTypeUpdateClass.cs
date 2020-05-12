@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -200,7 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -264,7 +264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "EnglishName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -328,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "LocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -389,7 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "SearchFields",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -453,59 +453,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup SpecialServicesTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "STQG", Name = "Special Services Type" }, queryGroupRepository);
-						QueryGroup SpecialServicesTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ea4b", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup SpecialServicesTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "STQG", Name = "Special Services Type" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup SpecialServicesTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ea4b", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable SpecialServicesTypeObjectTable = objectTables.ContainsKey("SpecialServicesType") ? objectTables["SpecialServicesType"] : null;
             if (SpecialServicesTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 SpecialServicesTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "SpecialServicesType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> SpecialServicesTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "SpecialServicesType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode SpecialServicesTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialSericesType.Q.AllSpecialServices", DefaultText = @"All Special Service Types",LocalDefaultText = null, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SpecialServicesTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLSPECIALSERVICES", ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServicesType.Features.AllSpecialServices", NameTextCodeDefaultText = "All Special Servcies Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SpecialServicesTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialSericesType.Q.AllSpecialServices", DefaultText = @"All Special Service Types",LocalDefaultText = null, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature SpecialServicesTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLSPECIALSERVICES", ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServicesType.Features.AllSpecialServices", NameTextCodeDefaultText = "All Special Servcies Type", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,SpecialServicesTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllSpecialServicesTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SpecialServicesTypeTextCode_0.Id, NameTextCodeCode = SpecialServicesTypeTextCode_0.Code, ObjectTableName = "SpecialServicesType", Code = "All Special Services Types",  QueryGroupCode = "STQG", IndexOrder = 0, Tenant = 0, ObjectTableId = SpecialServicesTypeObjectTable.Id, QuerySection = "SpecialServicesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = SpecialServicesTypeFeature_0.Id,FeatureUniqeCode= SpecialServicesTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllSpecialServicesTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SpecialServicesTypeTextCode_0.Id, NameTextCodeCode = SpecialServicesTypeTextCode_0.Code, ObjectTableName = "SpecialServicesType", Code = "All Special Services Types",  QueryGroupCode = "STQG", IndexOrder = 0, Tenant = 0, ObjectTableId = SpecialServicesTypeObjectTable.Id, QuerySection = "SpecialServicesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = SpecialServicesTypeFeature_0.Id,FeatureUniqeCode= SpecialServicesTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllSpecialServicesTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllSpecialServicesTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "SpecialServicesType.Code" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllSpecialServicesTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllSpecialServicesTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "SpecialServicesType.EnglishName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllSpecialServicesTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllSpecialServicesTypesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "SpecialServicesType.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllSpecialServicesTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == SpecialServicesTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllSpecialServicesTypesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSpecialServicesTypesQuery.Id,QueryCode = AllSpecialServicesTypesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "SpecialServicesType.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable SpecialServicesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SpecialServicesType" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> SpecialServicesTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "SpecialServicesType").ToList();
+		   //List<ObjectField> SpecialServicesTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "SpecialServicesType").ToList();
 		       
 	      
 
 	         Screen SpecialServicesTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SpecialServciesType.HeaderScreen", Name = "Header Screen", ObjectTableId = SpecialServicesTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField SpecialServicesTypeSpecialServciesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = SpecialServicesTypeHeaderScreenScreen0.Id,ScreenCode = SpecialServicesTypeHeaderScreenScreen0.Code, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SpecialServicesTypeSpecialServciesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SpecialServicesTypeHeaderScreenScreen0.Id,ScreenCode = SpecialServicesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "SpecialServicesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField SpecialServicesTypeSpecialServciesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = SpecialServicesTypeHeaderScreenScreen0.Id,ScreenCode = SpecialServicesTypeHeaderScreenScreen0.Code, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SpecialServicesTypeSpecialServciesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = SpecialServicesTypeHeaderScreenScreen0.Id,ScreenCode = SpecialServicesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "SpecialServicesType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    SpecialServicesTypeObjectTable.HeaderScreenId = SpecialServicesTypeHeaderScreenScreen0.Id;
 		    SpecialServicesTypeObjectTable.HeaderScreenCode = SpecialServicesTypeHeaderScreenScreen0.Code;
@@ -515,13 +526,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	         Screen SpecialServicesTypeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SpecialServicesType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = SpecialServicesTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = SpecialServicesTypeObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField SpecialServicesTypeSpecialServicesTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = SpecialServicesTypeGeneralTabScreenScreen1.Id,ScreenCode = SpecialServicesTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "SpecialServicesType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -532,11 +543,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   ObjectTable SpecialServicesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SpecialServicesType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode SpecialServicesTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature SpecialServicesTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServciesType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature SpecialServicesTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServciesType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,SpecialServicesTypeObjectTable);
  
                  
 			   TextCode SpecialServicesTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature SpecialServicesTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServciesType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature SpecialServicesTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServciesType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,SpecialServicesTypeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -552,10 +563,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    {  
 		   ObjectTable SpecialServicesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SpecialServicesType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature SpecialServicesTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServicesType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature SpecialServicesTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServicesType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature SpecialServicesTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServicesType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature SpecialServicesTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServicesType.Features.PackageFeature", NameTextCodeDefaultText = "SpecialServicesType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature SpecialServicesTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServicesType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SpecialServicesTypeObjectTable);
+		   Feature SpecialServicesTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServicesType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SpecialServicesTypeObjectTable);
+		   Feature SpecialServicesTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServicesType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SpecialServicesTypeObjectTable);
+		   Feature SpecialServicesTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialServicesType.Features.PackageFeature", NameTextCodeDefaultText = "SpecialServicesType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SpecialServicesTypeObjectTable);    
 	    
 		}
 

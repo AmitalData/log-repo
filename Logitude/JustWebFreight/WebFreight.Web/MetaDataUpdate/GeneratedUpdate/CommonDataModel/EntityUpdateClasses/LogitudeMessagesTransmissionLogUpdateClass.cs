@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -199,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Tenant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -265,7 +265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SourceTenant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -329,7 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CCS",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -393,7 +393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AirlineCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -457,7 +457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "MessageTypeCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -519,7 +519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Prefix",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -583,7 +583,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AWBNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -647,7 +647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "HWB",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -712,7 +712,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -776,7 +776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Participant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -840,7 +840,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IATACode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -904,7 +904,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CASSCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -968,7 +968,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "UserName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1032,7 +1032,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Origin",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1096,7 +1096,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Destination",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1160,7 +1160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Pieces",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1224,7 +1224,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "GrossWeight",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1286,7 +1286,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "GrossWeightUnitCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1350,7 +1350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ChargeableWeight",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1412,7 +1412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ChargeableWeightUnitCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1476,7 +1476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Volume",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1538,7 +1538,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "VolumeUnitCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1600,7 +1600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "DescriptionOfGoods",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1664,7 +1664,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "DirectParticipant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1728,7 +1728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsUpdatedinAirlineTenant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1792,7 +1792,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "UserEmail",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1854,7 +1854,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SearchFields",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1915,7 +1915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "FWBNotifyContacts",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1976,7 +1976,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "FHLNotifyContacts",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2037,77 +2037,88 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "FFRNotifyContacts",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup LogitudeMessagesTransmissionLogQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LMTL", Name = "Transmission Logs" }, queryGroupRepository);
-						QueryGroup LogitudeMessagesTransmissionLogQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "bb97", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup LogitudeMessagesTransmissionLogQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LMTL", Name = "Transmission Logs" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup LogitudeMessagesTransmissionLogQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "bb97", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable LogitudeMessagesTransmissionLogObjectTable = objectTables.ContainsKey("LogitudeMessagesTransmissionLog") ? objectTables["LogitudeMessagesTransmissionLog"] : null;
             if (LogitudeMessagesTransmissionLogObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 LogitudeMessagesTransmissionLogObjectTable = objectContext.ObjectTables.Where(d => d.Name == "LogitudeMessagesTransmissionLog" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> LogitudeMessagesTransmissionLogObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LogitudeMessagesTransmissionLog").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode LogitudeMessagesTransmissionLogTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.Q.AllTransmissionLogs", DefaultText = @"All Logitude Messages Transmission Logs",LocalDefaultText = null, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature LogitudeMessagesTransmissionLogFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTRANSMISSIONLOG", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.LogitudeMessagesTransmissionLogs", NameTextCodeDefaultText = "Logitude Messages Transmission Logs", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode LogitudeMessagesTransmissionLogTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.Q.AllTransmissionLogs", DefaultText = @"All Logitude Messages Transmission Logs",LocalDefaultText = null, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature LogitudeMessagesTransmissionLogFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTRANSMISSIONLOG", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.LogitudeMessagesTransmissionLogs", NameTextCodeDefaultText = "Logitude Messages Transmission Logs", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,LogitudeMessagesTransmissionLogObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllLogitudeTransmissionLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeMessagesTransmissionLogTextCode_0.Id, NameTextCodeCode = LogitudeMessagesTransmissionLogTextCode_0.Code, ObjectTableName = "LogitudeMessagesTransmissionLog", Code = "All Logitude Transmission Logs",  QueryGroupCode = "LMTL", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, QuerySection = "LogitudeMessagesTransmissionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeMessagesTransmissionLogFeature_0.Id,FeatureUniqeCode= LogitudeMessagesTransmissionLogFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllLogitudeTransmissionLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeMessagesTransmissionLogTextCode_0.Id, NameTextCodeCode = LogitudeMessagesTransmissionLogTextCode_0.Code, ObjectTableName = "LogitudeMessagesTransmissionLog", Code = "All Logitude Transmission Logs",  QueryGroupCode = "LMTL", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, QuerySection = "LogitudeMessagesTransmissionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeMessagesTransmissionLogFeature_0.Id,FeatureUniqeCode= LogitudeMessagesTransmissionLogFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "CCS" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "CCS" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LogitudeMessagesTransmissionLog.CCS" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AirlineCode" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AirlineCode" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LogitudeMessagesTransmissionLog.AirlineCode" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Prefix" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Prefix" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Prefix" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "MessageTypeCode" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "MessageTypeCode" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "LogitudeMessagesTransmissionLog.MessageTypeCode" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AWBNumber" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AWBNumber" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "LogitudeMessagesTransmissionLog.AWBNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "SentDate" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "SentDate" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "LogitudeMessagesTransmissionLog.SentDate" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Participant" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Participant" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Participant" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Origin" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Origin" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Origin" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Destination" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Destination" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Destination" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "UserName" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "UserName" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "LogitudeMessagesTransmissionLog.UserName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "DirectParticipant" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "DirectParticipant" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id,QueryCode = AllLogitudeTransmissionLogsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "LogitudeMessagesTransmissionLog.DirectParticipant" , ColumnWidth = 120 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable LogitudeMessagesTransmissionLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeMessagesTransmissionLog" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> LogitudeMessagesTransmissionLogObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LogitudeMessagesTransmissionLog").ToList();
+		   //List<ObjectField> LogitudeMessagesTransmissionLogObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LogitudeMessagesTransmissionLog").ToList();
 		       
 	      
 
 	         Screen LogitudeMessagesTransmissionLogHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LogitudeMessagesTransmissionLog.HeaderScreen", Name = "Header Screen", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AirlineCode").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Id,ScreenCode = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AirlineCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Id,ScreenCode = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.AirlineCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "MessageTypeCode").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Id,ScreenCode = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "MessageTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Id,ScreenCode = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.MessageTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Id,ScreenCode = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Id,ScreenCode = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.AWBNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "SentDate").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Id,ScreenCode = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "SentDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Id,ScreenCode = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.SentDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    LogitudeMessagesTransmissionLogObjectTable.HeaderScreenId = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Id;
 		    LogitudeMessagesTransmissionLogObjectTable.HeaderScreenCode = LogitudeMessagesTransmissionLogHeaderScreenScreen0.Code;
@@ -2117,39 +2128,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen LogitudeMessagesTransmissionLogGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LogitudeMessagesTransmissionLog.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 9, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "CCS").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "CCS").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.CCS", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "MessageTypeCode").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "MessageTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.MessageTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AirlineCode").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AirlineCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.AirlineCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "AWBNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.AWBNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "SentDate").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "SentDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.SentDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "UserName").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "UserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.UserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "UserEmail").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "UserEmail").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.UserEmail", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "DirectParticipant").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "DirectParticipant").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.DirectParticipant", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "IsUpdatedinAirlineTenant").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "IsUpdatedinAirlineTenant").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.IsUpdatedinAirlineTenant", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Participant").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Participant").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Participant", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Origin").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Origin").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Origin", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Destination").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Destination").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Destination", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Pieces").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Pieces").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Pieces", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "GrossWeight").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "GrossWeight").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.GrossWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField14 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "ChargeableWeight").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "ChargeableWeight").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField14 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.ChargeableWeight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField15 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Volume").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "Volume").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField15 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.Volume", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField16 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 7, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "DescriptionOfGoods").FirstOrDefault().Id, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "DescriptionOfGoods").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeMessagesTransmissionLogLogitudeMessagesTransmissionLogGeneralTabScreenScreenField16 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 7, ScreenId = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Id,ScreenCode = LogitudeMessagesTransmissionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeMessagesTransmissionLog.DescriptionOfGoods", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -2160,11 +2171,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable LogitudeMessagesTransmissionLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeMessagesTransmissionLog" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode LogitudeMessagesTransmissionLogGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature LogitudeMessagesTransmissionLogGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature LogitudeMessagesTransmissionLogGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,LogitudeMessagesTransmissionLogObjectTable);
  
                  
 			   TextCode LogitudeMessagesTransmissionLogAuditTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog.TH.Audit", DefaultText = "Audit",LocalDefaultText = null, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature LogitudeMessagesTransmissionLogAuditFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUDIT", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.Audit", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature LogitudeMessagesTransmissionLogAuditFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUDIT", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.Audit", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,LogitudeMessagesTransmissionLogObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2183,7 +2194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature LogitudeMessagesTransmissionLogFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.Automation", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature LogitudeMessagesTransmissionLogFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.Automation", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LogitudeMessagesTransmissionLogObjectTable);
 
    
 	    

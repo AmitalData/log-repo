@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -196,7 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -256,7 +256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -318,7 +318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -380,7 +380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -440,7 +440,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -498,7 +498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -558,7 +558,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -620,7 +620,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -677,7 +677,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -741,7 +741,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -800,7 +800,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -859,7 +859,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -916,7 +916,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -980,7 +980,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1039,7 +1039,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1102,7 +1102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1164,7 +1164,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1226,7 +1226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1288,7 +1288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1350,7 +1350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1411,7 +1411,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1473,7 +1473,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1532,7 +1532,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1593,7 +1593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1651,7 +1651,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1708,7 +1708,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1764,7 +1764,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1821,7 +1821,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1877,77 +1877,88 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup InterestReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "25a2", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup InterestReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2123", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup InterestReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "25a2", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup InterestReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2123", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable InterestReportObjectTable = objectTables.ContainsKey("InterestReport") ? objectTables["InterestReport"] : null;
             if (InterestReportObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 InterestReportObjectTable = objectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> InterestReportObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InterestReport").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode InterestReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InterestReport", DefaultText = @"Interest Report",LocalDefaultText = "דוח ריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature InterestReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.InterestReport", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.InterestReport", NameTextCodeDefaultText = "Interest Report", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode InterestReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InterestReport", DefaultText = @"Interest Report",LocalDefaultText = "דוח ריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature InterestReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.InterestReport", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.InterestReport", NameTextCodeDefaultText = "Interest Report", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query InterestReportQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestReportTextCode_0.Id, NameTextCodeCode = InterestReportTextCode_0.Code, ObjectTableName = "InterestReport", Code = "Interest Report",  QueryGroupCode = "25a2", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestReportObjectTable.Id, QuerySection = "InterestReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestReportFeature_0.Id,FeatureUniqeCode= InterestReportFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query InterestReportQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestReportTextCode_0.Id, NameTextCodeCode = InterestReportTextCode_0.Code, ObjectTableName = "InterestReport", Code = "Interest Report",  QueryGroupCode = "25a2", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestReportObjectTable.Id, QuerySection = "InterestReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestReportFeature_0.Id,FeatureUniqeCode= InterestReportFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn InterestReportQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "ReportNumber" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "ReportNumber" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestReportQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InterestReport.ReportNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InterestReportQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "CreateDateTime" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestReportQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InterestReport.CreateDateTime" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InterestReportQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "CreatedByLocalName" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "CreatedByLocalName" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestReportQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InterestReport.CreatedByLocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InterestReportQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "GLAccountDisplayNumber" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "GLAccountDisplayNumber" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestReportQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InterestReport.GLAccountDisplayNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InterestReportQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "GLAccountLocalName" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "GLAccountLocalName" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestReportQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "InterestReport.GLAccountLocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InterestReportQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusName" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusName" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestReportQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "InterestReport.InterestReportStatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InterestReportQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "TotalAmount" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "TotalAmount" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestReportQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "InterestReport.TotalAmount" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InterestReportQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "ARInvoiceNumber" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "ARInvoiceNumber" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InterestReportQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "InterestReport.ARInvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InterestReportQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InvoiceAmount" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InvoiceAmount" && d.ObjectTableId == InterestReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn InterestReportQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestReportQuery.Id,QueryCode = InterestReportQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "InterestReport.InvoiceAmount" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable InterestReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> InterestReportObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InterestReport").ToList();
+		   //List<ObjectField> InterestReportObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InterestReport").ToList();
 		       
 	      
 
 	         Screen InterestReportInterestReportHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestReport.HeaderScreen", Name = "InterestReportHeaderScreen", ObjectTableId = InterestReportObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField InterestReportInterestReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "ReportNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.ReportNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestReportInterestReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestCalculationDate").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestCalculationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.InterestCalculationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestReportInterestReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusLocalName").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "InterestReportStatusLocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.InterestReportStatusLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestReportInterestReportHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "ARInvoiceNumber").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "ARInvoiceNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.ARInvoiceNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestReportInterestReportHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "CreatedByLocalName").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "CreatedByLocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.CreatedByLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InterestReportInterestReportHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = InterestReportObjectFields.Where(d => d.FieldName == "UpdatedByLocalName").FirstOrDefault().Id, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = InterestReportObjectFields.Where(d => d.FieldName == "UpdatedByLocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InterestReportInterestReportHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = InterestReportInterestReportHeaderScreenScreen0.Id,ScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code, ObjectFieldCode = "InterestReport.UpdatedByLocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    InterestReportObjectTable.HeaderScreenId = InterestReportInterestReportHeaderScreenScreen0.Id;
 		    InterestReportObjectTable.HeaderScreenCode = InterestReportInterestReportHeaderScreenScreen0.Code;
@@ -1962,11 +1973,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable InterestReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode InterestReportGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature InterestReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Tab.General", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.IRGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature InterestReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Tab.General", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.IRGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
  
                  
 			   TextCode InterestReportEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature InterestReportEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Tab.Events", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.IREV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature InterestReportEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Tab.Events", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.IREV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1982,10 +1993,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable InterestReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature InterestReportFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InterestReportFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InterestReportFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InterestReportFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.PackageFeature", NameTextCodeDefaultText = "InterestReport Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature InterestReportFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestReportObjectTable);
+		   Feature InterestReportFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestReportObjectTable);
+		   Feature InterestReportFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestReportObjectTable);
+		   Feature InterestReportFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.PackageFeature", NameTextCodeDefaultText = "InterestReport Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestReportObjectTable);    
 	    
 		}
 
@@ -2050,14 +2061,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable InterestReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature InterestReportFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CreateInvoice", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.CreateInvoice", NameTextCodeDefaultText = "Create Invoice", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature InterestReportFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CreateInvoice", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.CreateInvoice", NameTextCodeDefaultText = "Create Invoice", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
 
-			   Feature InterestReportFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestPrint", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature InterestReportFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IRCN", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature InterestReportFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestPrint", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
+             			   Feature InterestReportFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IRCN", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestReportObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -200,7 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -266,7 +266,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsDigitallySigned",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -332,7 +332,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsSharedWithForwarder",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -394,7 +394,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Tenant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -459,7 +459,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -522,7 +522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "DocumentTypeId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -587,7 +587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "DocumentTypeName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -651,7 +651,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "DirectionCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -714,7 +714,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ObjectTableId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -778,7 +778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ObjectTableName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -841,7 +841,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreatedByUserId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -905,7 +905,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreatedByUserName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -968,7 +968,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "OwnerId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1033,7 +1033,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "OwnerName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1098,7 +1098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Description",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1159,7 +1159,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1225,7 +1225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Extension",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1287,7 +1287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LastVersion",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1351,108 +1351,119 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsRequested",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup DocumentsFilingQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DOCF", Name = "Document Filings" }, queryGroupRepository);
-						QueryGroup DocumentsFilingQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "e848", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup DocumentsFilingQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DOCF", Name = "Document Filings" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup DocumentsFilingQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "e848", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable DocumentsFilingObjectTable = objectTables.ContainsKey("DocumentsFiling") ? objectTables["DocumentsFiling"] : null;
             if (DocumentsFilingObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 DocumentsFilingObjectTable = objectContext.ObjectTables.Where(d => d.Name == "DocumentsFiling" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> DocumentsFilingObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DocumentsFiling").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode DocumentsFilingTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.AllDocumentsFilings", DefaultText = @"All Documents",LocalDefaultText = null, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DocumentsFilingFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLDOCUMENTSFILING", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.AllDocumentsFilings", NameTextCodeDefaultText = "All Documents", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DocumentsFilingTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.AllDocumentsFilings", DefaultText = @"All Documents",LocalDefaultText = null, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DocumentsFilingFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLDOCUMENTSFILING", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.AllDocumentsFilings", NameTextCodeDefaultText = "All Documents", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DocumentsFilingObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DocumentsFilingTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.RequestedDocumentsFilings", DefaultText = @"Requested Documents",LocalDefaultText = null, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DocumentsFilingFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTEDDOCUMENTSFILING", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.RequestedDocumentsFilings", NameTextCodeDefaultText = "Requested Documents", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DocumentsFilingTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.RequestedDocumentsFilings", DefaultText = @"Requested Documents",LocalDefaultText = null, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DocumentsFilingFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTEDDOCUMENTSFILING", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.RequestedDocumentsFilings", NameTextCodeDefaultText = "Requested Documents", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DocumentsFilingObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllDocumentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentsFilingTextCode_0.Id, NameTextCodeCode = DocumentsFilingTextCode_0.Code, ObjectTableName = "DocumentsFiling", Code = "All Documents",  QueryGroupCode = "DOCF", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentsFilingObjectTable.Id, QuerySection = "DocumentsFiling", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DocumentsFilingFeature_0.Id,FeatureUniqeCode= DocumentsFilingFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllDocumentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentsFilingTextCode_0.Id, NameTextCodeCode = DocumentsFilingTextCode_0.Code, ObjectTableName = "DocumentsFiling", Code = "All Documents",  QueryGroupCode = "DOCF", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentsFilingObjectTable.Id, QuerySection = "DocumentsFiling", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DocumentsFilingFeature_0.Id,FeatureUniqeCode= DocumentsFilingFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllDocumentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "Extension" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "Extension" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDocumentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DocumentsFiling.Extension" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllDocumentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDocumentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DocumentsFiling.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllDocumentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "DocumentTypeName" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "DocumentTypeName" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDocumentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DocumentsFiling.DocumentTypeName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllDocumentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDocumentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DocumentsFiling.Description" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllDocumentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDocumentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DocumentsFiling.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllDocumentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsDigitallySigned" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsDigitallySigned" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDocumentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "DocumentsFiling.IsDigitallySigned" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllDocumentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsSharedWithForwarder" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsSharedWithForwarder" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDocumentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "DocumentsFiling.IsSharedWithForwarder" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllDocumentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsRequested" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsRequested" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDocumentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DocumentsFiling.IsRequested" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "DirectionCode" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "DirectionCode" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "I",PredefinedValue2 = null, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "DocumentsFiling.DirectionCode", PredefinedValue = "I",PredefinedValue2 = null, QueryId = AllDocumentsQuery.Id,QueryCode = AllDocumentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query RequestedDocumentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentsFilingTextCode_1.Id, NameTextCodeCode = DocumentsFilingTextCode_1.Code, ObjectTableName = "DocumentsFiling", Code = "Requested Documents",  QueryGroupCode = "DOCF", IndexOrder = 1, Tenant = 0, ObjectTableId = DocumentsFilingObjectTable.Id, QuerySection = "DocumentsFiling", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DocumentsFilingFeature_1.Id,FeatureUniqeCode= DocumentsFilingFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query RequestedDocumentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentsFilingTextCode_1.Id, NameTextCodeCode = DocumentsFilingTextCode_1.Code, ObjectTableName = "DocumentsFiling", Code = "Requested Documents",  QueryGroupCode = "DOCF", IndexOrder = 1, Tenant = 0, ObjectTableId = DocumentsFilingObjectTable.Id, QuerySection = "DocumentsFiling", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DocumentsFilingFeature_1.Id,FeatureUniqeCode= DocumentsFilingFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn RequestedDocumentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "Extension" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "Extension" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RequestedDocumentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DocumentsFiling.Extension" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestedDocumentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RequestedDocumentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DocumentsFiling.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestedDocumentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "DocumentTypeName" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "DocumentTypeName" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RequestedDocumentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DocumentsFiling.DocumentTypeName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestedDocumentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RequestedDocumentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DocumentsFiling.Description" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestedDocumentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RequestedDocumentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DocumentsFiling.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestedDocumentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsDigitallySigned" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsDigitallySigned" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RequestedDocumentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "DocumentsFiling.IsDigitallySigned" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestedDocumentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsSharedWithForwarder" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsSharedWithForwarder" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RequestedDocumentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "DocumentsFiling.IsSharedWithForwarder" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestedDocumentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsRequested" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsRequested" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn RequestedDocumentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DocumentsFiling.IsRequested" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter RequestedDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "DirectionCode" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "DirectionCode" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "I",PredefinedValue2 = null, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter RequestedDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "DocumentsFiling.DirectionCode", PredefinedValue = "I",PredefinedValue2 = null, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter RequestedDocumentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsRequested" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsRequested" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter RequestedDocumentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "DocumentsFiling.IsRequested", PredefinedValue = "true",PredefinedValue2 = null, QueryId = RequestedDocumentsQuery.Id,QueryCode = RequestedDocumentsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
-	   
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable DocumentsFilingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentsFiling" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> DocumentsFilingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DocumentsFiling").ToList();
+		   //List<ObjectField> DocumentsFilingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DocumentsFiling").ToList();
 		       
 	      
 
 	         Screen DocumentsFilingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DocumentsFiling.HeaderScreen", Name = "Header Screen", ObjectTableId = DocumentsFilingObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = "DocumentsFiling.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().Id, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = "DocumentsFiling.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = "DocumentsFiling.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = "DocumentsFiling.CreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "OwnerName").FirstOrDefault().Id, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "OwnerName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = "DocumentsFiling.OwnerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsSharedWithForwarder").FirstOrDefault().Id, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsSharedWithForwarder").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DocumentsFilingDocumentsFilingHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = DocumentsFilingHeaderScreenScreen0.Id,ScreenCode = DocumentsFilingHeaderScreenScreen0.Code, ObjectFieldCode = "DocumentsFiling.IsSharedWithForwarder", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    DocumentsFilingObjectTable.HeaderScreenId = DocumentsFilingHeaderScreenScreen0.Id;
 		    DocumentsFilingObjectTable.HeaderScreenCode = DocumentsFilingHeaderScreenScreen0.Code;
@@ -1467,11 +1478,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable DocumentsFilingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentsFiling" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode DocumentsFilingGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentsFilingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature DocumentsFilingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentsFilingObjectTable);
  
                  
 			   TextCode DocumentsFilingEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DocumentsFilingEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature DocumentsFilingEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentsFilingObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1487,16 +1498,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable DocumentsFilingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentsFiling" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature DocumentsFilingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DocumentsFilingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DocumentsFilingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DocumentsFilingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.PackageFeature", NameTextCodeDefaultText = "DocumentsFiling Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature DocumentsFilingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentsFilingObjectTable);
+		   Feature DocumentsFilingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentsFilingObjectTable);
+		   Feature DocumentsFilingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentsFilingObjectTable);
+		   Feature DocumentsFilingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.PackageFeature", NameTextCodeDefaultText = "DocumentsFiling Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentsFilingObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature DocumentsFilingFeature_DOCUMENTSFILING = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSFILING", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.DocumentsFilings", NameTextCodeDefaultText = @"Document Filing" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentsFilingFeature_DOCUMENTSFILING = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSFILING", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.DocumentsFilings", NameTextCodeDefaultText = @"Document Filing" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentsFilingObjectTable);
 
-		   Feature DocumentsFilingFeature_DocumentsFiling_M_DocumentsFiling = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsFiling.M.DocumentsFiling", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFilingObjectTable.Features.DocumentsFilingObjectTable", NameTextCodeDefaultText = @"Documents Filing" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DocumentsFilingFeature_DocumentsFiling_M_DocumentsFiling = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsFiling.M.DocumentsFiling", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFilingObjectTable.Features.DocumentsFilingObjectTable", NameTextCodeDefaultText = @"Documents Filing" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentsFilingObjectTable);
 
    
 	    

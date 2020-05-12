@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -204,7 +204,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Notes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -268,7 +268,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BirthdayReminder",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -332,7 +332,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AnniversaryReminder",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -392,7 +392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "UpcomingDates",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -452,7 +452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "HasNoReminders",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -515,7 +515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "DoneDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -577,7 +577,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BirthDayOfYear",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -640,7 +640,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ContactDoneMethodCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -704,7 +704,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsAirExport",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -768,7 +768,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsAirImport",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -832,7 +832,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsOceanExport",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -896,7 +896,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsOceanImport",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -960,7 +960,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsCustomsImport",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1024,7 +1024,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsInlandDomestic",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1088,7 +1088,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsAll",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1152,7 +1152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Position",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1214,7 +1214,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1278,7 +1278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1339,7 +1339,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1403,7 +1403,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "EnglishName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1467,7 +1467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1529,7 +1529,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ComputedLocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1593,7 +1593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Email",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1657,7 +1657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Mobile",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1721,7 +1721,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BusinessPhone",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1785,7 +1785,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Fax",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1850,7 +1850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Birthday",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1915,7 +1915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Anniversary",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1979,7 +1979,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2041,7 +2041,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CardId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2107,7 +2107,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsUser",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2170,7 +2170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ContactIdCustomFilter",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2235,121 +2235,132 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ContactQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CONT", Name = "Contacts" }, queryGroupRepository);
-						QueryGroup ContactQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f483", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup ContactQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CONT", Name = "Contacts" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ContactQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f483", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ContactObjectTable = objectTables.ContainsKey("Contact") ? objectTables["Contact"] : null;
             if (ContactObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ContactObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Contact" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> ContactObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Contact").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ContactTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.UpcomingBirthdays", DefaultText = @"Upcoming Birthdays",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ContactFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPCOMINGBIRTHDAYSCONTACTS", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.UpcomingBirthdays", NameTextCodeDefaultText = "Upcoming Birthdays", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ContactTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.UpcomingBirthdays", DefaultText = @"Upcoming Birthdays",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContactFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPCOMINGBIRTHDAYSCONTACTS", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.UpcomingBirthdays", NameTextCodeDefaultText = "Upcoming Birthdays", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContactObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContactTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.NoReminders", DefaultText = @"Contacts Without Reminders",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ContactFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOREMINDERSCONTACTS", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.NoReminders", NameTextCodeDefaultText = "Contacts Without Reminders", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ContactTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.NoReminders", DefaultText = @"Contacts Without Reminders",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContactFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOREMINDERSCONTACTS", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.NoReminders", NameTextCodeDefaultText = "Contacts Without Reminders", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContactObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContactTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.Contacts", DefaultText = @"Contacts",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ContactFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ContactTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.Q.Contacts", DefaultText = @"Contacts",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContactFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContactObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query UpcomingBirthdaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_0.Id, NameTextCodeCode = ContactTextCode_0.Code, ObjectTableName = "Contact", Code = "Upcoming Birthdays",  QueryGroupCode = "CONT", IndexOrder = 0, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_0.Id,FeatureUniqeCode= ContactFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query UpcomingBirthdaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_0.Id, NameTextCodeCode = ContactTextCode_0.Code, ObjectTableName = "Contact", Code = "Upcoming Birthdays",  QueryGroupCode = "CONT", IndexOrder = 0, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_0.Id,FeatureUniqeCode= ContactFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn UpcomingBirthdaysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UpcomingBirthdaysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Contact.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn UpcomingBirthdaysQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UpcomingBirthdaysQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Contact.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn UpcomingBirthdaysQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UpcomingBirthdaysQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Contact.Email" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UpcomingBirthdaysQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "BusinessPhone" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "BusinessPhone" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UpcomingBirthdaysQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Contact.BusinessPhone" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UpcomingBirthdaysQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Birthday" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Birthday" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UpcomingBirthdaysQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Contact.Birthday" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UpcomingBirthdaysQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "BirthdayReminder" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "BirthdayReminder" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UpcomingBirthdaysQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Contact.BirthdayReminder" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn UpcomingBirthdaysQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Anniversary" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Anniversary" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UpcomingBirthdaysQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Contact.Anniversary" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UpcomingBirthdaysQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "AnniversaryReminder" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "AnniversaryReminder" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn UpcomingBirthdaysQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Contact.AnniversaryReminder" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter UpcomingBirthdaysQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "UpcomingDates" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "UpcomingDates" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter UpcomingBirthdaysQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Contact.UpcomingDates", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UpcomingBirthdaysQuery.Id,QueryCode = UpcomingBirthdaysQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query NoRemindersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_1.Id, NameTextCodeCode = ContactTextCode_1.Code, ObjectTableName = "Contact", Code = "No Reminders",  QueryGroupCode = "CONT", IndexOrder = 1, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_1.Id,FeatureUniqeCode= ContactFeature_1.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query NoRemindersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_1.Id, NameTextCodeCode = ContactTextCode_1.Code, ObjectTableName = "Contact", Code = "No Reminders",  QueryGroupCode = "CONT", IndexOrder = 1, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_1.Id,FeatureUniqeCode= ContactFeature_1.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn NoRemindersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NoRemindersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Contact.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn NoRemindersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NoRemindersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Contact.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn NoRemindersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NoRemindersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Contact.Email" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NoRemindersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "BusinessPhone" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "BusinessPhone" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NoRemindersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Contact.BusinessPhone" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NoRemindersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Mobile" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Mobile" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NoRemindersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Contact.Mobile" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NoRemindersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Fax" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Fax" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NoRemindersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Contact.Fax" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NoRemindersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Birthday" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Birthday" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NoRemindersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Contact.Birthday" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn NoRemindersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Anniversary" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Anniversary" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NoRemindersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Contact.Anniversary" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter NoRemindersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "HasNoReminders" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "HasNoReminders" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter NoRemindersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Contact.HasNoReminders", PredefinedValue = "true",PredefinedValue2 = null, QueryId = NoRemindersQuery.Id,QueryCode = NoRemindersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query ContactsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_2.Id, NameTextCodeCode = ContactTextCode_2.Code, ObjectTableName = "Contact", Code = "Contacts",  QueryGroupCode = "CONT", IndexOrder = 2, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_2.Id,FeatureUniqeCode= ContactFeature_2.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ContactsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactTextCode_2.Id, NameTextCodeCode = ContactTextCode_2.Code, ObjectTableName = "Contact", Code = "Contacts",  QueryGroupCode = "CONT", IndexOrder = 2, Tenant = 0, ObjectTableId = ContactObjectTable.Id, QuerySection = "Contact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ContactFeature_2.Id,FeatureUniqeCode= ContactFeature_2.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ContactsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContactsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Contact.Name" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ContactsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContactsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Contact.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ContactsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContactsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Contact.Email" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContactsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "BusinessPhone" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "BusinessPhone" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContactsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Contact.BusinessPhone" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContactsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Mobile" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Mobile" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContactsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Contact.Mobile" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContactsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Fax" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Fax" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContactsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Contact.Fax" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContactsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ContactsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Contact.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContactsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == ContactObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ContactsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactsQuery.Id,QueryCode = ContactsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Contact.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable ContactObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Contact" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> ContactObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Contact").ToList();
+		   //List<ObjectField> ContactObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Contact").ToList();
 		       
 	      
 
 	         Screen ContactHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Contact.HeaderScreen", Name = "Header Screen", ObjectTableId = ContactObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ContactContactHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = ContactHeaderScreenScreen0.Id,ScreenCode = ContactHeaderScreenScreen0.Code, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ContactContactHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ContactHeaderScreenScreen0.Id,ScreenCode = ContactHeaderScreenScreen0.Code, ObjectFieldCode = "Contact.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ContactContactHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ContactObjectFields.Where(d => d.FieldName == "IsUser").FirstOrDefault().Id, ScreenId = ContactHeaderScreenScreen0.Id,ScreenCode = ContactHeaderScreenScreen0.Code, ObjectFieldCode = ContactObjectFields.Where(d => d.FieldName == "IsUser").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ContactContactHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ContactHeaderScreenScreen0.Id,ScreenCode = ContactHeaderScreenScreen0.Code, ObjectFieldCode = "Contact.IsUser", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ContactObjectTable.HeaderScreenId = ContactHeaderScreenScreen0.Id;
 		    ContactObjectTable.HeaderScreenCode = ContactHeaderScreenScreen0.Code;
@@ -2364,19 +2375,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable ContactObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Contact" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ContactGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ContactGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ContactGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContactObjectTable);
  
                  
 			   TextCode ContactPartnersTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ContactPartnersFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTNERS", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Partners", NameTextCodeDefaultText = "Partners", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ContactPartnersFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTNERS", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Partners", NameTextCodeDefaultText = "Partners", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContactObjectTable);
  
                  
 			   TextCode ContactOccasionsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.Occasions", DefaultText = "Occasions",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ContactOccasionsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Contact.Tab.Occasions", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContactFeatures.COOC", NameTextCodeDefaultText = "Occasions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ContactOccasionsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Contact.Tab.Occasions", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContactFeatures.COOC", NameTextCodeDefaultText = "Occasions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContactObjectTable);
  
                  
 			   TextCode ContactEventsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ContactEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ContactEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContactObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2396,20 +2407,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable ContactObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Contact" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature ContactFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ContactFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ContactFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ContactFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.PackageFeature", NameTextCodeDefaultText = "Contact Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature ContactFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContactObjectTable);
+		   Feature ContactFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContactObjectTable);
+		   Feature ContactFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContactObjectTable);
+		   Feature ContactFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.PackageFeature", NameTextCodeDefaultText = "Contact Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContactObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature ContactFeature_ACTIVEPRODUCTTYPES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACTIVEPRODUCTTYPES", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.ActiveProductTypes", NameTextCodeDefaultText = @"Active Product Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ContactFeature_ACTIVEPRODUCTTYPES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACTIVEPRODUCTTYPES", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.ActiveProductTypes", NameTextCodeDefaultText = @"Active Product Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContactObjectTable);
 
-		   Feature ContactFeature_Contact_Feature_EXCEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Contact.Feature.EXCEL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.EXCEL", NameTextCodeDefaultText = @"Download to Excel" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ContactFeature_Contact_Feature_EXCEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Contact.Feature.EXCEL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.EXCEL", NameTextCodeDefaultText = @"Download to Excel" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContactObjectTable);
 
-		   Feature ContactFeature_ViewContactProducts = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViewContactProducts", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.ViewContactProducts", NameTextCodeDefaultText = @"View Contact Products" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ContactFeature_ViewContactProducts = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViewContactProducts", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.ViewContactProducts", NameTextCodeDefaultText = @"View Contact Products" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContactObjectTable);
 
-		   Feature ContactFeature_ContactAdditionalServices = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContactAdditionalServices", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.ContactAdditionalServices", NameTextCodeDefaultText = @"Additional Services" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ContactFeature_ContactAdditionalServices = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContactAdditionalServices", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.ContactAdditionalServices", NameTextCodeDefaultText = @"Additional Services" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContactObjectTable);
 
    
 	    
@@ -2479,10 +2490,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable ContactObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Contact" && d.Tenant == 0).FirstOrDefault(); 			   Feature ContactFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowInternetAccess", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.AllowInternetAccess", NameTextCodeDefaultText = "Allow Internet Access", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ContactFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANONYMIZE", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Anonymize", NameTextCodeDefaultText = "Anonymize", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable ContactObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Contact" && d.Tenant == 0).FirstOrDefault(); 			   Feature ContactFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowInternetAccess", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.AllowInternetAccess", NameTextCodeDefaultText = "Allow Internet Access", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContactObjectTable);
+             			   Feature ContactFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANONYMIZE", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Anonymize", NameTextCodeDefaultText = "Anonymize", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContactObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

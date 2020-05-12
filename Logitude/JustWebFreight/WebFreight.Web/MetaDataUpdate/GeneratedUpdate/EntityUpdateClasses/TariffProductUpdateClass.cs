@@ -141,7 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -200,7 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -259,7 +259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -318,7 +318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -377,7 +377,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -436,7 +436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -495,57 +495,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup TariffProductQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0c06", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup TariffProductQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "483d", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup TariffProductQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0c06", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup TariffProductQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "483d", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable TariffProductObjectTable = objectTables.ContainsKey("TariffProduct") ? objectTables["TariffProduct"] : null;
             if (TariffProductObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 TariffProductObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TariffProduct" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> TariffProductObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TariffProduct").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode TariffProductTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TariffProduct.Q.AllTariffProducts", DefaultText = @"All Tariff Products",LocalDefaultText = null, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TariffProductFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TariffProduct.Q.AllTariffProducts", ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProductFeatures.AllTariffProducts", NameTextCodeDefaultText = "AllTariffProducts", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TariffProductTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TariffProduct.Q.AllTariffProducts", DefaultText = @"All Tariff Products",LocalDefaultText = null, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TariffProductFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TariffProduct.Q.AllTariffProducts", ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProductFeatures.AllTariffProducts", NameTextCodeDefaultText = "AllTariffProducts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TariffProductObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTariffProductsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffProductTextCode_0.Id, NameTextCodeCode = TariffProductTextCode_0.Code, ObjectTableName = "TariffProduct", Code = "AllTariffProducts",  QueryGroupCode = "0c06", IndexOrder = 0, Tenant = 0, ObjectTableId = TariffProductObjectTable.Id, QuerySection = "TariffProduct", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffProductFeature_0.Id,FeatureUniqeCode= TariffProductFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllTariffProductsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffProductTextCode_0.Id, NameTextCodeCode = TariffProductTextCode_0.Code, ObjectTableName = "TariffProduct", Code = "AllTariffProducts",  QueryGroupCode = "0c06", IndexOrder = 0, Tenant = 0, ObjectTableId = TariffProductObjectTable.Id, QuerySection = "TariffProduct", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffProductFeature_0.Id,FeatureUniqeCode= TariffProductFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllTariffProductsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTariffProductsQuery.Id,QueryCode = AllTariffProductsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TariffProductObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == TariffProductObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTariffProductsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTariffProductsQuery.Id,QueryCode = AllTariffProductsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TariffProduct.Code" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllTariffProductsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTariffProductsQuery.Id,QueryCode = AllTariffProductsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffProductObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffProductObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTariffProductsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTariffProductsQuery.Id,QueryCode = AllTariffProductsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TariffProduct.Name" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllTariffProductsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTariffProductsQuery.Id,QueryCode = AllTariffProductsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TariffProductObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TariffProductObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllTariffProductsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTariffProductsQuery.Id,QueryCode = AllTariffProductsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TariffProduct.Inactive" , ColumnWidth = 200 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable TariffProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TariffProduct" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> TariffProductObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TariffProduct").ToList();
+		   //List<ObjectField> TariffProductObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TariffProduct").ToList();
 		       
 	      
 
 	         Screen TariffProductTariffProductHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TariffProduct.HeaderScreen", Name = "TariffProductHeaderScreen", ObjectTableId = TariffProductObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TariffProductTariffProductHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = TariffProductTariffProductHeaderScreenScreen0.Id,ScreenCode = TariffProductTariffProductHeaderScreenScreen0.Code, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffProductTariffProductHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TariffProductTariffProductHeaderScreenScreen0.Id,ScreenCode = TariffProductTariffProductHeaderScreenScreen0.Code, ObjectFieldCode = "TariffProduct.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffProductTariffProductHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TariffProductTariffProductHeaderScreenScreen0.Id,ScreenCode = TariffProductTariffProductHeaderScreenScreen0.Code, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffProductTariffProductHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffProductTariffProductHeaderScreenScreen0.Id,ScreenCode = TariffProductTariffProductHeaderScreenScreen0.Code, ObjectFieldCode = "TariffProduct.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TariffProductObjectTable.HeaderScreenId = TariffProductTariffProductHeaderScreenScreen0.Id;
 		    TariffProductObjectTable.HeaderScreenCode = TariffProductTariffProductHeaderScreenScreen0.Code;
@@ -555,13 +566,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TariffProductTariffProductGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TariffProduct.GeneralTabScreen", Name = "TariffProductGeneralTabScreen", ObjectTableId = TariffProductObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TariffProductTariffProductGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffProductTariffProductGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffProductTariffProductGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffProductTariffProductGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffProductTariffProductGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffProductTariffProductGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TariffProductTariffProductGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = TariffProductObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = TariffProductObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TariffProductTariffProductGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = TariffProductTariffProductGeneralTabScreenScreen1.Id,ScreenCode = TariffProductTariffProductGeneralTabScreenScreen1.Code, ObjectFieldCode = "TariffProduct.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -572,11 +583,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable TariffProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TariffProduct" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TariffProductGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TariffProduct.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TariffProductGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TariffProduct.Tab.General", ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProductFeatures.GNTP", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TariffProductGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TariffProduct.Tab.General", ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProductFeatures.GNTP", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TariffProductObjectTable);
  
                  
 			   TextCode TariffProductEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TariffProduct.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature TariffProductEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TariffProduct.Tab.Events", ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProductFeatures.EVPT", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TariffProductEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TariffProduct.Tab.Events", ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProductFeatures.EVPT", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TariffProductObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -592,10 +603,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TariffProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TariffProduct" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TariffProductFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProduct.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TariffProductFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProduct.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TariffProductFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProduct.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TariffProductFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProduct.Features.PackageFeature", NameTextCodeDefaultText = "TariffProduct Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature TariffProductFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProduct.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffProductObjectTable);
+		   Feature TariffProductFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProduct.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffProductObjectTable);
+		   Feature TariffProductFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProduct.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffProductObjectTable);
+		   Feature TariffProductFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TariffProductObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffProduct.Features.PackageFeature", NameTextCodeDefaultText = "TariffProduct Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffProductObjectTable);    
 	    
 		}
 

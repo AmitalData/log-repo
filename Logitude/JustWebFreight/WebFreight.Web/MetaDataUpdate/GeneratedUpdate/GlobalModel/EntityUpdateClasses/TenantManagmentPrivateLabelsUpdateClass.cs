@@ -137,7 +137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -199,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Private Label Short Name",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -261,7 +261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Private Label Name",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -323,7 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Private Label Url",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -385,7 +385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Contact Us Email",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -447,7 +447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Receive All Statuses",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -509,7 +509,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						HelpTextCode =  "In Active",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -568,49 +568,60 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup TenantManagmentPrivateLabelsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TMPL", Name = "Private Labels" }, queryGroupRepository);
-						QueryGroup TenantManagmentPrivateLabelsQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "387b", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup TenantManagmentPrivateLabelsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TMPL", Name = "Private Labels" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup TenantManagmentPrivateLabelsQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "387b", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable TenantManagmentPrivateLabelsObjectTable = objectTables.ContainsKey("TenantManagmentPrivateLabels") ? objectTables["TenantManagmentPrivateLabels"] : null;
             if (TenantManagmentPrivateLabelsObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 TenantManagmentPrivateLabelsObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TenantManagmentPrivateLabels" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> TenantManagmentPrivateLabelsObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TenantManagmentPrivateLabels").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode TenantManagmentPrivateLabelsTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagmentPrivateLabels.Q.PrivateLabels", DefaultText = @"Private Labels",LocalDefaultText = null, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TenantManagmentPrivateLabelsFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PrivateLabelsQ", ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.PrivateLabels", NameTextCodeDefaultText = "Private Labels", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TenantManagmentPrivateLabelsTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagmentPrivateLabels.Q.PrivateLabels", DefaultText = @"Private Labels",LocalDefaultText = null, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TenantManagmentPrivateLabelsFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PrivateLabelsQ", ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.PrivateLabels", NameTextCodeDefaultText = "Private Labels", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TenantManagmentPrivateLabelsObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
 			  Query PrivateLabelsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TenantManagmentPrivateLabelsTextCode_0.Id, NameTextCodeCode = TenantManagmentPrivateLabelsTextCode_0.Code, ObjectTableName = "TenantManagmentPrivateLabels", Code = "PrivateLabels",  EditWizardName = "Simplog.Infrastructure.Views.TenantManagmentPrivateLabels.AddEditPrivateLabelsControl",
-			   QueryGroupCode = "TMPL", IndexOrder = 0, Tenant = 0, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, QuerySection = "TenantManagmentPrivateLabels", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TenantManagmentPrivateLabelsFeature_0.Id,FeatureUniqeCode= TenantManagmentPrivateLabelsFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "TMPL", IndexOrder = 0, Tenant = 0, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, QuerySection = "TenantManagmentPrivateLabels", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TenantManagmentPrivateLabelsFeature_0.Id,FeatureUniqeCode= TenantManagmentPrivateLabelsFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PrivateLabelsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "PrivateLabelName" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "PrivateLabelName" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PrivateLabelsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TenantManagmentPrivateLabels.PrivateLabelName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn PrivateLabelsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "PrivateLabelShortName" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "PrivateLabelShortName" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PrivateLabelsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TenantManagmentPrivateLabels.PrivateLabelShortName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn PrivateLabelsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "PrivateLabelUrl" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "PrivateLabelUrl" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PrivateLabelsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TenantManagmentPrivateLabels.PrivateLabelUrl" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn PrivateLabelsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "ContactUsEmail" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "ContactUsEmail" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PrivateLabelsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TenantManagmentPrivateLabels.ContactUsEmail" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn PrivateLabelsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "ReceiveAllStatuses" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "ReceiveAllStatuses" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PrivateLabelsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TenantManagmentPrivateLabels.ReceiveAllStatuses" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn PrivateLabelsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TenantManagmentPrivateLabelsObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == TenantManagmentPrivateLabelsObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn PrivateLabelsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PrivateLabelsQuery.Id,QueryCode = PrivateLabelsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "TenantManagmentPrivateLabels.InActive" , ColumnWidth = 70 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -626,10 +637,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    {  
 		   ObjectTable TenantManagmentPrivateLabelsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagmentPrivateLabels" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TenantManagmentPrivateLabelsFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TenantManagmentPrivateLabelsFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TenantManagmentPrivateLabelsFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TenantManagmentPrivateLabelsFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.PackageFeature", NameTextCodeDefaultText = "TenantManagmentPrivateLabels Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature TenantManagmentPrivateLabelsFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TenantManagmentPrivateLabelsObjectTable);
+		   Feature TenantManagmentPrivateLabelsFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TenantManagmentPrivateLabelsObjectTable);
+		   Feature TenantManagmentPrivateLabelsFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TenantManagmentPrivateLabelsObjectTable);
+		   Feature TenantManagmentPrivateLabelsFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.PackageFeature", NameTextCodeDefaultText = "TenantManagmentPrivateLabels Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TenantManagmentPrivateLabelsObjectTable);    
 	    
 		}
 

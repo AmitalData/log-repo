@@ -54,5 +54,33 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     return AddedTextCodes[textCodeDetails.Code];
             }
         }
+
+
+        public static TextCode AddTextCode(TextCodeDetails textCodeDetails, Dictionary<string, TextCode> textCodes, List<TextCode> addedTextCodes)
+        {
+            if (textCodes.Keys.Contains(textCodeDetails.Code + textCodeDetails.Tenant + textCodeDetails.ObjectTableId))
+            {
+                TextCode textCode = textCodes[textCodeDetails.Code + textCodeDetails.Tenant + textCodeDetails.ObjectTableId];
+                return textCode;
+            }
+            else
+            {
+                TextCode newTextCode = new TextCode()
+                {
+                    TextCodeTypeCode = textCodeDetails.TextCodeTypeCode,
+                    DefaultTextPlural = textCodeDetails.DefaultTextPlural,
+                    DefaultText = textCodeDetails.DefaultText,
+                    Code = textCodeDetails.Code,
+                    Id = IdCounter.GetIdWithIdsRange("TextCode", 100, textCodeDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode",textCodeDetails.Tenant).ToString(),
+                    ObjectTableId = textCodeDetails.ObjectTableId,
+                    Tenant = textCodeDetails.Tenant,
+                    LocalDefaultText = textCodeDetails.LocalDefaultText,
+                    IsSpellChecked = textCodeDetails.IsSpellChecked,
+                };
+                addedTextCodes.Add(newTextCode);
+                return newTextCode;
+            }
+        }
+
     }
 }

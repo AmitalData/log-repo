@@ -31,7 +31,10 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string EventTypeCategoryCode { get; set; }
         public string SearchFields { get; set; }
         public bool AllowedInAutomation { get; set; }
+        public string CustomField { get; set; }
 
+
+        
         [ForeignKey("CustomerRoleId")]
         public Role CustomerRole { get; set; }
 
