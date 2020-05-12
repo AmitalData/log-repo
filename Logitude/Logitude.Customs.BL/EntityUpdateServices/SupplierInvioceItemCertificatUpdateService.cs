@@ -33,7 +33,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.DeclarationId = entityParentPM.DeclarationId;
             entityPM.InvoiceCounterKey = entityParentPM.CounterKey;
             entityPM.LineNumber = entityParentPM.LineNumber;
-            bool yaronRevertCS7859 = false; 
+            bool yaronRevertCS7859 = false;
             ICustomContext _Context = MainContext as CustomContext;
             if (yaronRevertCS7859)
             {
@@ -48,9 +48,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 entityPM.ItemCertificateCounterKey = maxCounter.Value + 1;
                 maxCounter = entityPM.ItemCertificateCounterKey;
-
             }
+
             base.OnCreating(entityPM, entityParentPM);
+
         }
 
         public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
@@ -630,7 +631,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
         }
-
+        public void InsertSupplierInvioceItemCertificatByCsvFile(string certificateNumber,string requestNumber,int tenant,string decId,int lineNumber,int invoiceCounterkey, SupplierInvoiceItemPM invoiceItem)
+        {
+            SupplierInvioceItemCertificatPM entity = new SupplierInvioceItemCertificatPM();
+            entity.InvoiceCounterKey = invoiceCounterkey;
+            entity.Tenant = tenant;
+            entity.CertificateNumber = certificateNumber;
+            entity.ResConfirmationTypeCode = "2402";
+            entity.ReqConfirmationTypeCode = "2402";
+            entity.AttachmentTypeCode = "2";
+            entity.ApprovalRequestNumber = requestNumber;
+            entity.ChangeSetOp = ChangeSetOperation.Insert;
+            this.EntityParentPM = invoiceItem;
+            this.Update(entity, true);
+        }
         public void FastDeleteMultiParents(SupplierInvoiceKeys entityKeyFields, List<int> supplierInvoiceItemsParentsLines)
         {
             (Repository as Logitude.Customs.Data.Repsitories.SupplierInvioceItemCertificatRepository).FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
@@ -687,6 +701,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
         }
+
+
 
         private static string GetConnection(int tenant)
         {

@@ -7,6 +7,7 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { DeclarationList } from '../../EntityLists/DeclarationList';
 
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { CertificateErrorView } from '../../../CustomsModules/CustomsGeneralRequests/Components/ReceiptCertificateFromFileComponent';
 
 
 @Injectable()
@@ -19,35 +20,42 @@ export class SupplierInvioceItemCertificatsService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SupplierInvioceItemCertificats';
 
     }
-    PutSupplierInvioceItemCertificatFromFileRequest(fileUploadParamerter: any) {
+    PutSupplierInvioceItemCertificatFromFileRequest(fileUploadParamerter: any, tenant: number, clientId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return Observable.defer(() => {
-            return this._http.put(this._apiUrl + '/PutSupplierInvioceItemCertificatFromFileRequest', JSON.stringify(fileUploadParamerter), {
+            return this._http.put(this._apiUrl + "/PutSupplierInvioceItemCertificatFromFileRequest?" + "tenant=" + tenant
+                + "&clientId=" + clientId, JSON.stringify(fileUploadParamerter), {
                 headers: authHeader,
             }).map(response => {
                 var result = response.json();
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
-                pmresponse.Result = result;
-                return pmresponse;
+                var _mappedListsArray: Array<CertificateErrorView> = [];
+                if (result) {
+                    for (var key in result) {
+                        var entity: CertificateErrorView;
+                        entity = this.MapJsonToEntityPM(result[key]);
+                        _mappedListsArray.push(entity);
+                    }
+                }
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = _mappedListsArray;
+                return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         }
         );
     }
+
     MapJsonToEntityPM(jsonPM: any) {
 
-        var entityPM: CustomsDocumentPointerPM;
-        entityPM = new CustomsDocumentPointerPM(null);
+        var entityPM: CertificateErrorView;
+        entityPM = new CertificateErrorView();
         var jsonPMKeys = Object.keys(jsonPM);
-
         for (var key in jsonPMKeys) {
             var property = jsonPMKeys[key];
             entityPM[property] = jsonPM[property];
         }
-
-
         return entityPM;
     }
 }

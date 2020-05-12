@@ -113,7 +113,6 @@ export class RecallSuppliersFromFileComponent
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
         if (this.filterImageParameter != null && this.filterImageParameter.Base64String != null) {
-            debugger;
             this.SendRecallMessageToServer(this.filterImageParameter);
         }
     }
@@ -208,7 +207,6 @@ export class RecallSuppliersFromFileComponent
         var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(filter.Key, 5, true);
-        debugger;
         this._VendorMessagesService.PutRecallSuppliersFromFileRequest(filter).subscribe((myServiceResponse: ServiceResponse) => {
             console.log("[Send] Response/PutRecallSuppliersFromFileRequest : ", myServiceResponse.Result);
             var response = myServiceResponse.Result;

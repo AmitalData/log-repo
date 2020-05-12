@@ -7,7 +7,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { DeclarationList } from '../../../Customs/EntityLists/DeclarationList';
-import { VendorMessagesService } from '../../../Customs/Services/WebServices/VendorMessagesService';
+import { SupplierInvioceItemCertificatsService } from '../../../Customs/Services/WebServices/SupplierInvioceItemCertificatsService';
 import { CreditQueryRequestParams } from '../../../Customs/DataContract/RequestParams/CreditQueryRequestParams';
 import { RTGSInfoQueryResponseData } from '../../../Customs/DataContract/ResponseData/RTGSInfoQueryResponseData';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
@@ -23,6 +23,7 @@ import {DocumentsFilingExtendedPMService} from '../../../Common/Services/Extende
 
 
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -38,30 +39,30 @@ export class ReceiptCertificateFromFileComponent
     public DataContext: ReceiptCertificateFromFileComponent = this;
     public ObjectTableName: string = "Customs.SupplierInvioceItemsCertificates";
     UploadButtonIsEnabled: boolean = true;
+    ExportAsExcelButtonIsEnabled: boolean = false;
+    _supplierInvioceItemCertificatsService: SupplierInvioceItemCertificatsService = new SupplierInvioceItemCertificatsService();
 
-    _VendorMessagesService: VendorMessagesService = new VendorMessagesService();
-    _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
-
-    public TransactionsResultList: ObservableCollection;
+    public ErrorsResultList: ObservableCollection;
     public UploadFileId: string = Guid.NewRandomString();
     FileName: string;
     FileSize: string;
     FileExtension: string;
     File: any;
     filterImageParameter: ImageParameter;
-
     FileData: number;
     ProgressBarPercentText: string;
     IsShowProgressBar: boolean = false;
     IsUploadCanceled: boolean;
     IsUploadInProgress: boolean;
     Placeholder: any;
-
+    tenant: number;
     ResponseMessage: any;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.TransactionsResultList = new ObservableCollection([]);
+        this.ErrorsResultList = new ObservableCollection([]);
+        this.tenant = SessionLocator.Tenant;
     }
 
 
@@ -83,25 +84,17 @@ export class ReceiptCertificateFromFileComponent
         }
 
         if (this.ResponseData) {
-            if (this.ResponseData.TransactionsList) {
-                this.TransactionsResultList.InsertCollection(this.ResponseData.TransactionsList);
+            if (this.ResponseData.CertificateErrorViewList) {
+                this.ErrorsResultList.InsertCollection(this.ResponseData.CertificateErrorViewList);
             }
-
         }
     }
 
     //#region Properties
-    get AgentExternalID() { return this.RequestParams ? this.RequestParams.AgentExternalId : null; }
-    set AgentExternalID(value: string) {
-        if (this.RequestParams.AgentExternalId != value) {
-            this.RequestParams.AgentExternalId = value;
-        }
-        if (value) {
-            this.UIProperties.SetEnabled("AgentExternalID", null, false);
-        }
-        else {
-            this.UIProperties.SetEnabled("AgentExternalID", null, true);
-        }
+    customerId: string;
+    get CustomerId() { return this.customerId }
+    set CustomerId(value: string) {
+        this.customerId = value;
     }
 
     //#endregion Properties
@@ -113,7 +106,7 @@ export class ReceiptCertificateFromFileComponent
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
         if (this.filterImageParameter != null && this.filterImageParameter.Base64String != null) {
-            this.SendRecallMessageToServer(this.filterImageParameter);
+            this.OkButtonClicked();
         }
     }
 
@@ -159,8 +152,6 @@ export class ReceiptCertificateFromFileComponent
             }
         }
     }
-
-
     ArrayBufferToBase64(file: any, viewmodel: any) {
         var reader: FileReader = new FileReader();
         var reader = new FileReader();
@@ -181,25 +172,23 @@ export class ReceiptCertificateFromFileComponent
         reader.readAsArrayBuffer(file);
     }
 
-    SendRecallMessageToServer(filter: ImageParameter) {
+    OkButtonClicked() {
         this.ProgressBarPercentText = "0%";
-        
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
-        myCustomMessageProgressHelper.BasicResponse = true;
-        myCustomMessageProgressHelper.StartProgress(filter.Key, 5, true);
 
-        this._VendorMessagesService.PutRecallSuppliersFromFileRequest(filter).subscribe((myServiceResponse: ServiceResponse) => {
-            console.log("[Send] Response/PutRecallSuppliersFromFileRequest : ", myServiceResponse.Result);
+        this._supplierInvioceItemCertificatsService.PutSupplierInvioceItemCertificatFromFileRequest(this.filterImageParameter, this.tenant, this.CustomerId).subscribe((myServiceResponse: ServiceResponse) => {
             var response = myServiceResponse.Result;
-            
-            myCustomMessageProgressHelper.MessageArrived = true;
-            this.CurrentSession.StopBusyIndicator();
-            if (!AppTool.IsNullOrEmpty(response)) {
+            this.ErrorsResultList.InsertCollection(response);
+            if (this.ErrorsResultList.Collection.length > 0) {
+                this.ExportAsExcelButtonIsEnabled = true;
             }
         });
 
     }
 
+    ExportExcel() {
+        var url = ServiceHelper.GetLogitudeURL() + 'api/SupplierInvioceItemCertificats/GetSupplierInvoiceItemCertificatErrors2Excel?' + 'tenant=' + this.tenant.toString() + '&key=' + this.filterImageParameter.Key;
+        window.open(url);
+    }
     IncreaseProgressBar(ProgressBarValue: number) {
         var elem = document.getElementById("myBar");
         if (ProgressBarValue == 100) {
@@ -212,34 +201,12 @@ export class ReceiptCertificateFromFileComponent
         }
 
     }
-
-
-
-    get CurrencyTypeCode() { return this.RequestParams.CurrencyTypeCode; }
-    set CurrencyTypeCode(value: string) {
-        if (this.RequestParams.CurrencyTypeCode != value) {
-            this.RequestParams.CurrencyTypeCode = value;
-        }
-    }
-
-    get CurrencyTypeName() { return this.RequestParams.CurrencyTypeName; }
-    set CurrencyTypeName(value: string) {
-        if (this.RequestParams.CurrencyTypeName != value) {
-            this.RequestParams.CurrencyTypeName = value;
-        }
-    }
-
-    get CustomsCurrencyRate() { return this.RequestParams.CustomsCurrencyRate; }
-    set CustomsCurrencyRate(value: string) {
-        if (this.RequestParams.CustomsCurrencyRate != value) {
-            this.RequestParams.CustomsCurrencyRate = value;
-        }
-    }
-
-    get StartDate() { return this.RequestParams.StartDate; }
-    set StartDate(value: string) {
-        if (this.RequestParams.StartDate != value) {
-            this.RequestParams.StartDate = value;
-        }
-    }
+}
+export class CertificateErrorView {
+    ExcelRow: string;
+    CustomfileNr: string;
+    DeclarationId: string;
+    SupplierItemInvoice: string;
+    Model: string;
+    Errors: string;
 }

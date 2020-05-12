@@ -288,6 +288,16 @@ namespace Logitude.Customs.Data.Repsitories
             return declarations;
 
         }
+        public List<Declaration> GetDeclarationsByIdAndClientID(List<string> declarationIds,string clientID)
+        {
+            DateTime month3ago = DateTime.Now.AddDays(-90);
+            List<Declaration> declarations = (from a in context.Declarations
+                                              where a.CustomerId==clientID && a.CreateDateTime > month3ago && declarationIds.Contains(a.Id)
+                                              select a).ToList();
+
+            return declarations;
+
+        }
 
 
         public List<Declaration> GetDeclarationsThatCanResend(int tenant, int take)
