@@ -325,39 +325,43 @@ namespace Logitude.DBMigrations.Models
 
             generatedScript = AppendRelationsScriptToGeneratedScript(generatedScript, relationsScript);
 
-            foreach (var dxmlView in dxmlViews)
+
+            if(!IsArgumentProvided("-basic") && !IsArgumentProvided("-datatypechanges"))
             {
-                Console.WriteLine("Generating Script For " + dxmlView.DXMLFileName + " ...");
-
-                string viewScript = GetScriptFromViewDefinition(dxmlView.ViewDefinition, dxmlView.DXMLFileName);
-
-                if (!String.IsNullOrEmpty(viewScript))
+                foreach (var dxmlView in dxmlViews)
                 {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlView.ViewDefinition.DBType, ReplaceScriptSemicolon(viewScript));
+                    Console.WriteLine("Generating Script For " + dxmlView.DXMLFileName + " ...");
+
+                    string viewScript = GetScriptFromViewDefinition(dxmlView.ViewDefinition, dxmlView.DXMLFileName);
+
+                    if (!String.IsNullOrEmpty(viewScript))
+                    {
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlView.ViewDefinition.DBType, ReplaceScriptSemicolon(viewScript));
+                    }
                 }
-            }
 
-            foreach (var dxmlProcedure in dxmlProcedures)
-            {
-                Console.WriteLine("Generating Script For " + dxmlProcedure.DXMLFileName + " ...");
-
-                string procedureScript = GetScriptFromProcedureDefinition(dxmlProcedure.ProcedureDefinition, dxmlProcedure.DXMLFileName);
-
-                if (!String.IsNullOrEmpty(procedureScript))
+                foreach (var dxmlProcedure in dxmlProcedures)
                 {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlProcedure.ProcedureDefinition.DBType, ReplaceScriptSemicolon(procedureScript));
+                    Console.WriteLine("Generating Script For " + dxmlProcedure.DXMLFileName + " ...");
+
+                    string procedureScript = GetScriptFromProcedureDefinition(dxmlProcedure.ProcedureDefinition, dxmlProcedure.DXMLFileName);
+
+                    if (!String.IsNullOrEmpty(procedureScript))
+                    {
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlProcedure.ProcedureDefinition.DBType, ReplaceScriptSemicolon(procedureScript));
+                    }
                 }
-            }
 
-            foreach (var dxmlTrigger in dxmlTriggers)
-            {
-                Console.WriteLine("Generating Script For " + dxmlTrigger.DXMLFileName + " ...");
-
-                string triggerScript = GetScriptFromTriggerDefinition(dxmlTrigger.TriggerDefinition, dxmlTrigger.DXMLFileName);
-
-                if (!String.IsNullOrEmpty(triggerScript))
+                foreach (var dxmlTrigger in dxmlTriggers)
                 {
-                    generatedScript = AppendToGeneratedScript(generatedScript, dxmlTrigger.TriggerDefinition.DBType, ReplaceScriptSemicolon(triggerScript));
+                    Console.WriteLine("Generating Script For " + dxmlTrigger.DXMLFileName + " ...");
+
+                    string triggerScript = GetScriptFromTriggerDefinition(dxmlTrigger.TriggerDefinition, dxmlTrigger.DXMLFileName);
+
+                    if (!String.IsNullOrEmpty(triggerScript))
+                    {
+                        generatedScript = AppendToGeneratedScript(generatedScript, dxmlTrigger.TriggerDefinition.DBType, ReplaceScriptSemicolon(triggerScript));
+                    }
                 }
             }
 
