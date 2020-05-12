@@ -2004,7 +2004,9 @@ namespace MeatadataGeneratorTool
                     XmlDocument doc = new XmlDocument();
                     XmlElement tableElement = (XmlElement)doc.AppendChild(doc.CreateElement("Table"));
 
-                    tableElement.SetAttribute("Name", table.DBTableName);
+                    string tableName = table.DBTableName.ToLower().StartsWith("customs.") ? table.DBTableName.Split('.')[1] : table.DBTableName;
+
+                    tableElement.SetAttribute("Name", tableName);
 
                     if (!string.IsNullOrEmpty(table.DBTableShortName))
                     {
@@ -2015,15 +2017,17 @@ namespace MeatadataGeneratorTool
 
                     if (!string.IsNullOrEmpty(table.DBTableOldNames))
                     {
-                        if (table.DBTableOldNames.Contains(","))
+                        string tableOldNames = string.Join(",", table.DBTableOldNames.Split(',').Select(n => n.ToLower().StartsWith("customs.") ? n.Split('.')[1] : n).ToArray());
+
+                        if (tableOldNames.Contains(","))
                         {
-                            var oldNamesExceptName = table.DBTableOldNames.Split(',').Where(x => x != table.DBTableName);
+                            var oldNamesExceptName = tableOldNames.Split(',').Where(x => x != tableName);
 
                             dbTableOldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
                         }
                         else
                         {
-                            dbTableOldNames = table.DBTableName == table.DBTableOldNames ? null : table.DBTableOldNames;
+                            dbTableOldNames = tableName == tableOldNames ? null : tableOldNames;
                         }
                     }
 
@@ -2452,7 +2456,7 @@ namespace MeatadataGeneratorTool
 
                 return new ForeignEntityData
                 {
-                    ReferencedTable = referencedTable.Contains("Customs.") ? referencedTable.Split('.')[1] : referencedTable,
+                    ReferencedTable = referencedTable.ToLower().StartsWith("customs.") ? referencedTable.Split('.')[1] : referencedTable,
                     ReferencedTableSchema = referencedTableSchema,
                     ReferencedColumn = referencedColumn
                 };
@@ -2495,7 +2499,7 @@ namespace MeatadataGeneratorTool
 
                 return new ForeignEntityData
                 {
-                    ReferencedTable = referencedTable.Contains("Customs.") ? referencedTable.Split('.')[1] : referencedTable,
+                    ReferencedTable = referencedTable.ToLower().StartsWith("customs.") ? referencedTable.Split('.')[1] : referencedTable,
                     ReferencedTableSchema = referencedTableSchema,
                     ReferencedColumn = referencedColumn
                 };
