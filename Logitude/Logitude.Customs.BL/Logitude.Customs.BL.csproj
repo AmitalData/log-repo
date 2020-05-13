@@ -145,8 +145,12 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\ClassificationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerRoleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsShipDetails.Generated.cs" />
+
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
+
+    <Compile Include="CloseTables\DeclaraionDetails.cs" />
+
     <Compile Include="CloseTables\EnumGenerated\CustomsShipStruct.Generated.cs" />
     <Compile Include="CloseTables\SincroTestCaseDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AcceptanceStatusDetails.Generated.cs" />
