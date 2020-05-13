@@ -561,6 +561,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\DWObjectField.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWObjectFieldCategories.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWObjectTable.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\WorkerRoleName.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWSubQuery.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQuery .cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryColumn.cs" />
@@ -574,6 +575,7 @@
     <Compile Include="InfrastructureModel\Mapping\DWObjectTableMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWQueryColumnMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWQueryFilterMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\WokerRoleNameMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\RuleUpdateHistoryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SchedulerProcedureMap.cs" />
@@ -585,6 +587,7 @@
     <Compile Include="InfrastructureModel\Repositories\DWObjectFieldRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWObjectTableRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWCategoriesRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\WorkerRoleNameRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\RuleUpdateHistoryRepository.cs" />

@@ -107,6 +107,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<DWObjectFieldCategories> DWObjectFieldCategories { get; }
         //IDbSet<SchedulerLogs> SchedulerLogs { get; }
         IDbSet<SchedulerProcedure> SchedulerProcedures { get; }
+        IDbSet<WorkerRoleName> WorkerRoleNames { get; }
 
         void SetAsModified(object entity);
         void DetectChanges();

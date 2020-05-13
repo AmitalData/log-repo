@@ -2069,5 +2069,7 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<RuleUpdateHistory> RuleUpdateHistories => throw new NotImplementedException();
+
+        public IDbSet<WorkerRoleName> WorkerRoleNames => throw new NotImplementedException();
     }
 }

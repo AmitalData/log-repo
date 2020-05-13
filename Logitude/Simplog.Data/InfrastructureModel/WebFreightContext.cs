@@ -366,6 +366,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
             //modelBuilder.Configurations.Add(new SchedulerLogsMap());
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
+            modelBuilder.Configurations.Add(new WorkerRoleNameMap());
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
@@ -999,6 +1000,12 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<RuleUpdateHistory> RuleUpdateHistories
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<WorkerRoleName> WorkerRoleNames
         {
             get;
             set;
