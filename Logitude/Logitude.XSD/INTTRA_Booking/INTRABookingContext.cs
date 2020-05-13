@@ -818,7 +818,7 @@ namespace Logitude.XSD.INTTRA_Booking
                                    Quantity = g.Sum(s => s.Quantity),
                                });
 
-            if (ShipmentPackages != null)
+            if (ShipmentPackages != null && ShipmentPackages.Count() > 0)
             {
                 groupedPackages = (from d in this.ShipmentPackages
                                    group d by new { d.PackageTypeId } into g
