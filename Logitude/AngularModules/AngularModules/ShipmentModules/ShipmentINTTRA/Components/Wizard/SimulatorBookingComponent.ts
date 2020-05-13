@@ -317,7 +317,7 @@ export class SimulatorBookingComponent extends BaseComponent {
                     logitudeWindow.Title = "Add Vessel";
                     logitudeWindow.WindowArgs = { EntityPM: this.EntityPM};
                     logitudeWindow.Width =650;
-                    logitudeWindow.Height = 158;
+                    logitudeWindow.Height = 230;
                     logitudeWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/AddEBookingVesselComponent');
                     logitudeWindow.WindowClosed.subscribe(s => {
                         if (s == "ok") {
@@ -351,9 +351,8 @@ export class SimulatorBookingComponent extends BaseComponent {
         this.EntityPM.MainCarriageCarrierNumber = this.INTTRABookingResponse_Voyage;
         this.EntityPM.MainCarriageFromPortId = this.INTTRABookingResponse_POFPort;
         this.EntityPM.MainCarriageToPortId = this.INTTRABookingResponse_PODPort;
-        if (!AppTool.IsNullOrEmpty(this.INTTRABookingResponse_VesselId)) {
-            this.EntityPM.MainCarriageVesselId = this.INTTRABookingResponse_VesselId;
-        }
+        this.EntityPM.MainCarriageVesselId = this.INTTRABookingResponse_VesselId;
+
         if (this.IsEditMode) {
             this.SubmitUpdatingShipment();
         }
