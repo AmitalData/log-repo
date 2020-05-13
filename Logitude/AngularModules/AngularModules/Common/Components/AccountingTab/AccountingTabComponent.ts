@@ -3,6 +3,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
     template:
@@ -29,19 +30,43 @@ export class AccountingTabComponent implements OnInit,AfterViewInit {
     public EntityPM: any = null;
     public ObjectTableName: string;
     public TabTitleTextCode: string = null;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
    // @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
    constructor(private entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.TabTitleTextCode = this.ObjectTableName + ".TH.Accounting";
-        this.InitializeComponent();
+        
+                    this.InitializeComponent();
+             
+
     }
     ngAfterViewInit(): void {
-        this.LoadComponent();
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { 
+            this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => {  
+                this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => {
+                        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) => {
+                            this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => {
+                                this._entityResourceService.getEntityResourceByTableName("GLAccountInterestPeriod").subscribe((response: any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe((response: any) => {
+
+                     
+                    this.LoadComponent();
+                });
+                });
+               }); 
+            });
+           }); 
+          }); 
+        });
+       });
+
     }
 
     ngOnInit() {
+    
         this.Listen();
     }
 
@@ -137,7 +162,13 @@ export class AccountingTabComponent implements OnInit,AfterViewInit {
             && this.ObjectTableName != 'AccountingPaymentMethod'
             && this.ObjectTableName != 'APPaymentMethod'
             && !this.isQuickBooksOnline) {
-            myComponentPath = "./Common/Components/AccountingTab/AccountingTab_Full";
+                // this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { 
+                //     this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { 
+                //         this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { 
+                    myComponentPath = "./Common/Components/AccountingTab/AccountingTab_Full";
+                //   });
+                //  });
+                // });
         }
         else if (this.isQuickBooksOnline) {
             myComponentPath = "./Common/Components/AccountingTab/AccountingTab_QuickBooksOnline";

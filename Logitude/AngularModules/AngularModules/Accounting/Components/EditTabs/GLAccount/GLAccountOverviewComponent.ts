@@ -38,7 +38,7 @@ import { AccountingNoteListService } from '../../../Services/StandardLists/Accou
 declare var makeAmBarChart;
 
 @Component({
-    
+
     templateUrl: './GLAccountOverviewComponent.html',
 })
 
@@ -256,8 +256,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             this.CurrentSession.StopBusyIndicator();
 
             if (serviceResponse.Result) {
-                var result = serviceResponse.Result;
-                var transaction = result.Result; // get the data
+                var transaction = serviceResponse.Result;
                 var openAmountCurrency = transaction.OpenAmountCurrencySign;
 
                 // original amount currency

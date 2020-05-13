@@ -250,10 +250,13 @@ export class NewBIReport extends BaseComponent {
         let item: BIReportList = selected.rowData;
         this.EntityPM.DWQueryId = item.DWQueryId;
         this.EntityPM.Name = item.Name;
+        this.EntityPM.FactTableName = item.FactTableName;
         this.EntityPM.Description = item.Description;
         this.BIReportsTenant = item.Tenant;
         this.IsCopy = true;
         this.IsOneRowSelected = true;
+        if (this.EntityPM.FactTableName)
+          this.FactTableSelectionChanged(this.EntityPM.FactTableName);
     }
 
     get Name() { return this.EntityPM.Name; }

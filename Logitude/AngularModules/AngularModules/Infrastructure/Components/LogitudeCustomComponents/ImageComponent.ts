@@ -142,9 +142,10 @@ export class ImageComponent implements AfterViewInit, OnInit {
   GetImageFile(imageId: string, extension: string, isFirEvent: boolean = false) {
 
     var type = "Base64";
-    if (this.EntityName == "Quotation") {
+    if (this.EntityName == "Quotation" || this.EntityName == "Airline") {
       type += ("^ImageDetail");
     }
+
     ShowHideProgressDownload(true, this.ProgressDownloadId);
     this._imageLibraryService.DownloadFile(this.ImageId, extension, "images", SessionInfo.LoggedUserTenant, type).subscribe((res: any) => {
       var pmResponse: ServiceResponse = res;
@@ -250,7 +251,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
 
     filter.UploadMode = "ImageComponent";
 
-    if (this.EntityName == "Customer") {
+    if (this.EntityName == "Customer" || this.EntityName == "Airline") {
       filter.EntityId = this.EntityId;
       filter.ContactId = null;
       filter.Key = null;

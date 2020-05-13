@@ -127,12 +127,12 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <span [style.width]="(ScreenWidth-178).toString() + 'px'" class="TextTrimming" style="font-size:20px;color:#1B90CB;float:left;font-family:sans-serif;padding-right:10px;">תשלום דיגיטלי מםובטח למשלוח</span>
+                                                                <span [style.padding-right]="FontTitleSize > 17? '10px':'0px'"  [style.font-size]="FontTitleSize.toString() + 'px'" [style.width]="(ScreenWidth-178).toString() + 'px'" class="TextTrimming" style="color:#212E62;float:left;font-family:sans-serif;">תשלום דיגיטלי מאובטח למשלוח</span>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <span [style.width]="(ScreenWidth-178).toString() + 'px'" style="font-size:20px;color:#1B90CB;float:left;font-family:sans-serif;padding-right:10px;">{{Hawb}}</span>
+                                                                <span [style.padding-right]="FontTitleSize > 17? '10px':'0px'"  [style.font-size]="(FontTitleSize+1).toString() + 'px'" [style.width]="(ScreenWidth-178).toString() + 'px'" style="color:#212E62;float:left;font-family:sans-serif;">{{Hawb}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -212,7 +212,7 @@
                                             <tr>
                                                 <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height:22px;">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
-                                                        תיםור טובין
+                                                        תיאור טובין
                                                     </div>
                                                 </td>
                                                 <td style="width:10px"><span></span></td>
@@ -237,11 +237,11 @@
                                                 <td colspan="2" style="font-size:20px;border-bottom:1px solid black;width:100%;float:left;font-family:sans-serif;padding-right:10px;"></td>
                                             </tr>
                                         </table>
-                                        <table style="height:130px;margin-right:5px;">
+                                        <table style="height:135px;margin-right:5px;">
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
                                                     <label class="MyLabel">
-                                                        ערך משלוח בש"ח
+                                                        ערך משלוח
                                                     </label>
                                                 </td>
                                                 <td style="height: 22px;">
@@ -289,7 +289,7 @@
                                                                 </label>
                                                             </td>
                                                             <td>
-                                                                <label style="text-decoration: underline;color: lightskyblue;font-size:17px;" (click)="PaymentDetailsClick()">
+                                                                <label style="text-decoration: underline;color: lightskyblue;font-size:18px;" (click)="PaymentDetailsClick()">
                                                                     פירוט עלויות
                                                                 </label>
                                                             </td>
@@ -383,11 +383,11 @@
                                                     <div style="width:100%;height:1px;border-bottom:1px solid black;"></div>
                                                 </td>
                                             </tr>
-                                            <tr style="height:22px;">
+                                            <tr style="height:24px;">
                                                 <td>
                                                     <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:right;margin-right: 5px;direction: rtl;">
                                                         <LogCheckBox [IsDisabled]="ShowFinalMessage" [Checked]="IsAgreed" (ValueChanged)="IsAggreeChicked($event)" [ObjectFieldName]="'IsAggree'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
-                                                        <label style="margin-right:-10px;font-size:12px;font-family:sans-serif;" class="TextTrimming">םני מםשר םת הסכם<span style="color:lightskyblue;text-decoration: underline;" (click)="ViewAggreement()"> השירות</span> </label><br />
+                                                        <label style="margin-right:-10px;font-size:13px;font-family:sans-serif;" class="TextTrimming">םני מםשר םת הסכם<span style="color:lightskyblue;text-decoration: underline;font-size:13px;" (click)="ViewAggreement()"> השירות</span> </label><br />
                                                     </div>
                                                 </td>
                                             </tr>
@@ -396,10 +396,10 @@
                                                     <div style="width:100%;height:1px;border-bottom:1px solid black;"></div>
                                                 </td>
                                             </tr>
-                                            <tr style="height:22px;">
+                                            <tr style="height:24px;">
                                                 <td>
                                                     <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:right;padding-right: 20px;direction: rtl;">
-                                                        <label style="margin-right:-10px;font-size:12px;font-family:sans-serif;" class="TextTrimming">לבירורים בנושם עלויות םו כל מידע נוסף םודות המשלוח <a style="color:lightskyblue;" href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כםן</a></label><br /><!--<span style="text-decoration: underline;color: lightskyblue;">לחץ כםן</span>-->
+                                                        <label style="margin-right:-10px;font-size:13px;font-family:sans-serif;" class="TextTrimming">לבירורים בנושם עלויות םו כל מידע נוסף םודות המשלוח <a style="color:lightskyblue;font-size:13px;" href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כםן</a></label><br /><!--<span style="text-decoration: underline;color: lightskyblue;">לחץ כםן</span>-->
                                                     </div>
                                                 </td>
                                             </tr>
@@ -414,9 +414,9 @@
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
                                                     <div style="vertical-align:middle;text-align:center;">
-                                                        <div [class.Disable]="IsAgreed == false" (click)="OnPayClick()" style="width:170px;height:35px;background-color:cornflowerblue;display:inline-block;font-size:13px;padding-top:5px;">
+                                                        <div [class.Disable]="IsAgreed == false" (click)="OnPayClick()" style="width:200px;height:35px;background-color:cornflowerblue;display:inline-block;font-size:13px;padding-top:5px;border:1px solid cornflowerblue;border-radius:9px;">
                                                             <span style="text-align:center;font-size:13px;">
-                                                                <a style="color:white;font-size:14px;font-family: sans-serif;">לתשלום מםובטח</a>
+                                                                <a style="color:white;font-size:17px;font-family: sans-serif;">לתשלום מםובטח</a>
                                                             </span>
                                                         </div>
                                                     </div>

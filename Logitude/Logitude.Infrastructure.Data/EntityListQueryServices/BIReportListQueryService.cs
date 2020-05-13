@@ -42,6 +42,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                                                   CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
                                                   LastRunDate = a.LastRunDetail == null ? null : (DateTime?)a.LastRunDetail.LastRunDate,
                                                   LastRunByUserName = a.LastRunDetail == null ? null : (a.LastRunDetail.LastRunByUser == null ? null : (a.LastRunDetail.LastRunByUser.Contact == null ? null : a.LastRunDetail.LastRunByUser.Contact.EnglishName)),
+                                                  FactTableName = a.FactTableName
                                               });
             return query;
         }

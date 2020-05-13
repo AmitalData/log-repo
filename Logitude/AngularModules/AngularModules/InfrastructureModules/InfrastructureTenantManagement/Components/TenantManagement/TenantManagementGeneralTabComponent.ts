@@ -72,6 +72,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
+                    this.BuildPackagesList();
                     this.BuildAddOnsList();
                     this.SetUIProperties();
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
@@ -82,6 +83,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
+                    this.BuildPackagesList();
                     this.BuildAddOnsList();
                     this.SetUIProperties();
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
@@ -878,7 +880,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     EditAddOn(itemViewModel: AddOnItem) {
         this.entityResourceService.getEntityResourceByTableName("TenantAddOn").subscribe((res1: any) => {
             itemViewModel.SetOldData();
-
             var logeWindow = new LogitudeWindow();
             logeWindow.Title = "Edit Add-On";
             logeWindow.DataContext = itemViewModel;
@@ -1350,7 +1351,7 @@ export class PackageItem extends BaseComponent{
         this.IsNew = isNew;
         this.IsMainPackage = isMainPackage;
         this.TenantManagementPM = fatherComponent.EntityPM;
-
+        this.SetUIProperties_NumberOfUsers();
         this.SetUIProperties_TotalPrice();
         this.GetPackageName();
     }
@@ -1384,8 +1385,13 @@ export class PackageItem extends BaseComponent{
     set NumberOfUsers(newValue: number) {
         if (this.EntityPM.NumberOfUsers != newValue) {
             this.EntityPM.NumberOfUsers = newValue;
+            this.SetUIProperties_NumberOfUsers();
             this.ComputeTotalPrice();
         }
+    }
+    private SetUIProperties_NumberOfUsers() {
+        this.UIProperties.SetRequired("NumberOfUsers", this.ObjectTableName, AppTool.IsNullOrZero(this.NumberOfUsers));
+
     }
 
     get FreeUsers() { return this.EntityPM.FreeUsers; }

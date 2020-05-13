@@ -1737,6 +1737,39 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         this.ServerSortTimer = setTimeout(() => this.DoServerSort(colDef, i), 200);       
     }
 
+  CompareAscending(a, b) {
+    if (a == undefined) {
+      a = null;
+    }
+    if (b == undefined) {
+      b = null;
+    }
+    if (a > b) {
+      return 1;
+    }
+    if (a < b) {
+      return -1;
+    }
+    return 0;
+  }
+
+  CompareDecending(a, b) {
+    if (a == undefined) {
+      a = null;
+    }
+    if (b == undefined) {
+      b = null;
+    }
+    if (a > b) {
+      return -1;
+    }
+    if (a < b) {
+      return 1;
+    }
+    return 0;
+  }
+
+
     DoServerSort(colDef, i) {
         if (colDef.SortFieldName) {
             this.OrigionalSortingData = this.ItemSource.Collection;
@@ -1752,7 +1785,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     {
                         //this.dataSource.sortingDir = "Descending";
                         this.sortingDir = "Descending";
-                        var temp = this.ItemSource.Collection.sort((a, b) => (a[colDef.SortFieldName] < b[colDef.SortFieldName]) ? -1 : ((a[colDef.SortFieldName] > b[colDef.SortFieldName]) ? 1 : 0));
+                  var temp = this.ItemSource.Collection.sort((a, b) => this.CompareAscending(a[colDef.SortFieldName], b[colDef.SortFieldName]));//(a[colDef.SortFieldName] < b[colDef.SortFieldName]) ? -1 : ((a[colDef.SortFieldName] > b[colDef.SortFieldName]) ? 1 : 0));
                         this.ItemSource = new ObservableCollection(temp);
                         break;
                     }
@@ -1760,7 +1793,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     {
                         //this.dataSource.sortingDir = "Ascending";
                         this.sortingDir = "Ascending";
-                        var temp = this.ItemSource.Collection.sort((a, b) => (a[colDef.SortFieldName] < b[colDef.SortFieldName]) ? 1 : ((a[colDef.SortFieldName] > b[colDef.SortFieldName]) ? -1 : 0));
+                  var temp = this.ItemSource.Collection.sort((a, b) => this.CompareDecending(a[colDef.SortFieldName],b[colDef.SortFieldName]));//(a[colDef.SortFieldName] < b[colDef.SortFieldName]) ? 1 : ((a[colDef.SortFieldName] > b[colDef.SortFieldName]) ? -1 : 0));
                         this.ItemSource = new ObservableCollection(temp);
                         break;
                     }

@@ -2635,6 +2635,7 @@ namespace WebFreight.Web.ReportsWebServices
             #region Fill Aging Statemant Data
 
             List<AgingStatemantDataItem> list_ARInvoice = (from d in iQueryable_ARInvoice
+                                                           where d.DueDate != null
                                                            select new AgingStatemantDataItem()
                                                            {
                                                                Id = "ARInvoice:" + d.Id,
@@ -2648,6 +2649,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                            }).ToList();
 
             List<AgingStatemantDataItem> list_APInvoice = (from d in iQueryable_APInvoice
+                                                           where d.DueDate != null
                                                            select new AgingStatemantDataItem()
                                                            {
                                                                Id = "APInvoice:" + d.Id,
@@ -2660,18 +2662,19 @@ namespace WebFreight.Web.ReportsWebServices
                                                            }).ToList();
 
             List<AgingStatemantDataItem> list_ARPayment = (from d in iQueryable_ARPayment
+                                                           where d.ValueDate != null
                                                            select new AgingStatemantDataItem()
                                                            {
                                                                Id = "ARPayment:" + d.Id,
                                                                TypeCode = "AR",
                                                                EntityName = "ARPayment",
-
                                                                CardId = d.BillToId,
                                                                Date = d.ValueDate,
                                                                Credit = d.OpenAmount * d.PaymentCurrencyExchangeRate,
                                                            }).ToList();
 
             List<AgingStatemantDataItem> list_APPayment = (from d in iQueryable_APPayment
+                                                           where d.ValueDate != null
                                                            select new AgingStatemantDataItem()
                                                            {
                                                                Id = "APPayment:" + d.Id,
@@ -2740,6 +2743,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             foreach (string cardId in cardIdsList)
             {
+                
                 AgedAccountsReceivableDataProvider.AgedAccountsReceivable acountsRecored = new AgedAccountsReceivableDataProvider.AgedAccountsReceivable();
 
                 double? currentsum = 0;

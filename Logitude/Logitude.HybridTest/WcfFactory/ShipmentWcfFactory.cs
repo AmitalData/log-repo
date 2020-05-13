@@ -38,7 +38,7 @@ namespace Logitude.HybridTest.WcfFactory
         }
         public static ShipmentPM GetShipmentPMWithNewNumber()
         {
-            shipmentPM.ShipmentNumber = TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "SHIP", shipmentPM.DirectionId, shipmentPM.TransportModeId);
+            shipmentPM.ShipmentNumber = Guid.NewGuid().ToString().Substring(0, 6) + Guid.NewGuid().ToString().Substring(0, 6); //TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "SHIP", shipmentPM.DirectionId, shipmentPM.TransportModeId);
             return shipmentPM;
         }
     }

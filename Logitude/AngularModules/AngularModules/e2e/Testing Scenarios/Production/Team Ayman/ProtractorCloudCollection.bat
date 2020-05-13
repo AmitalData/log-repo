@@ -11,46 +11,46 @@ cd C:\Program Files (x86)\Jenkins\workspace\Amital.DevOps\Logitude\AngularModule
 FOR /L %%A IN (1,1,1) DO (  
     --------------------------------------------------SpotRate-------------------------------------------------------------------------------------------------
 
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud"  --params.QuoteParams.Direction="Export" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote 
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud"  --params.QuoteParams.Direction="Export" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote 
     CALL :CheckError "Export-Air-SpotRate"
 
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud"  --params.QuoteParams.Direction="Import" --params.QuoteParams.TransportMode="O"  --params.QuoteParams.ShipmentType="FCL" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote 
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud"  --params.QuoteParams.Direction="Import" --params.QuoteParams.TransportMode="O"  --params.QuoteParams.ShipmentType="FCL" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote 
     CALL :CheckError "Import-Ocean-FCL-SpotRate"
 
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Domestic" --params.QuoteParams.TransportMode="I"  --params.QuoteParams.ShipmentType="LTL" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote 
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Domestic" --params.QuoteParams.TransportMode="I"  --params.QuoteParams.ShipmentType="LTL" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote 
     CALL :CheckError "Domestic-Inland-LTL-SpotRate"
 
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Drop" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote 
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Drop" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote 
     CALL :CheckError "Drop-Air-SpotRate" 
 
     --------------------------------------------------RoutingRate-------------------------------------------------------------------------------------------------
 
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Export" --params.QuoteParams.TransportMode="O"  --params.QuoteParams.ShipmentType="LCL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote 
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Export" --params.QuoteParams.TransportMode="O"  --params.QuoteParams.ShipmentType="LCL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote 
     CALL :CheckError "Export-Air-RoutingRate"
 
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Import" --params.QuoteParams.TransportMode="I"  --params.QuoteParams.ShipmentType="FTL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote 
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Import" --params.QuoteParams.TransportMode="I"  --params.QuoteParams.ShipmentType="FTL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote 
     CALL :CheckError "Import-Inland-LTL-RoutingRate"
 
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Domestic" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote 
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Domestic" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote 
     CALL :CheckError "Domestic-Air-RoutingRate" 
   
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Drop" --params.QuoteParams.TransportMode="O"  --params.QuoteParams.ShipmentType="FCL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote 
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.QuoteParams.Direction="Drop" --params.QuoteParams.TransportMode="O"  --params.QuoteParams.ShipmentType="FCL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote 
     CALL :CheckError "Drop-Ocean-FCL-RoutingRate" 
 
     --------------------------------------------------Activities-------------------------------------------------------------------------------------------------
 
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.CRM.CRMType="activity" --params.CRM.ActivityType="task" --suite=login,CRM
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.CRM.CRMType="activity" --params.CRM.ActivityType="task" --suite=login,CRM
     CALL :CheckError "Task"
 
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.CRM.CRMType="activity" --params.CRM.ActivityType="call" --suite=login,CRM
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.CRM.CRMType="activity" --params.CRM.ActivityType="call" --suite=login,CRM
     CALL :CheckError "PhoneCall"
 
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.CRM.CRMType="activity" --params.CRM.ActivityType="appoint" --suite=login,CRM 
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.CRM.CRMType="activity" --params.CRM.ActivityType="appoint" --suite=login,CRM 
     CALL :CheckError "Appointment"
 
      -------------------------------------------------- Opportunities-------------------------------------------------------------------------------------------------
 
-    cmd /c call npm run e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.CRM.CRMType="opportunity" --suite=login,CRM
+    cmd /c call npm run do-e2e -- --params.Env="cloudStaging" --params.Team="aymancloud" --params.CRM.CRMType="opportunity" --suite=login,CRM
     CALL :CheckError "opportunity"
 
 )

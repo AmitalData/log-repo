@@ -239,6 +239,8 @@ namespace CommunicationWorkerRole
                         cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
                         communicationLogRep.Update(cl);
                         communicationLogRep.SubmitChanges();
+
+                        this.UpdateEntity(cl);
                     }
 
                 }
@@ -370,6 +372,12 @@ namespace CommunicationWorkerRole
 
         private void UpdateEntity(CommunicationLog commLog)
         {
+            string transferStatus = "TR";
+            if(commLog.CommunicationStatusTypeCode == "F")
+            {
+                transferStatus = "ET";
+            }
+
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
             ObjectTable objectTable = objectTableRepository.GetSingleObjectTable(commLog.ObjectTableId, 0, false);
             if(objectTable!= null)
@@ -384,7 +392,7 @@ namespace CommunicationWorkerRole
                             ARInvoice myEntity = repository.GetSingleARInvoice(commLog.EntityId, commLog.Tenant);
                             if(myEntity != null)
                             {
-                                myEntity.TransferStatusCode = "TR";
+                                myEntity.TransferStatusCode = transferStatus;
                                 repository.Update(myEntity);
                                 repository.SubmitChanges();
                             }
@@ -397,7 +405,7 @@ namespace CommunicationWorkerRole
                             APInvoice myEntity = repository.GetSingleAPInvoice(commLog.EntityId, commLog.Tenant);
                             if (myEntity != null)
                             {
-                                myEntity.TransferStatusCode = "TR";
+                                myEntity.TransferStatusCode = transferStatus;
                                 repository.Update(myEntity);
                                 repository.SubmitChanges();
                             }
@@ -410,7 +418,7 @@ namespace CommunicationWorkerRole
                             ARPayment myEntity = repository.GetSingleARPayment(commLog.EntityId, commLog.Tenant);
                             if (myEntity != null)
                             {
-                                myEntity.TransferStatusCode = "TR";
+                                myEntity.TransferStatusCode = transferStatus;
                                 repository.Update(myEntity);
                                 repository.SubmitChanges();
                             }
@@ -423,7 +431,7 @@ namespace CommunicationWorkerRole
                             APPayment myEntity = repository.GetSingleAPPayment(commLog.EntityId, commLog.Tenant);
                             if (myEntity != null)
                             {
-                                myEntity.TransferStatusCode = "TR";
+                                myEntity.TransferStatusCode = transferStatus;
                                 repository.Update(myEntity);
                                 repository.SubmitChanges();
                             }

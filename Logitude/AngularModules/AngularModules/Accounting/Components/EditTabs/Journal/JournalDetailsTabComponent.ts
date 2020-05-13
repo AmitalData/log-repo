@@ -106,10 +106,10 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     private SetDatesDefaultValues() {
         if (this.AccountingDate == null)
             this.AccountingDate = new Date();
-        if (this.DocumentDate == null)
-            this.DocumentDate = new Date();
-        if (this.DueDate == null)
-            this.DueDate = new Date();
+        //if (this.DocumentDate == null)
+        //    this.DocumentDate = new Date();
+        //if (this.DueDate == null)
+        //    this.DueDate = new Date();
 
     }
     public CurrentEditComponentId: string;
@@ -541,12 +541,12 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         if (lines) {
             lines.forEach((line: JournalLineModel) => {
                 var headerDate = this.AccountingDate;
-                if (headerDate)
+                if (headerDate && line.AccountingDate)
                 {
                     var header_year = headerDate.getFullYear();
                     var header_month = headerDate.getMonth() + 1;
                     var header_day = headerDate.getDate();
-
+ 
                     var lineDate = new Date(line.AccountingDate.toString()); // somtimes this.AccountingDate contains string date o.O
 
                     var line_year = lineDate.getFullYear();
@@ -573,7 +573,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                         lineDate.setMonth(line_month - 1);
                         lineDate.setDate(line_day);
 
-                        console.log("[!] AccountingDate for line " + line.Line + " is changed to " + lineDate.toString());
+                       // console.log("[!] AccountingDate for line " + line.Line + " is changed to " + lineDate.toString());
                     }
                 }
 

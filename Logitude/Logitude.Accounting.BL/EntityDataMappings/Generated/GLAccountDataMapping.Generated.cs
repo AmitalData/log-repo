@@ -73,10 +73,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ActiveForInterest, 
 	         InterestCalculationStartDate, 
 	         ActiveForInterestCreditInvoice, 
-	         MinimumInterestInvoiceBilling, 
 	         InterestCreditLimit, 
 	         NameForPrintingCheques, 
-	         Smallcashbook,
+	         Smallcashbook, 
+	         MinimumInterestInvoiceBilling,
 	      }
 
 
@@ -187,10 +187,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ActiveForInterest, 
 	         InterestCalculationStartDate, 
 	         ActiveForInterestCreditInvoice, 
-	         MinimumInterestInvoiceBilling, 
 	         InterestCreditLimit, 
 	         NameForPrintingCheques, 
-	         Smallcashbook,
+	         Smallcashbook, 
+	         MinimumInterestInvoiceBilling,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -449,11 +449,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.ActiveForInterestCreditInvoice = entityPM.ActiveForInterestCreditInvoice;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
-            {
-				entityPOCO.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestCreditLimit))
             {
 				entityPOCO.InterestCreditLimit = entityPM.InterestCreditLimit;
@@ -467,6 +462,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Smallcashbook))
             {
 				entityPOCO.Smallcashbook = entityPM.Smallcashbook;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
+            {
+				entityPOCO.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -730,11 +730,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ActiveForInterestCreditInvoice = entityPOCO.ActiveForInterestCreditInvoice;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MinimumInterestInvoiceBilling))
-            {
-					entityPM.MinimumInterestInvoiceBilling = entityPOCO.MinimumInterestInvoiceBilling;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InterestCreditLimit))
             {
 					entityPM.InterestCreditLimit = entityPOCO.InterestCreditLimit;
@@ -748,6 +743,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Smallcashbook))
             {
 					entityPM.Smallcashbook = entityPOCO.Smallcashbook;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MinimumInterestInvoiceBilling))
+            {
+					entityPM.MinimumInterestInvoiceBilling = entityPOCO.MinimumInterestInvoiceBilling;
             }
 
 		}
@@ -1006,11 +1006,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.ActiveForInterestCreditInvoice = entityPM.ActiveForInterestCreditInvoice;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
-            {
-                oldEntityPM.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestCreditLimit))
             {
                 oldEntityPM.InterestCreditLimit = entityPM.InterestCreditLimit;
@@ -1024,6 +1019,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Smallcashbook))
             {
                 oldEntityPM.Smallcashbook = entityPM.Smallcashbook;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
+            {
+                oldEntityPM.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
             }
 			
 		}

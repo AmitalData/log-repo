@@ -7,7 +7,7 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            Sql("ALTER TABLE GLAccounts ALTER COLUMN MinimumInterestInvoiceBilling int null");
+           // Sql("ALTER TABLE GLAccounts ALTER COLUMN MinimumInterestInvoiceBilling int null");
         }
         
         public override void Down()

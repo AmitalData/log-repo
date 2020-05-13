@@ -54,7 +54,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    DefaultMessageTemplateId = report.DefaultMessageTemplateId,
                                    FeatureUniqeCode = report.FeatureUniqeCode,
                                    AvailableForScheduling = report.AvailableForScheduling,
-                                   ExcelOnly = report.ExcelOnly,
+                                   DisablePreview = report.DisablePreview,
             };
 
             ReportModificationRepository modificationRep = new ReportModificationRepository(tenant);
@@ -96,7 +96,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                DefaultMessageTemplateId = a.DefaultMessageTemplateId,
                                                FeatureUniqeCode = a.FeatureUniqeCode,
                                                AvailableForScheduling = a.AvailableForScheduling,
-                                               ExcelOnly = a.ExcelOnly,
+                                               DisablePreview = a.DisablePreview,
                                            };
             return reports;
         }
@@ -127,7 +127,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              DefaultMessageTemplateId = a.DefaultMessageTemplateId,
                              FeatureUniqeCode = a.FeatureUniqeCode,
                              AvailableForScheduling = a.AvailableForScheduling,
-                             ExcelOnly = a.ExcelOnly,
+                             DisablePreview = a.DisablePreview,
                          }).FirstOrDefault();
 
             return query;
@@ -155,7 +155,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 DefaultMessageTemplateId = report.DefaultMessageTemplateId,
                                                 FeatureUniqeCode = report.FeatureUniqeCode,
                                                 AvailableForScheduling = report.AvailableForScheduling,
-                                                ExcelOnly = report.ExcelOnly,
+                                                DisablePreview = report.DisablePreview,
                                             };
             return result;
         }
@@ -187,7 +187,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
                                            FeatureUniqeCode = report.FeatureUniqeCode,
                                            AvailableForScheduling = report.AvailableForScheduling,
-                                           ExcelOnly = report.ExcelOnly,
+                                           DisablePreview = report.DisablePreview,
 
                                        }).ToList();
 
@@ -237,7 +237,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
                                            FeatureUniqeCode = report.FeatureUniqeCode,
                                            AvailableForScheduling = report.AvailableForScheduling,
-                                           ExcelOnly = report.ExcelOnly,
+                                           DisablePreview = report.DisablePreview,
 
                                        }).ToList();
 
@@ -280,7 +280,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
                                            FeatureUniqeCode = report.FeatureUniqeCode,
                                            AvailableForScheduling = report.AvailableForScheduling,
-                                           ExcelOnly = report.ExcelOnly,
+                                           DisablePreview = report.DisablePreview,
 
                                        }).ToList();
 

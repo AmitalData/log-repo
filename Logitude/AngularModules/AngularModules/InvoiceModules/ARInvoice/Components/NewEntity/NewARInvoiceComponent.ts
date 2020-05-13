@@ -28,11 +28,9 @@ import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/
 import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {UpdateCurrencyRateComponent} from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
 import {VatTypePercentagePM} from '../../../../Common/EntityPMs/VatTypePercentagePM';
 import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { error } from 'util';
 
 @Component({
     
