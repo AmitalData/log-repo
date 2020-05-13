@@ -218,7 +218,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="DisplayInSearchWindowFiltersIndex"
+    Name="SearchWindowFiltersIndex"
     ShortName="SearchWindowFiltersIndex"
     Type="int">
     <Constraints
@@ -424,7 +424,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="AllowedInCustomerFieldsSettings"
+    Name="AllowedInCustFieldsSettings"
     ShortName="AllowedInCustFieldsSettings"
     Type="bit">
     <Constraints
