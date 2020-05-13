@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -185,7 +185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -243,7 +243,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -301,7 +301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -359,7 +359,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -417,7 +417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -476,7 +476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -534,7 +534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -592,7 +592,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -646,12 +646,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: subject\n2: documents names",
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    {    
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -667,32 +667,32 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable FilingInboxObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "FilingInbox" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature FilingInboxFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature FilingInboxFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature FilingInboxFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature FilingInboxFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.PackageFeature", NameTextCodeDefaultText = "FilingInbox Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature FilingInboxFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
+		   Feature FilingInboxFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
+		   Feature FilingInboxFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
+		   Feature FilingInboxFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.PackageFeature", NameTextCodeDefaultText = "FilingInbox Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature FilingInboxFeature_FilingInbox = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FilingInbox", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInboxObjectTable.Features.FilingInboxObjectTable", NameTextCodeDefaultText = @"Filing Inbox" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature FilingInboxFeature_FilingInbox = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FilingInbox", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInboxObjectTable.Features.FilingInboxObjectTable", NameTextCodeDefaultText = @"Filing Inbox" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
 
-		   Feature FilingInboxFeature_FilingInboxMyFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FilingInboxMyFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.FilingInboxMyFilter", NameTextCodeDefaultText = @"My Filter" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature FilingInboxFeature_FilingInboxMyFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FilingInboxMyFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.FilingInboxMyFilter", NameTextCodeDefaultText = @"My Filter" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
 
-		   Feature FilingInboxFeature_FilingInboxAllFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FilingInboxAllFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.FilingInboxAllFilter", NameTextCodeDefaultText = @"All Filter" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature FilingInboxFeature_FilingInboxAllFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FilingInboxAllFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.FilingInboxAllFilter", NameTextCodeDefaultText = @"All Filter" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
 
-		   Feature FilingInboxFeature_ShipmentsFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentsFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.ShipmentsFilter", NameTextCodeDefaultText = @"Shipments Filter" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature FilingInboxFeature_ShipmentsFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentsFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.ShipmentsFilter", NameTextCodeDefaultText = @"Shipments Filter" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
 
-		   Feature FilingInboxFeature_MastersFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MastersFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.MastersFilter", NameTextCodeDefaultText = @"Masters Filter" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature FilingInboxFeature_MastersFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MastersFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.MastersFilter", NameTextCodeDefaultText = @"Masters Filter" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
 
-		   Feature FilingInboxFeature_QuotesFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuotesFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.QuotesFilter", NameTextCodeDefaultText = @"Quotes Filter" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature FilingInboxFeature_QuotesFilter = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuotesFilter", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.QuotesFilter", NameTextCodeDefaultText = @"Quotes Filter" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
 
-		   Feature FilingInboxFeature_FilingInboxDescription = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FilingInboxDescription", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.FilingInboxDescription", NameTextCodeDefaultText = @"Filing Inbox Description" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature FilingInboxFeature_FilingInboxDescription = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FilingInboxDescription", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.FilingInboxDescription", NameTextCodeDefaultText = @"Filing Inbox Description" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
 
-		   Feature FilingInboxFeature_ShareWithAgent = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShareWithAgent", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.ShareWithAgent", NameTextCodeDefaultText = @"Share with Agent" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature FilingInboxFeature_ShareWithAgent = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShareWithAgent", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.ShareWithAgent", NameTextCodeDefaultText = @"Share with Agent" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
 
-		   Feature FilingInboxFeature_DigitallySign = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DigitallySign", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.DigitallySign", NameTextCodeDefaultText = @"Digitally Sign" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature FilingInboxFeature_DigitallySign = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DigitallySign", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.DigitallySign", NameTextCodeDefaultText = @"Digitally Sign" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
 
-		   Feature FilingInboxFeature_NewShipment = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NewShipment", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.NewShipment", NameTextCodeDefaultText = @"New Shipment" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature FilingInboxFeature_NewShipment = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NewShipment", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.NewShipment", NameTextCodeDefaultText = @"New Shipment" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FilingInboxObjectTable);
 
    
 	    

@@ -2079,6 +2079,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool lineEdited ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool LineEdited  
+	   {
+	    
+	     get
+		{
+		   return lineEdited;
+		 }
+		 set
+		 {
+		   if(lineEdited != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineEdited",OldValue=lineEdited,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   lineEdited=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

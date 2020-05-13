@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -198,7 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -263,7 +263,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ContactName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -328,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CompanyName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -393,7 +393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PhoneNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -458,7 +458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Country",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -523,7 +523,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Email",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -586,7 +586,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Comments",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -651,7 +651,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "RequestType",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -714,7 +714,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ZipCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -779,7 +779,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "City",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -844,7 +844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "State",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -909,7 +909,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "OpportunityId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -974,7 +974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CustomerId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1039,7 +1039,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PackageCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1103,7 +1103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LeadSource",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1167,7 +1167,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CASSCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1231,7 +1231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IATACode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1296,7 +1296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "NumberOfBranches",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1361,7 +1361,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastUpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1428,7 +1428,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1493,7 +1493,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsEmailVerified",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1558,7 +1558,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsSentToCustomer",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1623,7 +1623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "StatusCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1688,7 +1688,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Street",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1753,7 +1753,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsUserOpened",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1818,7 +1818,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TenantNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1883,95 +1883,106 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "NumberOfUsers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup LogitudeLeadQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LLQG", Name = "Logitude Leads" }, queryGroupRepository);
-						QueryGroup LogitudeLeadQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0605", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup LogitudeLeadQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LLQG", Name = "Logitude Leads" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup LogitudeLeadQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0605", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable LogitudeLeadObjectTable = objectTables.ContainsKey("LogitudeLead") ? objectTables["LogitudeLead"] : null;
             if (LogitudeLeadObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 LogitudeLeadObjectTable = objectContext.ObjectTables.Where(d => d.Name == "LogitudeLead" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> LogitudeLeadObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LogitudeLead").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode LogitudeLeadTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", DefaultText = @"All Logitude Leads ",LocalDefaultText = null, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature LogitudeLeadFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.AllLogitudeLeads", NameTextCodeDefaultText = "All Logitude Lead", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode LogitudeLeadTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", DefaultText = @"All Logitude Leads ",LocalDefaultText = null, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature LogitudeLeadFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.AllLogitudeLeads", NameTextCodeDefaultText = "All Logitude Lead", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LogitudeLeadObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllLogitudeLeadsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeLeadTextCode_0.Id, NameTextCodeCode = LogitudeLeadTextCode_0.Code, ObjectTableName = "LogitudeLead", Code = " All Logitude Leads",  QueryGroupCode = "LLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeLeadObjectTable.Id, QuerySection = "LogitudeLead", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeLeadFeature_0.Id,FeatureUniqeCode= LogitudeLeadFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllLogitudeLeadsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeLeadTextCode_0.Id, NameTextCodeCode = LogitudeLeadTextCode_0.Code, ObjectTableName = "LogitudeLead", Code = " All Logitude Leads",  QueryGroupCode = "LLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeLeadObjectTable.Id, QuerySection = "LogitudeLead", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeLeadFeature_0.Id,FeatureUniqeCode= LogitudeLeadFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllLogitudeLeadsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LogitudeLead.ContactName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "PhoneNumber" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "PhoneNumber" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LogitudeLead.PhoneNumber" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "LogitudeLead.CompanyName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "LogitudeLead.CreateDate" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfBranches" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfBranches" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "LogitudeLead.NumberOfBranches" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "LogitudeLead.Email" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfUsers" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "LogitudeLead.NumberOfUsers" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Comments" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Comments" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "LogitudeLead.Comments" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "RequestType" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "RequestType" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "LogitudeLead.RequestType" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsEmailVerified" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsEmailVerified" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "LogitudeLead.IsEmailVerified" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "LastUpdateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "LastUpdateDate" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "LogitudeLead.LastUpdateDate" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsSentToCustomer" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsSentToCustomer" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "LogitudeLead.IsSentToCustomer" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllLogitudeLeadsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "LogitudeLead.StatusCode" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AllLogitudeLeadsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Country" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Country" && d.ObjectTableId == LogitudeLeadObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllLogitudeLeadsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id,QueryCode = AllLogitudeLeadsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "LogitudeLead.Country" , ColumnWidth = 200 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable LogitudeLeadObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeLead" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> LogitudeLeadObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LogitudeLead").ToList();
+		   //List<ObjectField> LogitudeLeadObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LogitudeLead").ToList();
 		       
 	      
 
 	         Screen LogitudeLeadHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LogitudeLead.HeaderScreen", Name = "Header Screen", ObjectTableId = LogitudeLeadObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "PhoneNumber").FirstOrDefault().Id, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "PhoneNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.PhoneNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfUsers").FirstOrDefault().Id, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfUsers").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.NumberOfUsers", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "CompanyName").FirstOrDefault().Id, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "CompanyName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.CompanyName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Comments").FirstOrDefault().Id, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Comments").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.Comments", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName").FirstOrDefault().Id, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsEmailVerified").FirstOrDefault().Id, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsEmailVerified").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.IsEmailVerified", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfBranches").FirstOrDefault().Id, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfBranches").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.NumberOfBranches", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsSentToCustomer").FirstOrDefault().Id, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsSentToCustomer").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.IsSentToCustomer", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Email").FirstOrDefault().Id, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Email").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.Email", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "RequestType").FirstOrDefault().Id, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "RequestType").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = LogitudeLeadHeaderScreenScreen0.Id,ScreenCode = LogitudeLeadHeaderScreenScreen0.Code, ObjectFieldCode = "LogitudeLead.RequestType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    LogitudeLeadObjectTable.HeaderScreenId = LogitudeLeadHeaderScreenScreen0.Id;
 		    LogitudeLeadObjectTable.HeaderScreenCode = LogitudeLeadHeaderScreenScreen0.Code;
@@ -1981,25 +1992,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	         Screen LogitudeLeadGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LogitudeLead.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = LogitudeLeadObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 10, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "PhoneNumber").FirstOrDefault().Id, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "PhoneNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.PhoneNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "CompanyName").FirstOrDefault().Id, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "CompanyName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.CompanyName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName").FirstOrDefault().Id, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "ContactName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.ContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfBranches").FirstOrDefault().Id, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfBranches").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.NumberOfBranches", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Email").FirstOrDefault().Id, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Email").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.Email", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfUsers").FirstOrDefault().Id, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "NumberOfUsers").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.NumberOfUsers", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Comments").FirstOrDefault().Id, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "Comments").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.Comments", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsEmailVerified").FirstOrDefault().Id, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsEmailVerified").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.IsEmailVerified", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsSentToCustomer").FirstOrDefault().Id, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "IsSentToCustomer").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.IsSentToCustomer", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 9, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "RequestType").FirstOrDefault().Id, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = LogitudeLeadObjectFields.Where(d => d.FieldName == "RequestType").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField LogitudeLeadLogitudeLeadGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 9, ScreenId = LogitudeLeadGeneralTabScreenScreen1.Id,ScreenCode = LogitudeLeadGeneralTabScreenScreen1.Code, ObjectFieldCode = "LogitudeLead.RequestType", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -2010,7 +2021,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   ObjectTable LogitudeLeadObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeLead" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode LogitudeLeadGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature LogitudeLeadGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature LogitudeLeadGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,LogitudeLeadObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2024,10 +2035,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    {  
 		   ObjectTable LogitudeLeadObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeLead" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature LogitudeLeadFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LogitudeLeadFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LogitudeLeadFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature LogitudeLeadFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.PackageFeature", NameTextCodeDefaultText = "LogitudeLead Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature LogitudeLeadFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LogitudeLeadObjectTable);
+		   Feature LogitudeLeadFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LogitudeLeadObjectTable);
+		   Feature LogitudeLeadFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LogitudeLeadObjectTable);
+		   Feature LogitudeLeadFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeLead.Features.PackageFeature", NameTextCodeDefaultText = "LogitudeLead Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LogitudeLeadObjectTable);    
 	    
 		}
 

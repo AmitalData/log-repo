@@ -140,7 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -202,7 +202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -259,7 +259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -319,7 +319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -381,7 +381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -443,7 +443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -506,7 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -568,7 +568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -631,7 +631,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -693,7 +693,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -755,7 +755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -817,7 +817,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -879,7 +879,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -940,7 +940,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1001,7 +1001,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1063,7 +1063,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1124,7 +1124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1186,83 +1186,94 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup RevaluationQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "026a", Name = "Revaluation Query Group" }, queryGroupRepository);
-						QueryGroup RevaluationQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4733", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup RevaluationQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "026a", Name = "Revaluation Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup RevaluationQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4733", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable RevaluationObjectTable = objectTables.ContainsKey("Revaluation") ? objectTables["Revaluation"] : null;
             if (RevaluationObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 RevaluationObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Revaluation" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> RevaluationObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Revaluation").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode RevaluationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.Q.AllRevaluations", DefaultText = @"Revaluations",LocalDefaultText = "שערוכים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature RevaluationFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Revaluation.Q.AllRevaluations", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.AllRevaluations", NameTextCodeDefaultText = "AllRevaluations", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode RevaluationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.Q.AllRevaluations", DefaultText = @"Revaluations",LocalDefaultText = "שערוכים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature RevaluationFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Revaluation.Q.AllRevaluations", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.AllRevaluations", NameTextCodeDefaultText = "AllRevaluations", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,RevaluationObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllRevaluationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RevaluationTextCode_0.Id, NameTextCodeCode = RevaluationTextCode_0.Code, ObjectTableName = "Revaluation", Code = "AllRevaluations",  QueryGroupCode = "026a", IndexOrder = 0, Tenant = 0, ObjectTableId = RevaluationObjectTable.Id, QuerySection = "Revaluation", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RevaluationFeature_0.Id,FeatureUniqeCode= RevaluationFeature_0.FeatureUniqeCode, DefaultSortName = "RevaluationNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllRevaluationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RevaluationTextCode_0.Id, NameTextCodeCode = RevaluationTextCode_0.Code, ObjectTableName = "Revaluation", Code = "AllRevaluations",  QueryGroupCode = "026a", IndexOrder = 0, Tenant = 0, ObjectTableId = RevaluationObjectTable.Id, QuerySection = "Revaluation", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RevaluationFeature_0.Id,FeatureUniqeCode= RevaluationFeature_0.FeatureUniqeCode, DefaultSortName = "RevaluationNumber", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllRevaluationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationNumber" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationNumber" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllRevaluationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Revaluation.RevaluationNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllRevaluationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllRevaluationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Revaluation.CreateDate" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllRevaluationsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllRevaluationsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Revaluation.CreatedByUserName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllRevaluationsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationEnabled" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationEnabled" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllRevaluationsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Revaluation.RevaluationEnabled" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllRevaluationsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 170 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllRevaluationsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Revaluation.ChartOfAccountsName" , ColumnWidth = 170 }, addedQueryColumns);
 
-			 QueryColumn AllRevaluationsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "GLAccountName" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "GLAccountName" && d.ObjectTableId == RevaluationObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllRevaluationsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRevaluationsQuery.Id,QueryCode = AllRevaluationsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Revaluation.GLAccountName" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable RevaluationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Revaluation" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> RevaluationObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Revaluation").ToList();
+		   //List<ObjectField> RevaluationObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Revaluation").ToList();
 		       
 	      
 
 	         Screen RevaluationRevaluationDetailsScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Revaluation.RevaluationDetailsScreen", Name = "RevaluationDetailsScreen", ObjectTableId = RevaluationObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationNumber").FirstOrDefault().Id, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.RevaluationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationDate").FirstOrDefault().Id, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.RevaluationDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationEnabled").FirstOrDefault().Id, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationEnabled").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.RevaluationEnabled", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "ChartOfAccountsId").FirstOrDefault().Id, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "ChartOfAccountsId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.ChartOfAccountsId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().Id, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RevaluationRevaluationRevaluationDetailsScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = RevaluationRevaluationDetailsScreenScreen0.Id,ScreenCode = RevaluationRevaluationDetailsScreenScreen0.Code, ObjectFieldCode = "Revaluation.GLAccountId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen RevaluationHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Revaluation.HeaderScreen", Name = "HeaderScreen", ObjectTableId = RevaluationObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField RevaluationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationNumber").FirstOrDefault().Id, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "RevaluationNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RevaluationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.RevaluationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RevaluationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().Id, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RevaluationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RevaluationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RevaluationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.CreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RevaluationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "GLAccountNumber").FirstOrDefault().Id, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "GLAccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RevaluationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.GLAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField RevaluationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = RevaluationObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = RevaluationObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField RevaluationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = RevaluationHeaderScreenScreen1.Id,ScreenCode = RevaluationHeaderScreenScreen1.Code, ObjectFieldCode = "Revaluation.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    RevaluationObjectTable.HeaderScreenId = RevaluationHeaderScreenScreen1.Id;
 		    RevaluationObjectTable.HeaderScreenCode = RevaluationHeaderScreenScreen1.Code;
@@ -1277,11 +1288,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable RevaluationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Revaluation" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode RevaluationDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature RevaluationDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Revaluation.Tab.Details", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature RevaluationDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Revaluation.Tab.Details", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,RevaluationObjectTable);
  
                  
 			   TextCode RevaluationEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluation.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature RevaluationEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature RevaluationEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,RevaluationObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1297,16 +1308,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable RevaluationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Revaluation" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature RevaluationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature RevaluationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature RevaluationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature RevaluationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.PackageFeature", NameTextCodeDefaultText = "Revaluation Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature RevaluationFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,RevaluationObjectTable);
+		   Feature RevaluationFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,RevaluationObjectTable);
+		   Feature RevaluationFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,RevaluationObjectTable);
+		   Feature RevaluationFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.PackageFeature", NameTextCodeDefaultText = "Revaluation Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,RevaluationObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature RevaluationFeature_DETAILS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Details", NameTextCodeDefaultText = @"Details" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature RevaluationFeature_DETAILS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.Details", NameTextCodeDefaultText = @"Details" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,RevaluationObjectTable);
 
-		   Feature RevaluationFeature_REVALUATIONMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REVALUATIONMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.RevaluationMenu", NameTextCodeDefaultText = @"Revaluations" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature RevaluationFeature_REVALUATIONMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REVALUATIONMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = RevaluationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Revaluation.Features.RevaluationMenu", NameTextCodeDefaultText = @"Revaluations" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,RevaluationObjectTable);
 
    
 	    

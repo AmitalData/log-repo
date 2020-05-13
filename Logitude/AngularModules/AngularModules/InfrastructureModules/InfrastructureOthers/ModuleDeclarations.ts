@@ -20,6 +20,7 @@ import { WebhookKeysComponent } from './Components/WebhookKeys/WebhookKeysCompon
 import { WebhookTesterComponent } from './Components/WebhookKeys/WebhookTesterComponent';
 import { CreateTenantComponent } from './Components/CreateTenant/CreateTenantComponent'; 
 import { PriceStepsGeneralTabComponent } from './Components/PriceSteps/PriceStepsGeneralTabComponent';
+import { CustomEventTypeComponent } from './Components/EventType/CustomEventTypeComponent';
 
 export const Components =
     [
@@ -45,6 +46,7 @@ export const Components =
         WebhookTesterComponent,
         CreateTenantComponent,
         PriceStepsGeneralTabComponent,
+        CustomEventTypeComponent,
     ];
 
 export class ModuleDeclarations {
@@ -75,6 +77,9 @@ export class ModuleDeclarations {
             case "WebhookTesterComponent": { myResult = WebhookTesterComponent; break; }
             case "CreateTenantComponent": { myResult = CreateTenantComponent; break; }
             case "PriceStepsGeneralTabComponent": { myResult = PriceStepsGeneralTabComponent; break; }
+            case "CustomEventTypeComponent": { myResult = CustomEventTypeComponent; break; }
+
+                
                 
         }
 

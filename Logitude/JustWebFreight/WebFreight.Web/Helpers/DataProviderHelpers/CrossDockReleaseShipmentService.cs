@@ -37,6 +37,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     SetShipmentCustomFields();
                 }
             }
+
             return crossDockReleaseDataProvider;
         }
 
@@ -51,7 +52,29 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             crossDockReleaseDataProvider.ValueofGoods = shipmentDataView.ValueOfGoods;
             crossDockReleaseDataProvider.GeneralDescriptionofGoods = shipmentDataView.DescriptionOfGoods;
             crossDockReleaseDataProvider.ValueofGoodsCurrency = GetValueofGoodsCurrencyCodeById(shipmentDataView.ValueOfGoodsCurrencyId, shipmentDataView.Tenant);
+            crossDockReleaseDataProvider.IncotermCode = shipmentDataView.IncotermCode;
+            crossDockReleaseDataProvider.IncotermName = GetIncotermNameById(shipmentDataView.IncotermId, shipmentDataView.Tenant);
         }
+
+
+
+        private string GetIncotermNameById(string incotermId, int tenant)
+        {
+            string incotermName = string.Empty;
+            if (!string.IsNullOrEmpty(incotermId))
+            {
+                IncotermQuery incotermQuery = new IncotermQuery(tenant);
+                IncotermPM incotermPM = incotermQuery.GetSinglePM(incotermId, tenant);
+                if (incotermPM != null) incotermName = incotermPM.Name;
+            }
+            return incotermName;
+        }
+
+
+
+
+
+
         private void SetOriginAndDestinationtShipmenFields()
         {
             if (shipmentDataView.DirectionId == "D" && shipmentDataView.TransportModeId == "I")
