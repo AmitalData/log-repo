@@ -171,13 +171,11 @@ export class ReceiptCertificateFromFileComponent
         };
         reader.readAsArrayBuffer(file);
     }
-
     OkButtonClicked() {
         this.ProgressBarPercentText = "0%";
 
         this._supplierInvioceItemCertificatsService.PutSupplierInvioceItemCertificatFromFileRequest(this.filterImageParameter, this.tenant, this.CustomerId).subscribe((myServiceResponse: ServiceResponse) => {
-            var response = myServiceResponse.Result;
-            this.ErrorsResultList.InsertCollection(response);
+            this.ErrorsResultList.InsertCollection(myServiceResponse.Result);
             if (this.ErrorsResultList.Collection.length > 0) {
                 this.ExportAsExcelButtonIsEnabled = true;
             }

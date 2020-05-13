@@ -23,6 +23,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using WebFreight.Web.CustomWebServices.BL.XLSImport;
 using System.Text;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -41,6 +42,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     string decodedString = Encoding.UTF8.GetString(data);
                     SupplierInvioceItemCertificats supplierInvioceItemCertificats = new SupplierInvioceItemCertificats();
                     errors = supplierInvioceItemCertificats.RecallSuppliersFromFileRequest(fileUploadParamerter.Key, tenant , decodedString,clientId);
+                    CacheManager.CacheWrapper.Insert("IKEA", errors);
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, errors);
             }
@@ -56,6 +58,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
             try
             {
+                var errorlist = CacheManager.CacheWrapper.Get("IKEA");
+
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                  var o = new SupplierInvioceItemCertificats();
                 var result = o.ExportErrors(tenant);

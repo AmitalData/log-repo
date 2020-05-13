@@ -46,7 +46,6 @@ export class SupplierInvioceItemCertificatsService {
         }
         );
     }
-
     MapJsonToEntityPM(jsonPM: any) {
 
         var entityPM: CertificateErrorView;
