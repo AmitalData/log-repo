@@ -373,7 +373,8 @@ namespace Logitude.DBMigrations.Models
                 Precision = dxmlTableColumn.Precision,
                 Scale = dxmlTableColumn.Scale,
                 DefaultValue = dxmlTableColumn.DefaultValue,
-                Constraints = dxmlTableColumn.Constraints
+                Constraints = dxmlTableColumn.Constraints,
+                InitialValueScript = dxmlTableColumn.InitialValueScript
             };
             ColumnMigration columnMigration = new ColumnMigration
             {

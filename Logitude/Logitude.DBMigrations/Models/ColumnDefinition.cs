@@ -38,6 +38,9 @@ namespace Logitude.DBMigrations.Models
         [XmlAttribute()]
         public string DefaultValue { get; set; }
 
+        [XmlAttribute()]
+        public string InitialValueScript { get; set; }
+
         [XmlElement]
         public ConstraintsDefinition Constraints { get; set; }
     }
