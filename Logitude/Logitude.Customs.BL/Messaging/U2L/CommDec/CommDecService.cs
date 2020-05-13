@@ -571,7 +571,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             if (String.IsNullOrWhiteSpace(this._LogitudeCommDecFile.IsAutonomy) && String.IsNullOrWhiteSpace(this._MyDeclarationPM.ImporterCode))
             {
                 CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
-                if(customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' }), ResolvedTenant()))
+                var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
+                if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
+                if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, ResolvedTenant()))
                 {
                     this.IsAutonomy = true;
                 }
