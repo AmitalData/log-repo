@@ -1102,11 +1102,24 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                             this.AddNewTariffQuoteCharge(surcharge, this.ContainerType1Id, this.Quantity1);
                         });
                     }
+
+                    // Generate AllIn Surcharges
+                    if (item != null && item.AllInSurcharges != null) {
+                        item.AllInSurcharges.forEach(surcharge => {
+                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType1Id, this.Quantity1);
+                        });
+                    }
                 }
                 if (this.ContainerType2Id) {
                     this.AddNewTariffQuoteCharge(item, this.ContainerType2Id, this.Quantity2);
                     if (item != null && item.SurchargesWithoutAllIn != null) {
                         item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType2Id, this.Quantity2);
+                        });
+                    }
+                    // Generate AllIn Surcharges
+                    if (item != null && item.AllInSurcharges != null) {
+                        item.AllInSurcharges.forEach(surcharge => {
                             this.AddNewTariffQuoteCharge(surcharge, this.ContainerType2Id, this.Quantity2);
                         });
                     }
@@ -1126,6 +1139,12 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                             this.AddNewTariffQuoteCharge(surcharge, this.ContainerType3Id, this.Quantity3);
                         });
                     }
+                    // Generate AllIn Surcharges
+                    if (item != null && item.AllInSurcharges != null) {
+                        item.AllInSurcharges.forEach(surcharge => {
+                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType3Id, this.Quantity3);
+                        });
+                    }
                 }
                 if (this.ContainerType4Id) {
                     this.AddNewTariffQuoteCharge(item, this.ContainerType4Id, this.Quantity4);
@@ -1134,11 +1153,25 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                             this.AddNewTariffQuoteCharge(surcharge, this.ContainerType4Id, this.Quantity4);
                         });
                     }
+
+                    // Generate AllIn Surcharges
+                    if (item != null && item.AllInSurcharges != null) {
+                        item.AllInSurcharges.forEach(surcharge => {
+                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType4Id, this.Quantity4);
+                        });
+                    }
                 }
                 if (this.ContainerType5Id) {
                     this.AddNewTariffQuoteCharge(item, this.ContainerType5Id, this.Quantity5);
                     if (item != null && item.SurchargesWithoutAllIn != null) {
                         item.SurchargesWithoutAllIn.forEach(surcharge => {
+                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType5Id, this.Quantity5);
+                        });
+                    }
+
+                    // Generate AllIn Surcharges
+                    if (item != null && item.AllInSurcharges != null) {
+                        item.AllInSurcharges.forEach(surcharge => {
                             this.AddNewTariffQuoteCharge(surcharge, this.ContainerType5Id, this.Quantity5);
                         });
                     }
