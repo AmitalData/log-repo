@@ -549,6 +549,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         + r.TotalOpenShipments
                         )
                         ),
+                        OpenCredit = r.OpenCredit,
+                        OpenDebit = r.OpenDebit,
 
 
                         BalanceInLocalCurrency = r.BalanceInLocalCurrency,
@@ -606,7 +608,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                       BalanceInLocalCurrency = splitAccount!=null ? splitAccount.BalanceInLocalCurrency: account.BalanceInLocalCurrency,
                                                       TotalOpenShipments = account.TotalOpenShipments,
                                                       TotalFutureOpenCheques = account.TotalFutureOpenCheques,
-                                                      TotalOpenCheques = account.TotalOpenCheques
+                                                      TotalOpenCheques = account.TotalOpenCheques,
+                                                      OpenCredit = line.OpenCredit,
+                                                      OpenDebit = line.OpenDebit,
+                                                      CreditStatusAmount = account.CreditStatusAmount
+
                                                   }).ToList();
             return namedPeriods;
         }
