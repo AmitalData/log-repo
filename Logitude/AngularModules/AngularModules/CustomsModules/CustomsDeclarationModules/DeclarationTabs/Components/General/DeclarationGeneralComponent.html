@@ -325,7 +325,9 @@
         </td>
     </tr>
 </table>
-<span *ngIf="EntityPM && FeatureLocatorEXPORTDECLARATIONPSCREEN && &&  this.EntityPM.Direction == "E")"
+<span
+
+      *ngIf="EntityPM && FeatureLocatorEXPORTDECLARATIONPSCREEN &&   this.EntityPM.Direction =='E'"
       class="LeftTop">
     <button class="button_ellipsis" (click)="EditExportDecScreen()" >...</button>
 </span>
