@@ -146,6 +146,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                     else {
                         this.FinalMessage = "התיק לם קיים בסביבה הזו";
                         this.ShowFinalMessage = true;
+                        this.StopBusyIndicator();
                     }
                 });
             }
