@@ -174,13 +174,31 @@ namespace Logitude.BL.QuoteModel
                             ToDateOBJ = TenantServerConfigration.GetCurrentDateTime(tenant);
                         }
 
-
-                        queryableData = queryableData.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= FromDateOBJ && DbFunctions.TruncateTime(d.OpenDate) <= ToDateOBJ);
-
-
+                        queryableData = queryableData.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= DbFunctions.TruncateTime(FromDateOBJ) && DbFunctions.TruncateTime(d.OpenDate) <= DbFunctions.TruncateTime(ToDateOBJ));
                     }
 
-                    if(item.FieldName == "SentQuotesKPIChartFilter")
+                    if (item.FieldName == "QuoteConversionDateFilter")
+                    {
+                        DateTime? fromDate = null;
+                        DateTime? toDate = null;
+
+                        if (item.FieldValue != null)
+                        {
+                            fromDate = Convert.ToDateTime(item.FieldValue);
+                        }
+
+                        if (item.FieldValue2 != null)
+                        {
+                            toDate = Convert.ToDateTime(item.FieldValue2);
+                        }
+
+                        if (fromDate != null && toDate != null)
+                        {
+                            queryableData = queryableData.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= DbFunctions.TruncateTime(fromDate) && DbFunctions.TruncateTime(d.OpenDate) <= DbFunctions.TruncateTime(toDate));
+                        }
+                    }
+
+                    if (item.FieldName == "SentQuotesKPIChartFilter")
                     {
                         DateTime? fromDate = item.FieldValue != null && item.FieldValue.ToString() == "null" ? null : StringHelper.GetDate(item.FieldValue.ToString());
 

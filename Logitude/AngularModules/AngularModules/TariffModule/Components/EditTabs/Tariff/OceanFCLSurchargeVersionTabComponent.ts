@@ -1117,6 +1117,8 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     set OriginPortId(value: string) {
         if (this.EntityPM.OriginPortId != value) {
             this.EntityPM.OriginPortId = value;
+            this.EntityPM.LineEdited = true;
+
             if (this.IsFromAllOtherPorts) {
                 this.EntityPM.IsFromAllOtherPorts = false;
             }
@@ -1184,6 +1186,8 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     set DestinationPortId(value: string) {
         if (this.EntityPM.DestinationPortId != value) {
             this.EntityPM.DestinationPortId = value;
+            this.EntityPM.LineEdited = true;
+
             if (this.IsToAllOtherPorts) {
                 this.EntityPM.IsToAllOtherPorts = false;
             }
@@ -1200,6 +1204,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.DestinationPortCode = value;
         }
     }
+
     get DestinationPortCombinedCode() {
         return this.EntityPM.DestinationPortCombinedCode;
     }
@@ -1271,6 +1276,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     set CurrencyId(value: string) {
         if (this.EntityPM.CurrencyId != value) {
             this.EntityPM.CurrencyId = value;
+            this.EntityPM.LineEdited = true;
 
             this.SetUIProperties_Currency();
         }
@@ -1280,6 +1286,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     set StartDate(value: Date) {
         if (this.EntityPM.StartDate != value) {
             this.EntityPM.StartDate = value;
+            this.EntityPM.LineEdited = true;
         }
     }
 
@@ -1287,6 +1294,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     set ExpirationDate(value: Date) {
         if (this.EntityPM.ExpirationDate != value) {
             this.EntityPM.ExpirationDate = value;
+            this.EntityPM.LineEdited = true;
         }
     }
 
@@ -1296,6 +1304,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     set Notes(value: string) {
         if (this.EntityPM.Notes != value) {
             this.EntityPM.Notes = value;
+            this.EntityPM.LineEdited = true;
         }
     }
    
@@ -1563,6 +1572,7 @@ export class ContainerPricesItem extends BaseComponent {
     set SurchargeId(value: string) {
         if (this.EntityPM.SurchargeId != value) {
             this.EntityPM.SurchargeId = value;
+            this.TariffLinePM.LineEdited = true;
         }
     }
 
@@ -1572,6 +1582,8 @@ export class ContainerPricesItem extends BaseComponent {
     set Price1(value: number) {
         if (this.EntityPM.Price1 != value) {
             this.EntityPM.Price1 = value;
+            this.TariffLinePM.LineEdited = true;
+
             this.ComparePrice(1);
         }
     }
@@ -1582,6 +1594,8 @@ export class ContainerPricesItem extends BaseComponent {
     set Price2(value: number) {
         if (this.EntityPM.Price2 != value) {
             this.EntityPM.Price2 = value;
+            this.TariffLinePM.LineEdited = true;
+
             this.ComparePrice(2);
         }
     }
@@ -1592,6 +1606,8 @@ export class ContainerPricesItem extends BaseComponent {
     set Price3(value: number) {
         if (this.EntityPM.Price3 != value) {
             this.EntityPM.Price3 = value;
+            this.TariffLinePM.LineEdited = true;
+
             this.ComparePrice(3);
         }
     }
@@ -1602,6 +1618,8 @@ export class ContainerPricesItem extends BaseComponent {
     set Price4(value: number) {
         if (this.EntityPM.Price4 != value) {
             this.EntityPM.Price4 = value;
+            this.TariffLinePM.LineEdited = true;
+
             this.ComparePrice(4);
         }
     }
@@ -1612,6 +1630,8 @@ export class ContainerPricesItem extends BaseComponent {
     set Price5(value: number) {
         if (this.EntityPM.Price5 != value) {
             this.EntityPM.Price5 = value;
+            this.TariffLinePM.LineEdited = true;
+
             this.ComparePrice(5);
         }
     }
