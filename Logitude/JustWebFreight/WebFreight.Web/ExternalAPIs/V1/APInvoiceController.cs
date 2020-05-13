@@ -213,7 +213,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
                     APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "APInvoice", null, "APInvoice API");
-                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception)
+                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
                 }
             }
 
