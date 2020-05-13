@@ -95,8 +95,6 @@ export class CustomEventTypeComponent {
                 if (objectTable) {
 
                     this.IsDisable = !objectTable.AllowCustomFields ? true : false;
- 
-                    //this.EntityPM.UIProperties.SetEnabled("CustomField", this.ObjectTableName, objectTable.AllowCustomFields ? true : false);
                 }
                 this.GetObjectFieldFilterItems();
 

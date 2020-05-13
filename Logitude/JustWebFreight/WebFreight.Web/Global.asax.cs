@@ -342,7 +342,8 @@ namespace WebFreight.Web
             InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature,
                 () => (new ByteCompressorUtil()) as IByteCompressorUtil,
                 new IISManager(),
-                () => (new HtmlEditorHelper()) as IHtmlEditorHelper
+                () => (new HtmlEditorHelper()) as IHtmlEditorHelper,
+                () => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService
                 );
             ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
 
