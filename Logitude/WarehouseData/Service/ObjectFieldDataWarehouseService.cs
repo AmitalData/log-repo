@@ -27,7 +27,7 @@ namespace WarehouseData.Helper
 
             foreach (DataRow row in objectTableLists.Rows)
             {
-                string tableName = row["Name"].ToString() == "Master" ? "ShipmentMasterData" : row["Name"].ToString(); 
+                string tableName = row["Name"].ToString() == "Master" ? "ShipmentMasterData" : row["Name"].ToString();
                 string tableId = row["Id"].ToString();
 
                 var fields = (from rowfield in copyToDwObjectFieldLists.AsEnumerable()
@@ -50,7 +50,7 @@ namespace WarehouseData.Helper
 
         private static string GetAdditionalDWObjectFieldsDBName(TableClass tableClass)
         {
-            string fieldsDBName = (","+tableClass.KeyName)   + (!tableClass.IsCloseTable && tableClass.KeyName != "Tenant" && tableClass.TableName != "Tenant" ? ",Tenant" : "");
+            string fieldsDBName = ("," + tableClass.KeyName) + (!tableClass.IsCloseTable && tableClass.KeyName != "Tenant" && tableClass.TableName != "Tenant" ? ",Tenant" : "");
             fieldsDBName += ",AutomaticLastUpdateDate";
             return fieldsDBName;
         }
@@ -63,11 +63,14 @@ namespace WarehouseData.Helper
                 dwFieldsDBNameBuilder.Append(!string.IsNullOrEmpty(dwFieldsDBNameBuilder.ToString()) ? "," : "");
                 foreach (string fieldName in fields)
                 {
-                    dwFieldsDBNameBuilder.Append((fieldName + (fields.Last() != fieldName ? "," : "")));
-
+                    if (!dwFieldsDBNameBuilder.ToString().Split(',').Contains(fieldName))
+                    {
+                        dwFieldsDBNameBuilder.Append((fieldName + (fields.Last() != fieldName ? "," : "")));
+                    }
                 }
+                dwFieldsDBNameBuilder.Append("^");
             }
-            return dwFieldsDBNameBuilder.ToString();
+            return dwFieldsDBNameBuilder.ToString().Replace(",^", "").Replace("^", "");
         }
 
         private DataTable GetCopyToDWObjectFields(string connectionString)
@@ -108,7 +111,7 @@ namespace WarehouseData.Helper
                 string name = table.TableName == "ShipmentMasterData" ? "Master" : table.TableName;
                 tableNamesBuilder.Append(("'" + name + (tableNameLists.Last() != table ? "'," : "')")));
             }
-            return tableNamesBuilder.ToString() ;
+            return tableNamesBuilder.ToString();
         }
         #endregion
 
@@ -131,7 +134,7 @@ namespace WarehouseData.Helper
 
         private static void MapDimensionFieldsPropertyOnFactTables(List<TableClass> tableNameLists)
         {
-            foreach (TableClass tableClass in tableNameLists.Where(d =>d.HasFactTable).ToList())
+            foreach (TableClass tableClass in tableNameLists.Where(d => d.HasFactTable).ToList())
             {
                 if (tableClass.DWObjectFieldDBLists != null)
                 {

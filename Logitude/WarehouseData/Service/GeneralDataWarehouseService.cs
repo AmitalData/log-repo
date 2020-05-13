@@ -9,13 +9,13 @@ using System.Windows.Forms;
 
 namespace WarehouseData.Helper
 {
- public   class GeneralDataWarehouseService
+    public class GeneralDataWarehouseService
     {
 
-         
-       public  string ApplicationName = string.Empty;
-       public string ApplicationMode = string.Empty;
-       public long timeOut = 10000000000000000;
+
+        public string ApplicationName = string.Empty;
+        public string ApplicationMode = string.Empty;
+        public long timeOut = 10000000000000000;
         ObjectFieldDataWarehouseService objectFieldDataWarehouseService;
 
         public GeneralDataWarehouseService(string applicationName = "WarehouseData", string applicationMode = "Debug")
@@ -75,7 +75,7 @@ namespace WarehouseData.Helper
             return sqlFieldtype;
         }
 
-        public  string GetSqlCopyDataFromTempTableToActualTable(TableClass table)
+        public string GetSqlCopyDataFromTempTableToActualTable(TableClass table)
         {
             string result = "If OBJECT_ID('New" + table.DWObjectTableCode + "','U')  IS NOT NULL Begin  Drop Table New" + table.DWObjectTableCode + " End \r\n";
             result += (" SELECT *  INTO New" + table.DWObjectTableCode + " FROM #" + table.DWObjectTableCode + "Temp \r\n");
@@ -100,7 +100,7 @@ namespace WarehouseData.Helper
             }
         }
 
-   
+
 
         public List<TableClass> FillDataWarehouseTable()
         {
@@ -120,13 +120,14 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Industry", DBTableName = "Industries", Dw_TableName = "dw_Industries", KeyName = "Id" });
             tableNameLists.Add(new TableClass() { TableName = "ShipmentMasterData", FieldsDBName = "MasterShipmentNumber", DBTableName = "ShipmentMasterDatas", Dw_TableName = "dw_ShipmentMasterDatas", KeyName = "Id", HasNotSpecifiedValue = true, HasConstraint = true, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "ShipmentComputedFields", DBTableName = "ShipmentComputedFields", Dw_TableName = "dw_ShipmentComputedFields", KeyName = "Id", HasConstraint = true, DispayInScreen = true });
-            tableNameLists.Add(new TableClass() { TableName = "ShipmentPayable", ParentKeyName = "ShipmentId", HasConstraint = true, DBTableName = "ShipmentPayables", DispayInScreen = true, Dw_TableName = "dw_ShipmentPayables", KeyName = "Id", HasNotSpecifiedValue = true });
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentPayable", FieldsDBName = "ShipmentPayableParentId", ParentKeyName = "ShipmentId", HasConstraint = true, DBTableName = "ShipmentPayables", DispayInScreen = true, Dw_TableName = "dw_ShipmentPayables", KeyName = "Id", HasNotSpecifiedValue = true });
             tableNameLists.Add(new TableClass() { TableName = "APInvoiceLine", DBTableName = "APInvoiceLines", DispayInScreen = true, Dw_TableName = "dw_APInvoiceLines", KeyName = "APInvoiceId", FieldsDBName = "EntityPayableId", HasNotSpecifiedValue = true });
             tableNameLists.Add(new TableClass() { TableName = "APInvoice", DBTableName = "APInvoices", DispayInScreen = true, Dw_TableName = "dw_APInvoices", KeyName = "Id", HasNotSpecifiedValue = true });
-            tableNameLists.Add(new TableClass() { TableName = "ShipmentReceivable", ParentKeyName = "ShipmentId" , FieldsDBName = "ARInvoiceLineId", DispayInScreen = true, DBTableName = "ShipmentReceivables", Dw_TableName = "dw_ShipmentReceivables", KeyName = "Id", HasNotSpecifiedValue = true });
-            tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", DispayInScreen = true,DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id", HasNotSpecifiedValue = true, FieldsDBName = "ARInvoiceId,ReceivableId" });
-            tableNameLists.Add(new TableClass() { TableName = "ARInvoice",HasConstraint = true, DispayInScreen = true, DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id", HasNotSpecifiedValue = true });
-            tableNameLists.Add(new TableClass() { TableName = "Shipment", RelatedEntities = tableNameLists.Where(d => d.TableName == "ShipmentPayable" || d.TableName == "ShipmentReceivable").ToList(),    FieldsDBName = (("ToPortId,FromPortId") + GetCustomFieldAsDBFieldOnTable(40)), KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true,  DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentReceivable", ParentKeyName = "ShipmentId", FieldsDBName = "ARInvoiceLineId,ShipmentReceivableParentId", DispayInScreen = true, DBTableName = "ShipmentReceivables", Dw_TableName = "dw_ShipmentReceivables", KeyName = "Id", HasNotSpecifiedValue = true });
+            tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", DispayInScreen = true, DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id", HasNotSpecifiedValue = true, FieldsDBName = "ARInvoiceId,ReceivableId" });
+            tableNameLists.Add(new TableClass() { TableName = "ARInvoice", HasConstraint = true, DispayInScreen = true, DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id", HasNotSpecifiedValue = true });
+            tableNameLists.Add(new TableClass() { TableName = "Shipment", RelatedEntities = tableNameLists.Where(d => d.TableName == "ShipmentPayable" || d.TableName == "ShipmentReceivable").ToList(), FieldsDBName = (("ToPortId,FromPortId") + GetCustomFieldAsDBFieldOnTable(40)), KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, DispayInScreen = true });
+
 
 
             //Dimension  Table
@@ -152,8 +153,8 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "ChargesType", DBTableName = "ChargesTypes", DispayInScreen = true, Dw_TableName = "dw_ChargesTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_ChargesTypes", BuildScriptName = "BuildChargesTypeDimensionTable", IncrementalScriptName = "UpdateChargesTypeDimensionTable" });
 
             //Fact Table
-            tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Id", DWObjectTableCode = "Fact_Shipments", KeyName = "Id", DWTableKeyName = "Id" ,  Dw_TableName ="dw_Shipments",  HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", HasCustomFields = true, CustomFieldsCount = 40, DispayInScreen =true });
-            tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Shipment Id", DWObjectTableCode = "Fact_Charges", Dw_TableName = "dw_Shipments" , KeyName = "[Shipment Id]", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactChargesTable", IncrementalScriptName = "UpdateFactChargesTable", DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Id", DWObjectTableCode = "Fact_Shipments", KeyName = "Id", DWTableKeyName = "Id", Dw_TableName = "dw_Shipments", HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", HasCustomFields = true, CustomFieldsCount = 40, DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Shipment Id", DWObjectTableCode = "Fact_Charges", Dw_TableName = "dw_Shipments", KeyName = "[Shipment Id]", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactChargesTable", IncrementalScriptName = "UpdateFactChargesTable", DispayInScreen = true });
 
 
             //WaterMark
@@ -185,9 +186,9 @@ namespace WarehouseData.Helper
             ExecuteScript("Others", "Day 14 [Abed]AddFunctionResolveCustomFieldValue", connectionString);
         }
 
-        public void ExecuteScript(string forderName, string scriptName , string connectionString)
+        public void ExecuteScript(string forderName, string scriptName, string connectionString)
         {
-          string cmd = GetDataWarehouseScriptByForderAndScriptName(forderName, scriptName);
+            string cmd = GetDataWarehouseScriptByForderAndScriptName(forderName, scriptName);
 
             ExecuteSql(cmd, connectionString);
 
