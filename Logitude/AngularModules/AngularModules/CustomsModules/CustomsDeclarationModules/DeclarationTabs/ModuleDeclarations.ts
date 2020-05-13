@@ -26,6 +26,7 @@ import { SInvoiceClassificationTabComponent } from './Components/Classification/
 import { CasualSupplierDetailsComponent } from './Components/Classification/CasualSupplierDetailsComponent';
 import { DeclarationAmendmentComponent } from './Components/DeclarationAmendment/DeclarationAmendmentComponent';
 import { DeclarationCargoSealTabComponent } from './Components/CargoSeal/DeclarationCargoSealTabComponent';
+import { ExportDeclarationComponent } from './Components/General/ExportDeclarationComponent';
 
 export const Components =
     [
@@ -56,6 +57,7 @@ export const Components =
         CasualSupplierDetailsComponent,
         DeclarationAmendmentComponent,
         DeclarationCargoSealTabComponent,
+        ExportDeclarationComponent,
 
     ];
 
@@ -93,6 +95,7 @@ export class ModuleDeclarations {
             case "ConsigmentPackagesDangerComponent": { myResult = ConsigmentPackagesDangerComponent; break; }
             case "DeclarationAmendmentComponent": { myResult = DeclarationAmendmentComponent; break; }
             case "DeclarationCargoSealTabComponent": { myResult = DeclarationCargoSealTabComponent; break; }
+            case "ExportDeclarationComponent": { myResult = ExportDeclarationComponent; break; }
         }
 
         return myResult;

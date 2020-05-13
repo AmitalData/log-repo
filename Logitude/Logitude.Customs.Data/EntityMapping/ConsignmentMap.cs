@@ -58,6 +58,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ReceiverWarehouseCode).HasColumnName("ReceiverWarehouseCode").HasMaxLength(17).IsUnicode(false);
 
             this.Property(t => t.DeliveryPlaceName).HasColumnName("DeliveryPlaceName").HasMaxLength(256).IsUnicode(false);
+
+            this.Property(t => t.IsDangerousGoods).HasColumnName("IsDangerousGoods");
+
+            this.Property(t => t.FinalDestinationPortCode).HasColumnName("FinalDestinationPortCode").HasMaxLength(17).IsUnicode(false);
         }
     }
 }

@@ -4,13 +4,16 @@
         font-size: 14px;
         padding-left: 5px;
     }
+
     .RightToLeft {
         direction: rtl;
     }
-     .FormFieldRow{
+
+    .FormFieldRow {
         height: auto !important;
     }
-     .DisbleBox{
+
+    .DisbleBox {
         display: inline-block;
         border: 1px solid #ffd800;
         border-radius: 5px;
@@ -19,18 +22,41 @@
         margin: 5px;
         color: gray;
         font-family: sans-serif;
-     }
+    }
+
     .NoPadding {
         padding: 0px !important;
     }
+
+
+
+    .button_ellipsis {
+      
+        width: 30px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: white;
+        color: black;
+        border: 1px solid #e7e7e7;
+    }
+
+        .button_ellipsis:hover {
+            background-color: #e7e7e7;
+        }
+
+           
 </style>
 
 <!--<div class="TabHolder" style="background: red;">
 
 </div>-->
+<!---->
+
+
 
 <table>
-    <tr *ngIf="XMLErrors != null && XMLErrors.length > 0" style="height:1px;">
+    <tr *ngIf="XMLErrors != null && XMLErrors.length > 0" style="height: 1px;">
         <td>
             <ValidationSummary [ItemsSource]="XMLErrors" [SingleLine]="false"></ValidationSummary>
         </td>
@@ -59,7 +85,7 @@
                             </div>
                         </td>
                     </tr>
-                    
+
                     <!-- Filters Fields-->
                     <tr>
                         <td style="width: 700px;">
@@ -77,7 +103,7 @@
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Customs.CustomsHouseType'"
                                                 [HideColumns]="true"
-                                                 [SelectedValue]="DeclarationOfficeCode">
+                                                [SelectedValue]="DeclarationOfficeCode">
                                         </LogLov>
                                     </td>
 
@@ -89,7 +115,7 @@
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td style="width: 105px;" tabindex="2">
-                                        <LogDatePicker [RefreshMe]="RefreshDatePicker" [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="ObjectTableName"    
+                                        <LogDatePicker [RefreshMe]="RefreshDatePicker" [ObjectFieldName]="'TaxationDateTime'" [ObjectTableName]="ObjectTableName"
                                                        [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="TaxationDateTime"></LogDatePicker>
                                     </td>
 
@@ -113,9 +139,9 @@
                                                    [IsDisabled]="!IsImporerCodeEnabled"
                                                    (LostFocus)="ImporterLostFocus('Importer', $event, ImporterSearchBox)"
                                                    (ItemClicked)="ImporterClicked('Importer',$event)"></SearchBox>
-                                                   <!--(TextChanged)="ImporterTextChanged('Importer', $event, ImporterSearchBox)"-->
+                                        <!--(TextChanged)="ImporterTextChanged('Importer', $event, ImporterSearchBox)"-->
                                     </td>
-                                    <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditImporter()" ></IconButton></td>
+                                    <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditImporter()"></IconButton></td>
                                     <!--<td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Search'" (click)="SearchImporter('Importer', $event)" [IsEnabled]="!IsDisplayOnly"></IconButton></td>-->
                                     <td style="width: 25px;"><IconButton *ngIf="!IsDisplayOnly" [IsSmall]="true" [Name]="'Search'" (click)="SearchImporter('Importer', $event)" [IsIconOnly]="true" style="float:left;"></IconButton></td>
                                     <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 5px;">
@@ -244,7 +270,7 @@
                                         <img *ngIf="EntitleImporterCountryCode" style="float: right;margin-right: 5px;margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntitleImporterCountryCode | CountryFlagPipe" [attr.title]="EntitleImporterCountryName" />
                                     </td>
                                 </tr>
-                                
+
                             </table>
                         </td>
                         <td>
@@ -267,8 +293,7 @@
                                      (AddTabClicked)="AddConsigment($event)"
                                      (CloseTabClicked)="DeleteConsigment($event)"
                                      (SelectedTabChanged)="OnSelectedChanged($event)"
-                                     style="display: block; height: 100%;"
-                                    ></LogTabs>
+                                     style="display: block; height: 100%;"></LogTabs>
                         </td>
                     </tr>
 
@@ -300,3 +325,9 @@
         </td>
     </tr>
 </table>
+<span
+
+      *ngIf="EntityPM && FeatureLocatorEXPORTDECLARATIONPSCREEN &&   this.EntityPM.Direction =='E'"
+      class="LeftTop">
+    <button class="button_ellipsis" (click)="EditExportDecScreen()" >...</button>
+</span>

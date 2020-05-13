@@ -165,6 +165,21 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal OcrTop { get; set; }
         [Column("OcrPageNumber")]
 	    public decimal OcrPageNumber { get; set; }
+        [ForeignKey("ClassificationType")]
+        [Column("ClassificationTypeCode")]
+	    public string ClassificationTypeCode { get; set; }
+	      
+        public virtual ClassificationType ClassificationType { get; set; }
+        [ForeignKey("TransactionNatureType")]
+        [Column("TransactionNatureCode")]
+	    public string TransactionNatureCode { get; set; }
+	      
+        public virtual TransactionNatureType TransactionNatureType { get; set; }
+        [ForeignKey("ClaimReasonType")]
+        [Column("ClaimReasonCode")]
+	    public string ClaimReasonCode { get; set; }
+	      
+        public virtual ClaimReasonType ClaimReasonType { get; set; }
     }
 }
 	 

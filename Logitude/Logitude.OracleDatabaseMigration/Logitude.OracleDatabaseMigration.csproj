@@ -552,6 +552,37 @@
     <Compile Include="Migrations\202005050458332_EnabaleNullAvailabilityDate.Designer.cs">
       <DependentUpon>202005050458332_EnabaleNullAvailabilityDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005071033444_AddCustomsShip.cs" />
+    <Compile Include="Migrations\202005071033444_AddCustomsShip.Designer.cs">
+      <DependentUpon>202005071033444_AddCustomsShip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005100616033_AddedCustomTablesForExport.cs" />
+    <Compile Include="Migrations\202005100616033_AddedCustomTablesForExport.Designer.cs">
+      <DependentUpon>202005100616033_AddedCustomTablesForExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005100716392_CngSFCustomsShip2.cs" />
+    <Compile Include="Migrations\202005100716392_CngSFCustomsShip2.Designer.cs">
+      <DependentUpon>202005100716392_CngSFCustomsShip2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005101414116_CngExpDec.cs" />
+    <Compile Include="Migrations\202005101414116_CngExpDec.Designer.cs">
+      <DependentUpon>202005101414116_CngExpDec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005110650112_CngExpDecCon.cs" />
+    <Compile Include="Migrations\202005110650112_CngExpDecCon.Designer.cs">
+      <DependentUpon>202005110650112_CngExpDecCon.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="Migrations\202005111320113_AddExportTables.cs" />
+    <Compile Include="Migrations\202005111320113_AddExportTables.Designer.cs">
+      <DependentUpon>202005111320113_AddExportTables.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="Migrations\202005111347238_DeclarationExportRecipientMap.cs" />
+    <Compile Include="Migrations\202005111347238_DeclarationExportRecipientMap.Designer.cs">
+      <DependentUpon>202005111347238_DeclarationExportRecipientMap.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -957,6 +988,29 @@
     <EmbeddedResource Include="Migrations\202005050458332_EnabaleNullAvailabilityDate.resx">
       <DependentUpon>202005050458332_EnabaleNullAvailabilityDate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005071033444_AddCustomsShip.resx">
+      <DependentUpon>202005071033444_AddCustomsShip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005100616033_AddedCustomTablesForExport.resx">
+      <DependentUpon>202005100616033_AddedCustomTablesForExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005100716392_CngSFCustomsShip2.resx">
+      <DependentUpon>202005100716392_CngSFCustomsShip2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005101414116_CngExpDec.resx">
+      <DependentUpon>202005101414116_CngExpDec.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005110650112_CngExpDecCon.resx">
+      <DependentUpon>202005110650112_CngExpDecCon.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202005111320113_AddExportTables.resx">
+      <DependentUpon>202005111320113_AddExportTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005111347238_DeclarationExportRecipientMap.resx">
+      <DependentUpon>202005111347238_DeclarationExportRecipientMap.cs</DependentUpon>
+    </EmbeddedResource>
+
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

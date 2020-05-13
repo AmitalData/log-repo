@@ -226,7 +226,11 @@ import { AmendmentTypeListService } from './Services/StandardLists/AmendmentType
 import { SealUpdateReasonTypeListService } from './Services/StandardLists/SealUpdateReasonTypeListService';
 import { DeclarationReferantDataListService } from './Services/StandardLists/DeclarationReferantDataListService';
 import { ExceptionReasonListService } from './Services/StandardLists/ExceptionReasonListService';
-
+import { PartyRelationshipTypeListService } from './Services/StandardLists/PartyRelationshipTypeListService';
+import { AmountTypeListService } from './Services/StandardLists/AmountTypeListService';
+import { ClaimReasonTypeListService } from './Services/StandardLists/ClaimReasonTypeListService';
+import { ClassificationTypeListService } from './Services/StandardLists/ClassificationTypeListService';
+import { TransactionNatureTypeListService } from './Services/StandardLists/TransactionNatureTypeListService';
 
 //#endregion
 
@@ -356,6 +360,7 @@ import { ApprovedProfessionListService } from './Services/StandardLists/Approved
 import { RequestTypeListService } from './Services/StandardLists/RequestTypeListService'
 import { CustomsAutonomyKeywordPMService } from './Services/StandardPMs/CustomsAutonomyKeywordPMService';
 import { CurrencyTypePMService } from './Services/StandardPMs/CurrencyTypePMService';
+import { CustomsShipListService } from './Services/StandardLists/CustomsShipListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -591,7 +596,13 @@ export class ModuleProviders {
             case "SealUpdateReasonTypeListService": { myResult = new SealUpdateReasonTypeListService(); break; }
             case "DeclarationReferantDataListService": { myResult = new DeclarationReferantDataListService(); break; }
             case "ExceptionReasonListService": { myResult = new ExceptionReasonListService(); break;}
+            case "TransactionNatureTypeListService": { myResult = new TransactionNatureTypeListService(); break; }
+            case "ClassificationTypeListService": { myResult = new ClassificationTypeListService(); break; }
+            case "ClaimReasonTypeListService": { myResult = new ClaimReasonTypeListService(); break; }
+            case "AmountTypeListService": { myResult = new AmountTypeListService(); break; }
+            case "PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
 
+            case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
              //#endregion                
 
             //#region StandardPMs

@@ -2261,6 +2261,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.SetNewEntityButtonVisibility();
     }
     private SetNewEntityLabel() {
+        if (this.HaveFeatureNewExportDeclararion()) {
+            this.NewEntityButtonLabel = "הצהרת יצוא חדשה"
+        } else
         if (this.listArgs.NewButtonLabel != null) {
             this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
         }
@@ -2370,11 +2373,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 }
                             });
 
-
+                            if (!isVisible && this.HaveFeatureNewExportDeclararion()) {
+                                isVisible = true;
+                            }
                             break;
                         }
 
-
+                        
 
                     case "CustomerTenantAccess":
                         {
@@ -2399,6 +2404,12 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
         this.IsNewEntityButtonVisible = isVisible;
+    }
+    HaveFeatureNewExportDeclararion(): boolean {
+        let b1=FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONNEW2");
+        let b2 = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN");
+
+        return b1 && b2; 
     }
     AddNewEntity() {
         if (this.SelectedQuery != null) {

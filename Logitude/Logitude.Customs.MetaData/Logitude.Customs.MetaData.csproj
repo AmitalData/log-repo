@@ -107,19 +107,30 @@
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />
+    <None Include="EntityFiles\AmountType.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemsPrice.lxml" />
+    <None Include="EntityFiles\SuppInvoiceItemsAbachStatement.lxml" />
+    <None Include="EntityFiles\SupplierInvoicePayment.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceUCR.lxml" />
+    <None Include="EntityFiles\TransactionNatureType.lxml" />
+    <None Include="EntityFiles\ClaimReasonType.lxml" />
     <None Include="EntityFiles\ContinuousRequestType.lxml" />
     <None Include="EntityFiles\CurrencyTypeTenant.lxml" />
+    <None Include="EntityFiles\ClassificationType.lxml" />
+    <None Include="EntityFiles\PartyRelationshipType.lxml" />
     <None Include="EntityFiles\CustomsAutonomyKeyword.lxml" />
     <None Include="EntityFiles\CustomsPartnerFtp.lxml" />
     <None Include="EntityFiles\ApprovedProfession.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ConsignmentPackDanger.lxml" />
+    <None Include="EntityFiles\CustomsShip.lxml" />
     <None Include="EntityFiles\DBMigration.lxml" />
     <None Include="EntityFiles\DBMigrationLine.lxml" />
     <None Include="EntityFiles\DecDangersContacts.lxml" />
+    <None Include="EntityFiles\DeclarationExportRecipient.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
     <None Include="EntityFiles\ExceptionReason.lxml" />
     <None Include="EntityFiles\HazardousSubstance.lxml" />

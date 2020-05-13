@@ -15386,6 +15386,31 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             //Add new Feature, If the Feature is set Fill The Attachment in the interface , search & update the existing document in a new version (don't create 2 docs) 
             //Feature CustomsDeclarationFeature48 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTREPLYPRINTEDFORMNV", Packagable = true, ObjectTableId = paymentOrderObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.PaymentReplyPrintedFormNV", NameTextCodeDefaultText = "Payment Reply Printed Form New Ver.", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 #endif
+
+            #region ExportCustomsDeclarationFeature
+            
+            //Feature ExportCustomsDeclarationFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONNEW", ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.NewExportDeclaration", NameTextCodeDefaultText = "New Export Declaration", FeatureTypeCode = /*"NEW"*/ "ACT", FullLocalDefaultText = "הצהרת יצוא חדשה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            Feature ExportCustomsDeclarationFeature1TK2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONNEW2", Packagable = true, ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.NewExportDeclaration2", NameTextCodeDefaultText = "New Export Declaration", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            Feature ExportCustomsDeclarationFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONPSCREEN", Packagable = true, ObjectTableId = CustomsDeclarationObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Declaration.Features.ExportDecPilotScreen", NameTextCodeDefaultText = "Export Declaration Pilot Screens ", FeatureTypeCode = "AREA" , FullLocalDefaultText ="הצהרת יצוא מסכים פיילוט"
+            }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            
+            Feature ExportCustomsDeclarationFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails()
+            {
+                Code = "EXPORTDECLARATIONPMENU",
+                Packagable = true,
+                ObjectTableId = CustomsDeclarationObjectTable.Id,
+                Tenant = tenant,
+                NameTextCodeCode = "Customs.Declaration.Features.ExportDecMenuScreen",
+                NameTextCodeDefaultText = "Export Declaration Screens ",
+                FeatureTypeCode = "MENU",
+                FullLocalDefaultText = "הצהרת יצוא"
+            }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            
+            #endregion
+
             #endregion
 
             #region Claim

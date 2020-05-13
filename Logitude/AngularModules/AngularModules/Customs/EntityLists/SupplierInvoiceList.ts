@@ -46,6 +46,14 @@ export class SupplierInvoiceList {
 	InvoiceAmountInUSD: number;
 	ChangeInSupplierInvoice: string;
 	InvoiceCurrencyTypeName: string;
+	BuyerName: string;
+	BuyerAddress: string;
+	BuyerCountryCode: string;
+	BuyerRoleCode: string;
+	PartyRelationshipCode: string;
+	PartyRelationshipName: string;
+	BuyerRoleName: string;
+	BuyerCountryName: string;
 	
 }
  

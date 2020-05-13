@@ -826,6 +826,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             set;
 
         }
+        public IDbSet<ClaimReasonType> ClaimReasonTypes
+        {
+            get;
+            set;
+
+        }
         public IDbSet<Claim> Claims
         {
             get;
@@ -857,6 +863,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             set;
         }
         public IDbSet<ClaimsRelatedEntsReasonsExp> ClaimsRelatedEntsReasonsExps
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<ClassificationType> ClassificationTypes
         {
             get;
             set;
@@ -920,6 +932,9 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<MamanSpecialAction> MamanSpecialAction { get; set; }
         public IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatus { get; set; }
         public IDbSet<DeclarationMamanSpecialAction> PendingDeclarationMamanSpecialActionErrorPlace { get; set; }
+
+
+
         public IDbSet<RefundCustomerActivityType> RefundCustomerActivityType { get; set; }
         public IDbSet<TransferCargoMethodType> TransferCargoMethodType { get; set; }
         public IDbSet<GatepassReturnCode> GatepassReturnCode { get; set; }
@@ -1875,7 +1890,13 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             set;
 
         }
+        
+            public IDbSet<CustomsShip> CustomsShips
+        {
+            get;
+            set;
 
+        }
 
         public IDbSet<LeadDocumentExceptionType> LeadDocumentExceptionTypes
         {
@@ -2310,7 +2331,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             set;
 
         }
+        public IDbSet<DeclarationExportRecipient> DeclarationExportRecipients
+        {
+            get; set;
 
+        }
 
 
         public IDbSet<DeclarationPayment> DeclarationPayments
@@ -2360,6 +2385,14 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             set;
 
         }
+
+        public IDbSet<PartyRelationshipType> PartyRelationshipTypes
+        {
+            get;
+            set;
+
+        }
+
 
         public IDbSet<Deficit> Deficits
         {
@@ -2687,6 +2720,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatements
+        {
+            get; set;
+
+        }
+
         public IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats
         {
             get;
@@ -2736,6 +2775,13 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<SupplierInvoiceItemsPrice> SupplierInvoiceItemsPrices
+        {
+            get; set;
+
+        }
+
+
         public IDbSet<SupplierInvoiceItemProcesType> SupplierInvoiceItemProcesTypes
         {
             get;
@@ -2776,6 +2822,18 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         {
             get;
             set;
+
+        }
+
+        public IDbSet<SupplierInvoicePayment> SupplierInvoicePayments
+        {
+            get; set;
+
+        }
+
+        public IDbSet<SupplierInvoiceUCR> SupplierInvoiceUCRs
+        {
+            get; set;
 
         }
 
@@ -2865,6 +2923,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<ValidCustomsItem> ValidCustomsItems { get; set; }
         public IDbSet<CustomBanksCard> CustomBanksCards { get; set; }
         public IDbSet<TradeLevyExamptType> TradeLevyExamptTypes { get; set; }
+        public IDbSet<TransactionNatureType> TransactionNatureTypes { get; set; }
         public IDbSet<SupplierInvoiceItemsLevy> SupplierInvoiceItemsLevies { get; set; }
         public IDbSet<ImporterDesposition> ImporterDespositions { get; set; }
         public IDbSet<Guarantee> Guarantees { get; set; }
@@ -2939,6 +2998,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses { get; set; }
         public IDbSet<AmendmentStatus> AmendmentStatuses {get; set;}
         public IDbSet<AmendmentType> AmendmentTypes  { get; set; }
+        public IDbSet<AmountType> AmountTypes { get; set; }
         public IDbSet<SealUpdateReasonType> SealUpdateReasonTypes { get; set; }
         public IDbSet<DeclarationStatementType> DeclarationStatementTypes { get; set; }
         public IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes { get; set; }
@@ -3642,6 +3702,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new ClaimsRelatedEntsReasonsExpMap());
 
+            modelBuilder.Configurations.Add(new ClassificationTypeMap());
+
             modelBuilder.Configurations.Add(new ClaimsRelatedEntsExpDeclarMap());
 
             modelBuilder.Configurations.Add(new ClaimExplanationCodeMap());
@@ -3651,6 +3713,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ClaimImporterDeclarsPage3AMap());
 
             modelBuilder.Configurations.Add(new ClaimImporterDeclarsPage3BMap());
+
+            modelBuilder.Configurations.Add(new ClaimReasonTypeMap());
 
             modelBuilder.Configurations.Add(new ClaimImporterDeclarsP3LoiMap());
 
@@ -3779,6 +3843,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CustomsRequiredFieldMap());
 
             modelBuilder.Configurations.Add(new CustomsSettingMap());
+            modelBuilder.Configurations.Add(new CustomsShipMap());
 
             modelBuilder.Configurations.Add(new CustomsTransportModeMap());
 
@@ -3901,6 +3966,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new ParagraphTypeMap());
 
+            modelBuilder.Configurations.Add(new PartyRelationshipTypeMap());
+
             modelBuilder.Configurations.Add(new PassportTypeMap());
 
             modelBuilder.Configurations.Add(new PayerActivityTypeMap());
@@ -3985,6 +4052,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new SubCountryMap());
 
+            modelBuilder.Configurations.Add(new SuppInvoiceItemsAbachStatementMap());
+
             modelBuilder.Configurations.Add(new SupplierInvioceItemCertificatMap());
 
             modelBuilder.Configurations.Add(new SupplierInvoiceMap());
@@ -4007,11 +4076,17 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsSerialNumMap());
 
+            modelBuilder.Configurations.Add(new SupplierInvoiceItemsPriceMap());
+
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsTaxMap());
 
             //modelBuilder.Configurations.Add(new SupplierInvoiceItemsTaxesModMap());
 
             modelBuilder.Configurations.Add(new SupplierInvoiceModificationMap());
+
+            modelBuilder.Configurations.Add(new SupplierInvoicePaymentMap());
+
+            modelBuilder.Configurations.Add(new SupplierInvoiceUCRMap());
 
             modelBuilder.Configurations.Add(new TapagMap());
 
@@ -4024,6 +4099,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TradeAgreementMap());
 
             modelBuilder.Configurations.Add(new TradeLevyExamptTypeMap());
+
+            modelBuilder.Configurations.Add(new TransferCargoMethodTypeMap());
 
             modelBuilder.Configurations.Add(new UnloadingSiteTypeMap());
 
@@ -4073,6 +4150,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new AmendmentRequestStatusMap());
             modelBuilder.Configurations.Add(new AmendmentStatusMap());
             modelBuilder.Configurations.Add(new AmendmentTypeMap());
+            modelBuilder.Configurations.Add(new AmountTypeMap());
             modelBuilder.Configurations.Add(new SealUpdateReasonTypeMap());
             modelBuilder.Configurations.Add(new AmendmentFieldReasonTypeMap());
             modelBuilder.Configurations.Add(new DeclarationStatementTypeMap());
@@ -4110,9 +4188,10 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
             modelBuilder.Configurations.Add(new MamanSpecialActionMap());
             modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
+            modelBuilder.Configurations.Add(new DeclarationExportRecipientMap());
             modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
             modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
-            modelBuilder.Configurations.Add(new TransferCargoMethodTypeMap());
+            modelBuilder.Configurations.Add(new TransactionNatureTypeMap());
             modelBuilder.Configurations.Add(new GatepassReturnCodeMap());
             modelBuilder.Configurations.Add(new UpdateCodeMap());
             modelBuilder.Configurations.Add(new GatepassRequestMap());
