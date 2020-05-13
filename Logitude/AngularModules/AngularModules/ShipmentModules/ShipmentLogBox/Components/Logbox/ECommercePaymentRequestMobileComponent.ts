@@ -81,6 +81,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     ScreenWidth: number;
     private MaxScreenWidth: number = 600;
+    FontTitleSize: number;
 
     IsAcceptedChanged($event) {
         this.IsAccepted = $event;
@@ -88,7 +89,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     ngOnInit() {
 
         this.ScreenWidth = window.innerWidth > this.MaxScreenWidth ? this.MaxScreenWidth : window.innerWidth;;
-
+        this.FontTitleSize = this.ScreenWidth > 436 ? 20 : this.ScreenWidth > 390 ? 17 : 15;
     }
     ngAfterViewInit() {
 
