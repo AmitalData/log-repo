@@ -585,6 +585,8 @@ into groupBy_currency
                     trailReportParam.DetailedControlVendors
                     ||
                     trailReportParam.Suppress_DoNotShowCardWithoutActivity
+                    ||
+                    trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero
                     )
                 {
                     throw new Exception("Only in TrailReportLevel.GLAccount DetailedControl is allowed !!!");
