@@ -846,12 +846,14 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     }
 
 
-    public get VisibleExportDecScreen() {
+    public get VisibleExportDecScreen(): boolean{
         if (AppTool.IsNullOrEmpty(this.EntityPM)) {
             return false;
         }
         return this.EntityPM.Direction == "E" && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN");
     }
+    public set VisibleExportDecScreen(newval: boolean) { }
+
     EditExportDecScreen() {
         
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
