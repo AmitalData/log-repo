@@ -120,6 +120,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CRMClassesGenerator.cs</LastGenOutput>
     </None>
+    <None Include="DBScripts\FixFeatureBusinessUnitProperty.sxml" />
     <None Include="DBTables\Activity.dxml" />
     <None Include="DBTables\ActivityEmailRecipient.dxml" />
     <None Include="DBTables\ActivityInvitee.dxml" />
