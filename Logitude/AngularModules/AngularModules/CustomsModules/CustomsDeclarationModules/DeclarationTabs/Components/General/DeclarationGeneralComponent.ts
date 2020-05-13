@@ -845,14 +845,15 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
     }
 
+    public FeatureLocatorEXPORTDECLARATIONPSCREEN =FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN")
 
-    public get VisibleExportDecScreen(): boolean{
-        if (AppTool.IsNullOrEmpty(this.EntityPM)) {
-            return false;
-        }
-        return this.EntityPM.Direction == "E" && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN");
-    }
-    public set VisibleExportDecScreen(newval: boolean) { }
+    //public get VisibleExportDecScreen(): boolean{
+    //    if (AppTool.IsNullOrEmpty(this.EntityPM)) {
+    //        return false;
+    //    }
+    //    return this.EntityPM.Direction == "E" && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN");
+    //}
+    //public set VisibleExportDecScreen(newval: boolean) { }
 
     EditExportDecScreen() {
         
