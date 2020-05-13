@@ -452,7 +452,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 TenantQuery tenantQuery = new TenantQuery(_Param.Tenant);
                 var tenant = tenantQuery.GetSinglePM(_Param.Tenant);
 
-                IQueryable<PeriodMExtended> periodMExtendeds =
+                List<PeriodMExtended> periodMExtendeds =
                     (from acc in accountsList
                      join moredata in _AccountingContext.GLAccountMoreDatas.Where(r => r.Tenant == _Param.Tenant)
                      on acc.Id equals moredata.AccountId into moredataJoinT
@@ -504,7 +504,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                      }
 
-                 );
+                 ).ToList();
 
                 ///var list1=periodMExtendeds.ToList();
                 bool checkIt = false;
@@ -571,7 +571,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
         }
 
-        private static List<PeriodMExtended> MapExtended(List<PeriodM> reportList, IQueryable<PeriodMExtended> periodMExtendeds, IQueryable<Logitude.BL.CommonDataModel.EntityPMs.CurrencyPM> currencies)
+        private static List<PeriodMExtended> MapExtended(List<PeriodM> reportList, List<PeriodMExtended> periodMExtendeds, IQueryable<Logitude.BL.CommonDataModel.EntityPMs.CurrencyPM> currencies)
         {
             List<PeriodMExtended> namedPeriods = (from line in reportList
                                                  
