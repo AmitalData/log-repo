@@ -1740,7 +1740,8 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
   }
   SelectedSpotLightIndex: number;
   ShowSpot: boolean = false;
-  onSpotLightSelect(rowIndex) {
+    onSpotLightSelect(rowIndex) {
+        //this.rowHeight = 70;
     if (this.SelectedSpotLightIndex == rowIndex.rowIndex) {
       this.SelectedSpotLightIndex = null;
     }
@@ -1835,34 +1836,35 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
   scrollDirection: string = null;
  
   scrolltimer = null;
-  onScroll() {
-    this.SearchFieldChanged = false;
-    var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
-    var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
+    onScroll() {
+       //alert("sss");
+    //this.SearchFieldChanged = false;
+    //var columns: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridColumnsId);
+    //var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
 
-    this.LogGridElement = elem;
-    if (elem) {
-      if (this.HScrollPosition == -1 || elem.scrollLeft > this.HScrollPosition) {
-        this.HScrollPosition = elem.scrollLeft;
-      }
-      if (columns) {
-        //columns.style.top = elem.scrollTop + "px";
-        if (this.RTL == true) {
-          columns.style.right = -1 * (this.HScrollPosition - elem.scrollLeft) + "px";
-        }
-        else {
-          columns.style.left = -1 * elem.scrollLeft + "px";
-        }
-      }
-      //console.log("Inside Elem " + elem.scrollTop);
-    }
-    else {
-      //console.log("Inside else ");
-    }
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
-    this.timer = setTimeout(() => this.DoScroll(), 200);
+    //this.LogGridElement = elem;
+    //if (elem) {
+    //  if (this.HScrollPosition == -1 || elem.scrollLeft > this.HScrollPosition) {
+    //    this.HScrollPosition = elem.scrollLeft;
+    //  }
+    //  if (columns) {
+    //    //columns.style.top = elem.scrollTop + "px";
+    //    if (this.RTL == true) {
+    //      columns.style.right = -1 * (this.HScrollPosition - elem.scrollLeft) + "px";
+    //    }
+    //    else {
+    //      columns.style.left = -1 * elem.scrollLeft + "px";
+    //    }
+    //  }
+    //  //console.log("Inside Elem " + elem.scrollTop);
+    //}
+    //else {
+    //  //console.log("Inside else ");
+    //}
+    //if (this.timer) {
+    //  clearTimeout(this.timer);
+    //}
+    //this.timer = setTimeout(() => this.DoScroll(), 200);
   };
   HScrollPosition: number = -1;
   HorizantalScrollValue: string = "0px";
