@@ -2445,6 +2445,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private void MapINTTRABookingXMLFields(ShipmentPM shipmentPM)
         {
             this.ReadINTTRABookingXMLVoyage(shipmentPM);
+            this.ReadINTTRABookingXMLVessel(shipmentPM);
             this.ReadINTTRABookingXMLDates(shipmentPM);
             this.ReadINTTRABookingXMLShippingLine(shipmentPM);
         }
@@ -2471,6 +2472,44 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
         }
+        private void ReadINTTRABookingXMLVessel(ShipmentPM shipmentPM)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(shipmentPM.INTTRALastBookingResponse);
+            XmlNodeList xnList = xmlDoc.SelectNodes("//ConveyanceInformation");
+
+            foreach (XmlNode xn in xnList)
+            {
+                if (xn["Identifier"] != null)
+                {
+                    if (xn.FirstChild != null && xn.FirstChild.OuterXml.Contains("VesselName"))
+                    {
+                        shipmentPM.INTTRABookingResponse_Vessel = xn.FirstChild.InnerText;
+                    }
+
+                    if (xn.LastChild != null && xn.LastChild.OuterXml.Contains("VesselName"))
+                    {
+                        shipmentPM.INTTRABookingResponse_Vessel = xn.LastChild.InnerText;
+                    }
+
+                    if (!string.IsNullOrEmpty(shipmentPM.INTTRABookingResponse_Vessel))
+                    {
+                        this.GetSingleVesselByName(shipmentPM);
+                    }
+                }
+            }
+        }
+
+        private void GetSingleVesselByName(ShipmentPM shipmentPM)
+        {
+            VesselRepository vesselRepository = new VesselRepository(shipmentPM.Tenant);
+            var vessel = vesselRepository.GetSingleVesselByName(shipmentPM.INTTRABookingResponse_Vessel, shipmentPM.Tenant);
+            if(vessel != null)
+            {
+                shipmentPM.INTTRABookingResponse_VesselId = vessel.Id;
+            }
+        }
+
         private void ReadINTTRABookingXMLDates(ShipmentPM shipmentPM)
         {
             XmlDocument xmlDoc = new XmlDocument();

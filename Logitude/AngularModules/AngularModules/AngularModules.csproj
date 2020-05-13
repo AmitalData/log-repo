@@ -1335,6 +1335,7 @@
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\EditTabs\CustomsTransferGeneralTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.html" />
+    <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\AddEBookingVesselComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingLoadComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.html" />
@@ -3810,6 +3811,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleShipmentAMANAC.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\AddEBookingVesselComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingLoadComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.ts" />

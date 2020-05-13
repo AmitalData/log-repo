@@ -4,6 +4,7 @@ import {INTTRASettingsComponent} from './Components/Maintenance/INTTRASettingsCo
 import {INTTRACommunicationSettingsComponent} from './Components/Maintenance/INTTRACommunicationSettingsComponent';
 import { SimulatorBookingComponent } from './Components/Wizard/SimulatorBookingComponent';
 import { SimulatorBookingLoadComponent } from './Components/Wizard/SimulatorBookingLoadComponent';
+import { AddEBookingVesselComponent } from './Components/Wizard/AddEBookingVesselComponent';
 
 export const Components =
     [
@@ -12,7 +13,8 @@ export const Components =
         INTTRASettingsComponent,
         INTTRACommunicationSettingsComponent,
         SimulatorBookingComponent,
-        SimulatorBookingLoadComponent
+        SimulatorBookingLoadComponent,
+        AddEBookingVesselComponent
     ];
 
 export class ModuleDeclarations {
@@ -27,6 +29,8 @@ export class ModuleDeclarations {
             case "INTTRACommunicationSettingsComponent": { myResult = INTTRACommunicationSettingsComponent; break; }
             case "SimulatorBookingComponent": { myResult = SimulatorBookingComponent; break; }
             case "SimulatorBookingLoadComponent": { myResult = SimulatorBookingLoadComponent; break; }
+            case "AddEBookingVesselComponent": { myResult = AddEBookingVesselComponent; break; }
+
         }
         return myResult;
     }

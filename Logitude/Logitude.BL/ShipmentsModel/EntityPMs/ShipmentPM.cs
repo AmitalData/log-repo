@@ -2248,6 +2248,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string INTTRABookingResponse_PODCCode { get; set; }
         public string INTTRABookingResponse_PODCName { get; set; }
         public string INTTRABookingResponse_ShippingLine { get; set; }
+        public string INTTRABookingResponse_Vessel { get; set; }
+        public string INTTRABookingResponse_VesselId { get; set; }
+
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastFinalDestination { get; set; }
