@@ -681,15 +681,34 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetAddColumnScript(ColumnMigration columnMigration)
         {
-            string addScript = "-- Add New Column With Name " + columnMigration.NewColumn.Name + "\n";
-            addScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]" + " ";
-            addScript += "ADD " + "[" + columnMigration.NewColumn.Name + "]" + " ";
-            addScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
-            addScript += GetDefaultValueScript(columnMigration.NewColumn.Constraints.Nullable, columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
-            addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
-            addScript += ";\n\n";
+            string columnName = columnMigration.NewColumn.Name;
+            string tableNameWithSchema = "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]";
+            string columnDataTypeScript = GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
 
-            string addWithHistoryScript = addScript + GetInsertScriptForMigrationsHistory("Add Column", TableMigrations.DxmlTableName, columnMigration.NewColumn.Name, addScript);
+            string addScript = "-- Add New Column With Name " + columnName + "\n";
+            addScript += "ALTER TABLE " + tableNameWithSchema + " ";
+            addScript += "ADD " + "[" + columnName + "]" + " ";
+            addScript += columnDataTypeScript;
+            addScript += GetDefaultValueScript(columnMigration.NewColumn.Constraints.Nullable, columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
+
+            string initialValueScript = columnMigration.NewColumn.InitialValueScript;
+            if (String.IsNullOrEmpty(initialValueScript))
+            {
+                addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
+                addScript += ";\n\n";
+            }
+            else
+            {
+                addScript += " NULL;\n";
+                addScript += (initialValueScript.EndsWith(";") ? initialValueScript : initialValueScript + ";") + "\n";
+                if (!columnMigration.NewColumn.Constraints.Nullable)
+                {
+                    addScript += "ALTER TABLE " + tableNameWithSchema + " ALTER COLUMN " + "[" + columnName + "] " + columnDataTypeScript + " NOT NULL;\n";
+                }
+                addScript += "\n";
+            }
+
+            string addWithHistoryScript = addScript + GetInsertScriptForMigrationsHistory("Add Column", TableMigrations.DxmlTableName, columnName, addScript);
 
             return addWithHistoryScript;
         }
@@ -1058,7 +1077,7 @@ namespace Logitude.DBMigrations.Models
 
             if (!String.IsNullOrEmpty(script))
             {
-                string insertScript = "INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('" + Guid.NewGuid().ToString() + "', '" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', GETDATE(), '" + script.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "');" + "\n\n";
+                string insertScript = "INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('" + Guid.NewGuid().ToString() + "', '" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', GETDATE(), '" + script.Replace("\n", String.Empty).Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "');" + "\n\n";
                 return insertScript;
             }
 
