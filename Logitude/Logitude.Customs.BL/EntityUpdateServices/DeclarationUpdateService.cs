@@ -45,7 +45,9 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using System.Diagnostics;
- namespace Logitude.Customs.BL.EntityUpdateServices
+using Logitude.Customs.BL.CloseTables;
+
+namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class DeclarationUpdateService
     {
@@ -177,9 +179,65 @@ using System.Diagnostics;
             {
                 entityPM.ReferentUserId = entityPM.CreatedByUserId;
             }
+            OnCreatingExportDeclaration(entityPM);
+
+        }
+
+        private void OnCreatingExportDeclaration(DeclarationPM declarationPM)
+        {
+            if (String.IsNullOrWhiteSpace(declarationPM.Direction))
+            {
+                declarationPM.Direction = "I";
+            }
+
+            switch (declarationPM.Direction)
+            {
+                case "I":
+                    {
+                        return;
+                    }
+
+                case "E":
+                    bool initOnNewExportDeclarationScreen = true;
+                    if (initOnNewExportDeclarationScreen)
+                    {
+                        if (string.IsNullOrEmpty(declarationPM.TransportModeId))
+                        {
+                            throw new Exception("סוג הובלה - שדה חובה ");
+
+                        }
+                        if (string.IsNullOrEmpty(declarationPM.DeclarationTypeCode))
+                        {
+                            throw new Exception("סוג הצהרה - שדה חובה ");
+
+                        }
+                        if (string.IsNullOrEmpty(declarationPM.AgentRoleCode))
+                        {
+                            throw new Exception("תפקיד סוכן - שדה חובה ");
+
+                        }
+
+                        var allAgentRoleCodeDetails = (new DeclaraionDetails()).GetAllAgentRoleCodeDetails();
+                        var allAgentRoleCodes = allAgentRoleCodeDetails.Select(r => r.Code).ToList();
+                       if (!allAgentRoleCodes.Contains(declarationPM.AgentRoleCode))
+                        {
+                            throw new Exception("תפקיד סוכן - ערכים שגויים  ");
+                        }
+                    }
+
+
+                    break;
+
+                default:
+                    {
+                        throw new Exception("declarationPM.Direction should be E/I current {declarationPM.Direction}");
+                    }
+
+            }
 
 
         }
+
         protected override void UpdateCalculatedFields(DeclarationPM entityPM, EntityPM entityParentPM, Declaration entityPOCO)
         {
             DeclarationDataMapping.UpdateCourierDeclarationFields(entityPM, entityPOCO);
