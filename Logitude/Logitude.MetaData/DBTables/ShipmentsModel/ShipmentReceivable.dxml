@@ -146,7 +146,6 @@
   <Column
     Name="ShipmentReceivableLineStatusCode"
     ShortName="StatusCode"
-    OldNames="StatusCode"
     Type="char"
     Size="4">
     <Constraints
