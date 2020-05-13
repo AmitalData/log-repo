@@ -48,9 +48,18 @@ namespace Logitude.Customs.BL.EntityQueryServices
             SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context);
             entityPM.SupplierInvoiceModifications = supplierInvoiceModificationQueryService.GetMulti(supplierInvoiceKeys, true);
 
+            SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(context);
+            entityPM.SupplierInvoicePayments = supplierInvoicePaymentQueryService.GetMulti(supplierInvoiceKeys, true);
+
+
+            SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(context);
+            entityPM.SupplierInvoiceUCRs = supplierInvoiceUCRQueryService.GetMulti(supplierInvoiceKeys, true);
+
+
+
 
             #region new code for get Composition
-            
+
             SupplierInvoiceItemsConDeclarQueryService supplierInvoiceItemsConnectedDeclarationService = new SupplierInvoiceItemsConDeclarQueryService(context);
             
             List<SupplierInvoiceItemsConDeclarPM> supplierInvoiceItemsConDeclars = supplierInvoiceItemsConnectedDeclarationService.GetSupplierInvoiceItemsConDeclarPMsForSupplierInvoice(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, Tenant, listLines);
@@ -360,7 +369,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
                
             SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context);
             entityPM.SupplierInvoiceModifications = supplierInvoiceModificationQueryService.GetMulti(supplierInvoiceKeys, true);
-            
+
+            SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(context);
+            entityPM.SupplierInvoicePayments = supplierInvoicePaymentQueryService.GetMulti(supplierInvoiceKeys, true);
+
+            SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(context);
+            entityPM.SupplierInvoiceUCRs = supplierInvoiceUCRQueryService.GetMulti(supplierInvoiceKeys, true);
+
 
             #region new code for get Composition
 

@@ -437,6 +437,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             SupplierInvoiceFreightAmountUpdateService supplierInvoiceFreightAmountUpdateService = new SupplierInvoiceFreightAmountUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
             supplierInvoiceFreightAmountUpdateService.UpdateMulti(entityPM.SupplierInvoiceFreightAmounts, entityPM.DeletedSupplierInvoiceFreightAmounts, entityPM, false);
 
+            SupplierInvoicePaymentUpdateService supplierInvoicePaymentUpdateService = new SupplierInvoicePaymentUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
+            supplierInvoicePaymentUpdateService.UpdateMulti(entityPM.SupplierInvoicePayments, entityPM.DeletedSupplierInvoicePayments, entityPM, false);
+
+            SupplierInvoiceUCRUpdateService supplierInvoiceUCRUpdateService = new SupplierInvoiceUCRUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entityPM.Tenant);
+            supplierInvoiceUCRUpdateService.UpdateMulti(entityPM.SupplierInvoiceUCRs, entityPM.DeletedSupplierInvoiceUCRs, entityPM, false);
 
 
             base.UpdateComposition(entityPM);
