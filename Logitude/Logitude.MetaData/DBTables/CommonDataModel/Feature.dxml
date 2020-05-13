@@ -111,5 +111,4 @@
     Columns="FeatureUniqeCode" />
   <UniqueConstraint
     Columns="Code,ObjectTableId,Tenant" />
-
 </Table>

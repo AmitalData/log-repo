@@ -685,7 +685,7 @@ namespace Logitude.DBMigrations.Models
             string tableNameWithSchema = "[" + TableMigrations.DxmlTableSchema + "].[" + TableMigrations.DxmlTableName + "]";
             string columnDataTypeScript = GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
 
-            string addScript = "-- Add New Column With Name " + columnName + ";\n\n";
+            string addScript = "-- Add New Column With Name " + columnName + "\n";
             addScript += "ALTER TABLE " + tableNameWithSchema + " ";
             addScript += "ADD " + "[" + columnName + "]" + " ";
             addScript += columnDataTypeScript;
@@ -1077,7 +1077,7 @@ namespace Logitude.DBMigrations.Models
 
             if (!String.IsNullOrEmpty(script))
             {
-                string insertScript = "INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('" + Guid.NewGuid().ToString() + "', '" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', GETDATE(), '" + script.Replace("\n","").Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "');" + "\n\n";
+                string insertScript = "INSERT INTO [dbo].[DBMigrationsHistory]([Id], [DxmlFileName], [TableName], [ColumnName], [MigrationType], [ExecutionDate], [MigrationScript])VALUES('" + Guid.NewGuid().ToString() + "', '" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', GETDATE(), '" + script.Replace("\n", String.Empty).Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "');" + "\n\n";
                 return insertScript;
             }
 
