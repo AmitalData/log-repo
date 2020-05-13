@@ -859,6 +859,8 @@
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\ModuleCustomsGeneralRequests.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\CustomsCollateralListTemplate.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ActionListHeaderTemplate.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ArrivalDateListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\AddEditCustomsAirlineComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\AddEditInterfaceManagementComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\ClosedTableNotExistedComponent.ts" />

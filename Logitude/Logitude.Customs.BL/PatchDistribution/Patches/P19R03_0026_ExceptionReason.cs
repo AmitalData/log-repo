@@ -31,8 +31,7 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
                                    UNIFREIGHTSTATUSCODE  VARCHAR2(3 CHAR),
                                    SEARCHFIELDS  NVARCHAR2(1000),
                                    PRIMARY KEY(CODE))");
-
-       
+ 
         }
     }
 }

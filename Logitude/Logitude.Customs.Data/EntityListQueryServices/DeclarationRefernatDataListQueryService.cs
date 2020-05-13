@@ -64,8 +64,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  DeclarationOfficeName = d.DeclarationOffice.LocalName,
 
                                                                  VendorName = a.CustomsVendor.VendorName,
-                                                                 ArrivalDate = DateTime.MinValue != a.ArrivalDate ? a.ArrivalDate : a.EstimatedArrivalDate,
-                                                                 ATAOrETA = DateTime.MinValue != a.ArrivalDate ? "ATA" : "ETA",
+                                                                 ArrivalDate =   a.ArrivalDate != null ? a.ArrivalDate : a.EstimatedArrivalDate,
+                                                                 ATAOrETA =   a.ArrivalDate != null ? "ATA" : "ETA",
 
                                                                  DeclarationStatusTypeName = d.DeclarationStatusType.LocalName,
 
