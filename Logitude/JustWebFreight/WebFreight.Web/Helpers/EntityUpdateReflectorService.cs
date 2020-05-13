@@ -1,4 +1,5 @@
-﻿using Logitude.BL.Security;
+﻿using Logitude.BL.Interfaces;
+using Logitude.BL.Security;
 using Logitude.BookingLib.Data;
 using Logitude.CRM.Data;
 using Logitude.Customs.Data;
@@ -10,6 +11,7 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,18 +20,40 @@ using System.Web;
 
 namespace WebFreight.Web.Helpers
 {
-    public class EntityUpdateReflectorService
+    public class EntityUpdateReflectorService: IEntityUpdateReflectorService
     {
 
-        public static void UpdateEntity(object entityPM, string entityName , int tenant)
+        public  void UpdateEntity(object entityPM, string entityName, int tenant)
         {
+            PrepareUpdateEntityResult prepareUpdateEntityResult = GetPrepareUpdateEntityResult(entityName, tenant);
+            if (prepareUpdateEntityResult.Type != null)
+            {
+                object entityUpdateService = GentNewInStanceFromEntityUpdateService(entityPM, entityName, prepareUpdateEntityResult);
+                if (prepareUpdateEntityResult.IsNewModule) InitializeEntityUpdateService(entityPM, entityUpdateService);
+                MethodInfo updateMethodInfo = entityUpdateService.GetType().GetMethods().Where(d => d.Name == "Update").FirstOrDefault();
+                object[] parameters = GetUpdateMethodParameters(entityPM, entityName, updateMethodInfo);
+                if (updateMethodInfo != null) updateMethodInfo.Invoke(entityUpdateService, parameters);
+                else
+                {
+                    throw new Exception("Update" + entityName + "Service" + "not found!");
+                }
+            }
+        }
 
+        private  void InitializeEntityUpdateService(object entityPM, object entityService)
+        {
+            MethodInfo methodInfo = entityService.GetType().GetMethods().Where(d => d.Name == "InitializeEntityPM").FirstOrDefault();
+            methodInfo.Invoke(entityService, new object[] { entityPM });
+            PropertyInfo propInfo = entityPM.GetType().GetProperty("ChangeSetOp");
+            if (propInfo != null) propInfo.SetValue(entityPM, Simplog.Server.Infrastructure.ChangeSetOperation.Update, null);
+        }
+
+        private   PrepareUpdateEntityResult GetPrepareUpdateEntityResult(string entityName, int tenant)
+        {
             Assembly blAssembly = Assembly.Load("Logitude.BL");
             object objectContext = ShipmentsContext.GetContext(tenant);
             string typePath = "Logitude.BL.ShipmentsModel.Tools.EntityService." + entityName + "Service";
             Type type = blAssembly.GetType(typePath);
-            object entityService = null;
-
             if (type == null)
             {
                 objectContext = CommonDataContext.GetContext(tenant);
@@ -61,16 +85,14 @@ namespace WebFreight.Web.Helpers
             }
 
 
-            var isNewModule = type == null ? true : false ;
+            bool isNewModule = type == null ? true : false;
             if (type == null)
             {
                 objectContext = CRMContext.GetContext(tenant);
                 Assembly assembly = Assembly.Load("Logitude.CRM.BL");
                 typePath = "Logitude.CRM.BL.EntityUpdateServices." + entityName + "UpdateService";
                 type = assembly.GetType(typePath);
-
             }
-
 
             if (type == null)
             {
@@ -100,71 +122,68 @@ namespace WebFreight.Web.Helpers
                 type = assembly.GetType(typePath);
             }
 
+            return new PrepareUpdateEntityResult(){Type = type,ObjectContext = objectContext,IsNewModule = isNewModule,Tenant = tenant};
 
-            if (type != null)
+        }
+
+        private  object[] GetUpdateMethodParameters(object entityPM, string entityName, MethodInfo methodInfo)
+        {
+            ParameterInfo[] methodParameters = methodInfo.GetParameters();
+            object[] parameters = new object[] { };
+            switch (methodParameters.Count())
             {
-                if (entityName == "Shipment")
-                {
-                    entityService = Activator.CreateInstance(type, new object[] { objectContext, entityPM, SecurityUtility.GetAuthenticatedUser() });
-                }
-                else if (isNewModule)
-                {
-                    entityService = Activator.CreateInstance(type, new object[] { objectContext, new Dictionary<string, IContext>(), tenant });
-                }
-                else
-                {
-                    entityService = Activator.CreateInstance(type, new object[] { objectContext, tenant });
-                }
-
-                MethodInfo methodInfo;
-
-                if (isNewModule)
-                {
-                    methodInfo = entityService.GetType().GetMethods().Where(d => d.Name == "InitializeEntityPM").FirstOrDefault();
-                    methodInfo.Invoke(entityService, new object[] { entityPM });
-
-                    PropertyInfo propInfo = entityPM.GetType().GetProperty("ChangeSetOp");
-                    if (propInfo != null) propInfo.SetValue(entityPM, Simplog.Server.Infrastructure.ChangeSetOperation.Update, null);
-                }
-
-                methodInfo = entityService.GetType().GetMethods().Where(d => d.Name == "Update").FirstOrDefault();
-
-                ParameterInfo[] methodParameters = methodInfo.GetParameters();
-                object[] parameters = new object[] { };
-                switch (methodParameters.Count())
-                {
-                    case 1:
-                        parameters = new object[] { entityPM };
-
-                        break;
-                    case 2:
-                        parameters = new object[] { entityPM, true };
-                        break;
-                    case 3:
-                        parameters = new object[] { entityPM, true, null };
-                        break;
-
-                }
-
-                if (methodInfo != null)
-                {
-                    methodInfo.Invoke(entityService, parameters);
-                }
-                else
-                {
-                    throw new Exception("Update" + entityName + "PM Service" + "not found!");
-                }
-
+                case 1:
+                    parameters = entityName == "Shipment" ? new object[] { true } : new object[] { entityPM };
+     
+                    break;
+                case 2:
+                    parameters = new object[] { entityPM, true };
+                    break;
+                case 3:
+                    parameters = new object[] { entityPM, true, null };
+                    break;
 
             }
 
-      
+            return parameters;
+        }
 
+        private  object GentNewInStanceFromEntityUpdateService(object entityPM, string entityName, PrepareUpdateEntityResult PrepareUpdateEntityResult)
+        {
+            object entityService = null;
+            if (entityName == "Shipment")
+            {
+                entityService = Activator.CreateInstance(PrepareUpdateEntityResult.Type, new object[] { PrepareUpdateEntityResult.ObjectContext, entityPM, SecurityUtility.GetAuthenticatedUser() });
+            }
+            else if (PrepareUpdateEntityResult.IsNewModule)
+            {
+                entityService = Activator.CreateInstance(PrepareUpdateEntityResult.Type, new object[] { PrepareUpdateEntityResult.ObjectContext, new Dictionary<string, IContext>(), PrepareUpdateEntityResult.Tenant });
+            }
+            else
+            {
+                entityService = Activator.CreateInstance(PrepareUpdateEntityResult.Type, new object[] { PrepareUpdateEntityResult.ObjectContext, PrepareUpdateEntityResult.Tenant });
             }
 
-
-
+            return entityService;
         }
 
 
     }
+
+
+
+    public class PrepareUpdateEntityResult
+    {
+        public object ObjectContext { get; set; }
+        public Type Type { get; set; }
+        public bool IsNewModule { get; set; }
+        public int Tenant { get; set; }
+
+        
+
+
+    }
+
+}
+
+

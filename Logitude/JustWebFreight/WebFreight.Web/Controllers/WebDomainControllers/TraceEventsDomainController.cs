@@ -112,7 +112,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
 
-                    //DateTime myResult = newTraceEvent.LogDateTime;
+
+                    EventTracer.UpdateEventCustomFieldValue(new EventCustomFieldValue() { EventTypeId = args.EventTypeId, EventDateTime = newTraceEvent.EventDateTime, EntityId = args.EntityId, ObjectTableName = objectTable!=null?  objectTable.Name:null, Tenant = tenant });
+
 
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);

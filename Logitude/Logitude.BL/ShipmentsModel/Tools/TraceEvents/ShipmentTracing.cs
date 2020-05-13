@@ -1253,6 +1253,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                             ComputeLastSharedEvent(entityPM);
                         }
+
+
+                        if (!string.IsNullOrEmpty(eventType.CustomField))
+                        {
+
+                            EventTracer.UpdateEventCustomFieldValue(new EventCustomFieldValue() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = entityPM, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
+
+                        }
                     }
                 }
             }
