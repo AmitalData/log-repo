@@ -19,7 +19,7 @@ namespace WarehouseDataViews
         // string dbDestinationConnection = "DWPrivate,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
         //  private string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";
         //  private string dbDestinationConnection = "2019R1_Global,sa,Saas256,.";
-        //"UnicargoDW, UnicargoDBUser,Y&P95et1,logitude-ep.database.windows.net";
+        //"UnicargoDW,UnicargoDBUser,Y&P95et1,logitude-ep.database.windows.net";
        // logitudedw-shared,logitudeep,!LO852456,logitude-ep.database.windows.net
 
 
@@ -27,7 +27,7 @@ namespace WarehouseDataViews
 
         private int? tenant = 570;
         string dbSourceConnection = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
-        string dbDestinationConnection = "UnicargoDW, logitudeep,!LO852456,logitude-ep.database.windows.net";
+        string dbDestinationConnection = "UnicargoDW,logitudeep,!LO852456,logitude-ep.database.windows.net";
         
 
         public Form1()
