@@ -90,7 +90,7 @@
     Size="100">
     <Constraints
       Nullable="false" />
-  </Column>
+  </Column> 
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
@@ -111,4 +111,5 @@
     Columns="FeatureUniqeCode" />
   <UniqueConstraint
     Columns="Code,ObjectTableId,Tenant" />
+
 </Table>

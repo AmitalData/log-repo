@@ -609,14 +609,31 @@ namespace Logitude.DBMigrations.Models
         {
             string tableName = FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper();
             string columnName = FormatNameLength(columnMigration.NewColumn.Name, columnMigration.NewColumn.ShortName).ToUpper();
+            string columnDataTypeScript = GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
 
-            string addScript = "-- Add New Column With Name " + columnName + "\n";
+            string addScript = "-- Add New Column With Name " + columnName + ";\n\n";
             addScript += "ALTER TABLE " + "\"" + tableName + "\"" + " ";
             addScript += "ADD " + "\"" + columnName + "\"" + " ";
-            addScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
+            addScript += columnDataTypeScript;
             addScript += GetDefaultValueScript(columnMigration.NewColumn.Constraints.Nullable, columnMigration.NewColumn.Type, columnMigration.NewColumn.DefaultValue);
-            addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
-            addScript += ";\n\n";
+            string initialValueScript = columnMigration.NewColumn.InitialValueScript;
+            if (String.IsNullOrEmpty(initialValueScript))
+            {
+                addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
+                addScript += ";\n\n";
+            }
+            else
+            {
+                addScript += " NULL;\n";
+                addScript += (initialValueScript.EndsWith(";") ? initialValueScript : initialValueScript + ";") + "\n";
+                if (!columnMigration.NewColumn.Constraints.Nullable)
+                {
+                    addScript += "ALTER TABLE " + tableName + " ALTER COLUMN " + columnName + " " + columnDataTypeScript + " NOT NULL;\n";
+                }
+                addScript += "\n";
+            }
+            //addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
+            //addScript += ";\n\n";
 
             string addWithHistoryScript = addScript + GetInsertScriptForMigrationsHistory("Add Column", tableName, columnName, addScript);
 
@@ -922,7 +939,7 @@ namespace Logitude.DBMigrations.Models
 
             if (!String.IsNullOrEmpty(script))
             {
-                string insertScript = "DECLARE ScriptText NCLOB; BEGIN ScriptText := '" + script.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "'; INSERT INTO \"DBMIGRATIONSHISTORY\"(\"ID\", \"DXMLFILENAME\", \"TABLENAME\", \"COLUMNNAME\", \"MIGRATIONTYPE\", \"EXECUTIONDATE\", \"MIGRATIONSCRIPT\")VALUES('" + Guid.NewGuid().ToString() + "', '" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', SYSDATE, ScriptText); END;" + "\n\n";
+                string insertScript = "DECLARE ScriptText NCLOB; BEGIN ScriptText := '" + script.Replace("\n","").Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "'; INSERT INTO \"DBMIGRATIONSHISTORY\"(\"ID\", \"DXMLFILENAME\", \"TABLENAME\", \"COLUMNNAME\", \"MIGRATIONTYPE\", \"EXECUTIONDATE\", \"MIGRATIONSCRIPT\")VALUES('" + Guid.NewGuid().ToString() + "', '" + DXMLFileName + "', '" + tableName + "', " + (columnName == null ? "NULL" : "'" + columnName + "'") + ", '" + migrationType + "', SYSDATE, ScriptText); END;" + "\n\n";
                 return insertScript;
             }
 
