@@ -44,6 +44,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                        DetailedControlJob = false,
                        DetailedControlFile = false,
                        Suppress_DoNotShowCardWithoutActivity= true,
+                    DoNotShowCardWithLocalCloseBalanceEqualZero=true,
                     ChartOfAccountsTypeCodeList = new List<string>()
                     {
                         "1","2"
