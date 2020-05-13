@@ -97,6 +97,13 @@ namespace Logitude.Infrastructure.BL
                 Code = "CWH", 
                 SearchFields = "CWH,Charges DWH", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "LV2", 
+                Name = "LogGrid V2", 
+                SearchFields = "LGV2,LogGrid V2", 
+			});
 			
             return all;
        }
