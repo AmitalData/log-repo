@@ -97,7 +97,7 @@ import { OccasionTypeListService } from '../../CRM/Services/StandardLists/Occasi
 import { SessionLocator } from './SessionLocator';
 import { ObjectsLocator } from '../Locators/ObjectsLocator';
 import { AppTool } from '../Tools';
-
+import { ExceptionReasonListService } from '../../Customs/Services/StandardLists/ExceptionReasonListService';
 
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
@@ -189,6 +189,7 @@ export class CachedDataManagerServices {
             case "Customs.CustomsHouseTypeAdditionalListService": { myResult = new CustomsHouseTypeAdditionalListService(); break; }
             case "Customs.GovernmentProcedureTypeListService": { myResult = new GovernmentProcedureTypeListService(); break; }
             case "Customs.CourierPendingReasonListService": { myResult = new CourierPendingReasonListService(); break; }
+            case "Customs.ExceptionReasonListService": { myResult = new ExceptionReasonListService(); break; }
             case "JournalActionTypeListService": { myResult = new JournalActionTypeListService(); break; }
             case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }
             case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }

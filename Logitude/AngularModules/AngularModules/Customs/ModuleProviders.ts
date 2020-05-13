@@ -223,7 +223,8 @@ import { SealTypeListService } from './Services/StandardLists/SealTypeListServic
 import { SealCompletenesListService } from './Services/StandardLists/SealCompletenesListService';
 import { AmendmentTypeListService } from './Services/StandardLists/AmendmentTypeListService';
 import { SealUpdateReasonTypeListService } from './Services/StandardLists/SealUpdateReasonTypeListService';
-
+import { DeclarationReferantDataListService } from './Services/StandardLists/DeclarationRefernatDataListService';
+import { ExceptionReasonListService } from './Services/StandardLists/ExceptionReasonListService';
 
 
 //#endregion
@@ -270,6 +271,7 @@ import { VehiclePMService } from './Services/StandardPMs/VehiclePMService';
 import { VendorCommissionPMService } from './Services/StandardPMs/VendorCommissionPMService';
 import { CouriersVatPMService } from './Services/StandardPMs/CouriersVatPMService';
 import { CourierPendingReasonPMService } from './Services/StandardPMs/CourierPendingReasonPMService';
+import { ExceptionReasonPMService } from './Services/StandardPMs/ExceptionReasonPMService';
 import { CourierMasterPMService } from './Services/StandardPMs/CourierMasterPMService';
 import { CustomDocumentTypePMService } from './Services/StandardPMs/CustomDocumentTypePMService';
 import { UIMessagePMService } from './Services/StandardPMs/UIMessagePMService';
@@ -296,7 +298,7 @@ import { SignStationExtendedListService } from './Services/ExtendedLists/SignSta
 import { DeclarationCourierStatusExtendedListService } from './Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
 import { RecallClientsForCutoms } from '../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
 import { CustomsCollateralExtendedListService } from './Services/ExtendedLists/CustomsCollateralExtendedListService';
-
+ 
 //#endregion
 
 //#region ExtendedPMs
@@ -309,7 +311,7 @@ import { CustomsRequestSheetExtendedPMService } from './Services/ExtendedPMs/Cus
 import { PaymentOrderConnectionTableExtendedPMService } from './Services/ExtendedPMs/PaymentOrderConnectionTableExtendedPMService';
 import { SupplierInvoiceExtendedPMService } from './Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 ///????  import { CustomsRequestSheetExtendedPMService } from './Services/ExtendedPMs/CustomsRequestSheetExtendedPMService';
-
+import { ReferantExceptionExtendedPMService } from './Services/ExtendedPMs/ReferantExceptionExtendedPMService';
 
 //#endregion
 
@@ -582,7 +584,8 @@ export class ModuleProviders {
             case "SealUpdateReasonTypeListService": { myResult = new SealUpdateReasonTypeListService(); break; }
             case "AmendmentTypeListService": { myResult = new AmendmentTypeListService(); break; }
             case "SealCompletenesListService": { myResult = new SealCompletenesListService(); break; }
-          
+            case "DeclarationReferantDataListService": { myResult = new DeclarationReferantDataListService(); break; }
+            case "ExceptionReasonListService": { myResult = new ExceptionReasonListService(); break; }
             //#endregion                
 
             //#region StandardPMs
@@ -628,6 +631,7 @@ export class ModuleProviders {
             case "VendorCommissionPMService": { myResult = new VendorCommissionPMService(); break; }
             case "CouriersVatPMService": { myResult = new CouriersVatPMService(); break; }
             case "CourierPendingReasonPMService": { myResult = new CourierPendingReasonPMService(); break; }
+            case "ExceptionReasonPMService": { myResult = new ExceptionReasonPMService(); break; }
             case "CustomsAutonomyKeywordPMService": { myResult = new CustomsAutonomyKeywordPMService(); break; }
             case "CourierMasterPMService": { myResult = new CourierMasterPMService(); break; }
             case "CustomDocumentTypePMService": { myResult = new CustomDocumentTypePMService(); break; }
@@ -664,7 +668,8 @@ export class ModuleProviders {
             case "CustomsHouseTypeExtendedPMService": { myResult = new CustomsHouseTypeExtendedPMService(); break; }
             case "CustomsRequestSheetExtendedPMService": { myResult = new CustomsRequestSheetExtendedPMService(); break; }
             case "PaymentOrderConnectionTableExtendedPMService": { myResult = new PaymentOrderConnectionTableExtendedPMService(); break; }
-            case "SupplierInvoiceExtendedPMService": { myResult = new SupplierInvoiceExtendedPMService(); break; } 
+            case "SupplierInvoiceExtendedPMService": { myResult = new SupplierInvoiceExtendedPMService(); break; }
+            case "ReferantExceptionExtendedPMService": { myResult = new ReferantExceptionExtendedPMService(); break; }
             //#endregion
 
             //#region WebServices

@@ -16,6 +16,7 @@ import { CustomsDocumentsDefinitionComponent } from './Components/CustomsDocumen
 import { AddEditCustomsAirlineComponent } from './Components/AddEditCustomsAirlineComponent';
 import { CustomsPartnerFtpListComponent } from './Components/CustomsPartnerFtpListComponent';
 //import { CustomsPartnerFtpEditComponent } from './Components/CustomsPartnerFtpEditComponent';
+import { DeclarationRemarksComponent } from './Components/DeclarationRemarksComponent'
 
 
 export const Components =
@@ -36,6 +37,7 @@ export const Components =
         AddEditCustomsAirlineComponent,
         CustomsPartnerFtpListComponent,
         //CustomsPartnerFtpEditComponent,
+        DeclarationRemarksComponent
     ];
 
 export class ModuleDeclarations {
@@ -61,7 +63,7 @@ export class ModuleDeclarations {
             case "AddEditCustomsAirlineComponent": { myResult = AddEditCustomsAirlineComponent; break; }
             case "CustomsPartnerFtpListComponent": { myResult = CustomsPartnerFtpListComponent; break; }
             //case "CustomsPartnerFtpEditComponent": { myResult = CustomsPartnerFtpEditComponent; break; }
-                
+            case "DeclarationRemarksComponent": { myResult = DeclarationRemarksComponent; break; }
 
         }
 

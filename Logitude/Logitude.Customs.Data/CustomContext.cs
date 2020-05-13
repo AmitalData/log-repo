@@ -354,6 +354,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationPendingMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationReferantDataMap());
+	
             modelBuilder.Configurations.Add(new DeclarationStatementTypeMap());
 	
             modelBuilder.Configurations.Add(new DeclarationStatusTypeMap());
@@ -385,6 +387,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new EntitlementTypeMap());
 	
             modelBuilder.Configurations.Add(new EntityTypeLookupMap());
+	
+            modelBuilder.Configurations.Add(new ExceptionReasonMap());
 	
             modelBuilder.Configurations.Add(new FacilitationTypeMap());
 	
@@ -537,6 +541,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PropertiesDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new RansomViolationTypeMap());
+	
+            modelBuilder.Configurations.Add(new ReferantExceptionMap());
 	
             modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
 	
@@ -734,6 +740,8 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<DeclarationPaymentProtest>().Property(x => x.GoodsItemLineNumber).HasPrecision(16, 5);
 				
 			modelBuilder.Entity<DeclarationPaymentProtest>().Property(x => x.AmountInDispute).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<DeclarationReferantData>().Property(x => x.Weight).HasPrecision(15, 3);
 				
 			modelBuilder.Entity<DeclarationTax>().Property(x => x.TotalAmount).HasPrecision(16, 2);
 				
@@ -1983,6 +1991,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<DeclarationReferantData> DeclarationReferantDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<DeclarationStatementType> DeclarationStatementTypes 
 	 {
 	      get; set;
@@ -2074,6 +2088,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<EntityTypeLookup> EntityTypeLookups 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ExceptionReason> ExceptionReasons 
 	 {
 	      get; set;
 	 
@@ -2530,6 +2550,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<RansomViolationType> RansomViolationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ReferantException> ReferantExceptions 
 	 {
 	      get; set;
 	 
