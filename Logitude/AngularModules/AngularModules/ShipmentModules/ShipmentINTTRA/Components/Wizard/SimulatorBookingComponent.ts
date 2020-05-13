@@ -386,7 +386,7 @@ export class SimulatorBookingComponent extends BaseComponent {
   }
 
   RefreshAnswersClicked() {
-
+      this.GetShipment();
   }
 
   EditShipmentClicked() {
