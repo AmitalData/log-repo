@@ -34,7 +34,7 @@
                             </tr>
 
                             <!-- VatTypeId -->
-                            <tr class="FormFieldRow">
+                            <tr class="FormFieldRow" *ngIf="!TotalVATOnly">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'VatTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -57,7 +57,7 @@
                             </tr>
 
                             <!-- VatPercentage -->
-                            <tr class="FormFieldRow">
+                            <tr class="FormFieldRow" *ngIf="!TotalVATOnly">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'VatPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>

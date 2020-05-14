@@ -308,7 +308,7 @@
                                     </log-column>
 
                                     <!-- VAT -->
-                                    <log-column [width]="'120'" [header]="'APInvoiceLine.CH.VatTypeNameListLable' | TextCodeTranslationPipe">
+                                    <log-column [width]="'120'" [header]="'APInvoiceLine.CH.VatTypeNameListLable' | TextCodeTranslationPipe" *ngIf="!EntityPM.TotalVATOnly">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackgroundColor">
                                                 <div class="MediaFill">

@@ -19,6 +19,34 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ProfitCurrencyVATAmount"
+    Type="float"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ProfitVatableAmount"
+    Type="float"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExternalVATCard"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExternalTAXItemId"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="InvoiceCurrencyVATAmount"
     Type="float">
     <Constraints
@@ -61,34 +89,6 @@
     Size="15">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="ProfitCurrencyVATAmount"
-    Type="float"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ProfitVatableAmount"
-    Type="float"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ExternalVATCard"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ExternalTAXItemId"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="VatTypeId"

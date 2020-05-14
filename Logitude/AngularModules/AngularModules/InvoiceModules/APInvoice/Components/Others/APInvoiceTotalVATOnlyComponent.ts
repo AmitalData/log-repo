@@ -11,6 +11,9 @@ import { InvoiceTool } from '../../../../Invoice/Tools';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { VatTypeList } from '../../../../Common/EntityLists/VatTypeList';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { APInvoiceDetailsTabNormal } from '../EditTabs/APInvoiceDetailsTabNormal';
 
 @Component({
     templateUrl: './APInvoiceTotalVATOnlyComponent.html',
@@ -23,18 +26,17 @@ export class APInvoiceTotalVATOnlyComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public TotalVATsList: ObservableCollection;
     public IsEditingEnabled: boolean = false;
+    DetailsTabComponent: APInvoiceDetailsTabNormal;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TotalVATsList = new ObservableCollection([]);
     }
 
-    //private TabComponent:
     private isTotalVATOnlyOrigin: boolean = false;
-    private PercentagesList: VatTypePercentagePM[] = [];
-    SetWindowArgs(args: any) {
-        this.EntityPM = args.EntityPM;
-        this.PercentagesList = args.PercentagesList;
+    SetWindowArgs(tabComponent: APInvoiceDetailsTabNormal) {
+        this.DetailsTabComponent = tabComponent;
+        this.EntityPM = this.DetailsTabComponent.EntityPM;
 
         this.IsEditingEnabled = InvoiceTool.IsEditingAPInvoiceEnabled(this.EntityPM);
 
@@ -84,56 +86,72 @@ export class APInvoiceTotalVATOnlyComponent extends BaseComponent {
         var item: APInvoiceTotalVATPM = new APInvoiceTotalVATPM(null);
         item.Tenant = SessionLocator.Tenant;
         item.APInvoiceId = this.EntityPM.Id;
-
-        //item.VatTypeId = item.VatTypeId;
-        //item.VatTypeName = itemVatType.EnglishName;
-        //item.ExternalVATCard = item.ExternalVatCard;
-        //item.ExternalTAXItemId = item.ExternalTAXItemId;
-        //item.VatPercent = AppTool.Round(item.VatTypePercentage, 3);
-        //item.LocalVatableAmount = AppTool.Round(item.LocalCurrencyAmount, 2);
-        //item.InvoiceCurrencyVatableAmount = AppTool.Round(item.InvoiceCurrencyAmount, 2);
-        //item.ProfitVatableAmount = AppTool.Round(item.ProfitCurrencyAmount, 2);
-        //item.LocalVATAmount = AppTool.Round((itemTotalVAT.LocalVatableAmount * itemTotalVAT.VatPercent / 100), 2);
-        //item.InvoiceCurrencyVATAmount = AppTool.Round((itemTotalVAT.InvoiceCurrencyVatableAmount * itemTotalVAT.VatPercent / 100), 2);
-        //item.ProfitCurrencyVATAmount = AppTool.Round((itemTotalVAT.ProfitVatableAmount * itemTotalVAT.VatPercent / 100), 2);
-        //item.VatTypeCell = itemTotalVAT.VatTypeName + " (" + pipe.transform(itemTotalVAT.VatPercent, "N3") + "%)"; //pipe.transform(item.InvoiceCurrencyVATAmount, "N2")
-        //this.EntityPM.AddAPInvoiceTotalVATPM(itemTotalVAT);
-
         this.TotalVATsList.Insert(new TotalVATItem(item, this, true));
     }
 
-    OnRowEnded($event) {
-        //var errors = [];
-        //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+    OkButtonClicked() {
 
-        //if (($event) == this.TotalVATsList.Length) {
-        //    this.AddTotalVATItemClicked();
-        //}        
-    }
+    // wronge
+    // he can open this window
+    // old = vat only
+    // didnt change the check
+    // but he added and removed lines
 
-    GetVatTypePercentage(vatTypeId: string) {
-        var output: number = null;
-
-        var vatTypePercentagePM = this.PercentagesList.filter(d => d.VatTypeId == vatTypeId)[0];
-        if (vatTypePercentagePM != null) {
-            output = vatTypePercentagePM.Percentage;
+        if (this.TotalVATOnly == this.isTotalVATOnlyOrigin) {
+            this.CurrentSession.CloseCurrentWindow();
         }
 
-        return output;
-    }
-
-    OkButtonClicked() {
-        var errors: string[] = [];
-
-        this.TotalVATsList.Collection.forEach((item: TotalVATItem) => {
-            Validator.TryValidateObject(item.EntityPM, item.ObjectTableName, errors);
-        });
-
-        this.ValidationErrorsList = errors;
-
-        if (errors.length == 0) {
- 
+        else if (this.TotalVATOnly == false) {
+            this.DetailsTabComponent.ComputeTotals();
             this.CurrentSession.CloseCurrentWindow();
+        }
+
+        else {
+            var errors: string[] = [];
+
+            var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+            if (this.TotalVATsList.Length == 0) {
+                errors.push("You should have at least 1 invoice total VAT");
+            }
+
+            else {
+
+                this.EntityPM.TotalVATs = [];
+
+                this.TotalVATsList.Collection.forEach((item: TotalVATItem) => {
+                    // No need for validator, it will display alot of required fields
+                    // Validator.TryValidateObject(item.EntityPM, item.ObjectTableName, errors);
+
+                    if (AppTool.IsNullOrEmpty(item.VatTypeId)) {
+                        errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoiceTotalVAT.F.VatTypeId")));
+                    }
+
+                    if (AppTool.IsNullOrEmpty(item.VatPercent)) {
+                        errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoiceTotalVAT.F.VatPercent")));
+                    }
+
+                    if (AppTool.IsNullOrEmpty(item.InvoiceCurrencyVatableAmount)) {
+                        errors.push(msg.replace("%FieldName", "Amount"));
+                    }
+                });
+            }
+
+            this.ValidationErrorsList = errors;
+
+            if (errors.length == 0) {
+
+                this.TotalVATsList.Collection.forEach((item: TotalVATItem) => {
+                    if (item.IsNewEntity) {
+                    // HasChanges .. use such flag to decide calling the build totals / summary or just close screen
+                        this.EntityPM.AddAPInvoiceTotalVATPM(item.EntityPM);
+
+                    }
+                });
+
+                this.DetailsTabComponent.ComputeTotals();
+                this.CurrentSession.CloseCurrentWindow();
+            }
         }
     }
 
@@ -152,13 +170,28 @@ export class APInvoiceTotalVATOnlyComponent extends BaseComponent {
     private RejectChanges() {
         this.myCloner.RejectChanges();
     }
+
+    RemoveLine(item) {
+        if (item) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Delete this item ?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    var index = this.TotalVATsList.Collection.indexOf(item);
+                    if (index > -1) {
+                        this.TotalVATsList.Collection.splice(index, 1);
+                    }
+                }
+            });
+        }
+    }
 }
 
 export class TotalVATItem extends BaseComponent {
     public EntityPM: APInvoiceTotalVATPM;
-    public ObjectTableName: string = "APInvoiceTotalVAT";
     public IsNewEntity: boolean = false;
     public IsMultiPercentage: boolean = false;
+    public ObjectTableName: string = "APInvoiceTotalVAT";
     constructor(entity: APInvoiceTotalVATPM, public father: APInvoiceTotalVATOnlyComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -174,13 +207,15 @@ export class TotalVATItem extends BaseComponent {
             if (value) {
                 this.VatTypeName = value.EnglishName;
                 this.IsMultiPercentage = value.IsMultiPercentage;
+                this.EntityPM.ExternalVATCard = SessionLocator.AccountingSettingPM.PayableVATCard;
+                this.EntityPM.ExternalTAXItemId = value.ExternalTAXItemId;
 
                 if (this.IsMultiPercentage) {
                     this.VatPercent = null;
                 }
 
                 else {
-                    this.VatPercent = this.father.GetVatTypePercentage(value.Id);
+                    this.VatPercent = this.father.DetailsTabComponent.GetVatTypePercentage(value.Id);
                 }
             }
 
@@ -188,6 +223,8 @@ export class TotalVATItem extends BaseComponent {
                 this.VatTypeName = null;
                 this.IsMultiPercentage = false;
                 this.VatPercent = null;
+                this.EntityPM.ExternalVATCard = null;
+                this.EntityPM.ExternalTAXItemId = null;
             }
         }
     }
@@ -210,6 +247,7 @@ export class TotalVATItem extends BaseComponent {
     set VatPercent(value: number) {
         if (this.EntityPM.VatPercent != value) {
             this.EntityPM.VatPercent = value;
+            this.ComputeAllAmounts();
         }
     }
 
@@ -217,22 +255,17 @@ export class TotalVATItem extends BaseComponent {
     set InvoiceCurrencyVatableAmount(value: number) {
         if (this.EntityPM.InvoiceCurrencyVatableAmount != value) {
             this.EntityPM.InvoiceCurrencyVatableAmount = value;
+            this.ComputeAllAmounts();
         }
     }
 
-    RemoveLine(item) {
-        //var confirmWindow = new ConfirmWindow();
-        //confirmWindow.Show("Delete this item ?");
-        //confirmWindow.WindowClosed.subscribe((event: any) => {
-        //    if (confirmWindow.Yes) {
-        //        if (this.fatherComponent.EntityPM.ShipmentPackageItems.indexOf(this.EntityPM) != -1) {
-        //            this.fatherComponent.EntityPM.RemoveShipmentPackageItemPM(this.EntityPM);
-        //        }
+    ComputeAllAmounts() {
+        this.EntityPM.InvoiceCurrencyVatableAmount = AppTool.Round(this.EntityPM.InvoiceCurrencyVatableAmount, 2);
+        this.EntityPM.LocalVatableAmount = AppTool.Round(this.EntityPM.InvoiceCurrencyVatableAmount * this.father.EntityPM.InvoiceCurrencyExchangeRate, 2);
+        this.EntityPM.ProfitVatableAmount = AppTool.Round(this.EntityPM.LocalVatableAmount / this.father.EntityPM.ProfitCurrencyExchangeRate, 2);
 
-        //        if (this.fatherComponent.PackageItemsList.Collection.indexOf(this) != -1) {
-        //            this.fatherComponent.PackageItemsList.Remove(this);
-        //        }
-        //    }
-        //});
+        this.EntityPM.InvoiceCurrencyVATAmount = AppTool.Round((this.EntityPM.InvoiceCurrencyVatableAmount * this.EntityPM.VatPercent / 100), 2);
+        this.EntityPM.LocalVATAmount = AppTool.Round((this.EntityPM.LocalVatableAmount * this.EntityPM.VatPercent / 100), 2);
+        this.EntityPM.ProfitCurrencyVATAmount = AppTool.Round((this.EntityPM.ProfitVatableAmount * this.EntityPM.VatPercent / 100), 2);
     }
 }

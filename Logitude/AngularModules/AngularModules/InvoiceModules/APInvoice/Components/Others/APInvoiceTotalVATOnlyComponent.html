@@ -1,7 +1,9 @@
 <table>
+
+    <!-- [SingleLine]="true" -->
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
         <td>
-            <ValidationSummary [SingleLine]="true" [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
 
@@ -70,7 +72,7 @@
     <tr>
         <td>
             <div class="MediaFill" style="overflow-x: hidden;">
-                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.TotalVATsList" [Disabled]="!IsEditingVATEnabled" (RowEnded)="DataContext.OnRowEnded($event)">
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.TotalVATsList" [Disabled]="!IsEditingVATEnabled">
 
                     <!-- VAT Type -->
                     <log-column [header]="'VAT Type'" [width]="'200'" [Alignment]="'left'">
@@ -99,8 +101,8 @@
                     <log-column [header]="'Percentage'" [width]="'100'" [Alignment]="'right'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
-                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                    <span>{{item.VatPercent | NumbersPipe:'N3'}}</span>
+                                <div class="TextTrimming" style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                    {{item.VatPercent | NumbersPipe:'N3'}}
                                 </div>
 
                                 <div *ngIf="logcelltemplate.IsEditMode">
@@ -114,8 +116,8 @@
                     <log-column [header]="'Amount'" [width]="'100'" [Alignment]="'right'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate>
-                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                    <span>{{item.InvoiceCurrencyVatableAmount | NumbersPipe:'N2'}}</span>
+                                <div class="TextTrimming" style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                    {{item.InvoiceCurrencyVatableAmount | NumbersPipe:'N2'}}
                                 </div>
 
                                 <div *ngIf="logcelltemplate.IsEditMode">
@@ -125,11 +127,20 @@
                         </ng-template>
                     </log-column>
 
+                    <!-- VAT Amount -->
+                    <log-column [header]="'VAT Amount'" [width]="'100'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                                {{item.EntityPM.InvoiceCurrencyVATAmount | NumbersPipe:'N2'}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
                     <!-- Buttons -->
                     <log-column [width]="'30'" [Alignment]="'left'">
                         <ng-template let-item>
                             <log-cell-template [IgnoreMods]="true">
-                                <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="item.RemoveLine(item)"></IconButton>
+                                <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="RemoveLine(item)"></IconButton>
                             </log-cell-template>
                         </ng-template>
                     </log-column>
@@ -156,7 +167,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingVATEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
