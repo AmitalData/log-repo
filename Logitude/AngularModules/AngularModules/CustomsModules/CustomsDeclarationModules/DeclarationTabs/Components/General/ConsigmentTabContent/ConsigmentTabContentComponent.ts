@@ -27,6 +27,7 @@ import { CouriersVatPMService } from '../../../../../../Customs/Services/Standar
 import { CouriersVatExtendedPMService } from '../../../../../../Customs/Services/ExtendedPMs/CouriersVatExtendedPMService';
 import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
+import { WindowArgs } from '../../../../../../Infrastructure/DataContracts/WindowArgs';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -107,6 +108,7 @@ export class ConsigmentTabContentComponent
         SessionLocator.SelectedSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
+        windowArgs.declarationPM = this.declarationPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
 
