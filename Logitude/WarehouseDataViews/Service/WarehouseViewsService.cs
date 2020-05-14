@@ -101,14 +101,16 @@ namespace WarehouseDataViews
 
         public void CreateFactShipmentView(string sourceConnection, string destinationConnectionString)
         {
-            DropView("factShipment", destinationConnectionString);
-            string scriptView = GenerateScriptView("factShipment", "Shipment", "Fact_Shipments");
+            string viewName = "factShipments";
+            DropView(viewName, destinationConnectionString);
+            string scriptView = GenerateScriptView(viewName, "Shipment", "Fact_Shipments");
             scriptView = ConvertFieldsNameToCamelCase(scriptView);
             string customFieldScript = GetCustomFieldsSql();
             scriptView = scriptView.Replace(",@CustomFields", customFieldScript);
             scriptView = AppendDatesFieldToFactTable(scriptView);
+            scriptView = RemoveBowsFromFieldsName(scriptView);
             ExecuteSql(scriptView, destinationConnectionString);
-            GrantView("factShipment", destinationConnectionString);
+            GrantView(viewName, destinationConnectionString);
         }
 
         private string AppendDatesFieldToFactTable(string scriptView)
@@ -248,7 +250,7 @@ namespace WarehouseDataViews
         public void GrantView(string viewName,  string destinationConnectionString)
         {
             string sqlstring = "GRANT SELECT  ON [UnicargoDW].[dbo].["+ viewName + "] TO [UnicargoDBUser]";
-            ExecuteSql(sqlstring, destinationConnectionString);
+          //  ExecuteSql(sqlstring, destinationConnectionString);
         }
         public void DropView(string viewName, string connectionString)
         {

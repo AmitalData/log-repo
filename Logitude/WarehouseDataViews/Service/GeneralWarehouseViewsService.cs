@@ -27,7 +27,28 @@ namespace WarehouseDataViews.Service
         {
             string viewName = viewType == "Dim" ? "dim" : viewType == "Fact" ? "fact" : viewType == "Custom" ? "c_dim" : "";
             viewName += fieldName;
-            return viewName;
+            return PluralViewName(viewName);
+        }
+
+       public string PluralViewName(string viewName)
+        {
+            string result = string.Empty; 
+            if (!string.IsNullOrEmpty(viewName))
+            {
+               var lastOneCharacter = viewName.ToLower().Substring(viewName.Length - 1);
+                var lastSecondCharacter = viewName.ToLower().Substring(viewName.Length-2 ,1);
+                var lastTwoCharcter = lastSecondCharacter + lastOneCharacter;
+
+                if (lastOneCharacter == "s" || lastOneCharacter == "x" || lastOneCharacter == "z" || (lastTwoCharcter) == "ch" || lastTwoCharcter == "sh") result = viewName + "es";
+                else if (lastOneCharacter == "y" && !"a,3,i,o,u".Split(',').Contains(lastSecondCharacter)) result = viewName.Substring(0, viewName.Length - 1) + "ies";
+                else if (lastOneCharacter == "f" && lastTwoCharcter == "fe") result = lastOneCharacter == "f" ? viewName.Substring(0, viewName.Length - 1) + "ves" : viewName.Substring(0, viewName.Length - 2) + "ves";
+                else if (lastOneCharacter == "o" && !"a,3,i,o,u".Split(',').Contains(lastSecondCharacter)) result = viewName + "es";
+                else result = viewName + "s";
+                if (viewName.ToLower() == "dimcreatedby") result = viewName;
+            }
+
+            return result;
+
         }
 
         public string ReadScriptFile(string fileName)
@@ -78,6 +99,39 @@ namespace WarehouseDataViews.Service
             return result;
         }
 
+        public string RemoveBowsFromFieldsName(string scriptstring)
+        {
+            string result = scriptstring;
+            string[] sqlArray = result.Split(new string[] { "SELECT" }, StringSplitOptions.None);
+            sqlArray = sqlArray[1].Split(new string[] { "FROM" }, StringSplitOptions.None);
+            var allScriptLines = sqlArray[0].Split(',');
+            foreach (string line in allScriptLines)
+            {
+                if (!string.IsNullOrEmpty(line))
+                {
+                    if (line.Contains("(")  && line.Contains(")"))
+                    {
+                        string fieldName = GetFieldNameFromScriptLine(line);
+                        if (!string.IsNullOrEmpty(fieldName))
+                        {
+                            string fieldNameWithOutBows = fieldName.Replace("(", "In").Replace(")", "");
+                            result = result.Replace(fieldName, fieldNameWithOutBows);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        private string GetFieldNameFromScriptLine(string scriptLine)
+        {
+            string result = string.Empty;
+            var fieldName = scriptLine.Split(new string[] { "as [" }, StringSplitOptions.None);
+            if (fieldName.Length == 1) fieldName = scriptLine.Split(new string[] { "as  [" }, StringSplitOptions.None);
+            if (fieldName.Length == 1) fieldName = scriptLine.Split(new string[] { "as[" }, StringSplitOptions.None);
+            if (fieldName.Length > 1) result = ("[" + fieldName[1]);
+            return result;
+        }
 
 
 
@@ -86,6 +140,7 @@ namespace WarehouseDataViews.Service
             return (fieldName.Contains("] as") || fieldName.Contains("]  as") || fieldName.Contains("]as")) ? true : false;
 
         }
+
        public string ConvertStringToCamelCase(string value)
         {
             string result = string.Empty;

@@ -20,15 +20,17 @@ namespace WarehouseDataViews
         //  private string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";
         //  private string dbDestinationConnection = "2019R1_Global,sa,Saas256,.";
         //"UnicargoDW,UnicargoDBUser,Y&P95et1,logitude-ep.database.windows.net";
-       // logitudedw-shared,logitudeep,!LO852456,logitude-ep.database.windows.net
+        // logitudedw-shared,logitudeep,!LO852456,logitude-ep.database.windows.net
 
 
+        private int? tenant = 1;
+        string dbSourceConnection = "2020R2_Main,sa,Saas256,.";
+        string dbDestinationConnection = "2020R2_Global,sa,Saas256,.";
 
+        //private int? tenant = 570;
+        //string dbSourceConnection = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
+        //string dbDestinationConnection = "UnicargoDW,logitudeep,!LO852456,logitude-ep.database.windows.net";
 
-        private int? tenant = 570;
-        string dbSourceConnection = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
-        string dbDestinationConnection = "UnicargoDW,logitudeep,!LO852456,logitude-ep.database.windows.net";
-        
 
         public Form1()
         {
@@ -81,7 +83,7 @@ namespace WarehouseDataViews
                     string sourceConnectionString = warehouseViewsService.BuildConnectionString(dbSourceConnection);
                     string destinationConnectionString = warehouseViewsService.BuildConnectionString(dbDestinationConnection);
                     warehouseViewsService.DeleteDimensionViews(sourceConnectionString, destinationConnectionString);
-                    warehouseViewsService.DropView("factShipment", destinationConnectionString);
+                    warehouseViewsService.DropView("factShipments", destinationConnectionString);
                     SetResultLable(true);
                 }
                 else MessageBox.Show("Connection Problem");
