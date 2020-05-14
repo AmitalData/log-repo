@@ -41,7 +41,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReceiverWarehouseCode, 
 	         DeliveryPlaceName, 
 	         IsDangerousGoods, 
-	         FinalDestinationPortCode,
+	         FinalDestinationPortCode, 
+	         RecieverWareHouseCode,
 	      }
 
 
@@ -74,7 +75,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DeliveryPlaceName, 
 	         IsDangerousGoods, 
 	         FinalDestinationPortCode, 
-	         FinalDestinationPortName,
+	         FinalDestinationPortName, 
+	         RecieverWareHouseCode, 
+	         RecieverWareHouseName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -171,6 +174,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalDestinationPortCode))
             {
 				entityPOCO.FinalDestinationPortCode = entityPM.FinalDestinationPortCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RecieverWareHouseCode))
+            {
+				entityPOCO.RecieverWareHouseCode = entityPM.RecieverWareHouseCode;
 			}
 			}
 
@@ -277,6 +285,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.FinalDestinationPortCode = entityPOCO.FinalDestinationPortCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RecieverWareHouseCode))
+            {
+					entityPM.RecieverWareHouseCode = entityPOCO.RecieverWareHouseCode;
+            }
+
 		}
 
 		public void PMToOldPM(ConsignmentPM entityPM, ConsignmentPM oldEntityPM)
@@ -371,6 +384,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalDestinationPortCode))
             {
                 oldEntityPM.FinalDestinationPortCode = entityPM.FinalDestinationPortCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RecieverWareHouseCode))
+            {
+                oldEntityPM.RecieverWareHouseCode = entityPM.RecieverWareHouseCode;
             }
 			
 		}

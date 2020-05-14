@@ -572,6 +572,10 @@
     <Compile Include="Migrations\202005111347238_DeclarationExportRecipientMap.Designer.cs">
       <DependentUpon>202005111347238_DeclarationExportRecipientMap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005140713397_add_RecieverWareHouseCode.cs" />
+    <Compile Include="Migrations\202005140713397_add_RecieverWareHouseCode.Designer.cs">
+      <DependentUpon>202005140713397_add_RecieverWareHouseCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -991,6 +995,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005111347238_DeclarationExportRecipientMap.resx">
       <DependentUpon>202005111347238_DeclarationExportRecipientMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005140713397_add_RecieverWareHouseCode.resx">
+      <DependentUpon>202005140713397_add_RecieverWareHouseCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

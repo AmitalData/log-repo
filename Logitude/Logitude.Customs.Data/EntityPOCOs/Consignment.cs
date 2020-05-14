@@ -87,6 +87,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FinalDestinationPortCode { get; set; }
 	      
         public virtual InternationalSite FinalDestinationPort { get; set; }
+        [ForeignKey("RecieverWareHouse")]
+        [Column("RecieverWareHouseCode")]
+	    public string RecieverWareHouseCode { get; set; }
+	      
+        public virtual DeliverySiteType RecieverWareHouse { get; set; }
     }
 }
 	 

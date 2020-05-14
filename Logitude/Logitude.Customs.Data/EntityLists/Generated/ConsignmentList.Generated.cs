@@ -68,6 +68,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string FinalDestinationPortCode  { get; set; }
        [DataMember]
        public string FinalDestinationPortName  { get; set; }
+       [DataMember]
+       public string RecieverWareHouseCode  { get; set; }
+       [DataMember]
+       public string RecieverWareHouseName  { get; set; }
    }
 
 }
