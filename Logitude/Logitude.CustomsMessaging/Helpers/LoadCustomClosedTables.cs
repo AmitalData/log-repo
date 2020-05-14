@@ -977,6 +977,38 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(CustomerRoleType, CustomerRoleTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(CustomerRoleType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData PartyRelationshipType = closedSystemTables.Where(d => d.id == "2113").FirstOrDefault();
+            ObjectTable PartyRelationshipTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.PartyRelationshipType", 0, false);
+            InsertClosedTableRecord(PartyRelationshipType, PartyRelationshipTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(PartyRelationshipType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ClassificationType = closedSystemTables.Where(d => d.id == "1384").FirstOrDefault();
+            ObjectTable ClassificationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ClassificationType", 0, false);
+            InsertClosedTableRecord(ClassificationType, ClassificationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(ClassificationType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData TransactionNatureType = closedSystemTables.Where(d => d.id == "1328").FirstOrDefault();
+            ObjectTable TransactionNatureTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.TransactionNatureType", 0, false);
+            InsertClosedTableRecord(TransactionNatureType, TransactionNatureTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(TransactionNatureType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ClaimReasonType = closedSystemTables.Where(d => d.id == "1528").FirstOrDefault();
+            ObjectTable ClaimReasonTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ClaimReasonType", 0, false);
+            InsertClosedTableRecord(ClaimReasonType, ClaimReasonTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(ClaimReasonType);
+
+
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData AmountType = closedSystemTables.Where(d => d.id == "1436").FirstOrDefault();
+            ObjectTable AmountTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.AmountType", 0, false);
+            InsertClosedTableRecord(AmountType, AmountTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(AmountType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData NbcDeclarationType = closedSystemTables.Where(d => d.id == "2112").FirstOrDefault();
+            ObjectTable NbcDeclarationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.NbcDeclarationType", 0, false);
+            InsertClosedTableRecord(NbcDeclarationType, NbcDeclarationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(NbcDeclarationType);
+
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);

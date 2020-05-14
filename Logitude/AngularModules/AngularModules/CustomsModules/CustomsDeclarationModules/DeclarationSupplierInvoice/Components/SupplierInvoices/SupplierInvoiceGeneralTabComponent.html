@@ -427,7 +427,14 @@
                         <div style="width:30px"></div>
                     </td>
                     <td rowspan="2">
+                        <span *ngIf="allowExport" class="LeftTop buttonelipsis"
+                              style="background-color: white; color: black; border: 2px solid #e7e7e7; width: 30px; text-align: center; font-weight: bold;cursor: pointer;"
+                              (click)="OpenExporterInvoiceWindow()">...E</span>
+
+                        <br />
+                        <br />
                         <table>
+
                             <tr>
 
                                 <td class="TabTitleRow" style="">  {{'Customs.Declaration.O.FreightAmount'| TextCodeTranslationPipe}} </td>
@@ -454,6 +461,7 @@
                             <tr style="height:120px">
                                 <td colspan="2">
                                     <table>
+
                                         <tr>
                                             <td>
                                                 <div class="CellContent" style="bottom: 5px;padding:5px">

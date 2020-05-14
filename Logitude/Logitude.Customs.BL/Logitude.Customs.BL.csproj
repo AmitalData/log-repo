@@ -140,7 +140,13 @@
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AmountTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ClaimReasonTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ClassificationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomerRoleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsShipDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsShipStruct.Generated.cs" />
     <Compile Include="CloseTables\SincroTestCaseDetails.cs" />
@@ -272,6 +278,7 @@
     <Compile Include="EntityDataMappings\AmendmentRequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AmountTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ApprovedProfessionDataMapping.cs" />
     <Compile Include="EntityDataMappings\AssigneeNotificationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AttachmentTypeDataMapping.cs" />
@@ -298,6 +305,7 @@
     <Compile Include="EntityDataMappings\ClaimExplanationCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimImporterDeclarsP3LoiDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimImporterDeclarsPage3DataMapping.cs" />
+    <Compile Include="EntityDataMappings\ClaimReasonTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimsRelatedEntitiesAmountDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimsRelatedEntitiesReasonDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimsRelatedEntitiesRefundDataMapping.cs" />
@@ -307,6 +315,7 @@
     <Compile Include="EntityDataMappings\ClaimImporterDeclarsPage3BDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimsRelatedEntsExpDeclarDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimsRelatedEntsReasonsExpDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ClassificationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientAddressDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClientDrivingLicenseDataMapping.cs" />
@@ -447,6 +456,7 @@
     <Compile Include="EntityDataMappings\Generated\AmendmentRequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AmountTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ApprovedProfessionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AssigneeNotificationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AttachmentTypeDataMapping.Generated.cs" />
@@ -473,6 +483,7 @@
     <Compile Include="EntityDataMappings\Generated\ClaimExplanationCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimImporterDeclarsP3LoiDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimImporterDeclarsPage3DataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ClaimReasonTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimsRelatedEntitiesAmountDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimsRelatedEntitiesReasonDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimsRelatedEntitiesRefundDataMapping.Generated.cs" />
@@ -482,6 +493,7 @@
     <Compile Include="EntityDataMappings\Generated\ClaimImporterDeclarsPage3BDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimsRelatedEntsExpDeclarDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimsRelatedEntsReasonsExpDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ClassificationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientAddressDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClientDrivingLicenseDataMapping.Generated.cs" />
@@ -643,6 +655,7 @@
     <Compile Include="EntityDataMappings\Generated\MorningMessageTypeDataMapping.Generated.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EntityDataMappings\Generated\NbcDeclarationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationDefinitionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationReplyDataMapping.Generated.cs" />
@@ -652,6 +665,7 @@
     <Compile Include="EntityDataMappings\Generated\PackageMeasureQualifierDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PackingTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ParagraphTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PartyRelationshipTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PayerActivityTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PayerTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PaymentMethodStatusDataMapping.Generated.cs" />
@@ -706,6 +720,7 @@
     <Compile Include="EntityDataMappings\Generated\StorageMessageTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\StorageStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SubCountryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SuppInvoiceItemsAbachStatementDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvioceItemCertificatDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceDataMapping.Generated.cs">
       <SubType>Code</SubType>
@@ -720,6 +735,7 @@
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsLevyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsModDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemProcesTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsPriceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsProdIdentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsSerialNumDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsTaxDataMapping.Generated.cs" />
@@ -727,6 +743,8 @@
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemVehicleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemVehicleModDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceModificationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SupplierInvoicePaymentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SupplierInvoiceUCRDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TapagConnectionTableDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TapagDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TapagTypeDataMapping.Generated.cs" />
@@ -734,6 +752,7 @@
     <Compile Include="EntityDataMappings\Generated\TPGFileTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TradeAgreementDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TradeLevyExamptTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TransactionNatureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TransferCargoMethodTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TreatmentWayDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UIMessageAdditionalDataMapping.Generated.cs" />
@@ -789,6 +808,7 @@
     <Compile Include="EntityDataMappings\MorningMessageTypeDataMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EntityDataMappings\NbcDeclarationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationDefinitionDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationReplyDataMapping.cs" />
@@ -798,6 +818,7 @@
     <Compile Include="EntityDataMappings\PackageMeasureQualifierDataMapping.cs" />
     <Compile Include="EntityDataMappings\PackingTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ParagraphTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PartyRelationshipTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PassportTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PayerActivityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PayerTypeDataMapping.cs" />
@@ -852,6 +873,7 @@
     <Compile Include="EntityDataMappings\StorageMessageTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\StorageStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\SubCountryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SuppInvoiceItemsAbachStatementDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvioceItemCertificatDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceDataMapping.cs">
       <SubType>Code</SubType>
@@ -866,6 +888,7 @@
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsLevyDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsModDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemProcesTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SupplierInvoiceItemsPriceDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsProdIdentDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsSerialNumDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsTaxDataMapping.cs" />
@@ -873,6 +896,8 @@
     <Compile Include="EntityDataMappings\SupplierInvoiceItemVehicleDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemVehicleModDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceModificationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SupplierInvoicePaymentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SupplierInvoiceUCRDataMapping.cs" />
     <Compile Include="EntityDataMappings\TapagConnectionTableDataMapping.cs" />
     <Compile Include="EntityDataMappings\TapagDataMapping.cs" />
     <Compile Include="EntityDataMappings\TapagTypeDataMapping.cs" />
@@ -880,6 +905,7 @@
     <Compile Include="EntityDataMappings\TPGFileTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TradeAgreementDataMapping.cs" />
     <Compile Include="EntityDataMappings\TradeLevyExamptTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TransactionNatureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TransferCargoMethodTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TreatmentWayDataMapping.cs" />
     <Compile Include="EntityDataMappings\UIMessageAdditionalDataMapping.cs" />
@@ -905,6 +931,8 @@
     <Compile Include="EntityDataMappings\VendorTransactionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\SuppInvoiceItemsAbachStatementQueryService.cs" />
+    <Compile Include="EntityQueryServices\SupplierInvoiceItemsPriceQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoSealIdentifierQueryService.cs" />
     <Compile Include="EntityQueryServices\CityQueryService.cs" />
     <Compile Include="EntityQueryServices\ClaimImporterDeclarsPage3QueryService.cs" />
@@ -924,9 +952,12 @@
     <Compile Include="EntityQueryServices\ExceptionReasonQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AmountTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoSealIdentifierQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoSealQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ClaimReasonTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ClassificationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ConsignmentPackDangerQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContinuousRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CurrencyTypeTenantQueryService.Generated.cs" />
@@ -941,12 +972,19 @@
     <Compile Include="EntityQueryServices\Generated\DeficitDecisionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExceptionReasonQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ExceptionReasonQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\NbcDeclarationTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PartyRelationshipTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantExceptionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\HazardousSubstanceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SealCompletenesQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SealTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SealUpdateReasonTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SuppInvoiceItemsAbachStatementQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierInvoiceItemsPriceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierInvoicePaymentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierInvoiceUCRQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TransactionNatureTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\PendingByKeywordQueryService.cs" />
     <Compile Include="EntityQueryServices\ConsignmentQueryService.cs" />
     <Compile Include="EntityQueryServices\CourierDeclarationQueryService.cs" />
@@ -1379,8 +1417,18 @@
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AmountTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ClaimReasonTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ClassificationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationExportRecipientUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\NbcDeclarationTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PartyRelationshipTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SuppInvoiceItemsAbachStatementUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceItemsPriceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SupplierInvoicePaymentUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceUCRUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TransactionNatureTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationReferantDataUpdateService.cs" />
@@ -1468,6 +1516,7 @@
     <Compile Include="EntityUpdateServices\LogChangesService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PendingByKeywordUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SuppInvoiceItemsAbachStatementUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleAddUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBanksCardUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBankUpdateService.cs" />
@@ -1679,6 +1728,7 @@
     <Compile Include="EntityUpdateServices\ProceduralFaultUpdateService.Amital.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemModVehicleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleModUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SupplierInvoiceItemsPriceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeficitDecisionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\UIMessageUpdateService.cs" />

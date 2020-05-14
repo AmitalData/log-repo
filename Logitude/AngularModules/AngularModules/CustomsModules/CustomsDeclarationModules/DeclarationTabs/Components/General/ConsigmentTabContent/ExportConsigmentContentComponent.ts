@@ -21,7 +21,7 @@ import { BaseComponent } from '../../../../../../Infrastructure/Components/Logit
 })
 export class ExportConsigmentContentComponent extends BaseComponent {
     public EntityPM: ConsignmentPM;
-    public declarationPM: DeclarationPM;
+    public OriginalDeclarationPM: DeclarationPM;
 
     public ObjectTableName: string = "Customs.Consignment";
     public DataContext: any = this;
@@ -36,6 +36,7 @@ export class ExportConsigmentContentComponent extends BaseComponent {
     public ClonedEntityPM: ConsignmentPM;
     
     public ValidationErrorsList: string[] = [];
+    ClonedDeclarationPM: DeclarationPM;
 
     constructor() {
         super();
@@ -123,8 +124,12 @@ export class ExportConsigmentContentComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.EntityPM = args.EntityPM;
             this.OriginalEntityPM = args.EntityPM;
-            this.ClonedEntityPM = this.CloneEntity(args.EntityPM);
-            
+            this.ClonedEntityPM = this.CloneEntityConsignmentPM(args.EntityPM);
+
+            this.OriginalDeclarationPM = args.declarationPM;
+            this.ClonedDeclarationPM = this.CloneEntityDeclarationPM(args.declarationPM);
+
+
             this.IsDisplayOnly = args.IsDisplayOnly;
            
 
@@ -160,8 +165,17 @@ export class ExportConsigmentContentComponent extends BaseComponent {
 
 
 
-   
-    CloneEntity(entityToClone: ConsignmentPM) {
+    CloneEntityDeclarationPM(entityToClone: DeclarationPM) {
+
+        var clonedEntity: DeclarationPM;
+        clonedEntity = new DeclarationPM();
+
+        this.MapEntitytoEntity(entityToClone, clonedEntity);
+
+
+        return clonedEntity;
+    }
+    CloneEntityConsignmentPM(entityToClone: ConsignmentPM) {
 
         var clonedEntity: ConsignmentPM;
         clonedEntity = new ConsignmentPM(this.EntityPM);
@@ -173,7 +187,7 @@ export class ExportConsigmentContentComponent extends BaseComponent {
     }
     RejectChanges() {
         this.MapEntitytoEntity(this.ClonedEntityPM, this.OriginalEntityPM, true);
-        
+        this.MapEntitytoEntity(this.ClonedDeclarationPM, this.OriginalDeclarationPM);
 
     }
 

@@ -372,6 +372,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string identifierID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IdentifierID  
+	   {
+	    
+	     get
+		{
+		   return identifierID;
+		 }
+		 set
+		 {
+		   if(identifierID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IdentifierID",OldValue=identifierID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   identifierID=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleIDTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleIDTypeCode  
+	   {
+	    
+	     get
+		{
+		   return vehicleIDTypeCode;
+		 }
+		 set
+		 {
+		   if(vehicleIDTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleIDTypeCode",OldValue=vehicleIDTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleIDTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string vehicleIDTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VehicleIDTypeName  
+	   {
+	    
+	     get
+		{
+		   return vehicleIDTypeName;
+		 }
+		 set
+		 {
+		   if(vehicleIDTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VehicleIDTypeName",OldValue=vehicleIDTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vehicleIDTypeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
