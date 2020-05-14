@@ -87,7 +87,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
     public termsOfSaleTypeListService: TermsOfSaleTypeListService = new TermsOfSaleTypeListService();
     public customsExchangeRateExtendedPMService: CustomsExchangeRateExtendedPMService = new CustomsExchangeRateExtendedPMService();
     supplierInvoicePMService: SupplierInvoicePMService = new SupplierInvoicePMService();
-
+    public allowExport: boolean=false;
     public IsDisplayOnly: boolean = false;
     public IsReadOnly: boolean = false;
     //public IsCountryPURForItems: boolean = false;
@@ -120,7 +120,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
         this._entityListService = new EntityListService();
         this.FreightCopyList = [];
         this.VendorFilterItems = new ApiQueryFilters();
-
+  
         this.VendorFilterItems.addAdditionalFilter("StatusCode", "1", "NULL", null, "Equals", false, false, false, "string", false, true);
         //  this.VendorFilterItems.addAdditionalFilter("StatusCode", "NULL", null, null, "Equals", false, false, false, "string", false, true);
         var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
@@ -223,7 +223,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
                 this.IsReadOnly = true;
                 this.IsNotForAccumaltionVisibile = false;
                 for (var i = 0; i < this.ParentItems.length; i++) {
-                    TempItemSource.push(new SupplierInvoiceItemLine(this.ParentItems[i], this));
+                    TempItemSource.push(new SupplierInvoiceItemLine(this.ParentItems[i], this, this.allowExport));
                 }
 
             }
@@ -236,7 +236,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
                     this.IsNotForAccumaltionVisibile = true;
                 }
                 for (var i = 0; i < this.ChildrenItems.length; i++) {
-                    TempItemSource.push(new SupplierInvoiceItemLine(this.ChildrenItems[i], this));
+                    TempItemSource.push(new SupplierInvoiceItemLine(this.ChildrenItems[i], this, this.allowExport));
                 }
 
             }
@@ -245,7 +245,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
         else {
             this.AccumulatedMessageVisibility = false;
             for (var i = 0; i < this.EntityPM.SupplierInvoiceItems.length; i++) {
-                TempItemSource.push(new SupplierInvoiceItemLine(this.EntityPM.SupplierInvoiceItems[i], this));
+                TempItemSource.push(new SupplierInvoiceItemLine(this.EntityPM.SupplierInvoiceItems[i], this, this.allowExport));
             }
         }
         if (this.EntityPM.IsAccumalated) {
@@ -271,8 +271,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
             windowArgs.Declaration = this.declarationPM;
 
             windowArgs.Parent = this;
-            windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-            
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
             var windowTitle = "נתונים נוספים ליצוא - חטיבת חשבון יצואן";
 
             var logWindow = new LogitudeWindow();
@@ -425,6 +424,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
         this.oldIncoterm = this.EntityPM.IncotermCode;
         //this.InvoiceNumber = entityPM.InvoiceNumber;
         this.IsChecked = false;
+
+        if (this.declarationPM.Direction=="E" && FeatureLocator.HasFeaturePermession("Customs.Declaration", "EXPORTDECLARATIONPSCREEN"))
+            this.allowExport = true;
+
+
         this.isNewEntity = IsNewEntity;
         if (isDisplayOnly) {
             this.opacity = 0.5;
@@ -2034,7 +2038,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
         if (!this.EntityPM.SupplierInvoiceItems.includes(item)) {
             this.EntityPM.AddSupplierInvoiceItem(item);
-            this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this));
+            this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this, this.allowExport));
             //this.CurrentSession.ResetRowIndex();
             if (isNaN(this.EntityPM.FullItemsCount)) this.EntityPM.FullItemsCount = 0;
 
@@ -2089,7 +2093,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
         if (!this.EntityPM.SupplierInvoiceItems.includes(item)) {
             this.EntityPM.AddSupplierInvoiceItem(item);
-            this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this));
+            this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this, this.allowExport));
             //this.CurrentSession.ResetRowIndex();
             if (isNaN(this.EntityPM.FullItemsCount)) this.EntityPM.FullItemsCount = 0;
 
@@ -2612,7 +2616,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public ShowTariffErrorTooltip: boolean = false;
     public ShowValidatioIcon: boolean = false;
 
-
+    public allowExport = false;
     public closedManullay: boolean = false;
 
     ClassefierRemarkToolTipWrapper: string = "ClassefierRemarkToolTipWrapper";
@@ -2620,10 +2624,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     TariffErrorToolTipWrapper: string = "TariffErrorToolTipWrapper";
     TariffErrorToolTip: string = "TariffErrorToolTip";
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(EntityPM: SupplierInvoiceItemPM, parent: SupplierInvoiceGeneralTabComponent) {
+    constructor(EntityPM: SupplierInvoiceItemPM, parent: SupplierInvoiceGeneralTabComponent, allowExport: boolean = false) {
         super();
         this.entityPM = EntityPM;
-
+        this.allowExport = allowExport;
         //calculate ids
         this.ClassefierRemarkToolTipWrapper += EntityPM.SequenceNumeric;
         this.ClassefierRemarkToolTip += EntityPM.SequenceNumeric;
@@ -3110,7 +3114,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             windowArgs.SupplierInvoiceItemPM = item.entityPM;
             windowArgs.Parent = item;
             windowArgs.IsDisplayOnly = this.Parent.IsReadOnly;
-
+ 
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
 
             var logWindow = new LogitudeWindow();
@@ -3118,6 +3122,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             logWindow.Height = 600;
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = false;
+            windowArgs.allowExport = this.allowExport;
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.SetStatusVisibility());
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/EditSupplierInvoiceItem');
@@ -3612,7 +3617,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             //    copiedItemIndex = this.Parent.ItemsSource.GetIndex(copieditem);
             //}
             entityPM.AddSupplierInvoiceItem(item);
-            this.Parent.ItemsSource.InsertAtIndex(copiedItemIndex + 1, new SupplierInvoiceItemLine(item, this.Parent));
+            this.Parent.ItemsSource.InsertAtIndex(copiedItemIndex + 1, new SupplierInvoiceItemLine(item, this.Parent,false));
             //this.Parent.ItemsSource.Collection.push(new SupplierInvoiceItemLine(item, this.Parent));//Insert(new SupplierInvoiceItemLine(item, this.Parent), false);
             if (isNaN(entityPM.FullItemsCount)) entityPM.FullItemsCount = 0;
 

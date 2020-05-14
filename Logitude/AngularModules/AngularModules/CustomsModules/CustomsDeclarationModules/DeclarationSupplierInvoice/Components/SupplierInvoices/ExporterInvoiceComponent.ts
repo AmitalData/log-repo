@@ -217,6 +217,8 @@ export class ExporterInvoiceComponent extends BaseComponent
     }
 
     MapEntitytoEntity(srcEntity: any, targetEntity: any, takeKeysFromTarget: boolean = false) {
+        if (srcEntity == null) return;
+
         var keys;
         keys = Object.keys(takeKeysFromTarget ? targetEntity : srcEntity);
         for (var key in keys) {
@@ -244,10 +246,7 @@ export class ExporterInvoiceComponent extends BaseComponent
             this.originalSupplierInvoicePayment.Tenant = SessionLocator.Tenant;
             this.originalSupplierInvoice.AddSupplierInvoicePayment(this.originalSupplierInvoicePayment);
         }
-        else {
-            this.originalSupplierInvoicePayment.UniqueKey = "1";
-  
-        }
+      
 
         if (this.originalSupplierInvoiceUCR.DeclarationId == undefined && this.originalSupplierInvoice != undefined) {
             this.originalSupplierInvoiceUCR.DeclarationId = this.originalSupplierInvoice.DeclarationId;
@@ -257,10 +256,7 @@ export class ExporterInvoiceComponent extends BaseComponent
  
             this.originalSupplierInvoice.AddSupplierInvoiceUCR(this.originalSupplierInvoiceUCR);
         }
-        else {
-            this.originalSupplierInvoiceUCR.UniqueKey = "1";
- 
-        }
+      
 
         if (this.originalSupplierInvoiceUCR.IsDirty || this.originalSupplierInvoicePayment.IsDirty) {
             this.originalSupplierInvoice.IsDirty = true;

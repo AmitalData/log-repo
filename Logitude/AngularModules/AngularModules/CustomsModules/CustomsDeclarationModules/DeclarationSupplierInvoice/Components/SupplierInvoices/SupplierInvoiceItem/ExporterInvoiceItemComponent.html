@@ -19,7 +19,8 @@
                                 [DataContext]="DataContext"
                                 [HideColumns]="true"
                                 [LookUpTableName]="'Customs.ClassificationType'">
-                        </LogLov>                    </td>
+                        </LogLov>
+                    </td>
                     <td style="width:7px"></td>
 
                     <td>
@@ -74,9 +75,15 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'StatementInd'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
-                                    [Text]="StatementInd"
-                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                        <CheckBox style="float: right; margin-left: 8px;"
+                                  [IsEnabled]="!IsDisplayOnly"
+                                  [Text]="'Customs.Declaration.F.StatementInd' | TextCodeTranslationPipe"
+                                  [IsChecked]="StatementInd"
+                                  (Checked)="StatementInd = $event"></CheckBox>
+
+                        <!--<LogTextBox [ObjectFieldName]="'StatementInd'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
+                        [Text]="StatementInd"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
 
                     </td>
 
@@ -113,7 +120,10 @@
                     </td>
 
                 </tr>
-
+                <tr style="height: 25px;">
+                    <td colspan="3">
+                    </td>
+                </tr>
 
                 <tr style="height: 15px;">
                     <td>

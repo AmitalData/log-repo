@@ -15,7 +15,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
     public partial class SuppInvoiceItemsAbachStatementQueryService
     {
 
-        public List<SuppInvoiceItemsAbachStatementPM> GetSupplierInvoiceItemsPricesForSupplierInvoiceWithSpecificKeys(string declarationId, int invoiceCounterKey, List<int> itemsLineNumbers, int tenant)
+        public List<SuppInvoiceItemsAbachStatementPM> GetSuppInvoiceItemsAbachStatementsForSupplierInvoiceWithSpecificKeys(string declarationId, int invoiceCounterKey, List<int> itemsLineNumbers, int tenant)
         {
             List<SuppInvoiceItemsAbachStatement> supplierInvoiceItemsPrices = repository.GetSuppInvoiceItemsAbachStatementsForDeclarationId(declarationId, invoiceCounterKey, itemsLineNumbers, tenant);
             List<SuppInvoiceItemsAbachStatementPM> supplierInvoiceItemsPricePMs = (from a in supplierInvoiceItemsPrices
@@ -26,7 +26,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                           StatementInd = a.StatementInd,
                                                                                           StatementType = a.StatementType,
                                                                                           InvoiceCounterKey = a.InvoiceCounterKey,
-
+                                                                                          SequenceNumeric=a.SequenceNumeric,
                                                                                           Tenant = a.Tenant,
 
                                                                                       }).ToList();

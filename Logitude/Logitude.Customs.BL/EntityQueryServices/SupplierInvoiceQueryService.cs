@@ -402,9 +402,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             SupplierInvoiceItemModVehicleQueryService supplierInvoiceItemModVehicleQueryService = new SupplierInvoiceItemModVehicleQueryService(context);
             List<SupplierInvoiceItemModVehiclePM> supplierInvoiceItemModVehicles = supplierInvoiceItemModVehicleQueryService.GetSupplierInvoiceItemModVehiclesForSupplierInvoiceWithSpecificKeys(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey,itemsLineNumbers, Tenant);
             SupplierInvoiceItemsPriceQueryService supplierInvoiceItemsPriceQueryService = new SupplierInvoiceItemsPriceQueryService(context);
-            List<SupplierInvoiceItemsPricePM> supplierInvoiceItemsPrices = supplierInvoiceItemsPriceQueryService.GetSupplierInvoiceItemsPricesForSupplierInvoiceWithSpecificKeys(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, itemsLineNumbers, Tenant);
+            List<SupplierInvoiceItemsPricePM> supplierInvoiceItemsPrices = supplierInvoiceItemsPriceQueryService.GetSupplierInvoiceItemsPricesForSupplierInvoiceWithSpecificKeys(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, itemsLineNumbers, entityPM.Tenant);
             SuppInvoiceItemsAbachStatementQueryService suppInvoiceItemsAbachStatementQueryService = new SuppInvoiceItemsAbachStatementQueryService(context);
-            List<SuppInvoiceItemsAbachStatementPM> suppInvoiceItemsAbachStatements = suppInvoiceItemsAbachStatementQueryService.GetSupplierInvoiceItemsPricesForSupplierInvoiceWithSpecificKeys(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, itemsLineNumbers, Tenant);
+            List<SuppInvoiceItemsAbachStatementPM> suppInvoiceItemsAbachStatements = suppInvoiceItemsAbachStatementQueryService.GetSuppInvoiceItemsAbachStatementsForSupplierInvoiceWithSpecificKeys(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, itemsLineNumbers, entityPM.Tenant);
           
             //  SupplierInvoiceItemVehicleModQueryService supplierInvoiceItemVehicleModQueryService = new SupplierInvoiceItemVehicleModQueryService(context); // moran 20.10.15 - Task 17209
 
@@ -428,6 +428,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                 } */
                 // moran 20.10.15 - Task 17209 <--
                 supplierInvoiceItem.SupplierInvoiceItemModVehicles = supplierInvoiceItemModVehicles.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
+                supplierInvoiceItem.SupplierInvoiceItemsPrices = supplierInvoiceItemsPrices.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
+                supplierInvoiceItem.SuppInvoiceItemsAbachStatements = suppInvoiceItemsAbachStatements.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
 
                 if (supplierInvoiceItem.SupplierInvoiceItemsConDeclars != null)
                 {
