@@ -16,6 +16,8 @@ namespace Simplog.Server.Infrastructure.Helpers
         private Action<string, string, int, string> _checkContactFeature;
         private Func<IByteCompressorUtil> _ByteCompressorUtilProvider;
         private Func<IHtmlEditorHelper> _HtmlEditorHelper;
+        private Func<IEntityUpdateReflectorService> _EntityUpdateReflectorService;
+
         private I_IISManager _IISManager;
 
         private InjectionUtil(
@@ -86,7 +88,9 @@ namespace Simplog.Server.Infrastructure.Helpers
             Action<string, string, int, string> checkContactFeature,
             Func<IByteCompressorUtil> iByteCompressorUtilProvider,
             I_IISManager myIISManager,
-            Func<IHtmlEditorHelper> myIHtmlEditorHelper
+            Func<IHtmlEditorHelper> myIHtmlEditorHelper,
+            Func<IEntityUpdateReflectorService> myEntityUpdateReflectorService
+
             )
         {
             if (_Instance != null)
@@ -100,6 +104,8 @@ namespace Simplog.Server.Infrastructure.Helpers
             _Instance._ByteCompressorUtilProvider = iByteCompressorUtilProvider;
             _Instance._HtmlEditorHelper = myIHtmlEditorHelper;
             _Instance._IISManager = myIISManager;
+            _Instance._EntityUpdateReflectorService = myEntityUpdateReflectorService;
+
 
         }
 
@@ -136,7 +142,10 @@ namespace Simplog.Server.Infrastructure.Helpers
             return _HtmlEditorHelper().GetEntity(entityName, entityId, tenant);
         }
 
-
+        public void UpdateEntity(object entityPM, string entityName, int tenant)
+        {
+             _EntityUpdateReflectorService().UpdateEntity(entityPM, entityName, tenant);
+        }
 
     }
 
@@ -159,6 +168,15 @@ namespace Simplog.Server.Infrastructure.Helpers
         object GetEntity(string entityName, string entityId, int tenant);
 
     }
+
+
+    public interface IEntityUpdateReflectorService
+    {
+        void UpdateEntity(object entityPM, string entityName, int tenant);
+    }
+
+
+
 }
 
 

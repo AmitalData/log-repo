@@ -1045,7 +1045,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
         private void CreateTraceEvent(string eventTypeCode)
         {
-            this.CreateTraceEvent(new EventStatusTracerArgs()
+            this.CreateTraceEvent(new EventStatusTracerArgs() 
             {
                 Tenant = tenant,
                 UserId = loggedContactId,
@@ -1053,6 +1053,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 ObjectTableName = objectTableName,
                 OldStatusId = entityPoco.StatusId,
                 EventTypeCode = eventTypeCode,
+                
             });
         }
         private void CreateTraceEvent(string eventTypeCode, string eventNotes)
@@ -1137,6 +1138,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         EntityId = args.EntityId,
                         ObjectTableName = args.ObjectTableName,
                         Notes = args.Notes,
+                        Entity = entityPM,
                     });
                 }
 
@@ -1250,6 +1252,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant);
 
                             ComputeLastSharedEvent(entityPM);
+                        }
+
+
+                        if (!string.IsNullOrEmpty(eventType.CustomField))
+                        {
+
+                            EventTracer.UpdateEventCustomFieldValue(new EventCustomFieldValue() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = entityPM, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
+
                         }
                     }
                 }

@@ -2073,5 +2073,8 @@ namespace Simplog.Data.InfrastructureModel
         DbSet<ObjectField> IWebFreightContext.ObjectFields => throw new NotImplementedException();
 
         DbSet<TextCode> IWebFreightContext.TextCodes => throw new NotImplementedException();
+
+        public IDbSet<WorkerRoleName> WorkerRoleNames => throw new NotImplementedException();
+
     }
 }

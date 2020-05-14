@@ -50,6 +50,7 @@ export class SessionLocator {
     public static ShowUserNewReleaseToolTip: boolean = true;
     public static AllSessions: Array<SessionComponent>;
     public static ProtractorEmails: Array<string> = [];
+    public static WorkerRoleName: string = null;
     public static AddSession(mySession: SessionComponent) {
         if (SessionLocator.AllSessions == null) {
             SessionLocator.AllSessions = new Array<SessionComponent>();

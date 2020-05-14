@@ -1227,6 +1227,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  Email = a.Contact.Email,
                                                  EnglishName = a.Contact.EnglishName,
                                                  FacebookId = a.Contact.FacebookId,
+                                                 DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                                                  Fax = a.Contact.Fax,
                                                  Id = a.Contact.Id,
                                                  InActive = a.Contact.InActive,

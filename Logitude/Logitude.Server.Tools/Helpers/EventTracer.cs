@@ -8,6 +8,10 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
+using System.Reflection;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -130,7 +134,7 @@ namespace Logitude.Server.Tools.Helpers
                             }
                         }
                     }
-
+      
                     TraceEvent myTraceEvent = new TraceEvent()
                     {
                         Id = Guid.NewGuid().ToString(),
@@ -157,6 +161,13 @@ namespace Logitude.Server.Tools.Helpers
                     {
                         ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant);
                     }
+
+
+                    if (!string.IsNullOrEmpty(eventType.CustomField) && objectTable.AllowCustomFields)
+                    {
+                        UpdateEventCustomFieldValue(new EventCustomFieldValue() {CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = args.Entity, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
+                    }
+
                 }
             }
         }
@@ -311,8 +322,43 @@ namespace Logitude.Server.Tools.Helpers
             return id;
         }
 
-       
-       
+        #region UpdateEventCustomFieldValue
+        public static void UpdateEventCustomFieldValue(EventCustomFieldValue args)
+        {
+            ObjectField objectField = GetCustomObjectField(args);
+            if (objectField != null)
+            {
+                object entity = args.Entity;
+                CustomFieldClass customFieldValue = new CustomFieldClass(objectField.FieldName, args.ObjectTableName, new CustomFieldClass().SetFieldDataType(objectField.DataTypeCode, args.EventDateTime));
+                if (entity == null)
+                {
+                    entity = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(args.ObjectTableName, args.EntityId, args.Tenant);
+                    if (entity != null)
+                    {
+                        SetPropertyValue(objectField, entity, customFieldValue);
+                        InjectionUtil.Instance.UpdateEntity(entity, args.ObjectTableName, args.Tenant);
+                    }
+                }
+                else SetPropertyValue(objectField, entity, customFieldValue);
+            }
+        }
+        private static ObjectField GetCustomObjectField(EventCustomFieldValue args)
+        {
+            ObjectField objectField = null;
+            string customField = !string.IsNullOrEmpty(args.CustomField) ? args.CustomField : new EventTypeRepository(args.Tenant).GetCustomFieldByEventTypeId(args.EventTypeId, args.Tenant);
+            if (!string.IsNullOrEmpty(customField))
+            {
+                ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(args.Tenant);
+                objectField = objectFieldRepository.GetSingleObjectFieldByFieldCode(customField, args.Tenant);
+            }
+            return objectField;
+        }
+        private static void SetPropertyValue(ObjectField objectField, object entity, object fieldValue)
+        {
+            PropertyInfo propInfo = entity.GetType().GetProperty(objectField.FieldName);
+            if (propInfo != null) propInfo.SetValue(entity, fieldValue, null);
+        }
+        #endregion
     }
 
     public class TraceEventParams
@@ -332,6 +378,7 @@ namespace Logitude.Server.Tools.Helpers
         public string ExternalId { get; set; }
     }
 
+
     public class EventTracerArgs
     {
         public int Tenant { get; set; }
@@ -346,6 +393,25 @@ namespace Logitude.Server.Tools.Helpers
         public string ExternalId { get; set; }
         public string NewStatusId { get; set; }
         public string CurrentStatusId { get; set; }
+        public object Entity { get; set; }
     }
+
+    public class EventCustomFieldValue
+    {
+        public int Tenant { get; set; }
+        public string EntityId { get; set; }
+        public string ObjectTableName { get; set; }
+        public object Entity { get; set; }
+        public string CustomField { get; set; }
+        public DateTime EventDateTime { get; set; }
+        public string EventTypeId { get; set; }
+
+        
+
+    }
+
+
+
+
 
 }

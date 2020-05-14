@@ -141,6 +141,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             context.SaveChanges();
         }
 
+        public string GetCustomFieldByEventTypeId(string id, int tenant)
+        {
+            return (from a in context.EventType
+                    where a.Id == id && a.Tenant == tenant 
+                    select a.CustomField).FirstOrDefault();
+        }
 
 
 

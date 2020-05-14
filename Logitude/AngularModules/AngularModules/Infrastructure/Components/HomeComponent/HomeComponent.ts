@@ -140,6 +140,7 @@ export class HomeComponent implements OnDestroy{
     public IsFillLocalStorageVisible: boolean = false;
     public IsDocumentsBackupVisible: boolean = false;
     public IsCurrenciesRatesVisible: boolean = false;
+    public IsSetWorkerRoleNameVisible: boolean = false;
     public IsBluesnapAccount: boolean = false;
     public IsCountryIsrael: boolean = false;
     
@@ -192,6 +193,9 @@ export class HomeComponent implements OnDestroy{
             this.IfBlueSnapContracts = true;
         }
 
+        if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+            this.IsSetWorkerRoleNameVisible = true;
+        }
 
     }
 
@@ -1624,6 +1628,13 @@ export class HomeComponent implements OnDestroy{
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Language Settings";
         logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/LanguageSettings/LanguageSettingsComponent');
+    }
+    SetWorkerRoleNameClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Set Worker Role Name";
+        logWindow.Width = 400;
+        logWindow.Height = 200;
+        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/SetWorkerRoleName/SetWorkerRoleNameComponent');
     }
     ConnectToDropBox() {
         var myService: CommonDomainService = new CommonDomainService();
