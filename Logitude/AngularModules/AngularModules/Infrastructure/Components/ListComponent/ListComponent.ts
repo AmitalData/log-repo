@@ -2456,6 +2456,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                         if (this.QueryCode == "Masters" || this.QueryCode == "Open Payables Masters" || this.QueryCode == "All Masters" || IsOriginalMaster) {
                             this.RunNewMasterWizard();
                         }
+                        if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewDeclarationControlCommand" &&
+                            this.HaveFeatureNewExportDeclararion) {
+                            this.RunNewExportDeclaration();
+                        }
+                          
                         else {
                             this.RunNewEntityWizard(this.SelectedQuery.ObjectTableNewWizardControlName);
                         }
@@ -2484,6 +2489,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                 });
             }
         }
+    }
+    RunNewExportDeclaration() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "הצהרת יצוא ";
+        logWindow.Width = 800;
+        logWindow.Height = 500;
+        logWindow.NewWizardArgs = { IsNewEntity: true };
+        logWindow.Show("./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/NewEntity/NewExportDeclarationComponent");
     }
 
     private RunNewEntityWizard(wizardControlName: string) {
