@@ -890,6 +890,29 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         return max;
     }
 
+    OpenExporterInvoiceItem() {
+
+
+        if (!this.IsDisplayOnly) {
+            var windowArgs: any = {};
+            windowArgs.SupplierInvoiceItem = this.OriginalItemPM;
+
+            windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+             var windowTitle = "נתונים נוספים ליצוא - שורת חשבון יצואן";
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 700;
+            logWindow.Height = 400;
+            logWindow.Title = windowTitle;
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+ 
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/ExporterInvoiceItemComponent');
+        }
+
+
+    }
+
 
     EditActualLines() {
 
