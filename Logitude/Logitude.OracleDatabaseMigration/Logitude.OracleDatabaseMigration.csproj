@@ -580,10 +580,6 @@
     <Compile Include="Migrations\202005111347238_DeclarationExportRecipientMap.Designer.cs">
       <DependentUpon>202005111347238_DeclarationExportRecipientMap.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005140713397_add_RecieverWareHouseCode.cs" />
-    <Compile Include="Migrations\202005140713397_add_RecieverWareHouseCode.Designer.cs">
-      <DependentUpon>202005140713397_add_RecieverWareHouseCode.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202005140811047_AddNbcDeclarationTypes.cs" />
     <Compile Include="Migrations\202005140811047_AddNbcDeclarationTypes.Designer.cs">
       <DependentUpon>202005140811047_AddNbcDeclarationTypes.cs</DependentUpon>
@@ -591,6 +587,10 @@
     <Compile Include="Migrations\202005140836536_ExportChanges.cs" />
     <Compile Include="Migrations\202005140836536_ExportChanges.Designer.cs">
       <DependentUpon>202005140836536_ExportChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005141842395_addRecieverWareHouseCode.cs" />
+    <Compile Include="Migrations\202005141842395_addRecieverWareHouseCode.Designer.cs">
+      <DependentUpon>202005141842395_addRecieverWareHouseCode.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1024,8 +1024,8 @@
     <EmbeddedResource Include="Migrations\202005140836536_ExportChanges.resx">
       <DependentUpon>202005140836536_ExportChanges.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005140713397_add_RecieverWareHouseCode.resx">
-      <DependentUpon>202005140713397_add_RecieverWareHouseCode.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005141842395_addRecieverWareHouseCode.resx">
+      <DependentUpon>202005141842395_addRecieverWareHouseCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
