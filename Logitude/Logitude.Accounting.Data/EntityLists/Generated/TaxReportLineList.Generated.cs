@@ -64,6 +64,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool IsExternalLine  { get; set; }
        [DataMember]
        public decimal? TotalInvoiceAmount  { get; set; }
+       [DataMember]
+       public string OriginalReference  { get; set; }
    }
 
 }

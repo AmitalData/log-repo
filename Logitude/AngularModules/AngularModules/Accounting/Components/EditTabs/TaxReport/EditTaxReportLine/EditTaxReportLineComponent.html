@@ -30,7 +30,24 @@
                                 </td>
                                 <td><div></div></td>
                             </tr>
+                            <!-- LineTypeCode -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'LineTypeCode'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
 
+                                <td>
+                                    <LogLov [ObjectFieldName]="'LineTypeCode'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'TaxReportLineType'"
+                                            [QueryFilterItems]="TypeFilterItems"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
                             <!-- VatNumber -->
                             <tr class="FormFieldRow">
                                 <td>
@@ -51,7 +68,7 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'Reference'" [InputType]="'text'" [DataContext]="DataContext"
+                                    <LogTextBox [ObjectFieldName]="'Reference'" [InputType]="'text'" [DataContext]="DataContext" [Text]="Reference"
                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td><div></div></td>
