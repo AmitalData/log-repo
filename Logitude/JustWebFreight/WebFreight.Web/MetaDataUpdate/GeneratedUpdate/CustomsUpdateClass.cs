@@ -277,6 +277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		MeasurmentUnitUpdateClass  MeasurmentUnitUpdateClass = new MeasurmentUnitUpdateClass();
 		ModificationAndDiscountTypeUpdateClass  ModificationAndDiscountTypeUpdateClass = new ModificationAndDiscountTypeUpdateClass();
 		MorningMessageTypeUpdateClass  MorningMessageTypeUpdateClass = new MorningMessageTypeUpdateClass();
+		NbcDeclarationTypeUpdateClass  NbcDeclarationTypeUpdateClass = new NbcDeclarationTypeUpdateClass();
 		NotificationUpdateClass  NotificationUpdateClass = new NotificationUpdateClass();
 		NotificationDefinitionUpdateClass  NotificationDefinitionUpdateClass = new NotificationDefinitionUpdateClass();
 		NotificationReplyUpdateClass  NotificationReplyUpdateClass = new NotificationReplyUpdateClass();
@@ -876,6 +877,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ModificationAndDiscountTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   MorningMessageTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
+	   	   NbcDeclarationTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   NotificationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
@@ -1531,6 +1534,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   MorningMessageTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   NbcDeclarationTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   NotificationUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   NotificationDefinitionUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -2183,6 +2188,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ModificationAndDiscountTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   MorningMessageTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
+	   	   NbcDeclarationTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   NotificationUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
@@ -2837,6 +2844,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   MorningMessageTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   NbcDeclarationTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   NotificationUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   NotificationDefinitionUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -3489,6 +3498,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ModificationAndDiscountTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   MorningMessageTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   NbcDeclarationTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   NotificationUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
@@ -4143,6 +4154,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   MorningMessageTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
+	   	   NbcDeclarationTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
+	
 	   	   NotificationUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
 	
 	   	   NotificationDefinitionUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext);
@@ -4795,6 +4808,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ModificationAndDiscountTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   MorningMessageTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   NbcDeclarationTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   NotificationUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
@@ -5449,6 +5464,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   MorningMessageTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   NbcDeclarationTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   NotificationUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   NotificationDefinitionUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -5688,6 +5705,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllClosedTables()
         {
    
+	   
 	   
 	   
 	   

@@ -76,6 +76,7 @@
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationReferantDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SuppInvoiceItemsAbachStatementPM.Generated.cs" />
