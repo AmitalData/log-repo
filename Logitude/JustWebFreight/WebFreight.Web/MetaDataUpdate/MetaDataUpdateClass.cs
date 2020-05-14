@@ -65886,7 +65886,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     DisplayInList = zeroObject.DisplayInList,
                     DisplayInLookUpIndex = zeroObject.DisplayInLookUpIndex,
                     DisplayInSearchWindowFilters = zeroObject.DisplayInSearchWindowFilters,
-                    DisplayInSearchWindowFiltersIndex = zeroObject.DisplayInSearchWindowFiltersIndex,
+                    SearchWindowFiltersIndex = zeroObject.DisplayInSearchWindowFiltersIndex,
                     DisplayInSearchWindowList = zeroObject.DisplayInSearchWindowList,
                     DisplayInSearchWindowListIndex = zeroObject.DisplayInSearchWindowListIndex,
                     DisplayOnLookUp = zeroObject.DisplayOnLookUp,

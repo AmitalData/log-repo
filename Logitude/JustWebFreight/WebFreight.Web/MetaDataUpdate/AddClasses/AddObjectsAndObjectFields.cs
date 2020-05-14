@@ -569,7 +569,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.UniqueField = objectFieldDetails.UniqueField;
                 newObjectField.ShortNameTextCodeId = fullFieldTextCode != null ? fullFieldTextCode.Id : null;
                 newObjectField.ShortNameTextCodeCode = fullFieldTextCode != null ? fullFieldTextCode.Code : null;
-                newObjectField.DisplayInSearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
+                newObjectField.SearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
                 newObjectField.DisplayInSearchWindowListIndex = objectFieldDetails.DisplayInSearchWindowListIndex;
                 newObjectField.IsMulti = objectFieldDetails.IsMulti;
                 newObjectField.MultiTableId = objectFieldDetails.MultiTableId;
@@ -608,7 +608,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.CanAutomateSetValue = objectFieldDetails.CanAutomateSetValue;
                 newObjectField.CopyToDW = objectFieldDetails.CopyToDW;
 
-                newObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
+                newObjectField.AllowedInCustFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
                 newObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 newObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
                 newObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
@@ -661,7 +661,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.UniqueField = objectFieldDetails.UniqueField;
                 updatedObjectField.DisplayOnLookUp = objectFieldDetails.DisplayOnLookUp;
                 updatedObjectField.DisplayOnLookUpLocal = objectFieldDetails.DisplayOnLookUpLocal;
-                updatedObjectField.DisplayInSearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
+                updatedObjectField.SearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
                 updatedObjectField.DisplayInSearchWindowListIndex = objectFieldDetails.DisplayInSearchWindowListIndex;
                 updatedObjectField.IsMulti = objectFieldDetails.IsMulti;
                 updatedObjectField.MultiTableId = objectFieldDetails.MultiTableId;
@@ -702,7 +702,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.CanAutomateSetValue = objectFieldDetails.CanAutomateSetValue;
                 updatedObjectField.CopyToDW = objectFieldDetails.CopyToDW;
 
-                updatedObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
+                updatedObjectField.AllowedInCustFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
                 updatedObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 updatedObjectField.Code = objectFieldDetails.Code;
                 updatedObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
@@ -1209,7 +1209,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.UniqueField = objectFieldDetails.UniqueField;
                 newObjectField.ShortNameTextCodeId = fullFieldTextCode != null ? fullFieldTextCode.Id : null;
                 newObjectField.ShortNameTextCodeCode = fullFieldTextCode != null ? fullFieldTextCode.Code : null;
-                newObjectField.DisplayInSearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
+                newObjectField.SearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
                 newObjectField.DisplayInSearchWindowListIndex = objectFieldDetails.DisplayInSearchWindowListIndex;
                 newObjectField.IsMulti = objectFieldDetails.IsMulti;
                 newObjectField.MultiTableId = objectFieldDetails.MultiTableId;
@@ -1248,7 +1248,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.CanAutomateSetValue = objectFieldDetails.CanAutomateSetValue;
                 newObjectField.CopyToDW = objectFieldDetails.CopyToDW;
 
-                newObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
+                newObjectField.AllowedInCustFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
                 newObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 newObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
                 newObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
@@ -1301,7 +1301,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.UniqueField = objectFieldDetails.UniqueField;
                 updatedObjectField.DisplayOnLookUp = objectFieldDetails.DisplayOnLookUp;
                 updatedObjectField.DisplayOnLookUpLocal = objectFieldDetails.DisplayOnLookUpLocal;
-                updatedObjectField.DisplayInSearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
+                updatedObjectField.SearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
                 updatedObjectField.DisplayInSearchWindowListIndex = objectFieldDetails.DisplayInSearchWindowListIndex;
                 updatedObjectField.IsMulti = objectFieldDetails.IsMulti;
                 updatedObjectField.MultiTableId = objectFieldDetails.MultiTableId;
@@ -1342,7 +1342,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.CanAutomateSetValue = objectFieldDetails.CanAutomateSetValue;
                 updatedObjectField.CopyToDW = objectFieldDetails.CopyToDW;
 
-                updatedObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
+                updatedObjectField.AllowedInCustFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
                 updatedObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 updatedObjectField.Code = objectFieldDetails.Code;
                 updatedObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
@@ -1800,7 +1800,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             newObjectField.UniqueField = objectFieldDetails.UniqueField;
             newObjectField.ShortNameTextCodeId = fullFieldTextCode != null ? fullFieldTextCode.Id : null;
             newObjectField.ShortNameTextCodeCode = fullFieldTextCode != null ? fullFieldTextCode.Code : null;
-            newObjectField.DisplayInSearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
+            newObjectField.SearchWindowFiltersIndex = objectFieldDetails.DisplayInSearchWindowFiltersIndex;
             newObjectField.DisplayInSearchWindowListIndex = objectFieldDetails.DisplayInSearchWindowListIndex;
             newObjectField.IsMulti = objectFieldDetails.IsMulti;
             newObjectField.MultiTableId = objectFieldDetails.MultiTableId;
@@ -1839,7 +1839,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             newObjectField.CanAutomateSetValue = objectFieldDetails.CanAutomateSetValue;
             newObjectField.CopyToDW = objectFieldDetails.CopyToDW;
 
-            newObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
+            newObjectField.AllowedInCustFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
             newObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
             newObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
             newObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
