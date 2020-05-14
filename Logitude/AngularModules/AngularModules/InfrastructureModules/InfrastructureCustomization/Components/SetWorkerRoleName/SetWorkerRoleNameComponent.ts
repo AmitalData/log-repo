@@ -51,20 +51,7 @@ export class SetWorkerRoleNameComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
             SessionLocator.WorkerRoleName = this.EntityPM.Name;
-            //this.CurrentSession.CloseCurrentWindow();
-            var myService: WorkerRoleNameExtendedPMService = new WorkerRoleNameExtendedPMService();
-            myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                if (myResponse) {
-                    if (!myResponse.HasError) {
-                        this.CurrentSession.CloseCurrentWindow();
-                    }
-
-                    else {
-                        this.ValidationErrorsList = myResponse.ErrorsArray;
-                    }
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            });
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 }
