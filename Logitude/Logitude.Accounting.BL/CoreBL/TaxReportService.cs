@@ -124,6 +124,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 VatNumber = vatNumber,
                                 Reference = reference ,
+                                OriginalReference = reference,
                                 ReferecneGroup = referenceGroup,
                                 ReferenceDate = invoice.InvoiceDate,
                                 JournalId = a.Id,
@@ -238,6 +239,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     VatNumber = VatNumber,
                     Reference = reference,
+                    OriginalReference = reference,
                     ReferenceDate = a.ReferenceDate,
                     ReferecneGroup = referenceGroup,
                     JournalId = a.JournalId,

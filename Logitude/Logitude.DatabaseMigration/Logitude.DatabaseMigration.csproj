@@ -2375,6 +2375,10 @@
     <Compile Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.Designer.cs">
       <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005140933249_TaxReportLineOriginalReferenceFieldMigration.cs" />
+    <Compile Include="Migrations\202005140933249_TaxReportLineOriginalReferenceFieldMigration.Designer.cs">
+      <DependentUpon>202005140933249_TaxReportLineOriginalReferenceFieldMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4289,6 +4293,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.resx">
       <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005140933249_TaxReportLineOriginalReferenceFieldMigration.resx">
+      <DependentUpon>202005140933249_TaxReportLineOriginalReferenceFieldMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

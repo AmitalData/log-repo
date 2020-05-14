@@ -150,7 +150,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
         if (this.LineTypeCode == "I") {
           this.UIProperties.SetEnabled("Reference", this.ObjectTableName, true);
         }
-        else { this.Reference = this.OldReference; }
+        else { this.Reference = this.TaxReportLinePM.OriginalReference; }
       }
       
         

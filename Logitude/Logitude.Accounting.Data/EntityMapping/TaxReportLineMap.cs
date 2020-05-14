@@ -64,6 +64,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.IsExternalLine).HasColumnName("IsExternalLine");
 
             this.Property(t => t.TotalInvoiceAmount).HasColumnName("TotalInvoiceAmount").HasPrecision(16, 2);
+
+            this.Property(t => t.OriginalReference).HasColumnName("OriginalReference").HasMaxLength(20).IsUnicode(false);
         }
     }
 }
