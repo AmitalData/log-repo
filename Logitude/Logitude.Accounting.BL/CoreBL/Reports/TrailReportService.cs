@@ -995,6 +995,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             set { _GLAccountLevel_ChartOfAccountsIdList = value; }
         }
+
+        public bool DoNotShowCardWithLocalCloseBalanceEqualZero { get;  set; }
         #endregion
 
     }

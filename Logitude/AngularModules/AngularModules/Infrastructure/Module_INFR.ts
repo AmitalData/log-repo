@@ -2,6 +2,7 @@ import {NgModule}      from '@angular/core';
 import {ControlsModule} from '../Controls/Module_CTRL';
 import {Pipes, Directives, Components, ControlsComponents, ModuleDeclarations} from './ModuleDeclarations';
 import {ModuleProviders} from './ModuleProviders';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 // Services
@@ -18,7 +19,7 @@ import {LogitudeErrorHandler} from './Utilities/LogitudeErrorHandler'
 import {ErrorHandler} from '@angular/core';
 
 @NgModule({
-    imports: [ControlsModule],
+    imports: [ControlsModule, ScrollingModule],
   declarations: [...Pipes, ...Directives, ...Components, ...ControlsComponents],
     exports: [...Pipes, ...Directives, ...ControlsComponents, ControlsModule],
     entryComponents: [...Components, ...ControlsComponents],

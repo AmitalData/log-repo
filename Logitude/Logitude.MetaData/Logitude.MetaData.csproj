@@ -183,6 +183,7 @@
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateCustomerActualDataProcedure.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateTenantCustomersActualDataProcedure.dxml" />
     <None Include="DBOthers\CommonDataModel\Views\CustomersDataView.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\IdCounter GetIdRange Procedure.dxml" />
     <None Include="DBOthers\InvoiceModel\Views\AgingReportInvoiceDataView.dxml" />
     <None Include="DBOthers\InvoiceModel\Views\APInvoiceAgingReportDataView.dxml" />
     <None Include="DBOthers\QuoteModel\Views\QuoteFollowUpDataView.dxml" />
@@ -554,6 +555,7 @@
     <None Include="DBTables\InfrastructureModel\TriggerType.dxml" />
     <None Include="DBTables\InfrastructureModel\ValidationType.dxml" />
     <None Include="DBTables\InfrastructureModel\VolumeUnit.dxml" />
+    <None Include="DBTables\InfrastructureModel\WorkerRoleName.dxml" />
     <None Include="DBTables\InvoiceModel\Account.dxml" />
     <None Include="DBTables\InvoiceModel\AccountingPaymentMethod.dxml" />
     <None Include="DBTables\InvoiceModel\AccountingSystemsSetting.dxml" />
@@ -701,6 +703,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplateSectionType.lxml" />
     <None Include="EntityFiles\CommonDataModel\SharedLogistics.lxml" />

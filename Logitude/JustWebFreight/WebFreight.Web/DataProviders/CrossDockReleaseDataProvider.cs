@@ -61,7 +61,9 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeContactPersonEmail { get; set; }
         public double? ValueofGoods { get; set; }
         public string ValueofGoodsCurrency { get; set; }
-        public string Incoterm { get; set; }
+        public string IncotermCode { get; set; }
+        public string IncotermName { get; set; }
+
         public string GeneralDescriptionofGoods { get; set; }
         public string ShipperVATNumber { get; set; }
         public string ShipperContactPersonName { get; set; }

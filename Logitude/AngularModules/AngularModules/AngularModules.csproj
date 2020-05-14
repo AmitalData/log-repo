@@ -374,6 +374,7 @@
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Workspaces\TasksWorkspaceComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureComputingPartner\Components\EditTranslationComputingPartners.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentsFiling\DocumentsFilingGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonFilingInbox\Components\ChooseEntityComponent.html" />
     <Content Include="CommonModules\CommonFilingInbox\Components\FilingInboxWorkspaceComponent.html" />
@@ -1083,6 +1084,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\AccountingSettings\AccountingAdvancedAPSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\CreateTenant\CreateTenantComponent.ts" />
@@ -1096,6 +1098,8 @@
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\ImageLibraryComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\LogGridComponent\LogGridComponentV2.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\LogGridComponent\VirtualRowControllerV2.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\LogTextBoxComponentV3.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\LogToolTip\LogToolTipComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\MultilineTextBoxWindow.ts" />
@@ -1245,6 +1249,7 @@
     <TypeScriptCompile Include="Infrastructure\Helpers\DetectUserInActivity.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\ImageLibraryComponent.html" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\LogGridComponent\LogGridComponentV2.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\LogTextBoxComponentV3.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\LogToolTip\LogToolTipComponent.css" />
     <Content Include="Infrastructure\Components\LogitudeComponents\LogToolTip\LogToolTipComponent.html" />

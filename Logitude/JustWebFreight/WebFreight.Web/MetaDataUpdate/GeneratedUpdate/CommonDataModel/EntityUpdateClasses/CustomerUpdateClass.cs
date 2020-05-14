@@ -141,7 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -206,7 +206,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InvoiceCurrencyId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -270,7 +270,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CityName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -335,7 +335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LastShipmentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -400,7 +400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Activity",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -465,7 +465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Seniority",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -527,7 +527,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CustomersByLastActivity",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -590,7 +590,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "RankId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -655,7 +655,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "DaysFromLastShipment",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -717,7 +717,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "StartWorkingManuallySet",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -782,7 +782,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "StartWorkingDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -844,7 +844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PhoneNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -906,7 +906,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "FaxNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -969,7 +969,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CityWithCountry",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1034,7 +1034,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "RankCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1098,7 +1098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BillToName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1161,7 +1161,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "VatTypeId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1223,7 +1223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BankName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1285,7 +1285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BankAddress",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1347,7 +1347,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Swift",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1409,7 +1409,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AccountNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1471,7 +1471,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IBANNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1536,7 +1536,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SharedLogisticsInvitationStatusName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1600,7 +1600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LastLoginDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1664,7 +1664,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InvitationDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1726,7 +1726,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreditLimit",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1789,7 +1789,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IndustryId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1852,7 +1852,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LeadSourceId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1915,7 +1915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CollectorId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1978,7 +1978,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ClassifierId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2042,7 +2042,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IndustryName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2105,7 +2105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ATTN",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2167,7 +2167,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "MyCustomers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2232,7 +2232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2296,7 +2296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LeadDescription",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2358,7 +2358,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "MyCustomersAsAccountManager",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2422,7 +2422,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CollectorName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2486,7 +2486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ClassifierName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2549,7 +2549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CustomsAgentId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2612,7 +2612,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ForwarderId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2675,7 +2675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "MediatorId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2736,7 +2736,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "City_Potential",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2797,7 +2797,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Address1_Potential",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2858,7 +2858,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Address2_Potential",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2920,7 +2920,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CountryId_Potential",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2983,7 +2983,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "State_Potential",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3044,7 +3044,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ZipCode_Potential",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3105,7 +3105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PhoneNumber_Potential",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3166,7 +3166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "FaxNumber_Potential",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3227,7 +3227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ATTN_Potential",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3291,7 +3291,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LeadSourceName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3356,7 +3356,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CustomerStatusName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3420,7 +3420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PrimaryContactName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3482,7 +3482,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PrimaryContactPhone",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3544,7 +3544,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CodeMyCustomer",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3606,7 +3606,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ReadyCustomers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3671,7 +3671,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ReadyForActivationDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3735,7 +3735,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsCustomer",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3797,7 +3797,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ShippersAndConsignees",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3860,7 +3860,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CustomerStatusCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3920,7 +3920,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CustomerProducts",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3983,7 +3983,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreatedByUserId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4046,7 +4046,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "UpdatedByUserId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4110,7 +4110,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreatedByUserName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4174,7 +4174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "UpdatedByUserName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4237,7 +4237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PrimaryContactId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4300,7 +4300,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "RegionId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4363,7 +4363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "RegionName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4426,7 +4426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CustomerSizeId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4488,7 +4488,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BusinessUnitId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4552,7 +4552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CountryName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4614,7 +4614,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PotentialCustomers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4676,7 +4676,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ActiveCustomers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4738,7 +4738,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InactiveCustomers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4803,7 +4803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "UpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4868,7 +4868,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LastCallDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4933,7 +4933,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LastMeetingDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4998,7 +4998,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LastOpportunityDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5063,7 +5063,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "FirstInvoiceDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5128,7 +5128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "FirstShipmentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5193,7 +5193,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LastQuoteDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5258,7 +5258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LastInteractionDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5321,7 +5321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CountryId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5384,7 +5384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5449,7 +5449,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ProductsWatch",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5512,7 +5512,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SalesmanBusinessUnitId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5577,7 +5577,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ActivityWatch",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5641,7 +5641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PrimaryContactEmail",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5705,7 +5705,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InvoiceCurrencyCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5767,7 +5767,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "KnownConsignor",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5829,7 +5829,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SharedLogisticsCustomers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5891,7 +5891,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "KCExpirationDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5955,7 +5955,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6020,7 +6020,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6084,7 +6084,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6146,7 +6146,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ComputedLocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6210,7 +6210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6273,7 +6273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AccountManagerUserId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6336,7 +6336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SalesmanUserId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6400,7 +6400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Website",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6465,7 +6465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BillToId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6529,7 +6529,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "VatNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6592,7 +6592,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AccountingCard",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6655,7 +6655,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PaymentTermId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6719,7 +6719,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PaymentTermName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6783,7 +6783,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AccountManagerUserEnglishName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6847,7 +6847,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SalesmanUserName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6912,7 +6912,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "RankName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -6977,7 +6977,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Notes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7038,7 +7038,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SATForeignRFC",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7105,7 +7105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7172,7 +7172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7232,7 +7232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7295,7 +7295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BlockNewInvoiceCreation",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7358,7 +7358,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BlockNewShipmentCreation",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7418,7 +7418,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ExternalId2",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7480,7 +7480,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SupportNotes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7542,7 +7542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ZipCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7604,7 +7604,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Address1",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7666,7 +7666,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Address2",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7728,7 +7728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Phone",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7790,7 +7790,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IRSPlace",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7852,7 +7852,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IRSNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7916,7 +7916,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CustomerSizeName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -7978,7 +7978,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "RequestedAirlines",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8040,7 +8040,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "RegisteredAirlines",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8102,7 +8102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PendingAirlines",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8166,7 +8166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ReceivablesAccountingCard",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8230,7 +8230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PayablesAccountingCard",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8294,7 +8294,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CompetitorFields",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8356,7 +8356,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IsCreditLimitEnabled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8421,7 +8421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreditLimitAmount",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8485,7 +8485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreditLimitOpenBalance",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8549,7 +8549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CreditLimitWarningPercentage",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8611,7 +8611,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ExternalAccountingBusinessArea",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8674,7 +8674,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8738,7 +8738,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ActivationDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8802,7 +8802,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InactiveDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8866,7 +8866,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ActivationRequestDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8930,7 +8930,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ActivatedByUserName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -8994,7 +8994,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SetAsInactiveByName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -9058,7 +9058,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ActivationRequestedByUserName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -9118,7 +9118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -9178,7 +9178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -9238,7 +9238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -9297,7 +9297,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -9353,370 +9353,381 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CustomerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CLNT", Name = "Customers" }, queryGroupRepository);
-						QueryGroup CustomerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9eaa", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CustomerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CLNT", Name = "Customers" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CustomerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "9eaa", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CustomerObjectTable = objectTables.ContainsKey("Customer") ? objectTables["Customer"] : null;
             if (CustomerObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CustomerObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customer" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CustomerObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customer").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CustomerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.CustomersByLastShipment", DefaultText = @"By Last Shipment",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BYLASTSHIPMETN", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ByLastShipment", NameTextCodeDefaultText = "By Last Shipment", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.CustomersByLastShipment", DefaultText = @"By Last Shipment",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BYLASTSHIPMETN", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ByLastShipment", NameTextCodeDefaultText = "By Last Shipment", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippersAndConsignees.Q.ShippersAndConsignees", DefaultText = @"Shippers and Consignees",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPERSANDCONSIGNEES", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ShippersAndConsignees", NameTextCodeDefaultText = "Shippers And Consignees", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippersAndConsignees.Q.ShippersAndConsignees", DefaultText = @"Shippers and Consignees",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPERSANDCONSIGNEES", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ShippersAndConsignees", NameTextCodeDefaultText = "Shippers And Consignees", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.SharedLogisticsCustomers", DefaultText = @"Shared Logistics Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDLOGISTICSCUSTOMERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SharedLogisticsCustomers", NameTextCodeDefaultText = "Shared Logistics Customers", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.SharedLogisticsCustomers", DefaultText = @"Shared Logistics Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDLOGISTICSCUSTOMERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SharedLogisticsCustomers", NameTextCodeDefaultText = "Shared Logistics Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.Customers", DefaultText = @"Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Customers", NameTextCodeDefaultText = "Customers", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.Customers", DefaultText = @"Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Customers", NameTextCodeDefaultText = "Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomersAccMngr", DefaultText = @"My Customers (as Account Manager)",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MYCUSTOMRERSASACCMNGR", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.MyCustomersAsAccMngr", NameTextCodeDefaultText = "My customers (as Account Manager)", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomersAccMngr", DefaultText = @"My Customers (as Account Manager)",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MYCUSTOMRERSASACCMNGR", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.MyCustomersAsAccMngr", NameTextCodeDefaultText = "My customers (as Account Manager)", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomers", DefaultText = @"My Customers (as Salesman)",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.MyCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.MyCustomers", NameTextCodeDefaultText = "My customers (as Salesman)", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.MyCustomers", DefaultText = @"My Customers (as Salesman)",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.MyCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.MyCustomers", NameTextCodeDefaultText = "My customers (as Salesman)", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ReadyCustomers", DefaultText = @"Waiting for Activation",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.ReadyCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ReadyCustomers", NameTextCodeDefaultText = "Waiting for Activation", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ReadyCustomers", DefaultText = @"Waiting for Activation",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.ReadyCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ReadyCustomers", NameTextCodeDefaultText = "Waiting for Activation", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.PotentialCustomers", DefaultText = @"Potential Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.PotentialCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.PotentialCustomers", NameTextCodeDefaultText = "Potential Customers", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.PotentialCustomers", DefaultText = @"Potential Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.PotentialCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.PotentialCustomers", NameTextCodeDefaultText = "Potential Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ActiveCustomers", DefaultText = @"Active Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.ActiveCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ActiveCustomers", NameTextCodeDefaultText = "Active Customer", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.ActiveCustomers", DefaultText = @"Active Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.ActiveCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ActiveCustomers", NameTextCodeDefaultText = "Active Customer", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.InactiveCustomers", DefaultText = @"Inactive Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.InactiveCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.InactiveCustomers", NameTextCodeDefaultText = "Inactive Customers", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.InactiveCustomers", DefaultText = @"Inactive Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.InactiveCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.InactiveCustomers", NameTextCodeDefaultText = "Inactive Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ByLastShipmentQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_0.Id, NameTextCodeCode = CustomerTextCode_0.Code, ObjectTableName = "Customer", Code = "By Last Shipment",  QueryGroupCode = "CLNT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_0.Id,FeatureUniqeCode= CustomerFeature_0.FeatureUniqeCode, DefaultSortName = "LastShipmentDate", DefaultSortDirection = "Descending", Perspective = "customers" }, queriesRepository, tenantQueries);
+			  Query ByLastShipmentQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_0.Id, NameTextCodeCode = CustomerTextCode_0.Code, ObjectTableName = "Customer", Code = "By Last Shipment",  QueryGroupCode = "CLNT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_0.Id,FeatureUniqeCode= CustomerFeature_0.FeatureUniqeCode, DefaultSortName = "LastShipmentDate", DefaultSortDirection = "Descending", Perspective = "customers" }, addedQueries);
 	
-			 QueryColumn ByLastShipmentQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByLastShipmentQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ByLastShipmentQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByLastShipmentQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ByLastShipmentQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByLastShipmentQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ByLastShipmentQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByLastShipmentQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.CityName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ByLastShipmentQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByLastShipmentQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ByLastShipmentQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByLastShipmentQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ByLastShipmentQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByLastShipmentQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.LastShipmentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter ByLastShipmentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ByLastShipmentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query ShippersAndConsigneesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_1.Id, NameTextCodeCode = CustomerTextCode_1.Code, ObjectTableName = "Customer", Code = "ShippersAndConsignees",  QueryGroupCode = "CLNT", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_1.Id,FeatureUniqeCode= CustomerFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "ShippersAndConsignees" }, queriesRepository, tenantQueries);
+			  Query ShippersAndConsigneesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_1.Id, NameTextCodeCode = CustomerTextCode_1.Code, ObjectTableName = "Customer", Code = "ShippersAndConsignees",  QueryGroupCode = "CLNT", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_1.Id,FeatureUniqeCode= CustomerFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "ShippersAndConsignees" }, addedQueries);
 	
-			 QueryColumn ShippersAndConsigneesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.VatNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.ReceivablesAccountingCard" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "AccountManagerUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "AccountManagerUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customer.AccountManagerUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "RankName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "RankName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.RankName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Website" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Website" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customer.Website" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customer.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customer.Notes" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customer.BillToName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ShippersAndConsigneesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ShippersAndConsigneesQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customer.IsCustomer" , ColumnWidth = 100 }, addedQueryColumns);
   
 	      
 
 			  Query SharedLogisticsCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_2.Id, NameTextCodeCode = CustomerTextCode_2.Code, ObjectTableName = "Customer", Code = "Shared Logistics Customers",  EditWizardName = "SharedLogistics.Views.InviteCustomersControl",
-			   QueryGroupCode = "CLNT", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerFeature_2.Id,FeatureUniqeCode= CustomerFeature_2.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Descending", Perspective = "customers" }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "CLNT", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerFeature_2.Id,FeatureUniqeCode= CustomerFeature_2.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Descending", Perspective = "customers" }, addedQueries);
 	
-			 QueryColumn SharedLogisticsCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SharedLogisticsInvitationStatusName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SharedLogisticsInvitationStatusName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.SharedLogisticsInvitationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SharedLogisticsCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SharedLogisticsCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SharedLogisticsCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SharedLogisticsCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SharedLogisticsCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customer.LastShipmentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SharedLogisticsCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SharedLogisticsCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SharedLogisticsCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.LastLoginDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter SharedLogisticsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SharedLogisticsCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SharedLogisticsCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter SharedLogisticsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.SharedLogisticsCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query CustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_3.Id, NameTextCodeCode = CustomerTextCode_3.Code, ObjectTableName = "Customer", Code = "Customers",  QueryGroupCode = "CLNT", IndexOrder = 3, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_3.Id,FeatureUniqeCode= CustomerFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, queriesRepository, tenantQueries);
+			  Query CustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_3.Id, NameTextCodeCode = CustomerTextCode_3.Code, ObjectTableName = "Customer", Code = "Customers",  QueryGroupCode = "CLNT", IndexOrder = 3, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_3.Id,FeatureUniqeCode= CustomerFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
-			 QueryColumn CustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CreditLimitAmount" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CreditLimitAmount" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.CreditLimitAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CreditLimitWarningPercentage" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CreditLimitWarningPercentage" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.CreditLimitWarningPercentage" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CreditLimitOpenBalance" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CreditLimitOpenBalance" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.CreditLimitOpenBalance" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "BlockNewShipmentCreation" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "BlockNewShipmentCreation" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.BlockNewShipmentCreation" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "BlockNewInvoiceCreation" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "BlockNewInvoiceCreation" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customer.BlockNewInvoiceCreation" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customer.VatNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customer.ReceivablesAccountingCard" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "AccountManagerUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "AccountManagerUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customer.AccountManagerUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "RankName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "RankName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customer.RankName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Website" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Website" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customer.Website" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 14, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customer.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CustomersQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 15, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomersQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customer.Notes" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter CustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query Customer_Q_MyCustomersAccMngrQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_4.Id, NameTextCodeCode = CustomerTextCode_4.Code, ObjectTableName = "Customer", Code = "Customer.Q.MyCustomersAccMngr",  QueryGroupCode = "CLNT", IndexOrder = 4, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_4.Id,FeatureUniqeCode= CustomerFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, queriesRepository, tenantQueries);
+			  Query Customer_Q_MyCustomersAccMngrQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_4.Id, NameTextCodeCode = CustomerTextCode_4.Code, ObjectTableName = "Customer", Code = "Customer.Q.MyCustomersAccMngr",  QueryGroupCode = "CLNT", IndexOrder = 4, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_4.Id,FeatureUniqeCode= CustomerFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
-			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customer.CityName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.LastShipmentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customer.LastLoginDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SharedLogisticsInvitationStatusName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SharedLogisticsInvitationStatusName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customer.SharedLogisticsInvitationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "MyCustomersAsAccountManager" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "MyCustomersAsAccountManager" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.MyCustomersAsAccountManager", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query Customer_MyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_5.Id, NameTextCodeCode = CustomerTextCode_5.Code, ObjectTableName = "Customer", Code = "Customer.MyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 5, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_5.Id,FeatureUniqeCode= CustomerFeature_5.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, queriesRepository, tenantQueries);
+			  Query Customer_MyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_5.Id, NameTextCodeCode = CustomerTextCode_5.Code, ObjectTableName = "Customer", Code = "Customer.MyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 5, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_5.Id,FeatureUniqeCode= CustomerFeature_5.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
-			 QueryColumn Customer_MyCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_MyCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_MyCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_MyCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_MyCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_MyCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_MyCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_MyCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_MyCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_MyCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_MyCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_MyCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customer.CityName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_MyCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_MyCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_MyCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_MyCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.LastShipmentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_MyCustomersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_MyCustomersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customer.LastLoginDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_MyCustomersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SharedLogisticsInvitationStatusName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SharedLogisticsInvitationStatusName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_MyCustomersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customer.SharedLogisticsInvitationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_MyCustomersQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_MyCustomersQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_MyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "MyCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "MyCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_MyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.MyCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter Customer_MyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_MyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query Customer_ReadyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_6.Id, NameTextCodeCode = CustomerTextCode_6.Code, ObjectTableName = "Customer", Code = "Customer.ReadyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 6, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_6.Id,FeatureUniqeCode= CustomerFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, queriesRepository, tenantQueries);
+			  Query Customer_ReadyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_6.Id, NameTextCodeCode = CustomerTextCode_6.Code, ObjectTableName = "Customer", Code = "Customer.ReadyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 6, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_6.Id,FeatureUniqeCode= CustomerFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
-			 QueryColumn Customer_ReadyCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ReadyCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ReadyCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ReadyCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ReadyCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ReadyCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ReadyCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ReadyCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ReadyCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "ReadyForActivationDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "ReadyForActivationDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ReadyCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.ReadyForActivationDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ReadyCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ReadyCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customer.CityName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ReadyCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ReadyCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ReadyCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ReadyCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.LastShipmentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ReadyCustomersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ReadyCustomersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "ReadyCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "ReadyCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.ReadyCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.IsCustomer", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query Customer_PotentialCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_7.Id, NameTextCodeCode = CustomerTextCode_7.Code, ObjectTableName = "Customer", Code = "Customer.PotentialCustomers",  QueryGroupCode = "CLNT", IndexOrder = 7, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_7.Id,FeatureUniqeCode= CustomerFeature_7.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, queriesRepository, tenantQueries);
+			  Query Customer_PotentialCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_7.Id, NameTextCodeCode = CustomerTextCode_7.Code, ObjectTableName = "Customer", Code = "Customer.PotentialCustomers",  QueryGroupCode = "CLNT", IndexOrder = 7, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_7.Id,FeatureUniqeCode= CustomerFeature_7.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
-			 QueryColumn Customer_PotentialCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_PotentialCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_PotentialCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_PotentialCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_PotentialCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_PotentialCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_PotentialCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_PotentialCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_PotentialCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_PotentialCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.CityName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_PotentialCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_PotentialCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_PotentialCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_PotentialCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.LastShipmentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_PotentialCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_PotentialCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_PotentialCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "PotentialCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "PotentialCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_PotentialCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.PotentialCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query Customer_ActiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_8.Id, NameTextCodeCode = CustomerTextCode_8.Code, ObjectTableName = "Customer", Code = "Customer.ActiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 8, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_8.Id,FeatureUniqeCode= CustomerFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, queriesRepository, tenantQueries);
+			  Query Customer_ActiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_8.Id, NameTextCodeCode = CustomerTextCode_8.Code, ObjectTableName = "Customer", Code = "Customer.ActiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 8, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_8.Id,FeatureUniqeCode= CustomerFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
-			 QueryColumn Customer_ActiveCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ActiveCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ActiveCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ActiveCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ActiveCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ActiveCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ActiveCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ActiveCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ActiveCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ActiveCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.CityName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ActiveCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ActiveCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ActiveCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ActiveCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.LastShipmentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_ActiveCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_ActiveCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_ActiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "ActiveCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "ActiveCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_ActiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.ActiveCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query Customer_InactiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_9.Id, NameTextCodeCode = CustomerTextCode_9.Code, ObjectTableName = "Customer", Code = "Customer.InactiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 9, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_9.Id,FeatureUniqeCode= CustomerFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, queriesRepository, tenantQueries);
+			  Query Customer_InactiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_9.Id, NameTextCodeCode = CustomerTextCode_9.Code, ObjectTableName = "Customer", Code = "Customer.InactiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 9, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_9.Id,FeatureUniqeCode= CustomerFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
-			 QueryColumn Customer_InactiveCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "RankCode" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_InactiveCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_InactiveCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_InactiveCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_InactiveCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_InactiveCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_InactiveCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_InactiveCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_InactiveCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CityName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_InactiveCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.CityName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_InactiveCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_InactiveCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_InactiveCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_InactiveCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customer.LastShipmentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn Customer_InactiveCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn Customer_InactiveCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customer.SalesmanUserEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter Customer_InactiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "InactiveCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "InactiveCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_InactiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customer.InactiveCustomers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
-	   
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CustomerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customer" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CustomerObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customer").ToList();
+		   //List<ObjectField> CustomerObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customer").ToList();
 		       
 	      
 
 	         Screen CustomerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customer.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomerObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomerCustomerHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CodeMyCustomer").FirstOrDefault().Id, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CodeMyCustomer").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = "Customer.CodeMyCustomer", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CityWithCountry").FirstOrDefault().Id, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CityWithCountry").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = "Customer.CityWithCountry", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate").FirstOrDefault().Id, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "StartWorkingDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = "Customer.StartWorkingDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LeadSourceName").FirstOrDefault().Id, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "LeadSourceName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = "Customer.LeadSourceName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "PrimaryContactName").FirstOrDefault().Id, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "PrimaryContactName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = "Customer.PrimaryContactName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "PrimaryContactPhone").FirstOrDefault().Id, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "PrimaryContactPhone").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = "Customer.PrimaryContactPhone", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName").FirstOrDefault().Id, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = "Customer.SalesmanUserEnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CustomerStatusName").FirstOrDefault().Id, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CustomerStatusName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = CustomerHeaderScreenScreen0.Id,ScreenCode = CustomerHeaderScreenScreen0.Code, ObjectFieldCode = "Customer.CustomerStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomerObjectTable.HeaderScreenId = CustomerHeaderScreenScreen0.Id;
 		    CustomerObjectTable.HeaderScreenCode = CustomerHeaderScreenScreen0.Code;
@@ -9726,33 +9737,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen CustomerBillingTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customer.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = CustomerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomerCustomerBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().Id, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().Id, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.PaymentTermId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().Id, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.VatTypeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().Id, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().Id, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "CreditLimitAmount").FirstOrDefault().Id, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "CreditLimitAmount").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.CreditLimitAmount", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().Id, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().Id, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().Id, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomerBillingTabScreenScreen1.Id,ScreenCode = CustomerBillingTabScreenScreen1.Code, ObjectFieldCode = "Customer.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen CustomerAccountingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customer.AccountingTabScreen", Name = "Accounting Tab Screen", ObjectTableId = CustomerObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomerCustomerAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard").FirstOrDefault().Id, ScreenId = CustomerAccountingTabScreenScreen2.Id,ScreenCode = CustomerAccountingTabScreenScreen2.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomerAccountingTabScreenScreen2.Id,ScreenCode = CustomerAccountingTabScreenScreen2.Code, ObjectFieldCode = "Customer.ReceivablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomerCustomerAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().Id, ScreenId = CustomerAccountingTabScreenScreen2.Id,ScreenCode = CustomerAccountingTabScreenScreen2.Code, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomerCustomerAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomerAccountingTabScreenScreen2.Id,ScreenCode = CustomerAccountingTabScreenScreen2.Code, ObjectFieldCode = "Customer.PayablesAccountingCard", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
@@ -9767,67 +9778,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable CustomerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customer" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomerOverviewTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Overview", DefaultText = "Overview",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerOverviewFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OVERVIEW", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Overview", NameTextCodeDefaultText = "Overview", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerOverviewFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OVERVIEW", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Overview", NameTextCodeDefaultText = "Overview", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerSalesTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Sales", DefaultText = "Sales",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerSalesFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SALES", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Sales", NameTextCodeDefaultText = "Sales", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerSalesFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SALES", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Sales", NameTextCodeDefaultText = "Sales", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerGeneralTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerGeneralFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerGeneralFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerStatisticsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Statistics", DefaultText = "Statistics",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerStatisticsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Statistics", NameTextCodeDefaultText = "Statistics", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerStatisticsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Statistics", NameTextCodeDefaultText = "Statistics", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerBillingTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerBillingFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerBillingFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerAccountingTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerAccountingFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFERE", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.AccountingTransfere", NameTextCodeDefaultText = "Accounting Transfere", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerAccountingFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFERE", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.AccountingTransfere", NameTextCodeDefaultText = "Accounting Transfere", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerAWBStockTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.AWBStock", DefaultText = "AWB Stock",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerAWBStockFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBSTOCK", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.AWBSTOCK", NameTextCodeDefaultText = "AWB Stock", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerAWBStockFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBSTOCK", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.AWBSTOCK", NameTextCodeDefaultText = "AWB Stock", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerAccountingTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Accounting_2", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerAccountingFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTING_2", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Accounting_2", NameTextCodeDefaultText = "Accounting 2", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerAccountingFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTING_2", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Accounting_2", NameTextCodeDefaultText = "Accounting 2", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerAddressesTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Addresses", DefaultText = "Addresses",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerAddressesFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerAddressesFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerContactsTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Contacts", DefaultText = "Contacts",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerContactsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerContactsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerCommitmentTextCode_TH10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Commitments", DefaultText = "Commitment",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerCommitmentFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMITMENT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Commitment", NameTextCodeDefaultText = "Commitment", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerCommitmentFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMITMENT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Commitment", NameTextCodeDefaultText = "Commitment", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerProductsTextCode_TH11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Products", DefaultText = "Products",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerProductsFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "POTENTIAL", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Potential", NameTextCodeDefaultText = "Potential", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerProductsFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "POTENTIAL", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Potential", NameTextCodeDefaultText = "Potential", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerOccasionsTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Occasions", DefaultText = "Occasions",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerOccasionsFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Tab.Occasions", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFeatures.CSOC", NameTextCodeDefaultText = "Occasions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerOccasionsFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Tab.Occasions", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFeatures.CSOC", NameTextCodeDefaultText = "Occasions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerDocsOutTextCode_TH13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerDocsOutFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerDocsOutFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerDocsInTextCode_TH14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerDocsInFeature_TH14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerDocsInFeature_TH14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
  
                  
 			   TextCode CustomerEventsTextCode_TH15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerEventsFeature_TH15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerEventsFeature_TH15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -9871,36 +9882,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable CustomerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customer" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CustomerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.PackageFeature", NameTextCodeDefaultText = "Customer Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature CustomerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
+		   Feature CustomerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
+		   Feature CustomerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
+		   Feature CustomerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.PackageFeature", NameTextCodeDefaultText = "Customer Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature CustomerFeature_SHAREDLOGISTIC = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDLOGISTIC", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SharedLogistic", NameTextCodeDefaultText = @"Shared Logistic" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_SHAREDLOGISTIC = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDLOGISTIC", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SharedLogistic", NameTextCodeDefaultText = @"Shared Logistic" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
-		   Feature CustomerFeature_CUSTOMERSALESMANBYPRODUCT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERSALESMANBYPRODUCT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CustomerSalesmanByProduct", NameTextCodeDefaultText = @"Split Customer Salesman By Product" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_CUSTOMERSALESMANBYPRODUCT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERSALESMANBYPRODUCT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CustomerSalesmanByProduct", NameTextCodeDefaultText = @"Split Customer Salesman By Product" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
-		   Feature CustomerFeature_CUSTOMERACCOUNTMANAGERBYPRODUCT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERACCOUNTMANAGERBYPRODUCT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CustomerAccountManagerByProduct", NameTextCodeDefaultText = @"Split Customer Account Manager By Product" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_CUSTOMERACCOUNTMANAGERBYPRODUCT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERACCOUNTMANAGERBYPRODUCT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CustomerAccountManagerByProduct", NameTextCodeDefaultText = @"Split Customer Account Manager By Product" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
-		   Feature CustomerFeature_CUSTOMERFORWARDERBYPRODUCT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERFORWARDERBYPRODUCT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CustomerForwarderByProduct", NameTextCodeDefaultText = @"Split Customer Forwarder By Product" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_CUSTOMERFORWARDERBYPRODUCT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERFORWARDERBYPRODUCT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CustomerForwarderByProduct", NameTextCodeDefaultText = @"Split Customer Forwarder By Product" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
-		   Feature CustomerFeature_CUSTOMERMEDIATORBYPRODUCT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERMEDIATORBYPRODUCT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CustomerMediatorByProduct", NameTextCodeDefaultText = @"Split Customer Mediator By Product" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_CUSTOMERMEDIATORBYPRODUCT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERMEDIATORBYPRODUCT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CustomerMediatorByProduct", NameTextCodeDefaultText = @"Split Customer Mediator By Product" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
-		   Feature CustomerFeature_CUSTOMERCUSTOMSAGENTBYPRODUCT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERCUSTOMSAGENTBYPRODUCT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CustomerCustomsAgentByProduct", NameTextCodeDefaultText = @"Split Customer Customs Agent By Product" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_CUSTOMERCUSTOMSAGENTBYPRODUCT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERCUSTOMSAGENTBYPRODUCT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CustomerCustomsAgentByProduct", NameTextCodeDefaultText = @"Split Customer Customs Agent By Product" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
-		   Feature CustomerFeature_QUICKSEARCHALL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUICKSEARCHALL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.QuickSearchAll", NameTextCodeDefaultText = @"Show all customers in quick search" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_QUICKSEARCHALL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUICKSEARCHALL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.QuickSearchAll", NameTextCodeDefaultText = @"Show all customers in quick search" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
-		   Feature CustomerFeature_MAINCUSTOMERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MAINCUSTOMERS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.MaintenanceCustomers", NameTextCodeDefaultText = @"Maintenance Customers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_MAINCUSTOMERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MAINCUSTOMERS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.MaintenanceCustomers", NameTextCodeDefaultText = @"Maintenance Customers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
-		   Feature CustomerFeature_NEWCUSTOMER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWCUSTOMER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.NewCustomer", NameTextCodeDefaultText = @"New Customer" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_NEWCUSTOMER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWCUSTOMER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.NewCustomer", NameTextCodeDefaultText = @"New Customer" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
-		   Feature CustomerFeature_OUTLOOKCONNETION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OUTLOOKCONNETION", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.OutlookConnection", NameTextCodeDefaultText = @"Outlook Connection" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_OUTLOOKCONNETION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OUTLOOKCONNETION", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.OutlookConnection", NameTextCodeDefaultText = @"Outlook Connection" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
-		   Feature CustomerFeature_Customer_Feature_EXCEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.EXCEL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.EXCEL", NameTextCodeDefaultText = @"Download to Excel" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_Customer_Feature_EXCEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.EXCEL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.EXCEL", NameTextCodeDefaultText = @"Download to Excel" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
-		   Feature CustomerFeature_CREATEACTIVECUSTOMER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATEACTIVECUSTOMER", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CreateActiveCustomer", NameTextCodeDefaultText = @"Allow creating active customers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomerFeature_CREATEACTIVECUSTOMER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATEACTIVECUSTOMER", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CreateActiveCustomer", NameTextCodeDefaultText = @"Allow creating active customers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomerObjectTable);
 
    
 	    
@@ -10370,35 +10381,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable CustomerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customer" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature CustomerFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACTIVATE", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Activate", NameTextCodeDefaultText = "Activate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACTIVATE", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Activate", NameTextCodeDefaultText = "Activate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
 
       
     
-			   Feature CustomerFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READYACTIVATION", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ReadyForActivation", NameTextCodeDefaultText = "Ready For Activation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READYACTIVATION", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ReadyForActivation", NameTextCodeDefaultText = "Ready For Activation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
 
       
     
-			   Feature CustomerFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TOTANGO", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Totango", NameTextCodeDefaultText = "Totango", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TOTANGO", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Totango", NameTextCodeDefaultText = "Totango", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
 
       
     
-			   Feature CustomerFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TENANTMANAGEMENT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.TenantManagement", NameTextCodeDefaultText = "Tenant Management", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TENANTMANAGEMENT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.TenantManagement", NameTextCodeDefaultText = "Tenant Management", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
 
       
     
-			   Feature CustomerFeature_MB4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATETENANT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CreateTenant", NameTextCodeDefaultText = "Ready For Activation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerFeature_MB4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATETENANT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.CreateTenant", NameTextCodeDefaultText = "Ready For Activation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
 
-			   Feature CustomerFeature_MB50 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACTIVE", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.InActive", NameTextCodeDefaultText = "InActive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature CustomerFeature_MB51 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REACTIVATE", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ReActivate", NameTextCodeDefaultText = "ReActivate", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature CustomerFeature_MB52 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MYCUSTOMER", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SetMyCustomer", NameTextCodeDefaultText = "Set as Customer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature CustomerFeature_MB53 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETASPOTENTIAL", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SetAsPotential", NameTextCodeDefaultText = "Set as Potential", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature CustomerFeature_MB54 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTMYCUSTOMER", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SetNotMyCustomer", NameTextCodeDefaultText = "Set as Not My Customer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature CustomerFeature_MB55 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUESTIONNAIREANSWERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ViewQuestionnaireAnswers", NameTextCodeDefaultText = "View Questionnaire Answers", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature CustomerFeature_MB56 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomerFeature_MB50 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACTIVE", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.InActive", NameTextCodeDefaultText = "InActive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+             			   Feature CustomerFeature_MB51 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REACTIVATE", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ReActivate", NameTextCodeDefaultText = "ReActivate", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+             			   Feature CustomerFeature_MB52 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MYCUSTOMER", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SetMyCustomer", NameTextCodeDefaultText = "Set as Customer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+             			   Feature CustomerFeature_MB53 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETASPOTENTIAL", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SetAsPotential", NameTextCodeDefaultText = "Set as Potential", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+             			   Feature CustomerFeature_MB54 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTMYCUSTOMER", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SetNotMyCustomer", NameTextCodeDefaultText = "Set as Not My Customer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+             			   Feature CustomerFeature_MB55 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUESTIONNAIREANSWERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ViewQuestionnaireAnswers", NameTextCodeDefaultText = "View Questionnaire Answers", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+             			   Feature CustomerFeature_MB56 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

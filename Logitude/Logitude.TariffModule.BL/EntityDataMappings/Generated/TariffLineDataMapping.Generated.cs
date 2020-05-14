@@ -184,7 +184,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         IsPrice5Minus, 
 	         IsPrice6Minus, 
 	         IsPrice7Minus, 
-	         IsPrice8Minus,
+	         IsPrice8Minus, 
+	         LineEdited,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -26,9 +26,9 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<FieldDataType> FieldDataTypes { get; }
         IDbSet<Translation> Translations { get; }
         IDbSet<TranslationHeader> TranslationHeaders { get; }
-        IDbSet<TextCode> TextCodes { get; }
+        DbSet<TextCode> TextCodes { get; }
         IDbSet<ObjectTable> ObjectTables { get; }
-        IDbSet<ObjectField> ObjectFields { get; }
+        DbSet<ObjectField> ObjectFields { get; }
         IDbSet<Screen> Screens { get; }
         IDbSet<ScreenField> ScreenFields { get; }
         IDbSet<TextCodeType> TextCodeTypes { get; }
@@ -107,6 +107,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<DWObjectFieldCategories> DWObjectFieldCategories { get; }
         //IDbSet<SchedulerLogs> SchedulerLogs { get; }
         IDbSet<SchedulerProcedure> SchedulerProcedures { get; }
+        IDbSet<WorkerRoleName> WorkerRoleNames { get; }
 
         void SetAsModified(object entity);
         void DetectChanges();

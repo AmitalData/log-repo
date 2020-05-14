@@ -13,7 +13,7 @@ export class EventTypeValidator {
 
             if (objectField) {
                 if (!objectField.DisplayOnly) {
-                    error.push("Only ready only date custom fields can be connected to your event");
+                    error.push("Only read only date custom fields can be connected to your event");
                 }
             }
 

@@ -388,6 +388,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  }
 
             );
+            if (_TrailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero)
+            {
+                _QBaseTrailReportFull = _QBaseTrailReportFull.Where(r => r.LocalCloseBalance.HasValue &&   r.LocalCloseBalance != 0);
+            }
             if (testNow)
             {
                 var tettt = _QBaseTrailReportFull.ToList();

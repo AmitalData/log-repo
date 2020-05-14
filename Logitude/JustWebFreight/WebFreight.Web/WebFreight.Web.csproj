@@ -930,6 +930,7 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="FileNotFound.aspx.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2462,6 +2463,7 @@
     <Compile Include="Helpers\SendGrid\SendGridAnalyzer.cs" />
     <Compile Include="Helpers\SharedLogisticContactHelper.cs" />
     <Compile Include="Helpers\SignUpHelper.cs" />
+    <Compile Include="Helpers\SqlBulkInsert.cs" />
     <Compile Include="Helpers\TableQueryReflector.cs" />
     <Compile Include="Helpers\MessageArgs.cs" />
     <Compile Include="Helpers\TermsofUseArgs.cs" />
@@ -2906,6 +2908,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TraceEventUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TransportModeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\VolumeUnitUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\WorkerRoleNameUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\InfrastructureModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\AccountingSystemsSettingUpdateClass.cs" />

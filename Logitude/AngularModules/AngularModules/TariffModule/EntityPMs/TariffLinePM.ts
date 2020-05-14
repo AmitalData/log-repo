@@ -502,6 +502,11 @@ export class TariffLinePM {
     public set IsPrice8Minus(newValue: boolean) { if (this.isPrice8Minus != newValue) { this.isPrice8Minus = newValue; this.MarkAsDirty("IsPrice8Minus"); } }
        
 	 
+    private lineEdited: boolean;
+    public get LineEdited() { return this.lineEdited; }
+    public set LineEdited(newValue: boolean) { if (this.lineEdited != newValue) { this.lineEdited = newValue; this.MarkAsDirty("LineEdited"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	

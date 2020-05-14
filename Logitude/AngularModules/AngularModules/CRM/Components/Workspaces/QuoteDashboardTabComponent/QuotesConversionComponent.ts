@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { QuoteDashboardComponent } from './QuoteDashboardComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ChartingDataClass } from '../../../../Infrastructure/DataContracts/Dashboard/ChartingDataClass';
 import { DashboardService } from '../../../../Quote/Services/QuoteDashboard/DashboardService';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { QuoteDashboardArguments } from '../../../../Quote/DataContracts/QuoteDashboardArguments';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { FormatTool } from '../../../../Infrastructure/Tools';
@@ -17,53 +16,35 @@ declare var makeAmBarChart, BarClick, ResetItem: any;
     templateUrl: './QuotesConversionComponent.html',
 })
 
-export class QuotesConversionComponent implements OnInit {
-    private Wizard: QuoteDashboardComponent;   
+export class QuotesConversionComponent {
+    public ChartId: string;
+    private chartArgs: QuoteDashboardArguments;
+    private chartService: DashboardService;
     private CurrentSession = SessionLocator.SelectedSession;
-    private dashboardArgs: QuoteDashboardArguments;
-    private dashboardService: DashboardService;
-    public QuoteConversionDashboard: Array<ChartingDataClass>;
-    public QuoteConversionId: string;
-    public legenddiv: string = "Legends_ID_";
-    public chartColrs: ChartColors;
-    public NoQuotes: boolean = false;
-    constructor(private _entityResourceService: EntityResourceService) {        
-        this.QuoteConversionId = "QuoteConversionId+" + this.CurrentSession.GetNewId("QuoteConversionDashboard");
+    constructor() {
+        this.chartService = new DashboardService();
+        this.chartArgs = new QuoteDashboardArguments();
+        this.chartArgs.ChartCode = "QCV";
+        this.ChartId = "QuoteConversionId+" + this.CurrentSession.GetNewId("QuoteConversionDashboard");
         this.chartColrs = new ChartColors;
     }
 
-    ngOnInit() {
-        this.dashboardArgs = new QuoteDashboardArguments();
-        this.dashboardService = new DashboardService();
-
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
-            this.FillDashboardArgs();
-            this.LoadDashboardData();
-        });
-    }
-
-    InitTab(wizard: QuoteDashboardComponent) {
-        this.Wizard = wizard;
-    }
-    RefreshTab(wizard: QuoteDashboardComponent) {
-        this.Wizard = wizard;
-        this.FillDashboardArgs();
+    Update(comp: QuoteDashboardComponent) {
+        this.chartArgs.OwnerId = comp.OwnerId;
+        this.chartArgs.BusinessUnitId = comp.BusinessUnitId;
+        this.chartArgs.FromDate = comp.FromDate;
+        this.chartArgs.ToDate = comp.ToDate;
         this.LoadDashboardData();
     }
 
-    private FillDashboardArgs() {
-        this.dashboardArgs.OwnerId = this.Wizard.OwnerId;
-        this.dashboardArgs.BusinessUnitId = this.Wizard.BusinessUnitId;
-        this.dashboardArgs.FromDate = this.Wizard.FromDate;
-        this.dashboardArgs.ToDate = this.Wizard.ToDate;
-        this.dashboardArgs.ChartCode = "QCV";
-    }
-
+    public chartColrs: ChartColors;
+    public NoQuotes: boolean = false;
     public CountriesData: ChartingDataClass[];
+    public QuoteConversionDashboard: Array<ChartingDataClass>;
     private LoadDashboardData() {
         this.QuoteConversionDashboard = new Array<ChartingDataClass>();
 
-        this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
+        this.chartService.GetDashboardChartValues(this.chartArgs).subscribe((myResult: any) => {
             this.QuoteConversionDashboard = myResult;            
             this.FillQuoteConversionDashboardData();
         });
@@ -162,8 +143,8 @@ export class QuotesConversionComponent implements OnInit {
                 while (maximum % 5 != 0) {
                     maximum += 1;
                 }
-                
-                makeAmBarChart(this.QuoteConversionId, Graphs, DataProvider, maximum, false);
+
+                makeAmBarChart(this.ChartId, Graphs, DataProvider, maximum, false);
             }
         }
 
@@ -194,10 +175,10 @@ export class QuotesConversionComponent implements OnInit {
 
         if (flag) {
 
-            filterAgrs.addAdditionalFilter("ChartCreateDateFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate), null, "Equals", true, false, false, "String");
-            filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", true, false, false, "Boolean");
-            filterAgrs.addAdditionalFilter("SalesmanUserId", this.dashboardArgs.OwnerId, null, null, "Equals", false, false, false, "String");
-            filterAgrs.addAdditionalFilter("BusinessUnitId", this.dashboardArgs.BusinessUnitId, null, null, "Equals", true, false, false, "string");
+            filterAgrs.addAdditionalFilter("QuoteConversionDateFilter", this.chartArgs.FromDate, this.chartArgs.ToDate, null, "Equals", true, false, false, "String");
+            filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
+            filterAgrs.addAdditionalFilter("SalesmanUserId", this.chartArgs.OwnerId, null, null, "Equals", false, false, false, "String");
+            filterAgrs.addAdditionalFilter("BusinessUnitId", this.chartArgs.BusinessUnitId, null, null, "Equals", false, false, false, "string");
             filterAgrs.addAdditionalFilter("TransportModeId", this.YAxis[e.index].transportModeId, null, null, "Equals", false, false, false, "String");
             filterAgrs.addAdditionalFilter("DirectionId", this.YAxis[e.index].directionId, null, null, "Equals", false, false, false, "String");
 

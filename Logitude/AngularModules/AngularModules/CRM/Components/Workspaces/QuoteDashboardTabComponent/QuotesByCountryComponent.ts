@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';import { QuoteDashboardComponent } from './QuoteDashboardComponent';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { Component } from '@angular/core';
+import { QuoteDashboardComponent } from './QuoteDashboardComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DashboardService } from '../../../../Quote/Services/QuoteDashboard/DashboardService';
 import { QuoteDashboardArguments } from '../../../../Quote/DataContracts/QuoteDashboardArguments';
@@ -15,55 +15,93 @@ declare var PieClick, makePieChart, ResetItemPie: any;
     templateUrl: './QuotesByCountryComponent.html'
 })
 
-export class QuotesByCountryComponent implements OnInit {
-    public CountriesDashboardId: string = "CountriesDashboardId_";
-    public CountriesDashboardLegendId: string;
+export class QuotesByCountryComponent {
+    public ChartId: string = "CountriesDashboardId_";
+    public LegendId: string;
+    private chartService: DashboardService;
+    private chartArgs: QuoteDashboardArguments;
     private CurrentSession = SessionLocator.SelectedSession;
-    private dashboardArgs: QuoteDashboardArguments;
-    private dashboardService: DashboardService;
-
-    constructor(private _entityResourceService: EntityResourceService) {
-        this.CountriesDashboardId = "CountriesDashboardId_" + this.CurrentSession.GetNewId("CountriesDashboardId");    
-        this.CountriesDashboardLegendId = "CountriesDashboardLegendId_" + this.CurrentSession.GetNewId("CountriesDashboardLegendId");    
+    constructor() {
+        this.chartService = new DashboardService();
+        this.chartArgs = new QuoteDashboardArguments();
+        this.chartArgs.ChartCode = "QOC";
+        this.ChartId = "CountriesDashboardId_" + this.CurrentSession.GetNewId("CountriesDashboardId");    
+        this.LegendId = "CountriesDashboardLegendId_" + this.CurrentSession.GetNewId("CountriesDashboardLegendId");
     }
 
-    ngOnInit() {
-        this.dashboardArgs = new QuoteDashboardArguments();
-        this.dashboardService = new DashboardService();
-
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
-            this.FillDashboardArgs();
-            this.LoadDashboardData();
-        });
-    }
-
-    private Wizard: QuoteDashboardComponent;
-    InitTab(wizard: QuoteDashboardComponent) {
-        this.Wizard = wizard;
-        console.log("Init Tab");
-    }
-    RefreshTab(wizard: QuoteDashboardComponent) {
-        this.Wizard = wizard;
-        this.FillDashboardArgs();
+    Update(comp: QuoteDashboardComponent) {
+        this.chartArgs.OwnerId = comp.OwnerId;
+        this.chartArgs.BusinessUnitId = comp.BusinessUnitId;
+        this.chartArgs.FromDate = comp.FromDate;
+        this.chartArgs.ToDate = comp.ToDate;
+        this.UpdateLocalArgs();
         this.LoadDashboardData();
-        console.log("Refresh Tab");
     }
 
-    private FillDashboardArgs() {
-        this.dashboardArgs.OwnerId = this.Wizard.OwnerId;
-        this.dashboardArgs.BusinessUnitId = this.Wizard.BusinessUnitId;
-        this.dashboardArgs.FromDate = this.Wizard.FromDate;
-        this.dashboardArgs.ToDate = this.Wizard.ToDate;
-        this.dashboardArgs.ChartCode = "QOC";
-        this.dashboardArgs.TransportModeId = this.SelectedTransportFilter;
-        this.dashboardArgs.DirectionId = this.SelectedDirectionFilter;
-        this.dashboardArgs.IncludeOthersCountries = this.IncludeOthersCountries;
-        this.dashboardArgs.TopCountries = this.TopCountries;
+    UpdateLocalArgs() {
+        this.chartArgs.TransportModeId = this.SelectedTransportFilter;
+        this.chartArgs.DirectionId = this.SelectedDirectionFilter;
+        this.chartArgs.IncludeOthersCountries = this.IncludeOthersCountries;
+        this.chartArgs.TopCountries = this.TopCountries;
+    }
+
+    private selectedTransportFilter: string = "All";
+    get SelectedTransportFilter() { return this.selectedTransportFilter; }
+    set SelectedTransportFilter(newValue: string) {
+        if (this.selectedTransportFilter != newValue) {
+            this.selectedTransportFilter = newValue;
+
+            this.UpdateLocalArgs();
+            this.LoadDashboardData();
+        }
+    }
+
+    private selectedDirectionFilter: string = "All";
+    get SelectedDirectionFilter() { return this.selectedDirectionFilter; }
+    set SelectedDirectionFilter(newValue: string) {
+        if (this.selectedDirectionFilter != newValue) {
+            this.selectedDirectionFilter = newValue;
+
+            this.UpdateLocalArgs();
+            this.LoadDashboardData();
+        }
+    }
+
+    public includeOthersCountries: any = true;
+    public get IncludeOthersCountries() { return this.includeOthersCountries; }
+    public set IncludeOthersCountries(newValue: boolean) {
+        if (this.includeOthersCountries != newValue) {
+            this.includeOthersCountries = newValue;
+
+            this.UpdateLocalArgs();
+            this.LoadDashboardData();
+        }
+    }
+
+    public topCountries: any = 10;
+    public get TopCountries() { return this.topCountries; }
+    public set TopCountries(value: any) { this.topCountries = value; }
+
+    CountriesTopValueChanged(flag) {
+        if (flag) {
+            this.TopCountries = this.TopCountries + 1;
+        }
+
+        else {
+            this.TopCountries = this.TopCountries - 1;
+        }
+
+        if (this.TopCountries < 0) {
+            this.TopCountries = 0;
+        }
+
+        this.UpdateLocalArgs();
+        this.LoadDashboardData();
     }
 
     public CountriesData: ChartingDataClass[];
     private LoadDashboardData() {
-        this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
+        this.chartService.GetDashboardChartValues(this.chartArgs).subscribe((myResult: any) => {
             this.CountriesData = myResult;
             this.FillDashboardData(this.CountriesData);
         });
@@ -98,62 +136,8 @@ export class QuotesByCountryComponent implements OnInit {
             fullData.push({ label: element.CountryName, data: element.Total });
         });
         
-        this.CurrentCountriesChart = makePieChart(this.CountriesDashboardId, fullData, false, true, this.CountriesDashboardLegendId, 150);
+        this.CurrentCountriesChart = makePieChart(this.ChartId, fullData, false, true, this.LegendId, 150);
         this.NoCountries = false;
-    }
-
-    private selectedTransportFilter: string = "All";
-    get SelectedTransportFilter() { return this.selectedTransportFilter; }
-    set SelectedTransportFilter(newValue: string) {
-        if (this.selectedTransportFilter != newValue) {
-            this.selectedTransportFilter = newValue;
-
-            this.FillDashboardArgs();
-            this.LoadDashboardData();
-        }
-    }
-
-    private selectedDirectionFilter: string = "All";
-    get SelectedDirectionFilter() { return this.selectedDirectionFilter; }
-    set SelectedDirectionFilter(newValue: string) {
-        if (this.selectedDirectionFilter != newValue) {
-            this.selectedDirectionFilter = newValue;
-
-            this.FillDashboardArgs();
-            this.LoadDashboardData();
-        }
-    }
-
-    public includeOthersCountries: any = true;
-    public get IncludeOthersCountries() { return this.includeOthersCountries; }
-    public set IncludeOthersCountries(newValue: boolean) {
-        if (this.includeOthersCountries != newValue) {
-            this.includeOthersCountries = newValue;
-
-            this.FillDashboardArgs();
-            this.LoadDashboardData();
-        }
-    }
-
-    public topCountries: any = 10;
-    public get TopCountries() { return this.topCountries; }
-    public set TopCountries(value: any) { this.topCountries = value; }
-
-    CountriesTopValueChanged(flag) {
-        if (flag) {
-            this.TopCountries = this.TopCountries + 1;
-        }
-
-        else {
-            this.TopCountries = this.TopCountries - 1;
-        }
-
-        if (this.TopCountries < 0) {
-            this.TopCountries = 0;
-        }
-
-        this.FillDashboardArgs();
-        this.LoadDashboardData();
     }
     
     ItemClicked() {
@@ -169,11 +153,11 @@ export class QuotesByCountryComponent implements OnInit {
         var filterAgrs: ApiQueryFilters = new ApiQueryFilters();
         
         filterAgrs.addAdditionalFilter("CountryForStatisticsId", item.CountryId, null, null, "InList", false, false, false, "String");
-        filterAgrs.addAdditionalFilter("ChartCreateDateFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate), null, "Equals", true, false, false, "String");
+        filterAgrs.addAdditionalFilter("ChartCreateDateFilter", ServiceHelper.GetDateString(this.chartArgs.FromDate), ServiceHelper.GetDateString(this.chartArgs.ToDate), null, "Equals", true, false, false, "String");
         filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", true, false, false, "Boolean");
         filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", true, false, false, "Boolean");
-        filterAgrs.addAdditionalFilter("SalesmanUserId", this.dashboardArgs.OwnerId, null, null, "Equals", false, false, false, "String");
-        filterAgrs.addAdditionalFilter("BusinessUnitId", this.dashboardArgs.BusinessUnitId, null, null, "Equals", true, false, false, "string");
+        filterAgrs.addAdditionalFilter("SalesmanUserId", this.chartArgs.OwnerId, null, null, "Equals", false, false, false, "String");
+        filterAgrs.addAdditionalFilter("BusinessUnitId", this.chartArgs.BusinessUnitId, null, null, "Equals", true, false, false, "string");
 
         if (this.SelectedDirectionFilter != "All") {
             filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, false, false, "String");

@@ -58,7 +58,9 @@ import {CustomDatePickerComponent} from './Components/CustomControls/CustomDateP
 import {ObjectFieldTemplate} from './Components/Templates/ObjectFieldTemplate';
 import {StimulsoftViewerComponent} from './Components/StimulsoftComponent/StimulsoftViewerComponent';
 import {ListComponent} from './Components/ListComponent/ListComponent';
-import {LogGridComponent} from './Components/LogitudeComponents/LogGridComponent/LogGridComponent';
+import { LogGridComponent } from './Components/LogitudeComponents/LogGridComponent/LogGridComponent';
+import { LogGridComponentV2 } from './Components/LogitudeComponents/LogGridComponent/LogGridComponentV2';
+
 import {ListHeaderTemplateComponent} from './Components/LogitudeComponents/LogGridComponent/ListHeaderTemplateComponent';
 import {ListTemplateComponent} from './Components/LogitudeComponents/LogGridComponent/ListTemplateComponent';
 import {UsersQueryList} from './Components/CustomControls/UsersQueryList';
@@ -230,6 +232,7 @@ export const ControlsComponents =
 
         ListComponent,
         LogGridComponent,
+        LogGridComponentV2,
         ListHeaderTemplateComponent,
         ListTemplateComponent,
         UsersQueryList,

@@ -21,6 +21,7 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string BuildDocumentViaWorkerRole = "BDW";  
        public const string RunReportonSecondaryDB = "RRS";  
        public const string ChargesDWH = "CWH";  
+       public const string LogGridV2 = "LV2";  
     }
 }
 

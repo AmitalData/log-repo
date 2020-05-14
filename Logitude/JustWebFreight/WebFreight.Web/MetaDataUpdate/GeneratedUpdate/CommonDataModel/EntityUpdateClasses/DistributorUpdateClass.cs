@@ -123,7 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -182,7 +182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -241,7 +241,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -300,7 +300,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -356,58 +356,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup DistributorQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DIST", Name = "Distributor" }, queryGroupRepository);
+	        QueryGroup DistributorQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DIST", Name = "Distributor" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable DistributorObjectTable = objectTables.ContainsKey("Distributor") ? objectTables["Distributor"] : null;
             if (DistributorObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 DistributorObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Distributor" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> DistributorObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Distributor").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode DistributorTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.Q.AllDistributors", DefaultText = @"All Distributors",LocalDefaultText = null, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DistributorFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.Q.AllDistributors", ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.AllDistributors", NameTextCodeDefaultText = "All Distributors", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DistributorTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.Q.AllDistributors", DefaultText = @"All Distributors",LocalDefaultText = null, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DistributorFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.Q.AllDistributors", ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.AllDistributors", NameTextCodeDefaultText = "All Distributors", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DistributorObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllDistributorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DistributorTextCode_0.Id, NameTextCodeCode = DistributorTextCode_0.Code, ObjectTableName = "Distributor", Code = "All Distributors",  QueryGroupCode = "DIST", IndexOrder = 0, Tenant = 0, ObjectTableId = DistributorObjectTable.Id, QuerySection = "Distributor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DistributorFeature_0.Id,FeatureUniqeCode= DistributorFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllDistributorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DistributorTextCode_0.Id, NameTextCodeCode = DistributorTextCode_0.Code, ObjectTableName = "Distributor", Code = "All Distributors",  QueryGroupCode = "DIST", IndexOrder = 0, Tenant = 0, ObjectTableId = DistributorObjectTable.Id, QuerySection = "Distributor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DistributorFeature_0.Id,FeatureUniqeCode= DistributorFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllDistributorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDistributorsQuery.Id,QueryCode = AllDistributorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DistributorObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DistributorObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDistributorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDistributorsQuery.Id,QueryCode = AllDistributorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Distributor.Code" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllDistributorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDistributorsQuery.Id,QueryCode = AllDistributorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DistributorObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DistributorObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDistributorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDistributorsQuery.Id,QueryCode = AllDistributorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Distributor.EnglishName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllDistributorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDistributorsQuery.Id,QueryCode = AllDistributorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DistributorObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DistributorObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllDistributorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDistributorsQuery.Id,QueryCode = AllDistributorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Distributor.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable DistributorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Distributor" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> DistributorObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Distributor").ToList();
+		   //List<ObjectField> DistributorObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Distributor").ToList();
 		       
 	      
 
 	         Screen DistributorGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Distributor.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = DistributorObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField DistributorDistributorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = DistributorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = DistributorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DistributorDistributorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = "Distributor.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DistributorDistributorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = DistributorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = DistributorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DistributorDistributorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = "Distributor.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DistributorDistributorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = DistributorObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = DistributorObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField DistributorDistributorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = DistributorGeneralTabScreenScreen0.Id,ScreenCode = DistributorGeneralTabScreenScreen0.Code, ObjectFieldCode = "Distributor.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -418,15 +429,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable DistributorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Distributor" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode DistributorGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DistributorGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.Tab.General", ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature DistributorGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.Tab.General", ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DistributorObjectTable);
  
                  
 			   TextCode DistributorTenantsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.Tenants", DefaultText = "Tenants",LocalDefaultText = null, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DistributorTenantsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.Tab.Tenants", ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Tenants", NameTextCodeDefaultText = "Tenants", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature DistributorTenantsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.Tab.Tenants", ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Tenants", NameTextCodeDefaultText = "Tenants", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DistributorObjectTable);
  
                  
 			   TextCode DistributorEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Distributor.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DistributorEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.Tab.Events", ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature DistributorEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.Tab.Events", ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DistributorObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -444,14 +455,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable DistributorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Distributor" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature DistributorFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DistributorFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DistributorFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DistributorFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.PackageFeature", NameTextCodeDefaultText = "Distributor Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature DistributorFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DistributorObjectTable);
+		   Feature DistributorFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DistributorObjectTable);
+		   Feature DistributorFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DistributorObjectTable);
+		   Feature DistributorFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.PackageFeature", NameTextCodeDefaultText = "Distributor Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DistributorObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature DistributorFeature_Distributor_M_Distributors = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.M.Distributors", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Distributors", NameTextCodeDefaultText = @"Distributors" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DistributorFeature_Distributor_M_Distributors = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.M.Distributors", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Distributors", NameTextCodeDefaultText = @"Distributors" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DistributorObjectTable);
 
    
 	    

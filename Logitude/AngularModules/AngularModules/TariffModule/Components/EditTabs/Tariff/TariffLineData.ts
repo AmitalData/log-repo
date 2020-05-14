@@ -1375,6 +1375,8 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set OriginPortId(value: string) {
         if (this.EntityPM.OriginPortId != value) {
             this.EntityPM.OriginPortId = value;
+            this.EntityPM.LineEdited = true;
+
             if (this.IsFromAllOtherPorts) {
                 this.EntityPM.IsFromAllOtherPorts = false;
             }
@@ -1453,6 +1455,8 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set DestinationPortId(value: string) {
         if (this.EntityPM.DestinationPortId != value) {
             this.EntityPM.DestinationPortId = value;
+            this.EntityPM.LineEdited = true;
+
             if (this.IsToAllOtherPorts) {
                 this.EntityPM.IsToAllOtherPorts = false;
             }
@@ -1493,39 +1497,6 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.DestinationPortCombinedCode = null;
         }
     }
-    
-    currency: CurrencyList;
-    get Currency() { return this.currency; }
-    set Currency(value: CurrencyList) {
-        if (this.currency != value) {
-            this.currency = value;
-        }
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.CurrencyCode = value.Code;
-        } else {
-            this.CurrencyCode = null;
-        }
-    }
-
-    get CurrencyCode() {
-        return this.EntityPM.CurrencyCode;
-    }
-    set CurrencyCode(value: string) {
-        if (this.EntityPM.CurrencyCode != value) {
-            this.EntityPM.CurrencyCode = value;
-        }
-    }
-    
-    get CurrencyId() {
-        return this.EntityPM.CurrencyId;
-    }
-    set CurrencyId(value: string) {
-        if (this.EntityPM.CurrencyId != value) {
-            this.EntityPM.CurrencyId = value;
-
-            this.SetUIProperties_Currency();
-        }
-    }
 
     get DestinationPortValue() {
         if (this.FatherComponent.IsAir) {
@@ -1558,10 +1529,45 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    currency: CurrencyList;
+    get Currency() { return this.currency; }
+    set Currency(value: CurrencyList) {
+        if (this.currency != value) {
+            this.currency = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.CurrencyCode = value.Code;
+        } else {
+            this.CurrencyCode = null;
+        }
+    }
+
+    get CurrencyCode() {
+        return this.EntityPM.CurrencyCode;
+    }
+    set CurrencyCode(value: string) {
+        if (this.EntityPM.CurrencyCode != value) {
+            this.EntityPM.CurrencyCode = value;
+        }
+    }
+    
+    get CurrencyId() {
+        return this.EntityPM.CurrencyId;
+    }
+    set CurrencyId(value: string) {
+        if (this.EntityPM.CurrencyId != value) {
+            this.EntityPM.CurrencyId = value;
+            this.EntityPM.LineEdited = true;
+
+            this.SetUIProperties_Currency();
+        }
+    }
+
     get StartDate() { return this.EntityPM.StartDate; }
     set StartDate(value: Date) {
         if (this.EntityPM.StartDate != value) {
             this.EntityPM.StartDate = value;
+            this.EntityPM.LineEdited = true;
         }
     }
 
@@ -1569,6 +1575,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set ExpirationDate(value: Date) {
         if (this.EntityPM.ExpirationDate != value) {
             this.EntityPM.ExpirationDate = value;
+            this.EntityPM.LineEdited = true;
         }
     }
 
@@ -1578,6 +1585,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Notes(value: string) {
         if (this.EntityPM.Notes != value) {
             this.EntityPM.Notes = value;
+            this.EntityPM.LineEdited = true;
         }
     }
 
@@ -1588,6 +1596,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge1Price(value: number) {
         if (this.EntityPM.Surcharge1Price != value) {
             this.EntityPM.Surcharge1Price = value;
+            this.EntityPM.LineEdited = true;
             this.CheckIfLineHasError();
             this.CompareSurcharge1Price();
         }
@@ -1599,6 +1608,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge1MinPrice(value: number) {
         if (this.EntityPM.Surcharge1MinPrice != value) {
             this.EntityPM.Surcharge1MinPrice = value;
+            this.EntityPM.LineEdited = true;
             this.CompareMainPrice(1);
         }
     }
@@ -1634,6 +1644,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge2Price(value: number) {
         if (this.EntityPM.Surcharge2Price != value) {
             this.EntityPM.Surcharge2Price = value;
+            this.EntityPM.LineEdited = true;
             this.CheckIfLineHasError();
             this.CompareSurcharge2Price();
         }
@@ -1645,6 +1656,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge2MinPrice(value: number) {
         if (this.EntityPM.Surcharge2MinPrice != value) {
             this.EntityPM.Surcharge2MinPrice = value;
+            this.EntityPM.LineEdited = true;
             this.CompareMainPrice(2);
         }
     }
@@ -1680,6 +1692,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge3Price(value: number) {
         if (this.EntityPM.Surcharge3Price != value) {
             this.EntityPM.Surcharge3Price = value;
+            this.EntityPM.LineEdited = true;
             this.CheckIfLineHasError();
             this.CompareSurcharge3Price();
         }
@@ -1691,6 +1704,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge3MinPrice(value: number) {
         if (this.EntityPM.Surcharge3MinPrice != value) {
             this.EntityPM.Surcharge3MinPrice = value;
+            this.EntityPM.LineEdited = true;
             this.CompareMainPrice(3);
         }
     }
@@ -1726,6 +1740,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge4Price(value: number) {
         if (this.EntityPM.Surcharge4Price != value) {
             this.EntityPM.Surcharge4Price = value;
+            this.EntityPM.LineEdited = true;
             this.CheckIfLineHasError();
             this.CompareSurcharge4Price();
         }
@@ -1737,6 +1752,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge4MinPrice(value: number) {
         if (this.EntityPM.Surcharge4MinPrice != value) {
             this.EntityPM.Surcharge4MinPrice = value;
+            this.EntityPM.LineEdited = true;
             this.CompareMainPrice(4);
         }
     }
@@ -1772,6 +1788,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge5Price(value: number) {
         if (this.EntityPM.Surcharge5Price != value) {
             this.EntityPM.Surcharge5Price = value;
+            this.EntityPM.LineEdited = true;
             this.CheckIfLineHasError();
             this.CompareSurcharge5Price();
         }
@@ -1783,6 +1800,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge5MinPrice(value: number) {
         if (this.EntityPM.Surcharge5MinPrice != value) {
             this.EntityPM.Surcharge5MinPrice = value;
+            this.EntityPM.LineEdited = true;
             this.CompareMainPrice(5);
         }
     }
@@ -1818,6 +1836,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge6Price(value: number) {
         if (this.EntityPM.Surcharge6Price != value) {
             this.EntityPM.Surcharge6Price = value;
+            this.EntityPM.LineEdited = true;
             this.CheckIfLineHasError();
             this.CompareSurcharge6Price();
         }
@@ -1829,6 +1848,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge6MinPrice(value: number) {
         if (this.EntityPM.Surcharge6MinPrice != value) {
             this.EntityPM.Surcharge6MinPrice = value;
+            this.EntityPM.LineEdited = true;
             this.CompareMainPrice(6);
         }
     }
@@ -1864,6 +1884,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge7Price(value: number) {
         if (this.EntityPM.Surcharge7Price != value) {
             this.EntityPM.Surcharge7Price = value;
+            this.EntityPM.LineEdited = true;
             this.CheckIfLineHasError();
             this.CompareSurcharge7Price();
         }
@@ -1875,6 +1896,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge7MinPrice(value: number) {
         if (this.EntityPM.Surcharge7MinPrice != value) {
             this.EntityPM.Surcharge7MinPrice = value;
+            this.EntityPM.LineEdited = true;
             this.CompareMainPrice(7);
         }
     }
@@ -1910,6 +1932,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge8Price(value: number) {
         if (this.EntityPM.Surcharge8Price != value) {
             this.EntityPM.Surcharge8Price = value;
+            this.EntityPM.LineEdited = true;
             this.CheckIfLineHasError();
             this.CompareSurcharge8Price();
         }
@@ -1921,6 +1944,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge8MinPrice(value: number) {
         if (this.EntityPM.Surcharge8MinPrice != value) {
             this.EntityPM.Surcharge8MinPrice = value;
+            this.EntityPM.LineEdited = true;
             this.CompareMainPrice(8);
         }
     }
@@ -1956,6 +1980,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge9Price(value: number) {
         if (this.EntityPM.Surcharge9Price != value) {
             this.EntityPM.Surcharge9Price = value;
+            this.EntityPM.LineEdited = true;
             this.CheckIfLineHasError();
             this.CompareSurcharge9Price();
         }
@@ -1967,6 +1992,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge9MinPrice(value: number) {
         if (this.EntityPM.Surcharge9MinPrice != value) {
             this.EntityPM.Surcharge9MinPrice = value;
+            this.EntityPM.LineEdited = true;
             this.CompareMainPrice(9);
         }
     }
@@ -2002,6 +2028,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge10Price(value: number) {
         if (this.EntityPM.Surcharge10Price != value) {
             this.EntityPM.Surcharge10Price = value;
+            this.EntityPM.LineEdited = true;
             this.CheckIfLineHasError();
             this.CompareSurcharge10Price();
         }
@@ -2013,6 +2040,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set Surcharge10MinPrice(value: number) {
         if (this.EntityPM.Surcharge10MinPrice != value) {
             this.EntityPM.Surcharge10MinPrice = value;
+            this.EntityPM.LineEdited = true;
             this.CompareMainPrice(10);
         }
     }
