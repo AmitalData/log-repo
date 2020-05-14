@@ -158,7 +158,9 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                 if (myResponse.Result) {
                     if (myResponse.Result.Id) {
                         this.QuoteSetting = myResponse.Result;
+                        this.IsAutomaticallyClosed = true;
                     }
+
                     if (this.IsCopyFromQuote) {
                         this.InitializeCopy(this.sourceEntityPM);
                     }
