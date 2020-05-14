@@ -21,7 +21,27 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public List<SuppInvoiceItemsAbachStatement> GetSuppInvoiceItemsAbachStatementsForDeclarationId(string declarationId, int invoiceCounterKey, List<int> itemsLineNumbers, int tenant)
+        {
+            return (from a in context.SuppInvoiceItemsAbachStatements
+                    where a.DeclarationId == declarationId && a.Tenant == tenant && a.InvoiceCounterKey == invoiceCounterKey && itemsLineNumbers.Contains(a.InvoiceItemLineNumber)
+                    select a).ToList();
+        }
+
+        public void FastDeleteMultiParents(SupplierInvoiceKeys entityKeyFields, List<int> supplierInvoiceItemsParentsLines)
+        {
+            (context as DbContextBase)
+                .DeleteWhere<SuppInvoiceItemsAbachStatement>(rec => rec.DeclarationId == entityKeyFields.DeclarationId && rec.InvoiceCounterKey == entityKeyFields.InvoiceCounterKey && supplierInvoiceItemsParentsLines.Contains(rec.InvoiceItemLineNumber));
+
+        }
+
+        public void FastDeleteMulti(DeclarationKeys entityKeyFields)
+        {
+
+            (context as DbContextBase)
+                .DeleteWhere<SuppInvoiceItemsAbachStatement>(rec => rec.DeclarationId == entityKeyFields.Id);
+        }
+    }
 
 }
    

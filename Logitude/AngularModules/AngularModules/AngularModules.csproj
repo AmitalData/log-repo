@@ -977,6 +977,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\GatepassRequestList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassReturnCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\HazardousSubstanceList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\NbcDeclarationTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PartyRelationshipTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingByKeywordList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingErrorPlaceList.ts" />
@@ -1023,6 +1024,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassReturnCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\HazardousSubstancePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\NbcDeclarationTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PartyRelationshipTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingByKeywordPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
@@ -1078,6 +1080,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassReturnCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\HazardousSubstanceListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\NbcDeclarationTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PartyRelationshipTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingByKeywordListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingErrorPlaceListService.ts" />
@@ -1104,6 +1107,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationReferantDataPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ExceptionReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\NbcDeclarationTypePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\PendingByKeywordPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ReferantExceptionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />

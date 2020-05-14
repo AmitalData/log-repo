@@ -71,6 +71,12 @@ import { InterfaceTenantDefinitionListService } from '../../Customs/Services/Sta
 import { CustomsItemListService } from '../../Customs/Services/StandardLists/CustomsItemListService';
 import { CurrencyTypeListService } from '../../Customs/Services/StandardLists/CurrencyTypeListService';
 
+import { NbcDeclarationTypeListService } from '../../Customs/Services/StandardLists/NbcDeclarationTypeListService';
+import { PartyRelationshipTypeListService } from '../../Customs/Services/StandardLists/PartyRelationshipTypeListService';
+import { AmountTypeListService } from '../../Customs/Services/StandardLists/AmountTypeListService';
+import { ClaimReasonTypeListService } from '../../Customs/Services/StandardLists/ClaimReasonTypeListService';
+import { ClassificationTypeListService } from '../../Customs/Services/StandardLists/ClassificationTypeListService';
+import { TransactionNatureTypeListService } from '../../Customs/Services/StandardLists/TransactionNatureTypeListService';
 
 // Business Process
 import {BusinessRoleListService} from '../Services/StandardLists/BusinessRoleListService'; 
@@ -206,6 +212,13 @@ export class CachedDataManagerServices {
             case "TariffListService": { myResult = new TariffListService(); break; }               
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
             case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
+            case "TransactionNatureTypeListService": { myResult = new TransactionNatureTypeListService(); break; }
+            case "ClassificationTypeListService": { myResult = new ClassificationTypeListService(); break; }
+            case "ClaimReasonTypeListService": { myResult = new ClaimReasonTypeListService(); break; }
+            case "AmountTypeListService": { myResult = new AmountTypeListService(); break; }
+            case "PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
+            case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
+
             default: {
 
                 if (ObjectsLocator.GlobalSetting && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {

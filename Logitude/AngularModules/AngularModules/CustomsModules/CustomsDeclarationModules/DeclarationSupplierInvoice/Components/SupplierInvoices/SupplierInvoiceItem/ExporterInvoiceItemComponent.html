@@ -61,9 +61,12 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'StatementType'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
-                                    [Text]="StatementType"
-                                     [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                        <LogLov [ObjectFieldName]="'StatementType'"
+                                [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.NbcDeclarationType'">
+                        </LogLov>
                     </td>
                     <td style="width:7px"></td>
                     <td>

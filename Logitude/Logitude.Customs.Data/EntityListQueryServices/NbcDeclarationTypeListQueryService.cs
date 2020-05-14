@@ -24,6 +24,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<NbcDeclarationTypeList> query = (from a in iQueryable
                                             select new NbcDeclarationTypeList()
 											{
+                     Code=a.Code,
+                     EnglishName=a.EnglishName,
+                     LocalName=a.LocalName,
                      
 					                          SearchFields = a.SearchFields,
 					

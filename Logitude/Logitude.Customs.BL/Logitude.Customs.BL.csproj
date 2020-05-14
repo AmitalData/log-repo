@@ -931,6 +931,8 @@
     <Compile Include="EntityDataMappings\VendorTransactionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\SuppInvoiceItemsAbachStatementQueryService.cs" />
+    <Compile Include="EntityQueryServices\SupplierInvoiceItemsPriceQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoSealIdentifierQueryService.cs" />
     <Compile Include="EntityQueryServices\CityQueryService.cs" />
     <Compile Include="EntityQueryServices\ClaimImporterDeclarsPage3QueryService.cs" />
@@ -1514,6 +1516,7 @@
     <Compile Include="EntityUpdateServices\LogChangesService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PendingByKeywordUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SuppInvoiceItemsAbachStatementUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleAddUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBanksCardUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBankUpdateService.cs" />
@@ -1725,6 +1728,7 @@
     <Compile Include="EntityUpdateServices\ProceduralFaultUpdateService.Amital.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemModVehicleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleModUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SupplierInvoiceItemsPriceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeficitDecisionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\UIMessageUpdateService.cs" />
