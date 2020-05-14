@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -179,7 +179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -231,7 +231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -283,7 +283,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -336,7 +336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -388,7 +388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -440,7 +440,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -489,7 +489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -540,7 +540,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -592,70 +592,81 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup NotificationDefinitionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "NDQG", Name = "Customs.NotificationDefinition" }, queryGroupRepository);
+	        QueryGroup NotificationDefinitionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "NDQG", Name = "Customs.NotificationDefinition" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable NotificationDefinitionObjectTable = objectTables.ContainsKey("Customs.NotificationDefinition") ? objectTables["Customs.NotificationDefinition"] : null;
             if (NotificationDefinitionObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 NotificationDefinitionObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.NotificationDefinition" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> NotificationDefinitionObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.NotificationDefinition").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode NotificationDefinitionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.NotificationDefinition.Q.NotificationDefinitionQuery", DefaultText = @"Notification Definition",LocalDefaultText = "הגדרת הודעה", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature NotificationDefinitionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NotificationDefinition.Q.NotificationDefinition", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinitionFeatures.NotificationDefinition", NameTextCodeDefaultText = "NotificationDefinition", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode NotificationDefinitionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.NotificationDefinition.Q.NotificationDefinitionQuery", DefaultText = @"Notification Definition",LocalDefaultText = "הגדרת הודעה", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature NotificationDefinitionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NotificationDefinition.Q.NotificationDefinition", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinitionFeatures.NotificationDefinition", NameTextCodeDefaultText = "NotificationDefinition", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,NotificationDefinitionObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query NotificationDefinitionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = NotificationDefinitionTextCode_0.Id, NameTextCodeCode = NotificationDefinitionTextCode_0.Code, ObjectTableName = "Customs.NotificationDefinition", Code = "NotificationDefinition",  QueryGroupCode = "NDQG", IndexOrder = 0, Tenant = 0, ObjectTableId = NotificationDefinitionObjectTable.Id, QuerySection = "Customs.NotificationDefinition", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = NotificationDefinitionFeature_0.Id,FeatureUniqeCode= NotificationDefinitionFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query NotificationDefinitionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = NotificationDefinitionTextCode_0.Id, NameTextCodeCode = NotificationDefinitionTextCode_0.Code, ObjectTableName = "Customs.NotificationDefinition", Code = "NotificationDefinition",  QueryGroupCode = "NDQG", IndexOrder = 0, Tenant = 0, ObjectTableId = NotificationDefinitionObjectTable.Id, QuerySection = "Customs.NotificationDefinition", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = NotificationDefinitionFeature_0.Id,FeatureUniqeCode= NotificationDefinitionFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn NotificationDefinitionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotificationDefinitionQuery.Id,QueryCode = NotificationDefinitionQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == NotificationDefinitionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == NotificationDefinitionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotificationDefinitionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotificationDefinitionQuery.Id,QueryCode = NotificationDefinitionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "NotificationDefinition.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn NotificationDefinitionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotificationDefinitionQuery.Id,QueryCode = NotificationDefinitionQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == NotificationDefinitionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == NotificationDefinitionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotificationDefinitionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotificationDefinitionQuery.Id,QueryCode = NotificationDefinitionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "NotificationDefinition.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn NotificationDefinitionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotificationDefinitionQuery.Id,QueryCode = NotificationDefinitionQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "AssigneeNotificationTypeName" && d.ObjectTableId == NotificationDefinitionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "AssigneeNotificationTypeName" && d.ObjectTableId == NotificationDefinitionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn NotificationDefinitionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotificationDefinitionQuery.Id,QueryCode = NotificationDefinitionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "NotificationDefinition.AssigneeNotificationTypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn NotificationDefinitionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotificationDefinitionQuery.Id,QueryCode = NotificationDefinitionQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "DefaultAssigneeName" && d.ObjectTableId == NotificationDefinitionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "DefaultAssigneeName" && d.ObjectTableId == NotificationDefinitionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn NotificationDefinitionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotificationDefinitionQuery.Id,QueryCode = NotificationDefinitionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "NotificationDefinition.DefaultAssigneeName" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable NotificationDefinitionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.NotificationDefinition" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> NotificationDefinitionObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.NotificationDefinition").ToList();
+		   //List<ObjectField> NotificationDefinitionObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.NotificationDefinition").ToList();
 		       
 	      
 
 	         Screen NotificationDefinitionGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "NotificationDefinition.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = NotificationDefinitionObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField NotificationDefinitionNotificationDefinitionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = NotificationDefinitionGeneralTabScreenScreen0.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen0.Code, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField NotificationDefinitionNotificationDefinitionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = NotificationDefinitionGeneralTabScreenScreen0.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen0.Code, ObjectFieldCode = "NotificationDefinition.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField NotificationDefinitionNotificationDefinitionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = NotificationDefinitionGeneralTabScreenScreen0.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen0.Code, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField NotificationDefinitionNotificationDefinitionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = NotificationDefinitionGeneralTabScreenScreen0.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen0.Code, ObjectFieldCode = "NotificationDefinition.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField NotificationDefinitionNotificationDefinitionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "AssigneeNotificationTypeCode").FirstOrDefault().Id, ScreenId = NotificationDefinitionGeneralTabScreenScreen0.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen0.Code, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "AssigneeNotificationTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField NotificationDefinitionNotificationDefinitionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = NotificationDefinitionGeneralTabScreenScreen0.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen0.Code, ObjectFieldCode = "NotificationDefinition.AssigneeNotificationTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField NotificationDefinitionNotificationDefinitionGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "DefaultAssigneeId").FirstOrDefault().Id, ScreenId = NotificationDefinitionGeneralTabScreenScreen0.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen0.Code, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "DefaultAssigneeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField NotificationDefinitionNotificationDefinitionGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = NotificationDefinitionGeneralTabScreenScreen0.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen0.Code, ObjectFieldCode = "NotificationDefinition.DefaultAssigneeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen NotificationDefinitionHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.NotificationDefinition.HeaderScreen", Name = "Header Screen", ObjectTableId = NotificationDefinitionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField NotificationDefinitionCustomsNotificationDefinitionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = NotificationDefinitionHeaderScreenScreen1.Id,ScreenCode = NotificationDefinitionHeaderScreenScreen1.Code, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField NotificationDefinitionCustomsNotificationDefinitionHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = NotificationDefinitionHeaderScreenScreen1.Id,ScreenCode = NotificationDefinitionHeaderScreenScreen1.Code, ObjectFieldCode = "NotificationDefinition.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField NotificationDefinitionCustomsNotificationDefinitionHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = NotificationDefinitionHeaderScreenScreen1.Id,ScreenCode = NotificationDefinitionHeaderScreenScreen1.Code, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField NotificationDefinitionCustomsNotificationDefinitionHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = NotificationDefinitionHeaderScreenScreen1.Id,ScreenCode = NotificationDefinitionHeaderScreenScreen1.Code, ObjectFieldCode = "NotificationDefinition.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    NotificationDefinitionObjectTable.HeaderScreenId = NotificationDefinitionHeaderScreenScreen1.Id;
 		    NotificationDefinitionObjectTable.HeaderScreenCode = NotificationDefinitionHeaderScreenScreen1.Code;
@@ -665,13 +676,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen NotificationDefinitionGeneralTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.NotificationDefinition.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = NotificationDefinitionObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField NotificationDefinitionCustomsNotificationDefinitionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = NotificationDefinitionGeneralTabScreenScreen2.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen2.Code, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField NotificationDefinitionCustomsNotificationDefinitionGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = NotificationDefinitionGeneralTabScreenScreen2.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen2.Code, ObjectFieldCode = "NotificationDefinition.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField NotificationDefinitionCustomsNotificationDefinitionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = NotificationDefinitionGeneralTabScreenScreen2.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen2.Code, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField NotificationDefinitionCustomsNotificationDefinitionGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = NotificationDefinitionGeneralTabScreenScreen2.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen2.Code, ObjectFieldCode = "NotificationDefinition.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField NotificationDefinitionCustomsNotificationDefinitionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "AssigneeNotificationTypeCode").FirstOrDefault().Id, ScreenId = NotificationDefinitionGeneralTabScreenScreen2.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen2.Code, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "AssigneeNotificationTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField NotificationDefinitionCustomsNotificationDefinitionGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = NotificationDefinitionGeneralTabScreenScreen2.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen2.Code, ObjectFieldCode = "NotificationDefinition.AssigneeNotificationTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField NotificationDefinitionCustomsNotificationDefinitionGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = NotificationDefinitionObjectFields.Where(d => d.FieldName == "DefaultAssigneeId").FirstOrDefault().Id, ScreenId = NotificationDefinitionGeneralTabScreenScreen2.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen2.Code, ObjectFieldCode = NotificationDefinitionObjectFields.Where(d => d.FieldName == "DefaultAssigneeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField NotificationDefinitionCustomsNotificationDefinitionGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = NotificationDefinitionGeneralTabScreenScreen2.Id,ScreenCode = NotificationDefinitionGeneralTabScreenScreen2.Code, ObjectFieldCode = "NotificationDefinition.DefaultAssigneeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -682,14 +693,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable NotificationDefinitionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.NotificationDefinition" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode NotificationDefinitionGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.NotificationDefinition.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature NotificationDefinitionGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NotificationDefinition.Tab.General", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinition.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature NotificationDefinitionGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NotificationDefinition.Tab.General", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinition.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,NotificationDefinitionObjectTable);
  
                  
-			   Feature NotificationDefinitionGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.NotificationDefinition.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature NotificationDefinitionGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.NotificationDefinition.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,NotificationDefinitionObjectTable);
  
                  
 			   TextCode NotificationDefinitionEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.NotificationDefinition.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature NotificationDefinitionEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.NotificationDefinition.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature NotificationDefinitionEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.NotificationDefinition.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,NotificationDefinitionObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -707,10 +718,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable NotificationDefinitionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.NotificationDefinition" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature NotificationDefinitionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinition.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature NotificationDefinitionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinition.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature NotificationDefinitionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinition.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature NotificationDefinitionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinition.Features.PackageFeature", NameTextCodeDefaultText = "NotificationDefinition Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature NotificationDefinitionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinition.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,NotificationDefinitionObjectTable);
+		   Feature NotificationDefinitionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinition.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,NotificationDefinitionObjectTable);
+		   Feature NotificationDefinitionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinition.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,NotificationDefinitionObjectTable);
+		   Feature NotificationDefinitionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinition.Features.PackageFeature", NameTextCodeDefaultText = "NotificationDefinition Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,NotificationDefinitionObjectTable);    
 	    
 		}
 

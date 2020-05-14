@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -198,7 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -257,7 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -313,7 +313,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -372,7 +372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -430,44 +430,55 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup SeizureFactorTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a5be", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup SeizureFactorTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "40c6", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup SeizureFactorTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a5be", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup SeizureFactorTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "40c6", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable SeizureFactorTypeObjectTable = objectTables.ContainsKey("Customs.SeizureFactorType") ? objectTables["Customs.SeizureFactorType"] : null;
             if (SeizureFactorTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 SeizureFactorTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SeizureFactorType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> SeizureFactorTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SeizureFactorType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode SeizureFactorTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SeizureFactorType.Q.SeizureFactorType", DefaultText = @"SeizureFactorTypeQuery",LocalDefaultText = null, ObjectTableId = SeizureFactorTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SeizureFactorTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SeizureFactorType.Q.SeizureFactorType", ObjectTableId = SeizureFactorTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SeizureFactorType.Features.SeizureFactorType", NameTextCodeDefaultText = "SeizureFactorType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SeizureFactorTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SeizureFactorType.Q.SeizureFactorType", DefaultText = @"SeizureFactorTypeQuery",LocalDefaultText = null, ObjectTableId = SeizureFactorTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature SeizureFactorTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SeizureFactorType.Q.SeizureFactorType", ObjectTableId = SeizureFactorTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SeizureFactorType.Features.SeizureFactorType", NameTextCodeDefaultText = "SeizureFactorType", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,SeizureFactorTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query SeizureFactorTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SeizureFactorTypeTextCode_0.Id, NameTextCodeCode = SeizureFactorTypeTextCode_0.Code, ObjectTableName = "Customs.SeizureFactorType", Code = "SeizureFactorType",  QueryGroupCode = "a5be", IndexOrder = 0, Tenant = 0, ObjectTableId = SeizureFactorTypeObjectTable.Id, QuerySection = "Customs.SeizureFactorType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SeizureFactorTypeFeature_0.Id,FeatureUniqeCode= SeizureFactorTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query SeizureFactorTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SeizureFactorTypeTextCode_0.Id, NameTextCodeCode = SeizureFactorTypeTextCode_0.Code, ObjectTableName = "Customs.SeizureFactorType", Code = "SeizureFactorType",  QueryGroupCode = "a5be", IndexOrder = 0, Tenant = 0, ObjectTableId = SeizureFactorTypeObjectTable.Id, QuerySection = "Customs.SeizureFactorType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SeizureFactorTypeFeature_0.Id,FeatureUniqeCode= SeizureFactorTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn SeizureFactorTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureFactorTypeQuery.Id,QueryCode = SeizureFactorTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = SeizureFactorTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SeizureFactorTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SeizureFactorTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SeizureFactorTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SeizureFactorTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureFactorTypeQuery.Id,QueryCode = SeizureFactorTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "SeizureFactorType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SeizureFactorTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureFactorTypeQuery.Id,QueryCode = SeizureFactorTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = SeizureFactorTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SeizureFactorTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SeizureFactorTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SeizureFactorTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SeizureFactorTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureFactorTypeQuery.Id,QueryCode = SeizureFactorTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "SeizureFactorType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SeizureFactorTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureFactorTypeQuery.Id,QueryCode = SeizureFactorTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = SeizureFactorTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SeizureFactorTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SeizureFactorTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SeizureFactorTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SeizureFactorTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureFactorTypeQuery.Id,QueryCode = SeizureFactorTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "SeizureFactorType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SeizureFactorTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureFactorTypeQuery.Id,QueryCode = SeizureFactorTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = SeizureFactorTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == SeizureFactorTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SeizureFactorTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == SeizureFactorTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn SeizureFactorTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureFactorTypeQuery.Id,QueryCode = SeizureFactorTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "SeizureFactorType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

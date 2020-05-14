@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -227,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -277,7 +277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -324,7 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -374,43 +374,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup DeliverySiteTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DLST", Name = "Customs.DeliverySiteType" }, queryGroupRepository);
+	        QueryGroup DeliverySiteTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DLST", Name = "Customs.DeliverySiteType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable DeliverySiteTypeObjectTable = objectTables.ContainsKey("Customs.DeliverySiteType") ? objectTables["Customs.DeliverySiteType"] : null;
             if (DeliverySiteTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 DeliverySiteTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DeliverySiteType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> DeliverySiteTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DeliverySiteType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode DeliverySiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeliverySiteType.Q.DeliverySiteTypeQuery", DefaultText = @"Delivery Site Type",LocalDefaultText = "Delivery Site Types", ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DeliverySiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DELIVERYSITETYPE", ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeliverySiteType.Features.DeliverySiteTypes", NameTextCodeDefaultText = "Delivery Site Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DeliverySiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeliverySiteType.Q.DeliverySiteTypeQuery", DefaultText = @"Delivery Site Type",LocalDefaultText = "Delivery Site Types", ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeliverySiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DELIVERYSITETYPE", ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeliverySiteType.Features.DeliverySiteTypes", NameTextCodeDefaultText = "Delivery Site Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeliverySiteTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query DeliverySiteTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeliverySiteTypeTextCode_0.Id, NameTextCodeCode = DeliverySiteTypeTextCode_0.Code, ObjectTableName = "Customs.DeliverySiteType", Code = "DeliverySiteType",  QueryGroupCode = "DLST", IndexOrder = 0, Tenant = 0, ObjectTableId = DeliverySiteTypeObjectTable.Id, QuerySection = "Customs.DeliverySiteType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeliverySiteTypeFeature_0.Id,FeatureUniqeCode= DeliverySiteTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query DeliverySiteTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeliverySiteTypeTextCode_0.Id, NameTextCodeCode = DeliverySiteTypeTextCode_0.Code, ObjectTableName = "Customs.DeliverySiteType", Code = "DeliverySiteType",  QueryGroupCode = "DLST", IndexOrder = 0, Tenant = 0, ObjectTableId = DeliverySiteTypeObjectTable.Id, QuerySection = "Customs.DeliverySiteType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeliverySiteTypeFeature_0.Id,FeatureUniqeCode= DeliverySiteTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DeliverySiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliverySiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DeliverySiteType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeliverySiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliverySiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DeliverySiteType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeliverySiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn DeliverySiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DeliverySiteType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeliverySiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeliverySiteTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == DeliverySiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn DeliverySiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DeliverySiteType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -185,7 +185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -239,7 +239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -293,7 +293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -347,7 +347,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -400,43 +400,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup SplitOrMergeReasonQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7dff", Name = "Customs.SplitOrMergeReason Query Group" }, queryGroupRepository);
+	        QueryGroup SplitOrMergeReasonQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7dff", Name = "Customs.SplitOrMergeReason Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable SplitOrMergeReasonObjectTable = objectTables.ContainsKey("Customs.SplitOrMergeReason") ? objectTables["Customs.SplitOrMergeReason"] : null;
             if (SplitOrMergeReasonObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 SplitOrMergeReasonObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SplitOrMergeReason" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> SplitOrMergeReasonObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SplitOrMergeReason").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode SplitOrMergeReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SplitOrMergeReason.Q.SplitOrMergeReason", DefaultText = @"SplitOrMergeReasonQuery",LocalDefaultText = null, ObjectTableId = SplitOrMergeReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SplitOrMergeReasonFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SplitOrMergeReason.Q.SplitOrMergeReason", ObjectTableId = SplitOrMergeReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "SplitOrMergeReason.Features.SplitOrMergeReason", NameTextCodeDefaultText = "SplitOrMergeReason", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SplitOrMergeReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SplitOrMergeReason.Q.SplitOrMergeReason", DefaultText = @"SplitOrMergeReasonQuery",LocalDefaultText = null, ObjectTableId = SplitOrMergeReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature SplitOrMergeReasonFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SplitOrMergeReason.Q.SplitOrMergeReason", ObjectTableId = SplitOrMergeReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "SplitOrMergeReason.Features.SplitOrMergeReason", NameTextCodeDefaultText = "SplitOrMergeReason", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,SplitOrMergeReasonObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query SplitOrMergeReasonQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SplitOrMergeReasonTextCode_0.Id, NameTextCodeCode = SplitOrMergeReasonTextCode_0.Code, ObjectTableName = "Customs.SplitOrMergeReason", Code = "SplitOrMergeReason",  QueryGroupCode = "7dff", IndexOrder = 0, Tenant = 0, ObjectTableId = SplitOrMergeReasonObjectTable.Id, QuerySection = "Customs.SplitOrMergeReason", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SplitOrMergeReasonFeature_0.Id,FeatureUniqeCode= SplitOrMergeReasonFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query SplitOrMergeReasonQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SplitOrMergeReasonTextCode_0.Id, NameTextCodeCode = SplitOrMergeReasonTextCode_0.Code, ObjectTableName = "Customs.SplitOrMergeReason", Code = "SplitOrMergeReason",  QueryGroupCode = "7dff", IndexOrder = 0, Tenant = 0, ObjectTableId = SplitOrMergeReasonObjectTable.Id, QuerySection = "Customs.SplitOrMergeReason", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SplitOrMergeReasonFeature_0.Id,FeatureUniqeCode= SplitOrMergeReasonFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn SplitOrMergeReasonQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = SplitOrMergeReasonObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SplitOrMergeReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SplitOrMergeReasonObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == SplitOrMergeReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SplitOrMergeReasonQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "SplitOrMergeReason.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SplitOrMergeReasonQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = SplitOrMergeReasonObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SplitOrMergeReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SplitOrMergeReasonObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == SplitOrMergeReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SplitOrMergeReasonQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "SplitOrMergeReason.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SplitOrMergeReasonQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = SplitOrMergeReasonObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SplitOrMergeReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SplitOrMergeReasonObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == SplitOrMergeReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn SplitOrMergeReasonQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "SplitOrMergeReason.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SplitOrMergeReasonQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = SplitOrMergeReasonObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == SplitOrMergeReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = SplitOrMergeReasonObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == SplitOrMergeReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn SplitOrMergeReasonQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "SplitOrMergeReason.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

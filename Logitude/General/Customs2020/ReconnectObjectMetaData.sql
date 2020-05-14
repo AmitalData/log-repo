@@ -80,12 +80,12 @@ BEGIN
       FROM objectfields
       WHERE FieldCode = CustomerFieldsUpdateSettings.ObjectFieldCode
       );
-    UPDATE ObjectFieldValidations
-    SET ObjectFieldId =
-      (SELECT Id
-      FROM objectfields
-      WHERE FieldCode = ObjectFieldValidations.ObjectFieldCode
-      );
+    --UPDATE ObjectFieldValidations
+    --SET ObjectFieldId =
+    --  (SELECT Id
+    --  FROM objectfields
+    --  WHERE FieldCode = ObjectFieldValidations.ObjectFieldCode
+    --  );
     UPDATE ObjectFieldModifications
     SET ObjectFieldId =
       (SELECT Id

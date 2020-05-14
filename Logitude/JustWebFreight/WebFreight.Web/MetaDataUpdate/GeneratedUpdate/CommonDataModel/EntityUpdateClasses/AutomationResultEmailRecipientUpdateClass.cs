@@ -132,19 +132,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    {    
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable AutomationResultEmailRecipientObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AutomationResultEmailRecipient" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> AutomationResultEmailRecipientObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AutomationResultEmailRecipient").ToList();
+		   //List<ObjectField> AutomationResultEmailRecipientObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AutomationResultEmailRecipient").ToList();
 		       
 	      
 
@@ -165,10 +165,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable AutomationResultEmailRecipientObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AutomationResultEmailRecipient" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature AutomationResultEmailRecipientFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AutomationResultEmailRecipientObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomationResultEmailRecipient.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AutomationResultEmailRecipientFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AutomationResultEmailRecipientObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomationResultEmailRecipient.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AutomationResultEmailRecipientFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AutomationResultEmailRecipientObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomationResultEmailRecipient.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AutomationResultEmailRecipientFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AutomationResultEmailRecipientObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomationResultEmailRecipient.Features.PackageFeature", NameTextCodeDefaultText = "AutomationResultEmailRecipient Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature AutomationResultEmailRecipientFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AutomationResultEmailRecipientObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomationResultEmailRecipient.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationResultEmailRecipientObjectTable);
+		   Feature AutomationResultEmailRecipientFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AutomationResultEmailRecipientObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomationResultEmailRecipient.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationResultEmailRecipientObjectTable);
+		   Feature AutomationResultEmailRecipientFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AutomationResultEmailRecipientObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomationResultEmailRecipient.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationResultEmailRecipientObjectTable);
+		   Feature AutomationResultEmailRecipientFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AutomationResultEmailRecipientObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutomationResultEmailRecipient.Features.PackageFeature", NameTextCodeDefaultText = "AutomationResultEmailRecipient Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationResultEmailRecipientObjectTable);    
 	    
 		}
 

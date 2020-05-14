@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -275,7 +275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -322,7 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -372,43 +372,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ValidCustomsItemQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "VCQG", Name = "Customs.ValidCustomsItem" }, queryGroupRepository);
+	        QueryGroup ValidCustomsItemQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "VCQG", Name = "Customs.ValidCustomsItem" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ValidCustomsItemObjectTable = objectTables.ContainsKey("Customs.ValidCustomsItem") ? objectTables["Customs.ValidCustomsItem"] : null;
             if (ValidCustomsItemObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ValidCustomsItemObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ValidCustomsItem" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> ValidCustomsItemObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ValidCustomsItem").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ValidCustomsItemTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ValidCustomsItem.Q.ValidCustomsItemQuery", DefaultText = @"Valid Customs Item",LocalDefaultText = "פרטי מכס תקפים", ObjectTableId = ValidCustomsItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ValidCustomsItemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VALIDCUSTOMSITEM", ObjectTableId = ValidCustomsItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ValidCustomsItem.Features.ValidCustomsItem", NameTextCodeDefaultText = "Valid Customs Item", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ValidCustomsItemTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ValidCustomsItem.Q.ValidCustomsItemQuery", DefaultText = @"Valid Customs Item",LocalDefaultText = "פרטי מכס תקפים", ObjectTableId = ValidCustomsItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ValidCustomsItemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VALIDCUSTOMSITEM", ObjectTableId = ValidCustomsItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ValidCustomsItem.Features.ValidCustomsItem", NameTextCodeDefaultText = "Valid Customs Item", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ValidCustomsItemObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ValidCustomsItemQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ValidCustomsItemTextCode_0.Id, NameTextCodeCode = ValidCustomsItemTextCode_0.Code, ObjectTableName = "Customs.ValidCustomsItem", Code = "ValidCustomsItem",  QueryGroupCode = "VCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = ValidCustomsItemObjectTable.Id, QuerySection = "Customs.ValidCustomsItem", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ValidCustomsItemFeature_0.Id,FeatureUniqeCode= ValidCustomsItemFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ValidCustomsItemQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ValidCustomsItemTextCode_0.Id, NameTextCodeCode = ValidCustomsItemTextCode_0.Code, ObjectTableName = "Customs.ValidCustomsItem", Code = "ValidCustomsItem",  QueryGroupCode = "VCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = ValidCustomsItemObjectTable.Id, QuerySection = "Customs.ValidCustomsItem", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ValidCustomsItemFeature_0.Id,FeatureUniqeCode= ValidCustomsItemFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ValidCustomsItemQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ValidCustomsItemObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ValidCustomsItemObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ValidCustomsItemObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ValidCustomsItemObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ValidCustomsItemQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ValidCustomsItem.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ValidCustomsItemQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ValidCustomsItemObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ValidCustomsItemObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ValidCustomsItemObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ValidCustomsItemObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ValidCustomsItemQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ValidCustomsItem.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ValidCustomsItemQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ValidCustomsItemObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ValidCustomsItemObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ValidCustomsItemObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ValidCustomsItemObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ValidCustomsItemQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ValidCustomsItem.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ValidCustomsItemQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ValidCustomsItemObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ValidCustomsItemObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ValidCustomsItemObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ValidCustomsItemObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ValidCustomsItemQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ValidCustomsItem.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

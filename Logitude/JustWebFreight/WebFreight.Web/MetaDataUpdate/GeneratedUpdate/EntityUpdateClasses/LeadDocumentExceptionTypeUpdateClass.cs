@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -173,7 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -221,7 +221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -269,7 +269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -316,7 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -366,43 +366,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup LeadDocumentExceptionTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LDET", Name = "Customs.LeadDocumentExceptionTypes" }, queryGroupRepository);
+	        QueryGroup LeadDocumentExceptionTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LDET", Name = "Customs.LeadDocumentExceptionTypes" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable LeadDocumentExceptionTypeObjectTable = objectTables.ContainsKey("Customs.LeadDocumentExceptionType") ? objectTables["Customs.LeadDocumentExceptionType"] : null;
             if (LeadDocumentExceptionTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 LeadDocumentExceptionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.LeadDocumentExceptionType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> LeadDocumentExceptionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.LeadDocumentExceptionType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode LeadDocumentExceptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LeadDocumentExceptionType.Q.LeadDocumentExceptionTypeQuery", DefaultText = @"Lead Document Exception Types",LocalDefaultText = "סוג שגיאה במסמך מוביל", ObjectTableId = LeadDocumentExceptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature LeadDocumentExceptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LEADDOCUMENTEXCEPTIONTYPEQUERY", ObjectTableId = LeadDocumentExceptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.City.Features.LeadDocumentExceptionTypes", NameTextCodeDefaultText = "Lead Document Exception Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode LeadDocumentExceptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LeadDocumentExceptionType.Q.LeadDocumentExceptionTypeQuery", DefaultText = @"Lead Document Exception Types",LocalDefaultText = "סוג שגיאה במסמך מוביל", ObjectTableId = LeadDocumentExceptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature LeadDocumentExceptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LEADDOCUMENTEXCEPTIONTYPEQUERY", ObjectTableId = LeadDocumentExceptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.City.Features.LeadDocumentExceptionTypes", NameTextCodeDefaultText = "Lead Document Exception Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,LeadDocumentExceptionTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query LeadDocumentExceptionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LeadDocumentExceptionTypeTextCode_0.Id, NameTextCodeCode = LeadDocumentExceptionTypeTextCode_0.Code, ObjectTableName = "Customs.LeadDocumentExceptionType", Code = "LeadDocumentExceptionType",  QueryGroupCode = "LDET", IndexOrder = 0, Tenant = 0, ObjectTableId = LeadDocumentExceptionTypeObjectTable.Id, QuerySection = "Customs.LeadDocumentExceptionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LeadDocumentExceptionTypeFeature_0.Id,FeatureUniqeCode= LeadDocumentExceptionTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query LeadDocumentExceptionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LeadDocumentExceptionTypeTextCode_0.Id, NameTextCodeCode = LeadDocumentExceptionTypeTextCode_0.Code, ObjectTableName = "Customs.LeadDocumentExceptionType", Code = "LeadDocumentExceptionType",  QueryGroupCode = "LDET", IndexOrder = 0, Tenant = 0, ObjectTableId = LeadDocumentExceptionTypeObjectTable.Id, QuerySection = "Customs.LeadDocumentExceptionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LeadDocumentExceptionTypeFeature_0.Id,FeatureUniqeCode= LeadDocumentExceptionTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn LeadDocumentExceptionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentExceptionTypeQuery.Id,QueryCode = LeadDocumentExceptionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = LeadDocumentExceptionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == LeadDocumentExceptionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LeadDocumentExceptionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == LeadDocumentExceptionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn LeadDocumentExceptionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentExceptionTypeQuery.Id,QueryCode = LeadDocumentExceptionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LeadDocumentExceptionType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn LeadDocumentExceptionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentExceptionTypeQuery.Id,QueryCode = LeadDocumentExceptionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = LeadDocumentExceptionTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == LeadDocumentExceptionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LeadDocumentExceptionTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == LeadDocumentExceptionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn LeadDocumentExceptionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentExceptionTypeQuery.Id,QueryCode = LeadDocumentExceptionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LeadDocumentExceptionType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn LeadDocumentExceptionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentExceptionTypeQuery.Id,QueryCode = LeadDocumentExceptionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = LeadDocumentExceptionTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == LeadDocumentExceptionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LeadDocumentExceptionTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == LeadDocumentExceptionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn LeadDocumentExceptionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentExceptionTypeQuery.Id,QueryCode = LeadDocumentExceptionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "LeadDocumentExceptionType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn LeadDocumentExceptionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentExceptionTypeQuery.Id,QueryCode = LeadDocumentExceptionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = LeadDocumentExceptionTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == LeadDocumentExceptionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = LeadDocumentExceptionTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == LeadDocumentExceptionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn LeadDocumentExceptionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentExceptionTypeQuery.Id,QueryCode = LeadDocumentExceptionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "LeadDocumentExceptionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

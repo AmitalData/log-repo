@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -227,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -278,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -326,7 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -376,43 +376,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ModificationAndDiscountTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MADT", Name = "Customs.ModificationAndDiscountType" }, queryGroupRepository);
+	        QueryGroup ModificationAndDiscountTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MADT", Name = "Customs.ModificationAndDiscountType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ModificationAndDiscountTypeObjectTable = objectTables.ContainsKey("Customs.ModificationAndDiscountType") ? objectTables["Customs.ModificationAndDiscountType"] : null;
             if (ModificationAndDiscountTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ModificationAndDiscountTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ModificationAndDiscountType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> ModificationAndDiscountTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ModificationAndDiscountType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ModificationAndDiscountTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ModificationAndDiscountType.Q.ModificationAndDiscountTypeQuery", DefaultText = @"Modification And Discount Types",LocalDefaultText = "סוג ההתאמה", ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ModificationAndDiscountTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MODIFICATIONANDDISCOUNTTYPE", ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ModificationAndDiscountType.Features.ModificationAndDiscountTypes", NameTextCodeDefaultText = "Modification And Discount Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ModificationAndDiscountTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ModificationAndDiscountType.Q.ModificationAndDiscountTypeQuery", DefaultText = @"Modification And Discount Types",LocalDefaultText = "סוג ההתאמה", ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ModificationAndDiscountTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MODIFICATIONANDDISCOUNTTYPE", ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ModificationAndDiscountType.Features.ModificationAndDiscountTypes", NameTextCodeDefaultText = "Modification And Discount Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ModificationAndDiscountTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ModificationAndDiscountTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ModificationAndDiscountTypeTextCode_0.Id, NameTextCodeCode = ModificationAndDiscountTypeTextCode_0.Code, ObjectTableName = "Customs.ModificationAndDiscountType", Code = "ModificationAndDiscountType",  QueryGroupCode = "MADT", IndexOrder = 0, Tenant = 0, ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, QuerySection = "Customs.ModificationAndDiscountType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ModificationAndDiscountTypeFeature_0.Id,FeatureUniqeCode= ModificationAndDiscountTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ModificationAndDiscountTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ModificationAndDiscountTypeTextCode_0.Id, NameTextCodeCode = ModificationAndDiscountTypeTextCode_0.Code, ObjectTableName = "Customs.ModificationAndDiscountType", Code = "ModificationAndDiscountType",  QueryGroupCode = "MADT", IndexOrder = 0, Tenant = 0, ObjectTableId = ModificationAndDiscountTypeObjectTable.Id, QuerySection = "Customs.ModificationAndDiscountType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ModificationAndDiscountTypeFeature_0.Id,FeatureUniqeCode= ModificationAndDiscountTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ModificationAndDiscountTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ModificationAndDiscountTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ModificationAndDiscountTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ModificationAndDiscountTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ModificationAndDiscountTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ModificationAndDiscountType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ModificationAndDiscountTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ModificationAndDiscountTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ModificationAndDiscountTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ModificationAndDiscountTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ModificationAndDiscountTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ModificationAndDiscountType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ModificationAndDiscountTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ModificationAndDiscountTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ModificationAndDiscountTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ModificationAndDiscountTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ModificationAndDiscountTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ModificationAndDiscountType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ModificationAndDiscountTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ModificationAndDiscountTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ModificationAndDiscountTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ModificationAndDiscountTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ModificationAndDiscountTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ModificationAndDiscountTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ModificationAndDiscountTypeQuery.Id,QueryCode = ModificationAndDiscountTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ModificationAndDiscountType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

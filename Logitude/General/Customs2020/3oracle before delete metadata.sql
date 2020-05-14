@@ -1,7 +1,9 @@
 
 --------------------------------------------------------------Run automation Update before delete 
+update objectfields set FieldCode = ((select objecttables.Name from objecttables where id = ObjectTableId) || '.' || FieldName) where IsCustom = 0;
+update objectfields set FieldCode = ((select objecttables.Name from objecttables where id = ObjectTableId) ||'.' || TO_CHAR (Tenant) || '.' || FieldName) where IsCustom = 1;
 
-
+update CustomsRequiredFields set ObjectfieldCode =(select ObjectFields.FieldCode from ObjectFields where id=CustomsRequiredFields.ObjectFieldId);
 --MetaData All Scripts: Never Apply these scripts
 update Features set FeatureUniqeCode = ((select objecttables.Name from objecttables where id = ObjectTableId) || '.' || Code);
 

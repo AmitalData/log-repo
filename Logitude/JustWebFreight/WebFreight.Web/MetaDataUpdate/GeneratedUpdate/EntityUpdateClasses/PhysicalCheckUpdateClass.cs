@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -198,7 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -262,7 +262,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -325,7 +325,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -389,7 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -452,7 +452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -516,7 +516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -579,7 +579,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -643,7 +643,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -706,7 +706,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -767,7 +767,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -830,7 +830,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -894,7 +894,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -958,7 +958,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1021,7 +1021,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1084,7 +1084,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1147,7 +1147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1210,7 +1210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1273,7 +1273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1338,7 +1338,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1404,7 +1404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1468,7 +1468,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1532,7 +1532,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1596,7 +1596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1659,7 +1659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1723,7 +1723,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1786,7 +1786,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1849,7 +1849,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1912,7 +1912,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1973,7 +1973,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2036,7 +2036,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2098,7 +2098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2160,7 +2160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2221,7 +2221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2277,7 +2277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2333,7 +2333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2395,7 +2395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2458,7 +2458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2519,7 +2519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2582,7 +2582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2643,7 +2643,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2705,7 +2705,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2763,167 +2763,178 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup PhysicalCheckQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PHCK", Name = "Customs.PhysicalCheck" }, queryGroupRepository);
-						QueryGroup PhysicalCheckQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "06a2", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup PhysicalCheckQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PHCK", Name = "Customs.PhysicalCheck" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup PhysicalCheckQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "06a2", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable PhysicalCheckObjectTable = objectTables.ContainsKey("Customs.PhysicalCheck") ? objectTables["Customs.PhysicalCheck"] : null;
             if (PhysicalCheckObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 PhysicalCheckObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PhysicalCheck" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> PhysicalCheckObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PhysicalCheck").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode PhysicalCheckTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.OpenChecks", DefaultText = @"Open Checks",LocalDefaultText = "בדיקות פתוחות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PhysicalCheckFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PhysicalCheck.Q.OpenChecks", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheckFeatures.OpenChecks", NameTextCodeDefaultText = "OpenChecks", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PhysicalCheckTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.OpenChecks", DefaultText = @"Open Checks",LocalDefaultText = "בדיקות פתוחות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature PhysicalCheckFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PhysicalCheck.Q.OpenChecks", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheckFeatures.OpenChecks", NameTextCodeDefaultText = "OpenChecks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PhysicalCheckObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode PhysicalCheckTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.ClosedChecks", DefaultText = @"Closed Checks",LocalDefaultText = "בדיקות סגורות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PhysicalCheckFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PhysicalCheck.Q.ClosedChecks", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheckFeatures.ClosedChecks", NameTextCodeDefaultText = "ClosedChecks", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PhysicalCheckTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.ClosedChecks", DefaultText = @"Closed Checks",LocalDefaultText = "בדיקות סגורות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature PhysicalCheckFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PhysicalCheck.Q.ClosedChecks", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheckFeatures.ClosedChecks", NameTextCodeDefaultText = "ClosedChecks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PhysicalCheckObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode PhysicalCheckTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.AllChecks", DefaultText = @"All Checks",LocalDefaultText = "כל הבדיקות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PhysicalCheckFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PhysicalCheck.Q.ByUpcomingChecks", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheckFeatures.ByUpcomingChecks", NameTextCodeDefaultText = "By Upcoming Checks", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PhysicalCheckTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.Q.AllChecks", DefaultText = @"All Checks",LocalDefaultText = "כל הבדיקות", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature PhysicalCheckFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PhysicalCheck.Q.ByUpcomingChecks", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheckFeatures.ByUpcomingChecks", NameTextCodeDefaultText = "By Upcoming Checks", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PhysicalCheckObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query OpenChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_0.Id, NameTextCodeCode = PhysicalCheckTextCode_0.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "OpenChecks",  QueryGroupCode = "PHCK", IndexOrder = 0, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_0.Id,FeatureUniqeCode= PhysicalCheckFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query OpenChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_0.Id, NameTextCodeCode = PhysicalCheckTextCode_0.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "OpenChecks",  QueryGroupCode = "PHCK", IndexOrder = 0, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_0.Id,FeatureUniqeCode= PhysicalCheckFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn OpenChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PhysicalCheck.CustomFileNo" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "DeclarationNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "DeclarationNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PhysicalCheck.DeclarationNo" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PhysicalCheck.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "StorageSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "StorageSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PhysicalCheck.StorageSiteName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PhysicalCheck.CheckSiteName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "QueueTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "QueueTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "PhysicalCheck.QueueTypeName" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckId" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckId" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "PhysicalCheck.CheckId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "LimitDate" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "LimitDate" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "PhysicalCheck.LimitDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "ContainerNubmer" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "ContainerNubmer" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "PhysicalCheck.ContainerNubmer" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "OperationName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "OperationName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "PhysicalCheck.OperationName" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsComprehensiveCheck" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsComprehensiveCheck" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "PhysicalCheck.IsComprehensiveCheck" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeCode" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeCode" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "PhysicalCheck.CheckTypeCode" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "PhysicalCheck.CheckTypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "VehicleChassisNumber" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "VehicleChassisNumber" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "PhysicalCheck.VehicleChassisNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenChecksQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OpenChecksQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "PhysicalCheck.IsClosed", PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query ClosedChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_1.Id, NameTextCodeCode = PhysicalCheckTextCode_1.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "ClosedChecks",  QueryGroupCode = "PHCK", IndexOrder = 1, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_1.Id,FeatureUniqeCode= PhysicalCheckFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ClosedChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_1.Id, NameTextCodeCode = PhysicalCheckTextCode_1.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "ClosedChecks",  QueryGroupCode = "PHCK", IndexOrder = 1, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_1.Id,FeatureUniqeCode= PhysicalCheckFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ClosedChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PhysicalCheck.CustomFileNo" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "DeclarationNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "DeclarationNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PhysicalCheck.DeclarationNo" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PhysicalCheck.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "StorageSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "StorageSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PhysicalCheck.StorageSiteName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PhysicalCheck.CheckSiteName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "QueueTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "QueueTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "PhysicalCheck.QueueTypeName" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckId" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckId" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "PhysicalCheck.CheckId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "LimitDate" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "LimitDate" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "PhysicalCheck.LimitDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "ContainerNubmer" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "ContainerNubmer" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "PhysicalCheck.ContainerNubmer" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "OperationName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "OperationName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "PhysicalCheck.OperationName" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsComprehensiveCheck" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsComprehensiveCheck" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "PhysicalCheck.IsComprehensiveCheck" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeCode" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeCode" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "PhysicalCheck.CheckTypeCode" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "PhysicalCheck.CheckTypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedChecksQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "VehicleChassisNumber" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "VehicleChassisNumber" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedChecksQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "PhysicalCheck.VehicleChassisNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter ClosedChecksQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ClosedChecksQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "PhysicalCheck.IsClosed", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ClosedChecksQuery.Id,QueryCode = ClosedChecksQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query ByUpcomingChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_2.Id, NameTextCodeCode = PhysicalCheckTextCode_2.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "By Upcoming Checks",  QueryGroupCode = "PHCK", IndexOrder = 2, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_2.Id,FeatureUniqeCode= PhysicalCheckFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ByUpcomingChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_2.Id, NameTextCodeCode = PhysicalCheckTextCode_2.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "By Upcoming Checks",  QueryGroupCode = "PHCK", IndexOrder = 2, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_2.Id,FeatureUniqeCode= PhysicalCheckFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ByUpcomingChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomFileNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PhysicalCheck.CustomFileNo" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "DeclarationNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "DeclarationNo" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PhysicalCheck.DeclarationNo" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PhysicalCheck.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "StorageSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "StorageSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PhysicalCheck.StorageSiteName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckSiteName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PhysicalCheck.CheckSiteName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "QueueTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "QueueTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "PhysicalCheck.QueueTypeName" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckId" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckId" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "PhysicalCheck.CheckId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "LimitDate" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "LimitDate" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "PhysicalCheck.LimitDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "ContainerNubmer" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "ContainerNubmer" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "PhysicalCheck.ContainerNubmer" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "OperationName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "OperationName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "PhysicalCheck.OperationName" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsComprehensiveCheck" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsComprehensiveCheck" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "PhysicalCheck.IsComprehensiveCheck" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeCode" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeCode" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 80 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "PhysicalCheck.CheckTypeCode" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckTypeName" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ByUpcomingChecksQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "PhysicalCheck.CheckTypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ByUpcomingChecksQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "VehicleChassisNumber" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "VehicleChassisNumber" && d.ObjectTableId == PhysicalCheckObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ByUpcomingChecksQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByUpcomingChecksQuery.Id,QueryCode = ByUpcomingChecksQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "PhysicalCheck.VehicleChassisNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable PhysicalCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PhysicalCheck" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> PhysicalCheckObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PhysicalCheck").ToList();
+		   //List<ObjectField> PhysicalCheckObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PhysicalCheck").ToList();
 		       
 	      
 
 	         Screen PhysicalCheckHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.PhysicalCheck.HeaderScreen", Name = "Header Screen", ObjectTableId = PhysicalCheckObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CargoIdentifierTypeName").FirstOrDefault().Id, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CargoIdentifierTypeName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = "PhysicalCheck.CargoIdentifierTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckId").FirstOrDefault().Id, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = "PhysicalCheck.CheckId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CargoIdentifierKey1").FirstOrDefault().Id, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CargoIdentifierKey1").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = "PhysicalCheck.CargoIdentifierKey1", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "LimitDate").FirstOrDefault().Id, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "LimitDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = "PhysicalCheck.LimitDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CargoIdentifierKey2").FirstOrDefault().Id, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CargoIdentifierKey2").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = "PhysicalCheck.CargoIdentifierKey2", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsClosed").FirstOrDefault().Id, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "IsClosed").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = "PhysicalCheck.IsClosed", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CargoIdentifierKey3").FirstOrDefault().Id, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CargoIdentifierKey3").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = PhysicalCheckHeaderScreenScreen0.Id,ScreenCode = PhysicalCheckHeaderScreenScreen0.Code, ObjectFieldCode = "PhysicalCheck.CargoIdentifierKey3", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    PhysicalCheckObjectTable.HeaderScreenId = PhysicalCheckHeaderScreenScreen0.Id;
 		    PhysicalCheckObjectTable.HeaderScreenCode = PhysicalCheckHeaderScreenScreen0.Code;
@@ -2933,21 +2944,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen PhysicalCheckGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.PhysicalCheck.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = PhysicalCheckObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "StorageSiteCode").FirstOrDefault().Id, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "StorageSiteCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = "PhysicalCheck.StorageSiteCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckSiteCode").FirstOrDefault().Id, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckSiteCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = "PhysicalCheck.CheckSiteCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckId").FirstOrDefault().Id, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "CheckId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = "PhysicalCheck.CheckId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "OperationCode").FirstOrDefault().Id, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "OperationCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = "PhysicalCheck.OperationCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "StatusMessageCode").FirstOrDefault().Id, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "StatusMessageCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = "PhysicalCheck.StatusMessageCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "LimitDate").FirstOrDefault().Id, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "LimitDate").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = "PhysicalCheck.LimitDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "ContainerNubmer").FirstOrDefault().Id, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "ContainerNubmer").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = "PhysicalCheck.ContainerNubmer", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = PhysicalCheckObjectFields.Where(d => d.FieldName == "QueueTypeCode").FirstOrDefault().Id, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = PhysicalCheckObjectFields.Where(d => d.FieldName == "QueueTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField PhysicalCheckCustomsPhysicalCheckGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = PhysicalCheckGeneralTabScreenScreen1.Id,ScreenCode = PhysicalCheckGeneralTabScreenScreen1.Code, ObjectFieldCode = "PhysicalCheck.QueueTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -2958,19 +2969,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable PhysicalCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PhysicalCheck" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode PhysicalCheckGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PhysicalCheckGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PhysicalCheckGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable);
  
                  
 			   TextCode PhysicalCheckEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PhysicalCheckEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PhysicalCheckEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable);
  
                  
 			   TextCode PhysicalCheckCommunicationsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.Communications", DefaultText = "Communications",LocalDefaultText = "תקשורת", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PhysicalCheckCommunicationsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.Communication", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PhysicalCheckCommunicationsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.Communication", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable);
  
                  
 			   TextCode PhysicalCheckRequestSheetsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.TH.RequestSheets", DefaultText = "Request Sheets",LocalDefaultText = "גיליון בקשה", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature PhysicalCheckRequestSheetsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEET", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.RequestSheets", NameTextCodeDefaultText = "Request Sheets", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature PhysicalCheckRequestSheetsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEET", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.RequestSheets", NameTextCodeDefaultText = "Request Sheets", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2990,10 +3001,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable PhysicalCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PhysicalCheck" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature PhysicalCheckFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheck.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PhysicalCheckFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheck.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PhysicalCheckFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheck.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PhysicalCheckFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheck.Features.PackageFeature", NameTextCodeDefaultText = "PhysicalCheck Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature PhysicalCheckFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheck.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PhysicalCheckObjectTable);
+		   Feature PhysicalCheckFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheck.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PhysicalCheckObjectTable);
+		   Feature PhysicalCheckFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheck.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PhysicalCheckObjectTable);
+		   Feature PhysicalCheckFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "PhysicalCheck.Features.PackageFeature", NameTextCodeDefaultText = "PhysicalCheck Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PhysicalCheckObjectTable);    
 	    
 		}
 
@@ -3213,9 +3224,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable PhysicalCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PhysicalCheck" && d.Tenant == 0).FirstOrDefault(); 			   Feature PhysicalCheckFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEPHYSICALCHECK", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.ClosePhysicalCheck", NameTextCodeDefaultText = "Close Check", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable PhysicalCheckObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PhysicalCheck" && d.Tenant == 0).FirstOrDefault(); 			   Feature PhysicalCheckFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEPHYSICALCHECK", ObjectTableId = PhysicalCheckObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PhysicalCheck.Features.ClosePhysicalCheck", NameTextCodeDefaultText = "Close Check", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PhysicalCheckObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();

@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -227,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -278,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -326,7 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -376,43 +376,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup PaymentProtestTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PAPT", Name = "Customs.PaymentProtestType" }, queryGroupRepository);
+	        QueryGroup PaymentProtestTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PAPT", Name = "Customs.PaymentProtestType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable PaymentProtestTypeObjectTable = objectTables.ContainsKey("Customs.PaymentProtestType") ? objectTables["Customs.PaymentProtestType"] : null;
             if (PaymentProtestTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 PaymentProtestTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentProtestType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> PaymentProtestTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PaymentProtestType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode PaymentProtestTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentProtestType.Q.PaymentProtestTypeQuery", DefaultText = @"Payment Protest Types",LocalDefaultText = "סוג מחאה", ObjectTableId = PaymentProtestTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PaymentProtestTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTPROTESTTYPE", ObjectTableId = PaymentProtestTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentProtestType.Features.PaymentProtestTypes", NameTextCodeDefaultText = "Payment Protest Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PaymentProtestTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentProtestType.Q.PaymentProtestTypeQuery", DefaultText = @"Payment Protest Types",LocalDefaultText = "סוג מחאה", ObjectTableId = PaymentProtestTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature PaymentProtestTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTPROTESTTYPE", ObjectTableId = PaymentProtestTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentProtestType.Features.PaymentProtestTypes", NameTextCodeDefaultText = "Payment Protest Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PaymentProtestTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query PaymentProtestTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentProtestTypeTextCode_0.Id, NameTextCodeCode = PaymentProtestTypeTextCode_0.Code, ObjectTableName = "Customs.PaymentProtestType", Code = "PaymentProtestType",  QueryGroupCode = "PAPT", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentProtestTypeObjectTable.Id, QuerySection = "Customs.PaymentProtestType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PaymentProtestTypeFeature_0.Id,FeatureUniqeCode= PaymentProtestTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query PaymentProtestTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentProtestTypeTextCode_0.Id, NameTextCodeCode = PaymentProtestTypeTextCode_0.Code, ObjectTableName = "Customs.PaymentProtestType", Code = "PaymentProtestType",  QueryGroupCode = "PAPT", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentProtestTypeObjectTable.Id, QuerySection = "Customs.PaymentProtestType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PaymentProtestTypeFeature_0.Id,FeatureUniqeCode= PaymentProtestTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PaymentProtestTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentProtestTypeQuery.Id,QueryCode = PaymentProtestTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = PaymentProtestTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PaymentProtestTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentProtestTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == PaymentProtestTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PaymentProtestTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentProtestTypeQuery.Id,QueryCode = PaymentProtestTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PaymentProtestType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentProtestTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentProtestTypeQuery.Id,QueryCode = PaymentProtestTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = PaymentProtestTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PaymentProtestTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentProtestTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PaymentProtestTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PaymentProtestTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentProtestTypeQuery.Id,QueryCode = PaymentProtestTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PaymentProtestType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentProtestTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentProtestTypeQuery.Id,QueryCode = PaymentProtestTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = PaymentProtestTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == PaymentProtestTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentProtestTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == PaymentProtestTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn PaymentProtestTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentProtestTypeQuery.Id,QueryCode = PaymentProtestTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PaymentProtestType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentProtestTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentProtestTypeQuery.Id,QueryCode = PaymentProtestTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = PaymentProtestTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == PaymentProtestTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = PaymentProtestTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == PaymentProtestTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn PaymentProtestTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentProtestTypeQuery.Id,QueryCode = PaymentProtestTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PaymentProtestType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

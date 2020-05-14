@@ -30,6 +30,9 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsSharedLogisticsEnabled { get; set; }
         public DateTime? EventDateTime { get; set; }
         public bool AllowedInAutomation { get; set; }
+        public string CustomField { get; set; }
+
         
+
     }
 }

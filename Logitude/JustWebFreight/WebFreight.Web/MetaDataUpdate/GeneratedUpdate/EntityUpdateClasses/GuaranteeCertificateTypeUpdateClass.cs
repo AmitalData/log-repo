@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -175,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -225,7 +225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -275,7 +275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -320,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -370,43 +370,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup GuaranteeCertificateTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "GCQG", Name = "Customs.GuaranteeCertificateType" }, queryGroupRepository);
+	        QueryGroup GuaranteeCertificateTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "GCQG", Name = "Customs.GuaranteeCertificateType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable GuaranteeCertificateTypeObjectTable = objectTables.ContainsKey("Customs.GuaranteeCertificateType") ? objectTables["Customs.GuaranteeCertificateType"] : null;
             if (GuaranteeCertificateTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 GuaranteeCertificateTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.GuaranteeCertificateType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> GuaranteeCertificateTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.GuaranteeCertificateType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode GuaranteeCertificateTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.GuaranteeCertificateType.Q.GuaranteeCertificateTypeQuery", DefaultText = @"Guarantee Certificate Type",LocalDefaultText = "סוג ערבות", ObjectTableId = GuaranteeCertificateTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature GuaranteeCertificateTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GUARANTEECERTIFICATE", ObjectTableId = GuaranteeCertificateTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.GuaranteeCertificateType.Features.GuaranteeCertificateType", NameTextCodeDefaultText = "Guarantee Certificate Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode GuaranteeCertificateTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.GuaranteeCertificateType.Q.GuaranteeCertificateTypeQuery", DefaultText = @"Guarantee Certificate Type",LocalDefaultText = "סוג ערבות", ObjectTableId = GuaranteeCertificateTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature GuaranteeCertificateTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GUARANTEECERTIFICATE", ObjectTableId = GuaranteeCertificateTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.GuaranteeCertificateType.Features.GuaranteeCertificateType", NameTextCodeDefaultText = "Guarantee Certificate Type", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GuaranteeCertificateTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query GuaranteeCertificateTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GuaranteeCertificateTypeTextCode_0.Id, NameTextCodeCode = GuaranteeCertificateTypeTextCode_0.Code, ObjectTableName = "Customs.GuaranteeCertificateType", Code = "GuaranteeCertificateType",  QueryGroupCode = "GCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = GuaranteeCertificateTypeObjectTable.Id, QuerySection = "Customs.GuaranteeCertificateType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GuaranteeCertificateTypeFeature_0.Id,FeatureUniqeCode= GuaranteeCertificateTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query GuaranteeCertificateTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GuaranteeCertificateTypeTextCode_0.Id, NameTextCodeCode = GuaranteeCertificateTypeTextCode_0.Code, ObjectTableName = "Customs.GuaranteeCertificateType", Code = "GuaranteeCertificateType",  QueryGroupCode = "GCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = GuaranteeCertificateTypeObjectTable.Id, QuerySection = "Customs.GuaranteeCertificateType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GuaranteeCertificateTypeFeature_0.Id,FeatureUniqeCode= GuaranteeCertificateTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn GuaranteeCertificateTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GuaranteeCertificateTypeQuery.Id,QueryCode = GuaranteeCertificateTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = GuaranteeCertificateTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == GuaranteeCertificateTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GuaranteeCertificateTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == GuaranteeCertificateTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GuaranteeCertificateTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GuaranteeCertificateTypeQuery.Id,QueryCode = GuaranteeCertificateTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GuaranteeCertificateType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GuaranteeCertificateTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GuaranteeCertificateTypeQuery.Id,QueryCode = GuaranteeCertificateTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = GuaranteeCertificateTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GuaranteeCertificateTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GuaranteeCertificateTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == GuaranteeCertificateTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GuaranteeCertificateTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GuaranteeCertificateTypeQuery.Id,QueryCode = GuaranteeCertificateTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GuaranteeCertificateType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GuaranteeCertificateTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GuaranteeCertificateTypeQuery.Id,QueryCode = GuaranteeCertificateTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = GuaranteeCertificateTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GuaranteeCertificateTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GuaranteeCertificateTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == GuaranteeCertificateTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn GuaranteeCertificateTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GuaranteeCertificateTypeQuery.Id,QueryCode = GuaranteeCertificateTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GuaranteeCertificateType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GuaranteeCertificateTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GuaranteeCertificateTypeQuery.Id,QueryCode = GuaranteeCertificateTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = GuaranteeCertificateTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GuaranteeCertificateTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = GuaranteeCertificateTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == GuaranteeCertificateTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn GuaranteeCertificateTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GuaranteeCertificateTypeQuery.Id,QueryCode = GuaranteeCertificateTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GuaranteeCertificateType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

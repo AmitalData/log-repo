@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -276,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -320,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -369,43 +369,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup FaultInspectionTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "FIQG", Name = "Customs.FaultInspectionType" }, queryGroupRepository);
+	        QueryGroup FaultInspectionTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "FIQG", Name = "Customs.FaultInspectionType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable FaultInspectionTypeObjectTable = objectTables.ContainsKey("Customs.FaultInspectionType") ? objectTables["Customs.FaultInspectionType"] : null;
             if (FaultInspectionTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 FaultInspectionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.FaultInspectionType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> FaultInspectionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.FaultInspectionType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode FaultInspectionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.FaultInspectionType.Q.FaultInspectionTypeQuery", DefaultText = @"Fault Inspection Type",LocalDefaultText = "סוג בקורת בליקוי", ObjectTableId = FaultInspectionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature FaultInspectionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FAULTINSPECTIONTYPE", ObjectTableId = FaultInspectionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.FaultInspectionType.Features.FaultInspectionType", NameTextCodeDefaultText = "Fault Inspection Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode FaultInspectionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.FaultInspectionType.Q.FaultInspectionTypeQuery", DefaultText = @"Fault Inspection Type",LocalDefaultText = "סוג בקורת בליקוי", ObjectTableId = FaultInspectionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature FaultInspectionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FAULTINSPECTIONTYPE", ObjectTableId = FaultInspectionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.FaultInspectionType.Features.FaultInspectionType", NameTextCodeDefaultText = "Fault Inspection Type", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,FaultInspectionTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query FaultInspectionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = FaultInspectionTypeTextCode_0.Id, NameTextCodeCode = FaultInspectionTypeTextCode_0.Code, ObjectTableName = "Customs.FaultInspectionType", Code = "FaultInspectionType",  QueryGroupCode = "FIQG", IndexOrder = 0, Tenant = 0, ObjectTableId = FaultInspectionTypeObjectTable.Id, QuerySection = "Customs.FaultInspectionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = FaultInspectionTypeFeature_0.Id,FeatureUniqeCode= FaultInspectionTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query FaultInspectionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = FaultInspectionTypeTextCode_0.Id, NameTextCodeCode = FaultInspectionTypeTextCode_0.Code, ObjectTableName = "Customs.FaultInspectionType", Code = "FaultInspectionType",  QueryGroupCode = "FIQG", IndexOrder = 0, Tenant = 0, ObjectTableId = FaultInspectionTypeObjectTable.Id, QuerySection = "Customs.FaultInspectionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = FaultInspectionTypeFeature_0.Id,FeatureUniqeCode= FaultInspectionTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn FaultInspectionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = FaultInspectionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == FaultInspectionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = FaultInspectionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == FaultInspectionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FaultInspectionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "FaultInspectionType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn FaultInspectionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = FaultInspectionTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == FaultInspectionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = FaultInspectionTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == FaultInspectionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FaultInspectionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "FaultInspectionType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn FaultInspectionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = FaultInspectionTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == FaultInspectionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = FaultInspectionTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == FaultInspectionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn FaultInspectionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "FaultInspectionType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn FaultInspectionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = FaultInspectionTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == FaultInspectionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = FaultInspectionTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == FaultInspectionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn FaultInspectionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "FaultInspectionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

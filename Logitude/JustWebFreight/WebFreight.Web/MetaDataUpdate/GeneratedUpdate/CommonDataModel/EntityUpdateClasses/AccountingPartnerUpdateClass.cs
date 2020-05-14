@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AccountingPartnerUpdateClass
    {  		
-		public const string HashString = "2cf1db03bab9a2889b046ebe79b7601f";
+		public const string HashString = "b5aa103fab4e2c3c62190e44fa192b38";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -200,7 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Website",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -264,7 +264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Code",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -328,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "English Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -392,7 +392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "LocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -454,7 +454,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ComputedLocalName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -518,7 +518,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -582,7 +582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "VatNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -645,7 +645,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AccountingCard",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -708,7 +708,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PaymentTermId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -772,7 +772,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PaymentTermEnglishName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -837,7 +837,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Notes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -900,7 +900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "InvoiceCurrencyId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -963,7 +963,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "VatTypeId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1025,7 +1025,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BankName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1087,7 +1087,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "BankAddress",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1149,7 +1149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "Swift",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1211,7 +1211,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "AccountNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1273,7 +1273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IBANNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1336,7 +1336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1398,7 +1398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IRSPlace",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1460,7 +1460,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "IRSNumber",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1526,7 +1526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CityName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1593,7 +1593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CountryId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1658,7 +1658,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "CountryName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1719,7 +1719,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "SATForeignRFC",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1786,7 +1786,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1853,7 +1853,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1913,7 +1913,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ExternalId2",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1977,7 +1977,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ReceivablesAccountingCard",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2041,7 +2041,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PayablesAccountingCard",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2103,7 +2103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "ExternalAccountingBusinessArea",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2166,7 +2166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2230,7 +2230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PrimaryContactName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2294,7 +2294,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PrimaryContactEmail",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2356,7 +2356,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HelpTextCode =  "PrimaryContactPhone",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2412,67 +2412,78 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AccountingPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACGP", Name = "AccountingPartners" }, queryGroupRepository);
-						QueryGroup AccountingPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "35d6", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup AccountingPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACGP", Name = "AccountingPartners" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup AccountingPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "35d6", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AccountingPartnerObjectTable = objectTables.ContainsKey("AccountingPartner") ? objectTables["AccountingPartner"] : null;
             if (AccountingPartnerObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 AccountingPartnerObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AccountingPartner" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> AccountingPartnerObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingPartner").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode AccountingPartnerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.Q.AccountingPartners", DefaultText = @"Accounting Partners",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGPARTNERS", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.AccountingPartners", NameTextCodeDefaultText = "AccountingPartners", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AccountingPartnerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.Q.AccountingPartners", DefaultText = @"Accounting Partners",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AccountingPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGPARTNERS", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.AccountingPartners", NameTextCodeDefaultText = "AccountingPartners", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AccountingPartnerObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AccountingPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingPartnerTextCode_0.Id, NameTextCodeCode = AccountingPartnerTextCode_0.Code, ObjectTableName = "AccountingPartner", Code = "AccountingPartners",  QueryGroupCode = "ACGP", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingPartnerObjectTable.Id, QuerySection = "AccountingPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AccountingPartnerFeature_0.Id,FeatureUniqeCode= AccountingPartnerFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AccountingPartnersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AccountingPartnerTextCode_0.Id, NameTextCodeCode = AccountingPartnerTextCode_0.Code, ObjectTableName = "AccountingPartner", Code = "AccountingPartners",  QueryGroupCode = "ACGP", IndexOrder = 0, Tenant = 0, ObjectTableId = AccountingPartnerObjectTable.Id, QuerySection = "AccountingPartner", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = AccountingPartnerFeature_0.Id,FeatureUniqeCode= AccountingPartnerFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Descending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AccountingPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AccountingPartner.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AccountingPartner.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AccountingPartner.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AccountingPartner.VatNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "AccountingPartner.ReceivablesAccountingCard" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "AccountingPartner.PaymentTermEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AccountingPartnersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "AccountingPartner.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AccountingPartnersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == AccountingPartnerObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AccountingPartnersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AccountingPartnersQuery.Id,QueryCode = AccountingPartnersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "AccountingPartner.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable AccountingPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPartner" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> AccountingPartnerObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingPartner").ToList();
+		   //List<ObjectField> AccountingPartnerObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingPartner").ToList();
 		       
 	      
 
 	         Screen AccountingPartnerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPartner.HeaderScreen", Name = "Header Screen", ObjectTableId = AccountingPartnerObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AccountingPartnerAccountingPartnerHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = AccountingPartnerHeaderScreenScreen0.Id,ScreenCode = AccountingPartnerHeaderScreenScreen0.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPartnerHeaderScreenScreen0.Id,ScreenCode = AccountingPartnerHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingPartner.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = AccountingPartnerHeaderScreenScreen0.Id,ScreenCode = AccountingPartnerHeaderScreenScreen0.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingPartnerHeaderScreenScreen0.Id,ScreenCode = AccountingPartnerHeaderScreenScreen0.Code, ObjectFieldCode = "AccountingPartner.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AccountingPartnerObjectTable.HeaderScreenId = AccountingPartnerHeaderScreenScreen0.Id;
 		    AccountingPartnerObjectTable.HeaderScreenCode = AccountingPartnerHeaderScreenScreen0.Code;
@@ -2482,41 +2493,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AccountingPartnerGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPartner.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AccountingPartnerObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().Id, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.Website", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = AccountingPartnerGeneralTabScreenScreen1.Id,ScreenCode = AccountingPartnerGeneralTabScreenScreen1.Code, ObjectFieldCode = "AccountingPartner.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen AccountingPartnerBillingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPartner.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = AccountingPartnerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().Id, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().Id, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.PaymentTermId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().Id, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.InvoiceCurrencyId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().Id, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.VatTypeId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().Id, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.EnableConsolidationInvoices", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().Id, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.BankName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().Id, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.BankAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().Id, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.Swift", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = AccountingPartnerObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().Id, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = AccountingPartnerObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AccountingPartnerAccountingPartnerBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = AccountingPartnerBillingTabScreenScreen2.Id,ScreenCode = AccountingPartnerBillingTabScreenScreen2.Code, ObjectFieldCode = "AccountingPartner.IBANNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -2527,31 +2538,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable AccountingPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPartner" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode AccountingPartnerGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.TH.GENERAL", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.TH.GENERAL", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerBillingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Billing", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACBL", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerBillingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Billing", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACBL", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerAccountingTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Accounting", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.APAC", NameTextCodeDefaultText = "Accounting", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Accounting", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.APAC", NameTextCodeDefaultText = "Accounting", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerAddressesTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Addresses", DefaultText = "Addresses",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerAddressesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Addresses", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACAD", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerAddressesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Addresses", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACAD", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerContactsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Contacts", DefaultText = "Contacts",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Contacts", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACCO", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerContactsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Contacts", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACCO", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerDocsInTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.DocsIn", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACDI", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerDocsInFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.DocsIn", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACDI", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
  
                  
 			   TextCode AccountingPartnerEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Events", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.APET", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Events", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.APET", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -2577,14 +2588,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable AccountingPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPartner" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature AccountingPartnerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingPartnerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingPartnerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature AccountingPartnerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.PackageFeature", NameTextCodeDefaultText = "AccountingPartner Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature AccountingPartnerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingPartnerObjectTable);
+		   Feature AccountingPartnerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingPartnerObjectTable);
+		   Feature AccountingPartnerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingPartnerObjectTable);
+		   Feature AccountingPartnerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.PackageFeature", NameTextCodeDefaultText = "AccountingPartner Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingPartnerObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature AccountingPartnerFeature_ACCOUNTINGPARTNERSMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGPARTNERSMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.ACCOUNTINGPARTNERSMENU", NameTextCodeDefaultText = @"Accounting Partners " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature AccountingPartnerFeature_ACCOUNTINGPARTNERSMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGPARTNERSMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.ACCOUNTINGPARTNERSMENU", NameTextCodeDefaultText = @"Accounting Partners " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AccountingPartnerObjectTable);
 
    
 	    
@@ -2653,9 +2664,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable AccountingPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPartner" && d.Tenant == 0).FirstOrDefault(); 			   Feature AccountingPartnerFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable AccountingPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPartner" && d.Tenant == 0).FirstOrDefault(); 			   Feature AccountingPartnerFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AccountingPartnerObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -2671,7 +2682,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   MenuButton AccountingPartnerMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 0, 
 						IsActive = false,
 						LabelTextCodeCode = "AccountingPartner.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -2683,6 +2694,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						Style = null,
 						LocalDefaultText = "More",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton AccountingPartnerMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2700,6 +2713,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  AccountingPartnerFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "נתק כרטיס",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  AccountingPartnerFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

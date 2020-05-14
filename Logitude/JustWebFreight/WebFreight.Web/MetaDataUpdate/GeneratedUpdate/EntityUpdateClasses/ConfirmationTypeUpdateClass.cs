@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -175,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -225,7 +225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -275,7 +275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -322,7 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -372,43 +372,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ConfirmationTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CONT", Name = "Customs.ConfirmationType" }, queryGroupRepository);
+	        QueryGroup ConfirmationTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CONT", Name = "Customs.ConfirmationType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ConfirmationTypeObjectTable = objectTables.ContainsKey("Customs.ConfirmationType") ? objectTables["Customs.ConfirmationType"] : null;
             if (ConfirmationTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ConfirmationTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ConfirmationType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> ConfirmationTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ConfirmationType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ConfirmationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConfirmationType.Q.ConfirmationTypeQuery", DefaultText = @"Confirmation Types",LocalDefaultText = "סוג אישור", ObjectTableId = ConfirmationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ConfirmationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONFIRMATIONTYPE", ObjectTableId = ConfirmationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConfirmationType.Features.ConfirmationTypes", NameTextCodeDefaultText = "Confirmation Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ConfirmationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConfirmationType.Q.ConfirmationTypeQuery", DefaultText = @"Confirmation Types",LocalDefaultText = "סוג אישור", ObjectTableId = ConfirmationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ConfirmationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONFIRMATIONTYPE", ObjectTableId = ConfirmationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConfirmationType.Features.ConfirmationTypes", NameTextCodeDefaultText = "Confirmation Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ConfirmationTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ConfirmationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConfirmationTypeTextCode_0.Id, NameTextCodeCode = ConfirmationTypeTextCode_0.Code, ObjectTableName = "Customs.ConfirmationType", Code = "ConfirmationType",  QueryGroupCode = "CONT", IndexOrder = 0, Tenant = 0, ObjectTableId = ConfirmationTypeObjectTable.Id, QuerySection = "Customs.ConfirmationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConfirmationTypeFeature_0.Id,FeatureUniqeCode= ConfirmationTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query ConfirmationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConfirmationTypeTextCode_0.Id, NameTextCodeCode = ConfirmationTypeTextCode_0.Code, ObjectTableName = "Customs.ConfirmationType", Code = "ConfirmationType",  QueryGroupCode = "CONT", IndexOrder = 0, Tenant = 0, ObjectTableId = ConfirmationTypeObjectTable.Id, QuerySection = "Customs.ConfirmationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConfirmationTypeFeature_0.Id,FeatureUniqeCode= ConfirmationTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ConfirmationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ConfirmationTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ConfirmationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConfirmationTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ConfirmationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConfirmationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConfirmationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ConfirmationTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ConfirmationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConfirmationTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ConfirmationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConfirmationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConfirmationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ConfirmationTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ConfirmationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConfirmationTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ConfirmationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ConfirmationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ConfirmationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConfirmationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ConfirmationTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ConfirmationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ConfirmationTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ConfirmationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ConfirmationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ConfirmationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

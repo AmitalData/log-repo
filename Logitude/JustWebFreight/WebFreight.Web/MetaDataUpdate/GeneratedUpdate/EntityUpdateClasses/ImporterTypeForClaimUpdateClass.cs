@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -173,7 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -222,7 +222,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -272,7 +272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -321,7 +321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -365,41 +365,52 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ImporterTypeForClaimQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4b8d", Name = "Customs.ImporterTypeForClaim Query Group" }, queryGroupRepository);
+	        QueryGroup ImporterTypeForClaimQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4b8d", Name = "Customs.ImporterTypeForClaim Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ImporterTypeForClaimObjectTable = objectTables.ContainsKey("Customs.ImporterTypeForClaim") ? objectTables["Customs.ImporterTypeForClaim"] : null;
             if (ImporterTypeForClaimObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 ImporterTypeForClaimObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ImporterTypeForClaim" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> ImporterTypeForClaimObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ImporterTypeForClaim").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode ImporterTypeForClaimTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ImporterTypeForClaim.Q.ImporterTypeForClaim", DefaultText = @"ImporterTypeForClaimQuery",LocalDefaultText = null, ObjectTableId = ImporterTypeForClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ImporterTypeForClaimFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ImporterTypeForClaim.Q.ImporterTypeForClaim", ObjectTableId = ImporterTypeForClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "ImporterTypeForClaim.Features.ImporterTypeForClaim", NameTextCodeDefaultText = "ImporterTypeForClaim", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ImporterTypeForClaimTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ImporterTypeForClaim.Q.ImporterTypeForClaim", DefaultText = @"ImporterTypeForClaimQuery",LocalDefaultText = null, ObjectTableId = ImporterTypeForClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ImporterTypeForClaimFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ImporterTypeForClaim.Q.ImporterTypeForClaim", ObjectTableId = ImporterTypeForClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "ImporterTypeForClaim.Features.ImporterTypeForClaim", NameTextCodeDefaultText = "ImporterTypeForClaim", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ImporterTypeForClaimObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ImporterTypeForClaimQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ImporterTypeForClaimTextCode_0.Id, NameTextCodeCode = ImporterTypeForClaimTextCode_0.Code, ObjectTableName = "Customs.ImporterTypeForClaim", Code = "ImporterTypeForClaim",  QueryGroupCode = "4b8d", IndexOrder = 0, Tenant = 0, ObjectTableId = ImporterTypeForClaimObjectTable.Id, QuerySection = "Customs.ImporterTypeForClaim", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ImporterTypeForClaimFeature_0.Id,FeatureUniqeCode= ImporterTypeForClaimFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query ImporterTypeForClaimQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ImporterTypeForClaimTextCode_0.Id, NameTextCodeCode = ImporterTypeForClaimTextCode_0.Code, ObjectTableName = "Customs.ImporterTypeForClaim", Code = "ImporterTypeForClaim",  QueryGroupCode = "4b8d", IndexOrder = 0, Tenant = 0, ObjectTableId = ImporterTypeForClaimObjectTable.Id, QuerySection = "Customs.ImporterTypeForClaim", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ImporterTypeForClaimFeature_0.Id,FeatureUniqeCode= ImporterTypeForClaimFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ImporterTypeForClaimQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ImporterTypeForClaimObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ImporterTypeForClaimObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ImporterTypeForClaimObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ImporterTypeForClaimObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ImporterTypeForClaimQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ImporterTypeForClaim.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ImporterTypeForClaimQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ImporterTypeForClaimObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ImporterTypeForClaimObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ImporterTypeForClaimObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ImporterTypeForClaimObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ImporterTypeForClaimQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ImporterTypeForClaim.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ImporterTypeForClaimQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ImporterTypeForClaimObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ImporterTypeForClaimObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ImporterTypeForClaimObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ImporterTypeForClaimObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn ImporterTypeForClaimQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ImporterTypeForClaim.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

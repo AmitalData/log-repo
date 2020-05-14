@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -175,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -277,7 +277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -328,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -378,43 +378,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CommunicationTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "COMT", Name = "Customs.CommunicationType" }, queryGroupRepository);
+	        QueryGroup CommunicationTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "COMT", Name = "Customs.CommunicationType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CommunicationTypeObjectTable = objectTables.ContainsKey("Customs.CommunicationType") ? objectTables["Customs.CommunicationType"] : null;
             if (CommunicationTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CommunicationTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CommunicationType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CommunicationTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CommunicationType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CommunicationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CommunicationType.Q.CommunicationTypeQuery", DefaultText = @"Communication Types",LocalDefaultText = "סוג תקשורת", ObjectTableId = CommunicationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CommunicationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONTYPE", ObjectTableId = CommunicationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CommunicationType.Features.CommunicationTypes", NameTextCodeDefaultText = "Communication Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CommunicationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CommunicationType.Q.CommunicationTypeQuery", DefaultText = @"Communication Types",LocalDefaultText = "סוג תקשורת", ObjectTableId = CommunicationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CommunicationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONTYPE", ObjectTableId = CommunicationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CommunicationType.Features.CommunicationTypes", NameTextCodeDefaultText = "Communication Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CommunicationTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CommunicationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommunicationTypeTextCode_0.Id, NameTextCodeCode = CommunicationTypeTextCode_0.Code, ObjectTableName = "Customs.CommunicationType", Code = "CommunicationType",  QueryGroupCode = "COMT", IndexOrder = 0, Tenant = 0, ObjectTableId = CommunicationTypeObjectTable.Id, QuerySection = "Customs.CommunicationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommunicationTypeFeature_0.Id,FeatureUniqeCode= CommunicationTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CommunicationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommunicationTypeTextCode_0.Id, NameTextCodeCode = CommunicationTypeTextCode_0.Code, ObjectTableName = "Customs.CommunicationType", Code = "CommunicationType",  QueryGroupCode = "COMT", IndexOrder = 0, Tenant = 0, ObjectTableId = CommunicationTypeObjectTable.Id, QuerySection = "Customs.CommunicationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommunicationTypeFeature_0.Id,FeatureUniqeCode= CommunicationTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CommunicationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CommunicationTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CommunicationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CommunicationTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CommunicationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CommunicationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CommunicationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CommunicationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CommunicationTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CommunicationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CommunicationTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CommunicationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CommunicationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CommunicationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CommunicationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CommunicationTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CommunicationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CommunicationTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CommunicationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CommunicationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CommunicationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CommunicationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CommunicationTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CommunicationTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CommunicationTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CommunicationTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CommunicationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CommunicationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

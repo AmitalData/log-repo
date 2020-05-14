@@ -165,6 +165,11 @@ export class EventTypePM {
     public set AllowedInAutomation(newValue: boolean) { if (this.allowedInAutomation != newValue) { this.allowedInAutomation = newValue; this.MarkAsDirty("AllowedInAutomation"); } }
        
 	 
+    private customField: string;
+    public get CustomField() { return this.customField; }
+    public set CustomField(newValue: string) { if (this.customField != newValue) { this.customField = newValue; this.MarkAsDirty("CustomField"); } }
+       
+	 
 
     public OldEntityPM: EventTypePM;
 		

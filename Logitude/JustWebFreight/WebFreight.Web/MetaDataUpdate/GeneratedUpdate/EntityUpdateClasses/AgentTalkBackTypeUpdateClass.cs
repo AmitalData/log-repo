@@ -130,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -182,7 +182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -234,7 +234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -280,7 +280,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -332,7 +332,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -384,41 +384,52 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AgentTalkBackTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "016d", Name = "Customs.AgentTalkBackType Query Group" }, queryGroupRepository);
+	        QueryGroup AgentTalkBackTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "016d", Name = "Customs.AgentTalkBackType Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable AgentTalkBackTypeObjectTable = objectTables.ContainsKey("Customs.AgentTalkBackType") ? objectTables["Customs.AgentTalkBackType"] : null;
             if (AgentTalkBackTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 AgentTalkBackTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AgentTalkBackType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> AgentTalkBackTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AgentTalkBackType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode AgentTalkBackTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentTalkBackType.Q.AgentTalkBackType", DefaultText = @"AgentTalkBackTypeQuery",LocalDefaultText = null, ObjectTableId = AgentTalkBackTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AgentTalkBackTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AgentTalkBackType.Q.AgentTalkBackType", ObjectTableId = AgentTalkBackTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentTalkBackType.Features.AgentTalkBackType", NameTextCodeDefaultText = "AgentTalkBackType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AgentTalkBackTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentTalkBackType.Q.AgentTalkBackType", DefaultText = @"AgentTalkBackTypeQuery",LocalDefaultText = null, ObjectTableId = AgentTalkBackTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature AgentTalkBackTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AgentTalkBackType.Q.AgentTalkBackType", ObjectTableId = AgentTalkBackTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentTalkBackType.Features.AgentTalkBackType", NameTextCodeDefaultText = "AgentTalkBackType", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AgentTalkBackTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AgentTalkBackTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentTalkBackTypeTextCode_0.Id, NameTextCodeCode = AgentTalkBackTypeTextCode_0.Code, ObjectTableName = "Customs.AgentTalkBackType", Code = "AgentTalkBackType",  QueryGroupCode = "016d", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentTalkBackTypeObjectTable.Id, QuerySection = "Customs.AgentTalkBackType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentTalkBackTypeFeature_0.Id,FeatureUniqeCode= AgentTalkBackTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AgentTalkBackTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AgentTalkBackTypeTextCode_0.Id, NameTextCodeCode = AgentTalkBackTypeTextCode_0.Code, ObjectTableName = "Customs.AgentTalkBackType", Code = "AgentTalkBackType",  QueryGroupCode = "016d", IndexOrder = 0, Tenant = 0, ObjectTableId = AgentTalkBackTypeObjectTable.Id, QuerySection = "Customs.AgentTalkBackType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AgentTalkBackTypeFeature_0.Id,FeatureUniqeCode= AgentTalkBackTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AgentTalkBackTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentTalkBackTypeQuery.Id,QueryCode = AgentTalkBackTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = AgentTalkBackTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AgentTalkBackTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentTalkBackTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == AgentTalkBackTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentTalkBackTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentTalkBackTypeQuery.Id,QueryCode = AgentTalkBackTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AgentTalkBackType.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn AgentTalkBackTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentTalkBackTypeQuery.Id,QueryCode = AgentTalkBackTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = AgentTalkBackTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AgentTalkBackTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentTalkBackTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == AgentTalkBackTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AgentTalkBackTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentTalkBackTypeQuery.Id,QueryCode = AgentTalkBackTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AgentTalkBackType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AgentTalkBackTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentTalkBackTypeQuery.Id,QueryCode = AgentTalkBackTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = AgentTalkBackTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AgentTalkBackTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentTalkBackTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == AgentTalkBackTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AgentTalkBackTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AgentTalkBackTypeQuery.Id,QueryCode = AgentTalkBackTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AgentTalkBackType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

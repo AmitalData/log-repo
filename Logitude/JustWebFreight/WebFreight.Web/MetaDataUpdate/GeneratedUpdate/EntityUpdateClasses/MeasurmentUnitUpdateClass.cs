@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -227,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -278,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -326,7 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -376,7 +376,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -426,45 +426,56 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup MeasurmentUnitQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MESU", Name = "Customs.MeasurmentUnit" }, queryGroupRepository);
+	        QueryGroup MeasurmentUnitQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MESU", Name = "Customs.MeasurmentUnit" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable MeasurmentUnitObjectTable = objectTables.ContainsKey("Customs.MeasurmentUnit") ? objectTables["Customs.MeasurmentUnit"] : null;
             if (MeasurmentUnitObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 MeasurmentUnitObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.MeasurmentUnit" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> MeasurmentUnitObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.MeasurmentUnit").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode MeasurmentUnitTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.MeasurmentUnit.Q.MeasurmentUnitQuery", DefaultText = @"Measurement Units",LocalDefaultText = "יחידת מידה", ObjectTableId = MeasurmentUnitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature MeasurmentUnitFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MEASURMENTUNIT", ObjectTableId = MeasurmentUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.MeasurmentUnit.Features.MeasurmentUnits", NameTextCodeDefaultText = "Measurment Units", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode MeasurmentUnitTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.MeasurmentUnit.Q.MeasurmentUnitQuery", DefaultText = @"Measurement Units",LocalDefaultText = "יחידת מידה", ObjectTableId = MeasurmentUnitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature MeasurmentUnitFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MEASURMENTUNIT", ObjectTableId = MeasurmentUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.MeasurmentUnit.Features.MeasurmentUnits", NameTextCodeDefaultText = "Measurment Units", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,MeasurmentUnitObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query MeasurmentUnitQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MeasurmentUnitTextCode_0.Id, NameTextCodeCode = MeasurmentUnitTextCode_0.Code, ObjectTableName = "Customs.MeasurmentUnit", Code = "MeasurmentUnit",  QueryGroupCode = "MESU", IndexOrder = 0, Tenant = 0, ObjectTableId = MeasurmentUnitObjectTable.Id, QuerySection = "Customs.MeasurmentUnit", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MeasurmentUnitFeature_0.Id,FeatureUniqeCode= MeasurmentUnitFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query MeasurmentUnitQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MeasurmentUnitTextCode_0.Id, NameTextCodeCode = MeasurmentUnitTextCode_0.Code, ObjectTableName = "Customs.MeasurmentUnit", Code = "MeasurmentUnit",  QueryGroupCode = "MESU", IndexOrder = 0, Tenant = 0, ObjectTableId = MeasurmentUnitObjectTable.Id, QuerySection = "Customs.MeasurmentUnit", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MeasurmentUnitFeature_0.Id,FeatureUniqeCode= MeasurmentUnitFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn MeasurmentUnitQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = MeasurmentUnitObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == MeasurmentUnitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MeasurmentUnitObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == MeasurmentUnitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MeasurmentUnitQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "MeasurmentUnit.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn MeasurmentUnitQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = MeasurmentUnitObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == MeasurmentUnitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MeasurmentUnitObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == MeasurmentUnitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MeasurmentUnitQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "MeasurmentUnit.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn MeasurmentUnitQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = MeasurmentUnitObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == MeasurmentUnitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MeasurmentUnitObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == MeasurmentUnitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MeasurmentUnitQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "MeasurmentUnit.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn MeasurmentUnitQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = MeasurmentUnitObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == MeasurmentUnitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MeasurmentUnitObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == MeasurmentUnitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn MeasurmentUnitQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "MeasurmentUnit.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn MeasurmentUnitQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = MeasurmentUnitObjectFields.Where(d => d.FieldName == "MalamId" && d.ObjectTableId == MeasurmentUnitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MeasurmentUnitObjectFields.Where(d => d.FieldName == "MalamId" && d.ObjectTableId == MeasurmentUnitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn MeasurmentUnitQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "MeasurmentUnit.MalamId" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

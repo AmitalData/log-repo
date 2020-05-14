@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -183,7 +183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -235,7 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -287,7 +287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -336,7 +336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -388,7 +388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -441,7 +441,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -493,60 +493,71 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup InternationalSiteQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7902", Name = "Customs.InternationalSite Query Group" }, queryGroupRepository);
+	        QueryGroup InternationalSiteQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7902", Name = "Customs.InternationalSite Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable InternationalSiteObjectTable = objectTables.ContainsKey("Customs.InternationalSite") ? objectTables["Customs.InternationalSite"] : null;
             if (InternationalSiteObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 InternationalSiteObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.InternationalSite" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> InternationalSiteObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.InternationalSite").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode InternationalSiteTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InternationalSite.Q.InternationalSite", DefaultText = @"InternationalSiteQuery",LocalDefaultText = null, ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature InternationalSiteFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternationalSite.Q.InternationalSite", ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.InternationalSite", NameTextCodeDefaultText = "InternationalSite", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode InternationalSiteTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InternationalSite.Q.InternationalSite", DefaultText = @"InternationalSiteQuery",LocalDefaultText = null, ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature InternationalSiteFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternationalSite.Q.InternationalSite", ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.InternationalSite", NameTextCodeDefaultText = "InternationalSite", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,InternationalSiteObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query InternationalSiteQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InternationalSiteTextCode_0.Id, NameTextCodeCode = InternationalSiteTextCode_0.Code, ObjectTableName = "Customs.InternationalSite", Code = "InternationalSite",  QueryGroupCode = "7902", IndexOrder = 0, Tenant = 0, ObjectTableId = InternationalSiteObjectTable.Id, QuerySection = "Customs.InternationalSite", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InternationalSiteFeature_0.Id,FeatureUniqeCode= InternationalSiteFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query InternationalSiteQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InternationalSiteTextCode_0.Id, NameTextCodeCode = InternationalSiteTextCode_0.Code, ObjectTableName = "Customs.InternationalSite", Code = "InternationalSite",  QueryGroupCode = "7902", IndexOrder = 0, Tenant = 0, ObjectTableId = InternationalSiteObjectTable.Id, QuerySection = "Customs.InternationalSite", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InternationalSiteFeature_0.Id,FeatureUniqeCode= InternationalSiteFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn InternationalSiteQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = InternationalSiteObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InternationalSiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InternationalSiteObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InternationalSiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InternationalSiteQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InternationalSite.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InternationalSiteQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = InternationalSiteObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == InternationalSiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InternationalSiteObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == InternationalSiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InternationalSiteQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InternationalSite.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InternationalSiteQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = InternationalSiteObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InternationalSiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InternationalSiteObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InternationalSiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InternationalSiteQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InternationalSite.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InternationalSiteQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = InternationalSiteObjectFields.Where(d => d.FieldName == "CountryTypeCode" && d.ObjectTableId == InternationalSiteObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InternationalSiteObjectFields.Where(d => d.FieldName == "CountryTypeCode" && d.ObjectTableId == InternationalSiteObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn InternationalSiteQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InternationalSite.CountryTypeCode" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable InternationalSiteObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InternationalSite" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> InternationalSiteObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.InternationalSite").ToList();
+		   //List<ObjectField> InternationalSiteObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.InternationalSite").ToList();
 		       
 	      
 
 	         Screen InternationalSiteGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InternationalSite.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = InternationalSiteObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField InternationalSiteInternationalSiteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = InternationalSiteObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = InternationalSiteObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InternationalSiteInternationalSiteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = "InternationalSite.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InternationalSiteInternationalSiteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = InternationalSiteObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = InternationalSiteObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InternationalSiteInternationalSiteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = "InternationalSite.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InternationalSiteInternationalSiteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = InternationalSiteObjectFields.Where(d => d.FieldName == "CountryTypeCode").FirstOrDefault().Id, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = InternationalSiteObjectFields.Where(d => d.FieldName == "CountryTypeCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField InternationalSiteInternationalSiteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = "InternationalSite.CountryTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -557,11 +568,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable InternationalSiteObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InternationalSite" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode InternationalSiteGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternationalSite.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature InternationalSiteGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternationalSite.Tab.General", ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature InternationalSiteGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternationalSite.Tab.General", ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InternationalSiteObjectTable);
  
                  
 			   TextCode InternationalSiteEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternationalSite.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature InternationalSiteEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternationalSite.Tab.Events", ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature InternationalSiteEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternationalSite.Tab.Events", ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InternationalSiteObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -577,10 +588,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable InternationalSiteObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InternationalSite" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature InternationalSiteFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InternationalSiteFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InternationalSiteFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature InternationalSiteFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.PackageFeature", NameTextCodeDefaultText = "InternationalSite Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature InternationalSiteFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InternationalSiteObjectTable);
+		   Feature InternationalSiteFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InternationalSiteObjectTable);
+		   Feature InternationalSiteFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InternationalSiteObjectTable);
+		   Feature InternationalSiteFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = InternationalSiteObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternationalSite.Features.PackageFeature", NameTextCodeDefaultText = "InternationalSite Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InternationalSiteObjectTable);    
 	    
 		}
 

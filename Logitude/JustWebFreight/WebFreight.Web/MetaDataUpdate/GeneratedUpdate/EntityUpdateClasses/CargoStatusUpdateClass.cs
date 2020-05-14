@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -180,7 +180,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -232,7 +232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -281,7 +281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -333,7 +333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -385,43 +385,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CargoStatusQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1362", Name = "Customs.CargoStatus Query Group" }, queryGroupRepository);
+	        QueryGroup CargoStatusQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1362", Name = "Customs.CargoStatus Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CargoStatusObjectTable = objectTables.ContainsKey("Customs.CargoStatus") ? objectTables["Customs.CargoStatus"] : null;
             if (CargoStatusObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CargoStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CargoStatus" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CargoStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CargoStatus").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CargoStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CargoStatus.Q.CargoStatus", DefaultText = @"Cargo Statuses",LocalDefaultText = "סטאטוס מטען", ObjectTableId = CargoStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CargoStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CargoStatus.Q.CargoStatus", ObjectTableId = CargoStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoStatus.Features.CargoStatus", NameTextCodeDefaultText = "CargoStatus", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CargoStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CargoStatus.Q.CargoStatus", DefaultText = @"Cargo Statuses",LocalDefaultText = "סטאטוס מטען", ObjectTableId = CargoStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CargoStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CargoStatus.Q.CargoStatus", ObjectTableId = CargoStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoStatus.Features.CargoStatus", NameTextCodeDefaultText = "CargoStatus", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CargoStatusObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CargoStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CargoStatusTextCode_0.Id, NameTextCodeCode = CargoStatusTextCode_0.Code, ObjectTableName = "Customs.CargoStatus", Code = "CargoStatus",  QueryGroupCode = "1362", IndexOrder = 0, Tenant = 0, ObjectTableId = CargoStatusObjectTable.Id, QuerySection = "Customs.CargoStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CargoStatusFeature_0.Id,FeatureUniqeCode= CargoStatusFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query CargoStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CargoStatusTextCode_0.Id, NameTextCodeCode = CargoStatusTextCode_0.Code, ObjectTableName = "Customs.CargoStatus", Code = "CargoStatus",  QueryGroupCode = "1362", IndexOrder = 0, Tenant = 0, ObjectTableId = CargoStatusObjectTable.Id, QuerySection = "Customs.CargoStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CargoStatusFeature_0.Id,FeatureUniqeCode= CargoStatusFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CargoStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CargoStatusObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CargoStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CargoStatusObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CargoStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CargoStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CargoStatus.Code" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CargoStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CargoStatusObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CargoStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CargoStatusObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CargoStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CargoStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CargoStatus.Name" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CargoStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CargoStatusObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CargoStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CargoStatusObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CargoStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CargoStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CargoStatus.LocalName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CargoStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CargoStatusObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CargoStatusObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CargoStatusObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CargoStatusObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CargoStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CargoStatus.Inactive" , ColumnWidth = 120 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -277,7 +277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -324,7 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -374,43 +374,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup InternalBorderSiteTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "IBST", Name = "Customs.InternalBorderSiteType" }, queryGroupRepository);
+	        QueryGroup InternalBorderSiteTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "IBST", Name = "Customs.InternalBorderSiteType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable InternalBorderSiteTypeObjectTable = objectTables.ContainsKey("Customs.InternalBorderSiteType") ? objectTables["Customs.InternalBorderSiteType"] : null;
             if (InternalBorderSiteTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 InternalBorderSiteTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.InternalBorderSiteType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> InternalBorderSiteTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.InternalBorderSiteType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode InternalBorderSiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternalBorderSiteType.Q.InternalBorderSiteTypeQuery", DefaultText = @"Internal Border Site Type",LocalDefaultText = "Internal Border Site Type", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature InternalBorderSiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTERNALBORDERSITETYPE", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.InternalBorderSiteType.Features.InternalBorderSiteType", NameTextCodeDefaultText = "Internal Border Site Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode InternalBorderSiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternalBorderSiteType.Q.InternalBorderSiteTypeQuery", DefaultText = @"Internal Border Site Type",LocalDefaultText = "Internal Border Site Type", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature InternalBorderSiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTERNALBORDERSITETYPE", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.InternalBorderSiteType.Features.InternalBorderSiteType", NameTextCodeDefaultText = "Internal Border Site Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InternalBorderSiteTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query InternalBorderSiteTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InternalBorderSiteTypeTextCode_0.Id, NameTextCodeCode = InternalBorderSiteTypeTextCode_0.Code, ObjectTableName = "Customs.InternalBorderSiteType", Code = "InternalBorderSiteType",  QueryGroupCode = "IBST", IndexOrder = 0, Tenant = 0, ObjectTableId = InternalBorderSiteTypeObjectTable.Id, QuerySection = "Customs.InternalBorderSiteType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InternalBorderSiteTypeFeature_0.Id,FeatureUniqeCode= InternalBorderSiteTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query InternalBorderSiteTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InternalBorderSiteTypeTextCode_0.Id, NameTextCodeCode = InternalBorderSiteTypeTextCode_0.Code, ObjectTableName = "Customs.InternalBorderSiteType", Code = "InternalBorderSiteType",  QueryGroupCode = "IBST", IndexOrder = 0, Tenant = 0, ObjectTableId = InternalBorderSiteTypeObjectTable.Id, QuerySection = "Customs.InternalBorderSiteType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InternalBorderSiteTypeFeature_0.Id,FeatureUniqeCode= InternalBorderSiteTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn InternalBorderSiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = InternalBorderSiteTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InternalBorderSiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InternalBorderSiteTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == InternalBorderSiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InternalBorderSiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InternalBorderSiteType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InternalBorderSiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = InternalBorderSiteTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == InternalBorderSiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InternalBorderSiteTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == InternalBorderSiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InternalBorderSiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InternalBorderSiteType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InternalBorderSiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = InternalBorderSiteTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InternalBorderSiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InternalBorderSiteTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == InternalBorderSiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InternalBorderSiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InternalBorderSiteType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InternalBorderSiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = InternalBorderSiteTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == InternalBorderSiteTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = InternalBorderSiteTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == InternalBorderSiteTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn InternalBorderSiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InternalBorderSiteType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

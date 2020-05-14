@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -227,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -278,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -328,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -378,43 +378,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CustomsBookTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CUBT", Name = "Customs.CustomsBookType" }, queryGroupRepository);
+	        QueryGroup CustomsBookTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CUBT", Name = "Customs.CustomsBookType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CustomsBookTypeObjectTable = objectTables.ContainsKey("Customs.CustomsBookType") ? objectTables["Customs.CustomsBookType"] : null;
             if (CustomsBookTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CustomsBookTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBookType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CustomsBookTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsBookType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CustomsBookTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsBookType.Q.CustomsBookTypeQuery", DefaultText = @"Customs Book Types",LocalDefaultText = "Customs Book Type", ObjectTableId = CustomsBookTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsBookTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSBOOKTYPE", ObjectTableId = CustomsBookTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsBookType.Features.CustomsBookTypes", NameTextCodeDefaultText = "Customs Book Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsBookTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsBookType.Q.CustomsBookTypeQuery", DefaultText = @"Customs Book Types",LocalDefaultText = "Customs Book Type", ObjectTableId = CustomsBookTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomsBookTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSBOOKTYPE", ObjectTableId = CustomsBookTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsBookType.Features.CustomsBookTypes", NameTextCodeDefaultText = "Customs Book Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomsBookTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomsBookTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsBookTypeTextCode_0.Id, NameTextCodeCode = CustomsBookTypeTextCode_0.Code, ObjectTableName = "Customs.CustomsBookType", Code = "CustomsBookType",  QueryGroupCode = "CUBT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsBookTypeObjectTable.Id, QuerySection = "Customs.CustomsBookType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsBookTypeFeature_0.Id,FeatureUniqeCode= CustomsBookTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CustomsBookTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsBookTypeTextCode_0.Id, NameTextCodeCode = CustomsBookTypeTextCode_0.Code, ObjectTableName = "Customs.CustomsBookType", Code = "CustomsBookType",  QueryGroupCode = "CUBT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsBookTypeObjectTable.Id, QuerySection = "Customs.CustomsBookType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsBookTypeFeature_0.Id,FeatureUniqeCode= CustomsBookTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomsBookTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsBookTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomsBookTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsBookTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomsBookTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsBookTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsBookType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsBookTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsBookTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsBookTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsBookTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsBookTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsBookTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsBookType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsBookTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsBookTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomsBookTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsBookTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomsBookTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsBookTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsBookType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsBookTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomsBookTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CustomsBookTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsBookTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CustomsBookTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CustomsBookTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsBookType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

@@ -123,7 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -173,7 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -223,7 +223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -273,7 +273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -320,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -370,43 +370,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CustomMetaDataTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CMDT", Name = "Customs.CustomMetaDataType" }, queryGroupRepository);
+	        QueryGroup CustomMetaDataTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CMDT", Name = "Customs.CustomMetaDataType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CustomMetaDataTypeObjectTable = objectTables.ContainsKey("Customs.CustomMetaDataType") ? objectTables["Customs.CustomMetaDataType"] : null;
             if (CustomMetaDataTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CustomMetaDataTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomMetaDataType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CustomMetaDataTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomMetaDataType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CustomMetaDataTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomMetaDataType.Q.CustomMetaDataTypeQuery", DefaultText = @"Document Meta Data",LocalDefaultText = "Document Meta Datas", ObjectTableId = CustomMetaDataTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomMetaDataTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMMETADATATYPE", ObjectTableId = CustomMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomMetaDataType.Features.CustomMetaDataTypes", NameTextCodeDefaultText = "Custom Meta Data Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomMetaDataTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomMetaDataType.Q.CustomMetaDataTypeQuery", DefaultText = @"Document Meta Data",LocalDefaultText = "Document Meta Datas", ObjectTableId = CustomMetaDataTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomMetaDataTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMMETADATATYPE", ObjectTableId = CustomMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomMetaDataType.Features.CustomMetaDataTypes", NameTextCodeDefaultText = "Custom Meta Data Types", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomMetaDataTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomMetaDataTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomMetaDataTypeTextCode_0.Id, NameTextCodeCode = CustomMetaDataTypeTextCode_0.Code, ObjectTableName = "Customs.CustomMetaDataType", Code = "CustomMetaDataType",  QueryGroupCode = "CMDT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomMetaDataTypeObjectTable.Id, QuerySection = "Customs.CustomMetaDataType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomMetaDataTypeFeature_0.Id,FeatureUniqeCode= CustomMetaDataTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CustomMetaDataTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomMetaDataTypeTextCode_0.Id, NameTextCodeCode = CustomMetaDataTypeTextCode_0.Code, ObjectTableName = "Customs.CustomMetaDataType", Code = "CustomMetaDataType",  QueryGroupCode = "CMDT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomMetaDataTypeObjectTable.Id, QuerySection = "Customs.CustomMetaDataType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomMetaDataTypeFeature_0.Id,FeatureUniqeCode= CustomMetaDataTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomMetaDataTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomMetaDataTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomMetaDataTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomMetaDataTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CustomMetaDataTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomMetaDataTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomMetaDataType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomMetaDataTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomMetaDataTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomMetaDataTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomMetaDataTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomMetaDataTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomMetaDataTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomMetaDataType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomMetaDataTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomMetaDataTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomMetaDataTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomMetaDataTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CustomMetaDataTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomMetaDataTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomMetaDataType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomMetaDataTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomMetaDataTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CustomMetaDataTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomMetaDataTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CustomMetaDataTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CustomMetaDataTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomMetaDataType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -196,7 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -259,7 +259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -322,7 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -385,7 +385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -448,7 +448,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -511,7 +511,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -574,7 +574,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -636,7 +636,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -697,7 +697,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -759,7 +759,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -821,7 +821,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -883,7 +883,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -945,7 +945,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1007,7 +1007,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1064,7 +1064,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1121,7 +1121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1182,7 +1182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1243,7 +1243,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1302,7 +1302,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1364,7 +1364,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1421,7 +1421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1478,7 +1478,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1539,7 +1539,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1600,7 +1600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1663,7 +1663,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1725,7 +1725,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1784,7 +1784,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1840,7 +1840,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1896,7 +1896,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1958,7 +1958,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2014,115 +2014,126 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CustomsCollateralQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CCQG", Name = "Customs.CustomsCollateral" }, queryGroupRepository);
-						QueryGroup CustomsCollateralQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f77e", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CustomsCollateralQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CCQG", Name = "Customs.CustomsCollateral" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CustomsCollateralQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f77e", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CustomsCollateralObjectTable = objectTables.ContainsKey("Customs.CustomsCollateral") ? objectTables["Customs.CustomsCollateral"] : null;
             if (CustomsCollateralObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CustomsCollateralObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsCollateral" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CustomsCollateralObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsCollateral").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CustomsCollateralTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsCollateral.Q.AllCollaterals", DefaultText = @"All Collaterals",LocalDefaultText = "כל הבטוחות", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsCollateralFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCOLLATERALS", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsCollateral.Features.AllCollaterals", NameTextCodeDefaultText = "All Collaterals", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsCollateralTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsCollateral.Q.AllCollaterals", DefaultText = @"All Collaterals",LocalDefaultText = "כל הבטוחות", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomsCollateralFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCOLLATERALS", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsCollateral.Features.AllCollaterals", NameTextCodeDefaultText = "All Collaterals", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomsCollateralObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomsCollateralTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsCollateral.Q.OpenCollaterals", DefaultText = @"Open Collaterals",LocalDefaultText = "בטוחות פתוחות", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsCollateralFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENCOLLATERALS", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsCollateral.Features.OpenCollaterals", NameTextCodeDefaultText = "Open Collaterals", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsCollateralTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsCollateral.Q.OpenCollaterals", DefaultText = @"Open Collaterals",LocalDefaultText = "בטוחות פתוחות", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomsCollateralFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENCOLLATERALS", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsCollateral.Features.OpenCollaterals", NameTextCodeDefaultText = "Open Collaterals", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomsCollateralObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomsCollateralTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsCollateral.Q.ClosedCollaterals", DefaultText = @"Closed Collaterals",LocalDefaultText = "בטוחות סגורות", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsCollateralFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEDCOLLATERALS", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsCollateral.Features.ClosedCollaterals", NameTextCodeDefaultText = "Closed Collaterals", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsCollateralTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsCollateral.Q.ClosedCollaterals", DefaultText = @"Closed Collaterals",LocalDefaultText = "בטוחות סגורות", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomsCollateralFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEDCOLLATERALS", ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsCollateral.Features.ClosedCollaterals", NameTextCodeDefaultText = "Closed Collaterals", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomsCollateralObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
 			  Query AllCollateralsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsCollateralTextCode_0.Id, NameTextCodeCode = CustomsCollateralTextCode_0.Code, ObjectTableName = "Customs.CustomsCollateral", Code = "AllCollaterals",  EditWizardName = "Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl",
-			   QueryGroupCode = "CCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsCollateralObjectTable.Id, QuerySection = "Customs.CustomsCollateral", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsCollateralFeature_0.Id,FeatureUniqeCode= CustomsCollateralFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "CCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsCollateralObjectTable.Id, QuerySection = "Customs.CustomsCollateral", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsCollateralFeature_0.Id,FeatureUniqeCode= CustomsCollateralFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestNumber" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestNumber" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsCollateral.CollateralRequestNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestStatusName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestStatusName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsCollateral.CollateralRequestStatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "RequestValidityDate" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "RequestValidityDate" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsCollateral.RequestValidityDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomsEntityTypeName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomsEntityTypeName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsCollateral.CustomsEntityTypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomsCollateral.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey1" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey1" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomsCollateral.EntityIdKey1" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey2" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey2" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "CustomsCollateral.EntityIdKey2" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey3" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey3" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "CustomsCollateral.EntityIdKey3" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "CustomsCollateral.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
   
 	      
 
 			  Query OpenCollateralsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsCollateralTextCode_1.Id, NameTextCodeCode = CustomsCollateralTextCode_1.Code, ObjectTableName = "Customs.CustomsCollateral", Code = "OpenCollaterals",  EditWizardName = "Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl",
-			   QueryGroupCode = "CCQG", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomsCollateralObjectTable.Id, QuerySection = "Customs.CustomsCollateral", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsCollateralFeature_1.Id,FeatureUniqeCode= CustomsCollateralFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "CCQG", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomsCollateralObjectTable.Id, QuerySection = "Customs.CustomsCollateral", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsCollateralFeature_1.Id,FeatureUniqeCode= CustomsCollateralFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn OpenCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestNumber" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestNumber" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsCollateral.CollateralRequestNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestStatusName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestStatusName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsCollateral.CollateralRequestStatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "RequestValidityDate" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "RequestValidityDate" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsCollateral.RequestValidityDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomsEntityTypeName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomsEntityTypeName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsCollateral.CustomsEntityTypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomsCollateral.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey1" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey1" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomsCollateral.EntityIdKey1" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey2" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey2" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "CustomsCollateral.EntityIdKey2" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey3" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey3" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "CustomsCollateral.EntityIdKey3" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "CustomsCollateral.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenCollateralsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OpenCollateralsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CustomsCollateral.IsClosed", PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query ClosedCollateralsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsCollateralTextCode_2.Id, NameTextCodeCode = CustomsCollateralTextCode_2.Code, ObjectTableName = "Customs.CustomsCollateral", Code = "ClosedCollaterals",  EditWizardName = "Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl",
-			   QueryGroupCode = "CCQG", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomsCollateralObjectTable.Id, QuerySection = "Customs.CustomsCollateral", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsCollateralFeature_2.Id,FeatureUniqeCode= CustomsCollateralFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "CCQG", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomsCollateralObjectTable.Id, QuerySection = "Customs.CustomsCollateral", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsCollateralFeature_2.Id,FeatureUniqeCode= CustomsCollateralFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ClosedCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestNumber" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestNumber" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsCollateral.CollateralRequestNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestStatusName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CollateralRequestStatusName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsCollateral.CollateralRequestStatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "RequestValidityDate" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "RequestValidityDate" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsCollateral.RequestValidityDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomsEntityTypeName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomsEntityTypeName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsCollateral.CustomsEntityTypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomsCollateral.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey1" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey1" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomsCollateral.EntityIdKey1" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey2" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey2" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "CustomsCollateral.EntityIdKey2" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey3" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "EntityIdKey3" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "CustomsCollateral.EntityIdKey3" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "CustomsCollateral.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter ClosedCollateralsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsCollateralObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsCollateralObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == CustomsCollateralObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ClosedCollateralsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CustomsCollateral.IsClosed", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
-	   
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -2138,16 +2149,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable CustomsCollateralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsCollateral" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CustomsCollateralFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsCollateral.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsCollateralFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsCollateral.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsCollateralFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsCollateral.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsCollateralFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsCollateral.Features.PackageFeature", NameTextCodeDefaultText = "CustomsCollateral Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+		   Feature CustomsCollateralFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsCollateral.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsCollateralObjectTable);
+		   Feature CustomsCollateralFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsCollateral.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsCollateralObjectTable);
+		   Feature CustomsCollateralFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsCollateral.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsCollateralObjectTable);
+		   Feature CustomsCollateralFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsCollateral.Features.PackageFeature", NameTextCodeDefaultText = "CustomsCollateral Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsCollateralObjectTable); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature CustomsCollateralFeature_GENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsCollateral.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomsCollateralFeature_GENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsCollateral.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsCollateralObjectTable);
 
-		   Feature CustomsCollateralFeature_CLOSEDCOLLATERALS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEDCOLLATERALS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsCollateral.Features.ClosedCollaterals", NameTextCodeDefaultText = @"Closed Collaterals" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CustomsCollateralFeature_CLOSEDCOLLATERALS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEDCOLLATERALS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsCollateralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsCollateral.Features.ClosedCollaterals", NameTextCodeDefaultText = @"Closed Collaterals" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsCollateralObjectTable);
 
    
 	    

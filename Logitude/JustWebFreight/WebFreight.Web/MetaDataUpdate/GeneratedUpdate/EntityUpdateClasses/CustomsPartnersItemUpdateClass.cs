@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -198,7 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -260,7 +260,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -322,7 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -384,7 +384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -447,7 +447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -510,7 +510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -571,7 +571,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -632,7 +632,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -688,7 +688,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -750,7 +750,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -811,7 +811,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -873,61 +873,72 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CustomsPartnersItemQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ITQG", Name = "Customs.CustomsPartnersItem" }, queryGroupRepository);
-						QueryGroup CustomsPartnersItemQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "b010", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CustomsPartnersItemQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ITQG", Name = "Customs.CustomsPartnersItem" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CustomsPartnersItemQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "b010", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CustomsPartnersItemObjectTable = objectTables.ContainsKey("Customs.CustomsPartnersItem") ? objectTables["Customs.CustomsPartnersItem"] : null;
             if (CustomsPartnersItemObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CustomsPartnersItemObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsPartnersItem" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CustomsPartnersItemObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsPartnersItem").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CustomsPartnersItemTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsPartnersItem.Q.ItemQuery", DefaultText = @"Customs Partners Items",LocalDefaultText = "טבלת פריטים", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsPartnersItemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsPartnersItem.Q.CustomsPartnersItem", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPartnersItemFeatures.CustomsPartnersItem", NameTextCodeDefaultText = "CustomsPartnersItem", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsPartnersItemTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsPartnersItem.Q.ItemQuery", DefaultText = @"Customs Partners Items",LocalDefaultText = "טבלת פריטים", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomsPartnersItemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsPartnersItem.Q.CustomsPartnersItem", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPartnersItemFeatures.CustomsPartnersItem", NameTextCodeDefaultText = "CustomsPartnersItem", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,CustomsPartnersItemObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomsPartnersItemQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsPartnersItemTextCode_0.Id, NameTextCodeCode = CustomsPartnersItemTextCode_0.Code, ObjectTableName = "Customs.CustomsPartnersItem", Code = "CustomsPartnersItem",  QueryGroupCode = "ITQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsPartnersItemObjectTable.Id, QuerySection = "Customs.CustomsPartnersItem", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsPartnersItemFeature_0.Id,FeatureUniqeCode= CustomsPartnersItemFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query CustomsPartnersItemQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsPartnersItemTextCode_0.Id, NameTextCodeCode = CustomsPartnersItemTextCode_0.Code, ObjectTableName = "Customs.CustomsPartnersItem", Code = "CustomsPartnersItem",  QueryGroupCode = "ITQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsPartnersItemObjectTable.Id, QuerySection = "Customs.CustomsPartnersItem", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsPartnersItemFeature_0.Id,FeatureUniqeCode= CustomsPartnersItemFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomsPartnersItemQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPartnersItemQuery.Id,QueryCode = CustomsPartnersItemQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "ClassificationCode" && d.ObjectTableId == CustomsPartnersItemObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "ClassificationCode" && d.ObjectTableId == CustomsPartnersItemObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsPartnersItemQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPartnersItemQuery.Id,QueryCode = CustomsPartnersItemQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsPartnersItem.ClassificationCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsPartnersItemQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPartnersItemQuery.Id,QueryCode = CustomsPartnersItemQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "ItemCode" && d.ObjectTableId == CustomsPartnersItemObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "ItemCode" && d.ObjectTableId == CustomsPartnersItemObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsPartnersItemQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPartnersItemQuery.Id,QueryCode = CustomsPartnersItemQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsPartnersItem.ItemCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsPartnersItemQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPartnersItemQuery.Id,QueryCode = CustomsPartnersItemQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CustomsPartnersItemObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == CustomsPartnersItemObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsPartnersItemQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPartnersItemQuery.Id,QueryCode = CustomsPartnersItemQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsPartnersItem.Name" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsPartnersItemQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPartnersItemQuery.Id,QueryCode = CustomsPartnersItemQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == CustomsPartnersItemObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == CustomsPartnersItemObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CustomsPartnersItemQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPartnersItemQuery.Id,QueryCode = CustomsPartnersItemQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsPartnersItem.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsPartnersItemQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPartnersItemQuery.Id,QueryCode = CustomsPartnersItemQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == CustomsPartnersItemObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == CustomsPartnersItemObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn CustomsPartnersItemQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPartnersItemQuery.Id,QueryCode = CustomsPartnersItemQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomsPartnersItem.VendorName" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CustomsPartnersItemObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsPartnersItem" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CustomsPartnersItemObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsPartnersItem").ToList();
+		   //List<ObjectField> CustomsPartnersItemObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsPartnersItem").ToList();
 		       
 	      
 
 	         Screen CustomsPartnersItemHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsPartnersItem.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomsPartnersItemObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "ItemCode").FirstOrDefault().Id, ScreenId = CustomsPartnersItemHeaderScreenScreen0.Id,ScreenCode = CustomsPartnersItemHeaderScreenScreen0.Code, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "ItemCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsPartnersItemHeaderScreenScreen0.Id,ScreenCode = CustomsPartnersItemHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsPartnersItem.ItemCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CustomsPartnersItemHeaderScreenScreen0.Id,ScreenCode = CustomsPartnersItemHeaderScreenScreen0.Code, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsPartnersItemHeaderScreenScreen0.Id,ScreenCode = CustomsPartnersItemHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsPartnersItem.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomsPartnersItemObjectTable.HeaderScreenId = CustomsPartnersItemHeaderScreenScreen0.Id;
 		    CustomsPartnersItemObjectTable.HeaderScreenCode = CustomsPartnersItemHeaderScreenScreen0.Code;
@@ -937,15 +948,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CustomsPartnersItemGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsPartnersItem.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomsPartnersItemObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "ItemCode").FirstOrDefault().Id, ScreenId = CustomsPartnersItemGeneralTabScreenScreen1.Id,ScreenCode = CustomsPartnersItemGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "ItemCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsPartnersItemGeneralTabScreenScreen1.Id,ScreenCode = CustomsPartnersItemGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsPartnersItem.ItemCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "ClassificationCode").FirstOrDefault().Id, ScreenId = CustomsPartnersItemGeneralTabScreenScreen1.Id,ScreenCode = CustomsPartnersItemGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "ClassificationCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomsPartnersItemGeneralTabScreenScreen1.Id,ScreenCode = CustomsPartnersItemGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsPartnersItem.ClassificationCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = CustomsPartnersItemGeneralTabScreenScreen1.Id,ScreenCode = CustomsPartnersItemGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomsPartnersItemGeneralTabScreenScreen1.Id,ScreenCode = CustomsPartnersItemGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsPartnersItem.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "VendorId").FirstOrDefault().Id, ScreenId = CustomsPartnersItemGeneralTabScreenScreen1.Id,ScreenCode = CustomsPartnersItemGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "VendorId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CustomsPartnersItemGeneralTabScreenScreen1.Id,ScreenCode = CustomsPartnersItemGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsPartnersItem.VendorId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "CustomerId").FirstOrDefault().Id, ScreenId = CustomsPartnersItemGeneralTabScreenScreen1.Id,ScreenCode = CustomsPartnersItemGeneralTabScreenScreen1.Code, ObjectFieldCode = CustomsPartnersItemObjectFields.Where(d => d.FieldName == "CustomerId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPartnersItemCustomsCustomsPartnersItemGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CustomsPartnersItemGeneralTabScreenScreen1.Id,ScreenCode = CustomsPartnersItemGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsPartnersItem.CustomerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -956,11 +967,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable CustomsPartnersItemObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsPartnersItem" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomsPartnersItemGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsPartnersItem.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsPartnersItemGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsPartnersItem.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsPartnersItemGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsPartnersItem.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsPartnersItemObjectTable);
  
                  
 			   TextCode CustomsPartnersItemEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsPartnersItem.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsPartnersItemEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsPartnersItem.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsPartnersItemEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsPartnersItem.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsPartnersItemObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -976,10 +987,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable CustomsPartnersItemObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsPartnersItem" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CustomsPartnersItemFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPartnersItem.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsPartnersItemFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPartnersItem.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsPartnersItemFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPartnersItem.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsPartnersItemFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPartnersItem.Features.PackageFeature", NameTextCodeDefaultText = "CustomsPartnersItem Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CustomsPartnersItemFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPartnersItem.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsPartnersItemObjectTable);
+		   Feature CustomsPartnersItemFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPartnersItem.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsPartnersItemObjectTable);
+		   Feature CustomsPartnersItemFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPartnersItem.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsPartnersItemObjectTable);
+		   Feature CustomsPartnersItemFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPartnersItem.Features.PackageFeature", NameTextCodeDefaultText = "CustomsPartnersItem Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsPartnersItemObjectTable);    
 	    
 		}
 

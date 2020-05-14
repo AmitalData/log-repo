@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -276,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -320,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -370,43 +370,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup VendorTransactionTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "VTQG", Name = "Customs.VendorTransactionType" }, queryGroupRepository);
+	        QueryGroup VendorTransactionTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "VTQG", Name = "Customs.VendorTransactionType" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable VendorTransactionTypeObjectTable = objectTables.ContainsKey("Customs.VendorTransactionType") ? objectTables["Customs.VendorTransactionType"] : null;
             if (VendorTransactionTypeObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 VendorTransactionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.VendorTransactionType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> VendorTransactionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.VendorTransactionType").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode VendorTransactionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorTransactionType.Q.VendorTransactionTypeQuery", DefaultText = @"Vendor Transaction Type",LocalDefaultText = "סוג פעילות על ספק", ObjectTableId = VendorTransactionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature VendorTransactionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORTRANSACTIONTYPE", ObjectTableId = VendorTransactionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VendorTransactionType.Features.VendorTransactionType", NameTextCodeDefaultText = "Vendor Transaction Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode VendorTransactionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorTransactionType.Q.VendorTransactionTypeQuery", DefaultText = @"Vendor Transaction Type",LocalDefaultText = "סוג פעילות על ספק", ObjectTableId = VendorTransactionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature VendorTransactionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORTRANSACTIONTYPE", ObjectTableId = VendorTransactionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VendorTransactionType.Features.VendorTransactionType", NameTextCodeDefaultText = "Vendor Transaction Type", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,VendorTransactionTypeObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query VendorTransactionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VendorTransactionTypeTextCode_0.Id, NameTextCodeCode = VendorTransactionTypeTextCode_0.Code, ObjectTableName = "Customs.VendorTransactionType", Code = "VendorTransactionType",  QueryGroupCode = "VTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = VendorTransactionTypeObjectTable.Id, QuerySection = "Customs.VendorTransactionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = VendorTransactionTypeFeature_0.Id,FeatureUniqeCode= VendorTransactionTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
+			  Query VendorTransactionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VendorTransactionTypeTextCode_0.Id, NameTextCodeCode = VendorTransactionTypeTextCode_0.Code, ObjectTableName = "Customs.VendorTransactionType", Code = "VendorTransactionType",  QueryGroupCode = "VTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = VendorTransactionTypeObjectTable.Id, QuerySection = "Customs.VendorTransactionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = VendorTransactionTypeFeature_0.Id,FeatureUniqeCode= VendorTransactionTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn VendorTransactionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = VendorTransactionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VendorTransactionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorTransactionTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VendorTransactionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorTransactionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "VendorTransactionType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VendorTransactionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = VendorTransactionTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VendorTransactionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorTransactionTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VendorTransactionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorTransactionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "VendorTransactionType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VendorTransactionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = VendorTransactionTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VendorTransactionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorTransactionTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VendorTransactionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorTransactionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "VendorTransactionType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VendorTransactionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = VendorTransactionTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == VendorTransactionTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorTransactionTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == VendorTransactionTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn VendorTransactionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "VendorTransactionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

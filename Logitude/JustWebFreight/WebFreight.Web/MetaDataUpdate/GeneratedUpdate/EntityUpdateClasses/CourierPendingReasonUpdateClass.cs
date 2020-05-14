@@ -141,7 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -202,7 +202,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -263,7 +263,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -322,7 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -383,7 +383,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -444,7 +444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -506,7 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -566,7 +566,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -627,65 +627,76 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CourierPendingReasonQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "aef0", Name = "Customs.CourierPendingReason Query Group" }, queryGroupRepository);
-						QueryGroup CourierPendingReasonQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "bc89", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup CourierPendingReasonQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "aef0", Name = "Customs.CourierPendingReason Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CourierPendingReasonQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "bc89", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CourierPendingReasonObjectTable = objectTables.ContainsKey("Customs.CourierPendingReason") ? objectTables["Customs.CourierPendingReason"] : null;
             if (CourierPendingReasonObjectTable == null)
             {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
                 CourierPendingReasonObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CourierPendingReason" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
-	        List<ObjectField> CourierPendingReasonObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CourierPendingReason").ToList();   
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
 
-			   TextCode CourierPendingReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourierPendingReason.Q.AllCouriersPending", DefaultText = @"All Couriers Pending",LocalDefaultText = "Pending Reason", ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CourierPendingReasonFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReason.Q.AllCouriersPending", ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.AllCouriersPending", NameTextCodeDefaultText = "AllCouriersPending", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CourierPendingReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourierPendingReason.Q.AllCouriersPending", DefaultText = @"All Couriers Pending",LocalDefaultText = "Pending Reason", ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CourierPendingReasonFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReason.Q.AllCouriersPending", ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.AllCouriersPending", NameTextCodeDefaultText = "AllCouriersPending", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CourierPendingReasonObjectTable, addedFeatures, addedTextCodes);
 
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllCouriersPendingQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierPendingReasonTextCode_0.Id, NameTextCodeCode = CourierPendingReasonTextCode_0.Code, ObjectTableName = "Customs.CourierPendingReason", Code = "AllCouriersPending",  QueryGroupCode = "aef0", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierPendingReasonObjectTable.Id, QuerySection = "Customs.CourierPendingReason", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierPendingReasonFeature_0.Id,FeatureUniqeCode= CourierPendingReasonFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query AllCouriersPendingQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierPendingReasonTextCode_0.Id, NameTextCodeCode = CourierPendingReasonTextCode_0.Code, ObjectTableName = "Customs.CourierPendingReason", Code = "AllCouriersPending",  QueryGroupCode = "aef0", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierPendingReasonObjectTable.Id, QuerySection = "Customs.CourierPendingReason", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CourierPendingReasonFeature_0.Id,FeatureUniqeCode= CourierPendingReasonFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCouriersPendingQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierPendingReasonObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCouriersPendingQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CourierPendingReason.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllCouriersPendingQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierPendingReasonObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCouriersPendingQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CourierPendingReason.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllCouriersPendingQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierPendingReasonObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCouriersPendingQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CourierPendingReason.EnglishName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllCouriersPendingQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "ErrorPlaceName" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierPendingReasonObjectFields.Where(d => d.FieldName == "ErrorPlaceName" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCouriersPendingQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CourierPendingReason.ErrorPlaceName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllCouriersPendingQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "UnifreightStatusCode" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierPendingReasonObjectFields.Where(d => d.FieldName == "UnifreightStatusCode" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 167 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCouriersPendingQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CourierPendingReason.UnifreightStatusCode" , ColumnWidth = 167 }, addedQueryColumns);
 
-			 QueryColumn AllCouriersPendingQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CourierPendingReasonObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
-	   
+			 QueryColumn AllCouriersPendingQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id,QueryCode = AllCouriersPendingQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CourierPendingReason.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
 		   ObjectTable CourierPendingReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CourierPendingReason" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CourierPendingReasonObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CourierPendingReason").ToList();
+		   //List<ObjectField> CourierPendingReasonObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CourierPendingReason").ToList();
 		       
 	      
 
 	         Screen CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CourierPendingReason.Customs.CourierPendingReasonHeaderScreen", Name = "Customs.CourierPendingReasonHeaderScreen", ObjectTableId = CourierPendingReasonObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CourierPendingReasonCourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Id,ScreenCode = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Code, ObjectFieldCode = CourierPendingReasonObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierPendingReasonCourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Id,ScreenCode = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "CourierPendingReason.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierPendingReasonCourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Id,ScreenCode = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Code, ObjectFieldCode = CourierPendingReasonObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierPendingReasonCourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Id,ScreenCode = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "CourierPendingReason.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierPendingReasonCourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "ErrorPlaceName").FirstOrDefault().Id, ScreenId = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Id,ScreenCode = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Code, ObjectFieldCode = CourierPendingReasonObjectFields.Where(d => d.FieldName == "ErrorPlaceName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierPendingReasonCourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Id,ScreenCode = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Code, ObjectFieldCode = "CourierPendingReason.ErrorPlaceName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CourierPendingReasonObjectTable.HeaderScreenId = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Id;
 		    CourierPendingReasonObjectTable.HeaderScreenCode = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Code;
@@ -700,11 +711,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable CourierPendingReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CourierPendingReason" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CourierPendingReasonGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierPendingReason.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CourierPendingReasonGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReason.Tab.General", ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CourierPendingReasonGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReason.Tab.General", ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CourierPendingReasonObjectTable);
  
                  
 			   TextCode CourierPendingReasonEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierPendingReason.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CourierPendingReasonEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReason.Tab.Events", ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CourierPendingReasonEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReason.Tab.Events", ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CourierPendingReasonObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -720,10 +731,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable CourierPendingReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CourierPendingReason" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CourierPendingReasonFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CourierPendingReasonFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CourierPendingReasonFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CourierPendingReasonFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.PackageFeature", NameTextCodeDefaultText = "CourierPendingReason Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CourierPendingReasonFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierPendingReasonObjectTable);
+		   Feature CourierPendingReasonFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierPendingReasonObjectTable);
+		   Feature CourierPendingReasonFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierPendingReasonObjectTable);
+		   Feature CourierPendingReasonFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CourierPendingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierPendingReason.Features.PackageFeature", NameTextCodeDefaultText = "CourierPendingReason Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierPendingReasonObjectTable);    
 	    
 		}
 
