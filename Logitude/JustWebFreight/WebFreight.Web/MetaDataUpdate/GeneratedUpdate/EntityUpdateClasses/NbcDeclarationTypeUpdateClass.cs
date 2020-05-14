@@ -103,7 +103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "סוג הצהרת אב"כ",
+			      				    LocalDefaultText =  "סוג הצהרת אב'כ",
 			      				    DefaultText =  "Nbc Declaration Type",
 			      				    Code =  "c984",
 			      				    Name =  "Customs.CustomerRoleType Query Group",
@@ -480,7 +480,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable NbcDeclarationTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.NbcDeclarationType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> NbcDeclarationTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.NbcDeclarationType").ToList();   
 
-			   TextCode NbcDeclarationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "NbcDeclarationType.Q.NbcDeclarationType", DefaultText = "Nbc Declaration Type Query",LocalDefaultText = "סוגי הצהרת אב"כ", ObjectTableId = NbcDeclarationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode NbcDeclarationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "NbcDeclarationType.Q.NbcDeclarationType", DefaultText = "Nbc Declaration Type Query",LocalDefaultText = "סוגי הצהרת אב'כ", ObjectTableId = NbcDeclarationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature NbcDeclarationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NbcDeclarationType.Q.NbcDeclarationType", ObjectTableId = NbcDeclarationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "NbcDeclarationType.Features.NbcDeclarationType", NameTextCodeDefaultText = "NbcDeclarationType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
