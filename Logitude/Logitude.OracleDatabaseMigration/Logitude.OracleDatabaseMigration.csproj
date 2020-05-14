@@ -584,6 +584,10 @@
     <Compile Include="Migrations\202005140811047_AddNbcDeclarationTypes.Designer.cs">
       <DependentUpon>202005140811047_AddNbcDeclarationTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005140836536_ExportChanges.cs" />
+    <Compile Include="Migrations\202005140836536_ExportChanges.Designer.cs">
+      <DependentUpon>202005140836536_ExportChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1012,6 +1016,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005140811047_AddNbcDeclarationTypes.resx">
       <DependentUpon>202005140811047_AddNbcDeclarationTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005140836536_ExportChanges.resx">
+      <DependentUpon>202005140836536_ExportChanges.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
