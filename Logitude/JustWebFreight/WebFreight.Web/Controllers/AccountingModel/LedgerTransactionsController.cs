@@ -52,7 +52,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 response.Result = ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
-                response.TookMS= ledgerTransactionBalanceService.Response.TookMS;
+                response.TookMS = ledgerTransactionBalanceService.Response.TookMS;
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
@@ -68,7 +68,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
-                 int tenant = AuthinticateTenant();
+                int tenant = AuthinticateTenant();
 
                 var accountingContext = AccountingContext.GetContext(tenant);
                 var _LedgerTransactionQueryService = new LedgerTransactionQueryService(tenant);
@@ -167,7 +167,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-                
+
 
                 LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
 
@@ -208,7 +208,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     LTBFilter.DateTypeCode = _dateTypeCode;
                 }
                 var accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
-                var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext,LTBFilter);
+                var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
                 ledgerTransactionBalanceService.Run();
 
                 LTBFilter.CallBack = new LedgerTransactionBalanceFilterCallBack()
@@ -225,8 +225,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     TotalRowCount = ledgerTransactionBalanceService.Response.TotalRowCount,
                     YearTransferLedgerTransactionIds = ledgerTransactionBalanceService.Response.YearTransferLedgerTransactionIds,
 
-                SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionBalanceService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
-                    
+                    SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionBalanceService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
+
                 };
 
                 ServiceResponse response = new ServiceResponse();
@@ -259,7 +259,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-               
+
 
                 LedgerTransactionCardIndexFilter LTCIFilter = new LedgerTransactionCardIndexFilter();
 
@@ -298,7 +298,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             to = filters_list.Where(d => d.FieldName == "DocumentDate").FirstOrDefault().FieldValue2;
                             break;
                     }
-          
+
                     var isReconciled = filters_list.Where(d => d.FieldName == "IsReconciled").FirstOrDefault().FieldValue;
                     var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
 
@@ -374,15 +374,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("LedgerTransaction", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-                
-                
+
+
                 var accountingContext = AccountingContext.GetContext(tenant);
-                 
+
                 var LedgerTransactionRepository = new LedgerTransactionRepository(accountingContext);
                 var LedgerTransactionQuery = new LedgerTransactionQueryService(LedgerTransactionRepository);
-                var MyTrans = LedgerTransactionQuery.GetFirstLedgerTransaction(AccountId,tenant); 
+                var MyTrans = LedgerTransactionQuery.GetFirstLedgerTransaction(AccountId, tenant);
                 ServiceResponse response = new ServiceResponse();
-                 
+
 
                 response.Result = MyTrans;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
@@ -395,7 +395,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
-      
+
         [HttpGet]
         public HttpResponseMessage getLedgerTransactionsByIds([FromUri] List<string> Ids)
         {
@@ -469,6 +469,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         public HttpResponseMessage GetTransactionsForARPayment(string arpaymentId, string billToGLAccountId, string paymentCurrencyId)
         {
             try
+
             {
                 int tenant = GetAuthinticatedTenant();
 
@@ -525,6 +526,64 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         private static int GetAuthinticatedTenant()
         {
+
+            {
+                int tenant = GetAuthinticatedTenant();
+
+                if (arpaymentId == "undefined") arpaymentId = null;
+
+                string accountId = GetGLAccountIdForReconciledTransactions(billToGLAccountId, tenant, paymentCurrencyId);
+
+                ARPaymentInvoicesTransactionFetcher invoiceTransactionsFetcher = new ARPaymentInvoicesTransactionFetcher(arpaymentId, accountId, tenant);
+                var transactions = invoiceTransactionsFetcher.Fetch();
+
+                HttpResponseMessage reponseMessage = BuildResponseMessage(transactions);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private HttpResponseMessage BuildResponseMessage(List<LedgerTransactionPM> transactions)
+        {
+
+            ServiceResponse response = new ServiceResponse();
+            response.Result = transactions;
+            HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+            return reponseMessage;
+        }
+
+
+        //var accountingContext = AccountingContext.GetContext(tenant);
+        //LedgerTransactionQueryService query = new LedgerTransactionQueryService(accountingContext);
+
+
+
+        //// get reconciled transactions
+        //List<LedgerTransactionPM> reconciledTransactions = new List<LedgerTransactionPM>();
+        //if (arpaymentId != null) reconciledTransactions = query.GetReconciledInvoicesTransactionsForARPayment(arpaymentId, accountId, tenant);
+
+        //// get full opened & partailly reconciled transactions
+        //List<LedgerTransactionPM> openedTransactions
+        //    = query.GetOpenInvoicesTransactionsForAccount(accountId, arpaymentId, tenant);
+
+        //// concat two list
+        //IEnumerable<LedgerTransactionPM> finalTransactionsList
+        //    = openedTransactions
+        //        .Concat(reconciledTransactions);
+
+
+        //finalTransactionsList
+        //    = finalTransactionsList
+        //        .OrderByDescending(d => d.IsReconciled).ThenByDescending(d => d.PaymentReconciledAmount).ToList();
+
+
+        private static int GetAuthinticatedTenant()
+        {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -548,7 +607,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     {
                         return gLAccountCurrency.GLAccountId;
                     }
-                    else return gLAccount.Id;    
+                    else return gLAccount.Id;
                 }
                 else
                 {
@@ -561,7 +620,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
     }
 
-    public class BalanceCurrency{
+    public class BalanceCurrency
+    {
         public string CurrencyId { get; set; }
         public string CurrencyCode { get; set; }
         public string CurrencySign { get; set; }
