@@ -580,7 +580,10 @@
     <Compile Include="Migrations\202005111347238_DeclarationExportRecipientMap.Designer.cs">
       <DependentUpon>202005111347238_DeclarationExportRecipientMap.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202005140713397_add_RecieverWareHouseCode.cs" />
+    <Compile Include="Migrations\202005140713397_add_RecieverWareHouseCode.Designer.cs">
+      <DependentUpon>202005140713397_add_RecieverWareHouseCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202005140811047_AddNbcDeclarationTypes.cs" />
     <Compile Include="Migrations\202005140811047_AddNbcDeclarationTypes.Designer.cs">
       <DependentUpon>202005140811047_AddNbcDeclarationTypes.cs</DependentUpon>
@@ -589,23 +592,441 @@
     <Compile Include="Migrations\202005140836536_ExportChanges.Designer.cs">
       <DependentUpon>202005140836536_ExportChanges.cs</DependentUpon>
     </Compile>
-
-    <Compile Include="Migrations\202005140713397_add_RecieverWareHouseCode.cs" />
-    <Compile Include="Migrations\202005140713397_add_RecieverWareHouseCode.Designer.cs">
-      <DependentUpon>202005140713397_add_RecieverWareHouseCode.cs</DependentUpon>
-    </Compile>
-
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
+      <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
+      <Name>Logitude.Accounting.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BookingLib.Data\Logitude.BookingLib.Data.csproj">
+      <Project>{147a706d-221a-4fd1-8f27-c12e4ab276cf}</Project>
+      <Name>Logitude.BookingLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
+      <Project>{4733f914-0e16-4412-84df-d98232dd43e9}</Project>
+      <Name>Logitude.CRM.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
+      <Project>{643f92c9-7cf1-4429-b79e-1e354b758abf}</Project>
+      <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{b02e4d92-9226-4f3f-990f-66c7f66e9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Social.Data\Logitude.Social.Data.csproj">
+      <Project>{a00ae10e-2560-4e06-99fa-859ea7488ec3}</Project>
+      <Name>Logitude.Social.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
+      <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
+      <Name>Logitude.TariffModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.TimeManagement.Data\Logitude.TimeManagement.Data.csproj">
+      <Project>{68f57541-574a-4ee9-b3fe-8c535c74456a}</Project>
+      <Name>Logitude.TimeManagement.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.WarehouseLib.Data\Logitude.WarehouseLib.Data.csproj">
+      <Project>{54a12a5c-659c-4410-a5e7-949acd43f3a5}</Project>
+      <Name>Logitude.WarehouseLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810311122380_AddVehiclePassportName.resx">
+      <DependentUpon>201810311122380_AddVehiclePassportName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811050626572_CustomsPartnerFtpAndMore.resx">
+      <DependentUpon>201811050626572_CustomsPartnerFtpAndMore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811050632236_CustomsPartnerFtpTk2.resx">
+      <DependentUpon>201811050632236_CustomsPartnerFtpTk2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811050638372_CustomsPartnerFtpTk3.resx">
+      <DependentUpon>201811050638372_CustomsPartnerFtpTk3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811060542460_AddMigrationPendingErrorPlace.resx">
+      <DependentUpon>201811060542460_AddMigrationPendingErrorPlace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811151237538_VendorVATNumberChange.resx">
+      <DependentUpon>201811151237538_VendorVATNumberChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811201042007_AddMogrationDecisionType.resx">
+      <DependentUpon>201811201042007_AddMogrationDecisionType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811220919515_AddMigrationClaimRelatedEntityDecision.resx">
+      <DependentUpon>201811220919515_AddMigrationClaimRelatedEntityDecision.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811221127221_AddMigrationSeizureMethodType.resx">
+      <DependentUpon>201811221127221_AddMigrationSeizureMethodType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811221311394_AddClaimsRelatedEntitiesSeizure.resx">
+      <DependentUpon>201811221311394_AddClaimsRelatedEntitiesSeizure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811250603192_AddClaimsRelatedEntitiesRefund.resx">
+      <DependentUpon>201811250603192_AddClaimsRelatedEntitiesRefund.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811251240447_AddICAOFieldToCustomsAirLines.resx">
+      <DependentUpon>201811251240447_AddICAOFieldToCustomsAirLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811290906148_CustomsPartnerCommDet.resx">
+      <DependentUpon>201811290906148_CustomsPartnerCommDet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812020755198_CustomsPartnerFtpNullable.resx">
+      <DependentUpon>201812020755198_CustomsPartnerFtpNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812110709089_AddMigrationSeizureFactorType.resx">
+      <DependentUpon>201812110709089_AddMigrationSeizureFactorType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120858343_AddMigrationWeightValueCode.resx">
+      <DependentUpon>201812120858343_AddMigrationWeightValueCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812121305212_AddMigrationMamanSpecialAction.resx">
+      <DependentUpon>201812121305212_AddMigrationMamanSpecialAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812122107253_AddMigrationMamanSpecialActionStatus.resx">
+      <DependentUpon>201812122107253_AddMigrationMamanSpecialActionStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812160741349_AddMigrationDeclarationMamanSpecialAction.resx">
+      <DependentUpon>201812160741349_AddMigrationDeclarationMamanSpecialAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161346315_AddMigrationClaimSeizureUpdateKey.resx">
+      <DependentUpon>201812161346315_AddMigrationClaimSeizureUpdateKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812310731564_AddMigrationDecCourierSuspention.resx">
+      <DependentUpon>201812310731564_AddMigrationDecCourierSuspention.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901091013411_AddMigrationRefundCustomerActivityType.resx">
+      <DependentUpon>201901091013411_AddMigrationRefundCustomerActivityType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901100730447_AddMigrationFixProblems.resx">
+      <DependentUpon>201901100730447_AddMigrationFixProblems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131101558_AddMigrationChangeResponseStatus.resx">
+      <DependentUpon>201901131101558_AddMigrationChangeResponseStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901131529526_AddMigrationCourierSpecialActionStatus.resx">
+      <DependentUpon>201901131529526_AddMigrationCourierSpecialActionStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901171655152_AddDepositionStatusCodeFieldToDeclaration.resx">
+      <DependentUpon>201901171655152_AddDepositionStatusCodeFieldToDeclaration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901200958097_missingmaindbmigrations.resx">
+      <DependentUpon>201901200958097_missingmaindbmigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901201024109_shareduserqueriesoracle.resx">
+      <DependentUpon>201901201024109_shareduserqueriesoracle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901291242145_AddMigrationCourierFast.resx">
+      <DependentUpon>201901291242145_AddMigrationCourierFast.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902070727166_AddMigrationTransferCargoMethod.resx">
+      <DependentUpon>201902070727166_AddMigrationTransferCargoMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902070823513_AddMigrationGatepassReturnCode.resx">
+      <DependentUpon>201902070823513_AddMigrationGatepassReturnCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902070855195_AddMigrationUpdateCode.resx">
+      <DependentUpon>201902070855195_AddMigrationUpdateCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902071221184_AddMigrationGatepassRequest.resx">
+      <DependentUpon>201902071221184_AddMigrationGatepassRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111405202_missingmigration121212.resx">
+      <DependentUpon>201902111405202_missingmigration121212.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111428378_inframissing.resx">
+      <DependentUpon>201902111428378_inframissing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201345347_AddMigrationGatepassnumber.resx">
+      <DependentUpon>201902201345347_AddMigrationGatepassnumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201357336_AddMigrationGatepassNumberChange.resx">
+      <DependentUpon>201902201357336_AddMigrationGatepassNumberChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201418045_AddMigrationGatepassNumberKey.resx">
+      <DependentUpon>201902201418045_AddMigrationGatepassNumberKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201936149_AddMigGatepassRequest.resx">
+      <DependentUpon>201902201936149_AddMigGatepassRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902211453579_INFRASTRUCTUREBLABLA.resx">
+      <DependentUpon>201902211453579_INFRASTRUCTUREBLABLA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902281151282_TEXTbla.resx">
+      <DependentUpon>201902281151282_TEXTbla.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903031515368_AddMigrationGatepassChangeNumber.resx">
+      <DependentUpon>201903031515368_AddMigrationGatepassChangeNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903101005003_AdTerminalSuspentionNumber.resx">
+      <DependentUpon>201903101005003_AdTerminalSuspentionNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903101620062_AddMigrationTruckerIdCourier.resx">
+      <DependentUpon>201903101620062_AddMigrationTruckerIdCourier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904101034317_AddDeclarationCourierStatusesLastMileFields.resx">
+      <DependentUpon>201904101034317_AddDeclarationCourierStatusesLastMileFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904111219483_AddStorageSiteStatusCourier.resx">
+      <DependentUpon>201904111219483_AddStorageSiteStatusCourier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904140654179_AddMigrationDelMamanStatusCodeDec.resx">
+      <DependentUpon>201904140654179_AddMigrationDelMamanStatusCodeDec.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904181133174_AddMigrationChangeInSupplierInvoice.resx">
+      <DependentUpon>201904181133174_AddMigrationChangeInSupplierInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904221018347_AddMigrationModificationsTypeCode.resx">
+      <DependentUpon>201904221018347_AddMigrationModificationsTypeCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905070848314_VendorCommissionMigration.resx">
+      <DependentUpon>201905070848314_VendorCommissionMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905131153039_AddPendingByKeywordsTable.resx">
+      <DependentUpon>201905131153039_AddPendingByKeywordsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905191424434_AddSearchFieldsToPendingByKeyword.resx">
+      <DependentUpon>201905191424434_AddSearchFieldsToPendingByKeyword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905201531217_AddIntegratorFieldToCourierMaster.resx">
+      <DependentUpon>201905201531217_AddIntegratorFieldToCourierMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290826398_fuuscreenabdullah.resx">
+      <DependentUpon>201905290826398_fuuscreenabdullah.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905300822387_AddMigrationClientNationalIdentification.resx">
+      <DependentUpon>201905300822387_AddMigrationClientNationalIdentification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906041017285_AddMigrationSignedByUser.resx">
+      <DependentUpon>201906041017285_AddMigrationSignedByUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.resx">
+      <DependentUpon>201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.resx">
+      <DependentUpon>201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906130950285_NewTableDeclarationPendings.resx">
+      <DependentUpon>201906130950285_NewTableDeclarationPendings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906241435332_sync_null.resx">
+      <DependentUpon>201906241435332_sync_null.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906241448200_CustomsSettingCompanyType.resx">
+      <DependentUpon>201906241448200_CustomsSettingCompanyType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906250644067_InterfaceManagement_InterfaceType.resx">
+      <DependentUpon>201906250644067_InterfaceManagement_InterfaceType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907030608414_AddMigrationPhysicalCheckChassis.resx">
+      <DependentUpon>201907030608414_AddMigrationPhysicalCheckChassis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907070559384_AddContinuousRequestType.resx">
+      <DependentUpon>201907070559384_AddContinuousRequestType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907070654471_AddMigrationClaimRERequestType.resx">
+      <DependentUpon>201907070654471_AddMigrationClaimRERequestType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907221201353_AddMigrationDeficitDecision.resx">
+      <DependentUpon>201907221201353_AddMigrationDeficitDecision.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907311207513_missing20190731.resx">
+      <DependentUpon>201907311207513_missing20190731.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907311245148_missingreleasenotes20190731.resx">
+      <DependentUpon>201907311245148_missingreleasenotes20190731.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908151128118_AddDSupplierInvoiceItemsEntryFields.resx">
+      <DependentUpon>201908151128118_AddDSupplierInvoiceItemsEntryFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909010915024_AddCMisReadyForInvoice.resx">
+      <DependentUpon>201909010915024_AddCMisReadyForInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909110831576_AddSched.resx">
+      <DependentUpon>201909110831576_AddSched.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910271409135_AddDECIsPaymentProtested.resx">
+      <DependentUpon>201910271409135_AddDECIsPaymentProtested.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301122411_DecCreateIndex.resx">
+      <DependentUpon>201910301122411_DecCreateIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911031156127_ConsignmentPackDangers.resx">
+      <DependentUpon>201911031156127_ConsignmentPackDangers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911040909433_AddDecDangersContact.resx">
+      <DependentUpon>201911040909433_AddDecDangersContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911141233565_AddHazardousSubstance.resx">
+      <DependentUpon>201911141233565_AddHazardousSubstance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911170637449_ChangeHazardousSubstances.resx">
+      <DependentUpon>201911170637449_ChangeHazardousSubstances.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911180759188_ChangesHazardousSubstances.resx">
+      <DependentUpon>201911180759188_ChangesHazardousSubstances.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911181156591_ChangesHazardousSubstances1.resx">
+      <DependentUpon>201911181156591_ChangesHazardousSubstances1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.resx">
+      <DependentUpon>201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912031511537_dbMigLine.resx">
+      <DependentUpon>201912031511537_dbMigLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041514241_dbMigLineTk2.resx">
+      <DependentUpon>201912041514241_dbMigLineTk2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912171459058_AmendmentStatusAndSomeFieldsDeclaration.resx">
+      <DependentUpon>201912171459058_AmendmentStatusAndSomeFieldsDeclaration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912171544423_AmendmentStatus_LenghtName.resx">
+      <DependentUpon>201912171544423_AmendmentStatus_LenghtName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912251546005_AddMigrationdocumentTypeCourierMandatory.resx">
+      <DependentUpon>201912251546005_AddMigrationdocumentTypeCourierMandatory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912251658203_AddDeclarationAmendment.resx">
+      <DependentUpon>201912251658203_AddDeclarationAmendment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001051239465_dbCustomsAutonomyKeywords.resx">
+      <DependentUpon>202001051239465_dbCustomsAutonomyKeywords.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.resx">
+      <DependentUpon>202001070807302_AddIsAutomaticManifestSent_NoOfCourierHawb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001080937532_TarrifSetting.resx">
+      <DependentUpon>202001080937532_TarrifSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001081021093_AddDWHSettingP.resx">
+      <DependentUpon>202001081021093_AddDWHSettingP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001151307414_AddMigrationSealCompletenes.resx">
+      <DependentUpon>202001151307414_AddMigrationSealCompletenes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001131439222_AddAmendmentDontDisplayInList.resx">
+      <DependentUpon>202001131439222_AddAmendmentDontDisplayInList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001160629471_removeDWHSetting.resx">
+      <DependentUpon>202001160629471_removeDWHSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001191215152_AddMigrationSealType.resx">
+      <DependentUpon>202001191215152_AddMigrationSealType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001211530095_AddLastMileStatusNameField.resx">
+      <DependentUpon>202001211530095_AddLastMileStatusNameField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001231129242_AddIsManadatory_DeclarationType.resx">
+      <DependentUpon>202001231129242_AddIsManadatory_DeclarationType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001271324155_AddmigrationCargoSeal.resx">
+      <DependentUpon>202001271324155_AddmigrationCargoSeal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001280927543_SealReasonAndAmendmentType.resx">
+      <DependentUpon>202001280927543_SealReasonAndAmendmentType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001281231348_ChangeIsDiamonDeclarationField.resx">
+      <DependentUpon>202001281231348_ChangeIsDiamonDeclarationField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001281456089_AddFieldsToDiamond.resx">
+      <DependentUpon>202001281456089_AddFieldsToDiamond.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001281508426_ChangeNameIsDiamondManadatory.resx">
+      <DependentUpon>202001281508426_ChangeNameIsDiamondManadatory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001300921420_ChangeFieldsDiamonds.resx">
+      <DependentUpon>202001300921420_ChangeFieldsDiamonds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002021133564_AddedAutomaticPaymentFields.resx">
+      <DependentUpon>202002021133564_AddedAutomaticPaymentFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002021214069_AddDeclarationReferantDataTable.resx">
+      <DependentUpon>202002021214069_AddDeclarationReferantDataTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002191332025_CargoSealsChanges.resx">
+      <DependentUpon>202002191332025_CargoSealsChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002241636132_addCurrencyTypeTenant.resx">
+      <DependentUpon>202002241636132_addCurrencyTypeTenant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002250555150_AddTenantInactive.resx">
+      <DependentUpon>202002250555150_AddTenantInactive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002250857069_CargoSealsAddIdField.resx">
+      <DependentUpon>202002250857069_CargoSealsAddIdField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003071834188_AddClassificationFourDigitField.resx">
+      <DependentUpon>202003071834188_AddClassificationFourDigitField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003081316083_AddedSearchFieldReferant.resx">
+      <DependentUpon>202003081316083_AddedSearchFieldReferant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003101034101_ReferantExceptionReason.resx">
+      <DependentUpon>202003101034101_ReferantExceptionReason.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003121039121_ExceptionReasons.resx">
+      <DependentUpon>202003121039121_ExceptionReasons.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003221244107_ExceptionReasonAddSearchFields.resx">
+      <DependentUpon>202003221244107_ExceptionReasonAddSearchFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004020908214_AddOcrToSupplierInvoiceItems.resx">
+      <DependentUpon>202004020908214_AddOcrToSupplierInvoiceItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004190752541_AddSearchfieldTAutonomyKeyword.resx">
+      <DependentUpon>202004190752541_AddSearchfieldTAutonomyKeyword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005050458332_EnabaleNullAvailabilityDate.resx">
+      <DependentUpon>202005050458332_EnabaleNullAvailabilityDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005071033444_AddCustomsShip.resx">
+      <DependentUpon>202005071033444_AddCustomsShip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005100616033_AddedCustomTablesForExport.resx">
+      <DependentUpon>202005100616033_AddedCustomTablesForExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005100716392_CngSFCustomsShip2.resx">
+      <DependentUpon>202005100716392_CngSFCustomsShip2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005101414116_CngExpDec.resx">
+      <DependentUpon>202005101414116_CngExpDec.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005110650112_CngExpDecCon.resx">
+      <DependentUpon>202005110650112_CngExpDecCon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005111320113_AddExportTables.resx">
+      <DependentUpon>202005111320113_AddExportTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005111347238_DeclarationExportRecipientMap.resx">
+      <DependentUpon>202005111347238_DeclarationExportRecipientMap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005140811047_AddNbcDeclarationTypes.resx">
       <DependentUpon>202005140811047_AddNbcDeclarationTypes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005140836536_ExportChanges.resx">
       <DependentUpon>202005140836536_ExportChanges.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202005140713397_add_RecieverWareHouseCode.resx">
       <DependentUpon>202005140713397_add_RecieverWareHouseCode.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
