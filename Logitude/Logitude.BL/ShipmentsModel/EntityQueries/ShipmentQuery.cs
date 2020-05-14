@@ -175,11 +175,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
-            if(shipment.ShipmentLevelCode == "C")
+            if (shipment.ShipmentLevelCode == "C")
             {
                 shipmentPM.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
 
-                if(!string.IsNullOrEmpty(shipment.PreCarriageVesselId))
+                if (!string.IsNullOrEmpty(shipment.PreCarriageVesselId))
                 {
                     Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreCarriageVesselId, tenant);
                     if (vesselEntity != null)
@@ -192,8 +192,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             else if (shipment.ShipmentLevelCode == "H")
             {
                 Shipment masterShipment = (from a in repository.context.Shipments
-                                       where a.Id == shipment.MasterShipmentDataId
-                                       select a).FirstOrDefault();
+                                           where a.Id == shipment.MasterShipmentDataId
+                                           select a).FirstOrDefault();
 
                 if (masterShipment != null)
                 {
@@ -2285,7 +2285,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.TotalContainers = myTotalContainers;
             }
 
-            if(shipmentPM.ShipmentConsoleShipments != null)
+            if (shipmentPM.ShipmentConsoleShipments != null)
             {
                 this.ComputeHousesNumbersField(shipmentPM);
             }
@@ -2324,13 +2324,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.INTTRABookingError = shipment.INTTRABookingError;
             shipmentPM.INTTRALastBookingResponse = shipment.INTTRALastBookingResponse;
 
-            if (!string.IsNullOrEmpty(shipmentPM.INTTRALastBookingResponse)){
+            if (!string.IsNullOrEmpty(shipmentPM.INTTRALastBookingResponse))
+            {
                 this.MapINTTRABookingXMLFields(shipmentPM);
             }
 
             INTTRABookingStatusRepository iNTTRABookingStatusRepository = new INTTRABookingStatusRepository(repository.context);
-            if(!string.IsNullOrEmpty(shipmentPM.INTTRABookingStatusCode))
-            shipmentPM.INTTRABookingStatusName = iNTTRABookingStatusRepository.GetSingleINTTRABookingStatus(shipmentPM.INTTRABookingStatusCode).Name;
+            if (!string.IsNullOrEmpty(shipmentPM.INTTRABookingStatusCode))
+                shipmentPM.INTTRABookingStatusName = iNTTRABookingStatusRepository.GetSingleINTTRABookingStatus(shipmentPM.INTTRABookingStatusCode).Name;
 
 
             INTTRABookingTransStatusRepository iNTTRABookingTransStatusRepository = new INTTRABookingTransStatusRepository(repository.context);
@@ -2365,7 +2366,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private void ComputeHousesNumbersField(ShipmentPM shipmentPM)
         {
-            var myHousesNumbers = ""; 
+            var myHousesNumbers = "";
             foreach (ConsoleShipmentPM console in shipmentPM.ShipmentConsoleShipments)
             {
                 if (string.IsNullOrEmpty(myHousesNumbers))
@@ -2458,16 +2459,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             foreach (XmlNode xn in xnList)
             {
-                if (xn["Identifier"] != null)
+                foreach (XmlNode item in xn.ChildNodes)
                 {
-                    if(xn.FirstChild != null && xn.FirstChild.OuterXml.Contains("VoyageNumber"))
+                    if (item.Attributes != null &&  item.Attributes["Type"] != null && item.Attributes["Type"].Value == "VoyageNumber")
                     {
-                        shipmentPM.INTTRABookingResponse_Voyage = xn.FirstChild.InnerText;
-                    }
-
-                    if (xn.LastChild != null && xn.LastChild.OuterXml.Contains("VoyageNumber"))
-                    {
-                        shipmentPM.INTTRABookingResponse_Voyage = xn.LastChild.InnerText;
+                        shipmentPM.INTTRABookingResponse_Voyage = item.FirstChild.InnerText;
                     }
                 }
             }
@@ -2480,23 +2476,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             foreach (XmlNode xn in xnList)
             {
-                if (xn["Identifier"] != null)
+
+                if (xn.ChildNodes != null)
                 {
-                    if (xn.FirstChild != null && xn.FirstChild.OuterXml.Contains("VesselName"))
+                    foreach (XmlNode item in xn.ChildNodes)
                     {
-                        shipmentPM.INTTRABookingResponse_Vessel = xn.FirstChild.InnerText;
-                    }
-
-                    if (xn.LastChild != null && xn.LastChild.OuterXml.Contains("VesselName"))
-                    {
-                        shipmentPM.INTTRABookingResponse_Vessel = xn.LastChild.InnerText;
-                    }
-
-                    if (!string.IsNullOrEmpty(shipmentPM.INTTRABookingResponse_Vessel))
-                    {
-                        this.GetSingleVesselByName(shipmentPM);
+                        if (item.Attributes != null && item.Attributes["Type"] != null && item.Attributes["Type"].Value == "VesselName")
+                        {
+                            shipmentPM.INTTRABookingResponse_Vessel = item.FirstChild.InnerText;
+                        }
                     }
                 }
+            }
+
+            if (!string.IsNullOrEmpty(shipmentPM.INTTRABookingResponse_Vessel))
+            {
+                this.GetSingleVesselByName(shipmentPM);
             }
         }
 
