@@ -47,6 +47,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public bool CheckIfsAutonomyByType(string type ,string  valueToSearch , int tenant)
         {
+            if (String.IsNullOrWhiteSpace(valueToSearch)) return false;
 
             valueToSearch = valueToSearch.TrimEnd();
             valueToSearch = valueToSearch.TrimStart();
