@@ -1259,7 +1259,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 if (LogitudeSettings.WorkEnvironment == "customs")
                 {
-                    ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => !t.Name.Contains("Customs.")).ToList();
+                    ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => t.HashString != null).ToList();//Where(t => !t.Name.Contains("Customs."))
                 }
                 else
                 {
@@ -1267,6 +1267,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 }
 
             }
+            ObjectTableList = ObjectTableList.Where(t => t.HashString != null).ToList();
             IQueryable<TextCodePM> textCodePMLists = textCodeQuery.GetTenantZeroTextCodePMs();//.ToList();
             IQueryable<ObjectFieldPM> objectFieldLists = objectFieldsQuery.GetTenantZeroObjectFieldPMs();//.ToList();
 
