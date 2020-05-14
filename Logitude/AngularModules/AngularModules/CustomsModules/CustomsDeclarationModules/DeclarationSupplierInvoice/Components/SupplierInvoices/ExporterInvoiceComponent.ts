@@ -211,6 +211,9 @@ export class ExporterInvoiceComponent extends BaseComponent
 
     RejectChanges() {
         this.MapEntitytoEntity(this.clonedSupplierInvoice, this.originalSupplierInvoice, true);
+        this.MapEntitytoEntity(this.clonedSupplierInvoicePayment, this.originalSupplierInvoicePayment, true);
+        this.MapEntitytoEntity(this.clonedSupplierInvoiceUCR, this.originalSupplierInvoiceUCR, true);
+
     }
 
     MapEntitytoEntity(srcEntity: any, targetEntity: any, takeKeysFromTarget: boolean = false) {

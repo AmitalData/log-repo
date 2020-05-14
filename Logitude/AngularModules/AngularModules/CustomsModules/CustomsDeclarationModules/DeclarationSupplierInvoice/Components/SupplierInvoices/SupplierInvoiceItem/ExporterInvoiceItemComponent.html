@@ -10,36 +10,42 @@
 
                 <tr style="height: 15px;">
                     <td>
-                        <LogLabel [ObjectFieldName]="'BuyerName'" [ObjectTableName]="ObjectTableName"
+                        <LogLabel [ObjectFieldName]="'ClassificationTypeCode'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'BuyerName'" [ObjectTableName]="ObjectTableName" [Text]="BuyerName"
-                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                    </td>
-                    <td style="width:7px"></td>
-
-                    <td>
-                        <LogLabel [ObjectFieldName]="'BuyerAddress'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'BuyerAddress'" [ObjectTableName]="ObjectTableName" [Text]="BuyerAddress"
-                                    [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-
-                    </td>
-                    <td style="width:7px"></td>
-                    <td>
-                        <LogLabel [ObjectFieldName]="'BuyerCountryCode'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogLov [ObjectFieldName]="'BuyerCountryCode'"
+                        <LogLov [ObjectFieldName]="'ClassificationTypeCode'"
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
                                 [HideColumns]="true"
-                                [LookUpTableName]="'Customs.CustomsCountry'">
+                                [LookUpTableName]="'Customs.ClassificationType'">
+                        </LogLov>                    </td>
+                    <td style="width:7px"></td>
+
+                    <td>
+                        <LogLabel [ObjectFieldName]="'TransactionNatureCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogLov [ObjectFieldName]="'TransactionNatureCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.TransactionNatureType'">
+                        </LogLov>
+                    </td>
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ClaimReasonCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'ClaimReasonCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.ClaimReasonType'">
                         </LogLov>
                     </td>
                 </tr>
@@ -51,81 +57,81 @@
 
                 <tr style="height: 15px;">
                     <td>
-                        <LogLabel [ObjectFieldName]="'BuyerRoleCode'" [ObjectTableName]="ObjectTableName"
+                        <LogLabel [ObjectFieldName]="'StatementType'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogLov [ObjectFieldName]="'BuyerRoleCode'"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [HideColumns]="true"
-                                [LookUpTableName]="'Customs.CustomerRoleType'">
-                        </LogLov>
+                        <LogTextBox [ObjectFieldName]="'StatementType'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
+                                    [Text]="StatementType"
+                                     [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                     </td>
                     <td style="width:7px"></td>
                     <td>
-                        <LogLabel [ObjectFieldName]="'PartyRelationshipCode'" [ObjectTableName]="ObjectTableName"
+                        <LogLabel [ObjectFieldName]="'StatementInd'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogLov [ObjectFieldName]="'PartyRelationshipCode'"
-                                [ObjectTableName]="ObjectTableName"
+                        <LogTextBox [ObjectFieldName]="'StatementInd'" [ObjectTableName]="ObjectTableNameSuppInvoiceItemsAbachStatement"
+                                    [Text]="StatementInd"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+
+                    </td>
+
+                </tr>
+
+                <tr style="height: 25px;">
+                    <td colspan="3">
+                    </td>
+                </tr>
+
+                <tr style="height: 15px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'IdentifierID'" [ObjectTableName]="ObjectTableNameSupplierInvoiceItemVehicle"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'IdentifierID'" [ObjectTableName]="ObjectTableNameSupplierInvoiceItemVehicle"
+                                    [Text]="IdentifierID"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'VehicleIDTypeCode'" [ObjectTableName]="ObjectTableNameSupplierInvoiceItemVehicle"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'VehicleIDTypeCode'"
+                                [ObjectTableName]="ObjectTableNameSupplierInvoiceItemVehicle"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.CargoIdentityQualifier'">
+                        </LogLov>
+
+                    </td>
+
+                </tr>
+
+
+                <tr style="height: 15px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'AdditionalPriceTypeCode'" [ObjectTableName]="ObjectTableNameSupplierInvoiceItemsPrice"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'AdditionalPriceTypeCode'"
+                                [ObjectTableName]="ObjectTableNameSupplierInvoiceItemsPrice"
                                 [DataContext]="DataContext"
                                 [HideColumns]="true"
                                 [LookUpTableName]="'Customs.AmountType'">
                         </LogLov>
                     </td>
-
-                </tr>
-
-                <tr style="height: 25px;">
-                    <td colspan="3">
-                    </td>
-                </tr>
-
-                <tr style="height: 15px;">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'PaymentTypeCode'" [ObjectTableName]="ObjectTableNameSupplierInvoicePayment"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogLov [ObjectFieldName]="'PaymentTypeCode'"
-                                [ObjectTableName]="ObjectTableNameSupplierInvoicePayment"
-                                [DataContext]="DataContext"
-                                [HideColumns]="true"
-                                [LookUpTableName]="'Customs.PaymentType'">
-                        </LogLov>
-                    </td>
                     <td style="width:7px"></td>
                     <td>
-                        <LogLabel [ObjectFieldName]="'PaymentAmount'" [ObjectTableName]="ObjectTableNameSupplierInvoicePayment"
+                        <LogLabel [ObjectFieldName]="'AdditionalPrice'" [ObjectTableName]="ObjectTableNameSupplierInvoiceItemsPrice"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'PaymentAmount'" [ObjectTableName]="ObjectTableNameSupplierInvoicePayment" [Text]="PaymentAmount"
-                                  [AddCommasToNumbers]="true"  [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-
-                    </td>
-
-                </tr>
-
-
-                <tr style="height: 15px;">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'SupplierChargeID'" [ObjectTableName]="ObjectTableNameSupplierInvoiceUCR"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'SupplierChargeID'" [ObjectTableName]="ObjectTableNameSupplierInvoiceUCR" [Text]="SupplierChargeID"
-                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                    </td>
-                    <td style="width:7px"></td>
-                    <td>
-                        <LogLabel [ObjectFieldName]="'AgentChargeID'" [ObjectTableName]="ObjectTableNameSupplierInvoiceUCR"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'AgentChargeID'" [ObjectTableName]="ObjectTableNameSupplierInvoiceUCR" [Text]="AgentChargeID"
+                        <LogTextBox [ObjectFieldName]="'AdditionalPrice'" [ObjectTableName]="ObjectTableNameSupplierInvoiceItemsPrice" [Text]="AdditionalPrice"
                                     [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
 
                     </td>
