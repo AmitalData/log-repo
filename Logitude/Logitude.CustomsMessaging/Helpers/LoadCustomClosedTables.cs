@@ -1007,7 +1007,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData NbcDeclarationType = closedSystemTables.Where(d => d.id == "2112").FirstOrDefault();
             ObjectTable NbcDeclarationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.NbcDeclarationType", 0, false);
             InsertClosedTableRecord(NbcDeclarationType, NbcDeclarationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(AmountType);
+            addedClosedTables.Add(NbcDeclarationType);
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
