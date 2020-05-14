@@ -149,9 +149,9 @@ namespace Logitude.Accounting.BL.DataContract
 
         private List<LedgerTransaction> GetOppositeTransactions(List<LedgerTransaction> transactions)
         {
-            List<string> accountIds = transactions.Select(d => d.AccountId).ToList();
+            List<string> oopositeAccountIds = transactions.Select(d => d.OppositeAccountId).ToList();
             return (from a in accountingContext.LedgerTransactions                  
-                    where accountIds.Contains(a.OppositeAccountId)
+                    where oopositeAccountIds.Contains(a.AccountId)
                     && a.Tenant == Tenant                  
                     select a).ToList();
 
