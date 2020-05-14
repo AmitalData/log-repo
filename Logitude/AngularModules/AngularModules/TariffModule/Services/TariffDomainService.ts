@@ -385,6 +385,7 @@ export class ContainersPrice {
     TariffId: string;
     Price: number;
     Quantity: number;
+    Price_WithoutQuantity: number;
 }
 
 export class SurchargeSummary {

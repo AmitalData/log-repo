@@ -1093,104 +1093,23 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (isValid) {
             this.TariffList_Quote = [];
 
+            var isOFC = false;
             // FCL Quote 
             if (this.TariffType == "OFC") {
-                if (this.ContainerType1Id) {
-                    this.AddNewTariffQuoteCharge(item, this.ContainerType1Id, this.Quantity1);
-                    if (item != null && item.SurchargesWithoutAllIn != null) {
-                        item.SurchargesWithoutAllIn.forEach(surcharge => {
-                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType1Id, this.Quantity1);
-                        });
-                    }
-
-                    // Generate AllIn Surcharges
-                    if (item != null && item.AllInSurcharges != null) {
-                        item.AllInSurcharges.forEach(surcharge => {
-                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType1Id, this.Quantity1);
-                        });
-                    }
-                }
-                if (this.ContainerType2Id) {
-                    this.AddNewTariffQuoteCharge(item, this.ContainerType2Id, this.Quantity2);
-                    if (item != null && item.SurchargesWithoutAllIn != null) {
-                        item.SurchargesWithoutAllIn.forEach(surcharge => {
-                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType2Id, this.Quantity2);
-                        });
-                    }
-                    // Generate AllIn Surcharges
-                    if (item != null && item.AllInSurcharges != null) {
-                        item.AllInSurcharges.forEach(surcharge => {
-                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType2Id, this.Quantity2);
-                        });
-                    }
-                }
-                if (this.ContainerType2Id) {
-                    this.AddNewTariffQuoteCharge(item, this.ContainerType2Id, this.Quantity2);
-                    if (item != null && item.SurchargesWithoutAllIn != null) {
-                        item.SurchargesWithoutAllIn.forEach(surcharge => {
-                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType2Id, this.Quantity2);
-                        });
-                    }
-                }
-                if (this.ContainerType3Id) {
-                    this.AddNewTariffQuoteCharge(item, this.ContainerType3Id, this.Quantity3);
-                    if (item != null && item.SurchargesWithoutAllIn != null) {
-                        item.SurchargesWithoutAllIn.forEach(surcharge => {
-                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType3Id, this.Quantity3);
-                        });
-                    }
-                    // Generate AllIn Surcharges
-                    if (item != null && item.AllInSurcharges != null) {
-                        item.AllInSurcharges.forEach(surcharge => {
-                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType3Id, this.Quantity3);
-                        });
-                    }
-                }
-                if (this.ContainerType4Id) {
-                    this.AddNewTariffQuoteCharge(item, this.ContainerType4Id, this.Quantity4);
-                    if (item != null && item.SurchargesWithoutAllIn != null) {
-                        item.SurchargesWithoutAllIn.forEach(surcharge => {
-                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType4Id, this.Quantity4);
-                        });
-                    }
-
-                    // Generate AllIn Surcharges
-                    if (item != null && item.AllInSurcharges != null) {
-                        item.AllInSurcharges.forEach(surcharge => {
-                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType4Id, this.Quantity4);
-                        });
-                    }
-                }
-                if (this.ContainerType5Id) {
-                    this.AddNewTariffQuoteCharge(item, this.ContainerType5Id, this.Quantity5);
-                    if (item != null && item.SurchargesWithoutAllIn != null) {
-                        item.SurchargesWithoutAllIn.forEach(surcharge => {
-                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType5Id, this.Quantity5);
-                        });
-                    }
-
-                    // Generate AllIn Surcharges
-                    if (item != null && item.AllInSurcharges != null) {
-                        item.AllInSurcharges.forEach(surcharge => {
-                            this.AddNewTariffQuoteCharge(surcharge, this.ContainerType5Id, this.Quantity5);
-                        });
-                    }
-                }
+                isOFC = true;
             }
-            else {
-                // Generate Air Frieght
-                this.AddNewTariffQuoteCharge(item);
-                // Generate Surcharges
+
+            if (this.ContainerType1Id) {
+                this.AddNewTariffQuoteCharge(item, true);
                 if (item != null && item.SurchargesWithoutAllIn != null) {
                     item.SurchargesWithoutAllIn.forEach(surcharge => {
-                        this.AddNewTariffQuoteCharge(surcharge);
+                        this.AddNewTariffQuoteCharge(surcharge, isOFC);
                     });
                 }
-
                 // Generate AllIn Surcharges
                 if (item != null && item.AllInSurcharges != null) {
                     item.AllInSurcharges.forEach(surcharge => {
-                        this.AddNewTariffQuoteCharge(surcharge);
+                        this.AddNewTariffQuoteCharge(surcharge, isOFC);
                     });
                 }
             }
@@ -1343,7 +1262,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         });
         return isDuplicate;
     }
-    AddNewTariffQuoteCharge(item: any, packageId = null, quantity = null) {
+    AddNewTariffQuoteCharge(item: any, isOFC: boolean) {
         this.myChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -1372,57 +1291,30 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
                 if (!item.IsAllIn) {
                     chargePM.CostMinAmount = AppTool.Round(item.MinPrice, 3);
-
-                    var costAmount;
+                    var costAmount = AppTool.Round(item.ActualPrice, 3);
                     var measurementCode;
                     var quantity;
                     var measurementId;
-                    if (packageId != null) {
-                        var containerPrice = 0;
-                        if (item.ContainersPrices) {
-                            var container = item.ContainersPrices.filter(d => d.TariffId == item.TariffId && d.ContainerId == packageId)[0];
-                            if (container) {
-                                containerPrice = container.Price;
-                                quantity = container.Quantity;
-                            }
-                        }
-                        costAmount = containerPrice;
+                    if (isOFC) {
                         var bcntCharge = this.FatherComponent.AllMeasurements.filter(d => d.Code == "BCNT")[0];
                         measurementCode = bcntCharge.Code;
                         measurementId = bcntCharge.Id;
+                        this.FillQuoteFCLCharges(this.ContainerType1Id, chargePM, item);
+                        this.FillQuoteFCLCharges(this.ContainerType2Id, chargePM, item);
+                        this.FillQuoteFCLCharges(this.ContainerType3Id, chargePM, item);
+                        this.FillQuoteFCLCharges(this.ContainerType4Id, chargePM, item);
+                        this.FillQuoteFCLCharges(this.ContainerType5Id, chargePM, item);
                     }
                     else {
-                        costAmount = AppTool.Round(item.ActualPrice, 3);
                         measurementCode = item.UnitOfMesurmentCode;
                         measurementId = item.UnitOfMesurmentId;
                     }
 
-                    if (packageId == this.FatherComponent.EntityPM.PackageType1Id) {
-                        chargePM.CostContainerType1UnitPrice = costAmount;
-
-                    }
-                    else if (packageId == this.FatherComponent.EntityPM.PackageType2Id) {
-                        chargePM.CostContainerType2UnitPrice = costAmount;
-                    }
-                    else if (packageId == this.FatherComponent.EntityPM.PackageType3Id) {
-                        chargePM.CostContainerType3UnitPrice = costAmount;
-                    }
-                    else if (packageId == this.FatherComponent.EntityPM.PackageType4Id) {
-                        chargePM.CostContainerType4UnitPrice = costAmount;
-                    }
-                    else if (packageId == this.FatherComponent.EntityPM.PackageType5Id) {
-                        chargePM.CostContainerType5UnitPrice = costAmount;
-                    }
-                    else {
-                        chargePM.CostTotalAmount = costAmount;
-                    }
-                   
                     chargePM.CostMeasurementCode = measurementCode;
                     chargePM.SaleMeasurementCode = measurementCode;
                     chargePM.CostMeasurementId = measurementId;
                     chargePM.SaleMeasurementId = measurementId;
-
-                    chargePM.CostQuantity = quantity;
+                  
                 }
 
                 chargePM.VendorId = item.SellerId;
@@ -1431,6 +1323,39 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 this.TariffList_Quote.push(chargePM);
             }
         });
+    }
+
+    FillQuoteFCLCharges(packageId: string, chargePM: QuoteChargePM, item: any) {
+        var costAmount;
+        var quantity;
+        if (item.ContainersPrices) {
+            var container = item.ContainersPrices.filter(d => d.TariffId == item.TariffId && d.ContainerId == packageId)[0];
+            if (container) {
+                quantity = container.Quantity;
+                costAmount = container.Price_WithoutQuantity;
+            }
+        }
+  
+        if (packageId == this.FatherComponent.EntityPM.PackageType1Id) {
+            chargePM.CostContainerType1UnitPrice = costAmount;
+        }
+        else if (packageId == this.FatherComponent.EntityPM.PackageType2Id) {
+            chargePM.CostContainerType2UnitPrice = costAmount;
+        }
+        else if (packageId == this.FatherComponent.EntityPM.PackageType3Id) {
+            chargePM.CostContainerType3UnitPrice = costAmount;
+        }
+        else if (packageId == this.FatherComponent.EntityPM.PackageType4Id) {
+            chargePM.CostContainerType4UnitPrice = costAmount;
+        }
+        else if (packageId == this.FatherComponent.EntityPM.PackageType5Id) {
+            chargePM.CostContainerType5UnitPrice = costAmount;
+        }
+        else {
+            chargePM.CostTotalAmount = costAmount;
+        }
+
+        chargePM.CostQuantity = quantity;
     }
 
     ValidateExistChargesConnectedToTariff(item: TariffSearchSummary) {
