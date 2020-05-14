@@ -2218,8 +2218,7 @@ export class SupplierInvoicePMService {
         }
     }
     MapSupplierInvoiceFreightAmounts(entityPM: SupplierInvoicePM, jsonPM: any, mapParent: boolean = true) {
-
-        var oldSupplierInvoiceFreightAmounts: SupplierInvoiceFreightAmountPM[] = [];
+         var oldSupplierInvoiceFreightAmounts: SupplierInvoiceFreightAmountPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
             oldSupplierInvoiceFreightAmounts = entityPM.OldEntityPM.SupplierInvoiceFreightAmounts;
         }
@@ -2308,8 +2307,7 @@ export class SupplierInvoicePMService {
         }
     }
     MapSupplierInvoicePayments(entityPM: SupplierInvoicePM, jsonPM: any, mapParent: boolean = true) {
-
-        var oldSupplierInvoicePayments: SupplierInvoicePaymentPM[] = [];
+         var oldSupplierInvoicePayments: SupplierInvoicePaymentPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
             oldSupplierInvoicePayments = entityPM.OldEntityPM.SupplierInvoicePayments;
         }

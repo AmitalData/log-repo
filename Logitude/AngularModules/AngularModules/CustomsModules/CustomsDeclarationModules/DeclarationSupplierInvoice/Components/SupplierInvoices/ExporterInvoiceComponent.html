@@ -103,13 +103,16 @@
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'PaymentAmount'" [ObjectTableName]="ObjectTableNameSupplierInvoicePayment" [Text]="PaymentAmount"
-                                  [AddCommasToNumbers]="true"  [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                    [AddCommasToNumbers]="true" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
 
                     </td>
 
                 </tr>
 
-
+                <tr style="height: 25px;">
+                    <td colspan="3">
+                    </td>
+                </tr>
                 <tr style="height: 15px;">
                     <td>
                         <LogLabel [ObjectFieldName]="'SupplierChargeID'" [ObjectTableName]="ObjectTableNameSupplierInvoiceUCR"

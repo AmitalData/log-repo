@@ -19,7 +19,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(SuppInvoiceItemsAbachStatementPM entityPM, SuppInvoiceItemsAbachStatement entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPOCO.DeclarationId = entityPM.DeclarationId;
+            entityPOCO.InvoiceCounterKey = entityPM.InvoiceCounterKey;
+            entityPOCO.InvoiceItemLineNumber = entityPM.InvoiceItemLineNumber;
+            entityPOCO.SequenceNumeric = entityPM.SequenceNumeric;
         }
 
         public void CustomPOCOToPM(SuppInvoiceItemsAbachStatementPM entityPM, SuppInvoiceItemsAbachStatement entityPOCO)
