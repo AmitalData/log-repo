@@ -37,8 +37,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int? SequenceNumeric { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+        [ForeignKey("NbcDeclarationType")]
         [Column("StatementType")]
 	    public string StatementType { get; set; }
+	      
+        public virtual NbcDeclarationType NbcDeclarationType { get; set; }
         [Column("StatementInd")]
 	    public string StatementInd { get; set; }
     }
