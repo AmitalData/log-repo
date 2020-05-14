@@ -261,6 +261,31 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
 
     }
+
+
+
+
+    OpenExporterInvoiceWindow() {
+         var windowArgs: any = {};
+        windowArgs.SupplierInvoice = this.EntityPM;
+            windowArgs.Declaration = this.declarationPM;
+
+            windowArgs.Parent = this;
+            windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+            
+            var windowTitle = "נתונים נוספים ליצוא - חטיבת חשבון יצואן";
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 700;
+            logWindow.Height = 300;
+            logWindow.Title = windowTitle;
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/ExporterInvoiceComponent');
+
+
+     }
+
     originalItemSource: ObservableCollection = new ObservableCollection([]);
     Search(text: string) {
         var itemsSource: any = this.originalItemSource;

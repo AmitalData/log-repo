@@ -149,6 +149,10 @@
 
                             <!-- #region Details Tab -->
                             <div *ngSwitchCase="'Details'" style="height: 100%;">
+                                <span class="LeftTop buttonelipsis"
+                                      style="background-color: white; color: black; border: 2px solid #e7e7e7; width: 30px; text-align: center; font-weight: bold;cursor: pointer;"
+                                      (click)="OpenExporterInvoiceItem()">...E</span>
+
 
                                 <!-- Filters Fields-->
                                 <table *ngIf="ClonedItemPM" style="height: 150px;">
@@ -322,7 +326,7 @@
                                         </td>
                                         <td>
                                             <!--<LogTextBox [ObjectFieldName]="'TaxExemptCode'" [ObjectTableName]="ObjectTableName"
-                                [InputType]="'ntext'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>-->
+                [InputType]="'ntext'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>-->
 
                                             <SearchBox [ObjectTableName]="'Customs.CustomsItems'"
                                                        [IsQuickSearch]="true"
@@ -390,7 +394,7 @@
                                         </td>
 
                                     </tr>
-                                                                        <tr>
+                                    <tr>
                                         <td colspan="6"><div></div></td>
 
                                         <td style="width: 10px;"><div></div></td>
