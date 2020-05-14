@@ -149,6 +149,11 @@ export class TaxReportLinePM {
     public set TotalInvoiceAmount(newValue: number) { if (this.totalInvoiceAmount != newValue) { this.totalInvoiceAmount = newValue; this.MarkAsDirty("TotalInvoiceAmount"); } }
        
 	 
+    private originalReference: string;
+    public get OriginalReference() { return this.originalReference; }
+    public set OriginalReference(newValue: string) { if (this.originalReference != newValue) { this.originalReference = newValue; this.MarkAsDirty("OriginalReference"); } }
+       
+	 
 
     public OldEntityPM: TaxReportLinePM;
 		
