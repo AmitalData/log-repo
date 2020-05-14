@@ -234,8 +234,8 @@ export class ExporterInvoiceItemComponent extends BaseComponent
     }
 
     RejectChanges() {
-        //this.MapEntitytoEntity(this.clonedSupplierInvoiceItem, this.originalSupplierInvoiceItem, true);
-        //this.MapEntitytoEntity(this.clonedSupplierInvoiceItemsPrice, this.originalSupplierInvoiceItemsPrice, true);
+        this.MapEntitytoEntity(this.clonedSupplierInvoiceItem, this.originalSupplierInvoiceItem, true);
+       // this.MapEntitytoEntity(this.clonedSupplierInvoiceItemsPrice, this.originalSupplierInvoiceItemsPrice, true);
         //this.MapEntitytoEntity(this.clonedSupplierInvoiceItemVehicle, this.originalSupplierInvoiceItemVehicle, true);
         //this.MapEntitytoEntity(this.clonedSuppInvoiceItemsAbachStatement, this.clonedSuppInvoiceItemsAbachStatement, true);
 

@@ -299,6 +299,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             var mySupplierInvoiceItemUpdateService = new SupplierInvoiceItemUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
             mySupplierInvoiceItemUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
+
+            var mySupplierInvoiceItemsPriceUpdateService = new SupplierInvoiceItemsPriceUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+            mySupplierInvoiceItemsPriceUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
+
+            var mySuppInvoiceItemsAbachStatementUpdateService = new SuppInvoiceItemsAbachStatementUpdateService(dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+            mySuppInvoiceItemsAbachStatementUpdateService.FastDeleteComposition(new Data.EntityKeys.DeclarationKeys() { Id = declarationPM.Id });
+
+
         }
 
 

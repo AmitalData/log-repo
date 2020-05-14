@@ -231,6 +231,7 @@ import { AmountTypeListService } from './Services/StandardLists/AmountTypeListSe
 import { ClaimReasonTypeListService } from './Services/StandardLists/ClaimReasonTypeListService';
 import { ClassificationTypeListService } from './Services/StandardLists/ClassificationTypeListService';
 import { TransactionNatureTypeListService } from './Services/StandardLists/TransactionNatureTypeListService';
+import { NbcDeclarationTypeListService } from './Services/StandardLists/NbcDeclarationTypeListService';
 
 //#endregion
 
@@ -603,6 +604,8 @@ export class ModuleProviders {
             case "PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
+            case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
+
              //#endregion                
 
             //#region StandardPMs
