@@ -38,6 +38,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from a in context.Vessels where a.Tenant == tenant && a.Code == code select a).FirstOrDefault();
         }
 
+        public Vessel GetSingleVesselByName(string name, int tenant)
+        {
+            return (from a in context.Vessels where a.Tenant == tenant && (a.EnglishName != null && a.EnglishName.ToLower().Trim() == name.ToLower().Trim()) select a).FirstOrDefault();
+        }
+
         public IQueryable<Vessel> GetVesselsByTenant(int tenant)
         {
             return from a in context.Vessels
