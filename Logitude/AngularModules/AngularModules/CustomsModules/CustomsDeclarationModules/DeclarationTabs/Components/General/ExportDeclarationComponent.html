@@ -1,7 +1,11 @@
 
     <table style="margin:5px">
 
-
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="10">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            </td>
+        </tr>
 
         <tr style="height:32px" class="FormFieldRow">
 
@@ -13,14 +17,14 @@
 
             <td style="width: 160px;">
 
-                <LogDatePicker  [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
+                <LogDatePicker [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
                                [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="LoadingDateTime"></LogDatePicker>
 
             </td>
 
 
 
-           
+
 
             <td style="width:10px">
                 <div></div>
@@ -125,7 +129,7 @@
 
 
 
-           
+
 
             <td style="width:10px">
                 <div></div>
@@ -172,21 +176,17 @@
             </td>
 
 
-            
+
             <td style="width:10px">
                 <div></div>
             </td>
 
 
             <td style="width: 150px;">
-             
             </td>
 
             <!--(ValueChanged)="IsExporterConfirmationChecked($event)"-->
             <td style="width: 160px;">
-            
-
-
             </td>
 
 

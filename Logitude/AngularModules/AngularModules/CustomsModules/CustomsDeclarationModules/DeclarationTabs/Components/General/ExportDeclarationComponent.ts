@@ -31,7 +31,7 @@ export class ExportDeclarationComponent extends BaseComponent {
     public IsDisplayOnly: boolean = false;
     _DeclarationExportRecipientPM: DeclarationExportRecipientPM;
     ClonedDeclarationExportRecipientPM: DeclarationExportRecipientPM;
-
+    public ValidationErrorsList: string[] = [];
     constructor() {
         super();
 
@@ -84,16 +84,33 @@ export class ExportDeclarationComponent extends BaseComponent {
     public get RecipientName() { return this._DeclarationExportRecipientPM.RecipientName; }
     public set RecipientName(newValue: string) {
         this._DeclarationExportRecipientPM.RecipientName = newValue;
+        if (newValue) {
+            this.UIProperties.SetRequired("RecipientName", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("RecipientName", this.ObjectTableName, true);
+        }
     }
     public get RecipientAddress() { return this._DeclarationExportRecipientPM.RecipientAddress; }
     public set RecipientAddress(newValue: string) {
         this._DeclarationExportRecipientPM.RecipientAddress = newValue;
+        if (newValue) {
+            this.UIProperties.SetRequired("RecipientAddress", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("RecipientAddress", this.ObjectTableName, true);
+        }
     }
     public _RecipientIssueCountry: any;
     public get RecipientIssueCountryCode() { return this._DeclarationExportRecipientPM.RecipientIssueCountryCode; }
     public set RecipientIssueCountryCode(newValue: string) {
         this._DeclarationExportRecipientPM.RecipientIssueCountryCode = newValue;
-        
+        if (newValue) {
+            this.UIProperties.SetRequired("RecipientIssueCountryCode", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("RecipientIssueCountryCode", this.ObjectTableName, true);
+        }  
     }
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -191,10 +208,36 @@ export class ExportDeclarationComponent extends BaseComponent {
 
     doDisable: boolean;
 
+    FillErrors() {
+        var errors: string[] = [];
+        //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        this.ValidationErrorsList = errors;
 
+        if (AppTool.IsNullOrEmpty(this.DestinationCountryCode)) {
+
+            this.ValidationErrorsList.push("ארץ יעד הינו שדה  חובה");
+        }
+
+        //if (AppTool.IsNullOrEmpty(this.IsExporterConfirmation)) {
+        //    this.ValidationErrorsList.push("נמל פריקה הינו שדה  חובה");
+        //}
+        if (AppTool.IsNullOrEmpty(this.RecipientName)) {
+            this.ValidationErrorsList.push("שם המקבל הינו שדה  חובה");
+        }
+        if (AppTool.IsNullOrEmpty(this.RecipientAddress)) {
+            this.ValidationErrorsList.push("כתובת המקבל הינו שדה  חובה");
+        }
+        if (AppTool.IsNullOrEmpty(this.RecipientIssueCountryCode)) {
+            this.ValidationErrorsList.push("כתובת המקבל הינו שדה  חובה");
+        }
+
+    }
     OkButtonClicked() {
       
-
+        this.FillErrors();
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
         SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
     
 
