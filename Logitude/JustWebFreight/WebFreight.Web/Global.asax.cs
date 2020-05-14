@@ -609,7 +609,7 @@ namespace WebFreight.Web
                         else
                             HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
 
-
+                        HttpContext.Current.Items.Add("WorkerRole-Name", HttpContext.Current.Request.Headers["WorkerRole-Name"]);
                     }
                     else
                     {

@@ -16,6 +16,7 @@ import {DefaultTranslationComponent} from './Components/Translations/DefaultTran
 import {ScreenLayoutComponent} from './Components/Customization/ScreenLayoutComponent';
 import {LanguageSettingsComponent} from './Components/LanguageSettings/LanguageSettingsComponent';
 import { RuleUpdateHistoryComponent } from './Components/Customization/RulesComponents/RuleUpdateHistoryComponent';
+import { SetWorkerRoleNameComponent } from './Components/SetWorkerRoleName/SetWorkerRoleNameComponent';
 
 export const Components =
     [
@@ -36,6 +37,7 @@ export const Components =
         AddRuleFieldComponent,
         LanguageSettingsComponent,
         RuleUpdateHistoryComponent,
+        SetWorkerRoleNameComponent,
 
     ];
 export const ControlsComponents =
@@ -67,6 +69,7 @@ export class ModuleDeclarations {
             case "ScreenLayoutComponent": { myResult = ScreenLayoutComponent; break; }
             case "LanguageSettingsComponent": { myResult = LanguageSettingsComponent; break; }
             case "RuleUpdateHistoryComponent": { myResult = RuleUpdateHistoryComponent; break; }
+            case "SetWorkerRoleNameComponent": { myResult = SetWorkerRoleNameComponent; break; }
 
         }
 

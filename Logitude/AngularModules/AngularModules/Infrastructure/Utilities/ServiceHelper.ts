@@ -475,7 +475,8 @@ export class ServiceHelper {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
+                'Token': ServiceHelper.GetLoggedUserToken(),
+                'WorkerRole-Name': SessionLocator.WorkerRoleName != null ? SessionLocator.WorkerRoleName:''
             })
         };
 
@@ -488,7 +489,8 @@ export class ServiceHelper {
 
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
+                'Token': ServiceHelper.GetLoggedUserToken(),
+                'WorkerRole-Name': SessionLocator.WorkerRoleName != null ? SessionLocator.WorkerRoleName : ''
             }),
 
             observe: 'response'
