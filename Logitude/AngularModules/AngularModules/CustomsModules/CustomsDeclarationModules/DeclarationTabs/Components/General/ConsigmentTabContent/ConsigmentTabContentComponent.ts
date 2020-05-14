@@ -119,7 +119,7 @@ export class ConsigmentTabContentComponent
         logWindow.ShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;
         //logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ExportConsigmentContentComponent');
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ExportConsigmentContentComponent');
     }
     private Listen() {
         this._SubDisplayModeChanged=

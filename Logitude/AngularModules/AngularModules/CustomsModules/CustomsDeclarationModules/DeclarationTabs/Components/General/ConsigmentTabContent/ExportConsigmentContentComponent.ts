@@ -35,7 +35,7 @@ export class ExportConsigmentContentComponent extends BaseComponent {
     public OriginalEntityPM: ConsignmentPM;
     public ClonedEntityPM: ConsignmentPM;
     
-   
+    public ValidationErrorsList: string[] = [];
 
     constructor() {
         super();
@@ -47,57 +47,74 @@ export class ExportConsigmentContentComponent extends BaseComponent {
     //#region properties
 
 
-    public get LoadingDateTime() { return this.EntityPM.LoadingDateTime; }
-    public set LoadingDateTime(newValue: Date) { this.EntityPM.LoadingDateTime = newValue; }
-
-
-
-    public get ShipCode() { return this.EntityPM.ShipCode; }
-    public set ShipCode(newValue: string) {
-        this.EntityPM.ShipCode = newValue;
-    }
-
-    _CustomsShip: any;
-    public get CustomsShip() { return this._CustomsShip; }
-    public set CustomsShip(newValue: string) {
-        this._CustomsShip;
-    }
-
-    DestinationCountry: any;
-    public get DestinationCountryCode() { return this.EntityPM.DestinationCountryCode; }
-    public set DestinationCountryCode(newValue: string) {
-        this.EntityPM.DestinationCountryCode = newValue;
+    public get LoadingPortCode() { return this.EntityPM.LoadingPortCode; }
+    public set LoadingPortCode(newValue: string) {
+        this.EntityPM.LoadingPortCode = newValue;
         if (newValue) {
-            this.UIProperties.SetRequired("DestinationCountryCode", this.ObjectTableName, false);
+            this.UIProperties.SetRequired("LoadingPortCode", this.ObjectTableName, false);
         }
         else {
-            this.UIProperties.SetRequired("DestinationCountryCode", this.ObjectTableName, true);
+            this.UIProperties.SetRequired("LoadingPortCode", this.ObjectTableName, true);
         }
     }
 
 
 
-    public get IsExporterConfirmation() { return this.EntityPM.IsExporterConfirmation; }
-    public set IsExporterConfirmation(newValue: boolean) {
-        this.EntityPM.IsExporterConfirmation = newValue;
-        this.UIProperties.SetRequired("IsExporterConfirmation", this.ObjectTableName, false);
+    public get UnloadPortCode() { return this.EntityPM.UnloadPortCode; }
+    public set UnloadPortCode(newValue: string) {
+        this.EntityPM.UnloadPortCode = newValue;
+        if (newValue) {
+            this.UIProperties.SetRequired("UnloadPortCode", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("UnloadPortCode", this.ObjectTableName, true);
+        }
+    }
+
+   
+
+    DestinationCountry: any;
+    public get FinalDestinationPortCode() { return this.EntityPM.FinalDestinationPortCode; }
+    public set FinalDestinationPortCode(newValue: string) {
+        this.EntityPM.FinalDestinationPortCode = newValue;
+      
     }
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-    public get RecipientName() { return this._DeclarationExportRecipientPM.RecipientName; }
-    public set RecipientName(newValue: string) {
-        this._DeclarationExportRecipientPM.RecipientName = newValue;
+    public get StorageSiteCode() { return this.EntityPM.StorageSiteCode; }
+    public set StorageSiteCode(newValue: string) {
+        this.EntityPM.StorageSiteCode = newValue;
+        if (newValue) {
+            this.UIProperties.SetRequired("StorageSiteCode", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("StorageSiteCode", this.ObjectTableName, true);
+        }
     }
-    public get RecipientAddress() { return this._DeclarationExportRecipientPM.RecipientAddress; }
-    public set RecipientAddress(newValue: string) {
-        this._DeclarationExportRecipientPM.RecipientAddress = newValue;
-    }
-    public _RecipientIssueCountry: any;
-    public get RecipientIssueCountryCode() { return this._DeclarationExportRecipientPM.RecipientIssueCountryCode; }
-    public set RecipientIssueCountryCode(newValue: string) {
-        this._DeclarationExportRecipientPM.RecipientIssueCountryCode = newValue;
 
+    
+    public get RecieverWareHouseCode() { return this.EntityPM.RecieverWareHouseCode; }
+    public set RecieverWareHouseCode(newValue: string) {
+        this.EntityPM.RecieverWareHouseCode = newValue;
+        if (newValue) {
+            this.UIProperties.SetRequired("RecieverWareHouseCode", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("RecieverWareHouseCode", this.ObjectTableName, true);
+        }
+    }
+    
+
+    
+    public get IsDangerousGoods() { return this.EntityPM.IsDangerousGoods; }
+    public set IsDangerousGoods(newValue: boolean) {
+        this.EntityPM.IsDangerousGoods = newValue;
+        //if (newValue) {
+        //    this.UIProperties.SetRequired("IsDangerousGoods", this.ObjectTableName, false);
+        //}
+        //else {
+        //    this.UIProperties.SetRequired("IsDangerousGoods", this.ObjectTableName, true);
+        //}
     }
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -107,15 +124,9 @@ export class ExportConsigmentContentComponent extends BaseComponent {
             this.EntityPM = args.EntityPM;
             this.OriginalEntityPM = args.EntityPM;
             this.ClonedEntityPM = this.CloneEntity(args.EntityPM);
-            this.type = args.Type;
+            
             this.IsDisplayOnly = args.IsDisplayOnly;
-            if (this.EntityPM.DeclarationExportRecipients.length < 1) {
-                this._DeclarationExportRecipientPM = new DeclarationExportRecipientPM(this.EntityPM);
-                this.EntityPM.AddDeclarationExportRecipient(this._DeclarationExportRecipientPM);
-            } else {
-                this._DeclarationExportRecipientPM = this.EntityPM.DeclarationExportRecipients[0];
-                this.ClonedDeclarationExportRecipientPM = this.CloneEntityDeclarationExportRecipientPM(this._DeclarationExportRecipientPM);
-            }
+           
 
 
             //Disable fields
@@ -131,13 +142,13 @@ export class ExportConsigmentContentComponent extends BaseComponent {
     }
 
     SetScreenFieldsEditability() {
-        this.UIProperties.SetEnabled("LoadingDateTime", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("ShipCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("DestinationCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("IsExporterConfirmation", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("LoadingPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("UnloadPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("FinalDestinationPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("RecipientName", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("RecieverWareHouseCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("IsDangerousGoods", this.ObjectTableName, !this.IsDisplayOnly);
 
 
 
@@ -149,20 +160,11 @@ export class ExportConsigmentContentComponent extends BaseComponent {
 
 
 
-    CloneEntity(entityToClone: DeclarationPM) {
+   
+    CloneEntity(entityToClone: ConsignmentPM) {
 
-        var clonedEntity: DeclarationPM;
-        clonedEntity = new DeclarationPM();
-
-        this.MapEntitytoEntity(entityToClone, clonedEntity);
-
-
-        return clonedEntity;
-    }
-    CloneEntityDeclarationExportRecipientPM(entityToClone: DeclarationExportRecipientPM) {
-
-        var clonedEntity: DeclarationExportRecipientPM;
-        clonedEntity = new DeclarationExportRecipientPM(this.EntityPM);
+        var clonedEntity: ConsignmentPM;
+        clonedEntity = new ConsignmentPM(this.EntityPM);
 
         this.MapEntitytoEntity(entityToClone, clonedEntity);
 
@@ -171,10 +173,7 @@ export class ExportConsigmentContentComponent extends BaseComponent {
     }
     RejectChanges() {
         this.MapEntitytoEntity(this.ClonedEntityPM, this.OriginalEntityPM, true);
-        if (this.ClonedDeclarationExportRecipientPM != null) {
-            this.MapEntitytoEntity(this.ClonedDeclarationExportRecipientPM, this._DeclarationExportRecipientPM, true);
-
-        }
+        
 
     }
 
@@ -195,9 +194,33 @@ export class ExportConsigmentContentComponent extends BaseComponent {
 
     doDisable: boolean;
 
+    FillErrors() {
+        var errors: string[] = [];
+        //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        this.ValidationErrorsList = errors;
 
+        if (AppTool.IsNullOrEmpty(this.LoadingPortCode)) {
+           
+            this.ValidationErrorsList.push("נמל טעינה הינו חובה");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.UnloadPortCode)) {
+            this.ValidationErrorsList.push("נמל פריקה הינו חובה");
+        }
+        if (AppTool.IsNullOrEmpty(this.StorageSiteCode)) {
+            this.ValidationErrorsList.push("אתר  מסירה הינו חובה");
+        }
+        if (AppTool.IsNullOrEmpty(this.RecieverWareHouseCode)) {
+            this.ValidationErrorsList.push("אתר  המכלה הינו חובה");
+        }
+
+    }
     OkButtonClicked() {
 
+        this.FillErrors();
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
 
         SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
 
