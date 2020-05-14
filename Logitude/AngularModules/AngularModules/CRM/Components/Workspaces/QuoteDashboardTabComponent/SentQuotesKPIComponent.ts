@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { QuoteDashboardComponent } from './QuoteDashboardComponent';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DashboardService } from '../../../../Quote/Services/QuoteDashboard/DashboardService';
 import { QuoteDashboardArguments } from '../../../../Quote/DataContracts/QuoteDashboardArguments';
@@ -20,22 +19,19 @@ declare var makeAmBarChart, BarClick, ResetItem: any;
     templateUrl: './SentQuotesKPIComponent.html',
 })
 
-export class SentQuotesKPIComponent implements OnInit {
-
-    private Wizard: QuoteDashboardComponent;
-    public SentQuotesKPIDashboardId: string = "SentQuotesKPIDashboardId_";
-    public SentQuotesKPIChartID: string = null;
+export class SentQuotesKPIComponent  {
+    private chartService: DashboardService;
+    private chartArgs: QuoteDashboardArguments;
     private CurrentSession = SessionLocator.SelectedSession;
-    private dashboardArgs: QuoteDashboardArguments;
-    private dashboardService: DashboardService;
-    public SentQuotesKPIData: Array<ChartingDataClass>;
-    public NoQuotesData = false;
-    private acceptedSatgeId: string;
-
-    constructor(private _entityResourceService: EntityResourceService) {
+    constructor() {
         this.SetChartId();
+        this.chartService = new DashboardService();
+        this.chartArgs = new QuoteDashboardArguments();
+        this.chartArgs.ChartCode = "KPI";
     }
 
+    public SentQuotesKPIDashboardId: string = "SentQuotesKPIDashboardId_";
+    public SentQuotesKPIChartID: string = null;
     SetChartId() {
         if (this.CurrentSession == null) {
             this.SentQuotesKPIChartID = "SentQuotesKPIChartID_-1_-1";
@@ -46,52 +42,18 @@ export class SentQuotesKPIComponent implements OnInit {
         this.SentQuotesKPIDashboardId = this.SentQuotesKPIDashboardId + this.CurrentSession.GetChartId();
     }
 
-    InitTab(wizard: QuoteDashboardComponent) {
-        this.Wizard = wizard;
-        console.log("Init Tab");
-    }
-
-    RefreshTab(wizard: QuoteDashboardComponent) {
-        this.Wizard = wizard;
-        this.FillDashboardArgs();
+    Update(comp: QuoteDashboardComponent) {
+        this.chartArgs.OwnerId = comp.OwnerId;
+        this.chartArgs.BusinessUnitId = comp.BusinessUnitId;
+        this.chartArgs.FromDate = comp.FromDate;
+        this.chartArgs.ToDate = comp.ToDate;
         this.LoadDashboardData();
-        console.log("Refresh Tab");
     }
 
-    ngOnInit() {
-        this.dashboardArgs = new QuoteDashboardArguments();
-        this.dashboardService = new DashboardService();
-
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
-            this.FillDashboardArgs();
-            this.LoadDashboardData();
-        });
-
-        //this.GetQuoteSatges();
-    }
-
-    GetQuoteSatges() {
-        var myQuoteStageListService = new QuoteStageListService();
-        myQuoteStageListService.getAllFromCache().subscribe((resp: any) => {
-            if (!resp.HasError) {
-                var stages : QuoteStageList[] = resp.Result;
-
-                this.acceptedSatgeId = stages.filter(d => d.Code == "QTAC")[0].Id;
-            }
-        });
-
-    }
-
-    FillDashboardArgs() {
-        this.dashboardArgs.OwnerId = this.Wizard.OwnerId;
-        this.dashboardArgs.BusinessUnitId = this.Wizard.BusinessUnitId;
-        this.dashboardArgs.FromDate = this.Wizard.FromDate;
-        this.dashboardArgs.ToDate = this.Wizard.ToDate;
-        this.dashboardArgs.ChartCode = "KPI";
-    }
-
+    public SentQuotesKPIData: Array<ChartingDataClass>;
+    public NoQuotesData = false;
     LoadDashboardData() {
-        this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
+        this.chartService.GetDashboardChartValues(this.chartArgs).subscribe((myResult: any) => {
             this.SentQuotesKPIData = myResult;
             this.CheckIfEmptyList();
             this.FillDashboardData();
@@ -217,7 +179,7 @@ export class SentQuotesKPIComponent implements OnInit {
         var filterAgrs = new ApiQueryFilters();
       
         if (flag) {
-            filterAgrs.addAdditionalFilter("SentQuotesKPIChartFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate) + ";" + item.dataContext.category + "",null , "Equals", true, false, false, "String");
+            filterAgrs.addAdditionalFilter("SentQuotesKPIChartFilter", ServiceHelper.GetDateString(this.chartArgs.FromDate), ServiceHelper.GetDateString(this.chartArgs.ToDate) + ";" + item.dataContext.category + "",null , "Equals", true, false, false, "String");
             filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
             //filterAgrs.addAdditionalFilter("IsClosed", true, null, null, "Equals", true, false, false, "Boolean");
             //filterAgrs.addAdditionalFilter("StageId", this.acceptedSatgeId, null, null, "Equals", false, false, false, "String");

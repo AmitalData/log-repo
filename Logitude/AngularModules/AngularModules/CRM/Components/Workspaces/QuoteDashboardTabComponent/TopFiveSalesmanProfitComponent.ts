@@ -1,64 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { QuoteDashboardComponent } from './QuoteDashboardComponent';
 import { QuoteDashboardArguments } from '../../../../Quote/DataContracts/QuoteDashboardArguments';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DashboardService } from '../../../../Quote/Services/QuoteDashboard/DashboardService';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-
-
 declare var makeAMLineChartMultiple: any;
 
 @Component({
     selector: 'top-five-salesman-profit',
-    
     templateUrl: './TopFiveSalesmanProfitComponent.html',
 })
 
-export class TopFiveSalesmanProfitComponent implements OnInit {
+export class TopFiveSalesmanProfitComponent {
+    public ChartId: string;
+    public LegendId: string;
+    private chartService: DashboardService;
+    private chartArgs: QuoteDashboardArguments;
     private CurrentSession = SessionLocator.SelectedSession;
-    private dashboardService: DashboardService;
-    private dashboardArgs: QuoteDashboardArguments;
-    public PerformanceChartId: string;
-    public LegendDiv: string;
-    public ProfitCurrencyCode: string = SessionLocator.TenantPM.ProfitCurrencyCode;
-    public LocalCurrencyCode: string = SessionLocator.TenantPM.AccountingCurrencyCode;
-    public SelectedCurrency: string = "1";   
-    public IsNoDataVisible: boolean = false;
-    constructor(private _entityResourceService: EntityResourceService) {
-        this.dashboardService = new DashboardService();
-        this.dashboardArgs = new QuoteDashboardArguments();
-        this.PerformanceChartId = "PerformanceChartId_" + this.CurrentSession.GetNewId("PerformanceChartId");
-        this.LegendDiv = "LegendDiv_" + this.CurrentSession.GetNewId("LegendDiv");
+    constructor() {
+        this.chartService = new DashboardService();
+        this.chartArgs = new QuoteDashboardArguments();
+        this.chartArgs.ChartCode = "TFS";
+        this.ChartId = "PerformanceChartId_" + this.CurrentSession.GetNewId("PerformanceChartId");
+        this.LegendId = "LegendDiv_" + this.CurrentSession.GetNewId("LegendDiv");
     }
 
-    ngOnInit() {                
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
-            this.FillChartArgs();
-            this.LoadChartData();
-        });
-    }
-   
-    private Wizard: QuoteDashboardComponent;
-    InitTab(wizard: QuoteDashboardComponent) {
-        this.Wizard = wizard;
-    }
-
-    FillChartArgs() {
-        this.dashboardArgs.OwnerId = this.Wizard.OwnerId;
-        this.dashboardArgs.BusinessUnitId = this.Wizard.BusinessUnitId;
-        this.dashboardArgs.FromDate = this.Wizard.FromDate;
-        this.dashboardArgs.ToDate = this.Wizard.ToDate;
-        this.dashboardArgs.DatesCode = this.Wizard.DatesCode;
-        this.dashboardArgs.ChartCode = "TFS";
-        this.dashboardArgs.SelectedCurrency = "1";
-    }
-
-    RefreshTab(wizard: QuoteDashboardComponent) {
-        this.Wizard = wizard;
-        this.FillChartArgs();
+    Update(comp: QuoteDashboardComponent) {
+        this.chartArgs.OwnerId = comp.OwnerId;
+        this.chartArgs.BusinessUnitId = comp.BusinessUnitId;
+        this.chartArgs.FromDate = comp.FromDate;
+        this.chartArgs.ToDate = comp.ToDate;
+        this.chartArgs.DatesCode = comp.DatesCode;
+        this.chartArgs.SelectedCurrency = "1";
         this.LoadChartData();
     }
-
+ 
+    public ProfitCurrencyCode: string = SessionLocator.TenantPM.ProfitCurrencyCode;
+    public LocalCurrencyCode: string = SessionLocator.TenantPM.AccountingCurrencyCode;
+    public SelectedCurrency: string = "1";
+    public IsNoDataVisible: boolean = false;
     ChangeCurrency(code: string) {
 
         if (code == this.LocalCurrencyCode)
@@ -66,8 +45,8 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
         else
             code = "2";
 
-        if (code != this.dashboardArgs.SelectedCurrency) {
-            this.dashboardArgs.SelectedCurrency = code;
+        if (code != this.chartArgs.SelectedCurrency) {
+            this.chartArgs.SelectedCurrency = code;
             this.SelectedCurrency = code;
             this.FillChartData();
         }
@@ -78,7 +57,7 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
         this.DataSource = [];
         this.IsNoDataVisible = false;
 
-        this.dashboardService.GetDashboardChartValues(this.dashboardArgs).subscribe((myResult: any) => {
+        this.chartService.GetDashboardChartValues(this.chartArgs).subscribe((myResult: any) => {
 
             this.IsNoDataVisible = false;
             this.DataSource = [];
@@ -164,9 +143,9 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
             });
         }
 
-        //document.getElementById(this.LegendDiv).innerHTML = "";
+        //document.getElementById(this.LegendId).innerHTML = "";
 
-        makeAMLineChartMultiple(this.PerformanceChartId, dataProvider, null, graphs, true, null, "Profit");
+        makeAMLineChartMultiple(this.ChartId, dataProvider, null, graphs, true, null, "Profit");
     }   
 }
 
