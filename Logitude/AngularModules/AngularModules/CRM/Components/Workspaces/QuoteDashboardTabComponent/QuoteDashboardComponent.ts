@@ -14,6 +14,7 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { UserList } from '../../../../Common/EntityLists/UserList';
 import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
 import { CRMUtilities } from '../../../CRMUtilities';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({    
     templateUrl: './QuoteDashboardComponent.html',
@@ -29,8 +30,7 @@ export class QuoteDashboardComponent extends BaseComponent implements AfterViewI
     private myBusinessUnitListService: BusinessUnitListService;
     private myUserListService: UserListService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-
-    constructor() {
+    constructor(private entityResourceService: EntityResourceService) {
         super();
 
         this.myUserListService = new UserListService();
@@ -38,12 +38,12 @@ export class QuoteDashboardComponent extends BaseComponent implements AfterViewI
     }
 
     ngAfterViewInit() {
-        this.LoadComponents();
+        this.entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response: any) => {
+            this.LoadComponents();
+        });
     }
 
-    private Wizard: DashboardWorkspaceComponent;
     InitTab(wizard: DashboardWorkspaceComponent) {
-        this.Wizard = wizard;
     }
 
     RefreshTab() {
@@ -67,7 +67,6 @@ export class QuoteDashboardComponent extends BaseComponent implements AfterViewI
                 SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/OpenQuotesByStageComponent', OQSLocation.viewContainerRef)
                     .then(cmpRef => {
                         this.PageChild_OQS = cmpRef.instance;
-                        this.PageChild_OQS.InitTab(this);
                         this.BuildFilters();
                     });
             }
@@ -77,7 +76,6 @@ export class QuoteDashboardComponent extends BaseComponent implements AfterViewI
                 SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/QuotesByCountryComponent', QOCLocation.viewContainerRef)
                     .then(cmpRef => {
                         this.PageChild_QOC = cmpRef.instance;
-                        this.PageChild_QOC.InitTab(this);
                         this.BuildFilters();
                     });
             }
@@ -87,7 +85,6 @@ export class QuoteDashboardComponent extends BaseComponent implements AfterViewI
                 SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/QuotesConversionComponent', QCVLocation.viewContainerRef)
                     .then(cmpRef => {
                         this.PageChild_QCV = cmpRef.instance;
-                        this.PageChild_QCV.InitTab(this);
                         this.BuildFilters();
                     });
             }
@@ -97,7 +94,6 @@ export class QuoteDashboardComponent extends BaseComponent implements AfterViewI
                 SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/SentQuotesKPIComponent', KPILocation.viewContainerRef)
                     .then(cmpRef => {
                         this.PageChild_KPI = cmpRef.instance;
-                        this.PageChild_KPI.InitTab(this);
                         this.BuildFilters();
                     });
             }
@@ -107,7 +103,6 @@ export class QuoteDashboardComponent extends BaseComponent implements AfterViewI
                 SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/QuoteDashboardTabComponent/TopFiveSalesmanProfitComponent', TFSLocation.viewContainerRef)
                     .then(cmpRef => {
                         this.PageChild_TFS = cmpRef.instance;
-                        this.PageChild_TFS.InitTab(this);
                         this.BuildFilters();
                     });
             }
@@ -123,23 +118,23 @@ export class QuoteDashboardComponent extends BaseComponent implements AfterViewI
 
     RefreshComponents() {
         if (this.PageChild_OQS) {
-            this.PageChild_OQS.RefreshTab(this);
+            this.PageChild_OQS.Update(this);
         }
 
         if (this.PageChild_QOC) {
-            this.PageChild_QOC.RefreshTab(this);
+            this.PageChild_QOC.Update(this);
         }
 
         if (this.PageChild_QCV) {
-            this.PageChild_QCV.RefreshTab(this);
+            this.PageChild_QCV.Update(this);
         }
 
         if (this.PageChild_KPI) {
-            this.PageChild_KPI.RefreshTab(this);
+            this.PageChild_KPI.Update(this);
         }
 
         if (this.PageChild_TFS) {
-            this.PageChild_TFS.RefreshTab(this);
+            this.PageChild_TFS.Update(this);
         }
     }
 
