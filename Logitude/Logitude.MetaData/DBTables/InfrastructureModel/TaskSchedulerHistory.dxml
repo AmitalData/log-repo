@@ -93,4 +93,6 @@
     ReferencedTable="Documents"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="TaskId,StartDateTime,EndDateTime" /> 
 </Table>
