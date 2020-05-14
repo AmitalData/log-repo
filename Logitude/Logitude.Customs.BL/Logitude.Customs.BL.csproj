@@ -145,12 +145,9 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\ClassificationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerRoleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsShipDetails.Generated.cs" />
-
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
-
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
-
     <Compile Include="CloseTables\EnumGenerated\CustomsShipStruct.Generated.cs" />
     <Compile Include="CloseTables\SincroTestCaseDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AcceptanceStatusDetails.Generated.cs" />
@@ -658,6 +655,7 @@
     <Compile Include="EntityDataMappings\Generated\MorningMessageTypeDataMapping.Generated.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EntityDataMappings\Generated\NbcDeclarationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationDefinitionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationReplyDataMapping.Generated.cs" />
@@ -810,6 +808,7 @@
     <Compile Include="EntityDataMappings\MorningMessageTypeDataMapping.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EntityDataMappings\NbcDeclarationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationDefinitionDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationReplyDataMapping.cs" />
@@ -971,6 +970,7 @@
     <Compile Include="EntityQueryServices\Generated\DeficitDecisionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExceptionReasonQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ExceptionReasonQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\NbcDeclarationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PartyRelationshipTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantExceptionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\HazardousSubstanceQueryService.Generated.cs" />
@@ -1420,6 +1420,7 @@
     <Compile Include="EntityUpdateServices\Generated\ClassificationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationExportRecipientUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\NbcDeclarationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PartyRelationshipTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SuppInvoiceItemsAbachStatementUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceItemsPriceUpdateService.Generated.cs" />

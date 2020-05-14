@@ -478,6 +478,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new MorningMessageTypeMap());
 	
+            modelBuilder.Configurations.Add(new NbcDeclarationTypeMap());
+	
             modelBuilder.Configurations.Add(new NotificationMap());
 	
             modelBuilder.Configurations.Add(new NotificationDefinitionMap());
@@ -2398,6 +2400,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<MorningMessageType> MorningMessageTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<NbcDeclarationType> NbcDeclarationTypes 
 	 {
 	      get; set;
 	 
