@@ -547,6 +547,7 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportLinePMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
+    <TypeScriptCompile Include="App\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="App\Directives\ChildDirective.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\DynamicLoader.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgets.ts" />
@@ -649,6 +650,7 @@
     <TypeScriptCompile Include="Common\Services\StandardPMs\TenantAdditionalDataPMService Extended.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\TenantAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\UserLastSettingsPMService.ts" />
+    <TypeScriptCompile Include="Controls\Directives\ChildDirective.ts" />
     <TypeScriptCompile Include="Controls\InvitedFilter.ts" />
     <TypeScriptCompile Include="Controls\ParticipatedFilter.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />

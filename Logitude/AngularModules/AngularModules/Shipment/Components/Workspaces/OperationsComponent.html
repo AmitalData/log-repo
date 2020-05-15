@@ -1,8 +1,8 @@
 
-<table *ngIf="IsResourcesReady">
+<table>
     <tr style="height:21px;" *ngIf="IsMenuVisible">
         <td>
-            <ul class="PagesMenu">
+            <ul class="PagesMenu" *ngIf="IsResourcesReady">
                 <li id="{{'BOOK' | IdGeneratorPipe}}" *ngIf="IsBookingItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BOOK'" (click)="SelectedItem = 'BOOK'">Bookings</li>
 
                 <li id="{{'SHIP' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'SHIP'" (click)="SelectedItem = 'SHIP'">Shipments</li>
