@@ -401,11 +401,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CommercialSaleQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommercialSaleTextCode_0.Id, NameTextCodeCode = CommercialSaleTextCode_0.Code, ObjectTableName = "Customs.CommercialSale", Code = "CommercialSale",  QueryGroupCode = "2177", IndexOrder = 0, Tenant = 0, ObjectTableId = CommercialSaleObjectTable.Id, QuerySection = "Customs.CommercialSale", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommercialSaleFeature_0.Id,FeatureUniqeCode= CommercialSaleFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CommercialSaleQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id,QueryCode = CommercialSaleQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CommercialSale.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CommercialSaleQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id,QueryCode = CommercialSaleQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CommercialSale.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn CommercialSaleQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id,QueryCode = CommercialSaleQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CommercialSale.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CommercialSaleQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id,QueryCode = CommercialSaleQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CommercialSale.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CommercialSaleQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id,QueryCode = CommercialSaleQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CommercialSale.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CommercialSaleQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommercialSaleQuery.Id,QueryCode = CommercialSaleQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CommercialSale.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

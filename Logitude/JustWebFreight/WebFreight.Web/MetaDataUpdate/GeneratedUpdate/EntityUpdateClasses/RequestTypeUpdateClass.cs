@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RequestTypeUpdateClass
    {  		
-		public const string HashString = "400e9cb24c029d233ca32ab8050f427d";
+		public const string HashString = "cf867e2d17fefeb68e70a17b5ab768bd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוג בקשה",
 			      				    DefaultText =  "Request Type",
-			      				    Code =  "29af",
+			      				    Code =  "20af",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -452,7 +452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup RequestTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "29af", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup RequestTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "20af", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 						QueryGroup RequestTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "85d4", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable RequestTypeObjectTable = objectTables.ContainsKey("Customs.RequestType") ? objectTables["Customs.RequestType"] : null;
@@ -480,13 +480,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query RequestTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RequestTypeTextCode_0.Id, NameTextCodeCode = RequestTypeTextCode_0.Code, ObjectTableName = "Customs.RequestType", Code = "RequestType",  QueryGroupCode = "29af", IndexOrder = 0, Tenant = 0, ObjectTableId = RequestTypeObjectTable.Id, QuerySection = "Customs.RequestType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RequestTypeFeature_0.Id,FeatureUniqeCode= RequestTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn RequestTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestTypeQuery.Id,QueryCode = RequestTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "RequestType.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn RequestTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestTypeQuery.Id,QueryCode = RequestTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.RequestType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestTypeQuery.Id,QueryCode = RequestTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "RequestType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn RequestTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestTypeQuery.Id,QueryCode = RequestTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.RequestType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestTypeQuery.Id,QueryCode = RequestTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "RequestType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn RequestTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestTypeQuery.Id,QueryCode = RequestTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.RequestType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestTypeQuery.Id,QueryCode = RequestTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "RequestType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn RequestTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestTypeQuery.Id,QueryCode = RequestTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.RequestType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

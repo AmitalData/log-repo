@@ -413,13 +413,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query TermsOfSaleTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TermsOfSaleTypeTextCode_0.Id, NameTextCodeCode = TermsOfSaleTypeTextCode_0.Code, ObjectTableName = "Customs.TermsOfSaleType", Code = "TermsOfSaleType",  QueryGroupCode = "TOST", IndexOrder = 0, Tenant = 0, ObjectTableId = TermsOfSaleTypeObjectTable.Id, QuerySection = "Customs.TermsOfSaleType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TermsOfSaleTypeFeature_0.Id,FeatureUniqeCode= TermsOfSaleTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn TermsOfSaleTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TermsOfSaleTypeQuery.Id,QueryCode = TermsOfSaleTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TermsOfSaleType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TermsOfSaleTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TermsOfSaleTypeQuery.Id,QueryCode = TermsOfSaleTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.TermsOfSaleType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TermsOfSaleTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TermsOfSaleTypeQuery.Id,QueryCode = TermsOfSaleTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TermsOfSaleType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TermsOfSaleTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TermsOfSaleTypeQuery.Id,QueryCode = TermsOfSaleTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.TermsOfSaleType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TermsOfSaleTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TermsOfSaleTypeQuery.Id,QueryCode = TermsOfSaleTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TermsOfSaleType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TermsOfSaleTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TermsOfSaleTypeQuery.Id,QueryCode = TermsOfSaleTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.TermsOfSaleType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TermsOfSaleTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TermsOfSaleTypeQuery.Id,QueryCode = TermsOfSaleTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TermsOfSaleType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TermsOfSaleTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TermsOfSaleTypeQuery.Id,QueryCode = TermsOfSaleTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.TermsOfSaleType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

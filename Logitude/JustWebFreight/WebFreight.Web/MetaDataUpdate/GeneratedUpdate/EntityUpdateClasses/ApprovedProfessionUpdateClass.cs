@@ -480,13 +480,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ApprovedProfessionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ApprovedProfessionTextCode_0.Id, NameTextCodeCode = ApprovedProfessionTextCode_0.Code, ObjectTableName = "Customs.ApprovedProfession", Code = "ApprovedProfession",  QueryGroupCode = "29af", IndexOrder = 0, Tenant = 0, ObjectTableId = ApprovedProfessionObjectTable.Id, QuerySection = "Customs.ApprovedProfession", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ApprovedProfessionFeature_0.Id,FeatureUniqeCode= ApprovedProfessionFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ApprovedProfessionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedProfessionQuery.Id,QueryCode = ApprovedProfessionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ApprovedProfession.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ApprovedProfessionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedProfessionQuery.Id,QueryCode = ApprovedProfessionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ApprovedProfession.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ApprovedProfessionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedProfessionQuery.Id,QueryCode = ApprovedProfessionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ApprovedProfession.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ApprovedProfessionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedProfessionQuery.Id,QueryCode = ApprovedProfessionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ApprovedProfession.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ApprovedProfessionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedProfessionQuery.Id,QueryCode = ApprovedProfessionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ApprovedProfession.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ApprovedProfessionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedProfessionQuery.Id,QueryCode = ApprovedProfessionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ApprovedProfession.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ApprovedProfessionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedProfessionQuery.Id,QueryCode = ApprovedProfessionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ApprovedProfession.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ApprovedProfessionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedProfessionQuery.Id,QueryCode = ApprovedProfessionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ApprovedProfession.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

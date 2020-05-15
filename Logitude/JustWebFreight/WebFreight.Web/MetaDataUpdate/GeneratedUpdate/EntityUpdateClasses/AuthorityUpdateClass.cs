@@ -405,13 +405,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AuthorityQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AuthorityTextCode_0.Id, NameTextCodeCode = AuthorityTextCode_0.Code, ObjectTableName = "Customs.Authority", Code = "Authority",  QueryGroupCode = "ATQG", IndexOrder = 0, Tenant = 0, ObjectTableId = AuthorityObjectTable.Id, QuerySection = "Customs.Authority", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AuthorityFeature_0.Id,FeatureUniqeCode= AuthorityFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AuthorityQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorityQuery.Id,QueryCode = AuthorityQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Authority.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AuthorityQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorityQuery.Id,QueryCode = AuthorityQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Authority.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AuthorityQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorityQuery.Id,QueryCode = AuthorityQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Authority.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AuthorityQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorityQuery.Id,QueryCode = AuthorityQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Authority.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AuthorityQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorityQuery.Id,QueryCode = AuthorityQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Authority.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AuthorityQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorityQuery.Id,QueryCode = AuthorityQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Authority.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AuthorityQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorityQuery.Id,QueryCode = AuthorityQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Authority.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AuthorityQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorityQuery.Id,QueryCode = AuthorityQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Authority.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

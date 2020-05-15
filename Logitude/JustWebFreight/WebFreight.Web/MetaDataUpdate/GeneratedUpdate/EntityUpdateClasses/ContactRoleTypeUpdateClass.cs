@@ -408,13 +408,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ContactRoleTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContactRoleTypeTextCode_0.Id, NameTextCodeCode = ContactRoleTypeTextCode_0.Code, ObjectTableName = "Customs.ContactRoleType", Code = "ContactRoleType",  QueryGroupCode = "CORT", IndexOrder = 0, Tenant = 0, ObjectTableId = ContactRoleTypeObjectTable.Id, QuerySection = "Customs.ContactRoleType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContactRoleTypeFeature_0.Id,FeatureUniqeCode= ContactRoleTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ContactRoleTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactRoleTypeQuery.Id,QueryCode = ContactRoleTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContactRoleType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ContactRoleTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactRoleTypeQuery.Id,QueryCode = ContactRoleTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ContactRoleType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ContactRoleTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactRoleTypeQuery.Id,QueryCode = ContactRoleTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContactRoleType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ContactRoleTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactRoleTypeQuery.Id,QueryCode = ContactRoleTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ContactRoleType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ContactRoleTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactRoleTypeQuery.Id,QueryCode = ContactRoleTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContactRoleType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ContactRoleTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactRoleTypeQuery.Id,QueryCode = ContactRoleTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ContactRoleType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ContactRoleTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactRoleTypeQuery.Id,QueryCode = ContactRoleTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContactRoleType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ContactRoleTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContactRoleTypeQuery.Id,QueryCode = ContactRoleTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ContactRoleType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

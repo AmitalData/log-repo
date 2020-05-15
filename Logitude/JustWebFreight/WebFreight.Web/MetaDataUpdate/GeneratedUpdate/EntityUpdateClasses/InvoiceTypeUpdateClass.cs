@@ -411,13 +411,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query InvoiceTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InvoiceTypeTextCode_0.Id, NameTextCodeCode = InvoiceTypeTextCode_0.Code, ObjectTableName = "Customs.InvoiceType", Code = "InvoiceType",  QueryGroupCode = "INVT", IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceTypeObjectTable.Id, QuerySection = "Customs.InvoiceType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InvoiceTypeFeature_0.Id,FeatureUniqeCode= InvoiceTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn InvoiceTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoiceTypeQuery.Id,QueryCode = InvoiceTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InvoiceType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn InvoiceTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoiceTypeQuery.Id,QueryCode = InvoiceTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.InvoiceType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InvoiceTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoiceTypeQuery.Id,QueryCode = InvoiceTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InvoiceType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn InvoiceTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoiceTypeQuery.Id,QueryCode = InvoiceTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.InvoiceType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InvoiceTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoiceTypeQuery.Id,QueryCode = InvoiceTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InvoiceType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn InvoiceTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoiceTypeQuery.Id,QueryCode = InvoiceTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.InvoiceType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InvoiceTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoiceTypeQuery.Id,QueryCode = InvoiceTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InvoiceType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn InvoiceTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InvoiceTypeQuery.Id,QueryCode = InvoiceTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.InvoiceType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

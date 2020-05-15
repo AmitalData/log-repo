@@ -400,11 +400,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ClaimEntityQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ClaimEntityTextCode_0.Id, NameTextCodeCode = ClaimEntityTextCode_0.Code, ObjectTableName = "Customs.ClaimEntity", Code = "ClaimEntity",  QueryGroupCode = "adca", IndexOrder = 0, Tenant = 0, ObjectTableId = ClaimEntityObjectTable.Id, QuerySection = "Customs.ClaimEntity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ClaimEntityFeature_0.Id,FeatureUniqeCode= ClaimEntityFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ClaimEntityQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id,QueryCode = ClaimEntityQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ClaimEntity.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ClaimEntityQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id,QueryCode = ClaimEntityQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ClaimEntity.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ClaimEntityQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id,QueryCode = ClaimEntityQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ClaimEntity.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClaimEntityQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id,QueryCode = ClaimEntityQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ClaimEntity.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClaimEntityQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id,QueryCode = ClaimEntityQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ClaimEntity.Inactive" , ColumnWidth = 20 }, addedQueryColumns);
+			 QueryColumn ClaimEntityQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimEntityQuery.Id,QueryCode = ClaimEntityQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ClaimEntity.Inactive" , ColumnWidth = 20 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

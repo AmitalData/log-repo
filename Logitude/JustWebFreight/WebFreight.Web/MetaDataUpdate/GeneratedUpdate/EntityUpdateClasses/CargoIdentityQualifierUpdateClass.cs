@@ -405,13 +405,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CargoIdentityQualifierQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CargoIdentityQualifierTextCode_0.Id, NameTextCodeCode = CargoIdentityQualifierTextCode_0.Code, ObjectTableName = "Customs.CargoIdentityQualifier", Code = "CargoIdentityQualifier",  QueryGroupCode = "CQQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CargoIdentityQualifierObjectTable.Id, QuerySection = "Customs.CargoIdentityQualifier", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CargoIdentityQualifierFeature_0.Id,FeatureUniqeCode= CargoIdentityQualifierFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CargoIdentityQualifierQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentityQualifierQuery.Id,QueryCode = CargoIdentityQualifierQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CargoIdentityQualifier.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CargoIdentityQualifierQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentityQualifierQuery.Id,QueryCode = CargoIdentityQualifierQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CargoIdentityQualifier.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CargoIdentityQualifierQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentityQualifierQuery.Id,QueryCode = CargoIdentityQualifierQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CargoIdentityQualifier.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CargoIdentityQualifierQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentityQualifierQuery.Id,QueryCode = CargoIdentityQualifierQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CargoIdentityQualifier.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CargoIdentityQualifierQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentityQualifierQuery.Id,QueryCode = CargoIdentityQualifierQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CargoIdentityQualifier.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CargoIdentityQualifierQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentityQualifierQuery.Id,QueryCode = CargoIdentityQualifierQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CargoIdentityQualifier.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CargoIdentityQualifierQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentityQualifierQuery.Id,QueryCode = CargoIdentityQualifierQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CargoIdentityQualifier.InActive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CargoIdentityQualifierQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoIdentityQualifierQuery.Id,QueryCode = CargoIdentityQualifierQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CargoIdentityQualifier.InActive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

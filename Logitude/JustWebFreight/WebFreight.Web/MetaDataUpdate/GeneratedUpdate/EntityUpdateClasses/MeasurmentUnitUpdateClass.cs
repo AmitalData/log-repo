@@ -461,15 +461,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query MeasurmentUnitQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MeasurmentUnitTextCode_0.Id, NameTextCodeCode = MeasurmentUnitTextCode_0.Code, ObjectTableName = "Customs.MeasurmentUnit", Code = "MeasurmentUnit",  QueryGroupCode = "MESU", IndexOrder = 0, Tenant = 0, ObjectTableId = MeasurmentUnitObjectTable.Id, QuerySection = "Customs.MeasurmentUnit", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MeasurmentUnitFeature_0.Id,FeatureUniqeCode= MeasurmentUnitFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn MeasurmentUnitQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "MeasurmentUnit.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn MeasurmentUnitQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.MeasurmentUnit.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn MeasurmentUnitQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "MeasurmentUnit.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn MeasurmentUnitQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.MeasurmentUnit.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn MeasurmentUnitQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "MeasurmentUnit.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn MeasurmentUnitQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.MeasurmentUnit.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn MeasurmentUnitQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "MeasurmentUnit.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn MeasurmentUnitQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.MeasurmentUnit.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn MeasurmentUnitQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "MeasurmentUnit.MalamId" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn MeasurmentUnitQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeasurmentUnitQuery.Id,QueryCode = MeasurmentUnitQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.MeasurmentUnit.MalamId" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

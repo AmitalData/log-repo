@@ -418,13 +418,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AmendmentRequestStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AmendmentRequestStatusTextCode_0.Id, NameTextCodeCode = AmendmentRequestStatusTextCode_0.Code, ObjectTableName = "Customs.AmendmentRequestStatus", Code = "AmendmentRequestStatus",  QueryGroupCode = "ARQG", IndexOrder = 0, Tenant = 0, ObjectTableId = AmendmentRequestStatusObjectTable.Id, QuerySection = "Customs.AmendmentRequestStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AmendmentRequestStatusFeature_0.Id,FeatureUniqeCode= AmendmentRequestStatusFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AmendmentRequestStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestStatusQuery.Id,QueryCode = AmendmentRequestStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AmendmentRequestStatus.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AmendmentRequestStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestStatusQuery.Id,QueryCode = AmendmentRequestStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.AmendmentRequestStatus.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AmendmentRequestStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestStatusQuery.Id,QueryCode = AmendmentRequestStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AmendmentRequestStatus.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AmendmentRequestStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestStatusQuery.Id,QueryCode = AmendmentRequestStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.AmendmentRequestStatus.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AmendmentRequestStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestStatusQuery.Id,QueryCode = AmendmentRequestStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AmendmentRequestStatus.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AmendmentRequestStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestStatusQuery.Id,QueryCode = AmendmentRequestStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.AmendmentRequestStatus.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AmendmentRequestStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestStatusQuery.Id,QueryCode = AmendmentRequestStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AmendmentRequestStatus.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AmendmentRequestStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentRequestStatusQuery.Id,QueryCode = AmendmentRequestStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.AmendmentRequestStatus.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

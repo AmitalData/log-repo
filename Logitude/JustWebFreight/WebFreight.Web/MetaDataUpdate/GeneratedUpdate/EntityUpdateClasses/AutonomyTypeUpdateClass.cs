@@ -415,13 +415,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AutonomyTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AutonomyTypeTextCode_0.Id, NameTextCodeCode = AutonomyTypeTextCode_0.Code, ObjectTableName = "Customs.AutonomyType", Code = "AutonomyType",  QueryGroupCode = "AUTT", IndexOrder = 0, Tenant = 0, ObjectTableId = AutonomyTypeObjectTable.Id, QuerySection = "Customs.AutonomyType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AutonomyTypeFeature_0.Id,FeatureUniqeCode= AutonomyTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AutonomyTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutonomyTypeQuery.Id,QueryCode = AutonomyTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AutonomyType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AutonomyTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutonomyTypeQuery.Id,QueryCode = AutonomyTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.AutonomyType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AutonomyTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutonomyTypeQuery.Id,QueryCode = AutonomyTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AutonomyType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AutonomyTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutonomyTypeQuery.Id,QueryCode = AutonomyTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.AutonomyType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AutonomyTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutonomyTypeQuery.Id,QueryCode = AutonomyTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AutonomyType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AutonomyTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutonomyTypeQuery.Id,QueryCode = AutonomyTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.AutonomyType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AutonomyTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutonomyTypeQuery.Id,QueryCode = AutonomyTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AutonomyType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AutonomyTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AutonomyTypeQuery.Id,QueryCode = AutonomyTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.AutonomyType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

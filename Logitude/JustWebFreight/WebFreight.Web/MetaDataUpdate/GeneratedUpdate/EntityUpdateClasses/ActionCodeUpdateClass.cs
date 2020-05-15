@@ -435,13 +435,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ActionCodeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ActionCodeTextCode_0.Id, NameTextCodeCode = ActionCodeTextCode_0.Code, ObjectTableName = "Customs.ActionCode", Code = "ActionCode",  QueryGroupCode = "2ea0", IndexOrder = 0, Tenant = 0, ObjectTableId = ActionCodeObjectTable.Id, QuerySection = "Customs.ActionCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ActionCodeFeature_0.Id,FeatureUniqeCode= ActionCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ActionCodeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActionCodeQuery.Id,QueryCode = ActionCodeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ActionCode.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ActionCodeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActionCodeQuery.Id,QueryCode = ActionCodeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ActionCode.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActionCodeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActionCodeQuery.Id,QueryCode = ActionCodeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ActionCode.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ActionCodeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActionCodeQuery.Id,QueryCode = ActionCodeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ActionCode.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActionCodeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActionCodeQuery.Id,QueryCode = ActionCodeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ActionCode.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ActionCodeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActionCodeQuery.Id,QueryCode = ActionCodeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ActionCode.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ActionCodeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActionCodeQuery.Id,QueryCode = ActionCodeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ActionCode.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ActionCodeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActionCodeQuery.Id,QueryCode = ActionCodeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ActionCode.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

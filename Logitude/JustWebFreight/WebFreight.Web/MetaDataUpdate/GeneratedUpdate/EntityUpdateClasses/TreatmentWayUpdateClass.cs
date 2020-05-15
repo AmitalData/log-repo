@@ -435,13 +435,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query TreatmentWayQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TreatmentWayTextCode_0.Id, NameTextCodeCode = TreatmentWayTextCode_0.Code, ObjectTableName = "Customs.TreatmentWay", Code = "TreatmentWay",  QueryGroupCode = "2ea0", IndexOrder = 0, Tenant = 0, ObjectTableId = TreatmentWayObjectTable.Id, QuerySection = "Customs.ActionCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TreatmentWayFeature_0.Id,FeatureUniqeCode= TreatmentWayFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn TreatmentWayQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TreatmentWayQuery.Id,QueryCode = TreatmentWayQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TreatmentWay.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TreatmentWayQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TreatmentWayQuery.Id,QueryCode = TreatmentWayQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.TreatmentWay.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TreatmentWayQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TreatmentWayQuery.Id,QueryCode = TreatmentWayQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TreatmentWay.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TreatmentWayQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TreatmentWayQuery.Id,QueryCode = TreatmentWayQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.TreatmentWay.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TreatmentWayQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TreatmentWayQuery.Id,QueryCode = TreatmentWayQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TreatmentWay.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TreatmentWayQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TreatmentWayQuery.Id,QueryCode = TreatmentWayQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.TreatmentWay.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TreatmentWayQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TreatmentWayQuery.Id,QueryCode = TreatmentWayQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TreatmentWay.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TreatmentWayQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TreatmentWayQuery.Id,QueryCode = TreatmentWayQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.TreatmentWay.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

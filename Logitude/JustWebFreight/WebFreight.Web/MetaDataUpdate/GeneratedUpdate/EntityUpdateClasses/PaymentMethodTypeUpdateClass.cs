@@ -407,13 +407,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query PaymentMethodTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentMethodTypeTextCode_0.Id, NameTextCodeCode = PaymentMethodTypeTextCode_0.Code, ObjectTableName = "Customs.PaymentMethodType", Code = "PaymentMethodType",  QueryGroupCode = "PAMT", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentMethodTypeObjectTable.Id, QuerySection = "Customs.PaymentMethodType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PaymentMethodTypeFeature_0.Id,FeatureUniqeCode= PaymentMethodTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PaymentMethodTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentMethodTypeQuery.Id,QueryCode = PaymentMethodTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PaymentMethodType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentMethodTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentMethodTypeQuery.Id,QueryCode = PaymentMethodTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PaymentMethodType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentMethodTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentMethodTypeQuery.Id,QueryCode = PaymentMethodTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PaymentMethodType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentMethodTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentMethodTypeQuery.Id,QueryCode = PaymentMethodTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PaymentMethodType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentMethodTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentMethodTypeQuery.Id,QueryCode = PaymentMethodTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PaymentMethodType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentMethodTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentMethodTypeQuery.Id,QueryCode = PaymentMethodTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PaymentMethodType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentMethodTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentMethodTypeQuery.Id,QueryCode = PaymentMethodTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PaymentMethodType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentMethodTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentMethodTypeQuery.Id,QueryCode = PaymentMethodTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.PaymentMethodType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

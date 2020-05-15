@@ -403,11 +403,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ClaimExplanationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ClaimExplanationCodeTextCode_0.Id, NameTextCodeCode = ClaimExplanationCodeTextCode_0.Code, ObjectTableName = "Customs.ClaimExplanationCode", Code = "ClaimExplanation",  QueryGroupCode = "f29d", IndexOrder = 0, Tenant = 0, ObjectTableId = ClaimExplanationCodeObjectTable.Id, QuerySection = "Customs.ClaimExplanationCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ClaimExplanationCodeFeature_0.Id,FeatureUniqeCode= ClaimExplanationCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ClaimExplanationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimExplanationQuery.Id,QueryCode = ClaimExplanationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ClaimExplanationCode.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ClaimExplanationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimExplanationQuery.Id,QueryCode = ClaimExplanationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ClaimExplanationCode.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ClaimExplanationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimExplanationQuery.Id,QueryCode = ClaimExplanationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ClaimExplanationCode.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClaimExplanationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimExplanationQuery.Id,QueryCode = ClaimExplanationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ClaimExplanationCode.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ClaimExplanationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimExplanationQuery.Id,QueryCode = ClaimExplanationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ClaimExplanationCode.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ClaimExplanationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClaimExplanationQuery.Id,QueryCode = ClaimExplanationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ClaimExplanationCode.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

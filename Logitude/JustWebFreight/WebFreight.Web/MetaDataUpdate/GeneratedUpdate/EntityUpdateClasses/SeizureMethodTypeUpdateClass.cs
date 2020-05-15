@@ -466,13 +466,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query SeizureMethodTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SeizureMethodTypeTextCode_0.Id, NameTextCodeCode = SeizureMethodTypeTextCode_0.Code, ObjectTableName = "Customs.SeizureMethodType", Code = "SeizureMethodType",  QueryGroupCode = "3174", IndexOrder = 0, Tenant = 0, ObjectTableId = SeizureMethodTypeObjectTable.Id, QuerySection = "Customs.SeizureMethodType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SeizureMethodTypeFeature_0.Id,FeatureUniqeCode= SeizureMethodTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn SeizureMethodTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureMethodTypeQuery.Id,QueryCode = SeizureMethodTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "SeizureMethodType.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn SeizureMethodTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureMethodTypeQuery.Id,QueryCode = SeizureMethodTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.SeizureMethodType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SeizureMethodTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureMethodTypeQuery.Id,QueryCode = SeizureMethodTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "SeizureMethodType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn SeizureMethodTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureMethodTypeQuery.Id,QueryCode = SeizureMethodTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.SeizureMethodType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SeizureMethodTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureMethodTypeQuery.Id,QueryCode = SeizureMethodTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "SeizureMethodType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn SeizureMethodTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureMethodTypeQuery.Id,QueryCode = SeizureMethodTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.SeizureMethodType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SeizureMethodTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureMethodTypeQuery.Id,QueryCode = SeizureMethodTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "SeizureMethodType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn SeizureMethodTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SeizureMethodTypeQuery.Id,QueryCode = SeizureMethodTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.SeizureMethodType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

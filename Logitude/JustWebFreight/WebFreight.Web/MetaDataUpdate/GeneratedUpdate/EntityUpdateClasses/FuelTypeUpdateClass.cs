@@ -398,13 +398,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query FuelTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = FuelTypeTextCode_0.Id, NameTextCodeCode = FuelTypeTextCode_0.Code, ObjectTableName = "Customs.FuelType", Code = "FuelType",  QueryGroupCode = "FTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = FuelTypeObjectTable.Id, QuerySection = "Customs.FuelType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = FuelTypeFeature_0.Id,FeatureUniqeCode= FuelTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn FuelTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FuelTypeQuery.Id,QueryCode = FuelTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "FuelType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn FuelTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FuelTypeQuery.Id,QueryCode = FuelTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.FuelType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn FuelTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FuelTypeQuery.Id,QueryCode = FuelTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "FuelType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn FuelTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FuelTypeQuery.Id,QueryCode = FuelTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.FuelType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn FuelTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FuelTypeQuery.Id,QueryCode = FuelTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "FuelType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn FuelTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FuelTypeQuery.Id,QueryCode = FuelTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.FuelType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn FuelTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FuelTypeQuery.Id,QueryCode = FuelTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "FuelType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn FuelTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FuelTypeQuery.Id,QueryCode = FuelTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.FuelType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

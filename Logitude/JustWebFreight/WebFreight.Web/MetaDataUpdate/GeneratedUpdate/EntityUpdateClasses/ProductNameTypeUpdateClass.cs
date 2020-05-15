@@ -420,13 +420,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ProductNameTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ProductNameTypeTextCode_0.Id, NameTextCodeCode = ProductNameTypeTextCode_0.Code, ObjectTableName = "Customs.ProductNameType", Code = "ProductNameType",  QueryGroupCode = "PRNT", IndexOrder = 0, Tenant = 0, ObjectTableId = ProductNameTypeObjectTable.Id, QuerySection = "Customs.ProductNameType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ProductNameTypeFeature_0.Id,FeatureUniqeCode= ProductNameTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ProductNameTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ProductNameType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ProductNameTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ProductNameType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ProductNameTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ProductNameType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ProductNameTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ProductNameType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ProductNameTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ProductNameType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ProductNameTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ProductNameType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ProductNameTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ProductNameType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ProductNameTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProductNameTypeQuery.Id,QueryCode = ProductNameTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ProductNameType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

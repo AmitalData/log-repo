@@ -4542,23 +4542,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query VehicleQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VehicleTextCode_0.Id, NameTextCodeCode = VehicleTextCode_0.Code, ObjectTableName = "Customs.Vehicle", Code = "Vehicle",  QueryGroupCode = "VHQG", IndexOrder = 0, Tenant = 0, ObjectTableId = VehicleObjectTable.Id, QuerySection = "Customs.Vehicle", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VehicleFeature_0.Id,FeatureUniqeCode= VehicleFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn VehicleQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Vehicle.VehicleChassisNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Vehicle.VehicleChassisNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehicleQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Vehicle.RichbitFileNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Vehicle.RichbitFileNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehicleQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Vehicle.ImporterName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Vehicle.ImporterName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehicleQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Vehicle.ModelCode" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Vehicle.ModelCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehicleQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Vehicle.VehicleWindowNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Vehicle.VehicleWindowNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehicleQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Vehicle.VehiclePoolTypeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Vehicle.VehiclePoolTypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehicleQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Vehicle.VehicleManufacturerName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Vehicle.VehicleManufacturerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehicleQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Vehicle.StatusName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Vehicle.StatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehicleQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Vehicle.CustomFileNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleQuery.Id,QueryCode = VehicleQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Vehicle.CustomFileNumber" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -4577,11 +4577,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen VehicleHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Vehicle.HeaderScreen", Name = "Header Screen", ObjectTableId = VehicleObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField VehicleCustomsVehicleHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = VehicleHeaderScreenScreen0.Id,ScreenCode = VehicleHeaderScreenScreen0.Code, ObjectFieldCode = "Vehicle.VehicleChassisNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsVehicleCustomsVehicleHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = VehicleHeaderScreenScreen0.Id,ScreenCode = VehicleHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Vehicle.VehicleChassisNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VehicleCustomsVehicleHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = VehicleHeaderScreenScreen0.Id,ScreenCode = VehicleHeaderScreenScreen0.Code, ObjectFieldCode = "Vehicle.ModelCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsVehicleCustomsVehicleHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = VehicleHeaderScreenScreen0.Id,ScreenCode = VehicleHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Vehicle.ModelCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VehicleCustomsVehicleHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = VehicleHeaderScreenScreen0.Id,ScreenCode = VehicleHeaderScreenScreen0.Code, ObjectFieldCode = "Vehicle.RichbitFileNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsVehicleCustomsVehicleHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = VehicleHeaderScreenScreen0.Id,ScreenCode = VehicleHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Vehicle.RichbitFileNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    VehicleObjectTable.HeaderScreenId = VehicleHeaderScreenScreen0.Id;
 		    VehicleObjectTable.HeaderScreenCode = VehicleHeaderScreenScreen0.Code;

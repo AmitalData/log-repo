@@ -406,13 +406,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query MorningMessageTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MorningMessageTypeTextCode_0.Id, NameTextCodeCode = MorningMessageTypeTextCode_0.Code, ObjectTableName = "Customs.MorningMessageType", Code = "MorningMessageType",  QueryGroupCode = "MMTG", IndexOrder = 0, Tenant = 0, ObjectTableId = MorningMessageTypeObjectTable.Id, QuerySection = "Customs.MorningMessageType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = MorningMessageTypeFeature_0.Id,FeatureUniqeCode= MorningMessageTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn MorningMessageTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MorningMessageTypeQuery.Id,QueryCode = MorningMessageTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "MorningMessageType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn MorningMessageTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MorningMessageTypeQuery.Id,QueryCode = MorningMessageTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.MorningMessageType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn MorningMessageTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MorningMessageTypeQuery.Id,QueryCode = MorningMessageTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "MorningMessageType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn MorningMessageTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MorningMessageTypeQuery.Id,QueryCode = MorningMessageTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.MorningMessageType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn MorningMessageTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MorningMessageTypeQuery.Id,QueryCode = MorningMessageTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "MorningMessageType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn MorningMessageTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MorningMessageTypeQuery.Id,QueryCode = MorningMessageTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.MorningMessageType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn MorningMessageTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MorningMessageTypeQuery.Id,QueryCode = MorningMessageTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "MorningMessageType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn MorningMessageTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MorningMessageTypeQuery.Id,QueryCode = MorningMessageTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.MorningMessageType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

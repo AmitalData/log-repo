@@ -409,13 +409,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query PassportTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PassportTypeTextCode_0.Id, NameTextCodeCode = PassportTypeTextCode_0.Code, ObjectTableName = "Customs.PassportType", Code = "PassportType",  QueryGroupCode = "PAST", IndexOrder = 0, Tenant = 0, ObjectTableId = PassportTypeObjectTable.Id, QuerySection = "Customs.PassportType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PassportTypeFeature_0.Id,FeatureUniqeCode= PassportTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PassportTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PassportTypeQuery.Id,QueryCode = PassportTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PassportType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PassportTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PassportTypeQuery.Id,QueryCode = PassportTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PassportType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PassportTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PassportTypeQuery.Id,QueryCode = PassportTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PassportType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PassportTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PassportTypeQuery.Id,QueryCode = PassportTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PassportType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PassportTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PassportTypeQuery.Id,QueryCode = PassportTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PassportType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PassportTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PassportTypeQuery.Id,QueryCode = PassportTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PassportType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PassportTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PassportTypeQuery.Id,QueryCode = PassportTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PassportType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PassportTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PassportTypeQuery.Id,QueryCode = PassportTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.PassportType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

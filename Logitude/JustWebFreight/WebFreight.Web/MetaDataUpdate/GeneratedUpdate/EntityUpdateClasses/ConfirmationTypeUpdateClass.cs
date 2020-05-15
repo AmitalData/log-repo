@@ -407,13 +407,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ConfirmationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConfirmationTypeTextCode_0.Id, NameTextCodeCode = ConfirmationTypeTextCode_0.Code, ObjectTableName = "Customs.ConfirmationType", Code = "ConfirmationType",  QueryGroupCode = "CONT", IndexOrder = 0, Tenant = 0, ObjectTableId = ConfirmationTypeObjectTable.Id, QuerySection = "Customs.ConfirmationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConfirmationTypeFeature_0.Id,FeatureUniqeCode= ConfirmationTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ConfirmationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConfirmationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConfirmationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ConfirmationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConfirmationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConfirmationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConfirmationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ConfirmationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConfirmationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ConfirmationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConfirmationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ConfirmationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConfirmationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ConfirmationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConfirmationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationTypeQuery.Id,QueryCode = ConfirmationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ConfirmationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

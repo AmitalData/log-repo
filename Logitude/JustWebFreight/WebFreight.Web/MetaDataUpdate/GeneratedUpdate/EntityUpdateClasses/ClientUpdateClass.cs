@@ -2327,15 +2327,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			  Query ClientsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ClientTextCode_0.Id, NameTextCodeCode = ClientTextCode_0.Code, ObjectTableName = "Customs.Client", Code = "Clients",  EditWizardName = "Logitude.Customs.Views.Tabs.ClientEditControl",
 			   QueryGroupCode = "CLNT", IndexOrder = 0, Tenant = 0, ObjectTableId = ClientObjectTable.Id, QuerySection = "Customs.Client", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ClientFeature_0.Id,FeatureUniqeCode= ClientFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ClientsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Client.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClientsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Client.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClientsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Client.FullName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClientsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Client.FullName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClientsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Client.PassportTypeCode" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClientsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Client.PassportTypeCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClientsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Client.PassportNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClientsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Client.PassportNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClientsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Client.PassportCountryCode" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClientsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClientsQuery.Id,QueryCode = ClientsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Client.PassportCountryCode" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

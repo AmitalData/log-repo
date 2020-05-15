@@ -405,13 +405,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query VendorTransactionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VendorTransactionTypeTextCode_0.Id, NameTextCodeCode = VendorTransactionTypeTextCode_0.Code, ObjectTableName = "Customs.VendorTransactionType", Code = "VendorTransactionType",  QueryGroupCode = "VTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = VendorTransactionTypeObjectTable.Id, QuerySection = "Customs.VendorTransactionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = VendorTransactionTypeFeature_0.Id,FeatureUniqeCode= VendorTransactionTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn VendorTransactionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "VendorTransactionType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VendorTransactionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.VendorTransactionType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VendorTransactionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "VendorTransactionType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VendorTransactionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.VendorTransactionType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VendorTransactionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "VendorTransactionType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VendorTransactionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.VendorTransactionType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VendorTransactionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "VendorTransactionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VendorTransactionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorTransactionTypeQuery.Id,QueryCode = VendorTransactionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.VendorTransactionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

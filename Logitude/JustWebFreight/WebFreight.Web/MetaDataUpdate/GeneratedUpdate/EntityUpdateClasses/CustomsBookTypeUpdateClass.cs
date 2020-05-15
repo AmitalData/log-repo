@@ -413,13 +413,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CustomsBookTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsBookTypeTextCode_0.Id, NameTextCodeCode = CustomsBookTypeTextCode_0.Code, ObjectTableName = "Customs.CustomsBookType", Code = "CustomsBookType",  QueryGroupCode = "CUBT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsBookTypeObjectTable.Id, QuerySection = "Customs.CustomsBookType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsBookTypeFeature_0.Id,FeatureUniqeCode= CustomsBookTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomsBookTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsBookType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsBookTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsBookType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsBookTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsBookType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsBookTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsBookType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsBookTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsBookType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsBookTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsBookType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsBookTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsBookType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsBookTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBookTypeQuery.Id,QueryCode = CustomsBookTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsBookType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

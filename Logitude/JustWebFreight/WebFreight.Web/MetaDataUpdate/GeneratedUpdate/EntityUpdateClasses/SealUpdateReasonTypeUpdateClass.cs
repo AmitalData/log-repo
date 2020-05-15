@@ -476,13 +476,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query SealUpdateReasonQQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SealUpdateReasonTypeTextCode_0.Id, NameTextCodeCode = SealUpdateReasonTypeTextCode_0.Code, ObjectTableName = "Customs.SealUpdateReasonType", Code = "SealUpdateReasonQ",  QueryGroupCode = "ba29", IndexOrder = 0, Tenant = 0, ObjectTableId = SealUpdateReasonTypeObjectTable.Id, QuerySection = "Customs.SealUpdateReasonType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SealUpdateReasonTypeFeature_0.Id,FeatureUniqeCode= SealUpdateReasonTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn SealUpdateReasonQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "SealUpdateReasonType.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn SealUpdateReasonQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.SealUpdateReasonType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SealUpdateReasonQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "SealUpdateReasonType.EnglishName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn SealUpdateReasonQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.SealUpdateReasonType.EnglishName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn SealUpdateReasonQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "SealUpdateReasonType.LocalName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn SealUpdateReasonQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.SealUpdateReasonType.LocalName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn SealUpdateReasonQQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "SealUpdateReasonType.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn SealUpdateReasonQQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealUpdateReasonQQuery.Id,QueryCode = SealUpdateReasonQQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.SealUpdateReasonType.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

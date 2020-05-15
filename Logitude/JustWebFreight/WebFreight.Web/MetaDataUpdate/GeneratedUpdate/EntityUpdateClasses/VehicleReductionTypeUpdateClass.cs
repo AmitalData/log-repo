@@ -418,13 +418,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query VehicleReductionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VehicleReductionTypeTextCode_0.Id, NameTextCodeCode = VehicleReductionTypeTextCode_0.Code, ObjectTableName = "Customs.VehicleReductionType", Code = "VehicleReductionType",  QueryGroupCode = "VRQG", IndexOrder = 0, Tenant = 0, ObjectTableId = VehicleReductionTypeObjectTable.Id, QuerySection = "Customs.VehicleReductionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = VehicleReductionTypeFeature_0.Id,FeatureUniqeCode= VehicleReductionTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn VehicleReductionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleReductionTypeQuery.Id,QueryCode = VehicleReductionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "VehicleReductionType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleReductionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleReductionTypeQuery.Id,QueryCode = VehicleReductionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.VehicleReductionType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehicleReductionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleReductionTypeQuery.Id,QueryCode = VehicleReductionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "VehicleReductionType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleReductionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleReductionTypeQuery.Id,QueryCode = VehicleReductionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.VehicleReductionType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehicleReductionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleReductionTypeQuery.Id,QueryCode = VehicleReductionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "VehicleReductionType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleReductionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleReductionTypeQuery.Id,QueryCode = VehicleReductionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.VehicleReductionType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehicleReductionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleReductionTypeQuery.Id,QueryCode = VehicleReductionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "VehicleReductionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehicleReductionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehicleReductionTypeQuery.Id,QueryCode = VehicleReductionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.VehicleReductionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

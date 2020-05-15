@@ -404,13 +404,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query FaultInspectionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = FaultInspectionTypeTextCode_0.Id, NameTextCodeCode = FaultInspectionTypeTextCode_0.Code, ObjectTableName = "Customs.FaultInspectionType", Code = "FaultInspectionType",  QueryGroupCode = "FIQG", IndexOrder = 0, Tenant = 0, ObjectTableId = FaultInspectionTypeObjectTable.Id, QuerySection = "Customs.FaultInspectionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = FaultInspectionTypeFeature_0.Id,FeatureUniqeCode= FaultInspectionTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn FaultInspectionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "FaultInspectionType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn FaultInspectionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.FaultInspectionType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn FaultInspectionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "FaultInspectionType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn FaultInspectionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.FaultInspectionType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn FaultInspectionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "FaultInspectionType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn FaultInspectionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.FaultInspectionType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn FaultInspectionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "FaultInspectionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn FaultInspectionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FaultInspectionTypeQuery.Id,QueryCode = FaultInspectionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.FaultInspectionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

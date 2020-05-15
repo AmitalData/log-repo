@@ -528,13 +528,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query InternationalSiteQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InternationalSiteTextCode_0.Id, NameTextCodeCode = InternationalSiteTextCode_0.Code, ObjectTableName = "Customs.InternationalSite", Code = "InternationalSite",  QueryGroupCode = "7902", IndexOrder = 0, Tenant = 0, ObjectTableId = InternationalSiteObjectTable.Id, QuerySection = "Customs.InternationalSite", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InternationalSiteFeature_0.Id,FeatureUniqeCode= InternationalSiteFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn InternationalSiteQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InternationalSite.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InternationalSiteQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.InternationalSite.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InternationalSiteQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InternationalSite.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InternationalSiteQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.InternationalSite.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InternationalSiteQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InternationalSite.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InternationalSiteQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.InternationalSite.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn InternationalSiteQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InternationalSite.CountryTypeCode" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InternationalSiteQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternationalSiteQuery.Id,QueryCode = InternationalSiteQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.InternationalSite.CountryTypeCode" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -553,11 +553,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen InternationalSiteGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InternationalSite.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = InternationalSiteObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField InternationalSiteInternationalSiteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = "InternationalSite.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsInternationalSiteInternationalSiteGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.InternationalSite.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InternationalSiteInternationalSiteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = "InternationalSite.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsInternationalSiteInternationalSiteGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.InternationalSite.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField InternationalSiteInternationalSiteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = "InternationalSite.CountryTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsInternationalSiteInternationalSiteGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = InternationalSiteGeneralTabScreenScreen0.Id,ScreenCode = InternationalSiteGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.InternationalSite.CountryTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

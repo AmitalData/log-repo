@@ -399,13 +399,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query VehiclePoolTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VehiclePoolTypeTextCode_0.Id, NameTextCodeCode = VehiclePoolTypeTextCode_0.Code, ObjectTableName = "Customs.VehiclePoolType", Code = "VehiclePoolType",  QueryGroupCode = "VPQG", IndexOrder = 0, Tenant = 0, ObjectTableId = VehiclePoolTypeObjectTable.Id, QuerySection = "Customs.VehiclePoolType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = VehiclePoolTypeFeature_0.Id,FeatureUniqeCode= VehiclePoolTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn VehiclePoolTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehiclePoolTypeQuery.Id,QueryCode = VehiclePoolTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "VehiclePoolType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehiclePoolTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehiclePoolTypeQuery.Id,QueryCode = VehiclePoolTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.VehiclePoolType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehiclePoolTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehiclePoolTypeQuery.Id,QueryCode = VehiclePoolTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "VehiclePoolType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehiclePoolTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehiclePoolTypeQuery.Id,QueryCode = VehiclePoolTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.VehiclePoolType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehiclePoolTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehiclePoolTypeQuery.Id,QueryCode = VehiclePoolTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "VehiclePoolType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehiclePoolTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehiclePoolTypeQuery.Id,QueryCode = VehiclePoolTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.VehiclePoolType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VehiclePoolTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehiclePoolTypeQuery.Id,QueryCode = VehiclePoolTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "VehiclePoolType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VehiclePoolTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VehiclePoolTypeQuery.Id,QueryCode = VehiclePoolTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.VehiclePoolType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

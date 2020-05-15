@@ -469,13 +469,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllCouriersVatsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CouriersVatTextCode_0.Id, NameTextCodeCode = CouriersVatTextCode_0.Code, ObjectTableName = "Customs.CouriersVat", Code = "AllCouriersVats",  QueryGroupCode = "77f9", IndexOrder = 0, Tenant = 0, ObjectTableId = CouriersVatObjectTable.Id, QuerySection = "Customs.CouriersVat", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CouriersVatFeature_0.Id,FeatureUniqeCode= CouriersVatFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCouriersVatsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CouriersVat.VatNumber" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllCouriersVatsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CouriersVat.VatNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllCouriersVatsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CouriersVat.LocalName" , ColumnWidth = 240 }, addedQueryColumns);
+			 QueryColumn AllCouriersVatsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CouriersVat.LocalName" , ColumnWidth = 240 }, addedQueryColumns);
 
-			 QueryColumn AllCouriersVatsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CouriersVat.EnglishName" , ColumnWidth = 220 }, addedQueryColumns);
+			 QueryColumn AllCouriersVatsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CouriersVat.EnglishName" , ColumnWidth = 220 }, addedQueryColumns);
 
-			 QueryColumn AllCouriersVatsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CouriersVat.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllCouriersVatsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersVatsQuery.Id,QueryCode = AllCouriersVatsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CouriersVat.InActive" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -494,9 +494,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CouriersVatCustomsCouriersVatHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CouriersVat.Customs.CouriersVatHeaderScreen", Name = "Customs.CouriersVatHeaderScreen", ObjectTableId = CouriersVatObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CouriersVatCouriersVatCustomsCouriersVatHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Id,ScreenCode = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Code, ObjectFieldCode = "CouriersVat.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCouriersVatCouriersVatCustomsCouriersVatHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Id,ScreenCode = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CouriersVat.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CouriersVatCouriersVatCustomsCouriersVatHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Id,ScreenCode = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Code, ObjectFieldCode = "CouriersVat.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCouriersVatCouriersVatCustomsCouriersVatHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Id,ScreenCode = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CouriersVat.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CouriersVatObjectTable.HeaderScreenId = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Id;
 		    CouriersVatObjectTable.HeaderScreenCode = CouriersVatCustomsCouriersVatHeaderScreenScreen0.Code;
@@ -506,13 +506,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CouriersVatGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CouriersVat.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CouriersVatObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "CouriersVat.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCouriersVatCouriersVatGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CouriersVat.VatNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "CouriersVat.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCouriersVatCouriersVatGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CouriersVat.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "CouriersVat.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCouriersVatCouriersVatGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CouriersVat.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CouriersVatCouriersVatGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "CouriersVat.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCouriersVatCouriersVatGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CouriersVatGeneralTabScreenScreen1.Id,ScreenCode = CouriersVatGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CouriersVat.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

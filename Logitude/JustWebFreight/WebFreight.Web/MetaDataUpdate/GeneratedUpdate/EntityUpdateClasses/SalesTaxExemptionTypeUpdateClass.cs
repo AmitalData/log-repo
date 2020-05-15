@@ -413,13 +413,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query SalesTaxExemptionTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SalesTaxExemptionTypeTextCode_0.Id, NameTextCodeCode = SalesTaxExemptionTypeTextCode_0.Code, ObjectTableName = "Customs.SalesTaxExemptionType", Code = "SalesTaxExemptionType",  QueryGroupCode = "STET", IndexOrder = 0, Tenant = 0, ObjectTableId = SalesTaxExemptionTypeObjectTable.Id, QuerySection = "Customs.SalesTaxExemptionType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SalesTaxExemptionTypeFeature_0.Id,FeatureUniqeCode= SalesTaxExemptionTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn SalesTaxExemptionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SalesTaxExemptionTypeQuery.Id,QueryCode = SalesTaxExemptionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "SalesTaxExemptionType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SalesTaxExemptionTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SalesTaxExemptionTypeQuery.Id,QueryCode = SalesTaxExemptionTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.SalesTaxExemptionType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SalesTaxExemptionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SalesTaxExemptionTypeQuery.Id,QueryCode = SalesTaxExemptionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "SalesTaxExemptionType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SalesTaxExemptionTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SalesTaxExemptionTypeQuery.Id,QueryCode = SalesTaxExemptionTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.SalesTaxExemptionType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SalesTaxExemptionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SalesTaxExemptionTypeQuery.Id,QueryCode = SalesTaxExemptionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "SalesTaxExemptionType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SalesTaxExemptionTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SalesTaxExemptionTypeQuery.Id,QueryCode = SalesTaxExemptionTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.SalesTaxExemptionType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SalesTaxExemptionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SalesTaxExemptionTypeQuery.Id,QueryCode = SalesTaxExemptionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "SalesTaxExemptionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SalesTaxExemptionTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SalesTaxExemptionTypeQuery.Id,QueryCode = SalesTaxExemptionTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.SalesTaxExemptionType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

@@ -408,13 +408,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AuthorizedSignerPermitQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AuthorizedSignerPermitTextCode_0.Id, NameTextCodeCode = AuthorizedSignerPermitTextCode_0.Code, ObjectTableName = "Customs.AuthorizedSignerPermit", Code = "AuthorizedSignerPermit",  QueryGroupCode = "AUSP", IndexOrder = 0, Tenant = 0, ObjectTableId = AuthorizedSignerPermitObjectTable.Id, QuerySection = "Customs.AuthorizedSignerPermit", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AuthorizedSignerPermitFeature_0.Id,FeatureUniqeCode= AuthorizedSignerPermitFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AuthorizedSignerPermitQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorizedSignerPermitQuery.Id,QueryCode = AuthorizedSignerPermitQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AuthorizedSignerPermit.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AuthorizedSignerPermitQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorizedSignerPermitQuery.Id,QueryCode = AuthorizedSignerPermitQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.AuthorizedSignerPermit.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AuthorizedSignerPermitQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorizedSignerPermitQuery.Id,QueryCode = AuthorizedSignerPermitQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AuthorizedSignerPermit.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AuthorizedSignerPermitQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorizedSignerPermitQuery.Id,QueryCode = AuthorizedSignerPermitQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.AuthorizedSignerPermit.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AuthorizedSignerPermitQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorizedSignerPermitQuery.Id,QueryCode = AuthorizedSignerPermitQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AuthorizedSignerPermit.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AuthorizedSignerPermitQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorizedSignerPermitQuery.Id,QueryCode = AuthorizedSignerPermitQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.AuthorizedSignerPermit.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AuthorizedSignerPermitQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorizedSignerPermitQuery.Id,QueryCode = AuthorizedSignerPermitQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AuthorizedSignerPermit.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AuthorizedSignerPermitQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AuthorizedSignerPermitQuery.Id,QueryCode = AuthorizedSignerPermitQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.AuthorizedSignerPermit.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

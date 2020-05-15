@@ -414,13 +414,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query EntitlementTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = EntitlementTypeTextCode_0.Id, NameTextCodeCode = EntitlementTypeTextCode_0.Code, ObjectTableName = "Customs.EntitlementType", Code = "EntitlementType",  QueryGroupCode = "ENTT", IndexOrder = 0, Tenant = 0, ObjectTableId = EntitlementTypeObjectTable.Id, QuerySection = "Customs.EntitlementType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = EntitlementTypeFeature_0.Id,FeatureUniqeCode= EntitlementTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn EntitlementTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntitlementTypeQuery.Id,QueryCode = EntitlementTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "EntitlementType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn EntitlementTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntitlementTypeQuery.Id,QueryCode = EntitlementTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.EntitlementType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn EntitlementTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntitlementTypeQuery.Id,QueryCode = EntitlementTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "EntitlementType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn EntitlementTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntitlementTypeQuery.Id,QueryCode = EntitlementTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.EntitlementType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn EntitlementTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntitlementTypeQuery.Id,QueryCode = EntitlementTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "EntitlementType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn EntitlementTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntitlementTypeQuery.Id,QueryCode = EntitlementTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.EntitlementType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn EntitlementTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntitlementTypeQuery.Id,QueryCode = EntitlementTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "EntitlementType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn EntitlementTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntitlementTypeQuery.Id,QueryCode = EntitlementTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.EntitlementType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

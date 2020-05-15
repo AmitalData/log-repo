@@ -400,11 +400,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ContinuousMessagesTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContinuousMessagesTypeCodeTextCode_0.Id, NameTextCodeCode = ContinuousMessagesTypeCodeTextCode_0.Code, ObjectTableName = "Customs.ContinuousMessagesTypeCode", Code = "ContinuousMessagesType",  QueryGroupCode = "6b46", IndexOrder = 0, Tenant = 0, ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, QuerySection = "Customs.ContinuousMessagesTypeCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContinuousMessagesTypeCodeFeature_0.Id,FeatureUniqeCode= ContinuousMessagesTypeCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ContinuousMessagesTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContinuousMessagesTypeCode.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ContinuousMessagesTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ContinuousMessagesTypeCode.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ContinuousMessagesTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContinuousMessagesTypeCode.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ContinuousMessagesTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ContinuousMessagesTypeCode.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContinuousMessagesTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContinuousMessagesTypeCode.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ContinuousMessagesTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousMessagesTypeQuery.Id,QueryCode = ContinuousMessagesTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ContinuousMessagesTypeCode.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

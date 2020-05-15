@@ -405,13 +405,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CheckTypeLookupQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CheckTypeLookupTextCode_0.Id, NameTextCodeCode = CheckTypeLookupTextCode_0.Code, ObjectTableName = "Customs.CheckTypeLookup", Code = "CheckTypeLookup",  QueryGroupCode = "CLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CheckTypeLookupObjectTable.Id, QuerySection = "Customs.CheckTypeLookup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CheckTypeLookupFeature_0.Id,FeatureUniqeCode= CheckTypeLookupFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CheckTypeLookupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CheckTypeLookup.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckTypeLookupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CheckTypeLookup.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckTypeLookupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CheckTypeLookup.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckTypeLookupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CheckTypeLookup.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckTypeLookupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CheckTypeLookup.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckTypeLookupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CheckTypeLookup.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckTypeLookupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CheckTypeLookup.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckTypeLookupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckTypeLookupQuery.Id,QueryCode = CheckTypeLookupQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CheckTypeLookup.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
