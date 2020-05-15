@@ -1884,6 +1884,9 @@ export class DateTool {
         if (myDate.valueOf() == DateTool.GetMinDateTime().valueOf()) {
             return true;
         }
+        if (myDate.toString() == "0001-01-01T00:00:00") {
+            return true;
+        }
         return false;
     }
 
