@@ -138,12 +138,23 @@ export class ExportConsigmentContentComponent extends BaseComponent {
             if (this.IsDisplayOnly) {
                 this.SetScreenFieldsEditability();
             } else {
-
+                
+                this.ForceMust();
+               
             }
 
 
 
         }
+    }
+
+    private ForceMust() {
+        this.LoadingPortCode = this.EntityPM.LoadingPortCode;
+        this.UnloadPortCode = this.EntityPM.UnloadPortCode;
+        //this.FinalDestinationPortCode = this.EntityPM.FinalDestinationPortCode;
+        this.StorageSiteCode = this.EntityPM.StorageSiteCode;
+        this.RecieverWareHouseCode = this.EntityPM.RecieverWareHouseCode;
+        this.IsDangerousGoods = this.EntityPM.IsDangerousGoods;
     }
 
     SetScreenFieldsEditability() {
@@ -215,17 +226,17 @@ export class ExportConsigmentContentComponent extends BaseComponent {
 
         if (AppTool.IsNullOrEmpty(this.LoadingPortCode)) {
            
-            this.ValidationErrorsList.push("נמל טעינה הינו חובה");
+            this.ValidationErrorsList.push("נמל טעינה שדה חובה");
         }
 
         if (AppTool.IsNullOrEmpty(this.UnloadPortCode)) {
-            this.ValidationErrorsList.push("נמל פריקה הינו חובה");
+            this.ValidationErrorsList.push("נמל פריקה שדה חובה");
         }
         if (AppTool.IsNullOrEmpty(this.StorageSiteCode)) {
-            this.ValidationErrorsList.push("אתר  מסירה הינו חובה");
+            this.ValidationErrorsList.push("אתר  מסירה שדה חובה");
         }
         if (AppTool.IsNullOrEmpty(this.RecieverWareHouseCode)) {
-            this.ValidationErrorsList.push("אתר  המכלה הינו חובה");
+            this.ValidationErrorsList.push("אתר  המכלה שדה חובה");
         }
 
     }
