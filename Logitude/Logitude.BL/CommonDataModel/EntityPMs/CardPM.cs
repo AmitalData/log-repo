@@ -67,6 +67,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SalesmanUserId { get; set; }
+        public string AccountManagerUserId { get; set; }
         public string SalesmanBusinessUnitId { get; set; }
 
         public string PartnerTypeName { get; set; }
@@ -77,7 +78,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string VatTypeId { get; set; }
 
         public string Prefix { get; set; }
-      
+
         public string CityName { get; set; }
         public string ImageDetailId { get; set; }
         public bool DisconectFromContact { get; set; }
@@ -136,13 +137,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             set { contacts = value; }
         }
         //////////////////////////////////////
-        
+
         private List<AddressPM> addresses;
         [Include]
         [Association("CardPMAddressPM", "Id", "CardId")]
-        public virtual List<AddressPM> Addresses 
+        public virtual List<AddressPM> Addresses
         {
-            get 
+            get
             {
                 if (addresses == null)
                 {
@@ -181,13 +182,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public string MetodoPagoCode { get; set; }
 
-         
+
         public string UsoCFDICode { get; set; }
         public bool IsInternationalPartner { get; set; }
         public bool IsAutonomy { get; set; }
 
         public string CustomerStatusCode { get; set; }
-        
+
 
         [DataMember]
         public string CalculatedLocalName { get; set; }
