@@ -1099,20 +1099,20 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 isOFC = true;
             }
 
-            if (this.ContainerType1Id) {
-                this.AddNewTariffQuoteCharge(item, true);
-                if (item != null && item.SurchargesWithoutAllIn != null) {
-                    item.SurchargesWithoutAllIn.forEach(surcharge => {
-                        this.AddNewTariffQuoteCharge(surcharge, isOFC);
-                    });
-                }
-                // Generate AllIn Surcharges
-                if (item != null && item.AllInSurcharges != null) {
-                    item.AllInSurcharges.forEach(surcharge => {
-                        this.AddNewTariffQuoteCharge(surcharge, isOFC);
-                    });
-                }
+
+            this.AddNewTariffQuoteCharge(item, true);
+            if (item != null && item.SurchargesWithoutAllIn != null) {
+                item.SurchargesWithoutAllIn.forEach(surcharge => {
+                    this.AddNewTariffQuoteCharge(surcharge, isOFC);
+                });
             }
+            // Generate AllIn Surcharges
+            if (item != null && item.AllInSurcharges != null) {
+                item.AllInSurcharges.forEach(surcharge => {
+                    this.AddNewTariffQuoteCharge(surcharge, false);
+                });
+            }
+
 
             var isDuplicate = this.CheckTariffChargesDuplicate();
             if (isDuplicate) {
