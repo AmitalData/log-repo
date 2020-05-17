@@ -361,9 +361,9 @@ namespace Logitude.DBMigrations.Models
 
         private void SaveScript(GeneratedScript generatedScript)
         {
-            string globalScript = generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";");
-            string mainScript = generatedScript.MainScript.Replace(ScriptSemicolonCode, ";");
-            string systemLogsScript = generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";");
+            string globalScript = !string.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "";
+            string mainScript = !string.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "";
+            string systemLogsScript = !string.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
 
             Console.WriteLine("Saving The Generated Scripts ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
