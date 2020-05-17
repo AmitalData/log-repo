@@ -42,7 +42,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     string decodedString = Encoding.UTF8.GetString(data);
                     SupplierInvioceItemCertificats supplierInvioceItemCertificats = new SupplierInvioceItemCertificats();
                     errors = supplierInvioceItemCertificats.RecallSuppliersFromFileRequest(fileUploadParamerter.Key, tenant , decodedString,clientId);
-                    CacheManager.CacheWrapper.Insert("IKEA", errors);
+                    CacheManager.CacheWrapper.Insert(fileUploadParamerter.Key+"IKEA-ErrorList", errors);
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, errors);
             }
@@ -58,11 +58,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
             try
             {
-                var errorlist = CacheManager.CacheWrapper.Get("IKEA");
-
-                ICustomContext customContext = CustomContext.GetContext(tenant);
-                 var o = new SupplierInvioceItemCertificats();
-                var result = o.ExportErrors(tenant);
+                var ErrorObject = (List< CertificateErrorView>)CacheManager.CacheWrapper.Get(key+ "IKEA-ErrorList");
+                var o = new SupplierInvioceItemCertificats();
+                var result = o.ExportErrors(tenant, ErrorObject);
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
                 response.Content = new StreamContent(new MemoryStream(result));
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");

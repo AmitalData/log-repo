@@ -132,7 +132,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
         {
             return errors;
         }
-        public byte[] ExportErrors(int tenant)
+        public byte[] ExportErrors(int tenant, List<CertificateErrorView> errorsList)
         {
             DataTable dt = null;
             var settingCol = new BITabularViewSettings()
@@ -158,9 +158,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
 
             settingCol.Columns.Add(new Column() { Index = 6, Code = "Errors", Name = "Errors", DataTypeCode = "String", Width = 150, });
             dt.Columns.Add(new DataColumn() { Caption = /*"Errors"*/"הודעת שגיאה", ColumnName = "Errors", DataType = System.Type.GetType("System.String"), });
-
-            var errorLists = getErrorsList();
-            errorLists.ForEach(r =>
+            errorsList.ForEach(r =>
             {
                 var newrow = dt.NewRow();
                 newrow[0] = r.ExcelRow;

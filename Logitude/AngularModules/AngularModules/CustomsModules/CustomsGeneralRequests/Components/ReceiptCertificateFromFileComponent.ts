@@ -54,7 +54,7 @@ export class ReceiptCertificateFromFileComponent
     IsShowProgressBar: boolean = false;
     IsUploadCanceled: boolean;
     IsUploadInProgress: boolean;
-    Placeholder: any;
+    Placeholder: any="";
     tenant: number;
     ResponseMessage: any;
 
@@ -171,10 +171,12 @@ export class ReceiptCertificateFromFileComponent
         };
         reader.readAsArrayBuffer(file);
     }
+    UploadSuccess: any = false;
     OkButtonClicked() {
         this.ProgressBarPercentText = "0%";
 
         this._supplierInvioceItemCertificatsService.PutSupplierInvioceItemCertificatFromFileRequest(this.filterImageParameter, this.tenant, this.CustomerId).subscribe((myServiceResponse: ServiceResponse) => {
+            this.UploadSuccess = true;
             this.ErrorsResultList.InsertCollection(myServiceResponse.Result);
             if (this.ErrorsResultList.Collection.length > 0) {
                 this.ExportAsExcelButtonIsEnabled = true;
