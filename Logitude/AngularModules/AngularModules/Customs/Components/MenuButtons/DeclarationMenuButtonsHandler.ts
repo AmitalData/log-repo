@@ -602,7 +602,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             });
         });
 
-        logWindow.Show('./CustomsModules/CustomControls/Components/TestCase/SendDeclarationTastCaseComponent');
+        logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
 
     }
 

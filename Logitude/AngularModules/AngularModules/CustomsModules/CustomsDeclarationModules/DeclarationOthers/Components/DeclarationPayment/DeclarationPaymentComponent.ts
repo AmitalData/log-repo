@@ -1581,7 +1581,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 });
             });
 
-            logWindow.Show('./CustomsModules/CustomControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
             ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
 
             return;
@@ -2326,7 +2326,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         logWindow.WindowArgs = windowArgs;
         //logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
 
-        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
     _IsCloseScreen: boolean = false;
     AnalyzeResponseMessageSendPaymentWithCheckCustomFileCredit(responseData: CustomFileCreditResponseData) {

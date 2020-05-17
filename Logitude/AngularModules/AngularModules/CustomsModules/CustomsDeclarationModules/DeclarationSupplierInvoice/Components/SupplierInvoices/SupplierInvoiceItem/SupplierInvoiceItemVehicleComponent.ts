@@ -385,7 +385,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
                                         }
                                     });
 
-                                    logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+                                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
                                     this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                                     
 
