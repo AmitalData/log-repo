@@ -231,7 +231,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             IsEquipment = d.IsEquipment,
                             StatusLocalName = d.StatusLocalName,
                             StatusEnglishName = d.StatusEnglishName,
-                            JournalNumber = d.JournalNumber
+                            JournalNumber = d.JournalNumber,
+                            TotalInvoiceAmount = d.TotalInvoiceAmount
                         };
                         linesPM.Add(item);
                     });
