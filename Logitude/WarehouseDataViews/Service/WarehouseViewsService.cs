@@ -251,7 +251,7 @@ namespace WarehouseDataViews
         public void GrantView(string viewName,  string destinationConnectionString)
         {
             string sqlstring = "GRANT SELECT  ON [UnicargoDW].[dbo].["+ viewName + "] TO [UnicargoDBUser]";
-          //  ExecuteSql(sqlstring, destinationConnectionString);
+            ExecuteSql(sqlstring, destinationConnectionString);
         }
         public void DropView(string viewName, string connectionString)
         {
