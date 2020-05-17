@@ -56,6 +56,7 @@ namespace WarehouseDataViews
                     if (tableCode != "DIM_Dates")
                     {
                         if (fieldCode == "[Notify 1]") fieldCode = "[Notify One]";
+                        else if (fieldCode == "[Source Tenant]") fieldCode = "[Tenant]";
                         else if (fieldCode == "[Notify 2]") fieldCode = "[Notify Two]";
                         string fieldName = GetFieldNameFromCode(fieldCode);
                         string viewName = GetViewName(fieldName, "Dim");
@@ -237,7 +238,7 @@ namespace WarehouseDataViews
         {
             string scriptView = string.Empty;
             string scriptstring = ReadScriptFile(tableCode);
-            scriptstring = scriptstring.Replace("[Key]", fieldCode + "key");
+            scriptstring = scriptstring.Replace("[Key]", fieldCode + "Key");
             if (tableCode != "DIM_CustomPickLists")
             {
                 scriptstring = scriptstring.Replace("[Code]", "[Code] as [" + fieldCode + "Code]");
