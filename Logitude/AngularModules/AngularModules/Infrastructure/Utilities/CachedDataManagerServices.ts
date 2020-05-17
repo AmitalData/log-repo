@@ -212,12 +212,12 @@ export class CachedDataManagerServices {
             case "TariffListService": { myResult = new TariffListService(); break; }               
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
             case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
-            case "TransactionNatureTypeListService": { myResult = new TransactionNatureTypeListService(); break; }
-            case "ClassificationTypeListService": { myResult = new ClassificationTypeListService(); break; }
-            case "ClaimReasonTypeListService": { myResult = new ClaimReasonTypeListService(); break; }
-            case "AmountTypeListService": { myResult = new AmountTypeListService(); break; }
-            case "PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
-            case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
+            case "Customs.TransactionNatureTypeListService": { myResult = new TransactionNatureTypeListService(); break; }
+            case "Customs.ClassificationTypeListService": { myResult = new ClassificationTypeListService(); break; }
+            case "Customs.ClaimReasonTypeListService": { myResult = new ClaimReasonTypeListService(); break; }
+            case "Customs.AmountTypeListService": { myResult = new AmountTypeListService(); break; }
+            case "Customs.PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
+            case "Customs.NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
 
             default: {
 
