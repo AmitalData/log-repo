@@ -1,3 +1,4 @@
+
 <table>
 
     <!-- [SingleLine]="true" -->
@@ -100,10 +101,44 @@
                     <!-- Percentage -->
                     <log-column [header]="'Percentage'" [width]="'100'" [Alignment]="'right'">
                         <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
-                                <div class="TextTrimming" style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    {{item.VatPercent | NumbersPipe:'N3'}}
+                            <log-cell-template #logcelltemplate [IsEnabled]="!item.IsMultiPercentage">
+
+                                <div class="MediaFill" *ngIf="logcelltemplate.IsDisplayMode">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div *ngIf="!item.IsMultiPercentage" class="MediaFill TextTrimming" [ngStyle]="{color: item.VatTypeCellColor}" style="line-height: 25px; padding-left: 4px;">
+                                                    {{item.VatPercent | NumbersPipe:'N3'}}
+                                                </div>
+
+                                                <div *ngIf="item.IsMultiPercentage" style="line-height: 25px; padding-left: 4px;">
+                                                    Multi
+                                                </div>
+                                            </td>
+
+                                            <td style="width: 20px; padding-left: 2px;" *ngIf="item.IsMultiPercentage">
+                                                <CellTooltip [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="item.VatTypeName">
+                                                    <table>
+                                                        <tr style="height: 20px; border-bottom: 1px solid #D1D1D1;" *ngFor="let itemGroup of item.VatTypesGroups">
+                                                            <td>
+                                                                <div class="MediaFill TextTrimming Label">
+                                                                    {{itemGroup.SingleVATTypeName}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </CellTooltip>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
+
 
                                 <div *ngIf="logcelltemplate.IsEditMode">
                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'VatPercent'" [DataContext]="item" [Text]="item.VatPercent" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
