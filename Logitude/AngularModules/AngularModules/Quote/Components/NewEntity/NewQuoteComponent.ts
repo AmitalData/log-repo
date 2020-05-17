@@ -52,7 +52,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     constructor() {
         super();
 
-        this.SessionIndex = SessionLocator.Index;
+        this.SessionIndex = this.CurrentSession.SessionIndex;
+
         this.InitializeServices();
 
         this.EntityPM = this.myQuotePMService.GetNewEntityPM();

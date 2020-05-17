@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .WindowLayout {
         position: absolute;
@@ -100,14 +100,14 @@
     <div class="MediaFillRelative" [attr.id]="WindowContainerId" style="overflow:hidden;" (mouseup)="OnMouseUp()">
         <div [attr.id]="WindowId" class="LogitudeWindow" [ngStyle]="{width: Width, height: Height, top: Top, left: Left}">
 
+            <input [attr.id]="FocusElementId" style="position: absolute; width: 0px; height: 0px; border:0px; outline: none;">
+
             <table [style.direction]="RTL == true ? 'rtl' : 'ltr'">
                 <tr *ngIf="!IsHideHeader" style="height: 35px">
                     <td>
                         <div [style.border-bottom]="BottomBorderForTitle"
                              [class.WindowHeaderRight]="RTL == true" [class.WindowHeader]="RTL != true"
                              (mousedown)="OnMouseDown($event)">
-
-                            <input [attr.id]="FocusElementId" style="position: absolute; width: 0px; height: 0px; border:0px; outline: none;">
 
                             <table>
                                 <tr>
@@ -194,6 +194,7 @@
                 <tr>
                     <td>
                         <div class="MediaFill">
+
                             <table>
                                 <tr>
                                     <td style="width: 10px;" *ngIf="!IsEditComponent && !IsFullScreen && !IsHideWindowMargin">
@@ -202,7 +203,7 @@
 
                                     <td>
                                         <div class="MediaFill">
-                                            <div #WindowContent></div>
+                                            <div ChildDirective></div>
                                         </div>
                                     </td>
 

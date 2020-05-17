@@ -53,7 +53,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
   private CurrentSession = SessionLocator.SelectedSession;
   constructor() {
     super();
-    this.SessionIndex = SessionLocator.Index;
+      this.SessionIndex = this.CurrentSession.SessionIndex;
     this.InitializeServices();
     this.TenantPM = SessionLocator.TenantPM;
     this.EntityPM = this.myShipmentPMService.GetNewEntityPM();

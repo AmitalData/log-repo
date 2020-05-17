@@ -62,8 +62,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
   private CurrentSession = SessionLocator.SelectedSession;
   private PropertyChangedEvent: any = null;
   constructor() {
-    super();
-    this.SessionIndex = SessionLocator.Index;
+      super();
+      this.SessionIndex = this.CurrentSession.SessionIndex;
     this.InitializeServices();
     this.TenantPM = SessionLocator.TenantPM;
     this.EntityPM = this.myShipmentPMService.GetNewEntityPM();
