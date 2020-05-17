@@ -1,5 +1,5 @@
 SELECT  [Id_Number]  as [Key]
-      ,[Source Tenant] as [Shipment Statuses Tenant]
+      ,[Source Tenant] as [Tenant]
       ,[Name]
       ,[Code] 
 

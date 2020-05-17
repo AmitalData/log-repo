@@ -56,6 +56,7 @@ namespace WarehouseDataViews
                     if (tableCode != "DIM_Dates")
                     {
                         if (fieldCode == "[Notify 1]") fieldCode = "[Notify One]";
+                        else if (fieldCode == "[Source Tenant]") fieldCode = "[Tenant]";
                         else if (fieldCode == "[Notify 2]") fieldCode = "[Notify Two]";
                         string fieldName = GetFieldNameFromCode(fieldCode);
                         string viewName = GetViewName(fieldName, "Dim");
@@ -101,14 +102,16 @@ namespace WarehouseDataViews
 
         public void CreateFactShipmentView(string sourceConnection, string destinationConnectionString)
         {
-            DropView("factShipment", destinationConnectionString);
-            string scriptView = GenerateScriptView("factShipment", "Shipment", "Fact_Shipments");
+            string viewName = "factShipments";
+            DropView(viewName, destinationConnectionString);
+            string scriptView = GenerateScriptView(viewName, "Shipment", "Fact_Shipments");
             scriptView = ConvertFieldsNameToCamelCase(scriptView);
             string customFieldScript = GetCustomFieldsSql();
             scriptView = scriptView.Replace(",@CustomFields", customFieldScript);
             scriptView = AppendDatesFieldToFactTable(scriptView);
+            scriptView = RemoveBowsFromFieldsName(scriptView);
             ExecuteSql(scriptView, destinationConnectionString);
-            GrantView("factShipment", destinationConnectionString);
+            GrantView(viewName, destinationConnectionString);
         }
 
         private string AppendDatesFieldToFactTable(string scriptView)
@@ -227,15 +230,13 @@ namespace WarehouseDataViews
 
             return customFields;
 
-
-
         }
 
         public string GenerateScriptView(string viewName, string fieldCode,string tableCode)
         {
             string scriptView = string.Empty;
             string scriptstring = ReadScriptFile(tableCode);
-            scriptstring = scriptstring.Replace("[Key]", fieldCode + "key");
+            scriptstring = scriptstring.Replace("[Key]", fieldCode + "Key");
             if (tableCode != "DIM_CustomPickLists")
             {
                 scriptstring = scriptstring.Replace("[Code]", "[Code] as [" + fieldCode + "Code]");
