@@ -105,7 +105,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             transmitStatus = "0";
                             }
                            VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
-                            InvoiceAmount = invoice.TotalAmountForTaxReport != null ? invoice.TotalAmountForTaxReport : 0;
+                            InvoiceAmount = invoice.TotaVatableAmountForTaxReport != null ? invoice.TotaVatableAmountForTaxReport : 0;
                             if (invoice.InvoiceNumber.Length > 9)
                             {
                                 outputreference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
@@ -131,6 +131,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 OutputOrInput = "O",
                                 VatAmount = Math.Round(VatAmount.Value, MidpointRounding.AwayFromZero),
                                 VatableInvoiceAmount = Math.Round(InvoiceAmount.Value, MidpointRounding.AwayFromZero),
+                                TotalInvoiceAmount = invoice.TotalAmountForTaxReport != null ? Math.Round(invoice.TotalAmountForTaxReport.Value, MidpointRounding.AwayFromZero) : 0,
                                 IsManuallyChanged = false,
                                 TransmitStatusCode = transmitStatus ,
                                 TaxReportId = taxReport.Id,
@@ -245,7 +246,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalId = a.JournalId,
                     OutputOrInput = "I",
                     VatAmount = Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
-                    VatableInvoiceAmount = Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
+                    VatableInvoiceAmount = 0,// Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
+                    TotalInvoiceAmount = Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
                     IsEquipment = isEquipment,
                     IsManuallyChanged = true,
                     TaxReportId = taxReport.Id,
@@ -606,8 +608,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         //VatAmount
                         myStringBuilder.Append(FormatDecimal(lineList.VatAmount, 9, showLocalError: showLocal, includeSign: false, truncateDecimal: true));
 
-                        //VatableInvoiceAmount
-                        myStringBuilder.Append(FormatDecimal(lineList.VatableInvoiceAmount, 10, showLocalError: showLocal, includeSign: true, truncateDecimal: true));
+                        //TotalInvoiceAmount
+                        myStringBuilder.Append(FormatDecimal(lineList.TotalInvoiceAmount, 10, showLocalError: showLocal, includeSign: true, truncateDecimal: true));
 
 
                         myStringBuilder.Append("000000000");
@@ -713,9 +715,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 var inputLines = lines.Where(d => d.OutputOrInput == "I");
 
                 // OUTPUT
-                taxReportPM.TaxableOutputAmount = outputLines.Where(d => d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
+                taxReportPM.TaxableOutputAmount = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Sum(d => d.VatableInvoiceAmount);
                 taxReportPM.OutputTaxAmount = outputLines.Where(d => d.VatAmount != 0).Sum(d => d.VatAmount);
-                taxReportPM.ExemptTaxableOutput = outputLines.Where(d => d.VatAmount == 0 && d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Sum(d => d.VatableInvoiceAmount);
+                taxReportPM.ExemptTaxableOutput = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Sum(d => d.TotalInvoiceAmount - d.VatableInvoiceAmount);
                 taxReportPM.OutputLinesCount = outputLines.Count();
 
                 // INPUTS
