@@ -230,8 +230,6 @@ namespace WarehouseDataViews
 
             return customFields;
 
-
-
         }
 
         public string GenerateScriptView(string viewName, string fieldCode,string tableCode)
