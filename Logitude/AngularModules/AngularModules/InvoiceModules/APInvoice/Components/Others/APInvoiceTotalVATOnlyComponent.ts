@@ -186,6 +186,11 @@ export class APInvoiceTotalVATOnlyComponent extends BaseComponent {
     }
 
     private RejectChanges() {
+
+        this.TotalVATsList.Collection.forEach((item: TotalVATItem) => {
+            item.RejectChanges();
+        });
+
         this.myCloner.RejectChanges();
     }
 
@@ -197,7 +202,7 @@ export class APInvoiceTotalVATOnlyComponent extends BaseComponent {
                 if (confirmWindow.Yes) {
                     var index = this.TotalVATsList.Collection.indexOf(item);
                     if (index > -1) {
-                        this.TotalVATsList.Collection.splice(index, 1);
+                        this.TotalVATsList.Remove(item);
                     }
                 }
             });
@@ -211,11 +216,26 @@ export class TotalVATItem extends BaseComponent {
     public ObjectTableName: string = "APInvoiceTotalVAT";
     public IsMultiPercentage: boolean = false;
     public VatTypesGroups: VATTypesGroupPM[] = [];
-
+    private VatTypeId_Origin: string;
+    private VatTypeName_Origin: string;
+    private VatPercent_Origin: number;
+    private Amount_Origin: number;
     constructor(entity: APInvoiceTotalVATPM, public father: APInvoiceTotalVATOnlyComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
+
+        this.VatTypeId_Origin = this.VatTypeId;
+        this.VatTypeName_Origin = this.VatTypeName;
+        this.VatPercent_Origin = this.VatPercent;
+        this.Amount_Origin = this.InvoiceCurrencyVatableAmount;
+
+        var vat: VatTypeList = father.DetailsTabComponent.AllVatTypes.filter(f => f.Id == entity.VatTypeId)[0];
+        if (vat) {
+            if (vat.IsMultiPercentage) {
+                this.IsMultiPercentage = true;
+            }
+        }
     }
 
     private vatTypeList: VatTypeList;
@@ -306,5 +326,12 @@ export class TotalVATItem extends BaseComponent {
         this.EntityPM.InvoiceCurrencyVATAmount = AppTool.Round(vatAmount, 2);
         this.EntityPM.LocalVATAmount = AppTool.Round(this.EntityPM.InvoiceCurrencyVATAmount * this.father.EntityPM.InvoiceCurrencyExchangeRate, 2);
         this.EntityPM.ProfitCurrencyVATAmount = AppTool.Round(this.EntityPM.LocalVATAmount / this.father.EntityPM.ProfitCurrencyExchangeRate, 2);
+    }
+
+    RejectChanges() {
+        this.VatTypeId = this.VatTypeId_Origin;
+        this.VatTypeName = this.VatTypeName_Origin;
+        this.VatPercent = this.VatPercent_Origin;
+        this.InvoiceCurrencyVatableAmount = this.Amount_Origin;
     }
 }
