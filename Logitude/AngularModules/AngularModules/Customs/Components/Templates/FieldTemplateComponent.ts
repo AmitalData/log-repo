@@ -30,6 +30,7 @@ export class FieldTemplateComponent {
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
+    RowIndex: any;
     constructor(private CD: ChangeDetectorRef) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
@@ -53,6 +54,7 @@ export class FieldTemplateComponent {
         this.IsSpotLightTemplate = args['IsSpotLightTemplate'];
         this.SpotlightDataTemplate = args['SpotlightDataTemplate'];
         this.IsHeaderScreenTemplate = args['IsHeaderScreenTemplate'];
+        this.RowIndex = args['RowIndex'];
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
         }
@@ -71,7 +73,7 @@ export class FieldTemplateComponent {
             var myComponentPath = "./Customs/Components/Spotlight/ReferantSpotlightDataTemplate";
             SessionLocator.DynamicLoader.Load(myComponentPath, this.SpotLightViewContainerRef)
                 .then(cmpRef => {
-                    cmpRef.instance.Run(this.Entity, this.SpotLightViewContainerRef);
+                    cmpRef.instance.Run(this.Entity, this.SpotLightViewContainerRef, this.RowIndex);
                 });
         }
 
@@ -176,7 +178,8 @@ export class FieldTemplateComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) { // YES
                     this.customsAutonomyKeywordExtendedPMService.deleteByid(value).subscribe((response: ServiceResponse) => {
-                        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                        //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                        SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
                         this.CD.detectChanges();
                     });
                 }
@@ -233,7 +236,9 @@ export class FieldTemplateComponent {
                             sub.unsubscribe();
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+                            this.CD.detectChanges();
                         }
                     }
                 );
@@ -295,7 +300,7 @@ export class FieldTemplateComponent {
                             sub.unsubscribe();
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
                         }
                     }
                 );
@@ -350,7 +355,7 @@ export class FieldTemplateComponent {
                             sub.unsubscribe();
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });;
                         }
                     }
                 );
@@ -403,7 +408,7 @@ export class FieldTemplateComponent {
 
     OnBackFromEdit(selectedEntityId, $event) {
         if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentListComponent != null) {
-            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.RowIndex });
         }
     }
  
@@ -424,7 +429,8 @@ export class FieldTemplateComponent {
                             sub.unsubscribe();
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+                            //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                             //this.CurrentSession.PseventRowSelectEvent.emit({ Name: 'btnComponentComputingPartnerEdit', Value: this.rowData, RowIndex: this.AdditionalData.rowIndex });
 
                             //alert("reload");
@@ -470,7 +476,8 @@ export class FieldTemplateComponent {
                             sub.unsubscribe();
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
                             //this.CurrentSession.PseventRowSelectEvent.emit({ Name: 'btnComponentComputingPartnerEdit', Value: this.rowData, RowIndex: this.AdditionalData.rowIndex });
 
                             //alert("reload");
