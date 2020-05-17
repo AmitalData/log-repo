@@ -4291,6 +4291,15 @@ export class ShipmentPM {
     public get INTTRABookingResponse_Voyage() { return this.iNTTRABookingResponse_Voyage; }
     public set INTTRABookingResponse_Voyage(newValue: string) { if (this.iNTTRABookingResponse_Voyage != newValue) { this.iNTTRABookingResponse_Voyage = newValue; this.MarkAsDirty("INTTRABookingResponse_Voyage"); } }
 
+    private iNTTRABookingResponse_Vessel: string;
+    public get INTTRABookingResponse_Vessel() { return this.iNTTRABookingResponse_Vessel; }
+    public set INTTRABookingResponse_Vessel(newValue: string) { if (this.iNTTRABookingResponse_Vessel != newValue) { this.iNTTRABookingResponse_Vessel = newValue; this.MarkAsDirty("INTTRABookingResponse_Vessel"); } }
+
+    private iNTTRABookingResponse_VesselId: string;
+    public get INTTRABookingResponse_VesselId() { return this.iNTTRABookingResponse_VesselId; }
+    public set INTTRABookingResponse_VesselId(newValue: string) { if (this.iNTTRABookingResponse_VesselId != newValue) { this.iNTTRABookingResponse_VesselId = newValue; this.MarkAsDirty("INTTRABookingResponse_VesselId"); } }
+
+
     private iNTTRABookingResponse_POLDate: Date;
     public get INTTRABookingResponse_POLDate() { return this.iNTTRABookingResponse_POLDate; }
     public set INTTRABookingResponse_POLDate(newValue: Date) { if (this.iNTTRABookingResponse_POLDate != newValue) { this.iNTTRABookingResponse_POLDate = newValue; this.MarkAsDirty("INTTRABookingResponse_POLDate"); } }

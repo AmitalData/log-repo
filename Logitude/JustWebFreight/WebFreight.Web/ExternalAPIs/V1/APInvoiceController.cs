@@ -94,7 +94,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = authToken.Tenant;
 
-                        SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                        //SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 
                         bool isFullAccounting = false;
                         Tenant myTenant = TenantRepository.GetSingleTenant(tenant, true);
@@ -181,6 +181,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 apinvoicePM.TransferStatusCode = "NR";
 
                             this.MapLines(apinvoice, tenant, apinvoicePM);
+
+                            apinvoicePM.InvoiceCurrencyExchangeRate = apinvoicePM.AmountInLocalCurrency / apinvoicePM.AmountInInvoiceCurrency;
                         }
 
                         else
@@ -221,6 +223,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "APInvoice", null, "APInvoice API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
+        }
+
+        private static void UpdateInvoiceCurrencyRateFromLines(APInvoicePM apinvoicePM)
+        {
+            double? averageLinesExchangeRate = apinvoicePM.InvoiceLines.Average(d => d.ForiegnExchangeRate);
+            apinvoicePM.InvoiceCurrencyExchangeRate = averageLinesExchangeRate;
         }
 
         private static void CalculateTotalsIfEmpty(APInvoicePM apinvoicePM)
@@ -278,17 +286,25 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 if (line.ForiegnCurrencyId == null)
                     line.ForiegnCurrencyId = apinvoicePM.InvoiceCurrencyId;
 
-                // ForiegnExchangeRate
-                if (line.ForiegnCurrencyId == apinvoicePM.InvoiceCurrencyId)
+                if(line.ForiegnExchangeRate != null)
                 {
-                    line.ForiegnExchangeRate = apinvoice.InvoiceCurrencyExchangeRate;
                     line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
                 }
                 else
                 {
-                    line.ForiegnExchangeRate = GetRateByTenantAndCurrency(line.ForiegnCurrencyId, GetTenantPM(tenant));
-                    line.ProfitCurrencyAmount = line.LocalCurrencyAmount / apinvoice.ProfitCurrencyExchangeRate;
+                    // ForiegnExchangeRate
+                    if (line.ForiegnCurrencyId == apinvoicePM.InvoiceCurrencyId)
+                    {
+                        line.ForiegnExchangeRate = apinvoice.InvoiceCurrencyExchangeRate;
+                        line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
+                    }
+                    else
+                    {
+                        line.ForiegnExchangeRate = GetRateByTenantAndCurrency(line.ForiegnCurrencyId, GetTenantPM(tenant));
+                        line.ProfitCurrencyAmount = line.LocalCurrencyAmount / apinvoice.ProfitCurrencyExchangeRate;
+                    }
                 }
+                
 
                 // vat
                 VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(tenant);
@@ -316,7 +332,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 ChargesTypePM charge = chargesTypeQuery.GetSinglePM(line.ChargesTypeId, tenant);
 
                 if (string.IsNullOrWhiteSpace(line.Description))
-                    line.Description = charge.Description;
+                    line.Description = charge.EnglishName;
                 if (string.IsNullOrWhiteSpace(line.LocalDescription))
                     line.LocalDescription = charge.LocalName ?? charge.EnglishName;
 

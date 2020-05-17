@@ -52,7 +52,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     constructor() {
         super();
 
-        this.SessionIndex = SessionLocator.Index;
+        this.SessionIndex = this.CurrentSession.SessionIndex;
+
         this.InitializeServices();
 
         this.EntityPM = this.myQuotePMService.GetNewEntityPM();
@@ -157,12 +158,15 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             if (myResponse.HasError == false) {
                 if (myResponse.Result) {
                     if (myResponse.Result.Id) {
-                        this.QuoteSetting = myResponse.Result;
+                        this.QuoteSetting = myResponse.Result;                        
                     }
+
                     if (this.IsCopyFromQuote) {
                         this.InitializeCopy(this.sourceEntityPM);
                     }
                 }
+
+                this.IsAutomaticallyClosed = true;
             }
         });
     }

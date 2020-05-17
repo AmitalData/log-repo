@@ -1046,68 +1046,76 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private decimal CalculateContainerPrice(TariffSearchArgs args, Tariff trariff, TariffLine tariffLine)
         {
-            decimal? price1 = null; decimal? price2 = null; decimal? price3 = null; decimal? price4 = null; decimal? price5 = null;
+            decimal? price1 = null; decimal? price_WithoutQuantity = null; decimal? price2 = null; decimal? price3 = null; decimal? price4 = null; decimal? price5 = null;
             int containerQuantity = 0;
             if (trariff.ContainerType1Id != null)
             {
                 containerQuantity = trariff.ContainerType1Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType1Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType1Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType1Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType1Id == args.ContainerType5Id ? quantity5 : 0))));
-                price1 = ((tariffLine.Surcharge1Price != null ? tariffLine.Surcharge1Price : 0) * containerQuantity);
+                price_WithoutQuantity = (tariffLine.Surcharge1Price != null ? tariffLine.Surcharge1Price : 0);
+                price1 = (price_WithoutQuantity * containerQuantity);
                 this.tariffsSummary.ContainersPrices.Add(new ContainersPrice
                 {
                     TariffId = trariff.Id,
                     ContainerId = trariff.ContainerType1Id,
                     Price = price1,
-                    Quantity = containerQuantity
+                    Quantity = containerQuantity,
+                    Price_WithoutQuantity = price_WithoutQuantity
                 });
             }
             if (trariff.ContainerType2Id != null)
             {
                 containerQuantity = trariff.ContainerType2Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType2Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType2Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType2Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType2Id == args.ContainerType5Id ? quantity5 : 0))));
-                price2 = ((tariffLine.Surcharge2Price != null ? tariffLine.Surcharge2Price : 0) * containerQuantity);
+                price_WithoutQuantity = (tariffLine.Surcharge2Price != null ? tariffLine.Surcharge2Price : 0);
+                price2 = (price_WithoutQuantity * containerQuantity);
                 this.tariffsSummary.ContainersPrices.Add(new ContainersPrice
                 {
                     TariffId = trariff.Id,
                     ContainerId = trariff.ContainerType2Id,
                     Price = price2,
-                    Quantity = containerQuantity
+                    Quantity = containerQuantity,
+                    Price_WithoutQuantity = price_WithoutQuantity
                 });
             }
             if (trariff.ContainerType3Id != null)
             {
                 containerQuantity = trariff.ContainerType3Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType3Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType3Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType3Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType3Id == args.ContainerType5Id ? quantity5 : 0))));
-                price3 = ((tariffLine.Surcharge3Price != null ? tariffLine.Surcharge3Price : 0) * containerQuantity);
+                price_WithoutQuantity = (tariffLine.Surcharge3Price != null ? tariffLine.Surcharge3Price : 0);
+                price3 = (price_WithoutQuantity * containerQuantity);
                 this.tariffsSummary.ContainersPrices.Add(new ContainersPrice
                 {
                     TariffId = trariff.Id,
                     ContainerId = trariff.ContainerType3Id,
                     Price = price3,
-                    Quantity = containerQuantity
+                    Quantity = containerQuantity,
+                    Price_WithoutQuantity = price_WithoutQuantity
                 });
             }
             if (trariff.ContainerType4Id != null)
             {
                 containerQuantity = trariff.ContainerType4Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType4Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType4Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType4Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType4Id == args.ContainerType5Id ? quantity5 : 0))));
-
-                price4 = ((tariffLine.Surcharge4Price != null ? tariffLine.Surcharge4Price : 0) * containerQuantity);
+                price_WithoutQuantity = (tariffLine.Surcharge4Price != null ? tariffLine.Surcharge4Price : 0);
+                price4 = (price_WithoutQuantity * containerQuantity);
                 this.tariffsSummary.ContainersPrices.Add(new ContainersPrice
                 {
                     TariffId = trariff.Id,
                     ContainerId = trariff.ContainerType4Id,
                     Price = price4,
-                    Quantity = containerQuantity
+                    Quantity = containerQuantity,
+                    Price_WithoutQuantity = price_WithoutQuantity
                 });
             }
             if (trariff.ContainerType5Id != null)
             {
                 containerQuantity = trariff.ContainerType5Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType5Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType5Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType5Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType5Id == args.ContainerType5Id ? quantity5 : 0))));
-
-                price5 = ((tariffLine.Surcharge5Price != null ? tariffLine.Surcharge5Price : 0) * containerQuantity);
+                price_WithoutQuantity = (tariffLine.Surcharge5Price != null ? tariffLine.Surcharge5Price : 0);
+                price5 = (price_WithoutQuantity * containerQuantity);
                 this.tariffsSummary.ContainersPrices.Add(new ContainersPrice
                 {
                     TariffId = trariff.Id,
                     ContainerId = trariff.ContainerType5Id,
                     Price = price5,
-                    Quantity = containerQuantity
+                    Quantity = containerQuantity,
+                    Price_WithoutQuantity = price_WithoutQuantity
                 });
             }
 
@@ -1121,69 +1129,76 @@ namespace Logitude.TariffModule.BL.Helpers
         }
         private decimal CalculateContainerPriceFromTariffLinesContainers(TariffSearchArgs args, Tariff trariff, TariffLinesContainersPrice tariffLinesContainersPrice)
         {
-            decimal? price1 = null; decimal? price2 = null; decimal? price3 = null; decimal? price4 = null; decimal? price5 = null;
+            decimal? price1 = null; decimal? price_WithoutQuantity = null; decimal? price2 = null; decimal? price3 = null; decimal? price4 = null; decimal? price5 = null;
             int containerQuantity = 0;
             if (trariff.ContainerType1Id != null)
             {
                 containerQuantity = trariff.ContainerType1Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType1Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType1Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType1Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType1Id == args.ContainerType5Id ? quantity5 : 0))));
-                price1 = ((tariffLinesContainersPrice.Price1 != null ? tariffLinesContainersPrice.Price1 : 0) * containerQuantity);
+                price_WithoutQuantity = (tariffLinesContainersPrice.Price1 != null ? tariffLinesContainersPrice.Price1 : 0);
+                price1 = (price_WithoutQuantity * containerQuantity);
                 this.SurchargeItem.ContainersPrices.Add(new ContainersPrice
                 {
                     TariffId = trariff.Id,
                     ContainerId = trariff.ContainerType1Id,
                     Price = price1,
-                    Quantity = containerQuantity
+                    Quantity = containerQuantity,
+                    Price_WithoutQuantity = price_WithoutQuantity
                 });
             }
             if (trariff.ContainerType2Id != null)
             {
                 containerQuantity = trariff.ContainerType2Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType2Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType2Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType2Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType2Id == args.ContainerType5Id ? quantity5 : 0))));
-                price2 = ((tariffLinesContainersPrice.Price2 != null ? tariffLinesContainersPrice.Price2 : 0) * containerQuantity);
+                price_WithoutQuantity = (tariffLinesContainersPrice.Price2 != null ? tariffLinesContainersPrice.Price2 : 0);
+                price2 = (price_WithoutQuantity * containerQuantity);
                 this.SurchargeItem.ContainersPrices.Add(new ContainersPrice
                 {
                     TariffId = trariff.Id,
                     ContainerId = trariff.ContainerType2Id,
                     Price = price2,
-                    Quantity = containerQuantity
+                    Quantity = containerQuantity,
+                    Price_WithoutQuantity = price_WithoutQuantity
                 });
             }
             if (trariff.ContainerType3Id != null)
             {
                 containerQuantity = trariff.ContainerType3Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType3Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType3Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType3Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType3Id == args.ContainerType5Id ? quantity5 : 0))));
-
-                price3 = ((tariffLinesContainersPrice.Price3 != null ? tariffLinesContainersPrice.Price3 : 0) * containerQuantity);
+                price_WithoutQuantity = (tariffLinesContainersPrice.Price3 != null ? tariffLinesContainersPrice.Price3 : 0);
+                price3 = (price_WithoutQuantity * containerQuantity);
                 this.SurchargeItem.ContainersPrices.Add(new ContainersPrice
                 {
                     TariffId = trariff.Id,
                     ContainerId = trariff.ContainerType3Id,
                     Price = price3,
-                    Quantity = containerQuantity
+                    Quantity = containerQuantity,
+                    Price_WithoutQuantity = price_WithoutQuantity
                 });
             }
             if (trariff.ContainerType4Id != null)
             {
                 containerQuantity = trariff.ContainerType4Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType4Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType4Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType4Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType4Id == args.ContainerType5Id ? quantity5 : 0))));
-
-                price4 = ((tariffLinesContainersPrice.Price4 != null ? tariffLinesContainersPrice.Price4 : 0) * containerQuantity);
+                price_WithoutQuantity = (tariffLinesContainersPrice.Price4 != null ? tariffLinesContainersPrice.Price4 : 0);
+                price4 = (price_WithoutQuantity * containerQuantity);
                 this.SurchargeItem.ContainersPrices.Add(new ContainersPrice
                 {
                     TariffId = trariff.Id,
                     ContainerId = trariff.ContainerType4Id,
                     Price = price4,
-                    Quantity = containerQuantity
+                    Quantity = containerQuantity,
+                    Price_WithoutQuantity = price_WithoutQuantity
                 });
             }
             if (trariff.ContainerType5Id != null)
             {
                 containerQuantity = trariff.ContainerType5Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType5Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType5Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType5Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType5Id == args.ContainerType5Id ? quantity5 : 0))));
-
-                price5 = ((tariffLinesContainersPrice.Price5 != null ? tariffLinesContainersPrice.Price5 : 0) * containerQuantity);
+                price_WithoutQuantity = (tariffLinesContainersPrice.Price5 != null ? tariffLinesContainersPrice.Price5 : 0);
+                price5 = (price_WithoutQuantity  * containerQuantity);
                 this.SurchargeItem.ContainersPrices.Add(new ContainersPrice
                 {
                     TariffId = trariff.Id,
                     ContainerId = trariff.ContainerType5Id,
                     Price = price5,
-                    Quantity = containerQuantity
+                    Quantity = containerQuantity,
+                    Price_WithoutQuantity = price_WithoutQuantity
                 });
             }
 

@@ -374,6 +374,7 @@
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Workspaces\TasksWorkspaceComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureComputingPartner\Components\EditTranslationComputingPartners.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentsFiling\DocumentsFilingGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonFilingInbox\Components\ChooseEntityComponent.html" />
     <Content Include="CommonModules\CommonFilingInbox\Components\FilingInboxWorkspaceComponent.html" />
@@ -548,6 +549,7 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportLinePMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
+    <TypeScriptCompile Include="App\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="App\Directives\ChildDirective.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\DynamicLoader.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgets.ts" />
@@ -650,6 +652,7 @@
     <TypeScriptCompile Include="Common\Services\StandardPMs\TenantAdditionalDataPMService Extended.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\TenantAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\UserLastSettingsPMService.ts" />
+    <TypeScriptCompile Include="Controls\Directives\ChildDirective.ts" />
     <TypeScriptCompile Include="Controls\InvitedFilter.ts" />
     <TypeScriptCompile Include="Controls\ParticipatedFilter.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
@@ -1083,6 +1086,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\AccountingSettings\AccountingAdvancedAPSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\CreateTenant\CreateTenantComponent.ts" />
@@ -1338,6 +1342,7 @@
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\EditTabs\CustomsTransferGeneralTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.html" />
+    <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\AddEBookingVesselComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingLoadComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.html" />
@@ -3813,6 +3818,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleShipmentAMANAC.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\AddEBookingVesselComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingLoadComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.ts" />

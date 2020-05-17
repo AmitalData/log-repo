@@ -75,9 +75,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             this.IsShowTotalPerContainer = true;
         }
 
-
-        this.IsPriceCheckVisible = QuoteUtilities.IsPriceCheckVisible(this.EntityPM);
-
+        if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck")) {
+            this.IsPriceCheckVisible = true;
+        }
+     
         this.InitializeServices();
         this.LoadRequiredData();
         this.SetLabels();
@@ -603,7 +604,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.RunAddEditCharge(itemComponent, title);
     }
     DeleteChargeClicked(itemComponent: FCLQuoteChargeItem) {
-        if (itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+        if ((itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) ||
+            (itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsCostAllIn).length > 0)) {
             var window = new MessageWindow();
             window.Show("Can't delete this charge because it's connected to other All In charges");
             window.WindowClosed.subscribe((event: any) => {
@@ -717,14 +719,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 betweenDate = this.EntityPM.ETD;
             }
 
-            var tariffType = "";
-            if (this.EntityPM.TransportModeId == "A") {
-                tariffType = "AFC";
-            }
-            else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
-                tariffType = "OLC";
-            }
-
+            var tariffType = "OFC";
             var WindowArgs: any =
             {
                 BetweenDate: betweenDate,
@@ -1475,14 +1470,17 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
     SetUIProperties_AllInCost() {
         var isFromTariff = this.EntityPM != null && this.EntityPM.TariffId != null;
-        var isEnabled_CostCurrencyId = true;
-        if (this.IsCostAllIn || this.TariffId != null) {
-            isEnabled_CostCurrencyId = false;
+        if (this.IsEditingEnabled && isFromTariff) {
+            var isEnabled_CostCurrencyId = true;
+            if (this.IsCostAllIn) {
+                isEnabled_CostCurrencyId = false;
+            }
+            this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+            this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+            this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId);
+            this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
+            this.IsEnabled_CostUnitPriceFCL = isEnabled_CostCurrencyId;
         }
-        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
-        this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
-        this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
-        this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
     }
 
     
@@ -1571,7 +1569,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("CostMinAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.UIProperties.SetEnabled("CostMaxAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.SetUIProperties_CostRate();
-        //this.SetUIProperties_AllInCost();
+        this.SetUIProperties_AllInCost();
     }
     SetUIProperties_CostRate() {
         var isEnabled = false;
