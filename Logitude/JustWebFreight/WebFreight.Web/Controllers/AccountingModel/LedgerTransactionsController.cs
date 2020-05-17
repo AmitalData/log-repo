@@ -524,39 +524,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         //        .OrderByDescending(d => d.IsReconciled).ThenByDescending(d => d.PaymentReconciledAmount).ToList();
 
 
-        private static int GetAuthinticatedTenant()
-        {
-
-            {
-                int tenant = GetAuthinticatedTenant();
-
-                if (arpaymentId == "undefined") arpaymentId = null;
-
-                string accountId = GetGLAccountIdForReconciledTransactions(billToGLAccountId, tenant, paymentCurrencyId);
-
-                ARPaymentInvoicesTransactionFetcher invoiceTransactionsFetcher = new ARPaymentInvoicesTransactionFetcher(arpaymentId, accountId, tenant);
-                var transactions = invoiceTransactionsFetcher.Fetch();
-
-                HttpResponseMessage reponseMessage = BuildResponseMessage(transactions);
-
-                return reponseMessage;
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
-        private HttpResponseMessage BuildResponseMessage(List<LedgerTransactionPM> transactions)
-        {
-
-            ServiceResponse response = new ServiceResponse();
-            response.Result = transactions;
-            HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-            return reponseMessage;
-        }
-
+       
 
         //var accountingContext = AccountingContext.GetContext(tenant);
         //LedgerTransactionQueryService query = new LedgerTransactionQueryService(accountingContext);
