@@ -903,6 +903,15 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.UIProperties.SetEnabled("BookingVolume", this.ObjectTableName, isFieldsEnabled);
         this.UIProperties.SetEnabled("OrderChargeableWeight", this.ObjectTableName, isFieldsEnabled);
         this.UIProperties.SetEnabled("BookingNumberOfPackages", this.ObjectTableName, isFieldsEnabled);
+
+        var isNoOfPackagesRequired = false;
+        if (!AppTool.IsNullOrZero(this.OrderGrossWeight) || !AppTool.IsNullOrZero(this.BookingVolume) || !AppTool.IsNullOrZero(this.OrderChargeableWeight)) {
+            if (AppTool.IsNullOrZero(this.BookingNumberOfPackages)) {
+                isNoOfPackagesRequired = true;
+            }
+        }
+
+        this.UIProperties.SetRequired("BookingNumberOfPackages", this.ObjectTableName, isNoOfPackagesRequired);
     }
     SetUIProperties_Containers() {
         this.UIProperties.SetEnabled("PackageTypeId1", this.ObjectTableName, this.Quantity1 > 0);
@@ -2562,6 +2571,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.EntityPM.OrderGrossWeight != newValue) {
             this.EntityPM.OrderGrossWeight = AppTool.Round(newValue, 3);
             this.ComputeChargeableWeight();
+            this.SetUIProperties_OrderDetails();
         }
     }
 
@@ -2570,6 +2580,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         if (this.EntityPM.BookingVolume != newValue) {
             this.EntityPM.BookingVolume = AppTool.Round(newValue, 3);
             this.ComputeOrderVolumetricWeight();
+            this.SetUIProperties_OrderDetails();
         }
     }
 
@@ -2587,6 +2598,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             var myResult: number = AppTool.Round(newValue, 3);
             this.EntityPM.OrderChargeableWeight = myResult;
 
+            this.SetUIProperties_OrderDetails();
+
             if (this.OrderGrossWeight == null && this.OrderVolumetricWeight == null) {
                 this.EntityPM.OrderVolumetricWeight = myResult;
                 this.EntityPM.OrderGrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, myResult);
@@ -2599,6 +2612,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     set BookingNumberOfPackages(newValue: number) {
         if (this.EntityPM.BookingNumberOfPackages != newValue) {
             this.EntityPM.BookingNumberOfPackages = newValue;
+            this.SetUIProperties_OrderDetails();
         }
     }
 
@@ -3311,6 +3325,12 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
         var validator = new ShipmentValidator();
         this.ValidationErrorsList = validator.Validate(this.EntityPM);
+
+        if (!AppTool.IsNullOrZero(this.OrderGrossWeight) || !AppTool.IsNullOrZero(this.BookingVolume) || !AppTool.IsNullOrZero(this.OrderChargeableWeight)) {
+            if (AppTool.IsNullOrZero(this.BookingNumberOfPackages)) {
+                this.ValidationErrorsList.push("Number of Packages is required");
+            }
+        }
 
         if (this.ValidationErrorsList.length == 0) {
 
