@@ -78,6 +78,12 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
             this.EntityPM.ExportFile = value;
         }
     }
+    get CustomerId() { return this.EntityPM.CustomerId; }
+    set CustomerId(value: string) {
+        if (this.EntityPM.CustomerId != value) {
+            this.EntityPM.CustomerId = value;
+        }
+    }
     get TransportMode() { return this.EntityPM.TransportModeId }
     
     TransportModeClicked(value: string) {
@@ -85,9 +91,10 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
             this.EntityPM.TransportModeId = value;
         }
     }
+
+ 
     OkButtonClicked() {
-        debugger;
-        var idIndex = this.CurrentSession.GetNewId("RadioButton");
+         var idIndex = this.CurrentSession.GetNewId("RadioButton");
         var errors: string[] = [];
         this.ValidationErrorsList = [];
 
