@@ -1289,12 +1289,14 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate(this.FatherComponent.EntityPM.SaleCurrencyId);
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
 
+                var measurementCode = item.UnitOfMesurmentCode;
+                var quantity;
+                var measurementId = item.UnitOfMesurmentId;
+
                 if (!item.IsAllIn) {
                     chargePM.CostMinAmount = AppTool.Round(item.MinPrice, 3);
                     var costAmount = AppTool.Round(item.ActualPrice, 3);
-                    var measurementCode;
-                    var quantity;
-                    var measurementId;
+                  
                     if (isOFC) {
                         var bcntCharge = this.FatherComponent.AllMeasurements.filter(d => d.Code == "BCNT")[0];
                         measurementCode = bcntCharge.Code;
@@ -1305,18 +1307,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                         this.FillQuoteFCLCharges(this.ContainerType4Id, chargePM, item);
                         this.FillQuoteFCLCharges(this.ContainerType5Id, chargePM, item);
                     }
-                    else {
-                        measurementCode = item.UnitOfMesurmentCode;
-                        measurementId = item.UnitOfMesurmentId;
-                    }
-
-                    chargePM.CostMeasurementCode = measurementCode;
-                    chargePM.SaleMeasurementCode = measurementCode;
-                    chargePM.CostMeasurementId = measurementId;
-                    chargePM.SaleMeasurementId = measurementId;
-                  
                 }
-
+                chargePM.CostMeasurementCode = measurementCode;
+                chargePM.SaleMeasurementCode = measurementCode;
+                chargePM.CostMeasurementId = measurementId;
+                chargePM.SaleMeasurementId = measurementId;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
                 chargePM.IsCostAllIn = item.IsAllIn;
