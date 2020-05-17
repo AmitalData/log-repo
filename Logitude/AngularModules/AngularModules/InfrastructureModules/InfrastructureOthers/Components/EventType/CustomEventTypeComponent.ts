@@ -1,4 +1,4 @@
-﻿
+
 import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import { EventTypePM } from '../../../../Infrastructure/EntityPMs/EventTypePM';
@@ -78,7 +78,7 @@ export class CustomEventTypeComponent {
     }
 
 
-   private ObjectTableId: string;
+    ObjectTableId: string;
     GetObjectTableId() {
 
         if (this.EntityPM) {
@@ -106,7 +106,7 @@ export class CustomEventTypeComponent {
 
 
 
-    private customField: string;
+    customField: string;
     get CustomField() {
         this.GetObjectTableId();
         return this.customField;
