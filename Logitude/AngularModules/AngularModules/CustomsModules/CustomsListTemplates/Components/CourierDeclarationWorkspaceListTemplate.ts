@@ -44,7 +44,11 @@ export class CourierDeclarationWorkspaceListTemplate {
         }
         else if (estimatedArrivalDate.getTime() === today.getTime()) {
             this.colorDate = "Blue";
-        }
+         } else {
+             alert(estimatedArrivalDate);
+             alert(today);
+
+         }
       
         this.CD.detectChanges();
     }
