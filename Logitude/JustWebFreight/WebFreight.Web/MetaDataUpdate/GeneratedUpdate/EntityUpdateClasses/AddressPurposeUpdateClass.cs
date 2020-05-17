@@ -408,13 +408,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AddressPurposeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AddressPurposeTextCode_0.Id, NameTextCodeCode = AddressPurposeTextCode_0.Code, ObjectTableName = "Customs.AddressPurpose", Code = "AddressPurpose",  QueryGroupCode = "ADPU", IndexOrder = 0, Tenant = 0, ObjectTableId = AddressPurposeObjectTable.Id, QuerySection = "Customs.AddressPurpose", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AddressPurposeFeature_0.Id,FeatureUniqeCode= AddressPurposeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AddressPurposeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AddressPurpose.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AddressPurposeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.AddressPurpose.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AddressPurposeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AddressPurpose.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AddressPurposeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.AddressPurpose.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AddressPurposeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AddressPurpose.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AddressPurposeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.AddressPurpose.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AddressPurposeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AddressPurpose.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AddressPurposeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressPurposeQuery.Id,QueryCode = AddressPurposeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.AddressPurpose.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

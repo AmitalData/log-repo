@@ -3754,36 +3754,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query OpenClaimFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ClaimTextCode_0.Id, NameTextCodeCode = ClaimTextCode_0.Code, ObjectTableName = "Customs.Claim", Code = "Open Claim Files",  QueryGroupCode = "d8f1", IndexOrder = 0, Tenant = 0, ObjectTableId = ClaimObjectTable.Id, QuerySection = "Customs.Claim", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ClaimFeature_0.Id,FeatureUniqeCode= ClaimFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn OpenClaimFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Claim.TapagNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenClaimFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Claim.TapagNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenClaimFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Claim.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenClaimFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Claim.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenClaimFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Claim.FollowDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenClaimFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Claim.FollowDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenClaimFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Claim.SubmitDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenClaimFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Claim.SubmitDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenClaimFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Claim.IsClosed", PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OpenClaimFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Claim.IsClosed", PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query AllClaimFilesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ClaimTextCode_1.Id, NameTextCodeCode = ClaimTextCode_1.Code, ObjectTableName = "Customs.Claim", Code = "All Claim Files",  QueryGroupCode = "d8f1", IndexOrder = 1, Tenant = 0, ObjectTableId = ClaimObjectTable.Id, QuerySection = "Customs.Claim", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ClaimFeature_1.Id,FeatureUniqeCode= ClaimFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllClaimFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Claim.TapagNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllClaimFilesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Claim.TapagNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllClaimFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Claim.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllClaimFilesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Claim.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllClaimFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Claim.FollowDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllClaimFilesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Claim.FollowDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllClaimFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Claim.SubmitDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllClaimFilesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Claim.SubmitDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllClaimFilesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Claim.CustomsFiles" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClaimFilesQuery.Id,QueryCode = AllClaimFilesQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Claim.IsClosed" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -3802,15 +3802,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen ClaimClaimHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Claim.ClaimHeaderScreen", Name = "ClaimHeaderScreen", ObjectTableId = ClaimObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ClaimClaimClaimHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Claim.TapagNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsClaimClaimClaimHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Claim.TapagNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ClaimClaimClaimHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Claim.TapagTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsClaimClaimClaimHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Claim.TapagTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ClaimClaimClaimHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Claim.CustomerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsClaimClaimClaimHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Claim.CustomerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ClaimClaimClaimHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Claim.IsClosed", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsClaimClaimClaimHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Claim.IsClosed", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ClaimClaimClaimHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Claim.FollowDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsClaimClaimClaimHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Claim.FollowDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ClaimObjectTable.HeaderScreenId = ClaimClaimHeaderScreenScreen0.Id;
 		    ClaimObjectTable.HeaderScreenCode = ClaimClaimHeaderScreenScreen0.Code;

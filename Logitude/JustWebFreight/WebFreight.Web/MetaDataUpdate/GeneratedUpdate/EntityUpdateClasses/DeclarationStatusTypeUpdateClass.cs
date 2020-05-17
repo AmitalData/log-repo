@@ -407,13 +407,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query DeclarationStatusTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationStatusTypeTextCode_0.Id, NameTextCodeCode = DeclarationStatusTypeTextCode_0.Code, ObjectTableName = "Customs.DeclarationStatusType", Code = "DeclarationStatusType",  QueryGroupCode = "DEST", IndexOrder = 0, Tenant = 0, ObjectTableId = DeclarationStatusTypeObjectTable.Id, QuerySection = "Customs.DeclarationStatusType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationStatusTypeFeature_0.Id,FeatureUniqeCode= DeclarationStatusTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DeclarationStatusTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DeclarationStatusType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeclarationStatusTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationStatusType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeclarationStatusTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DeclarationStatusType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeclarationStatusTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationStatusType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeclarationStatusTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DeclarationStatusType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeclarationStatusTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationStatusType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeclarationStatusTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DeclarationStatusType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeclarationStatusTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationStatusTypeQuery.Id,QueryCode = DeclarationStatusTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationStatusType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

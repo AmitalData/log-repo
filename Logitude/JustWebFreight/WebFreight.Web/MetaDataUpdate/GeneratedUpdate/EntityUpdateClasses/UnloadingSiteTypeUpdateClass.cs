@@ -404,13 +404,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query UnloadingSiteTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UnloadingSiteTypeTextCode_0.Id, NameTextCodeCode = UnloadingSiteTypeTextCode_0.Code, ObjectTableName = "Customs.UnloadingSiteType", Code = "UnloadingSiteType",  QueryGroupCode = "USTG", IndexOrder = 0, Tenant = 0, ObjectTableId = UnloadingSiteTypeObjectTable.Id, QuerySection = "Customs.UnloadingSiteType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = UnloadingSiteTypeFeature_0.Id,FeatureUniqeCode= UnloadingSiteTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn UnloadingSiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnloadingSiteTypeQuery.Id,QueryCode = UnloadingSiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "UnloadingSiteType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn UnloadingSiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnloadingSiteTypeQuery.Id,QueryCode = UnloadingSiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.UnloadingSiteType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnloadingSiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnloadingSiteTypeQuery.Id,QueryCode = UnloadingSiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "UnloadingSiteType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn UnloadingSiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnloadingSiteTypeQuery.Id,QueryCode = UnloadingSiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.UnloadingSiteType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnloadingSiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnloadingSiteTypeQuery.Id,QueryCode = UnloadingSiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "UnloadingSiteType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn UnloadingSiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnloadingSiteTypeQuery.Id,QueryCode = UnloadingSiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.UnloadingSiteType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn UnloadingSiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnloadingSiteTypeQuery.Id,QueryCode = UnloadingSiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "UnloadingSiteType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn UnloadingSiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnloadingSiteTypeQuery.Id,QueryCode = UnloadingSiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.UnloadingSiteType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

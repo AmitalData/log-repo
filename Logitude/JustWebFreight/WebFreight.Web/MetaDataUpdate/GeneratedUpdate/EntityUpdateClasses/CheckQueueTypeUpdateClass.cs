@@ -414,13 +414,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CheckQueueTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CheckQueueTypeTextCode_0.Id, NameTextCodeCode = CheckQueueTypeTextCode_0.Code, ObjectTableName = "Customs.CheckQueueType", Code = "CheckQueueType",  QueryGroupCode = "CHQT", IndexOrder = 0, Tenant = 0, ObjectTableId = CheckQueueTypeObjectTable.Id, QuerySection = "Customs.CheckQueueType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CheckQueueTypeFeature_0.Id,FeatureUniqeCode= CheckQueueTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CheckQueueTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckQueueTypeQuery.Id,QueryCode = CheckQueueTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CheckQueueType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckQueueTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckQueueTypeQuery.Id,QueryCode = CheckQueueTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CheckQueueType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckQueueTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckQueueTypeQuery.Id,QueryCode = CheckQueueTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CheckQueueType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckQueueTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckQueueTypeQuery.Id,QueryCode = CheckQueueTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CheckQueueType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckQueueTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckQueueTypeQuery.Id,QueryCode = CheckQueueTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CheckQueueType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckQueueTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckQueueTypeQuery.Id,QueryCode = CheckQueueTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CheckQueueType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckQueueTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckQueueTypeQuery.Id,QueryCode = CheckQueueTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CheckQueueType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckQueueTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckQueueTypeQuery.Id,QueryCode = CheckQueueTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CheckQueueType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

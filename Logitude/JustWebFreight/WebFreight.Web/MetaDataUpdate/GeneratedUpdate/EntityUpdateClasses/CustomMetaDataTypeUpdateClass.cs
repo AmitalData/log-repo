@@ -405,13 +405,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CustomMetaDataTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomMetaDataTypeTextCode_0.Id, NameTextCodeCode = CustomMetaDataTypeTextCode_0.Code, ObjectTableName = "Customs.CustomMetaDataType", Code = "CustomMetaDataType",  QueryGroupCode = "CMDT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomMetaDataTypeObjectTable.Id, QuerySection = "Customs.CustomMetaDataType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomMetaDataTypeFeature_0.Id,FeatureUniqeCode= CustomMetaDataTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomMetaDataTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomMetaDataType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomMetaDataTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomMetaDataType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomMetaDataTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomMetaDataType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomMetaDataTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomMetaDataType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomMetaDataTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomMetaDataType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomMetaDataTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomMetaDataType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomMetaDataTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomMetaDataType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomMetaDataTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomMetaDataTypeQuery.Id,QueryCode = CustomMetaDataTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomMetaDataType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

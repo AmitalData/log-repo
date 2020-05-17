@@ -467,13 +467,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query GatepassReturnCodeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GatepassReturnCodeTextCode_0.Id, NameTextCodeCode = GatepassReturnCodeTextCode_0.Code, ObjectTableName = "Customs.GatepassReturnCode", Code = "GatepassReturnCode",  QueryGroupCode = "293f", IndexOrder = 0, Tenant = 0, ObjectTableId = GatepassReturnCodeObjectTable.Id, QuerySection = "Customs.GatepassReturnCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GatepassReturnCodeFeature_0.Id,FeatureUniqeCode= GatepassReturnCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn GatepassReturnCodeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GatepassReturnCodeQuery.Id,QueryCode = GatepassReturnCodeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GatepassReturnCode.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn GatepassReturnCodeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GatepassReturnCodeQuery.Id,QueryCode = GatepassReturnCodeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.GatepassReturnCode.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn GatepassReturnCodeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GatepassReturnCodeQuery.Id,QueryCode = GatepassReturnCodeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GatepassReturnCode.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn GatepassReturnCodeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GatepassReturnCodeQuery.Id,QueryCode = GatepassReturnCodeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.GatepassReturnCode.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn GatepassReturnCodeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GatepassReturnCodeQuery.Id,QueryCode = GatepassReturnCodeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GatepassReturnCode.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn GatepassReturnCodeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GatepassReturnCodeQuery.Id,QueryCode = GatepassReturnCodeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.GatepassReturnCode.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn GatepassReturnCodeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GatepassReturnCodeQuery.Id,QueryCode = GatepassReturnCodeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GatepassReturnCode.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn GatepassReturnCodeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GatepassReturnCodeQuery.Id,QueryCode = GatepassReturnCodeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.GatepassReturnCode.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

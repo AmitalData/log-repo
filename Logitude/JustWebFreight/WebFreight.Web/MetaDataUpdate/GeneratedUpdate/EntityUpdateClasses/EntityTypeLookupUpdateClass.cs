@@ -407,13 +407,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query EntityTypeLookupQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = EntityTypeLookupTextCode_0.Id, NameTextCodeCode = EntityTypeLookupTextCode_0.Code, ObjectTableName = "Customs.EntityTypeLookup", Code = "EntityTypeLookup",  QueryGroupCode = "ENTL", IndexOrder = 0, Tenant = 0, ObjectTableId = EntityTypeLookupObjectTable.Id, QuerySection = "Customs.EntityTypeLookup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = EntityTypeLookupFeature_0.Id,FeatureUniqeCode= EntityTypeLookupFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn EntityTypeLookupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntityTypeLookupQuery.Id,QueryCode = EntityTypeLookupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "EntityTypeLookup.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn EntityTypeLookupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntityTypeLookupQuery.Id,QueryCode = EntityTypeLookupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.EntityTypeLookup.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn EntityTypeLookupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntityTypeLookupQuery.Id,QueryCode = EntityTypeLookupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "EntityTypeLookup.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn EntityTypeLookupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntityTypeLookupQuery.Id,QueryCode = EntityTypeLookupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.EntityTypeLookup.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn EntityTypeLookupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntityTypeLookupQuery.Id,QueryCode = EntityTypeLookupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "EntityTypeLookup.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn EntityTypeLookupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntityTypeLookupQuery.Id,QueryCode = EntityTypeLookupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.EntityTypeLookup.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn EntityTypeLookupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntityTypeLookupQuery.Id,QueryCode = EntityTypeLookupQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "EntityTypeLookup.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn EntityTypeLookupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EntityTypeLookupQuery.Id,QueryCode = EntityTypeLookupQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.EntityTypeLookup.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

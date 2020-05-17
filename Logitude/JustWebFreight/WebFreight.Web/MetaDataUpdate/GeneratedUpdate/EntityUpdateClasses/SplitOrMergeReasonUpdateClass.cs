@@ -435,13 +435,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query SplitOrMergeReasonQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SplitOrMergeReasonTextCode_0.Id, NameTextCodeCode = SplitOrMergeReasonTextCode_0.Code, ObjectTableName = "Customs.SplitOrMergeReason", Code = "SplitOrMergeReason",  QueryGroupCode = "7dff", IndexOrder = 0, Tenant = 0, ObjectTableId = SplitOrMergeReasonObjectTable.Id, QuerySection = "Customs.SplitOrMergeReason", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SplitOrMergeReasonFeature_0.Id,FeatureUniqeCode= SplitOrMergeReasonFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn SplitOrMergeReasonQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "SplitOrMergeReason.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn SplitOrMergeReasonQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.SplitOrMergeReason.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SplitOrMergeReasonQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "SplitOrMergeReason.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn SplitOrMergeReasonQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.SplitOrMergeReason.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SplitOrMergeReasonQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "SplitOrMergeReason.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn SplitOrMergeReasonQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.SplitOrMergeReason.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SplitOrMergeReasonQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "SplitOrMergeReason.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn SplitOrMergeReasonQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SplitOrMergeReasonQuery.Id,QueryCode = SplitOrMergeReasonQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.SplitOrMergeReason.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

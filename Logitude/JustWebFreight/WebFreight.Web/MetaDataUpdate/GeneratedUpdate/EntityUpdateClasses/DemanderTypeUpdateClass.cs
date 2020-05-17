@@ -406,13 +406,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query DemanderTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DemanderTypeTextCode_0.Id, NameTextCodeCode = DemanderTypeTextCode_0.Code, ObjectTableName = "Customs.DemanderType", Code = "DemanderType",  QueryGroupCode = "DTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = DemanderTypeObjectTable.Id, QuerySection = "Customs.DemanderType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DemanderTypeFeature_0.Id,FeatureUniqeCode= DemanderTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DemanderTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DemanderTypeQuery.Id,QueryCode = DemanderTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DemanderType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DemanderTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DemanderTypeQuery.Id,QueryCode = DemanderTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DemanderType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DemanderTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DemanderTypeQuery.Id,QueryCode = DemanderTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DemanderType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DemanderTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DemanderTypeQuery.Id,QueryCode = DemanderTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DemanderType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DemanderTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DemanderTypeQuery.Id,QueryCode = DemanderTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DemanderType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DemanderTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DemanderTypeQuery.Id,QueryCode = DemanderTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DemanderType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DemanderTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DemanderTypeQuery.Id,QueryCode = DemanderTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DemanderType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DemanderTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DemanderTypeQuery.Id,QueryCode = DemanderTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DemanderType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

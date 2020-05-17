@@ -481,13 +481,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ContinuousRequestTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContinuousRequestTypeTextCode_0.Id, NameTextCodeCode = ContinuousRequestTypeTextCode_0.Code, ObjectTableName = "Customs.ContinuousRequestType", Code = "ContinuousRequestType",  QueryGroupCode = "cc88", IndexOrder = 0, Tenant = 0, ObjectTableId = ContinuousRequestTypeObjectTable.Id, QuerySection = "Customs.ContinuousRequestType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContinuousRequestTypeFeature_0.Id,FeatureUniqeCode= ContinuousRequestTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ContinuousRequestTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id,QueryCode = ContinuousRequestTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ContinuousRequestType.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ContinuousRequestTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id,QueryCode = ContinuousRequestTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ContinuousRequestType.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ContinuousRequestTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id,QueryCode = ContinuousRequestTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ContinuousRequestType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ContinuousRequestTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id,QueryCode = ContinuousRequestTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ContinuousRequestType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContinuousRequestTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id,QueryCode = ContinuousRequestTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ContinuousRequestType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ContinuousRequestTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id,QueryCode = ContinuousRequestTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ContinuousRequestType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContinuousRequestTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id,QueryCode = ContinuousRequestTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ContinuousRequestType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ContinuousRequestTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id,QueryCode = ContinuousRequestTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ContinuousRequestType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

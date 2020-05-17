@@ -402,13 +402,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CollateralAnswerTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CollateralAnswerTypeTextCode_0.Id, NameTextCodeCode = CollateralAnswerTypeTextCode_0.Code, ObjectTableName = "Customs.CollateralAnswerType", Code = "CollateralAnswerType",  QueryGroupCode = "COAT", IndexOrder = 0, Tenant = 0, ObjectTableId = CollateralAnswerTypeObjectTable.Id, QuerySection = "Customs.CollateralAnswerType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CollateralAnswerTypeFeature_0.Id,FeatureUniqeCode= CollateralAnswerTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CollateralAnswerTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CollateralAnswerType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CollateralAnswerTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CollateralAnswerType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CollateralAnswerTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CollateralAnswerType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CollateralAnswerTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CollateralAnswerType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CollateralAnswerTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CollateralAnswerType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CollateralAnswerTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CollateralAnswerType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CollateralAnswerTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CollateralAnswerType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CollateralAnswerTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerTypeQuery.Id,QueryCode = CollateralAnswerTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CollateralAnswerType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

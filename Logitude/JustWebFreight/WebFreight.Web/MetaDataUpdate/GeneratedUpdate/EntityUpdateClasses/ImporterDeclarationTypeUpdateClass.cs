@@ -404,11 +404,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ImporterDeclarationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ImporterDeclarationTypeTextCode_0.Id, NameTextCodeCode = ImporterDeclarationTypeTextCode_0.Code, ObjectTableName = "Customs.ImporterDeclarationType", Code = "ImporterDeclarationType",  QueryGroupCode = "4486", IndexOrder = 0, Tenant = 0, ObjectTableId = ImporterDeclarationTypeObjectTable.Id, QuerySection = "Customs.ImporterDeclarationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ImporterDeclarationTypeFeature_0.Id,FeatureUniqeCode= ImporterDeclarationTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ImporterDeclarationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterDeclarationTypeQuery.Id,QueryCode = ImporterDeclarationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ImporterDeclarationType.Code" , ColumnWidth = 10 }, addedQueryColumns);
+			 QueryColumn ImporterDeclarationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterDeclarationTypeQuery.Id,QueryCode = ImporterDeclarationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ImporterDeclarationType.Code" , ColumnWidth = 10 }, addedQueryColumns);
 
-			 QueryColumn ImporterDeclarationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterDeclarationTypeQuery.Id,QueryCode = ImporterDeclarationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ImporterDeclarationType.EnglishName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn ImporterDeclarationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterDeclarationTypeQuery.Id,QueryCode = ImporterDeclarationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ImporterDeclarationType.EnglishName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn ImporterDeclarationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterDeclarationTypeQuery.Id,QueryCode = ImporterDeclarationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ImporterDeclarationType.LocalName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn ImporterDeclarationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterDeclarationTypeQuery.Id,QueryCode = ImporterDeclarationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ImporterDeclarationType.LocalName" , ColumnWidth = 200 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

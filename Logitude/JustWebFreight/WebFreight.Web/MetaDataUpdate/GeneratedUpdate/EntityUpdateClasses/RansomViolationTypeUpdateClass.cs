@@ -404,13 +404,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query RansomViolationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RansomViolationTypeTextCode_0.Id, NameTextCodeCode = RansomViolationTypeTextCode_0.Code, ObjectTableName = "Customs.RansomViolationType", Code = "RansomViolationType",  QueryGroupCode = "RVQG", IndexOrder = 0, Tenant = 0, ObjectTableId = RansomViolationTypeObjectTable.Id, QuerySection = "Customs.RansomViolationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RansomViolationTypeFeature_0.Id,FeatureUniqeCode= RansomViolationTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn RansomViolationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "RansomViolationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn RansomViolationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.RansomViolationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RansomViolationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "RansomViolationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn RansomViolationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.RansomViolationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RansomViolationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "RansomViolationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn RansomViolationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.RansomViolationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RansomViolationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "RansomViolationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn RansomViolationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RansomViolationTypeQuery.Id,QueryCode = RansomViolationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.RansomViolationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

@@ -406,13 +406,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query DepositFileTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DepositFileTypeTextCode_0.Id, NameTextCodeCode = DepositFileTypeTextCode_0.Code, ObjectTableName = "Customs.DepositFileType", Code = "DepositFileType",  QueryGroupCode = "DFQG", IndexOrder = 0, Tenant = 0, ObjectTableId = DepositFileTypeObjectTable.Id, QuerySection = "Customs.DepositFileType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DepositFileTypeFeature_0.Id,FeatureUniqeCode= DepositFileTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DepositFileTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DepositFileTypeQuery.Id,QueryCode = DepositFileTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DepositFileType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DepositFileTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DepositFileTypeQuery.Id,QueryCode = DepositFileTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DepositFileType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DepositFileTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DepositFileTypeQuery.Id,QueryCode = DepositFileTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DepositFileType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DepositFileTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DepositFileTypeQuery.Id,QueryCode = DepositFileTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DepositFileType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DepositFileTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DepositFileTypeQuery.Id,QueryCode = DepositFileTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DepositFileType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DepositFileTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DepositFileTypeQuery.Id,QueryCode = DepositFileTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DepositFileType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DepositFileTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DepositFileTypeQuery.Id,QueryCode = DepositFileTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DepositFileType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DepositFileTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DepositFileTypeQuery.Id,QueryCode = DepositFileTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DepositFileType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

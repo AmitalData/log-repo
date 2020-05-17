@@ -420,13 +420,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CargoStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CargoStatusTextCode_0.Id, NameTextCodeCode = CargoStatusTextCode_0.Code, ObjectTableName = "Customs.CargoStatus", Code = "CargoStatus",  QueryGroupCode = "1362", IndexOrder = 0, Tenant = 0, ObjectTableId = CargoStatusObjectTable.Id, QuerySection = "Customs.CargoStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CargoStatusFeature_0.Id,FeatureUniqeCode= CargoStatusFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CargoStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CargoStatus.Code" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CargoStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CargoStatus.Code" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CargoStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CargoStatus.Name" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CargoStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CargoStatus.Name" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CargoStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CargoStatus.LocalName" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CargoStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CargoStatus.LocalName" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CargoStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CargoStatus.Inactive" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CargoStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoStatusQuery.Id,QueryCode = CargoStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CargoStatus.Inactive" , ColumnWidth = 120 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

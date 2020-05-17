@@ -405,13 +405,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ProceduralFaultTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ProceduralFaultTypeTextCode_0.Id, NameTextCodeCode = ProceduralFaultTypeTextCode_0.Code, ObjectTableName = "Customs.ProceduralFaultType", Code = "ProceduralFaultType",  QueryGroupCode = "PFQG", IndexOrder = 0, Tenant = 0, ObjectTableId = ProceduralFaultTypeObjectTable.Id, QuerySection = "Customs.ProceduralFaultType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ProceduralFaultTypeFeature_0.Id,FeatureUniqeCode= ProceduralFaultTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ProceduralFaultTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultTypeQuery.Id,QueryCode = ProceduralFaultTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ProceduralFaultType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ProceduralFaultTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultTypeQuery.Id,QueryCode = ProceduralFaultTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ProceduralFaultType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ProceduralFaultTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultTypeQuery.Id,QueryCode = ProceduralFaultTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ProceduralFaultType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ProceduralFaultTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultTypeQuery.Id,QueryCode = ProceduralFaultTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ProceduralFaultType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ProceduralFaultTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultTypeQuery.Id,QueryCode = ProceduralFaultTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ProceduralFaultType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ProceduralFaultTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultTypeQuery.Id,QueryCode = ProceduralFaultTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ProceduralFaultType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ProceduralFaultTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultTypeQuery.Id,QueryCode = ProceduralFaultTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ProceduralFaultType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ProceduralFaultTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProceduralFaultTypeQuery.Id,QueryCode = ProceduralFaultTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ProceduralFaultType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

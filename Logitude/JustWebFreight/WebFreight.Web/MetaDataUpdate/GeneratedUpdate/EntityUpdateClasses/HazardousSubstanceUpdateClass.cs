@@ -487,13 +487,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query HazardousSubstanceQQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HazardousSubstanceTextCode_0.Id, NameTextCodeCode = HazardousSubstanceTextCode_0.Code, ObjectTableName = "Customs.HazardousSubstance", Code = "HazardousSubstanceQ",  QueryGroupCode = "cee3", IndexOrder = 0, Tenant = 0, ObjectTableId = HazardousSubstanceObjectTable.Id, QuerySection = "Customs.HazardousSubstance", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = HazardousSubstanceFeature_0.Id,FeatureUniqeCode= HazardousSubstanceFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn HazardousSubstanceQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "HazardousSubstance.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn HazardousSubstanceQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.HazardousSubstance.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn HazardousSubstanceQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "HazardousSubstance.EnglishName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn HazardousSubstanceQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.HazardousSubstance.EnglishName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn HazardousSubstanceQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "HazardousSubstance.LocalName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn HazardousSubstanceQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.HazardousSubstance.LocalName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn HazardousSubstanceQQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "HazardousSubstance.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn HazardousSubstanceQQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id,QueryCode = HazardousSubstanceQQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.HazardousSubstance.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

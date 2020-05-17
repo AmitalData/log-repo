@@ -414,13 +414,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CheckEntityTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CheckEntityTypeTextCode_0.Id, NameTextCodeCode = CheckEntityTypeTextCode_0.Code, ObjectTableName = "Customs.CheckEntityType", Code = "CheckEntityType",  QueryGroupCode = "CHET", IndexOrder = 0, Tenant = 0, ObjectTableId = CheckEntityTypeObjectTable.Id, QuerySection = "Customs.CheckEntityType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CheckEntityTypeFeature_0.Id,FeatureUniqeCode= CheckEntityTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CheckEntityTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEntityTypeQuery.Id,QueryCode = CheckEntityTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CheckEntityType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckEntityTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEntityTypeQuery.Id,QueryCode = CheckEntityTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CheckEntityType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckEntityTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEntityTypeQuery.Id,QueryCode = CheckEntityTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CheckEntityType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckEntityTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEntityTypeQuery.Id,QueryCode = CheckEntityTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CheckEntityType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckEntityTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEntityTypeQuery.Id,QueryCode = CheckEntityTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CheckEntityType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckEntityTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEntityTypeQuery.Id,QueryCode = CheckEntityTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CheckEntityType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckEntityTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEntityTypeQuery.Id,QueryCode = CheckEntityTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CheckEntityType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckEntityTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEntityTypeQuery.Id,QueryCode = CheckEntityTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CheckEntityType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

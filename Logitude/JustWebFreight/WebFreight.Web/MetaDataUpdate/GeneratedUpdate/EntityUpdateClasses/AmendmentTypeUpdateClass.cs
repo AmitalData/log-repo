@@ -484,13 +484,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AmendmentTypeQQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AmendmentTypeTextCode_0.Id, NameTextCodeCode = AmendmentTypeTextCode_0.Code, ObjectTableName = "Customs.AmendmentType", Code = "AmendmentTypeQ",  QueryGroupCode = "b2b7", IndexOrder = 0, Tenant = 0, ObjectTableId = AmendmentTypeObjectTable.Id, QuerySection = "Customs.AmendmentType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AmendmentTypeFeature_0.Id,FeatureUniqeCode= AmendmentTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AmendmentTypeQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentTypeQQuery.Id,QueryCode = AmendmentTypeQQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AmendmentType.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AmendmentTypeQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentTypeQQuery.Id,QueryCode = AmendmentTypeQQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.AmendmentType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AmendmentTypeQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentTypeQQuery.Id,QueryCode = AmendmentTypeQQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AmendmentType.LocalName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn AmendmentTypeQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentTypeQQuery.Id,QueryCode = AmendmentTypeQQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.AmendmentType.LocalName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AmendmentTypeQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentTypeQQuery.Id,QueryCode = AmendmentTypeQQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AmendmentType.EnglishName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn AmendmentTypeQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentTypeQQuery.Id,QueryCode = AmendmentTypeQQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.AmendmentType.EnglishName" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn AmendmentTypeQQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentTypeQQuery.Id,QueryCode = AmendmentTypeQQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AmendmentType.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AmendmentTypeQQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AmendmentTypeQQuery.Id,QueryCode = AmendmentTypeQQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.AmendmentType.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

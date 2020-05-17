@@ -400,11 +400,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ImporterTypeForClaimQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ImporterTypeForClaimTextCode_0.Id, NameTextCodeCode = ImporterTypeForClaimTextCode_0.Code, ObjectTableName = "Customs.ImporterTypeForClaim", Code = "ImporterTypeForClaim",  QueryGroupCode = "4b8d", IndexOrder = 0, Tenant = 0, ObjectTableId = ImporterTypeForClaimObjectTable.Id, QuerySection = "Customs.ImporterTypeForClaim", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ImporterTypeForClaimFeature_0.Id,FeatureUniqeCode= ImporterTypeForClaimFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ImporterTypeForClaimQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ImporterTypeForClaim.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ImporterTypeForClaimQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ImporterTypeForClaim.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ImporterTypeForClaimQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ImporterTypeForClaim.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ImporterTypeForClaimQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ImporterTypeForClaim.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ImporterTypeForClaimQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ImporterTypeForClaim.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ImporterTypeForClaimQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ImporterTypeForClaimQuery.Id,QueryCode = ImporterTypeForClaimQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ImporterTypeForClaim.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

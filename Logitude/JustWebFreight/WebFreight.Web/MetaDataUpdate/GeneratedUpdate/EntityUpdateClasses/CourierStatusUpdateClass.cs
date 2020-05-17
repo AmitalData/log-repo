@@ -424,11 +424,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CourierStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourierStatusTextCode_0.Id, NameTextCodeCode = CourierStatusTextCode_0.Code, ObjectTableName = "Customs.CourierStatus", Code = "CourierStatus",  QueryGroupCode = "5d5d", IndexOrder = 0, Tenant = 0, ObjectTableId = CourierStatusObjectTable.Id, QuerySection = "Customs.CourierStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CourierStatusFeature_0.Id,FeatureUniqeCode= CourierStatusFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CourierStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierStatusQuery.Id,QueryCode = CourierStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CourierStatus.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CourierStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierStatusQuery.Id,QueryCode = CourierStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CourierStatus.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn CourierStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierStatusQuery.Id,QueryCode = CourierStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CourierStatus.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CourierStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierStatusQuery.Id,QueryCode = CourierStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CourierStatus.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CourierStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierStatusQuery.Id,QueryCode = CourierStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CourierStatus.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CourierStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierStatusQuery.Id,QueryCode = CourierStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CourierStatus.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

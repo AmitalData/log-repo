@@ -404,11 +404,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CourtInstanceQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CourtInstanceTextCode_0.Id, NameTextCodeCode = CourtInstanceTextCode_0.Code, ObjectTableName = "Customs.CourtInstance", Code = "CourtInstance",  QueryGroupCode = "269e", IndexOrder = 0, Tenant = 0, ObjectTableId = CourtInstanceObjectTable.Id, QuerySection = "Customs.CourtInstance", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CourtInstanceFeature_0.Id,FeatureUniqeCode= CourtInstanceFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CourtInstanceQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourtInstanceQuery.Id,QueryCode = CourtInstanceQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CourtInstance.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CourtInstanceQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourtInstanceQuery.Id,QueryCode = CourtInstanceQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CourtInstance.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn CourtInstanceQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourtInstanceQuery.Id,QueryCode = CourtInstanceQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CourtInstance.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CourtInstanceQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourtInstanceQuery.Id,QueryCode = CourtInstanceQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CourtInstance.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CourtInstanceQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourtInstanceQuery.Id,QueryCode = CourtInstanceQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CourtInstance.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CourtInstanceQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourtInstanceQuery.Id,QueryCode = CourtInstanceQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CourtInstance.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

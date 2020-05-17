@@ -465,13 +465,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query SiteLookupQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SiteLookupTextCode_0.Id, NameTextCodeCode = SiteLookupTextCode_0.Code, ObjectTableName = "Customs.SiteLookup", Code = "SiteLookup",  QueryGroupCode = "SITL", IndexOrder = 0, Tenant = 0, ObjectTableId = SiteLookupObjectTable.Id, QuerySection = "Customs.SiteLookup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SiteLookupFeature_0.Id,FeatureUniqeCode= SiteLookupFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn SiteLookupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteLookupQuery.Id,QueryCode = SiteLookupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "SiteLookup.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SiteLookupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteLookupQuery.Id,QueryCode = SiteLookupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.SiteLookup.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SiteLookupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteLookupQuery.Id,QueryCode = SiteLookupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "SiteLookup.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SiteLookupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteLookupQuery.Id,QueryCode = SiteLookupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.SiteLookup.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SiteLookupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteLookupQuery.Id,QueryCode = SiteLookupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "SiteLookup.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SiteLookupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteLookupQuery.Id,QueryCode = SiteLookupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.SiteLookup.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SiteLookupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteLookupQuery.Id,QueryCode = SiteLookupQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "SiteLookup.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SiteLookupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteLookupQuery.Id,QueryCode = SiteLookupQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.SiteLookup.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

@@ -411,13 +411,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query OrganizationUnitTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OrganizationUnitTypeTextCode_0.Id, NameTextCodeCode = OrganizationUnitTypeTextCode_0.Code, ObjectTableName = "Customs.OrganizationUnitType", Code = "OrganizationUnitType",  QueryGroupCode = "ORUT", IndexOrder = 0, Tenant = 0, ObjectTableId = OrganizationUnitTypeObjectTable.Id, QuerySection = "Customs.OrganizationUnitType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = OrganizationUnitTypeFeature_0.Id,FeatureUniqeCode= OrganizationUnitTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn OrganizationUnitTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OrganizationUnitTypeQuery.Id,QueryCode = OrganizationUnitTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "OrganizationUnitType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OrganizationUnitTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OrganizationUnitTypeQuery.Id,QueryCode = OrganizationUnitTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.OrganizationUnitType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OrganizationUnitTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OrganizationUnitTypeQuery.Id,QueryCode = OrganizationUnitTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "OrganizationUnitType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OrganizationUnitTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OrganizationUnitTypeQuery.Id,QueryCode = OrganizationUnitTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.OrganizationUnitType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OrganizationUnitTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OrganizationUnitTypeQuery.Id,QueryCode = OrganizationUnitTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "OrganizationUnitType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OrganizationUnitTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OrganizationUnitTypeQuery.Id,QueryCode = OrganizationUnitTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.OrganizationUnitType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OrganizationUnitTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OrganizationUnitTypeQuery.Id,QueryCode = OrganizationUnitTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "OrganizationUnitType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OrganizationUnitTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OrganizationUnitTypeQuery.Id,QueryCode = OrganizationUnitTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.OrganizationUnitType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

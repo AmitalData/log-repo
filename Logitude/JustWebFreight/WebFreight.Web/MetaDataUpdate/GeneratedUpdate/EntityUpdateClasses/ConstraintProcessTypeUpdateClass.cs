@@ -409,13 +409,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ConstraintProcessTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConstraintProcessTypeTextCode_0.Id, NameTextCodeCode = ConstraintProcessTypeTextCode_0.Code, ObjectTableName = "Customs.ConstraintProcessType", Code = "ConstraintProcessType",  QueryGroupCode = "CTPT", IndexOrder = 0, Tenant = 0, ObjectTableId = ConstraintProcessTypeObjectTable.Id, QuerySection = "Customs.ConstriantProcessType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConstraintProcessTypeFeature_0.Id,FeatureUniqeCode= ConstraintProcessTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ConstraintProcessTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintProcessTypeQuery.Id,QueryCode = ConstraintProcessTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConstraintProcessType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConstraintProcessTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintProcessTypeQuery.Id,QueryCode = ConstraintProcessTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ConstraintProcessType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConstraintProcessTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintProcessTypeQuery.Id,QueryCode = ConstraintProcessTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConstraintProcessType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConstraintProcessTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintProcessTypeQuery.Id,QueryCode = ConstraintProcessTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ConstraintProcessType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConstraintProcessTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintProcessTypeQuery.Id,QueryCode = ConstraintProcessTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ConstraintProcessType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConstraintProcessTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintProcessTypeQuery.Id,QueryCode = ConstraintProcessTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ConstraintProcessType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConstraintProcessTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintProcessTypeQuery.Id,QueryCode = ConstraintProcessTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ConstraintProcessType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConstraintProcessTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintProcessTypeQuery.Id,QueryCode = ConstraintProcessTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ConstraintProcessType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

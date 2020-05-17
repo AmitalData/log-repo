@@ -456,13 +456,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CustomsBranchQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsBranchTextCode_0.Id, NameTextCodeCode = CustomsBranchTextCode_0.Code, ObjectTableName = "Customs.CustomsBranch", Code = "CustomsBranch",  QueryGroupCode = "CUBR", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsBranchObjectTable.Id, QuerySection = "Customs.CustomsBranch", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsBranchFeature_0.Id,FeatureUniqeCode= CustomsBranchFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomsBranchQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBranchQuery.Id,QueryCode = CustomsBranchQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsBranch.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsBranchQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBranchQuery.Id,QueryCode = CustomsBranchQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsBranch.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsBranchQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBranchQuery.Id,QueryCode = CustomsBranchQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsBranch.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsBranchQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBranchQuery.Id,QueryCode = CustomsBranchQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsBranch.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsBranchQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBranchQuery.Id,QueryCode = CustomsBranchQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsBranch.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsBranchQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBranchQuery.Id,QueryCode = CustomsBranchQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsBranch.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsBranchQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBranchQuery.Id,QueryCode = CustomsBranchQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsBranch.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsBranchQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsBranchQuery.Id,QueryCode = CustomsBranchQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsBranch.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

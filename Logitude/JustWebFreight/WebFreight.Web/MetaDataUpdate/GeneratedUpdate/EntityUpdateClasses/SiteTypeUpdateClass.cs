@@ -414,13 +414,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query SiteTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SiteTypeTextCode_0.Id, NameTextCodeCode = SiteTypeTextCode_0.Code, ObjectTableName = "Customs.SiteType", Code = "SiteType",  QueryGroupCode = "SITT", IndexOrder = 0, Tenant = 0, ObjectTableId = SiteTypeObjectTable.Id, QuerySection = "Customs.SiteType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SiteTypeFeature_0.Id,FeatureUniqeCode= SiteTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn SiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteTypeQuery.Id,QueryCode = SiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "SiteType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteTypeQuery.Id,QueryCode = SiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.SiteType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteTypeQuery.Id,QueryCode = SiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "SiteType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteTypeQuery.Id,QueryCode = SiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.SiteType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteTypeQuery.Id,QueryCode = SiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "SiteType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteTypeQuery.Id,QueryCode = SiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.SiteType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteTypeQuery.Id,QueryCode = SiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "SiteType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SiteTypeQuery.Id,QueryCode = SiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.SiteType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

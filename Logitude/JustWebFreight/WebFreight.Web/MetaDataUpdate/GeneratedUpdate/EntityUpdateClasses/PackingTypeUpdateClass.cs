@@ -415,13 +415,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query PackingTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PackingTypeTextCode_0.Id, NameTextCodeCode = PackingTypeTextCode_0.Code, ObjectTableName = "Customs.PackingType", Code = "PackingType",  QueryGroupCode = "PAKT", IndexOrder = 0, Tenant = 0, ObjectTableId = PackingTypeObjectTable.Id, QuerySection = "Customs.PackingType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PackingTypeFeature_0.Id,FeatureUniqeCode= PackingTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PackingTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackingTypeQuery.Id,QueryCode = PackingTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PackingType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PackingTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackingTypeQuery.Id,QueryCode = PackingTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PackingType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PackingTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackingTypeQuery.Id,QueryCode = PackingTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PackingType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PackingTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackingTypeQuery.Id,QueryCode = PackingTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PackingType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PackingTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackingTypeQuery.Id,QueryCode = PackingTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PackingType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PackingTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackingTypeQuery.Id,QueryCode = PackingTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PackingType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PackingTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackingTypeQuery.Id,QueryCode = PackingTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PackingType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PackingTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PackingTypeQuery.Id,QueryCode = PackingTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.PackingType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

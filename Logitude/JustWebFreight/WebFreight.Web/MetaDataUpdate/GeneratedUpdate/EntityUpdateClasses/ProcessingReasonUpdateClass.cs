@@ -396,11 +396,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ProcessingReasonQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ProcessingReasonTextCode_0.Id, NameTextCodeCode = ProcessingReasonTextCode_0.Code, ObjectTableName = "Customs.ProcessingReason", Code = "ProcessingReason",  QueryGroupCode = "5969", IndexOrder = 0, Tenant = 0, ObjectTableId = ProcessingReasonObjectTable.Id, QuerySection = "Customs.ProcessingReason", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ProcessingReasonFeature_0.Id,FeatureUniqeCode= ProcessingReasonFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ProcessingReasonQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProcessingReasonQuery.Id,QueryCode = ProcessingReasonQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ProcessingReason.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ProcessingReasonQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProcessingReasonQuery.Id,QueryCode = ProcessingReasonQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ProcessingReason.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ProcessingReasonQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProcessingReasonQuery.Id,QueryCode = ProcessingReasonQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ProcessingReason.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ProcessingReasonQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProcessingReasonQuery.Id,QueryCode = ProcessingReasonQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ProcessingReason.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ProcessingReasonQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProcessingReasonQuery.Id,QueryCode = ProcessingReasonQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ProcessingReason.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ProcessingReasonQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ProcessingReasonQuery.Id,QueryCode = ProcessingReasonQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ProcessingReason.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

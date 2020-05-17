@@ -672,13 +672,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CurrencyTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CurrencyTypeTextCode_0.Id, NameTextCodeCode = CurrencyTypeTextCode_0.Code, ObjectTableName = "Customs.CurrencyType", Code = "CurrencyType",  QueryGroupCode = "CURT", IndexOrder = 0, Tenant = 0, ObjectTableId = CurrencyTypeObjectTable.Id, QuerySection = "Customs.CurrencyType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CurrencyTypeFeature_0.Id,FeatureUniqeCode= CurrencyTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CurrencyTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CurrencyTypeQuery.Id,QueryCode = CurrencyTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CurrencyType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CurrencyTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CurrencyTypeQuery.Id,QueryCode = CurrencyTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CurrencyType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CurrencyTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CurrencyTypeQuery.Id,QueryCode = CurrencyTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CurrencyType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CurrencyTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CurrencyTypeQuery.Id,QueryCode = CurrencyTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CurrencyType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CurrencyTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CurrencyTypeQuery.Id,QueryCode = CurrencyTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CurrencyType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CurrencyTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CurrencyTypeQuery.Id,QueryCode = CurrencyTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CurrencyType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CurrencyTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CurrencyTypeQuery.Id,QueryCode = CurrencyTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CurrencyType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CurrencyTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CurrencyTypeQuery.Id,QueryCode = CurrencyTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CurrencyType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -697,11 +697,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CurrencyTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CurrencyType.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CurrencyTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CurrencyTypeCurrencyTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id,ScreenCode = CurrencyTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CurrencyType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCurrencyTypeCurrencyTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id,ScreenCode = CurrencyTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CurrencyType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CurrencyTypeCurrencyTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id,ScreenCode = CurrencyTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CurrencyType.MehesInactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCurrencyTypeCurrencyTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id,ScreenCode = CurrencyTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CurrencyType.MehesInactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CurrencyTypeCurrencyTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id,ScreenCode = CurrencyTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "CurrencyType.TenantInactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCurrencyTypeCurrencyTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id,ScreenCode = CurrencyTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CurrencyType.TenantInactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

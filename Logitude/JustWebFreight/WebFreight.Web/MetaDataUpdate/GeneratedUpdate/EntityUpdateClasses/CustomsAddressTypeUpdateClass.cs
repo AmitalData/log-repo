@@ -408,13 +408,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CustomsAddressTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsAddressTypeTextCode_0.Id, NameTextCodeCode = CustomsAddressTypeTextCode_0.Code, ObjectTableName = "Customs.CustomsAddressType", Code = "CustomsAddressType",  QueryGroupCode = "CUAT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsAddressTypeObjectTable.Id, QuerySection = "Customs.CustomsAddressType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsAddressTypeFeature_0.Id,FeatureUniqeCode= CustomsAddressTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomsAddressTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsAddressTypeQuery.Id,QueryCode = CustomsAddressTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsAddressType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsAddressTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsAddressTypeQuery.Id,QueryCode = CustomsAddressTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsAddressType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsAddressTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsAddressTypeQuery.Id,QueryCode = CustomsAddressTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsAddressType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsAddressTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsAddressTypeQuery.Id,QueryCode = CustomsAddressTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsAddressType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsAddressTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsAddressTypeQuery.Id,QueryCode = CustomsAddressTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsAddressType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsAddressTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsAddressTypeQuery.Id,QueryCode = CustomsAddressTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsAddressType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsAddressTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsAddressTypeQuery.Id,QueryCode = CustomsAddressTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsAddressType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsAddressTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsAddressTypeQuery.Id,QueryCode = CustomsAddressTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsAddressType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

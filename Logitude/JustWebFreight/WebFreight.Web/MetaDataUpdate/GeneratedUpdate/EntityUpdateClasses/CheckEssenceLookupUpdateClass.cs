@@ -405,13 +405,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CheckEssenceLookupQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CheckEssenceLookupTextCode_0.Id, NameTextCodeCode = CheckEssenceLookupTextCode_0.Code, ObjectTableName = "Customs.CheckEssenceLookup", Code = "CheckEssenceLookup",  QueryGroupCode = "CEQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CheckEssenceLookupObjectTable.Id, QuerySection = "Customs.CheckEssenceLookup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CheckEssenceLookupFeature_0.Id,FeatureUniqeCode= CheckEssenceLookupFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CheckEssenceLookupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEssenceLookupQuery.Id,QueryCode = CheckEssenceLookupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CheckEssenceLookup.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckEssenceLookupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEssenceLookupQuery.Id,QueryCode = CheckEssenceLookupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CheckEssenceLookup.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckEssenceLookupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEssenceLookupQuery.Id,QueryCode = CheckEssenceLookupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CheckEssenceLookup.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckEssenceLookupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEssenceLookupQuery.Id,QueryCode = CheckEssenceLookupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CheckEssenceLookup.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckEssenceLookupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEssenceLookupQuery.Id,QueryCode = CheckEssenceLookupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CheckEssenceLookup.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckEssenceLookupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEssenceLookupQuery.Id,QueryCode = CheckEssenceLookupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CheckEssenceLookup.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CheckEssenceLookupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEssenceLookupQuery.Id,QueryCode = CheckEssenceLookupQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CheckEssenceLookup.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CheckEssenceLookupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CheckEssenceLookupQuery.Id,QueryCode = CheckEssenceLookupQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CheckEssenceLookup.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

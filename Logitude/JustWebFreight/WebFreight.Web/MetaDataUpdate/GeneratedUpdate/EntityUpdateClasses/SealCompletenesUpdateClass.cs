@@ -476,13 +476,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query SealCompletenesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SealCompletenesTextCode_0.Id, NameTextCodeCode = SealCompletenesTextCode_0.Code, ObjectTableName = "Customs.SealCompletenes", Code = "SealCompletenes",  QueryGroupCode = "bc45", IndexOrder = 0, Tenant = 0, ObjectTableId = SealCompletenesObjectTable.Id, QuerySection = "Customs.SealCompletenes", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SealCompletenesFeature_0.Id,FeatureUniqeCode= SealCompletenesFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn SealCompletenesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealCompletenesQuery.Id,QueryCode = SealCompletenesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "SealCompletenes.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn SealCompletenesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealCompletenesQuery.Id,QueryCode = SealCompletenesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.SealCompletenes.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn SealCompletenesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealCompletenesQuery.Id,QueryCode = SealCompletenesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "SealCompletenes.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn SealCompletenesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealCompletenesQuery.Id,QueryCode = SealCompletenesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.SealCompletenes.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SealCompletenesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealCompletenesQuery.Id,QueryCode = SealCompletenesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "SealCompletenes.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn SealCompletenesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealCompletenesQuery.Id,QueryCode = SealCompletenesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.SealCompletenes.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn SealCompletenesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealCompletenesQuery.Id,QueryCode = SealCompletenesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "SealCompletenes.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn SealCompletenesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SealCompletenesQuery.Id,QueryCode = SealCompletenesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.SealCompletenes.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

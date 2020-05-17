@@ -475,13 +475,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query UIMessageQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = UIMessageTextCode_0.Id, NameTextCodeCode = UIMessageTextCode_0.Code, ObjectTableName = "Customs.UIMessage", Code = "UIMessage",  QueryGroupCode = "ea48", IndexOrder = 0, Tenant = 0, ObjectTableId = UIMessageObjectTable.Id, QuerySection = "Customs.UIMessage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = UIMessageFeature_0.Id,FeatureUniqeCode= UIMessageFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn UIMessageQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "UIMessage.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn UIMessageQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.UIMessage.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn UIMessageQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "UIMessage.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn UIMessageQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.UIMessage.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UIMessageQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "UIMessage.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn UIMessageQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.UIMessage.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn UIMessageQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "UIMessage.Sort" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn UIMessageQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UIMessageQuery.Id,QueryCode = UIMessageQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.UIMessage.Sort" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -500,11 +500,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen UIMessageGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "UIMessage.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = UIMessageObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField UIMessageUIMessageGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = "UIMessage.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsUIMessageUIMessageGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.UIMessage.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField UIMessageUIMessageGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = "UIMessage.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsUIMessageUIMessageGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.UIMessage.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField UIMessageUIMessageGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = "UIMessage.Sort", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsUIMessageUIMessageGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = UIMessageGeneralTabScreenScreen0.Id,ScreenCode = UIMessageGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.UIMessage.Sort", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
