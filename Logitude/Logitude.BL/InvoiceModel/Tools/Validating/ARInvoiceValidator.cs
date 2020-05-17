@@ -506,47 +506,50 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
 
                 #region Line Amounts
-                foreach (ARInvoiceLinePM item in entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
-                {
-                    double? lineForiegnAmount = MethodHelper.Round(item.ForiegnCurrencyAmount, 2);
-                    double? lineForiegnAmount_Computed = MethodHelper.Round(item.Quantity * item.UnitPrice, 2);
-                    if (lineForiegnAmount != lineForiegnAmount_Computed)
+                //if (!IsFullAccountingActivated(entityPM.Tenant))
+                //{
+                    foreach (ARInvoiceLinePM item in entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
                     {
-                        throw new ApplicationException("Wrong Line Foriegn Amount");
-                    }
-
-
-                    double? lineLocalAmount = MethodHelper.Round(item.LocalCurrencyAmount, 2);
-                    double? lineLocalAmount_Computed = MethodHelper.Round(item.ForiegnCurrencyAmount * item.ForiegnExchangeRate, 2);
-                    localAmount_Computed = localAmount_Computed + lineLocalAmount_Computed;
-                    if (item.VatPercentage != 0)
-                    {
-                        localAmount_Computed = localAmount_Computed + (lineLocalAmount_Computed * item.VatPercentage / 100);
-                    }
-                    if (lineLocalAmount != lineLocalAmount_Computed)
-                    {
-                        throw new ApplicationException("Wrong Line Local Amount");
-                    }
-
-                    double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
-                    double? exchangeRate = entityPM.InvoiceCurrencyExchangeRate;
-                    double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
-                    if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
-                    {
-                        if (lineInvoiceAmount != lineForiegnAmount)
+                        double? lineForiegnAmount = MethodHelper.Round(item.ForiegnCurrencyAmount, 2);
+                        double? lineForiegnAmount_Computed = MethodHelper.Round(item.Quantity * item.UnitPrice, 2);
+                        if (lineForiegnAmount != lineForiegnAmount_Computed)
                         {
-                            throw new ApplicationException("Wrong Line Invoice Amount");
+                            throw new ApplicationException("Wrong Line Foriegn Amount");
+                        }
+
+
+                        double? lineLocalAmount = MethodHelper.Round(item.LocalCurrencyAmount, 2);
+                        double? lineLocalAmount_Computed = MethodHelper.Round(item.ForiegnCurrencyAmount * item.ForiegnExchangeRate, 2);
+                        localAmount_Computed = localAmount_Computed + lineLocalAmount_Computed;
+                        if (item.VatPercentage != 0)
+                        {
+                            localAmount_Computed = localAmount_Computed + (lineLocalAmount_Computed * item.VatPercentage / 100);
+                        }
+                        if (lineLocalAmount != lineLocalAmount_Computed && !!IsFullAccountingActivated(entityPM.Tenant))
+                        {
+                            throw new ApplicationException("Wrong Line Local Amount");
+                        }
+
+                        double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
+                        double? exchangeRate = entityPM.InvoiceCurrencyExchangeRate;
+                        double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
+                        if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
+                        {
+                            if (lineInvoiceAmount != lineForiegnAmount && !!IsFullAccountingActivated(entityPM.Tenant))
+                            {
+                                throw new ApplicationException("Wrong Line Invoice Amount");
+                            }
+                        }
+
+                        else
+                        {
+                            if (lineInvoiceAmount != lineInvoiceAmount_Computed && !IsFullAccountingActivated(entityPM.Tenant))
+                            {
+                                throw new ApplicationException("Wrong Line Invoice Amount");
+                            }
                         }
                     }
-
-                    else
-                    {
-                        if (lineInvoiceAmount != lineInvoiceAmount_Computed)
-                        {
-                            throw new ApplicationException("Wrong Line Invoice Amount");
-                        }
-                    }
-                }
+                //}
                 #endregion
 
                 #region Lines Amounts VS Invoice Amount
