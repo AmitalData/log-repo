@@ -1,4 +1,4 @@
-import {Component, ViewChildren, QueryList, OnInit} from '@angular/core';
+import {Component, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
@@ -12,7 +12,7 @@ import { EntityListService } from '../../../Infrastructure/Services/EntityListSe
     providers: [EntityResourceService],
 })
 
-export class OperationsComponent implements OnInit {
+export class OperationsComponent implements AfterViewInit {
     public IsMenuVisible: boolean = false;
     public IsBookingItemVisible: boolean = false;
     public IsSharedManifestItemVisible: boolean = false;
@@ -21,10 +21,16 @@ export class OperationsComponent implements OnInit {
     public IsAMANACItemVisible: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService) {
+        if (FeatureLocator.HasFeaturePermession("Booking", "Booking.Menu")) {
+            this.selectedItem = "BOOK";
+        }
 
+        else {
+            this.selectedItem = "SHIP";
+        }
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
@@ -53,54 +59,11 @@ export class OperationsComponent implements OnInit {
                             this.IsMenuVisible = true;
                         }
 
-                        this.RunComponent();
+                        this.SelectionChanged();
                     });
                 });
             });
         });
-    }
-
-    private isLoaderReady: boolean = false;
-    RunComponent() {
-        if (this.AllLocations) {
-
-            if (this.AllLocations.length == 0) {
-                this.RunComponentTimer();
-            }
-
-            else {
-                this.isLoaderReady = true;
-                this.SetSelectedItem();
-            }
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    } 
-
-    private SetSelectedItem() {
-        if (FeatureLocator.HasFeaturePermession("Booking", "Booking.Menu")) {
-            this.SelectedItem = "BOOK";
-        }
-
-        else {
-            this.SelectedItem = "SHIP";
-        }
     }
 
     private selectedItem: string;
@@ -119,77 +82,75 @@ export class OperationsComponent implements OnInit {
     private Page_AMANAC: any = null;
 
     SelectionChanged() {
-        if (this.isLoaderReady) {
-            if (this.SelectedItem != null) {
+        if (this.SelectedItem != null) {
 
-                let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedItem)[0];
-                if (myLocation != null) {
+            let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedItem)[0];
+            if (myLocation != null) {
 
-                    switch (this.SelectedItem) {
+                switch (this.SelectedItem) {
 
-                        case "BOOK": {
-                            if (this.Page_BOOK == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Booking", 0).subscribe((response:any) => {
-                                    SessionLocator.DynamicLoader.Load('./Booking/Components/Workspaces/BookingsComponent', myLocation.viewContainerRef)
-                                        .then(cmpRef => {
-                                            this.Page_BOOK = cmpRef.instance;
-                                            this.Page_BOOK.InitComponent();
-                                        });
-                                });
-                            }
-
-                            break;
-                        }
-
-                        case "SHIP": {
-                            if (this.Page_SHIP == null) {
-
-                                SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/ShipmentsComponent', myLocation.viewContainerRef)
+                    case "BOOK": {
+                        if (this.Page_BOOK == null) {
+                            this._entityResourceService.getEntityResourceByTableName("Booking", 0).subscribe((response: any) => {
+                                SessionLocator.DynamicLoader.Load('./Booking/Components/Workspaces/BookingsComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
-                                        this.Page_SHIP = cmpRef.instance;
-                                        this.Page_SHIP.InitComponent();
+                                        this.Page_BOOK = cmpRef.instance;
+                                        this.Page_BOOK.InitComponent();
                                     });
-                            }
-
-                            break;
+                            });
                         }
 
-                        case "SHMA": {
-                            if (this.Page_SHMA == null) {
-                                this._entityResourceService.getEntityResourceByTableName("AgentSharedManifest", 0).subscribe((response:any) => {
-                            
-                                    SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestsWorkSpaces', myLocation.viewContainerRef)
-                                            .then(cmpRef => {
-                                                this.Page_SHMA = cmpRef.instance;
-                                                this.Page_SHMA.InitComponent();
-                                            });
-                                 
-                                });
-                            }
+                        break;
+                    }
 
-                            break;
-                        }
+                    case "SHIP": {
+                        if (this.Page_SHIP == null) {
 
-                        case "CNFU": {
-
-                            SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/ContainersFUsComponent', myLocation.viewContainerRef)
+                            SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/ShipmentsComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
-                                    this.Page_CNFU = cmpRef.instance;
+                                    this.Page_SHIP = cmpRef.instance;
+                                    this.Page_SHIP.InitComponent();
                                 });
-
-                            break;
                         }
 
+                        break;
+                    }
 
-                        case "AMANAC": {
+                    case "SHMA": {
+                        if (this.Page_SHMA == null) {
+                            this._entityResourceService.getEntityResourceByTableName("AgentSharedManifest", 0).subscribe((response: any) => {
 
-                            SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/AMANACComponent', myLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    this.Page_AMANAC = cmpRef.instance;
-                                });
+                                SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestsWorkSpaces', myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.Page_SHMA = cmpRef.instance;
+                                        this.Page_SHMA.InitComponent();
+                                    });
 
-                            break;
+                            });
                         }
+
+                        break;
+                    }
+
+                    case "CNFU": {
+
+                        SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/ContainersFUsComponent', myLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                this.Page_CNFU = cmpRef.instance;
+                            });
+
+                        break;
+                    }
+
+
+                    case "AMANAC": {
+
+                        SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/AMANACComponent', myLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                this.Page_AMANAC = cmpRef.instance;
+                            });
+
+                        break;
                     }
                 }
             }

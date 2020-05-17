@@ -1,4 +1,7 @@
 
+// Directives
+import { ChildDirective } from './Directives/ChildDirective';
+
 // Pipes
 import {CountryFlagPipe} from './Pipes/CountryFlagPipe';
 import {DateTimeToDatePipe} from  './Pipes/DateTimeToDatePipe';
@@ -67,7 +70,10 @@ import {ConnectToFilter} from './ConnectToFilter';
 import { ParticipatedFilter } from './ParticipatedFilter';
 import { InvitedFilter } from './InvitedFilter';
 
-
+export const Directives =
+    [
+        ChildDirective,
+    ];
 
 export const Pipes =
     [

@@ -1,5 +1,6 @@
 import {Component, AfterViewInit, ViewChild, ViewContainerRef, Output, EventEmitter, HostListener} from '@angular/core';
-import {Settings} from '../../Infrastructure/Settings';
+import { ChildDirective } from '../Directives/ChildDirective';
+import { Settings } from '../../Infrastructure/Settings';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 declare var dragger: any;
 
@@ -230,8 +231,7 @@ export class LogitudeWindow {
 
 }
 
-@Component({
-    
+@Component({    
     templateUrl: "./LogitudeWindow.html",
 })
 
@@ -266,29 +266,27 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public RTL: boolean = false;
     public BottomBorderForTitle: string = "none";
     public IsHideWindowMargin: boolean = false;
-
     LayoutDirection: string = 'ltr';
     public ZIndex: number = 0;
-
     leftPadding: number = 0;
-
     public IsOverAll: boolean = false;
-    @ViewChild("WindowContent", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
+    @ViewChild(ChildDirective) Child: ChildDirective;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
+
         if (this.LayoutDirection == 'rtl') {
             this.RTL = true;
         }
     }
 
+    private isChildInjected: boolean = false;
     private ChildComponentPath: string = null;
+    private isAfterViewInited: boolean = false;
     ngAfterViewInit() {
-        //this.isLoaderReady = true;
-        //this.LoadComponent();
-        this.Focus();
-
-
+        this.isAfterViewInited = true;
+        this.FocusWindow();
+        this.LoadChildComponent();
     }
 
     private logWindow: LogitudeWindow;
@@ -318,9 +316,9 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
         this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
-
         this.SetWindowSize();
-        this.RunComponent();
+        this.isChildInjected = true;
+        this.LoadChildComponent();
     }
 
     private EditComponentEntityId: string;
@@ -334,9 +332,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.EditComponentTableName = objectTableName;
         this.EditComponentTabCode = selectedTabCode;
         this.ShowHeaderButtons = true;
-
         this.CreateDynamicIds();
-
         this.Title = logWindow.Title;
         this.TitleIcon = logWindow.TitleIcon;
         this.WindowArgs = logWindow.WindowArgs;
@@ -351,14 +347,13 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.NotifyOnClose = logWindow.NotifyOnClose;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
         this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
-
-
         this.ChildComponentPath = "./Infrastructure/Components/EditComponent/EditComponent";
         this.HelpText = logWindow.HelpText;
         this.RTL = logWindow.RTL;
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
         this.SetWindowSize();
-        this.RunComponent();
+        this.isChildInjected = true;
+        this.LoadChildComponent();
     }
 
     private SetWindowSize() {
@@ -476,7 +471,6 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
             this.Left = leftProperty + "px";
         }
     }
-
     private CreateDynamicIds() {
         this.WindowId = "LogitudeWindow_" + this.CurrentSession.SessionIndex + "_" + this.CurrentSession.SessionWindowIndex;
         this.FocusElementId = "LogitudeWindowFocusElement_" + this.CurrentSession.SessionIndex + "_" + this.CurrentSession.SessionWindowIndex;
@@ -485,53 +479,24 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.logWindow.WindowContainerId = this.WindowContainerId;
     }
 
-    private Focus() {
-        if (this.isLoaderReady) {
-            if (this.FocusElementId != null) {
-                var element = document.getElementById(this.FocusElementId);
-                if (element != null) {
-                    element.focus();
-                }
+    FocusWindow() {
+        if (this.FocusElementId) {
+            var element = document.getElementById(this.FocusElementId);
+            if (element) {
+                element.focus();
             }
-        }
-    }
-
-    private isLoaderReady: boolean;
-    private RunComponent() {
-        if (this.viewContainerRef) {
-            this.isLoaderReady = true;
-            this.LoadComponent();
-            this.Focus();
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
 
     private ComponentRef: any = null;
     private ComponentInstance: any = null;
-    private LoadComponent() {
-        if (this.isLoaderReady) {
+    private LoadChildComponent() {
+        if (this.isChildInjected && this.isAfterViewInited) {
             if (this.ChildComponentPath != null) {
 
                 if (this.IsEditComponent) {
 
-                    SessionLocator.DynamicLoader.Load(this.ChildComponentPath, this.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load(this.ChildComponentPath, this.Child.Location)
                         .then(cmpRef => {
                             this.ComponentRef = cmpRef;
                             cmpRef.instance.ComponentRef = cmpRef;
@@ -543,7 +508,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
                 }
 
                 else {
-                    SessionLocator.DynamicLoader.Load(this.ChildComponentPath, this.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load(this.ChildComponentPath, this.Child.Location)
                         .then(cmpRef => {
                             this.ComponentRef = cmpRef;
                             this.ComponentInstance = this.ComponentRef.instance;
