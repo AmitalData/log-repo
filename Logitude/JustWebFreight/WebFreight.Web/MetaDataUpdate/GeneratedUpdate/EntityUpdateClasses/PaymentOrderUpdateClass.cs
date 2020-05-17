@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PaymentOrderUpdateClass
    {  		
-		public const string HashString = "538142763b903c1740956aab73919394";
+		public const string HashString = "5b64444fa9869e0638ca26b4d2bb13bb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3253,7 +3253,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentOrderFeature_MB00.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "סגירת הוראה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentOrderFeature_MB00.FeatureUniqeCode,
@@ -3273,7 +3273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentOrderFeature_MB01.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "ביטול סגירת הוראה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentOrderFeature_MB01.FeatureUniqeCode,
@@ -3293,7 +3293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentOrderFeature_MB02.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "הדפס הוראת תשלום",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentOrderFeature_MB02.FeatureUniqeCode,
@@ -3313,7 +3313,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentOrderFeature_MB03.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "הדפס הודעת חיוב",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentOrderFeature_MB03.FeatureUniqeCode,
@@ -3333,7 +3333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "control",
 						FeatureId = PaymentOrderFeature_MB1.Id,
 						Style = null,
-						LocalDefaultText = "שלח תשלום הזמנה",
+						LocalDefaultText = "שלח תביעה",
 						FeatureUniqeCode = PaymentOrderFeature_MB1.FeatureUniqeCode,
 						HtmlComponentPath = "./CustomsModules/CustomsPaymentOrder/Components/SendPaymentOrder/SendPaymentOrderComponent",
 						Width = 0,
