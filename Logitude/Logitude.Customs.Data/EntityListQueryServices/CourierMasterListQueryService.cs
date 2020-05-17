@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CourierMasterList> GetIqueryableList(IQueryable<CourierMaster> iQueryable)
         {
-
+            var today = DateTime.Now.Date;
             var qJoin=
 (from p in context.CourierDeclarations
  join dec in context.Declarations
@@ -60,14 +60,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
 
 
-//#if false
+                                                       //#if false
 
 
                                                    join recJoin in qMyJoin
                                                               on a.Id equals recJoin.CourierMasterId
                                                               into qrecJoin
                                                    from myJoin in qrecJoin.DefaultIfEmpty()
-//#endif
+                                                       //#endif
                                                    select new CourierMasterList()
                                                    {
                                                        // comments made because of cannot convert nclob to char exception ---mohammad
@@ -114,6 +114,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        CalcPending900 = myJoin != null ? myJoin.P900 : 0,
                                                        CalcPendingCustoms = myJoin != null ? myJoin.IsPendingCustoms : 0,
                                                        CalcSuspendedDeclarations = myJoin != null ? myJoin.IsSuspendedDeclarations : 0,
+                                                       IsEstimatedArrivalToDay = a.EstimatedArrivalDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) == today ? true : false) : false,
+                                                       //EstimatedArrivalDateOnly =
+                                                       //a.EstimatedArrivalDate != null ? System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) : null
                                                    });
             return query;
 		}
