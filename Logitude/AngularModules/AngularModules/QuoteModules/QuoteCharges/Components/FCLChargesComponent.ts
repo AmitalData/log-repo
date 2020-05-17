@@ -604,7 +604,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.RunAddEditCharge(itemComponent, title);
     }
     DeleteChargeClicked(itemComponent: FCLQuoteChargeItem) {
-        if (itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+        if ((itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) ||
+            (itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsCostAllIn).length > 0)) {
             var window = new MessageWindow();
             window.Show("Can't delete this charge because it's connected to other All In charges");
             window.WindowClosed.subscribe((event: any) => {
