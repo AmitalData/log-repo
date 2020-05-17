@@ -350,6 +350,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     queryFilterItem.FieldName = "IsReconciled";
     queryFilterItem.Operator = "Equals";
     queryFilterItem.FieldValue = this.IsReconciled;
+    queryFilterItems.push(queryFilterItem)
 
     return queryFilterItems;
   }
