@@ -29,6 +29,7 @@ import { SpotlightSharedDataService } from '../../../Customs/Services/DataChange
 export class ReferantSpotlightDataTemplate
     extends BaseComponent
     implements AfterViewInit{
+    RowIndex: any;
     ngAfterViewInit(): void { 
         this.ShowBusyIndicator = false;
     }
@@ -67,8 +68,9 @@ export class ReferantSpotlightDataTemplate
         }
     }
     spotLightViewContainerRef: ViewContainerRef;
-    Run(entity: DeclarationReferantDataPM, SpotLightViewContainerRef: ViewContainerRef) {
+    Run(entity: DeclarationReferantDataPM, SpotLightViewContainerRef: ViewContainerRef, RowIndex) {
         this.EntityPM = entity;
+        this.RowIndex = RowIndex;
         this.spotLightViewContainerRef = SpotLightViewContainerRef;
         this.LoadReferantException();
         this.IsDisplayOnly = false;
@@ -182,7 +184,8 @@ export class ReferantSpotlightDataTemplate
                 this.ShowBusyIndicator = true;
                 this.BuildExceptionReasonsList();
                 this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
-                    SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                    SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.RowIndex });
+                    //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                 });
                 this.DeletedCodeList.forEach((item: string) => {
                     this._referantExceptionExtendedPMService.Delete(this.EntityPM.DeclarationId, item).subscribe((response: any) => {
