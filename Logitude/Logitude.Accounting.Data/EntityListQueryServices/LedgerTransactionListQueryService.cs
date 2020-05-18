@@ -61,7 +61,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            OpenAmountCurrencyCode = a.OpenAmountCurrency.Code,
                                                            IsReconciled = a.IsReconciled,
                                                            InReconcileProgress = a.InReconcileProgress,
-
+                                                           InProgressExternalReconcile = a.InProgressExternalReconcile,
                                                            SourceId = a.JournalLine.Journal.AccountingEntityId, // hidden id to use in link
                                                            SourceNumber = a.JournalLine.Journal.AccountingEntityReference, // display number
                                                            SourceTypeCode = a.JournalLine.Journal.AccountingEntity.Code, // source type code from AccountingEntities
