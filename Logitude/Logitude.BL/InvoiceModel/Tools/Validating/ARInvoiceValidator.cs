@@ -1077,7 +1077,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     CheckCardConnectedGLAccount(invoice.Tenant, invoice.BillToId);
                 }
                 CheckInvoiceCurrency(invoice);
-                CheckClosedMonth(invoice.InvoiceDate, invoice.Tenant);
+                CheckClosedMonth(invoice.InvoiceDate, invoice.Tenant, invoice.ARInvoiceTypeCode);
 
                 if (errorsList.Count > 0)
                     throw new ApplicationException(string.Join(";", errorsList));
@@ -1131,9 +1131,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
         }
 
-        private static void CheckClosedMonth(DateTime? accountingDate, int tenant)
+        private static void CheckClosedMonth(DateTime? accountingDate, int tenant ,string Type=null)
         {
-            AccountingPeriodList period = GetInvoiceAccountPeriodByYear(tenant, accountingDate.Value.Year);
+            AccountingPeriodList period = GetInvoiceAccountPeriodByYear(tenant, accountingDate.Value.Year, Type);
 
             if (period != null && accountingDate != null)
             {
@@ -1154,14 +1154,19 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             return msg;
         }
 
-        private static AccountingPeriodList GetInvoiceAccountPeriodByYear(int tenant, int year)
+        private static AccountingPeriodList GetInvoiceAccountPeriodByYear(int tenant, int year,string Type=null)
         {
+            string AccountPeriodCode = "2";// 2- Invoice
+            if (Type == "IT")
+            {
+                AccountPeriodCode = "3";// 2- Interest Invoice
+            }
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(accountingContext);
-            AccountingPeriodList accountingPeriod = accountingPeriodQuery.GetByYear(year, "2", tenant); // 2- Invoice
+            AccountingPeriodList accountingPeriod = accountingPeriodQuery.GetByYear(year, AccountPeriodCode, tenant); 
             return accountingPeriod;
         }
-
+ 
         private static GLAccountPM getGLAccount(string billToId, int tenant)
         {
             GLAccountPM glaAccount = null;
