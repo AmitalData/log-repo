@@ -43,7 +43,9 @@
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
-  ApplyOnPropertyChangedCode="false">
+  ApplyOnPropertyChangedCode="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;e3d5dba5-dc3c-45ef-9a85-e46b5c1a3b15&quot;"
     FieldName="&quot;DeclarationId&quot;"

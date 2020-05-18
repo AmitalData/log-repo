@@ -35,7 +35,9 @@
   Name="&quot;Customs.SupplierInvoiceItemsProdIdent Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;547bcbda-84f5-4620-851c-47909191256b&quot;"
     FieldName="&quot;DeclarationId&quot;"

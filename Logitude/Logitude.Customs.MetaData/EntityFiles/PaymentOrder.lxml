@@ -60,7 +60,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;41a99405-57b6-497d-9326-928f0f224c59&quot;"
     FieldName="&quot;Id&quot;"
@@ -355,7 +357,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;e7acccb9-aa6b-498e-8d39-ad5dbe7ff0f7&quot;"
     FieldName="&quot;LastPayDate&quot;"
@@ -364,7 +367,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.PaymentOrder&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -984,7 +987,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.PaymentOrder&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"

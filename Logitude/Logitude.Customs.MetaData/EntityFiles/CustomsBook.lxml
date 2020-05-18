@@ -35,7 +35,9 @@
   Name="&quot;Customs.CustomsBook Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;2c80cc02-eb66-437c-9ac3-2e7665a75b27&quot;"
     FieldName="&quot;Id&quot;"

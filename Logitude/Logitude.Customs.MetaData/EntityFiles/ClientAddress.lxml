@@ -36,7 +36,9 @@
   Name="&quot;Customs.ClientAddress Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;78895b46-e2a8-48bf-a8a5-0478e8d96581&quot;"
     FieldName="&quot;ClientId&quot;"

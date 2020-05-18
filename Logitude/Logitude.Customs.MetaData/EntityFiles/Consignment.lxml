@@ -57,7 +57,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;d25555e5-4a66-4720-9be5-371c477e1772&quot;"
     FieldName="&quot;DeclarationId&quot;"
@@ -1400,7 +1402,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.DeliverySiteType&quot;"
     MinLength="0"
-    MaxLength="17"
+    MaxLength="20"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1549,7 +1551,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.RegisteredWarehouseSiteType&quot;"
     MinLength="0"
-    MaxLength="17"
+    MaxLength="20"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

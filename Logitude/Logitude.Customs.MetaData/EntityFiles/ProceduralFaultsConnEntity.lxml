@@ -34,7 +34,9 @@
   Name="&quot;Customs.ProceduralFaultsConnEntity Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;e5cd8fc9-c869-40e5-8d12-6bc5dace489f&quot;"
     FieldName="&quot;Id&quot;"

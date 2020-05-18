@@ -55,7 +55,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;adcde9e1-6fbe-4b86-8fdf-5303d15416be&quot;"
     FieldName="&quot;VendorId&quot;"

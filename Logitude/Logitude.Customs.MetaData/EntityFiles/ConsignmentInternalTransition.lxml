@@ -35,7 +35,9 @@
   Name="&quot;Customs.ConsignmentInternalTransition Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;30ef41f8-067c-47f1-a861-412d4cbe3c02&quot;"
     FieldName="&quot;DeclarationId&quot;"
@@ -204,7 +206,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.InternalBorderSiteType&quot;"
     MinLength="0"
-    MaxLength="17"
+    MaxLength="20"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="false"

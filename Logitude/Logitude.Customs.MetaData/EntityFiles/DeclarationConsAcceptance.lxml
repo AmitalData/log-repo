@@ -46,7 +46,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;011d5282-3804-441e-b1d1-3a83fab1c66b&quot;"
     FieldName="&quot;Tenant&quot;"

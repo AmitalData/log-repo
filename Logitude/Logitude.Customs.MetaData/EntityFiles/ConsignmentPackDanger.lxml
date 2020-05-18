@@ -62,7 +62,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;411aa29b-4cba-42a1-93ab-c882c354369e&quot;"
     FieldName="&quot;DeclarationId&quot;"

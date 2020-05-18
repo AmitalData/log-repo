@@ -57,7 +57,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;ce8a8e2d-f72b-46ff-9982-ad60f8cdc0a3&quot;"
     FieldName="&quot;ClaimId&quot;"

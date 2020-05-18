@@ -35,7 +35,9 @@
   Name="&quot;Customs.VendorCommunication Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;559e5f58-2c13-4313-8d3a-4ab419c5511d&quot;"
     FieldName="&quot;Tenant&quot;"

@@ -34,7 +34,9 @@
   Name="&quot;Customs.NotificationTenantDefinition Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;100a0296-6349-48c5-8a03-4e3ab5349478&quot;"
     FieldName="&quot;Id&quot;"

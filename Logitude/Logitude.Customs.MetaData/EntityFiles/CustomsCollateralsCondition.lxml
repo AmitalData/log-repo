@@ -34,7 +34,9 @@
   Name="&quot;Customs.CustomsCollateralsCondition Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;b9eadc7f-1b33-45ac-8837-1ade6cee1d64&quot;"
     FieldName="&quot;CustomsCollateralId&quot;"
@@ -252,7 +254,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;2f719173-7e32-45be-bfd6-2811033a34a1&quot;"
     FieldName="&quot;ConditionName&quot;"

@@ -58,7 +58,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;45e1ce09-b94e-413a-90ff-9e04105dbd7e&quot;"
     FieldName="&quot;Id&quot;"
@@ -429,7 +431,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="100"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"

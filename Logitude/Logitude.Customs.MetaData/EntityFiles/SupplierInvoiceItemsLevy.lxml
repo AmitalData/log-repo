@@ -34,7 +34,9 @@
   Name="&quot;Customs.SupplierInvoiceItemsLevy Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;6c24c759-95c6-409c-8575-b0efeca89684&quot;"
     FieldName="&quot;DeclarationId&quot;"

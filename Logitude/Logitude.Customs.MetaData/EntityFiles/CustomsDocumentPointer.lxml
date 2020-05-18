@@ -31,7 +31,9 @@
   DefaultText="&quot;Customs Document Pointer&quot;"
   Code="&quot;ea3a&quot;"
   Name="&quot;Customs.CustomsDocumentPointer Query Group&quot;"
-  GenerateDomainService="false">
+  GenerateDomainService="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;bc71462a-691c-48ae-a5c5-55ddb50249ea&quot;"
     FieldName="&quot;Id&quot;"

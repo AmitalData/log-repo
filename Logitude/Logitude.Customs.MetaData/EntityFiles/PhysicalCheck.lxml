@@ -58,7 +58,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;315584b2-bbae-4683-a0c7-fd09d133d853&quot;"
     FieldName="&quot;Id&quot;"
@@ -744,7 +746,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.PhysicalCheckOperation&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="4"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1714,7 +1716,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.PhysicalCheckStatusMessage&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="4"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
