@@ -91,7 +91,8 @@
                                             [SelectedValue]="item.VatTypeId"
                                             [LookUpTableName]="'VatType'"
                                             (SelectedItemChanged)="item.VatTypeList = $event"
-                                            [HideColumns]="true">
+                                            [HideColumns]="true"
+                                            [DependencyFilter1Value]="false">
                                     </LogLov>
                                 </div>
                             </log-cell-template>
