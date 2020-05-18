@@ -178,13 +178,14 @@ export class ShipmentValidator implements IShipmentValidator {
     }
 
     private ValidatePackages() {
-
-        //if (!AppTool.IsNullOrEmpty(this.entityPM.AWBCommodityItemNumber)) {
-        //    if (!FormatTool.Validate_CommodityNo(this.entityPM.AWBCommodityItemNumber)) {
-        //        var fieldName:string = TextCodeTranslator.Translate("Shipment.F.AWBCommodityItemNumber");
-        //        this.Errors.push(fieldName + " must be 4-7 numeric");
-        //    }
-        //}
+        if (this.IsFCLEntity) {
+            for (var i = 1; i <= 5; i++) {
+                if (!AppTool.IsNullOrEmpty(this.entityPM["Quantity" + i]) && AppTool.IsNullOrEmpty(this.entityPM["PackageTypeId" + i])) {
+                    this.Errors.push("Package type is required when Quantity is filled");
+                    break;
+                }
+            }
+        }
 
         this.entityPM.ShipmentPackages.forEach(item => {
             Validator.TryValidateObject(item, "ShipmentPackage", this.Errors);
