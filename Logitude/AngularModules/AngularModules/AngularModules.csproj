@@ -222,6 +222,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\CargoSeal\DeclarationCargoSealTabComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\CopyDeclarationComponent.html" />
+    <Content Include="CustomsModules\CustomsGeneralRequests\Components\ReceiptCertificateFromFileComponent.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsCollateralListTemplate.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ConsigmentPackagesDanger\ConsigmentPackagesDangerComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\AddEditCustomsAirlineComponent.html" />
@@ -854,6 +855,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\MorningMessageComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\RecallClientsForCutoms.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\RecallSuppliersFromFileComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\ReceiptCertificateFromFileComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\RequiredDocumentComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\SpecialActivityRequestComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\ModuleCustomsGeneralRequests.ts" />
@@ -1062,6 +1064,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\PendingByKeywordPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ReferantExceptionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />
+    <TypeScriptCompile Include="Customs\Services\WebServices\SupplierInvioceItemCertificatsService.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.ts" />
