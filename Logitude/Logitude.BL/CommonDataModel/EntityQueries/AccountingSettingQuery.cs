@@ -83,6 +83,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                TransferToFTPActivated = a.TransferToFTPActivated,
                                                TransferFTPDetailId = a.TransferFTPDetailId,
                                                TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
+                                               EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
                                            }).FirstOrDefault();
 
             return account;
@@ -143,7 +144,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                TransferToFTPActivated = a.TransferToFTPActivated,
                                                TransferFTPDetailId = a.TransferFTPDetailId,
                                                TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
-
+                                               EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
                                            }).FirstOrDefault();
 
             if (account != null)
@@ -218,7 +219,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        TransferToFTPActivated = a.TransferToFTPActivated,
                                        TransferFTPDetailId = a.TransferFTPDetailId,
                                        TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
-
+                                       EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
                                    });
 
                     foreach (var c in systems)
@@ -294,7 +295,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               TransferToFTPActivated = a.TransferToFTPActivated,
                               TransferFTPDetailId = a.TransferFTPDetailId,
                               TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
-
+                              EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
                           }).FirstOrDefault();
             }
 
@@ -355,7 +356,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
                                                             TransferToFTPActivated = a.TransferToFTPActivated,
                                                             TransferFTPDetailId = a.TransferFTPDetailId,
-
+                                                            EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
                                                         });
 
             return accounts;
@@ -414,6 +415,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
                                                            TransferToFTPActivated = a.TransferToFTPActivated,
                                                            TransferFTPDetailId = a.TransferFTPDetailId,
+                                                           EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
                                                        };
             return result;
         }

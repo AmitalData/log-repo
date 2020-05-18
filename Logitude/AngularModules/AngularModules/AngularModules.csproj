@@ -1237,6 +1237,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Validators\EventTypeValidator.ts" />
+    <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\Others\APInvoiceTotalVATOnlyComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentCancelationDetailsComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.ts" />
@@ -1266,6 +1267,7 @@
     <Content Include="Infrastructure\Components\QueryColumnsComponents\btnUpdateComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.html" />
+    <Content Include="InvoiceModules\APInvoice\Components\Others\APInvoiceTotalVATOnlyComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentCancelationDetailsComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.html" />

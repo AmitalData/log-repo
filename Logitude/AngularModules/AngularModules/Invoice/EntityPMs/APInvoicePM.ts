@@ -774,6 +774,11 @@ export class APInvoicePM {
     public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
        
 	 
+    private totalVATOnly: boolean;
+    public get TotalVATOnly() { return this.totalVATOnly; }
+    public set TotalVATOnly(newValue: boolean) { if (this.totalVATOnly != newValue) { this.totalVATOnly = newValue; this.MarkAsDirty("TotalVATOnly"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		
