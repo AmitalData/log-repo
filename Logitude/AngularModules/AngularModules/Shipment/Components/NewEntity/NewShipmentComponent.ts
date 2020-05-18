@@ -755,8 +755,14 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.SetUIProperties_MasterField();
         this.SetUIProperties_HouseField();
         this.SetUIProperties_VesselField();
-        this.SetUIProperties_OrderDetails();
-        this.SetUIProperties_Containers();
+
+        if (this.IsLCLEntity) {
+            this.SetUIProperties_OrderDetails();
+        }
+
+        else {
+            this.SetUIProperties_Containers();
+        }
     }
     SetUIProperties_Filters() {
 
