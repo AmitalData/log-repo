@@ -2317,7 +2317,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     private SetNewEntityLabel() {
         if (this.HaveFeatureNewExportDeclararion()) {
-            this.NewEntityButtonLabel = "הצהרת יצום חדשה"
+            this.NewEntityButtonLabel = "הצהרת יצוא חדשה"
         } else
         if (this.listArgs.NewButtonLabel != null) {
             this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
@@ -2549,7 +2549,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "הצהרת יצום ";
+        logWindow.Title = "הצהרת יצוא ";
         logWindow.Width = 800;
         logWindow.Height = 500;
         logWindow.NewWizardArgs = { IsNewEntity: true };
