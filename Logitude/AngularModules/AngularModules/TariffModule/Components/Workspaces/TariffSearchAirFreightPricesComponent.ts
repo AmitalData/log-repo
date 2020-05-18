@@ -1235,13 +1235,17 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
             var costQuantity: number = chargeItem.CostQuantity;
             if (costQuantity != null && costQuantity != 0) {
+            if (chargeItem.CostMeasurementCode == "PRVL" || chargeItem.CostMeasurementCode == "PRFR") {
+                chargeItem.CostUnitPrice = (costAmount / costQuantity) * 100;
+            }
+            else {
                 chargeItem.CostUnitPrice = (costAmount / costQuantity);
+            }
                 chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
             }
-
             chargeItem.ComputeSalePrice();
             chargeItem.ComputeSaleAmounts();
-            chargeItem.ComputeCostInSalePrice();
+            chargeItem.ComputeCostInSalePrice();  
             chargeItem.ComputeCostInSalePrice1();
             chargeItem.ComputeCostInSalePrice2();
             chargeItem.ComputeCostInSalePrice3();
@@ -1303,7 +1307,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 if (!item.IsAllIn) {
                     chargePM.CostMinAmount = AppTool.Round(item.MinPrice, 3);
                     var costAmount = AppTool.Round(item.ActualPrice, 3);
-                  
+                    chargePM.CostTotalAmount = costAmount;
                     if (isOFC) {
                         var bcntCharge = this.FatherComponent.AllMeasurements.filter(d => d.Code == "BCNT")[0];
                         measurementCode = bcntCharge.Code;
@@ -1315,6 +1319,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                         this.FillQuoteFCLCharges(this.ContainerType5Id, chargePM, item);
                     }
                 }
+              
                 chargePM.CostMeasurementCode = measurementCode;
                 chargePM.SaleMeasurementCode = measurementCode;
                 chargePM.CostMeasurementId = measurementId;
@@ -1328,7 +1333,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
     FillQuoteFCLCharges(packageId: string, chargePM: QuoteChargePM, item: any) {
-        var costAmount;
+        var costAmount = AppTool.Round(item.ActualPrice, 3);
         var quantity;
         if (item.ContainersPrices) {
             var container = item.ContainersPrices.filter(d => d.TariffId == item.TariffId && d.ContainerId == packageId)[0];
