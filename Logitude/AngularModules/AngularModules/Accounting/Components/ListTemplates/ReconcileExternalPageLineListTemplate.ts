@@ -10,7 +10,7 @@ import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+
     templateUrl: './ReconcileExternalPageLineListTemplate.html',
 })
 
@@ -54,7 +54,7 @@ export class ReconcileExternalPageLineListTemplate {
     }
     ExtPageCheckBoxClicked(checked: boolean) {
         console.log("clicked: ", checked);
-        this.rowData['IsChecked'] = checked;
+        // this.rowData['IsChecked'] = checked;
         ReconcileEventManager.ExtPageCheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
 
     }
