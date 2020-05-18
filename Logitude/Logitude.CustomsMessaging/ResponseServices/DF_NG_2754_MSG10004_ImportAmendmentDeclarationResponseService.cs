@@ -1014,7 +1014,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 }
                 supplierInvioceItemCertificatPM.ChangeSetOp = ChangeSetOperation.Insert;
-                supplierInvioceItemCertificatPMs.Add(supplierInvioceItemCertificatPM);
+                supplierInvioceItemCertificatPM.Tenant = tenant;
+               supplierInvioceItemCertificatPMs.Add(supplierInvioceItemCertificatPM);
             }
             return supplierInvioceItemCertificatPMs;
 
