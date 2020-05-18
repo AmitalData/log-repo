@@ -128,7 +128,7 @@ export class PayablesComponent extends BaseComponent {
     public get EstimateProfit() { return this.EntityPM.EstimateProfitInLocalCurrency; }
     public set EstimateProfit(value: number) {
         if (this.EntityPM.EstimateProfitInLocalCurrency != value) {
-            this.EntityPM.EstimateProfitInLocalCurrency = AppTool.Round(value, 2);
+            this.EntityPM.EstimateProfitInLocalCurrency = AppTool.Round(value, 2);            
         }
     }
 
