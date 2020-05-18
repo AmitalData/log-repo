@@ -257,7 +257,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             BankAccountPM bankAccount = GetBankAccountForExternalReconciliation(externalRecoPM);
 
-            if (bankAccount != null)
+            if (bankAccount != null && bankAccount.GLAccountId != bankAccount.TransferGLAcccountId)
             {
                 bool haveExternalPageLines = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerTransactionId == null && d.ExternalPageLineId != null) > 0;
                 int transferTransactionsCount = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerGLAccountId == bankAccount.TransferGLAcccountId);

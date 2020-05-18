@@ -402,6 +402,12 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "BatchTaskExecutionWR").ToList();
             }
+            var reportsTest = false;
+
+            if (reportsTest)
+            {
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "ReportExecutionLogWorkerRole").ToList();
+            }
             foreach (var Service in BatchServicesDefinitions)
             {
                 for (int i = 0; i < Service.NumberOfThreads; i++)
