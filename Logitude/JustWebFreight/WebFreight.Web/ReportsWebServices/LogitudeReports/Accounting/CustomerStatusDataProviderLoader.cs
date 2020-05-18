@@ -63,9 +63,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     || balanceFilter == "debt" && customerBalance > balanceFilterValue
                     || balanceFilter == "all" || balanceFilter == null)
                 {
-                    CustomerStatus customerStatus = CreateNewCustomerStatus(customer, periodsByDate);
+                        CustomerStatus customerStatus = CreateNewCustomerStatus(customer, periodsByDate);
+                    if (GetFilterValue<bool>("IsCreditLimitSet") == true && customerStatus.CreditLimit == 0)
+                    {
 
-                    dataProvider.CustomersStatuses.Add(customerStatus);
+                    }
+                    else
+                    {
+                        dataProvider.CustomersStatuses.Add(customerStatus);
+                    }
+
+
                 }
 
             }
