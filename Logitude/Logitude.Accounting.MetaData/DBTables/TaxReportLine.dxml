@@ -136,6 +136,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="TaxReportDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsExternalLine"
     Type="bit">
     <Constraints
