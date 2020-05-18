@@ -1100,7 +1100,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
 
 
-            this.AddNewTariffQuoteCharge(item, true);
+            this.AddNewTariffQuoteCharge(item, isOFC);
             if (item != null && item.SurchargesWithoutAllIn != null) {
                 item.SurchargesWithoutAllIn.forEach(surcharge => {
                     this.AddNewTariffQuoteCharge(surcharge, isOFC);
