@@ -346,7 +346,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     queryFilterItems.push(queryFilterItem)
 
     queryFilterItem = new QueryFilterItem();
-    this.IsReconciled = !this.AttachedGLAccountCheckBox ? false : true;
+    this.IsReconciled = this.AttachedGLAccountCheckBox ? null : false;
     queryFilterItem.FieldName = "IsReconciled";
     queryFilterItem.Operator = "Equals";
     queryFilterItem.FieldValue = this.IsReconciled;
