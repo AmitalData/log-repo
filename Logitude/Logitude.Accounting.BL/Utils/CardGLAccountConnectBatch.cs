@@ -19,6 +19,8 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
+using Logitude.Accounting.Data.Repositories;
+
 namespace Logitude.Accounting.BL.Utils
 {
     public class CardGLAccountConnectBatch
@@ -66,11 +68,11 @@ namespace Logitude.Accounting.BL.Utils
                 CardQuery cardQueryService = new CardQuery(tenant);
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
 
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                 {
                     try
                     {
-                        TryCustomers(cardQueryService, gLAccountQueryService, context, tenant);
+                        TryCustomers(context, tenant);
 
                         scope.Complete();
                     }
@@ -80,11 +82,11 @@ namespace Logitude.Accounting.BL.Utils
                     }
                 }
 
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                 {
                     try
                     {
-                        TryVendors(cardQueryService, gLAccountQueryService, context, tenant);
+                        TryVendors( context, tenant);
 
                         scope.Complete();
                     }
@@ -98,7 +100,7 @@ namespace Logitude.Accounting.BL.Utils
                 {
                     try
                     {
-                        TryAllOthers(cardQueryService, gLAccountQueryService, context, tenant);
+                        TryAllOthers(context, tenant);
 
                         scope.Complete();
                     }
@@ -118,8 +120,66 @@ namespace Logitude.Accounting.BL.Utils
                 throw new Exception("CardGLAccountConnectBatch failure ", e);
             }
         }
+        private void TryAllOthers( IAccountingContext context, int tenant)
+        {
+            var accountRepository = new GLAccountRepository(context);
+            var cards = accountRepository.GetAllOtherCardsWithoutGLAccountMatchDisplayNumberReceivable(tenant);
+            if (cards != null)
+            {
+                var myDiff = cards.FirstOrDefault(r => r.ReceivablesAccountingCard != r.AccountNumber);
+                if (myDiff != null)
+                {
+                    throw new Exception($"GetAllOtherCardsWithoutGLAccountMatchDisplayNumberReceivable retrieve {myDiff.ReceivablesAccountingCard}");
+                }
+                foreach (var cardList in cards)
+                {
+                    try
+                    {
+                        ConnectCardToGLAccount(cardList.GLAccountId, cardList.Id, context, tenant);
+                        _AllOthersMade++;
+                    }
+                    catch (Exception ex)
+                    {
+                        string errorText = ex.Message;
+                        if (ex.InnerException != null && !String.IsNullOrEmpty(ex.InnerException.Message))
+                        {
+                            errorText += ", " + ex.InnerException.Message;
+                        }
+                        _badList.Add(errorText);
+                    }
+                }
+            }
 
-        private void TryAllOthers(CardQuery cardQueryService, GLAccountQueryService gLAccountQueryService, IAccountingContext context, int tenant)
+
+
+             cards = accountRepository.GetAllOtherCardsWithoutGLAccountMatchDisplayNumberPayable(tenant);
+            if (cards != null)
+            {
+                var myDiff = cards.FirstOrDefault(r => r.PayablesAccountingCard != r.AccountNumber);
+                if (myDiff != null)
+                {
+                    throw new Exception($"GetAllOtherCardsWithoutGLAccountMatchDisplayNumberPayable retrieve {myDiff.PayablesAccountingCard}");
+                }
+                foreach (var cardList in cards)
+                {
+                    try
+                    {
+                        ConnectCardToGLAccount(cardList.GLAccountId, cardList.Id, context, tenant);
+                        _AllOthersMade++;
+                    }
+                    catch (Exception ex)
+                    {
+                        string errorText = ex.Message;
+                        if (ex.InnerException != null && !String.IsNullOrEmpty(ex.InnerException.Message))
+                        {
+                            errorText += ", " + ex.InnerException.Message;
+                        }
+                        _badList.Add(errorText);
+                    }
+                }
+            }
+        }
+        private void TryAllOthersOld(CardQuery cardQueryService, GLAccountQueryService gLAccountQueryService, IAccountingContext context, int tenant)
         {
             List<CardList> cards = cardQueryService.GetAllOtherCardsWithoutGLAccount(tenant);
             if (cards != null)
@@ -208,7 +268,38 @@ namespace Logitude.Accounting.BL.Utils
             }
         }
 
-        private void TryVendors(CardQuery cardQueryService, GLAccountQueryService gLAccountQueryService, IAccountingContext context, int tenant)
+        private void TryVendors( IAccountingContext context, int tenant)
+        {
+            var accountRepository = new GLAccountRepository(context);
+            var vendors = accountRepository.GetVendorCardsWithoutGLAccountMatchDisplayNumber(tenant);
+            if (vendors != null)
+            {
+                var myDiff = vendors.FirstOrDefault(r => r.PayablesAccountingCard != r.AccountNumber);
+                if (myDiff != null)
+                {
+                    throw new Exception($"GetVendorCardsWithoutGLAccountMatchDisplayNumber retrieve {myDiff.PayablesAccountingCard}");
+                }
+                foreach (var cardList in vendors)
+                {
+                    try
+                    {
+                        ConnectCardToGLAccount(cardList.GLAccountId, cardList.Id, context, tenant);
+                        _VendorsMade++;
+                    }
+                    catch (Exception ex)
+                    {
+                        string errorText = ex.Message;
+                        if (ex.InnerException != null && !String.IsNullOrEmpty(ex.InnerException.Message))
+                        {
+                            errorText += ", " + ex.InnerException.Message;
+                        }
+                        _badList.Add(errorText);
+                    }
+                }
+                }
+        }
+
+        private void TryVendorsOld(CardQuery cardQueryService, GLAccountQueryService gLAccountQueryService, IAccountingContext context, int tenant)
         {
             List<CardList> vendors = cardQueryService.GetVendorCardsWithoutGLAccount(tenant);
             if (vendors != null)
@@ -262,7 +353,38 @@ namespace Logitude.Accounting.BL.Utils
             }
         }
 
-        private void TryCustomers(CardQuery cardQueryService, GLAccountQueryService gLAccountQueryService, IAccountingContext context, int tenant)
+        private void TryCustomers(IAccountingContext context, int tenant)
+        {
+            var accountRepository = new GLAccountRepository(context);
+            var customers = accountRepository.GetCustomerCardsWithoutGLAccountMatchDisplayNumber(tenant);
+            if (customers != null)
+            {
+                var myDiff = customers.FirstOrDefault(r => r.ReceivablesAccountingCard != r.AccountNumber);
+                if (myDiff!=null)
+                {
+                    throw new Exception($"GetCustomerCardsWithoutGLAccountMatchDisplayNumber retrieve {myDiff.ReceivablesAccountingCard}");
+                }
+                foreach (var cardList in customers)
+                {
+                    try
+                    {
+                        ConnectCardToGLAccount(cardList.GLAccountId, cardList.Id, context, tenant);
+                        _CustomersMade++;
+                    }
+                    catch (Exception ex)
+                    {
+                        string errorText = ex.Message;
+                        if (ex.InnerException != null && !String.IsNullOrEmpty(ex.InnerException.Message))
+                        {
+                            errorText += ", " + ex.InnerException.Message;
+                        }
+                        _badList.Add(errorText);
+                    }
+                }
+            }
+
+        }
+        private void TryCustomersOld(CardQuery cardQueryService, GLAccountQueryService gLAccountQueryService, IAccountingContext context, int tenant)
         {
             List<CardList> customers = cardQueryService.GetCustomerCardsWithoutGLAccount(tenant);
             if (customers != null)
@@ -280,7 +402,7 @@ namespace Logitude.Accounting.BL.Utils
                                 if (gLAccount != null)
                                 {
                                     try
-                                    { 
+                                    {
                                         ConnectCardToGLAccount(gLAccount.Id, cardList.Id, context, tenant);
                                         _CustomersMade++;
                                     }
@@ -316,7 +438,6 @@ namespace Logitude.Accounting.BL.Utils
             }
 
         }
-
         private void ConnectCardToGLAccount(string accountId, string cardId, IAccountingContext context, int tenant)
         {
             bool skipConnectedCardsValidation = false;
