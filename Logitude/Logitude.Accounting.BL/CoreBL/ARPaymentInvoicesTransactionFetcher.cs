@@ -184,7 +184,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     decimal reconciledAmount = 0;
                     transactionRecoLines.ForEach(recoLine =>
                     {
-                        if (recoLine.ReconciledWithTransactionId == paymentTransaction.Id && paymentTransaction.Id != null && recoLine.IsRecoCancelled == false)
+                    if (paymentTransaction != null &&recoLine.ReconciledWithTransactionId == paymentTransaction.Id 
+                    && paymentTransaction.Id != null && recoLine.IsRecoCancelled == false)
                             reconciledAmount += recoLine.ReconciliationAmount;
                     });
 
