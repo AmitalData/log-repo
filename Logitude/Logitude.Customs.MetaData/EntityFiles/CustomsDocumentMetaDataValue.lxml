@@ -34,7 +34,9 @@
   Name="&quot;Customs.CustomsDocumentMetaDataValue Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;481cfd19-e92d-4c29-8590-9e8dd5383512&quot;"
     FieldName="&quot;CustomsDocumentId&quot;"

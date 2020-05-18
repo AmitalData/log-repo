@@ -33,7 +33,9 @@
   Name="&quot;Customs.TapagConnectionTable Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;9682a249-a23d-4c49-ab2f-d88c8439792c&quot;"
     FieldName="&quot;TapagId&quot;"

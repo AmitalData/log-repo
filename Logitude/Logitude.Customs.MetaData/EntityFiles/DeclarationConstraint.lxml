@@ -35,7 +35,9 @@
   Name="&quot;Customs.DeclarationConstraint Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;2e9a0c7b-a802-4f77-bb12-36adfabb5ca4&quot;"
     FieldName="&quot;DeclarationID&quot;"

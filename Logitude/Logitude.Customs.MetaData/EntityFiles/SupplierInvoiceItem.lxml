@@ -57,7 +57,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;e5c75427-8e67-48d2-accd-13a47bff783e&quot;"
     FieldName="&quot;DeclarationId&quot;"
@@ -1175,7 +1177,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;59a62903-4095-4dc6-a977-a6fcd5d777ca&quot;"
     FieldName="&quot;SalesTaxExemptionTypeCode&quot;"

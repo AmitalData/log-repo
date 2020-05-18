@@ -34,7 +34,9 @@
   Name="&quot;Customs.CollateralsRequestFileCond Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;c94b4cb3-d6e6-41fe-9b7a-812b0dac7076&quot;"
     FieldName="&quot;CustomsCollateralId&quot;"

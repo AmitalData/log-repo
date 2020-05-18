@@ -33,7 +33,9 @@
   Name="&quot;Customs.Tapag Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;fd3f4803-6d55-48a0-9c8c-06a4eaa039f4&quot;"
     FieldName="&quot;Id&quot;"
@@ -961,7 +963,7 @@
     Id="&quot;75c505f8-140d-4c8b-9a52-3727f0d15f17&quot;"
     FieldName="&quot;FollowDate&quot;"
     ObjectTableName="&quot;Customs.Tapag&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -1014,7 +1016,7 @@
     Id="&quot;0aa7b11b-c9d3-4534-9db2-723fe656e40b&quot;"
     FieldName="&quot;ValidityDate&quot;"
     ObjectTableName="&quot;Customs.Tapag&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"

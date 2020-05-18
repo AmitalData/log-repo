@@ -34,7 +34,9 @@
   Name="&quot;Customs.DeclarationTax Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;d617fa3a-2cdd-4d01-a11b-76d10bef7154&quot;"
     FieldName="&quot;DeclarationId&quot;"

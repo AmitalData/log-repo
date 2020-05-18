@@ -35,7 +35,9 @@
   Name="&quot;Customs.ClaimsRelatedEntsExpDeclar Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;dcaa67be-3260-4deb-b961-b23625fe3981&quot;"
     FieldName="&quot;ClaimId&quot;"

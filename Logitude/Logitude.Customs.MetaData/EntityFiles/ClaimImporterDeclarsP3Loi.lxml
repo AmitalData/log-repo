@@ -34,7 +34,9 @@
   Name="&quot;Customs.ClaimImporterDeclarsP3Loi Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;2263b6fc-0c92-4ff1-a7f1-c3829d8bd658&quot;"
     FieldName="&quot;ClaimId&quot;"

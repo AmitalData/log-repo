@@ -33,7 +33,9 @@
   Name="&quot;Customs.DeficitConnFileParagraphType Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;82d6b24e-c151-492c-bf0a-ae8390e45dbe&quot;"
     FieldName="&quot;DeficitId&quot;"

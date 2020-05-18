@@ -35,7 +35,9 @@
   Name="&quot;Customs.ClaimsRelatedEntitiesReason Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;6fecfb6a-a4f5-476e-b37a-921fe07f9c6c&quot;"
     FieldName="&quot;ClaimId&quot;"

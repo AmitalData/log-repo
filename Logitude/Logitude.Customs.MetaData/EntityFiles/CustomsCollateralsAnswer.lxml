@@ -34,7 +34,9 @@
   Name="&quot;Customs.CustomsCollateralsAnswer Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;eb6dc273-0bef-4c4a-9559-2c64dfa63a14&quot;"
     FieldName="&quot;CustomsCollateralId&quot;"
@@ -302,7 +304,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;af767125-2f71-48f9-9de5-079d94fa7d04&quot;"
     FieldName="&quot;Remarks&quot;"

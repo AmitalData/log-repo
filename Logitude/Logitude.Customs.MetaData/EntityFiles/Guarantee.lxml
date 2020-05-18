@@ -34,7 +34,9 @@
   Name="&quot;Customs.Guarantee Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;dc403fe4-0769-4739-8402-dd50ce82f289&quot;"
     FieldName="&quot;Id&quot;"
