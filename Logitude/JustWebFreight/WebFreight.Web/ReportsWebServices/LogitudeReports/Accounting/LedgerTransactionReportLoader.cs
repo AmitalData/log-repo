@@ -389,7 +389,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountId"),
                 AccountTypeCode = GetFilterValue<string>("AccountTypeCode"),
-                IsReconciled = GetFilterValue<bool>("IsReconciled"),
+                IsReconciled = GetFilterValue<bool?>("IsReconciled"),
                 IncludeChildAccounts = GetFilterValue<bool>("IncludeChildAccounts"),
                 IncludeRelatedCurrenciesAccount = GetFilterValue<bool>("IncludeRelatedCurrenciesAccount"),
 
