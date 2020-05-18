@@ -69,62 +69,64 @@ namespace WebFreight.Web.Helpers
 
         public string CreateLogitudeLead(LogitudeLeadPM leadPM)
         {
-            IGlobalContext globalContext = GlobalContext.GetContext();
-            if (globalContext == null) globalContext = GlobalContext.GetContext();
-            LogitudeLeadService logitudeLeadService = new LogitudeLeadService(globalContext);
-
-            if (string.IsNullOrEmpty(leadPM.Id))
+            if (leadPM != null)
             {
-                if (string.IsNullOrEmpty(leadPM.Country))
+                if ((!string.IsNullOrEmpty(leadPM.CompanyName) && leadPM.CompanyName.ToLower().Contains("https")) || (!string.IsNullOrEmpty(leadPM.ContactName) && leadPM.ContactName.ToLower().Contains("https"))) return null;
+                IGlobalContext globalContext = GlobalContext.GetContext();
+                if (globalContext == null) globalContext = GlobalContext.GetContext();
+                LogitudeLeadService logitudeLeadService = new LogitudeLeadService(globalContext);
+                if (string.IsNullOrEmpty(leadPM.Id))
                 {
-                    leadPM.Country = "Unassigned";
-                }
-                if (string.IsNullOrEmpty(leadPM.CompanyName))
-                {
-                    leadPM.CompanyName = "Unassigned";
-                }
-                if (string.IsNullOrEmpty(leadPM.ContactName))
-                {
-                    leadPM.ContactName = "Unassigned";
-                }
-                if (string.IsNullOrEmpty(leadPM.RequestType))
-                {
-                    leadPM.RequestType = "DemoTenant";
-                }
+                    if (string.IsNullOrEmpty(leadPM.Country))
+                    {
+                        leadPM.Country = "Unassigned";
+                    }
+                    if (string.IsNullOrEmpty(leadPM.CompanyName))
+                    {
+                        leadPM.CompanyName = "Unassigned";
+                    }
+                    if (string.IsNullOrEmpty(leadPM.ContactName))
+                    {
+                        leadPM.ContactName = "Unassigned";
+                    }
+                    if (string.IsNullOrEmpty(leadPM.RequestType))
+                    {
+                        leadPM.RequestType = "DemoTenant";
+                    }
 
-                LogitudeLeadPM LogitudeLeadpm = new LogitudeLeadPM()
-                {
-                    Email = leadPM.Email,
-                    ContactName = TruncateLongString(leadPM.ContactName, 40),
-                    PhoneNumber = TruncateLongString(leadPM.PhoneNumber, 40),
-                    CompanyName = TruncateLongString(leadPM.CompanyName, 100),
-                    Comments = TruncateLongString(leadPM.Comments, 500),
-                    Country = TruncateLongString(leadPM.Country, 120),
-                    ZipCode = TruncateLongString(leadPM.ZipCode, 15),
-                    RequestType = TruncateLongString(leadPM.RequestType, 20),
-                    PackageCode = TruncateLongString(leadPM.PackageCode, 4),
-                    City = TruncateLongString(leadPM.City, 25),
-                    State = TruncateLongString(leadPM.State, 40),
-                    Street = TruncateLongString(leadPM.Street, 65),
-                    NumberOfBranches = leadPM.NumberOfBranches,
-                    NumberOfUsers = leadPM.NumberOfUsers,
-                    IsEmailVerified = false,
-                    IsSentToCustomer = false,
-                    TenantNumber = 1,
-                    LastUpdateDate = DateTime.Now,
-                    CreateDate = DateTime.Now,
-                    StatusCode = "InProgress",
-                    IATACode = leadPM.IATACode,
-                    CASSCode = leadPM.CASSCode,
-                    LeadSource = leadPM.LeadSource,
-                    VatNumber = leadPM.VatNumber,
+                    LogitudeLeadPM LogitudeLeadpm = new LogitudeLeadPM()
+                    {
+                        Email = leadPM.Email,
+                        ContactName = TruncateLongString(leadPM.ContactName, 40),
+                        PhoneNumber = TruncateLongString(leadPM.PhoneNumber, 40),
+                        CompanyName = TruncateLongString(leadPM.CompanyName, 100),
+                        Comments = TruncateLongString(leadPM.Comments, 500),
+                        Country = TruncateLongString(leadPM.Country, 120),
+                        ZipCode = TruncateLongString(leadPM.ZipCode, 15),
+                        RequestType = TruncateLongString(leadPM.RequestType, 20),
+                        PackageCode = TruncateLongString(leadPM.PackageCode, 4),
+                        City = TruncateLongString(leadPM.City, 25),
+                        State = TruncateLongString(leadPM.State, 40),
+                        Street = TruncateLongString(leadPM.Street, 65),
+                        NumberOfBranches = leadPM.NumberOfBranches,
+                        NumberOfUsers = leadPM.NumberOfUsers,
+                        IsEmailVerified = false,
+                        IsSentToCustomer = false,
+                        TenantNumber = 1,
+                        LastUpdateDate = DateTime.Now,
+                        CreateDate = DateTime.Now,
+                        StatusCode = "InProgress",
+                        IATACode = leadPM.IATACode,
+                        CASSCode = leadPM.CASSCode,
+                        LeadSource = leadPM.LeadSource,
+                        VatNumber = leadPM.VatNumber,
 
-                };
+                    };
 
-                logitudeLeadService.Create(LogitudeLeadpm);
+                    logitudeLeadService.Create(LogitudeLeadpm);
 
+                }
             }
-
             return null;
         }
 
