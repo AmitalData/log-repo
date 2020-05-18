@@ -15213,43 +15213,48 @@
       DefaultText="&quot;Delete this package?&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.TH.Events&quot;"
+      DefaultText="&quot;Events&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;BOOKINGSENDRESPONSE&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Booking.Features.SendResponse&quot;"
+      FeatureDefaultText="&quot;Send Response&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Booking.Features.SendResponse&quot;"
-      FeatureDefaultText="&quot;Send Response&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;BOOKINGEVENTS&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Booking.Features.Events&quot;"
+      FeatureDefaultText="&quot;Events&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Booking.Features.Events&quot;"
-      FeatureDefaultText="&quot;Events&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;Booking.Menu&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;Booking.Features.BookingMenu&quot;"
+      FeatureDefaultText="&quot;Bookings&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Booking.Features.BookingMenu&quot;"
-      FeatureDefaultText="&quot;Bookings&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;Booking.Action.SendToAirlineTenant&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Booking.Features.SendToAirlineTenant&quot;"
+      FeatureDefaultText="&quot;Send to airline tenant&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;Booking.Features.SendToAirlineTenant&quot;"
-      FeatureDefaultText="&quot;Send to airline tenant&quot;" />
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
