@@ -395,23 +395,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
  
         private void setAccountingTypeCodeByChartofAccountTypeCode(GLAccountPM entityPM)
         {
-           switch (entityPM.ChartOfAccountsTypeCode)
+            if (string.IsNullOrEmpty(entityPM.AccountTypeCode))
             {
-                case "3":
-                    {
-                        entityPM.AccountTypeCode = "2";
-                        break;
-                    }
-                case "4":
-                    {
-                        entityPM.AccountTypeCode = "3";
-                        break;
-                    }
-                default:
-                    {
-                        entityPM.AccountTypeCode = "1";
-                        break;
-                    }
+                switch (entityPM.ChartOfAccountsTypeCode)
+                {
+                    case "3":
+                        {
+                            entityPM.AccountTypeCode = "2";
+                            break;
+                        }
+                    case "4":
+                        {
+                            entityPM.AccountTypeCode = "3";
+                            break;
+                        }
+                    default:
+                        {
+                            entityPM.AccountTypeCode = "1";
+                            break;
+                        }
+                }
             }
         }
  
