@@ -31,9 +31,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
 
             string paymentMethodCode = "";
-            APPaymentMethodRepository paymentMethodRepository = new APPaymentMethodRepository(tenant);
-            APPaymentMethod paymentMethod = paymentMethodRepository.GetSingleAPPaymentMethod(entityPM.AccountingPaymentMethodId, tenant);
-            if(paymentMethod != null)
+            //APPaymentMethodRepository paymentMethodRepository = new APPaymentMethodRepository(tenant);
+            //APPaymentMethod paymentMethod = paymentMethodRepository.GetSingleAPPaymentMethod(entityPM.AccountingPaymentMethodId, tenant);
+
+            AccountingPaymentMethodRepository paymentMethodRepository = new AccountingPaymentMethodRepository(tenant);
+            AccountingPaymentMethod paymentMethod = paymentMethodRepository.GetSingleAccountingPaymentMethod(entityPM.AccountingPaymentMethodId, tenant);            
+            if (paymentMethod != null)
             {
                 paymentMethodCode = paymentMethod.Code;
             }
