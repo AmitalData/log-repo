@@ -1159,9 +1159,14 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
       chargeItem.SetCostQuantity();
       chargeItem.SetSaleQuantity();
       var costQuantity: number = chargeItem.CostQuantity;
-      if (costQuantity != null && costQuantity != 0) {
-        chargeItem.CostUnitPrice = (costAmount / costQuantity);
-        chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
+        if (costQuantity != null && costQuantity != 0) {
+            if (chargeItem.CostMeasurementCode == "PRVL" || chargeItem.CostMeasurementCode == "PRFR") {
+                chargeItem.CostUnitPrice = (costAmount / costQuantity) * 100;
+            }
+            else {
+                chargeItem.CostUnitPrice = (costAmount / costQuantity);
+            }
+            chargeItem.SaleUnitPrice = chargeItem.CostUnitPrice;
       }
       chargeItem.ComputeSalePrice();
       chargeItem.ComputeSaleAmounts();
