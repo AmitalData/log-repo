@@ -14258,7 +14258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query DeclarationAmendmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_0.Id, Code = "DeclarationAmendments",  QueryGroupCode = "33c9", IndexOrder = 0, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_0.Id, DefaultSortName = "AmendmentissueDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query DeclarationAmendmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_0.Id, Code = "DeclarationAmendments",  QueryGroupCode = "33c9", IndexOrder = 3, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_0.Id, DefaultSortName = "AmendmentissueDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DeclarationAmendmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id, IndexOrder = 0, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "AmendmentissueDate" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
