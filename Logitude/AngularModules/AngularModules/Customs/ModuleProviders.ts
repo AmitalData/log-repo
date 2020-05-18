@@ -338,6 +338,7 @@ import { PaymentOrderWebService } from './Services/WebServices/PaymentOrderWebSe
 import { QuantityTypeMessageService } from './Services/WebServices/QuantityTypeMessageService';
 import { TapagMessagesService } from './Services/WebServices/TapagMessagesService';
 import { VendorMessagesService } from './Services/WebServices/VendorMessagesService';
+import { SupplierInvioceItemCertificatsService } from './Services/WebServices/SupplierInvioceItemCertificatsService';
 import { LoadTestService } from './Services/WebServices/LoadTestService';
 //#endregion
 
@@ -708,6 +709,7 @@ export class ModuleProviders {
             case "QuantityTypeMessageService": { myResult = new QuantityTypeMessageService(); break; }
             case "TapagMessagesService": { myResult = new TapagMessagesService(); break; }
             case "VendorMessagesService": { myResult = new VendorMessagesService(); break; }
+            case "SupplierInvioceItemCertificatsService": { myResult = new SupplierInvioceItemCertificatsService(); break; }
             case "LoadTestService": { myResult = new LoadTestService(); break; }
                 
             //#endregion

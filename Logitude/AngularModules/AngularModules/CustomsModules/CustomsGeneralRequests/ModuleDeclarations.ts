@@ -14,6 +14,7 @@ import { DeclarationReshimonConversionComponent } from './Components/Declaration
 import { AddAttachmentResponseComponent } from './Components/AddAttachmentResponseComponent';
 import { RequiredDocumentComponent } from './Components/RequiredDocumentComponent';
 import { RecallSuppliersFromFileComponent } from './Components/RecallSuppliersFromFileComponent';
+import { ReceiptCertificateFromFileComponent } from './Components/ReceiptCertificateFromFileComponent';
 import { ClientSearchByIDComponent } from './Components/ClientSearchByIDComponent';
 import { CustomerIndicationComponent } from './Components/CustomerIndicationComponent';
 import { RecallClientsForCutoms } from './Components/RecallClientsForCutoms';
@@ -40,6 +41,7 @@ export const Components =
         AddAttachmentResponseComponent,
         RequiredDocumentComponent,
         RecallSuppliersFromFileComponent,
+        ReceiptCertificateFromFileComponent,
         ClientSearchByIDComponent,
         CustomerIndicationComponent,
         RecallClientsForCutoms,
@@ -72,6 +74,7 @@ export class ModuleDeclarations {
             case "AddAttachmentResponseComponent": { myResult = AddAttachmentResponseComponent; break; }
             case "RequiredDocumentComponent": { myResult = RequiredDocumentComponent; break; }
             case "RecallSuppliersFromFileComponent": { myResult = RecallSuppliersFromFileComponent; break; }
+            case "ReceiptCertificateFromFileComponent": { myResult = ReceiptCertificateFromFileComponent; break; }
             case "ClientSearchByIDComponent": { myResult = ClientSearchByIDComponent; break; }
             case "CustomerIndicationComponent": { myResult = CustomerIndicationComponent; break; }
             case "RecallClientsForCutoms": { myResult = RecallClientsForCutoms; break; }

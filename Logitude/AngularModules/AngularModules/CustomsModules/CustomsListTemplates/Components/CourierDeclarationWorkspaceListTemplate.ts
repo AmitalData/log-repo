@@ -41,16 +41,18 @@ export class CourierDeclarationWorkspaceListTemplate {
         estimatedArrivalDate.setHours(0, 0, 0, 0);
         if (this._CourierMasterList.IsEstimatedArrivalToDay) {
             this.colorDate = "Blue";
-        }
-        else if (estimatedArrivalDate.getTime() < today.getTime()) {
+        } else {
             this.colorDate = "Red";
         }
-        else if (estimatedArrivalDate.getTime() === today.getTime()) {
-            this.colorDate = "Blue";
-         } else {
+        //else if (estimatedArrivalDate.getTime() < today.getTime()) {
+        //    this.colorDate = "Red";
+        //}
+        //else if (estimatedArrivalDate.getTime() === today.getTime()) {
+        //    this.colorDate = "Blue";
+        // } else {
             
 
-         }
+        // }
       
         this.CD.detectChanges();
     }
