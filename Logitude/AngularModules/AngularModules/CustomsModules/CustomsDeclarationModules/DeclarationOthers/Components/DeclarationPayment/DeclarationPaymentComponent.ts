@@ -137,11 +137,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     	
     OnCheckedAutomaticPayment(event) {
-         if (event.target.checked && this.FuturePaymentDateTime != null) {
+          if (event.target.checked && this.FuturePaymentDateTime != null) {
            this.AutomaticPayment = 0;
-             event.preventDefault()
-        var myMessageWindow = new MessageWindow
-        myMessageWindow.Show("לם ניתן לבצע תשלום בזמינות עם תםריך תשלום עתידי");//TextCodeTranslator.Translate("")
+             event.preventDefault();
+             event.target.checked = false;
+             var myMessageWindow = new MessageWindow();
+        myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
        
     }
 	
@@ -302,7 +303,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     public get FuturePaymentDateTime() { return this.paymentPM.FuturePaymentDateTime; }
     public set FuturePaymentDateTime(newValue: Date) {
-        this.paymentPM.FuturePaymentDateTime = newValue;
+         this.paymentPM.FuturePaymentDateTime = newValue;
     }
 
     public get AutomaticPayment() { return this.paymentPM.AutomaticPayment; }
@@ -313,25 +314,29 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     _FuturePaymentTime: Date;
     public get FuturePaymentTime() { return this._FuturePaymentTime; }
     public set FuturePaymentTime(newValue: Date) {
+             if (newValue) {
+                var date: Date = this.FuturePaymentDateTime;
+                if (this.paymentPM.FuturePaymentDateTime && typeof (this.paymentPM.FuturePaymentDateTime) == 'string') {
+                    date = this.GetDateFromString(this.paymentPM.FuturePaymentDateTime);
+                }
 
-        if (newValue) {
-            var date: Date = this.FuturePaymentDateTime;
-            if (this.paymentPM.FuturePaymentDateTime && typeof (this.paymentPM.FuturePaymentDateTime) == 'string') {
-                date = this.GetDateFromString(this.paymentPM.FuturePaymentDateTime);
+                // var date = new Date(Date.parse(this.paymentPM.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
+                //else
+                 //    var date = this.GetTodaysDate();// new Date();
+                 if (date != null && !this.AutomaticPayment) {
+                     var datetime = this.GetDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds());//new Date(date.getFullYear(), date.getMonth(), date.getDate(), newValue.getHours(), newValue.getMinutes(), newValue.getSeconds());
+                     this.FuturePaymentDateTime = datetime;
+                     this._FuturePaymentTime = datetime;
+                 }
+                 else if (date == null && !this.AutomaticPayment) {
+                     this._FuturePaymentTime = newValue;
+                 }
+               
             }
-
-            // var date = new Date(Date.parse(this.paymentPM.FuturePaymentDateTime + "")); // sometimes this variable contains string value of date, so convert it to date
-            //else
-            //    var date = this.GetTodaysDate();// new Date();
-
-            var datetime = this.GetDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds());//new Date(date.getFullYear(), date.getMonth(), date.getDate(), newValue.getHours(), newValue.getMinutes(), newValue.getSeconds());
-            this.FuturePaymentDateTime = datetime;
-            this._FuturePaymentTime = datetime;
+            else {
+                this._FuturePaymentTime = newValue;
+            
         }
-        else {
-            this._FuturePaymentTime = newValue;
-        }
-
     }
 
     private _GetCreditInternalBankId: string;
@@ -1356,18 +1361,26 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     FuturePaymentDateTimeOnBlur(event) {
         // WI 32593
-        this.IsFuturePaymentDateValid();
+        this.IsFuturePaymentDateValid(null);
 
 
     }
-    IsFuturePaymentDateValid() {
-        if (this.AutomaticPayment && this.FuturePaymentDateTime != null) {
+    FuturePaymentTimeOnBlur(event) {
+        // WI 32593
+        this.IsFuturePaymentDateValid(event);
+
+
+    }
+    IsFuturePaymentDateValid(event) {
+        if (this.AutomaticPayment && event != null ) {
             var myMessageWindow = new MessageWindow
-            myMessageWindow.Show("לם ניתן לבצע תשלום בזמינות עם תםריך תשלום עתידי");//TextCodeTranslator.Translate("")
+            myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
             this.FuturePaymentDateTime = null;
-            return false;
+            this.paymentPM.FuturePaymentDateTime = null;
+            this.FuturePaymentTime = null;
+             return false;
         }
-        if (this.FuturePaymentDateTime) {
+        if (this.FuturePaymentDateTime && !this.AutomaticPayment) {
 
             var newDate = new Date();
             var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0);
@@ -1400,7 +1413,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0); // last of today
 
             if (this.PaymentDate < currentDate) {
-                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לם ניתן להזין תםריך בעבר");
+                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לא ניתן להזין תאריך בעבר");
                 return false;
             } else {
                 this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
@@ -1422,7 +1435,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             return;
         }
         
-        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(); // WI 32593
+        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(null); // WI 32593
         var isPaymentDateValid = this.IsPaymentDateValid();
         var isBlockTime = false;
         if (!isFuturePaymentDateValid || !isPaymentDateValid) {
@@ -1431,7 +1444,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
             if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לם ניתן להזין תםריך בעבר");
+                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
 
         }
         else {
@@ -1454,7 +1467,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                     if (!AppTool.IsNullOrEmpty(this.FuturePaymentDateTime)) {
                                         if (!AppTool.IsNullOrEmpty(timeCompany)) {
                                             if (this.CheckIdDateBetween2Times(timeCompany, this.FuturePaymentDateTime)) {
-                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                                 isBlockTime = true;
                                             }
 
@@ -1462,7 +1475,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                         if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCustomer, this.FuturePaymentDateTime)) {
-                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                                 isBlockTime = true;
                                             }
                                         }
@@ -1472,14 +1485,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                         if (!AppTool.IsNullOrEmpty(timeCompany)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                                 isBlockTime = true;
                                             }
                                         }
                                         if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                                 isBlockTime = true;
                                             }
                                         }
@@ -1684,7 +1697,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //#endregion
 
         //#region Validate dates
-        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(); // WI 32593
+        var isFuturePaymentDateValid = this.IsFuturePaymentDateValid(null); // WI 32593
         var isPaymentDateValid = this.IsPaymentDateValid();
         if (isFuturePaymentDateValid && isPaymentDateValid) {
             this.ValidationErrorsList = [];
@@ -1694,7 +1707,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
             if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לם ניתן להזין תםריך בעבר");
+                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
         }
         //#endregion
 
@@ -1721,7 +1734,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                 if (!AppTool.IsNullOrEmpty(this.FuturePaymentDateTime)) {
                                     if (!AppTool.IsNullOrEmpty(timeCompany)) {
                                         if (this.CheckIdDateBetween2Times(timeCompany, this.FuturePaymentDateTime)) {
-                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                             isBlockTime = true;
                                         }
 
@@ -1729,7 +1742,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                     if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                         if (this.CheckIdDateBetween2Times(timeCustomer, this.FuturePaymentDateTime)) {
-                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                             isBlockTime = true;
                                         }
                                     }
@@ -1739,14 +1752,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                     if (!AppTool.IsNullOrEmpty(timeCompany)) {
 
                                         if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
-                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                             isBlockTime = true;
                                         }
                                     }
                                     if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                         if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
-                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                             isBlockTime = true;
                                         }
                                     }
@@ -2286,7 +2299,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 confirmWindow.Show(mess);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לםישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
+                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לאישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
                     {
                         this.RefreshDeclaration();
                         if (SessionLocator.SelectedSession.CurrentWindow != null) {

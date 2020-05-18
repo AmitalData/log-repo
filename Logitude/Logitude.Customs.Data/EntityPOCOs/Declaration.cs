@@ -379,6 +379,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual CustomsShip CustomsShip { get; set; }
         [Column("IsExporterConfirmation")]
 	    public bool IsExporterConfirmation { get; set; }
+
     }
 }
 	 

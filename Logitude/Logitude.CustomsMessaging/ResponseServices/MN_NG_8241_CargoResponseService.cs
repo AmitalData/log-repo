@@ -213,7 +213,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _MyDeclarationPM.CurrentContextTag = _cargoContext;
 
                         OpenUnifreighTask();
+                    
                         myDeclarationUpdateService.SuppressNewConcurrencyGUID = true;
+                        if (_status == "SST" || _status == "SMG")
+                            _MyDeclarationPM.AvailabilityDate = DateTime.Now;
                         myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                         if (_status == "SST" || _status == "SMG")
                             SendPayment(_MyDeclarationPM, context, requestParams);
@@ -344,7 +347,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         StatusDate = statusDate,
                         FileAdditionalData = myFileAdditionalData
                     };
+ 
                     _MyDeclarationPM.CurrentContextTag = cargoContext;
+                    if (status == "SST" || status == "SMG")
+                        _MyDeclarationPM.AvailabilityDate = DateTime.Now;
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                     if(status=="SST" || status=="SMG")
                         SendPayment(_MyDeclarationPM, context, requestParams);
@@ -384,7 +390,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
+            var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
 
+            //var myDeclarationQueryService = new DeclarationQueryService(dbContext);
+            //var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+            //myDeclarationQueryService.GetSingle(requestParams.DeclarationId, true, false);
+            //_MyDeclarationPM.AvailabilityDate = DateTime.Now;
+            //_MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            //using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+            //{
+            //    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+
+            //    scopeNewCRS.Complete();
+            //}
             if (declarationPaymentPM != null)
             {
                 if (declarationPaymentPM.AutomaticPayment == 1)
@@ -399,7 +417,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             EventDateTime = DateTime.Now,
                             Entname = "CFIFILEM",
                             PrimaryNum = declarationPM.CustomFileNo,
-                            EventRemarks = "",
+                            EventRemarks = "לא אושר בבקרת אשראי",
                         };
                         LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
                         var myOpenUnifreighTask = new UnifreightEventTaskService();
@@ -413,6 +431,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         try
                         {
                             DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
+                            declarationPaymentPM.PaymentDate = DateTime.Now;
+                            declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
 
                             using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                             {
@@ -431,15 +451,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 if (requestDate != DateTime.MinValue)
                                 {
                                     requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
+                                    declarationPaymentPM.PaymentDate = requestDate;
 
                                     requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
                                     requestParams2755.FutureSendDateTime = requestDate;
+                                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+
                                 }
-                                SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                else
+                                {
+
+                                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                }
+                           
 
                                 scopeNewCRS.Complete();
                             }
+                            //using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                            //{=
+                            //    myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
+                            //    scopeNewCRS.Complete();
 
+                            //}
+                            myDeclarationPaymentUpdateService.Update(declarationPaymentPM, true);
                         }
                         catch (System.Exception)
                         {
@@ -450,7 +484,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 EventDateTime = DateTime.Now,
                                 Entname = "CFIFILEM",
                                 PrimaryNum = declarationPM.CustomFileNo,
-                                EventRemarks = "",
+                                EventRemarks = "כשלון בשליחת הגשת תשלום",
                             };
                             LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
                             var myOpenUnifreighTask = new UnifreightEventTaskService();
@@ -555,7 +589,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LoggingUserId = user,
                 RequestName = "Send to check credit request",
                 ResponseName = "Get check credit Response",
-                Mode = "GetCredit",
+                Mode = "Check",
                 RequestVIA = SendRequestVIA.WebServiceBatch,
             };
             var myCustomFileCreditService = new CustomFileCreditService(requestParamsCredit);

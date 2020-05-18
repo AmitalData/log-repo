@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools; 
+using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
-   
-   public partial class ReferantExceptionDataMapping: IMapping<ReferantExceptionPM, ReferantException>
-   {
+
+    public partial class ReferantExceptionDataMapping : IMapping<ReferantExceptionPM, ReferantException>
+    {
 
         public void CustomPMToPOCO(ReferantExceptionPM entityPM, ReferantException entityPOCO)
         {
@@ -36,8 +36,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
             //throw new NotImplementedException();
         }
-   }
+    }
 
 
 }
-   

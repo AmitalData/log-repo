@@ -105,7 +105,6 @@ import { ObjectsLocator } from '../Locators/ObjectsLocator';
 import { AppTool } from '../Tools';
 import { ExceptionReasonListService } from '../../Customs/Services/StandardLists/ExceptionReasonListService';
 
-
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
 

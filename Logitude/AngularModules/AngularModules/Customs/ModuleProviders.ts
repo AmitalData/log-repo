@@ -233,6 +233,7 @@ import { ClassificationTypeListService } from './Services/StandardLists/Classifi
 import { TransactionNatureTypeListService } from './Services/StandardLists/TransactionNatureTypeListService';
 import { NbcDeclarationTypeListService } from './Services/StandardLists/NbcDeclarationTypeListService';
 
+
 //#endregion
 
 //#region StandardPMs
@@ -304,8 +305,8 @@ import { SignStationExtendedListService } from './Services/ExtendedLists/SignSta
 import { DeclarationCourierStatusExtendedListService } from './Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
 import { RecallClientsForCutoms } from '../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
 import { CustomsCollateralExtendedListService } from './Services/ExtendedLists/CustomsCollateralExtendedListService';
-import { CourierMasterExtendedListService } from './Services/ExtendedLists/CourierMasterExtendedListService';
-
+ import { CourierMasterExtendedListService } from './Services/ExtendedLists/CourierMasterExtendedListService';
+ 
 //#endregion
 
 //#region ExtendedPMs
@@ -320,7 +321,7 @@ import { SupplierInvoiceExtendedPMService } from './Services/ExtendedPMs/Supplie
 import { ReferantExceptionExtendedPMService } from './Services/ExtendedPMs/ReferantExceptionExtendedPMService';
 
 ///????  import { CustomsRequestSheetExtendedPMService } from './Services/ExtendedPMs/CustomsRequestSheetExtendedPMService';
-
+import { ReferantExceptionExtendedPMService } from './Services/ExtendedPMs/ReferantExceptionExtendedPMService';
 
 //#endregion
 
@@ -605,7 +606,7 @@ export class ModuleProviders {
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
-
+ 
              //#endregion                
 
             //#region StandardPMs

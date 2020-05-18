@@ -479,14 +479,19 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsSetting")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-         if  
-            (SessionLocator.LoggedUserPM.Email.includes("amital")
-        ) {
+
+        //let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
+        //LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
+        //let allowed = false;
+        //allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital."));
+
+        if (SessionLocator.LoggedUserPM.Email.includes("amital"))             
+         {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "CSM";
             item.Icon = "Settings"
              item.Code = "CSRA";
-             item.TextCode = "General.MC.Customs.ReAnalysis";
+            item.ObjectTableName = TextCodeTranslator.Translate("General.MC.Customs.ReAnalysis") ;
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
         }
@@ -780,7 +785,7 @@ export class MaintenanceComponent {
                     var windowArgs: any = {};;
                     windowArgs.isReAnAnalysis = true;
 
-                    let windowTitle = "גליון בקשות - ניתוח מחדש"//"Customs Settings";
+                    let windowTitle = TextCodeTranslator.Translate("General.MC.Customs.ReAnalysis");//"גליון בקשות - ניתוח מחדש"//"Customs Settings";
                     let logWindow = new LogitudeWindow();
                     logWindow.Width = 1300;
                     logWindow.Height = 700;

@@ -150,6 +150,8 @@
                         <td>
                             <div></div>
                         </td>
+
+                       
                     </tr>
                 </table>
             </td>
@@ -236,9 +238,14 @@
             <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
         </select>-->
                             <!--<div class="dropdown">
-        <div style="float:left;">
+            <div style="float:left;">
             <button (click)="ShowFieldsList()" class="dropbtn " id="AddFilterButton" style="width:80px;">{{'General.B.AddFilter' | TextCodeTranslationPipe}}</button>
+
+                <button (click)="ShowFieldsList()" class="dropbtn " id="AddFilterButton" style="width:80px;">{{'General.B.AddFilter' | TextCodeTranslationPipe}}</button>
+
             <div id="FieldsDropdown" class="dropdown-content" style="border:solid 1px #AAAAAA;">-->
+
+                <div id="FieldsDropdown" class="dropdown-content" style="border:solid 1px #AAAAAA;">-->
                             <!--<select [(ngModel)]="SelectedQueryId" (change)="QueryValueChanged($event.target.value)" style="height:244px;" multiple>
             <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
         </select>-->
@@ -258,10 +265,10 @@
                         <td>
                             <div></div>
                         </td>
-                        <td style="width: 650px; left:50PX;">
+
+                        <td style="width: 650px; left:50PX;"> 
                             <div LocationDirective Code="MNH"></div>
                         </td>
-
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
                             <button *ngIf="IsNavigateButtonVisible" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="Navigate()">Navigate</button>
                         </td>

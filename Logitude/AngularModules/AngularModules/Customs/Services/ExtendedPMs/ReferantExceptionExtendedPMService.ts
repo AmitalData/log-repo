@@ -34,5 +34,5 @@ export class ReferantExceptionExtendedPMService {
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
- }
+    }
 }

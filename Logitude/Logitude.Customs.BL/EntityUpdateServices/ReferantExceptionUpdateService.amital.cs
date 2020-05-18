@@ -15,7 +15,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class ReferantExceptionUpdateService
     {
-        private void UpdateUnifreight(ReferantExceptionPM dirtyReferantExceptionPM,ExceptionReasonPM exceptionReasonPM)
+        private void UpdateUnifreight(ReferantExceptionPM dirtyReferantExceptionPM, ExceptionReasonPM exceptionReasonPM)
         {
             if (dirtyReferantExceptionPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Update &&
                 dirtyReferantExceptionPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
 
             ReferantExceptionQueryService ReferantExceptionQueryService = new ReferantExceptionQueryService(dirtyReferantExceptionPM.Tenant);
-            var myDBEntity = ReferantExceptionQueryService.GetSingle(dirtyReferantExceptionPM.DeclarationId,dirtyReferantExceptionPM.ExceptionReasonsCode, true, false);
+            var myDBEntity = ReferantExceptionQueryService.GetSingle(dirtyReferantExceptionPM.DeclarationId, dirtyReferantExceptionPM.ExceptionReasonsCode, true, false);
             return myDBEntity ?? new ReferantExceptionPM();
 
         }

@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 
 
@@ -7,7 +7,8 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 export class SpotlightSharedDataService {
     public IsDisplayButtonSend: boolean;
 
-  public SupperssOnRowSelectedAction: boolean = false;
+
+    public SupperssOnRowSelectedAction: boolean = false;
     private messageSource = new BehaviorSubject('default message');
     CurrentMessage = this.messageSource.asObservable();
     WebAPICourierGWMessageECTHRDataMaman: string;

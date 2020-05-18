@@ -251,7 +251,7 @@
                         </div>
                     </div>
                     <div *ngIf="row.ShowDetails && IsSpotLight" [id]="'DetailsDiv' + row.rowIndex" [style.height.px]="SpotLightHeight" style="position:absolute;display: flex;width:100%;" [ngStyle]="row.Detailsstyles">
-                        <ObjectFieldTemplate [ObjectTable]="ObjectTable" [Entity]="row.rowData" [IsSpotLightTemplate]="IsSpotLight" [SpotlightDataTemplate]="SpotlightDataTemplate" style="width:100%;"></ObjectFieldTemplate>
+                        <ObjectFieldTemplate [ObjectTable]="ObjectTable" [RowIndex]="row.rowIndex" [Entity]="row.rowData" [IsSpotLightTemplate]="IsSpotLight" [SpotlightDataTemplate]="SpotlightDataTemplate" style="width:100%;"></ObjectFieldTemplate>
                     </div>
 
 

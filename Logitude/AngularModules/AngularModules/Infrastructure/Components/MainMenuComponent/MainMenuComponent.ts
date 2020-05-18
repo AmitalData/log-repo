@@ -557,6 +557,7 @@ export class MainMenuComponent {
                         break;
                     }
 
+
                     case "General.MH.ReferantScreen": {
 
                         var listArgs = new ListComponentArgs();
@@ -577,7 +578,6 @@ export class MainMenuComponent {
                         });
                         break;
                     }
-
                     default: {
                         if (this.SelectedMenu.ObjectTableName) {
                             ServiceLocator.SendTotangoUserActivity(this.SelectedMenu.ObjectTableName, "List View");

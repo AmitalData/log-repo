@@ -16,10 +16,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnCreating(DeclarationReferantDataPM entityPM, EntityPM entityParentPM)
         {
-            
+
             base.OnCreating(entityPM, entityParentPM);
         }
-        
+
 
         protected override void OnUpdating(DeclarationReferantDataPM entityPM)
         {

@@ -95,6 +95,7 @@ export class CustomsRequestsSheetsComponent
     FiltersSectionVisibility: boolean = true;
     RefreshButtonVisibility: boolean;
     CloseButtonVisibility: boolean;//?????
+    selectStatusesHeight: string;
     //_stratSearch: boolean = true;
     public get AllCRSSChecked() { return this._AllCRSSChecked };
     public set AllCRSSChecked(value: boolean) {
@@ -121,6 +122,11 @@ export class CustomsRequestsSheetsComponent
     SetWindowArgs(args) {
         if (args != null) {
             this.isReAnAnalysis = args.isReAnAnalysis;
+            if (this.isReAnAnalysis)
+                this.selectStatusesHeight = "100px";
+            else
+                this.selectStatusesHeight = "410px";
+
         }
     }
 
@@ -186,8 +192,13 @@ export class CustomsRequestsSheetsComponent
                             return (a.LocalName === b.LocalName) ? 0 : (a.LocalName < b.LocalName) ? -1 : 1
 
                         }).forEach((item) => {
+                            if (this.isReAnAnalysis && ["25", "21", "15"].includes(item.Code)) {
+                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration"));
+}
+                            else if (!this.isReAnAnalysis ){
+                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration"));
 
-                            this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration"));
+                            }
                         });
 
                         if (this.entityArgs.ObjectTableName == "Customs.Declaration") {
@@ -217,14 +228,14 @@ export class CustomsRequestsSheetsComponent
         //this.CRSSearch();
     }
     CancelByFilters() {
-         if (!this.CheckValidation("Cancel")) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Width = 400;
-            messageWindow.Height = 150;
-            messageWindow.ShowErrorIcon = true;
-             messageWindow.Show("You cannot cancel a request other than status Sending failed(15).");
-            return;
-        }
+        // if (!this.CheckValidation("Cancel")) {
+        //    var messageWindow = new MessageWindow();
+        //    messageWindow.Width = 400;
+        //    messageWindow.Height = 150;
+        //    messageWindow.ShowErrorIcon = true;
+        //     messageWindow.Show("אין אפשרות לבטל בקשות בסטטוס ניתוח נכשל/תשובה תקינה , הסר את הסטטוס ונסה שוב");
+        //    return;
+        //}
         this.CurrentSession.StartBusyIndicator("");
 
          this.InitFilter();
@@ -263,7 +274,7 @@ export class CustomsRequestsSheetsComponent
             messageWindow.Width = 400;
             messageWindow.Height = 150;
             messageWindow.ShowErrorIcon = true;
-            messageWindow.Show("Requests in different statuses cannot be re-analyzed from failure or request registered");
+            messageWindow.Show("אין אפשרות לנתח מחדש בקשות בסטטוס שליחה נכשלה , הסר את הסטטוס ונסה שוב");
             return;
         }
         this.CurrentSession.StartBusyIndicator("");
