@@ -17,8 +17,7 @@ import { AddEditCustomsAirlineComponent } from './Components/AddEditCustomsAirli
 import { CustomsPartnerFtpListComponent } from './Components/CustomsPartnerFtpListComponent';
 import { DeclarationRemarksComponent } from './Components/DeclarationRemarksComponent'
 //import { CustomsPartnerFtpEditComponent } from './Components/CustomsPartnerFtpEditComponent';
-import { DeclarationRemarksComponent } from './Components/DeclarationRemarksComponent'
-
+ 
 
 export const Components =
     [

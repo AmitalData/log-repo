@@ -137,19 +137,6 @@ new XComment(rem),
             }
             return Serialize(ListEntry, remarks);
         }
-
-        public static string GetHtmlDecodeValue(ref Dictionary<string, string> hash_data_in, string key)
-     {
-         var result = GetValue(ref hash_data_in, key);
  
-         if (!string.IsNullOrEmpty(result))
- 
-         {
-             result = HttpUtility.HtmlDecode(result);
-
-         }
- 
-         return result;
-        }
     }
 }

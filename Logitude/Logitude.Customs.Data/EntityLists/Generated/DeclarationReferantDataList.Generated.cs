@@ -23,9 +23,9 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string VendorId  { get; set; }
        [DataMember]
-       public DateTime ArrivalDate  { get; set; }
+       public DateTime? ArrivalDate  { get; set; }
        [DataMember]
-       public DateTime EstimatedArrivalDate  { get; set; }
+       public DateTime? EstimatedArrivalDate  { get; set; }
        [DataMember]
        public decimal? Weight  { get; set; }
        [DataMember]

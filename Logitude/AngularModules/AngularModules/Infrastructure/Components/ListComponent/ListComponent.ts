@@ -2813,20 +2813,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             messageWindow.Show("Fill NewWizard Component Path and Name in ObjectTable !!");
         }
     }
-
-    RunNewCustomsFileWizard() {
-        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-            AmitalGatewayUtil.Instance.NewCustomsFileScreen(
-                "ShowCFIFILEMMoveSIToOCRScreen");
-        } else {
-            var myMessageWindow = new MessageWindow();
-            let mess = "NewCustomsFileScreen";
-            myMessageWindow.Show(mess);
-            this.RefreshBtnClick();
-        }
-    }
-
-
+ 
     private RunNewGenaricEntity() {
 
         var componentPath = "./Infrastructure/GenericComponents/NewEntityComponent";

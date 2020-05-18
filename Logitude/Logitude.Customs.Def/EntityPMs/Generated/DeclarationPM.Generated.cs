@@ -4491,7 +4491,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private string customFileAmendment ;
 	  	  
        
@@ -4539,7 +4538,8 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private DateTime? availabilityDate ;
-
+	  	  
+       
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
        public DateTime? AvailabilityDate  

@@ -74,7 +74,6 @@
     <Compile Include="EntityPMs\CustomsShipPM.cs" />
     <Compile Include="EntityPMs\Generated\CustomsShipPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\DeclarationReferantDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
@@ -282,7 +281,6 @@
     <Compile Include="EntityPMs\Generated\DocumentTypeCustomsDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\EntitlementTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\EntityTypeLookupPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FacilitationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FaultInspectionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FreightPaymentMethodPM.Generated.cs" />
@@ -360,7 +358,6 @@
     <Compile Include="EntityPMs\Generated\ProductNameTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PropertiesDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RansomViolationTypePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RefundCustomerActivityTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RegisteredWarehouseSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestStatusPM.Generated.cs" />
