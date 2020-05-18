@@ -845,8 +845,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //AdditionalDocument**********
                 supplierInvoiceItemPM.SupplierInvoiceItemsMods = GetSupplierInvoiceItemsMods(governmentAgencyGoodsItem, declaration, declarationId, tenant);
 
-                supplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvioceItemCertificats(supplierInvoicePM, supplierInvoiceItemPM);
+               // supplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvioceItemCertificats(supplierInvoicePM, supplierInvoiceItemPM);
 
+                supplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvioceItemCertificats(governmentAgencyGoodsItem, declaration, declarationId, tenant);
 
                 SupplierInvoiceItemPM supplierInvoiceItemPMOrg = supplierInvoicePMPMOrg.SupplierInvoiceItems.FirstOrDefault(x => x.SequenceNumeric == supplierInvoiceItemPM.SequenceNumeric);
                 if (supplierInvoiceItemPMOrg != null)
@@ -870,8 +871,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return supplierInvoiceItemPMs;
         }
 
-
-
+   
 
         private List<SupplierInvoiceItemsModPM> GetSupplierInvoiceItemsMods(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem, Declaration declaration, string declarationId, int tenant)
         {
@@ -994,9 +994,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
-  
-
  
+        private List<SupplierInvioceItemCertificatPM> GetSupplierInvioceItemCertificats(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem, Declaration declaration, string declarationId, int tenant)
+        {
+            if (governmentAgencyGoodsItem == null || governmentAgencyGoodsItem.AdditionalDocument == null) return null;
+            List<SupplierInvioceItemCertificatPM> supplierInvioceItemCertificatPMs = new List<SupplierInvioceItemCertificatPM>();
+            foreach (var additionalDocument in governmentAgencyGoodsItem.AdditionalDocument)
+            {
+                SupplierInvioceItemCertificatPM supplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM();
+                supplierInvioceItemCertificatPM.CertificateNumber = GetValueIDType(additionalDocument.ID);
+                supplierInvioceItemCertificatPM.CertificateExemptionTypeCode = GetValueCodeType(additionalDocument.LPCOExemptionCode);
+                supplierInvioceItemCertificatPM.AttachmentTypeCode = GetValueCodeType(additionalDocument.TypeCode);
+                if(additionalDocument.DMExtensions!= null)
+                {
+                    supplierInvioceItemCertificatPM.ResConfirmationTypeCode= GetValueCodeType(additionalDocument.DMExtensions.LPCOTypeCode);
+                    supplierInvioceItemCertificatPM.ReqConfirmationTypeCode = GetValueCodeType(additionalDocument.DMExtensions.requirementLicenseType);
+                    supplierInvioceItemCertificatPM.CustomsAttachmentID = GetValueIDType(additionalDocument.DMExtensions.ExternalAttachmentID);
+                    supplierInvioceItemCertificatPM.SequenceNumeric = Convert.ToInt32( additionalDocument.DMExtensions.SequenceNumeric) ;
+
+                }
+                supplierInvioceItemCertificatPM.ChangeSetOp = ChangeSetOperation.Insert;
+                supplierInvioceItemCertificatPMs.Add(supplierInvioceItemCertificatPM);
+            }
+            return supplierInvioceItemCertificatPMs;
+
+         }
+
         private List<SupplierInvioceItemCertificatPM> GetSupplierInvioceItemCertificats(SupplierInvoicePM supplierInvoicePM, SupplierInvoiceItemPM supplierInvoiceItemPM)
         {
             //if (supplierInvoiceItemPM.SupplierInvioceItemCertificats != null && supplierInvoiceItemPM.SupplierInvioceItemCertificats.Count() > 0)
