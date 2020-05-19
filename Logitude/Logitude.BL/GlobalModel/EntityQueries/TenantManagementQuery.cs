@@ -1072,13 +1072,13 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                         #region Main Package Number of User
                         TenantManagementLicensePM package = multiPackage.Where(d => d.PackageCode != "EAWB" || d.PackageCode != "LOGI").OrderByDescending(d => d.NumberOfUsers).FirstOrDefault();
-                        if (package != null) item.MainPackageNumberOfUsers = (int)package.NumberOfUsers;
+                        if (package != null) item.MainPackageNumberOfUsers = package.NumberOfUsers != null ? (int)package.NumberOfUsers : 0;
 
                         #endregion
 
                         #region CRM  Number of User
                         TenantManagementLicensePM crmPackage = multiPackage.Where(d => d.PackageCode == "LOGI").FirstOrDefault();
-                        if (crmPackage != null) item.CRMNumberOfUsers = (int)crmPackage.NumberOfUsers;
+                        if (crmPackage != null) item.CRMNumberOfUsers = crmPackage.NumberOfUsers != null ? (int)crmPackage.NumberOfUsers : 0;
                         else item.CRMNumberOfUsers = 0;
 
 
@@ -1086,7 +1086,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                         #region E-AWB  Number of User
                         TenantManagementLicensePM eAWBBackage = multiPackage.Where(d => d.PackageCode == "EAWB" || d.PackageCode == "BUBK").FirstOrDefault();
-                        if (eAWBBackage != null) item.EAWBNumberOfUsers = (int)eAWBBackage.NumberOfUsers;
+                        if (eAWBBackage != null) item.EAWBNumberOfUsers = eAWBBackage.NumberOfUsers != null ? (int)eAWBBackage.NumberOfUsers : 0;
                         else item.EAWBNumberOfUsers = 0;
 
 
