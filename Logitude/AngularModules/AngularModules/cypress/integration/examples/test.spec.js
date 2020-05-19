@@ -16,14 +16,15 @@ context('Actions', () => {
   it('redirect into logitude', () => {
 	   
 		//cy.visit('http://localhost:4200') 
-		cy.visit('https://test.logitudeworld.com/staging') 
+		cy.visit('https://test.logitudeworld.com/test') 
 		//cy.request('http://localhost:9996/LinksGateway.aspx') 
   })
-  it('.type() - type into a DOM element', () => {
+  it('Login to the system', () => {
 		cy.get('#Email').type('protractor@test.com') 
 		cy.get('#Password').type('!P123t456') 
         cy.get('#cmdLogin').click().then(()=>{
-           // cy.url().should('include', '/angular')
+			//cy.contains('#errorsList')
+           cy.url().should('include', '/Angular')
 
         })
   })
