@@ -2722,6 +2722,34 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
             });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2751",
+                InOut = InOutEnum.O.ToString(),
+                Description = "הצהרת יצוא",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                 Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "2757",
+             });
+
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2757",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר תשובה הצהרה יצוא",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                 Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+             });
             //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
             var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
             var myRequestCode = pm.ResponseInterfaceCode;
