@@ -340,15 +340,13 @@ export class DocumentTypePM {
     private printingFieldsScreenCode: string;
     public get PrintingFieldsScreenCode() { return this.printingFieldsScreenCode; }
     public set PrintingFieldsScreenCode(newValue: string) { if (this.printingFieldsScreenCode != newValue) { this.printingFieldsScreenCode = newValue; this.MarkAsDirty("PrintingFieldsScreenCode"); } }
-
-
+       
+	 
     private addedManually: boolean;
     public get AddedManually() { return this.addedManually; }
     public set AddedManually(newValue: boolean) { if (this.addedManually != newValue) { this.addedManually = newValue; this.MarkAsDirty("AddedManually"); } }
-
-
-
-    
+       
+	 
 
     public OldEntityPM: DocumentTypePM;
 		

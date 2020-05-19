@@ -51,5 +51,6 @@ export class DocumentTypeList {
 		OrderedDisplayName: string;
 		IsSystemAdditionalPrintingFields: boolean;
 		PrintingFieldsScreenCode: string;
+		AddedManually: boolean;
 	
 }

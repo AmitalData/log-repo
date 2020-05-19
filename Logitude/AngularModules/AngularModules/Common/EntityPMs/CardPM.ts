@@ -149,6 +149,11 @@ export class CardPM {
     public set SalesmanUserId(newValue: string) { if (this.salesmanUserId != newValue) { this.salesmanUserId = newValue; this.MarkAsDirty("SalesmanUserId"); } }
        
 	 
+    private accountManagerUserId: string;
+    public get AccountManagerUserId() { return this.accountManagerUserId; }
+    public set AccountManagerUserId(newValue: string) { if (this.accountManagerUserId != newValue) { this.accountManagerUserId = newValue; this.MarkAsDirty("AccountManagerUserId"); } }
+       
+	 
     private salesmanBusinessUnitId: string;
     public get SalesmanBusinessUnitId() { return this.salesmanBusinessUnitId; }
     public set SalesmanBusinessUnitId(newValue: string) { if (this.salesmanBusinessUnitId != newValue) { this.salesmanBusinessUnitId = newValue; this.MarkAsDirty("SalesmanBusinessUnitId"); } }
