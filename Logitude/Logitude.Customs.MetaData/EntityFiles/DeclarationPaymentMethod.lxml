@@ -34,7 +34,9 @@
   Name="&quot;Customs.DeclarationPaymentMethod Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;640dfb2c-4254-4a08-8122-ca3066b8b855&quot;"
     FieldName="&quot;DeclarationId&quot;"

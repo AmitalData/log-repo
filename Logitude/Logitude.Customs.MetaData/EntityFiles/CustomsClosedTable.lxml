@@ -34,7 +34,9 @@
   Name="&quot;Customs.CustomsClosedTable Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;1b83c063-119c-4636-bc7c-735064a8d744&quot;"
     FieldName="&quot;Id&quot;"

@@ -35,7 +35,9 @@
   Name="&quot;Customs.ClaimImporterDeclarsPage3 Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;68f114f7-c074-4cb6-b141-9b5170f07034&quot;"
     FieldName="&quot;ClaimId&quot;"

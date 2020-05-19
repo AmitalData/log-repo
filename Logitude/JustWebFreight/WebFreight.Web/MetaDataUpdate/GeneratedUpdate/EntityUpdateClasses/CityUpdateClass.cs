@@ -409,13 +409,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CityQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CityTextCode_0.Id, NameTextCodeCode = CityTextCode_0.Code, ObjectTableName = "Customs.City", Code = "City",  QueryGroupCode = "CITY", IndexOrder = 0, Tenant = 0, ObjectTableId = CityObjectTable.Id, QuerySection = "Customs.City", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CityFeature_0.Id,FeatureUniqeCode= CityFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CityQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CityQuery.Id,QueryCode = CityQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "City.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CityQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CityQuery.Id,QueryCode = CityQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.City.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CityQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CityQuery.Id,QueryCode = CityQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "City.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CityQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CityQuery.Id,QueryCode = CityQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.City.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CityQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CityQuery.Id,QueryCode = CityQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "City.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CityQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CityQuery.Id,QueryCode = CityQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.City.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CityQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CityQuery.Id,QueryCode = CityQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "City.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CityQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CityQuery.Id,QueryCode = CityQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.City.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

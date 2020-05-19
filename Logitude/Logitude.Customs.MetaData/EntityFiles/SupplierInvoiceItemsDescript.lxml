@@ -41,7 +41,9 @@
   NoPMController="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
-  HasMenuButtons="false">
+  HasMenuButtons="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;a1229edf-6c6a-4432-aa3e-c0e19aaeb531&quot;"
     FieldName="&quot;DeclarationId&quot;"

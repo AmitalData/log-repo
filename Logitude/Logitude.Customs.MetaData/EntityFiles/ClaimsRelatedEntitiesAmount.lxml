@@ -35,7 +35,9 @@
   Name="&quot;Customs.ClaimsRelatedEntitiesAmount Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;ef9eb92f-5c2d-46a6-b698-55469cb525cf&quot;"
     FieldName="&quot;ClaimId&quot;"

@@ -423,11 +423,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query FreightPaymentMethodQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = FreightPaymentMethodTextCode_0.Id, NameTextCodeCode = FreightPaymentMethodTextCode_0.Code, ObjectTableName = "Customs.FreightPaymentMethod", Code = "FreightPaymentMethod",  QueryGroupCode = "f557", IndexOrder = 0, Tenant = 0, ObjectTableId = FreightPaymentMethodObjectTable.Id, QuerySection = "Customs.FreightPaymentMethod", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = FreightPaymentMethodFeature_0.Id,FeatureUniqeCode= FreightPaymentMethodFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn FreightPaymentMethodQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FreightPaymentMethodQuery.Id,QueryCode = FreightPaymentMethodQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "FreightPaymentMethod.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn FreightPaymentMethodQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FreightPaymentMethodQuery.Id,QueryCode = FreightPaymentMethodQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.FreightPaymentMethod.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn FreightPaymentMethodQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FreightPaymentMethodQuery.Id,QueryCode = FreightPaymentMethodQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "FreightPaymentMethod.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FreightPaymentMethodQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FreightPaymentMethodQuery.Id,QueryCode = FreightPaymentMethodQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.FreightPaymentMethod.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FreightPaymentMethodQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FreightPaymentMethodQuery.Id,QueryCode = FreightPaymentMethodQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "FreightPaymentMethod.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FreightPaymentMethodQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FreightPaymentMethodQuery.Id,QueryCode = FreightPaymentMethodQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.FreightPaymentMethod.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

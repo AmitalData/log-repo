@@ -409,13 +409,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AddressContactStateQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AddressContactStateTextCode_0.Id, NameTextCodeCode = AddressContactStateTextCode_0.Code, ObjectTableName = "Customs.AddressContactState", Code = "AddressContactState",  QueryGroupCode = "ADCS", IndexOrder = 0, Tenant = 0, ObjectTableId = AddressContactStateObjectTable.Id, QuerySection = "Customs.AddressContactState", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AddressContactStateFeature_0.Id,FeatureUniqeCode= AddressContactStateFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AddressContactStateQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressContactStateQuery.Id,QueryCode = AddressContactStateQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AddressContactState.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AddressContactStateQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressContactStateQuery.Id,QueryCode = AddressContactStateQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.AddressContactState.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AddressContactStateQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressContactStateQuery.Id,QueryCode = AddressContactStateQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AddressContactState.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AddressContactStateQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressContactStateQuery.Id,QueryCode = AddressContactStateQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.AddressContactState.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AddressContactStateQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressContactStateQuery.Id,QueryCode = AddressContactStateQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AddressContactState.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AddressContactStateQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressContactStateQuery.Id,QueryCode = AddressContactStateQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.AddressContactState.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AddressContactStateQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressContactStateQuery.Id,QueryCode = AddressContactStateQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AddressContactState.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AddressContactStateQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AddressContactStateQuery.Id,QueryCode = AddressContactStateQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.AddressContactState.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

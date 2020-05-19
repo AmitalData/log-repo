@@ -399,13 +399,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ConverterTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConverterTypeTextCode_0.Id, NameTextCodeCode = ConverterTypeTextCode_0.Code, ObjectTableName = "Customs.ConverterType", Code = "ConverterType",  QueryGroupCode = "CTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = ConverterTypeObjectTable.Id, QuerySection = "Customs.ConverterType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConverterTypeFeature_0.Id,FeatureUniqeCode= ConverterTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ConverterTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConverterType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConverterTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ConverterType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConverterTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConverterType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConverterTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ConverterType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConverterTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ConverterType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConverterTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ConverterType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConverterTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ConverterType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConverterTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConverterTypeQuery.Id,QueryCode = ConverterTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ConverterType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

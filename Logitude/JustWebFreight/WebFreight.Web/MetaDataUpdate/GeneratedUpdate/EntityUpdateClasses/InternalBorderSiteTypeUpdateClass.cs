@@ -409,13 +409,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query InternalBorderSiteTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InternalBorderSiteTypeTextCode_0.Id, NameTextCodeCode = InternalBorderSiteTypeTextCode_0.Code, ObjectTableName = "Customs.InternalBorderSiteType", Code = "InternalBorderSiteType",  QueryGroupCode = "IBST", IndexOrder = 0, Tenant = 0, ObjectTableId = InternalBorderSiteTypeObjectTable.Id, QuerySection = "Customs.InternalBorderSiteType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InternalBorderSiteTypeFeature_0.Id,FeatureUniqeCode= InternalBorderSiteTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn InternalBorderSiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InternalBorderSiteType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn InternalBorderSiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.InternalBorderSiteType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InternalBorderSiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InternalBorderSiteType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn InternalBorderSiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.InternalBorderSiteType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InternalBorderSiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InternalBorderSiteType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn InternalBorderSiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.InternalBorderSiteType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn InternalBorderSiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InternalBorderSiteType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn InternalBorderSiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InternalBorderSiteTypeQuery.Id,QueryCode = InternalBorderSiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.InternalBorderSiteType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

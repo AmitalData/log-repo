@@ -407,13 +407,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ParagraphTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ParagraphTypeTextCode_0.Id, NameTextCodeCode = ParagraphTypeTextCode_0.Code, ObjectTableName = "Customs.ParagraphType", Code = "ParagraphType",  QueryGroupCode = "PART", IndexOrder = 0, Tenant = 0, ObjectTableId = ParagraphTypeObjectTable.Id, QuerySection = "Customs.ParagraphType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ParagraphTypeFeature_0.Id,FeatureUniqeCode= ParagraphTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ParagraphTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParagraphTypeQuery.Id,QueryCode = ParagraphTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ParagraphType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ParagraphTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParagraphTypeQuery.Id,QueryCode = ParagraphTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ParagraphType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ParagraphTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParagraphTypeQuery.Id,QueryCode = ParagraphTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ParagraphType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ParagraphTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParagraphTypeQuery.Id,QueryCode = ParagraphTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ParagraphType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ParagraphTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParagraphTypeQuery.Id,QueryCode = ParagraphTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ParagraphType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ParagraphTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParagraphTypeQuery.Id,QueryCode = ParagraphTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ParagraphType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ParagraphTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParagraphTypeQuery.Id,QueryCode = ParagraphTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ParagraphType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ParagraphTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ParagraphTypeQuery.Id,QueryCode = ParagraphTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ParagraphType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

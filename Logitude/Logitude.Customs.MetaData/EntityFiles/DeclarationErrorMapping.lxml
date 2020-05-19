@@ -33,7 +33,9 @@
   Name="&quot;Customs.DeclarationErrorMapping Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;31c8ccfa-79a0-4455-8c93-febca34fe983&quot;"
     FieldName="&quot;Id&quot;"

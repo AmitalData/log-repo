@@ -237,7 +237,7 @@ export class CustomsRequestMenuService {
                     'AnalyzeMessage': JSON.parse(resJson),
                     'CustomResponse': JSON.parse(reqJson),
                 };
-                logitudeWindow.Show('./CustomsModules/CustomControls/Components/ObjectViewerComponent');
+                logitudeWindow.Show('./CustomsModules/CustomsControls/Components/ObjectViewerComponent');
 
 
             });

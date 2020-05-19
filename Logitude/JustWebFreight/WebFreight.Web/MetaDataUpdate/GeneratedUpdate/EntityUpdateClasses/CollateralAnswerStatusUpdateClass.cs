@@ -401,13 +401,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CollateralAnswerStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CollateralAnswerStatusTextCode_0.Id, NameTextCodeCode = CollateralAnswerStatusTextCode_0.Code, ObjectTableName = "Customs.CollateralAnswerStatus", Code = "CollateralAnswerStatus",  QueryGroupCode = "COAS", IndexOrder = 0, Tenant = 0, ObjectTableId = CollateralAnswerStatusObjectTable.Id, QuerySection = "Customs.CollateralAnswerStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CollateralAnswerStatusFeature_0.Id,FeatureUniqeCode= CollateralAnswerStatusFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CollateralAnswerStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerStatusQuery.Id,QueryCode = CollateralAnswerStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CollateralAnswerStatus.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CollateralAnswerStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerStatusQuery.Id,QueryCode = CollateralAnswerStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CollateralAnswerStatus.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CollateralAnswerStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerStatusQuery.Id,QueryCode = CollateralAnswerStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CollateralAnswerStatus.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CollateralAnswerStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerStatusQuery.Id,QueryCode = CollateralAnswerStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CollateralAnswerStatus.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CollateralAnswerStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerStatusQuery.Id,QueryCode = CollateralAnswerStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CollateralAnswerStatus.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CollateralAnswerStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerStatusQuery.Id,QueryCode = CollateralAnswerStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CollateralAnswerStatus.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CollateralAnswerStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerStatusQuery.Id,QueryCode = CollateralAnswerStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CollateralAnswerStatus.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CollateralAnswerStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CollateralAnswerStatusQuery.Id,QueryCode = CollateralAnswerStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CollateralAnswerStatus.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

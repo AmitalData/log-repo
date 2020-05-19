@@ -413,13 +413,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CommunicationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommunicationTypeTextCode_0.Id, NameTextCodeCode = CommunicationTypeTextCode_0.Code, ObjectTableName = "Customs.CommunicationType", Code = "CommunicationType",  QueryGroupCode = "COMT", IndexOrder = 0, Tenant = 0, ObjectTableId = CommunicationTypeObjectTable.Id, QuerySection = "Customs.CommunicationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommunicationTypeFeature_0.Id,FeatureUniqeCode= CommunicationTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CommunicationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CommunicationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CommunicationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CommunicationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CommunicationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CommunicationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CommunicationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CommunicationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CommunicationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CommunicationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CommunicationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CommunicationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CommunicationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CommunicationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CommunicationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CommunicationTypeQuery.Id,QueryCode = CommunicationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CommunicationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

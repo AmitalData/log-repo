@@ -262,6 +262,7 @@
     <Content Include="Customs2020\5 after update.sql" />
     <Content Include="Customs2020\1delete from metadata bad records.sql" />
     <Content Include="Customs2020\DeleteObjectTableMetadataSP.sql" />
+    <Content Include="Customs2020\export for spellchecked.sql" />
     <Content Include="Customs2020\PreDatabaseMigrationScripts\AddMetadataColumns.sql" />
     <Content Include="Customs2020\PreDatabaseMigrationScripts\Color Index Script.sql" />
     <Content Include="Customs2020\PreDatabaseMigrationScripts\DropEmptyTables_Global.sql" />
@@ -281,6 +282,7 @@
     <Content Include="Customs2020\PreDeleteMetadata.sql" />
     <Content Include="Customs2020\ReconnectObjectMetaData.sql" />
     <Content Include="Customs2020\SELECT CONSTRAINTS.sql" />
+    <Content Include="Customs2020\Set Declaration To not connected to unf.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />

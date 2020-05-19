@@ -34,7 +34,9 @@
   Name="&quot;Customs.Deposit Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;7eb6f375-fecf-419c-baad-abd0b150a8ee&quot;"
     FieldName="&quot;Id&quot;"

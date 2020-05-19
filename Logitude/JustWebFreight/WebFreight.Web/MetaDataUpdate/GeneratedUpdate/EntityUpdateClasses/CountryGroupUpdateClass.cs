@@ -414,13 +414,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CountryGroupQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CountryGroupTextCode_0.Id, NameTextCodeCode = CountryGroupTextCode_0.Code, ObjectTableName = "Customs.CountryGroup", Code = "CountryGroup",  QueryGroupCode = "COGR", IndexOrder = 0, Tenant = 0, ObjectTableId = CountryGroupObjectTable.Id, QuerySection = "Customs.CountryGroup", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CountryGroupFeature_0.Id,FeatureUniqeCode= CountryGroupFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CountryGroupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountryGroupQuery.Id,QueryCode = CountryGroupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CountryGroup.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CountryGroupQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountryGroupQuery.Id,QueryCode = CountryGroupQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CountryGroup.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CountryGroupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountryGroupQuery.Id,QueryCode = CountryGroupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CountryGroup.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CountryGroupQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountryGroupQuery.Id,QueryCode = CountryGroupQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CountryGroup.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CountryGroupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountryGroupQuery.Id,QueryCode = CountryGroupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CountryGroup.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CountryGroupQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountryGroupQuery.Id,QueryCode = CountryGroupQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CountryGroup.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CountryGroupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountryGroupQuery.Id,QueryCode = CountryGroupQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CountryGroup.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CountryGroupQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CountryGroupQuery.Id,QueryCode = CountryGroupQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CountryGroup.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

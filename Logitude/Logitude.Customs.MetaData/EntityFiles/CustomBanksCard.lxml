@@ -34,7 +34,9 @@
   Name="&quot;Customs.CustomBanksCard Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;df3cc23f-e975-432a-bca8-dc86936d191f&quot;"
     FieldName="&quot;Id&quot;"

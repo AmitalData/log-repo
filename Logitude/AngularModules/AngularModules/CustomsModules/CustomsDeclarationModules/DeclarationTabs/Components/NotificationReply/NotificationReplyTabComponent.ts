@@ -205,7 +205,7 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
             logWindow.Title = TextCodeTranslator.Translate("Customs.Notification.O.NotificationReplySendErrors");
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
-            logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+            logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
             return;
         }
 

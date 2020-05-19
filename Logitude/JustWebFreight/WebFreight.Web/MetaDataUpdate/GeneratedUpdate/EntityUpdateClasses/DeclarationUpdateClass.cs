@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "713fac52000554548ba7514f8e124ac3";
+		public const string HashString = "886b1fb23b3aedfd544db4d719ed5e12";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12200,363 +12200,363 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query OpenCourierMasterQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_0.Id, NameTextCodeCode = DeclarationTextCode_0.Code, ObjectTableName = "Customs.Declaration", Code = "OpenCourierMaster",  QueryGroupCode = "VHQG", IndexOrder = 0, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_0.Id,FeatureUniqeCode= DeclarationFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn OpenCourierMasterQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn OpenCourierMasterQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn OpenCourierMasterQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn OpenCourierMasterQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn OpenCourierMasterQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.FastIndividualProcessCode" , ColumnWidth = 140 }, addedQueryColumns);
+			 QueryColumn OpenCourierMasterQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn OpenCourierMasterQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn OpenCourierMasterQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn OpenCourierMasterQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn OpenCourierMasterQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn OpenCourierMasterQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn OpenCourierMasterQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn OpenCourierMasterQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn OpenCourierMasterQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn OpenCourierMasterQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Declaration.DeclarationStatusTypeName" , ColumnWidth = 190 }, addedQueryColumns);
+			 QueryColumn OpenCourierMasterQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 190 }, addedQueryColumns);
 
-			 QueryColumn OpenCourierMasterQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Declaration.CourierCustomStatusName" , ColumnWidth = 180 }, addedQueryColumns);
+			 QueryColumn OpenCourierMasterQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.CourierCustomStatusName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn OpenCourierMasterQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Declaration.CourierSuspentionName" , ColumnWidth = 180 }, addedQueryColumns);
+			 QueryColumn OpenCourierMasterQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.Declaration.CourierSuspentionName" , ColumnWidth = 180 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenCourierMasterQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter OpenCourierMasterQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
 
 			  Query UnReleasedFastProcessQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_1.Id, NameTextCodeCode = DeclarationTextCode_1.Code, ObjectTableName = "Customs.Declaration", Code = "UnReleasedFastProcess",  QueryGroupCode = "VHQG", IndexOrder = 1, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_1.Id,FeatureUniqeCode= DeclarationFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn UnReleasedFastProcessQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn UnReleasedFastProcessQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedFastProcessQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn UnReleasedFastProcessQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedFastProcessQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn UnReleasedFastProcessQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedFastProcessQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn UnReleasedFastProcessQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedFastProcessQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn UnReleasedFastProcessQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedFastProcessQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn UnReleasedFastProcessQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedFastProcessQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.DeclarationStatusTypeName" , ColumnWidth = 190 }, addedQueryColumns);
+			 QueryColumn UnReleasedFastProcessQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 190 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedFastProcessQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Declaration.CourierCustomStatusName" , ColumnWidth = 180 }, addedQueryColumns);
+			 QueryColumn UnReleasedFastProcessQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.CourierCustomStatusName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedFastProcessQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Declaration.CourierSuspentionName" , ColumnWidth = 180 }, addedQueryColumns);
+			 QueryColumn UnReleasedFastProcessQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.CourierSuspentionName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedFastProcessQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Declaration.AcceptanceStatusName" , ColumnWidth = 140 }, addedQueryColumns);
+			 QueryColumn UnReleasedFastProcessQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.Declaration.AcceptanceStatusName" , ColumnWidth = 140 }, addedQueryColumns);
 
-             AdvancedQueryFilter UnReleasedFastProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.FastIndividualProcessCode", PredefinedValue = "F",PredefinedValue2 = null, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter UnReleasedFastProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode", PredefinedValue = "F",PredefinedValue2 = null, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter UnReleasedFastProcessQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.HatraDate", PredefinedValue = "",PredefinedValue2 = null, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter UnReleasedFastProcessQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.HatraDate", PredefinedValue = "",PredefinedValue2 = null, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
 
 			  Query CourierMasterOpenIndividualQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_2.Id, NameTextCodeCode = DeclarationTextCode_2.Code, ObjectTableName = "Customs.Declaration", Code = "CourierMasterOpenIndividual",  QueryGroupCode = "VHQG", IndexOrder = 2, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_2.Id,FeatureUniqeCode= DeclarationFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CourierMasterOpenIndividualQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn CourierMasterOpenIndividualQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CourierMasterOpenIndividualQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn CourierMasterOpenIndividualQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn CourierMasterOpenIndividualQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn CourierMasterOpenIndividualQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn CourierMasterOpenIndividualQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.DeclarationStatusTypeName" , ColumnWidth = 190 }, addedQueryColumns);
+			 QueryColumn CourierMasterOpenIndividualQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 190 }, addedQueryColumns);
 
-             AdvancedQueryFilter CourierMasterOpenIndividualQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter CourierMasterOpenIndividualQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter CourierMasterOpenIndividualQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.FastIndividualProcessCode", PredefinedValue = "I",PredefinedValue2 = null, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter CourierMasterOpenIndividualQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode", PredefinedValue = "I",PredefinedValue2 = null, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
 
 			  Query UnReleasedIndividualQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_3.Id, NameTextCodeCode = DeclarationTextCode_3.Code, ObjectTableName = "Customs.Declaration", Code = "UnReleasedIndividual",  QueryGroupCode = "VHQG", IndexOrder = 3, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_3.Id,FeatureUniqeCode= DeclarationFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn UnReleasedIndividualQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn UnReleasedIndividualQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedIndividualQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn UnReleasedIndividualQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedIndividualQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn UnReleasedIndividualQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedIndividualQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn UnReleasedIndividualQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedIndividualQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn UnReleasedIndividualQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedIndividualQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn UnReleasedIndividualQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedIndividualQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.DeclarationStatusTypeName" , ColumnWidth = 190 }, addedQueryColumns);
+			 QueryColumn UnReleasedIndividualQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 190 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedIndividualQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Declaration.CourierCustomStatusName" , ColumnWidth = 180 }, addedQueryColumns);
+			 QueryColumn UnReleasedIndividualQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.CourierCustomStatusName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedIndividualQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Declaration.CourierSuspentionName" , ColumnWidth = 180 }, addedQueryColumns);
+			 QueryColumn UnReleasedIndividualQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.CourierSuspentionName" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn UnReleasedIndividualQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Declaration.AcceptanceStatusName" , ColumnWidth = 140 }, addedQueryColumns);
+			 QueryColumn UnReleasedIndividualQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.Declaration.AcceptanceStatusName" , ColumnWidth = 140 }, addedQueryColumns);
 
-             AdvancedQueryFilter UnReleasedIndividualQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.FastIndividualProcessCode", PredefinedValue = "I",PredefinedValue2 = null, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter UnReleasedIndividualQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode", PredefinedValue = "I",PredefinedValue2 = null, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter UnReleasedIndividualQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.HatraDate", PredefinedValue = "",PredefinedValue2 = null, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter UnReleasedIndividualQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.HatraDate", PredefinedValue = "",PredefinedValue2 = null, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
 
 			  Query WithoutIdQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_4.Id, NameTextCodeCode = DeclarationTextCode_4.Code, ObjectTableName = "Customs.Declaration", Code = "WithoutId",  QueryGroupCode = "VHQG", IndexOrder = 4, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_4.Id,FeatureUniqeCode= DeclarationFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn WithoutIdQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.MAWB" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn WithoutIdQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.MAWB" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn WithoutIdQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn WithoutIdQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn WithoutIdQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn WithoutIdQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn WithoutIdQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn WithoutIdQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn WithoutIdQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn WithoutIdQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn WithoutIdQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn WithoutIdQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn WithoutIdQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn WithoutIdQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter WithoutIdQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter WithoutIdQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter WithoutIdQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsPending902", PredefinedValue = "true",PredefinedValue2 = null, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter WithoutIdQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsPending902", PredefinedValue = "true",PredefinedValue2 = null, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
 
 			  Query WithoutClassificationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_5.Id, NameTextCodeCode = DeclarationTextCode_5.Code, ObjectTableName = "Customs.Declaration", Code = "WithoutClassification",  QueryGroupCode = "VHQG", IndexOrder = 5, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_5.Id,FeatureUniqeCode= DeclarationFeature_5.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn WithoutClassificationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.MAWB" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn WithoutClassificationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.MAWB" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn WithoutClassificationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn WithoutClassificationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn WithoutClassificationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn WithoutClassificationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn WithoutClassificationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn WithoutClassificationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn WithoutClassificationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn WithoutClassificationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn WithoutClassificationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn WithoutClassificationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn WithoutClassificationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn WithoutClassificationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn WithoutClassificationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Declaration.CargoDescription" , ColumnWidth = 190 }, addedQueryColumns);
+			 QueryColumn WithoutClassificationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.CargoDescription" , ColumnWidth = 190 }, addedQueryColumns);
 
-             AdvancedQueryFilter WithoutClassificationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsCourierMissingClassification", PredefinedValue = "true",PredefinedValue2 = null, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter WithoutClassificationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierMissingClassification", PredefinedValue = "true",PredefinedValue2 = null, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
 
 			  Query PendingPaymentQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_6.Id, NameTextCodeCode = DeclarationTextCode_6.Code, ObjectTableName = "Customs.Declaration", Code = "PendingPayment",  QueryGroupCode = "VHQG", IndexOrder = 6, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_6.Id,FeatureUniqeCode= DeclarationFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PendingPaymentQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.MAWB" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn PendingPaymentQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.MAWB" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn PendingPaymentQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn PendingPaymentQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn PendingPaymentQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingPaymentQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn PendingPaymentQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn PendingPaymentQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn PendingPaymentQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingPaymentQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn PendingPaymentQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn PendingPaymentQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn PendingPaymentQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn PendingPaymentQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
 
-             AdvancedQueryFilter PendingPaymentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsPending900", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter PendingPaymentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsPending900", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
 
 			  Query PendingCustomsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_7.Id, NameTextCodeCode = DeclarationTextCode_7.Code, ObjectTableName = "Customs.Declaration", Code = "PendingCustoms",  QueryGroupCode = "VHQG", IndexOrder = 7, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_7.Id,FeatureUniqeCode= DeclarationFeature_7.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PendingCustomsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.MAWB" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn PendingCustomsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.MAWB" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn PendingCustomsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn PendingCustomsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn PendingCustomsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingCustomsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn PendingCustomsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn PendingCustomsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn PendingCustomsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingCustomsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn PendingCustomsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn PendingCustomsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn PendingCustomsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn PendingCustomsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn PendingCustomsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Declaration.AcceptanceStatusName" , ColumnWidth = 190 }, addedQueryColumns);
+			 QueryColumn PendingCustomsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.AcceptanceStatusName" , ColumnWidth = 190 }, addedQueryColumns);
 
-			 QueryColumn PendingCustomsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Declaration.CourierSuspentionName" , ColumnWidth = 180 }, addedQueryColumns);
+			 QueryColumn PendingCustomsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.CourierSuspentionName" , ColumnWidth = 180 }, addedQueryColumns);
 
-             AdvancedQueryFilter PendingCustomsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter PendingCustomsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter PendingCustomsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.CourierCustomStatusCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter PendingCustomsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.CourierCustomStatusCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
 
 			  Query PendingQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_8.Id, NameTextCodeCode = DeclarationTextCode_8.Code, ObjectTableName = "Customs.Declaration", Code = "Pending",  QueryGroupCode = "VHQG", IndexOrder = 8, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_8.Id,FeatureUniqeCode= DeclarationFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PendingQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.MAWB" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn PendingQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.MAWB" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn PendingQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn PendingQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn PendingQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CourierHAWB" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn PendingQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn PendingQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn PendingQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn PendingQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn PendingQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn PendingQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn PendingQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn PendingQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.TotalInvoiceAmountInUSD" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn PendingQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Declaration.AcceptanceStatusName" , ColumnWidth = 190 }, addedQueryColumns);
+			 QueryColumn PendingQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.AcceptanceStatusName" , ColumnWidth = 190 }, addedQueryColumns);
 
-			 QueryColumn PendingQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Declaration.CourierPendingReasonList" , ColumnWidth = 180 }, addedQueryColumns);
+			 QueryColumn PendingQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.Declaration.CourierPendingReasonList" , ColumnWidth = 180 }, addedQueryColumns);
 
-             AdvancedQueryFilter PendingQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsPendingNotNull", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter PendingQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsPendingNotNull", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
 
 			  Query DeclarationWithoutReleaseQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_9.Id, NameTextCodeCode = DeclarationTextCode_9.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationWithoutRelease",  QueryGroupCode = "DECL", IndexOrder = 9, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_9.Id,FeatureUniqeCode= DeclarationFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DeclarationWithoutReleaseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn DeclarationWithoutReleaseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn DeclarationWithoutReleaseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationWithoutReleaseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclarationWithoutReleaseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn DeclarationWithoutReleaseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn DeclarationWithoutReleaseQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeclarationWithoutReleaseQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeclarationWithoutReleaseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn DeclarationWithoutReleaseQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn DeclarationWithoutReleaseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationWithoutReleaseQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclarationWithoutReleaseQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn DeclarationWithoutReleaseQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
-             AdvancedQueryFilter DeclarationWithoutReleaseQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
-
-
-             AdvancedQueryFilter DeclarationWithoutReleaseQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.DeclarationWithoutRelease", PredefinedValue = "1",PredefinedValue2 = null, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DeclarationWithoutReleaseQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DeclarationWithoutReleaseQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DeclarationWithoutReleaseQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.DeclarationWithoutRelease", PredefinedValue = "1",PredefinedValue2 = null, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter DeclarationWithoutReleaseQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query DeclarationInConstraintQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_10.Id, NameTextCodeCode = DeclarationTextCode_10.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationInConstraint",  QueryGroupCode = "DECL", IndexOrder = 10, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_10.Id,FeatureUniqeCode= DeclarationFeature_10.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DeclarationInConstraintQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn DeclarationInConstraintQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationInConstraintQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn DeclarationInConstraintQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeclarationInConstraintQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn DeclarationInConstraintQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationInConstraintQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclarationInConstraintQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn DeclarationInConstraintQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
-             AdvancedQueryFilter DeclarationInConstraintQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
-
-
-             AdvancedQueryFilter DeclarationInConstraintQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.DeclarationStatusTypeCode", PredefinedValue = "11",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DeclarationInConstraintQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DeclarationInConstraintQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DeclarationInConstraintQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeCode", PredefinedValue = "11",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter DeclarationInConstraintQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query PaidDeclarationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_11.Id, NameTextCodeCode = DeclarationTextCode_11.Code, ObjectTableName = "Customs.Declaration", Code = "PaidDeclaration",  QueryGroupCode = "DECL", IndexOrder = 11, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_11.Id,FeatureUniqeCode= DeclarationFeature_11.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PaidDeclarationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn PaidDeclarationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn PaidDeclarationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn PaidDeclarationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PaidDeclarationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn PaidDeclarationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn PaidDeclarationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaidDeclarationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaidDeclarationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn PaidDeclarationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn PaidDeclarationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn PaidDeclarationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn PaidDeclarationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn PaidDeclarationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
-             AdvancedQueryFilter PaidDeclarationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
-
-
-             AdvancedQueryFilter PaidDeclarationQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.PaidDeclarationWithoutRelease", PredefinedValue = "",PredefinedValue2 = null, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter PaidDeclarationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter PaidDeclarationQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter PaidDeclarationQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.PaidDeclarationWithoutRelease", PredefinedValue = "",PredefinedValue2 = null, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+
+             AdvancedQueryFilter PaidDeclarationQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query DeclarationAmendmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_12.Id, NameTextCodeCode = DeclarationTextCode_12.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationAmendments",  QueryGroupCode = "DECL", IndexOrder = 12, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_12.Id,FeatureUniqeCode= DeclarationFeature_12.FeatureUniqeCode, DefaultSortName = "AmendmentissueDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn DeclarationAmendmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.AmendmentissueDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeclarationAmendmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.AmendmentissueDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeclarationAmendmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CustomFileAmendment" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationAmendmentsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileAmendment" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclarationAmendmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.DeclarationNoAmendment" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn DeclarationAmendmentsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.DeclarationNoAmendment" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn DeclarationAmendmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationAmendmentsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclarationAmendmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationAmendmentsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclarationAmendmentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.DeclarationOfficeName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationAmendmentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclarationAmendmentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.AmendmentRequestNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationAmendmentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.AmendmentRequestNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclarationAmendmentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Declaration.AmendmentCorrectedByUserName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationAmendmentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.AmendmentCorrectedByUserName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter DeclarationAmendmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsAmendment", PredefinedValue = "True",PredefinedValue2 = null, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter DeclarationAmendmentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsAmendment", PredefinedValue = "True",PredefinedValue2 = null, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DeclarationAmendmentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.AmendmentStatus", PredefinedValue = "1",PredefinedValue2 = null, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter DeclarationAmendmentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentStatus", PredefinedValue = "1",PredefinedValue2 = null, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
 
 			  Query DeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_13.Id, NameTextCodeCode = DeclarationTextCode_13.Code, ObjectTableName = "Customs.Declaration", Code = "Declarations",  QueryGroupCode = "DECL", IndexOrder = 13, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_13.Id,FeatureUniqeCode= DeclarationFeature_13.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn DeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn DeclarationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Declaration.CustomFileNo" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.CustomFileNo" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclarationsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn DeclarationsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.CustomerName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn DeclarationsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeclarationsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeclarationsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Declaration.DeclarationNumber" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn DeclarationsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.Declaration.DeclarationNumber" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn DeclarationsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DeclarationsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DeclarationsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn DeclarationsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
-             AdvancedQueryFilter DeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DeclarationsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DeclarationsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -12576,21 +12576,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen DeclarationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Declaration.HeaderScreen", Name = "Header Screen", ObjectTableId = DeclarationObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField DeclarationCustomsDeclarationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Declaration.DeclarationNumberandVersionId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.DeclarationNumberandVersionId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DeclarationCustomsDeclarationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Declaration.ProcedureCurrentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DeclarationCustomsDeclarationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Declaration.ExternalDeclarationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.ExternalDeclarationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DeclarationCustomsDeclarationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Declaration.DeclarationOfficeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DeclarationCustomsDeclarationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Declaration.TaxationDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.TaxationDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DeclarationCustomsDeclarationHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Declaration.HatraDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.HatraDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DeclarationCustomsDeclarationHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Declaration.DeclarationStatusTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DeclarationCustomsDeclarationHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Declaration.DepartmentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.DepartmentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    DeclarationObjectTable.HeaderScreenId = DeclarationHeaderScreenScreen0.Id;
 		    DeclarationObjectTable.HeaderScreenCode = DeclarationHeaderScreenScreen0.Code;
@@ -12600,15 +12600,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen DeclarationGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Declaration.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = DeclarationObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField DeclarationCustomsDeclarationGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Declaration.CustomFileNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.Declaration.CustomFileNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DeclarationCustomsDeclarationGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Declaration.CustomerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.Declaration.CustomerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DeclarationCustomsDeclarationGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Declaration.DeclarationOfficeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DeclarationCustomsDeclarationGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Declaration.ImporterId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.Declaration.ImporterId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField DeclarationCustomsDeclarationGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Declaration.ProcedureCurrentCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsDeclarationCustomsDeclarationGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -14128,7 +14128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = "שחרור חלקי",
+						LocalDefaultText = "טפסים",
 						FeatureUniqeCode = null,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -14148,7 +14148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB20.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "צרופה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB20.FeatureUniqeCode,
@@ -14168,7 +14168,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB21.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "צרופה צבורה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB21.FeatureUniqeCode,
@@ -14188,7 +14188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB22.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "טופס הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB22.FeatureUniqeCode,
@@ -14208,7 +14208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB23.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "שחרור חלקי",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB23.FeatureUniqeCode,
@@ -14248,7 +14248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = "בקשות מכס",
+						LocalDefaultText = "פעולות",
 						FeatureUniqeCode = null,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -14268,7 +14268,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB40.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "בדיקת סטטוס הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB40.FeatureUniqeCode,
@@ -14288,7 +14288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB41.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "שחזור נתוני הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB41.FeatureUniqeCode,
@@ -14308,7 +14308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB42.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "איפוס מספר הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB42.FeatureUniqeCode,
@@ -14328,7 +14328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB43.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "העתקת הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB43.FeatureUniqeCode,
@@ -14348,7 +14348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB44.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "העברה לגובה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB44.FeatureUniqeCode,
@@ -14368,7 +14368,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB45.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "הפחתות לשילדה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB45.FeatureUniqeCode,
@@ -14408,7 +14408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB47.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "Pending",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB47.FeatureUniqeCode,
@@ -14428,7 +14428,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB48.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "סגירת הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB48.FeatureUniqeCode,
@@ -14448,7 +14448,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB49.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "ביטול סגירת הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB49.FeatureUniqeCode,
@@ -14468,7 +14468,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  DeclarationFeature_MB410.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "בקשות מכס",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB410.FeatureUniqeCode,

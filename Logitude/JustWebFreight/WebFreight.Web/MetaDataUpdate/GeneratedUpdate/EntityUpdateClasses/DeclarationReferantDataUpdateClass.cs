@@ -1868,39 +1868,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query DEREQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationReferantDataTextCode_0.Id, NameTextCodeCode = DeclarationReferantDataTextCode_0.Code, ObjectTableName = "Customs.DeclarationReferantData", Code = "DERE",  SpotlightDataTemplate = "ReferantSpotlightDataTemplate",  QueryGroupCode = "5277", IndexOrder = 0, Tenant = 0, ObjectTableId = DeclarationReferantDataObjectTable.Id, QuerySection = "Customs.DeclarationReferantData", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationReferantDataFeature_0.Id,FeatureUniqeCode= DeclarationReferantDataFeature_0.FeatureUniqeCode, DefaultSortName = "ArrivalDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn DEREQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DeclarationReferantData.CustomFileNo" , ColumnWidth = 94 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationReferantData.CustomFileNo" , ColumnWidth = 94 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DeclarationReferantData.CustomerName" , ColumnWidth = 172 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationReferantData.CustomerName" , ColumnWidth = 172 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DeclarationReferantData.OrderNumber" , ColumnWidth = 89 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationReferantData.OrderNumber" , ColumnWidth = 89 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DeclarationReferantData.TransportModeId" , ColumnWidth = 60 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationReferantData.TransportModeId" , ColumnWidth = 60 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DeclarationReferantData.DeclarationOfficeName" , ColumnWidth = 159 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationOfficeName" , ColumnWidth = 159 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "DeclarationReferantData.VendorName" , ColumnWidth = 243 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationReferantData.VendorName" , ColumnWidth = 243 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "DeclarationReferantData.ArrivalDate" , ColumnWidth = 81 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationReferantData.ArrivalDate" , ColumnWidth = 81 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DeclarationReferantData.Weight" , ColumnWidth = 77 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationReferantData.Weight" , ColumnWidth = 77 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "DeclarationReferantData.DeclarationStatusTypeName" , ColumnWidth = 257 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationReferantData.DeclarationStatusTypeName" , ColumnWidth = 257 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "DeclarationReferantData.PreClassification" , ColumnWidth = 60 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationReferantData.PreClassification" , ColumnWidth = 60 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "DeclarationReferantData.ClassificationStatus" , ColumnWidth = 96 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationReferantData.ClassificationStatus" , ColumnWidth = 96 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "DeclarationReferantData.ControllerStatus" , ColumnWidth = 46 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationReferantData.ControllerStatus" , ColumnWidth = 46 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "DeclarationReferantData.CollectionOfMoneyStatus" , ColumnWidth = 96 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.DeclarationReferantData.CollectionOfMoneyStatus" , ColumnWidth = 96 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "DeclarationReferantData.FollowUpDate" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.DeclarationReferantData.FollowUpDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "DeclarationReferantData.ExceptionReasonsList" , ColumnWidth = 71 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customs.DeclarationReferantData.ExceptionReasonsList" , ColumnWidth = 71 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "DeclarationReferantData.WithPaper" , ColumnWidth = 71 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customs.DeclarationReferantData.WithPaper" , ColumnWidth = 71 }, addedQueryColumns);
 
-			 QueryColumn DEREQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "DeclarationReferantData.Actions" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn DEREQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DEREQuery.Id,QueryCode = DEREQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Customs.DeclarationReferantData.Actions" , ColumnWidth = 70 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

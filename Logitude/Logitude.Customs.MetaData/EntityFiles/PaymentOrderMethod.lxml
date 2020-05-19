@@ -34,7 +34,9 @@
   Name="&quot;Customs.PaymentOrderMethod Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;444a2305-58af-4892-a026-ced14965774f&quot;"
     FieldName="&quot;PaymentOrderId&quot;"

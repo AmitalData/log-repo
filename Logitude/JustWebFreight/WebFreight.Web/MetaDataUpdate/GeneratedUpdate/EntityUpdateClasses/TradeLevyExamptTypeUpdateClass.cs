@@ -407,13 +407,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query TradeLevyExamptTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TradeLevyExamptTypeTextCode_0.Id, NameTextCodeCode = TradeLevyExamptTypeTextCode_0.Code, ObjectTableName = "Customs.TradeLevyExamptType", Code = "TradeLevyExamptType",  QueryGroupCode = "TLQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TradeLevyExamptTypeObjectTable.Id, QuerySection = "Customs.TradeLevyExamptType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TradeLevyExamptTypeFeature_0.Id,FeatureUniqeCode= TradeLevyExamptTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn TradeLevyExamptTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TradeLevyExamptType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TradeLevyExamptTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.TradeLevyExamptType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TradeLevyExamptTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TradeLevyExamptType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TradeLevyExamptTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.TradeLevyExamptType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TradeLevyExamptTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TradeLevyExamptType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TradeLevyExamptTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.TradeLevyExamptType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TradeLevyExamptTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TradeLevyExamptType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TradeLevyExamptTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeLevyExamptTypeQuery.Id,QueryCode = TradeLevyExamptTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.TradeLevyExamptType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

@@ -405,13 +405,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query StorageMessageTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = StorageMessageTypeTextCode_0.Id, NameTextCodeCode = StorageMessageTypeTextCode_0.Code, ObjectTableName = "Customs.StorageMessageType", Code = "StorageMessageType",  QueryGroupCode = "SMQG", IndexOrder = 0, Tenant = 0, ObjectTableId = StorageMessageTypeObjectTable.Id, QuerySection = "Customs.StorageMessageType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = StorageMessageTypeFeature_0.Id,FeatureUniqeCode= StorageMessageTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn StorageMessageTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StorageMessageTypeQuery.Id,QueryCode = StorageMessageTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "StorageMessageType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn StorageMessageTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StorageMessageTypeQuery.Id,QueryCode = StorageMessageTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.StorageMessageType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn StorageMessageTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StorageMessageTypeQuery.Id,QueryCode = StorageMessageTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "StorageMessageType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn StorageMessageTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StorageMessageTypeQuery.Id,QueryCode = StorageMessageTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.StorageMessageType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn StorageMessageTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StorageMessageTypeQuery.Id,QueryCode = StorageMessageTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "StorageMessageType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn StorageMessageTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StorageMessageTypeQuery.Id,QueryCode = StorageMessageTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.StorageMessageType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn StorageMessageTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StorageMessageTypeQuery.Id,QueryCode = StorageMessageTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "StorageMessageType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn StorageMessageTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = StorageMessageTypeQuery.Id,QueryCode = StorageMessageTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.StorageMessageType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

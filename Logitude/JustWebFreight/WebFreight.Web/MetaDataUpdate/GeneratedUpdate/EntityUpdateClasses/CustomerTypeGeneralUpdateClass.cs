@@ -407,13 +407,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CustomerTypeGeneralQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTypeGeneralTextCode_0.Id, NameTextCodeCode = CustomerTypeGeneralTextCode_0.Code, ObjectTableName = "Customs.CustomerTypeGeneral", Code = "CustomerTypeGeneral",  QueryGroupCode = "CUTG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerTypeGeneralObjectTable.Id, QuerySection = "Customs.CustomerTypeGeneral", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerTypeGeneralFeature_0.Id,FeatureUniqeCode= CustomerTypeGeneralFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomerTypeGeneralQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTypeGeneralQuery.Id,QueryCode = CustomerTypeGeneralQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomerTypeGeneral.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomerTypeGeneralQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTypeGeneralQuery.Id,QueryCode = CustomerTypeGeneralQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomerTypeGeneral.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomerTypeGeneralQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTypeGeneralQuery.Id,QueryCode = CustomerTypeGeneralQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomerTypeGeneral.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomerTypeGeneralQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTypeGeneralQuery.Id,QueryCode = CustomerTypeGeneralQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomerTypeGeneral.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomerTypeGeneralQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTypeGeneralQuery.Id,QueryCode = CustomerTypeGeneralQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomerTypeGeneral.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomerTypeGeneralQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTypeGeneralQuery.Id,QueryCode = CustomerTypeGeneralQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomerTypeGeneral.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomerTypeGeneralQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTypeGeneralQuery.Id,QueryCode = CustomerTypeGeneralQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomerTypeGeneral.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomerTypeGeneralQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTypeGeneralQuery.Id,QueryCode = CustomerTypeGeneralQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomerTypeGeneral.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

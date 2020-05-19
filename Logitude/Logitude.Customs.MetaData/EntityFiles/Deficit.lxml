@@ -55,7 +55,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;2a0fae0b-d692-493b-9cec-86417f506a4f&quot;"
     FieldName="&quot;Id&quot;"
@@ -425,7 +427,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.Deficit&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -643,7 +645,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.Deficit&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"

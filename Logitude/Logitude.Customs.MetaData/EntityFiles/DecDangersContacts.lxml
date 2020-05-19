@@ -62,7 +62,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;5eab50bd-2292-4e21-955e-e865be06ffd9&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -363,7 +365,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.CommunicationType&quot;"
     MinLength="0"
-    MaxLength="3"
+    MaxLength="2"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -582,7 +584,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.CommunicationType&quot;"
     MinLength="0"
-    MaxLength="3"
+    MaxLength="2"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"

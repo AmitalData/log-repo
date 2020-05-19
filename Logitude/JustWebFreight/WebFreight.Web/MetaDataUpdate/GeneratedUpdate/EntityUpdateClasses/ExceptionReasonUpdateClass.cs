@@ -545,15 +545,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllReferantExceptionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExceptionReasonTextCode_0.Id, NameTextCodeCode = ExceptionReasonTextCode_0.Code, ObjectTableName = "Customs.ExceptionReason", Code = "AllReferantException",  QueryGroupCode = "c5df", IndexOrder = 0, Tenant = 0, ObjectTableId = ExceptionReasonObjectTable.Id, QuerySection = "Customs.ExceptionReason", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ExceptionReasonFeature_0.Id,FeatureUniqeCode= ExceptionReasonFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllReferantExceptionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ExceptionReason.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllReferantExceptionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExceptionReason.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllReferantExceptionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ExceptionReason.EnglishName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllReferantExceptionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ExceptionReason.EnglishName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllReferantExceptionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ExceptionReason.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllReferantExceptionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ExceptionReason.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllReferantExceptionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ExceptionReason.IsActive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn AllReferantExceptionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ExceptionReason.IsActive" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn AllReferantExceptionQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ExceptionReason.UnifreightStatusCode" , ColumnWidth = 167 }, addedQueryColumns);
+			 QueryColumn AllReferantExceptionQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ExceptionReason.UnifreightStatusCode" , ColumnWidth = 167 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -572,9 +572,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ExceptionReason.HeaderScreen", Name = "Customs.ExceptionReasonHeaderScreen", ObjectTableId = ExceptionReasonObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ExceptionReasonCustomsExceptionReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Id,ScreenCode = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Code, ObjectFieldCode = "ExceptionReason.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsExceptionReasonCustomsExceptionReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Id,ScreenCode = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExceptionReason.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ExceptionReasonCustomsExceptionReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Id,ScreenCode = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Code, ObjectFieldCode = "ExceptionReason.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsExceptionReasonCustomsExceptionReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Id,ScreenCode = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExceptionReason.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ExceptionReasonObjectTable.HeaderScreenId = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Id;
 		    ExceptionReasonObjectTable.HeaderScreenCode = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Code;

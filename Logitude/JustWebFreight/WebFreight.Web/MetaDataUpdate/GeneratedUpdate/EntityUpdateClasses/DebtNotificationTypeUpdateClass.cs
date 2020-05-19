@@ -405,13 +405,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query DebtNotificationTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DebtNotificationTypeTextCode_0.Id, NameTextCodeCode = DebtNotificationTypeTextCode_0.Code, ObjectTableName = "Customs.DebtNotificationType", Code = "DebtNotificationType",  QueryGroupCode = "DNQG", IndexOrder = 0, Tenant = 0, ObjectTableId = DebtNotificationTypeObjectTable.Id, QuerySection = "Customs.DebtNotificationType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DebtNotificationTypeFeature_0.Id,FeatureUniqeCode= DebtNotificationTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DebtNotificationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebtNotificationTypeQuery.Id,QueryCode = DebtNotificationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DebtNotificationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DebtNotificationTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebtNotificationTypeQuery.Id,QueryCode = DebtNotificationTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DebtNotificationType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DebtNotificationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebtNotificationTypeQuery.Id,QueryCode = DebtNotificationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DebtNotificationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DebtNotificationTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebtNotificationTypeQuery.Id,QueryCode = DebtNotificationTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DebtNotificationType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DebtNotificationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebtNotificationTypeQuery.Id,QueryCode = DebtNotificationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DebtNotificationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DebtNotificationTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebtNotificationTypeQuery.Id,QueryCode = DebtNotificationTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DebtNotificationType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DebtNotificationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebtNotificationTypeQuery.Id,QueryCode = DebtNotificationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DebtNotificationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DebtNotificationTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebtNotificationTypeQuery.Id,QueryCode = DebtNotificationTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DebtNotificationType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

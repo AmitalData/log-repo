@@ -60,7 +60,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;f62c9cf8-87e9-4495-ac81-e9001bb164e1&quot;"
     FieldName="&quot;Id&quot;"
@@ -1023,7 +1025,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.InternationalSite&quot;"
     MinLength="0"
-    MaxLength="35"
+    MaxLength="17"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2689,7 +2691,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;Customs.DeliverySiteType&quot;"
     MinLength="0"
-    MaxLength="17"
+    MaxLength="20"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

@@ -34,7 +34,9 @@
   Name="&quot;Customs.VehicleSafetyAccessory Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
-  ServerModuleName="&quot;Customs&quot;">
+  ServerModuleName="&quot;Customs&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;f6711f39-8ca2-4777-af4e-49349e62f6e1&quot;"
     FieldName="&quot;Tenant&quot;"

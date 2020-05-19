@@ -406,13 +406,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query VendorStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VendorStatusTextCode_0.Id, NameTextCodeCode = VendorStatusTextCode_0.Code, ObjectTableName = "Customs.VendorStatus", Code = "VendorStatus",  QueryGroupCode = "VSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = VendorStatusObjectTable.Id, QuerySection = "Customs.VendorStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = VendorStatusFeature_0.Id,FeatureUniqeCode= VendorStatusFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn VendorStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorStatusQuery.Id,QueryCode = VendorStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "VendorStatus.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VendorStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorStatusQuery.Id,QueryCode = VendorStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.VendorStatus.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VendorStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorStatusQuery.Id,QueryCode = VendorStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "VendorStatus.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VendorStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorStatusQuery.Id,QueryCode = VendorStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.VendorStatus.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VendorStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorStatusQuery.Id,QueryCode = VendorStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "VendorStatus.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VendorStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorStatusQuery.Id,QueryCode = VendorStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.VendorStatus.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn VendorStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorStatusQuery.Id,QueryCode = VendorStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "VendorStatus.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn VendorStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorStatusQuery.Id,QueryCode = VendorStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.VendorStatus.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

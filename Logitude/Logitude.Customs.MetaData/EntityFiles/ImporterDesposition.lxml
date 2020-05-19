@@ -42,7 +42,9 @@
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
-  ApplyOnPropertyChangedCode="false">
+  ApplyOnPropertyChangedCode="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="Customs">
   <field
     Id="&quot;295d0f45-165d-48bc-a904-3f51c54552a3&quot;"
     FieldName="&quot;DepositionNumber&quot;"

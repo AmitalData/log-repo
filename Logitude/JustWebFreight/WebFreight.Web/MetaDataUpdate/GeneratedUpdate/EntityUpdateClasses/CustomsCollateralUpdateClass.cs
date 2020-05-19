@@ -2059,48 +2059,48 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			  Query AllCollateralsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsCollateralTextCode_0.Id, NameTextCodeCode = CustomsCollateralTextCode_0.Code, ObjectTableName = "Customs.CustomsCollateral", Code = "AllCollaterals",  EditWizardName = "Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl",
 			   QueryGroupCode = "CCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsCollateralObjectTable.Id, QuerySection = "Customs.CustomsCollateral", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsCollateralFeature_0.Id,FeatureUniqeCode= CustomsCollateralFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsCollateral.CollateralRequestNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsCollateral.CollateralRequestNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsCollateral.CollateralRequestStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsCollateral.CollateralRequestStatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsCollateral.RequestValidityDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsCollateral.RequestValidityDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsCollateral.CustomsEntityTypeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsCollateral.CustomsEntityTypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomsCollateral.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CustomsCollateral.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomsCollateral.EntityIdKey1" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CustomsCollateral.EntityIdKey1" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "CustomsCollateral.EntityIdKey2" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CustomsCollateral.EntityIdKey2" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "CustomsCollateral.EntityIdKey3" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CustomsCollateral.EntityIdKey3" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "CustomsCollateral.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCollateralsQuery.Id,QueryCode = AllCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.CustomsCollateral.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
   
 	      
 
 			  Query OpenCollateralsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsCollateralTextCode_1.Id, NameTextCodeCode = CustomsCollateralTextCode_1.Code, ObjectTableName = "Customs.CustomsCollateral", Code = "OpenCollaterals",  EditWizardName = "Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl",
 			   QueryGroupCode = "CCQG", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomsCollateralObjectTable.Id, QuerySection = "Customs.CustomsCollateral", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsCollateralFeature_1.Id,FeatureUniqeCode= CustomsCollateralFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn OpenCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsCollateral.CollateralRequestNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsCollateral.CollateralRequestNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsCollateral.CollateralRequestStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsCollateral.CollateralRequestStatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsCollateral.RequestValidityDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsCollateral.RequestValidityDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsCollateral.CustomsEntityTypeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsCollateral.CustomsEntityTypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomsCollateral.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CustomsCollateral.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomsCollateral.EntityIdKey1" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CustomsCollateral.EntityIdKey1" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "CustomsCollateral.EntityIdKey2" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CustomsCollateral.EntityIdKey2" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "CustomsCollateral.EntityIdKey3" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CustomsCollateral.EntityIdKey3" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "CustomsCollateral.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.CustomsCollateral.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenCollateralsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CustomsCollateral.IsClosed", PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OpenCollateralsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.CustomsCollateral.IsClosed", PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenCollateralsQuery.Id,QueryCode = OpenCollateralsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -2108,25 +2108,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			  Query ClosedCollateralsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsCollateralTextCode_2.Id, NameTextCodeCode = CustomsCollateralTextCode_2.Code, ObjectTableName = "Customs.CustomsCollateral", Code = "ClosedCollaterals",  EditWizardName = "Logitude.Customs.Views.CustomsCollateral.CustomsCollateralControl",
 			   QueryGroupCode = "CCQG", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomsCollateralObjectTable.Id, QuerySection = "Customs.CustomsCollateral", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsCollateralFeature_2.Id,FeatureUniqeCode= CustomsCollateralFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ClosedCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsCollateral.CollateralRequestNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsCollateral.CollateralRequestNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsCollateral.CollateralRequestStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsCollateral.CollateralRequestStatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsCollateral.RequestValidityDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsCollateral.RequestValidityDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsCollateral.CustomsEntityTypeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsCollateral.CustomsEntityTypeName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomsCollateral.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CustomsCollateral.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomsCollateral.EntityIdKey1" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CustomsCollateral.EntityIdKey1" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "CustomsCollateral.EntityIdKey2" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CustomsCollateral.EntityIdKey2" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "CustomsCollateral.EntityIdKey3" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CustomsCollateral.EntityIdKey3" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "CustomsCollateral.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedCollateralsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.CustomsCollateral.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter ClosedCollateralsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CustomsCollateral.IsClosed", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ClosedCollateralsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.CustomsCollateral.IsClosed", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ClosedCollateralsQuery.Id,QueryCode = ClosedCollateralsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

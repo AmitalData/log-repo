@@ -415,13 +415,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query LeadDocumentTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LeadDocumentTypeTextCode_0.Id, NameTextCodeCode = LeadDocumentTypeTextCode_0.Code, ObjectTableName = "Customs.LeadDocumentType", Code = "LeadDocumentType",  QueryGroupCode = "LEDT", IndexOrder = 0, Tenant = 0, ObjectTableId = LeadDocumentTypeObjectTable.Id, QuerySection = "Customs.LeadDocumentType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LeadDocumentTypeFeature_0.Id,FeatureUniqeCode= LeadDocumentTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn LeadDocumentTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentTypeQuery.Id,QueryCode = LeadDocumentTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LeadDocumentType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn LeadDocumentTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentTypeQuery.Id,QueryCode = LeadDocumentTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.LeadDocumentType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn LeadDocumentTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentTypeQuery.Id,QueryCode = LeadDocumentTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LeadDocumentType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn LeadDocumentTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentTypeQuery.Id,QueryCode = LeadDocumentTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.LeadDocumentType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn LeadDocumentTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentTypeQuery.Id,QueryCode = LeadDocumentTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "LeadDocumentType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn LeadDocumentTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentTypeQuery.Id,QueryCode = LeadDocumentTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.LeadDocumentType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn LeadDocumentTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentTypeQuery.Id,QueryCode = LeadDocumentTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "LeadDocumentType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn LeadDocumentTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LeadDocumentTypeQuery.Id,QueryCode = LeadDocumentTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.LeadDocumentType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

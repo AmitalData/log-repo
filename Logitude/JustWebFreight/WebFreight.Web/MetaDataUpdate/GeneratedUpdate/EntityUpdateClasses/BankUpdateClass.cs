@@ -410,13 +410,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query BankQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankTextCode_0.Id, NameTextCodeCode = BankTextCode_0.Code, ObjectTableName = "Customs.Bank", Code = "Bank",  QueryGroupCode = "BANK", IndexOrder = 0, Tenant = 0, ObjectTableId = BankObjectTable.Id, QuerySection = "Banks", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = BankFeature_0.Id,FeatureUniqeCode= BankFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn BankQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankQuery.Id,QueryCode = BankQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Bank.Code" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn BankQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankQuery.Id,QueryCode = BankQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Bank.Code" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn BankQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankQuery.Id,QueryCode = BankQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Bank.EnglishName" , ColumnWidth = 250 }, addedQueryColumns);
+			 QueryColumn BankQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankQuery.Id,QueryCode = BankQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Bank.EnglishName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn BankQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankQuery.Id,QueryCode = BankQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Bank.LocalName" , ColumnWidth = 250 }, addedQueryColumns);
+			 QueryColumn BankQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankQuery.Id,QueryCode = BankQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Bank.LocalName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn BankQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankQuery.Id,QueryCode = BankQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Bank.Inactive" , ColumnWidth = 250 }, addedQueryColumns);
+			 QueryColumn BankQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = BankQuery.Id,QueryCode = BankQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Bank.Inactive" , ColumnWidth = 250 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

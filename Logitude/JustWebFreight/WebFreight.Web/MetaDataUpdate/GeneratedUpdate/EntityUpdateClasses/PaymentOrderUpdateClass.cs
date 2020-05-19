@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PaymentOrderUpdateClass
    {  		
-		public const string HashString = "538142763b903c1740956aab73919394";
+		public const string HashString = "5b64444fa9869e0638ca26b4d2bb13bb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2866,79 +2866,79 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query OpenPaymentOrdersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentOrderTextCode_0.Id, NameTextCodeCode = PaymentOrderTextCode_0.Code, ObjectTableName = "Customs.PaymentOrder", Code = "Open Payment Orders",  QueryGroupCode = "POGR", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentOrderObjectTable.Id, QuerySection = "Customs.PaymentOrder", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentOrderFeature_0.Id,FeatureUniqeCode= PaymentOrderFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn OpenPaymentOrdersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PaymentOrder.PaymentProcessName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenPaymentOrdersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PaymentOrder.PaymentProcessName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenPaymentOrdersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PaymentOrder.PaymentNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenPaymentOrdersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PaymentOrder.PaymentNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenPaymentOrdersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PaymentOrder.CustomFiles" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenPaymentOrdersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PaymentOrder.CustomFiles" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenPaymentOrdersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PaymentOrder.CreateDate" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn OpenPaymentOrdersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.PaymentOrder.CreateDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn OpenPaymentOrdersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PaymentOrder.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenPaymentOrdersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.PaymentOrder.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenPaymentOrdersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "PaymentOrder.ImporterName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenPaymentOrdersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.PaymentOrder.ImporterName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenPaymentOrdersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "PaymentOrder.TotalSumToPay" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenPaymentOrdersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.PaymentOrder.TotalSumToPay" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenPaymentOrdersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "PaymentOrder.PaymentStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenPaymentOrdersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.PaymentOrder.PaymentStatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenPaymentOrdersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "PaymentOrder.LastPayDate" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn OpenPaymentOrdersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PaymentOrder.LastPayDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn OpenPaymentOrdersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "PaymentOrder.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenPaymentOrdersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PaymentOrder.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenPaymentOrdersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "PaymentOrder.IsClosed", PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OpenPaymentOrdersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.PaymentOrder.IsClosed", PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenPaymentOrdersQuery.Id,QueryCode = OpenPaymentOrdersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query ClosedPaymentOrdersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentOrderTextCode_1.Id, NameTextCodeCode = PaymentOrderTextCode_1.Code, ObjectTableName = "Customs.PaymentOrder", Code = "Closed Payment Orders",  QueryGroupCode = "POGR", IndexOrder = 1, Tenant = 0, ObjectTableId = PaymentOrderObjectTable.Id, QuerySection = "Customs.PaymentOrder", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentOrderFeature_1.Id,FeatureUniqeCode= PaymentOrderFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ClosedPaymentOrdersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PaymentOrder.PaymentProcessName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedPaymentOrdersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PaymentOrder.PaymentProcessName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedPaymentOrdersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PaymentOrder.PaymentNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedPaymentOrdersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PaymentOrder.PaymentNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedPaymentOrdersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PaymentOrder.CustomFiles" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedPaymentOrdersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PaymentOrder.CustomFiles" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedPaymentOrdersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PaymentOrder.CreateDate" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn ClosedPaymentOrdersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.PaymentOrder.CreateDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ClosedPaymentOrdersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PaymentOrder.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedPaymentOrdersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.PaymentOrder.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedPaymentOrdersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "PaymentOrder.ImporterName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedPaymentOrdersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.PaymentOrder.ImporterName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedPaymentOrdersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "PaymentOrder.TotalSumToPay" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedPaymentOrdersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.PaymentOrder.TotalSumToPay" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedPaymentOrdersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "PaymentOrder.PaymentStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedPaymentOrdersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.PaymentOrder.PaymentStatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ClosedPaymentOrdersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "PaymentOrder.LastPayDate" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn ClosedPaymentOrdersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PaymentOrder.LastPayDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn ClosedPaymentOrdersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "PaymentOrder.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ClosedPaymentOrdersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PaymentOrder.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter ClosedPaymentOrdersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "PaymentOrder.IsClosed", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ClosedPaymentOrdersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.PaymentOrder.IsClosed", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ClosedPaymentOrdersQuery.Id,QueryCode = ClosedPaymentOrdersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
 			  Query PaymentOrdersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentOrderTextCode_2.Id, NameTextCodeCode = PaymentOrderTextCode_2.Code, ObjectTableName = "Customs.PaymentOrder", Code = "Payment Orders",  QueryGroupCode = "POGR", IndexOrder = 2, Tenant = 0, ObjectTableId = PaymentOrderObjectTable.Id, QuerySection = "Customs.PaymentOrder", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentOrderFeature_2.Id,FeatureUniqeCode= PaymentOrderFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn PaymentOrdersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "PaymentOrder.PaymentProcessName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentOrdersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PaymentOrder.PaymentProcessName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentOrdersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "PaymentOrder.PaymentNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentOrdersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PaymentOrder.PaymentNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentOrdersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "PaymentOrder.CustomFiles" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentOrdersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PaymentOrder.CustomFiles" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentOrdersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "PaymentOrder.CreateDate" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn PaymentOrdersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.PaymentOrder.CreateDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn PaymentOrdersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "PaymentOrder.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentOrdersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.PaymentOrder.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentOrdersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "PaymentOrder.ImporterName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentOrdersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.PaymentOrder.ImporterName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentOrdersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "PaymentOrder.TotalSumToPay" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentOrdersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.PaymentOrder.TotalSumToPay" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentOrdersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "PaymentOrder.PaymentStatusName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentOrdersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.PaymentOrder.PaymentStatusName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn PaymentOrdersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "PaymentOrder.LastPayDate" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn PaymentOrdersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PaymentOrder.LastPayDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn PaymentOrdersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "PaymentOrder.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn PaymentOrdersQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentOrdersQuery.Id,QueryCode = PaymentOrdersQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PaymentOrder.IsClosed" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -2957,17 +2957,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen PaymentOrderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.PaymentOrder.HeaderScreen", Name = "Header Screen", ObjectTableId = PaymentOrderObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentOrder.PaymentNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPaymentOrderCustomsPaymentOrderHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.PaymentOrder.PaymentNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentOrder.CustomerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPaymentOrderCustomsPaymentOrderHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.PaymentOrder.CustomerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentOrder.PaymentStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPaymentOrderCustomsPaymentOrderHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.PaymentOrder.PaymentStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentOrder.FirstEntityID", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPaymentOrderCustomsPaymentOrderHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.PaymentOrder.FirstEntityID", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentOrder.LastPayDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPaymentOrderCustomsPaymentOrderHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.PaymentOrder.LastPayDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField PaymentOrderCustomsPaymentOrderHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "PaymentOrder.ActualPayDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsPaymentOrderCustomsPaymentOrderHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = PaymentOrderHeaderScreenScreen0.Id,ScreenCode = PaymentOrderHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.PaymentOrder.ActualPayDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    PaymentOrderObjectTable.HeaderScreenId = PaymentOrderHeaderScreenScreen0.Id;
 		    PaymentOrderObjectTable.HeaderScreenCode = PaymentOrderHeaderScreenScreen0.Code;
@@ -3253,7 +3253,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentOrderFeature_MB00.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "סגירת הוראה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentOrderFeature_MB00.FeatureUniqeCode,
@@ -3273,7 +3273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentOrderFeature_MB01.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "ביטול סגירת הוראה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentOrderFeature_MB01.FeatureUniqeCode,
@@ -3293,7 +3293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentOrderFeature_MB02.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "הדפס הוראת תשלום",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentOrderFeature_MB02.FeatureUniqeCode,
@@ -3313,7 +3313,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentOrderFeature_MB03.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "הדפס הודעת חיוב",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentOrderFeature_MB03.FeatureUniqeCode,
@@ -3333,7 +3333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "control",
 						FeatureId = PaymentOrderFeature_MB1.Id,
 						Style = null,
-						LocalDefaultText = "שלח תשלום הזמנה",
+						LocalDefaultText = "שלח תביעה",
 						FeatureUniqeCode = PaymentOrderFeature_MB1.FeatureUniqeCode,
 						HtmlComponentPath = "./CustomsModules/CustomsPaymentOrder/Components/SendPaymentOrder/SendPaymentOrderComponent",
 						Width = 0,

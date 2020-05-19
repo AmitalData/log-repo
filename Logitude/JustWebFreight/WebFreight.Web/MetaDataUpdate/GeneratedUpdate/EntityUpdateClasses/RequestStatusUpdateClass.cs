@@ -405,13 +405,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query RequestStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RequestStatusTextCode_0.Id, NameTextCodeCode = RequestStatusTextCode_0.Code, ObjectTableName = "Customs.RequestStatus", Code = "RequestStatus",  QueryGroupCode = "RSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = RequestStatusObjectTable.Id, QuerySection = "Customs.RequestStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RequestStatusFeature_0.Id,FeatureUniqeCode= RequestStatusFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn RequestStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "RequestStatus.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn RequestStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.RequestStatus.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RequestStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "RequestStatus.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn RequestStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.RequestStatus.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RequestStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "RequestStatus.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn RequestStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.RequestStatus.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn RequestStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "RequestStatus.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn RequestStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestStatusQuery.Id,QueryCode = RequestStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.RequestStatus.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

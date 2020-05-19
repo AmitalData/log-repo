@@ -410,13 +410,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CustomsPaymentTermQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsPaymentTermTextCode_0.Id, NameTextCodeCode = CustomsPaymentTermTextCode_0.Code, ObjectTableName = "Customs.CustomsPaymentTerm", Code = "CustomsPaymentTerm",  QueryGroupCode = "CUPT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsPaymentTermObjectTable.Id, QuerySection = "Customs.CustomsPaymentTerm", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsPaymentTermFeature_0.Id,FeatureUniqeCode= CustomsPaymentTermFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomsPaymentTermQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPaymentTermQuery.Id,QueryCode = CustomsPaymentTermQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsPaymentTerm.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsPaymentTermQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPaymentTermQuery.Id,QueryCode = CustomsPaymentTermQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsPaymentTerm.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsPaymentTermQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPaymentTermQuery.Id,QueryCode = CustomsPaymentTermQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsPaymentTerm.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsPaymentTermQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPaymentTermQuery.Id,QueryCode = CustomsPaymentTermQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsPaymentTerm.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsPaymentTermQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPaymentTermQuery.Id,QueryCode = CustomsPaymentTermQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsPaymentTerm.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsPaymentTermQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPaymentTermQuery.Id,QueryCode = CustomsPaymentTermQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsPaymentTerm.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomsPaymentTermQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPaymentTermQuery.Id,QueryCode = CustomsPaymentTermQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsPaymentTerm.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsPaymentTermQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsPaymentTermQuery.Id,QueryCode = CustomsPaymentTermQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsPaymentTerm.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

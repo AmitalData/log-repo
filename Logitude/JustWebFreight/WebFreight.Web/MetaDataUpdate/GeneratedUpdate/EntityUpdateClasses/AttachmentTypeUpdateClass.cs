@@ -433,13 +433,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AttachmentTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AttachmentTypeTextCode_0.Id, NameTextCodeCode = AttachmentTypeTextCode_0.Code, ObjectTableName = "Customs.AttachmentType", Code = "AttachmentType",  QueryGroupCode = "ATTT", IndexOrder = 0, Tenant = 0, ObjectTableId = AttachmentTypeObjectTable.Id, QuerySection = "Customs.AttachmentType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AttachmentTypeFeature_0.Id,FeatureUniqeCode= AttachmentTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AttachmentTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AttachmentType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AttachmentTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.AttachmentType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AttachmentTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AttachmentType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AttachmentTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.AttachmentType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AttachmentTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AttachmentType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AttachmentTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.AttachmentType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AttachmentTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "AttachmentType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AttachmentTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AttachmentTypeQuery.Id,QueryCode = AttachmentTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.AttachmentType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

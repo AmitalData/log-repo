@@ -401,13 +401,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ReturnConditionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReturnConditionTextCode_0.Id, NameTextCodeCode = ReturnConditionTextCode_0.Code, ObjectTableName = "Customs.ReturnCondition", Code = "ReturnCondition",  QueryGroupCode = "RETC", IndexOrder = 0, Tenant = 0, ObjectTableId = ReturnConditionObjectTable.Id, QuerySection = "Customs.ReturnCondition", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReturnConditionFeature_0.Id,FeatureUniqeCode= ReturnConditionFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ReturnConditionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReturnConditionQuery.Id,QueryCode = ReturnConditionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReturnCondition.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ReturnConditionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReturnConditionQuery.Id,QueryCode = ReturnConditionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ReturnCondition.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ReturnConditionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReturnConditionQuery.Id,QueryCode = ReturnConditionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReturnCondition.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ReturnConditionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReturnConditionQuery.Id,QueryCode = ReturnConditionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ReturnCondition.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ReturnConditionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReturnConditionQuery.Id,QueryCode = ReturnConditionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReturnCondition.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ReturnConditionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReturnConditionQuery.Id,QueryCode = ReturnConditionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ReturnCondition.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ReturnConditionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReturnConditionQuery.Id,QueryCode = ReturnConditionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReturnCondition.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ReturnConditionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReturnConditionQuery.Id,QueryCode = ReturnConditionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ReturnCondition.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

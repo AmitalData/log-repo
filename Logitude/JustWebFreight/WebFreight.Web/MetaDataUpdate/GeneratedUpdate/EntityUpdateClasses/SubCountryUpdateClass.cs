@@ -463,13 +463,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query SubCountryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SubCountryTextCode_0.Id, NameTextCodeCode = SubCountryTextCode_0.Code, ObjectTableName = "Customs.SubCountry", Code = "SubCountry",  QueryGroupCode = "SUCO", IndexOrder = 0, Tenant = 0, ObjectTableId = SubCountryObjectTable.Id, QuerySection = "Customs.SubCountry", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = SubCountryFeature_0.Id,FeatureUniqeCode= SubCountryFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn SubCountryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SubCountryQuery.Id,QueryCode = SubCountryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "SubCountry.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SubCountryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SubCountryQuery.Id,QueryCode = SubCountryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.SubCountry.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SubCountryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SubCountryQuery.Id,QueryCode = SubCountryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "SubCountry.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SubCountryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SubCountryQuery.Id,QueryCode = SubCountryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.SubCountry.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SubCountryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SubCountryQuery.Id,QueryCode = SubCountryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "SubCountry.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SubCountryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SubCountryQuery.Id,QueryCode = SubCountryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.SubCountry.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn SubCountryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SubCountryQuery.Id,QueryCode = SubCountryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "SubCountry.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn SubCountryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SubCountryQuery.Id,QueryCode = SubCountryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.SubCountry.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

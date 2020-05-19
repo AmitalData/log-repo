@@ -1606,40 +1606,40 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			  Query AllVendorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsVendorTextCode_0.Id, NameTextCodeCode = CustomsVendorTextCode_0.Code, ObjectTableName = "Customs.CustomsVendor", Code = "AllVendors",  EditWizardName = "Logitude.Customs.Views.AddEditVendorControl",
 			   QueryGroupCode = "VNDR", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsVendorObjectTable.Id, QuerySection = "Customs.CustomsVendor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsVendorFeature_0.Id,FeatureUniqeCode= CustomsVendorFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn AllVendorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsVendor.VendorNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsVendor.VendorNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsVendor.VendorName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsVendor.VendorName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsVendor.CountryCode" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsVendor.CountryCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsVendor.CityName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsVendor.CityName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomsVendor.MainAddressLine" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CustomsVendor.MainAddressLine" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomsVendor.VATNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CustomsVendor.VATNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllVendorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "CustomsVendor.DunsNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllVendorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllVendorsQuery.Id,QueryCode = AllVendorsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CustomsVendor.DunsNumber" , ColumnWidth = 130 }, addedQueryColumns);
   
 	      
 
 			  Query ActiveVendorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsVendorTextCode_1.Id, NameTextCodeCode = CustomsVendorTextCode_1.Code, ObjectTableName = "Customs.CustomsVendor", Code = "ActiveVendors",  EditWizardName = "Logitude.Customs.Views.AddEditVendorControl",
 			   QueryGroupCode = "VNDR", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomsVendorObjectTable.Id, QuerySection = "Customs.CustomsVendor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsVendorFeature_1.Id,FeatureUniqeCode= CustomsVendorFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ActiveVendorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomsVendor.VendorNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ActiveVendorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsVendor.VendorNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ActiveVendorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomsVendor.VendorName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ActiveVendorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsVendor.VendorName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ActiveVendorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomsVendor.CountryCode" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ActiveVendorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsVendor.CountryCode" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ActiveVendorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomsVendor.CityName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ActiveVendorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsVendor.CityName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ActiveVendorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "CustomsVendor.MainAddressLine" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ActiveVendorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CustomsVendor.MainAddressLine" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ActiveVendorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "CustomsVendor.VATNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ActiveVendorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CustomsVendor.VATNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ActiveVendorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "CustomsVendor.DunsNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ActiveVendorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CustomsVendor.DunsNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter ActiveVendorsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "CustomsVendor.InActive", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ActiveVendorsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.CustomsVendor.InActive", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveVendorsQuery.Id,QueryCode = ActiveVendorsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -1659,9 +1659,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CustomsVendorHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Vendor.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomsVendorObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomsVendorCustomsVendorHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsVendorHeaderScreenScreen0.Id,ScreenCode = CustomsVendorHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsVendor.VendorNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCustomsVendorCustomsVendorHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsVendorHeaderScreenScreen0.Id,ScreenCode = CustomsVendorHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CustomsVendor.VendorNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsVendorCustomsVendorHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsVendorHeaderScreenScreen0.Id,ScreenCode = CustomsVendorHeaderScreenScreen0.Code, ObjectFieldCode = "CustomsVendor.VendorName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCustomsVendorCustomsVendorHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsVendorHeaderScreenScreen0.Id,ScreenCode = CustomsVendorHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CustomsVendor.VendorName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CustomsVendorObjectTable.HeaderScreenId = CustomsVendorHeaderScreenScreen0.Id;
 		    CustomsVendorObjectTable.HeaderScreenCode = CustomsVendorHeaderScreenScreen0.Code;
@@ -1671,23 +1671,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CustomsVendorGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Vendor.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomsVendorObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CustomsVendorCustomsVendorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsVendor.VendorTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCustomsVendorCustomsVendorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsVendor.VendorTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsVendorCustomsVendorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsVendor.CountryCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCustomsVendorCustomsVendorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsVendor.CountryCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsVendorCustomsVendorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsVendor.CityName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCustomsVendorCustomsVendorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsVendor.CityName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsVendorCustomsVendorGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsVendor.PostalCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCustomsVendorCustomsVendorGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsVendor.PostalCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsVendorCustomsVendorGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsVendor.VATNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCustomsVendorCustomsVendorGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsVendor.VATNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsVendorCustomsVendorGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsVendor.VendorName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCustomsVendorCustomsVendorGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsVendor.VendorName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsVendorCustomsVendorGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsVendor.SubCountryCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCustomsVendorCustomsVendorGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsVendor.SubCountryCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsVendorCustomsVendorGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsVendor.MainAddressLine", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCustomsVendorCustomsVendorGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsVendor.MainAddressLine", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsVendorCustomsVendorGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "CustomsVendor.DunsNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCustomsVendorCustomsVendorGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomsVendorGeneralTabScreenScreen1.Id,ScreenCode = CustomsVendorGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsVendor.DunsNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

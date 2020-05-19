@@ -419,13 +419,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query TPGFileTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TPGFileTypeTextCode_0.Id, NameTextCodeCode = TPGFileTypeTextCode_0.Code, ObjectTableName = "Customs.TPGFileType", Code = "TPGFileType",  QueryGroupCode = "f69d", IndexOrder = 0, Tenant = 0, ObjectTableId = TPGFileTypeObjectTable.Id, QuerySection = "Customs.TPGFileType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TPGFileTypeFeature_0.Id,FeatureUniqeCode= TPGFileTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn TPGFileTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TPGFileType.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TPGFileTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.TPGFileType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TPGFileTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TPGFileType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TPGFileTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.TPGFileType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TPGFileTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TPGFileType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TPGFileTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.TPGFileType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TPGFileTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TPGFileType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn TPGFileTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TPGFileTypeQuery.Id,QueryCode = TPGFileTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.TPGFileType.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

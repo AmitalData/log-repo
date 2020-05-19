@@ -407,13 +407,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ValidCustomsItemQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ValidCustomsItemTextCode_0.Id, NameTextCodeCode = ValidCustomsItemTextCode_0.Code, ObjectTableName = "Customs.ValidCustomsItem", Code = "ValidCustomsItem",  QueryGroupCode = "VCQG", IndexOrder = 0, Tenant = 0, ObjectTableId = ValidCustomsItemObjectTable.Id, QuerySection = "Customs.ValidCustomsItem", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ValidCustomsItemFeature_0.Id,FeatureUniqeCode= ValidCustomsItemFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ValidCustomsItemQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ValidCustomsItem.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ValidCustomsItemQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ValidCustomsItem.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ValidCustomsItemQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ValidCustomsItem.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ValidCustomsItemQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ValidCustomsItem.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ValidCustomsItemQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ValidCustomsItem.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ValidCustomsItemQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ValidCustomsItem.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ValidCustomsItemQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ValidCustomsItem.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ValidCustomsItemQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ValidCustomsItemQuery.Id,QueryCode = ValidCustomsItemQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ValidCustomsItem.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

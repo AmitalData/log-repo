@@ -409,13 +409,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query DeliverySiteTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeliverySiteTypeTextCode_0.Id, NameTextCodeCode = DeliverySiteTypeTextCode_0.Code, ObjectTableName = "Customs.DeliverySiteType", Code = "DeliverySiteType",  QueryGroupCode = "DLST", IndexOrder = 0, Tenant = 0, ObjectTableId = DeliverySiteTypeObjectTable.Id, QuerySection = "Customs.DeliverySiteType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeliverySiteTypeFeature_0.Id,FeatureUniqeCode= DeliverySiteTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn DeliverySiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DeliverySiteType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeliverySiteTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeliverySiteType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeliverySiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DeliverySiteType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeliverySiteTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeliverySiteType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeliverySiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DeliverySiteType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeliverySiteTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeliverySiteType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn DeliverySiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DeliverySiteType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn DeliverySiteTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeliverySiteTypeQuery.Id,QueryCode = DeliverySiteTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeliverySiteType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

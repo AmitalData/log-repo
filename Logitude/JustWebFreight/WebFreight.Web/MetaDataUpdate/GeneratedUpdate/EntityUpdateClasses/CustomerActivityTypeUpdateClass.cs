@@ -427,13 +427,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CustomerActivityTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerActivityTypeTextCode_0.Id, NameTextCodeCode = CustomerActivityTypeTextCode_0.Code, ObjectTableName = "Customs.CustomerActivityType", Code = "CustomerActivityType",  QueryGroupCode = "CUAT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerActivityTypeObjectTable.Id, QuerySection = "Customs.CustomerActivityType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerActivityTypeFeature_0.Id,FeatureUniqeCode= CustomerActivityTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn CustomerActivityTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerActivityTypeQuery.Id,QueryCode = CustomerActivityTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "CustomerActivityType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomerActivityTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerActivityTypeQuery.Id,QueryCode = CustomerActivityTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomerActivityType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomerActivityTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerActivityTypeQuery.Id,QueryCode = CustomerActivityTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "CustomerActivityType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomerActivityTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerActivityTypeQuery.Id,QueryCode = CustomerActivityTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomerActivityType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomerActivityTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerActivityTypeQuery.Id,QueryCode = CustomerActivityTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "CustomerActivityType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomerActivityTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerActivityTypeQuery.Id,QueryCode = CustomerActivityTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomerActivityType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn CustomerActivityTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerActivityTypeQuery.Id,QueryCode = CustomerActivityTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "CustomerActivityType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomerActivityTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerActivityTypeQuery.Id,QueryCode = CustomerActivityTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomerActivityType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

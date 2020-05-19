@@ -408,13 +408,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query GenderQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GenderTextCode_0.Id, NameTextCodeCode = GenderTextCode_0.Code, ObjectTableName = "Customs.Gender", Code = "Gender",  QueryGroupCode = "GNDR", IndexOrder = 0, Tenant = 0, ObjectTableId = GenderObjectTable.Id, QuerySection = "Customs.Gender", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GenderFeature_0.Id,FeatureUniqeCode= GenderFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn GenderQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Gender.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn GenderQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Gender.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GenderQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Gender.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn GenderQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Gender.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GenderQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Gender.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn GenderQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Gender.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn GenderQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Gender.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn GenderQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GenderQuery.Id,QueryCode = GenderQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.Gender.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

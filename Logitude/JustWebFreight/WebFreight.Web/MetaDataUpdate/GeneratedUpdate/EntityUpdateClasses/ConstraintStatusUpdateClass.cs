@@ -406,13 +406,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ConstraintStatusQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConstraintStatusTextCode_0.Id, NameTextCodeCode = ConstraintStatusTextCode_0.Code, ObjectTableName = "Customs.ConstraintStatus", Code = "ConstraintStatus",  QueryGroupCode = "CONS", IndexOrder = 0, Tenant = 0, ObjectTableId = ConstraintStatusObjectTable.Id, QuerySection = "Customs.ConstraintStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConstraintStatusFeature_0.Id,FeatureUniqeCode= ConstraintStatusFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ConstraintStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintStatusQuery.Id,QueryCode = ConstraintStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConstraintStatus.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConstraintStatusQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintStatusQuery.Id,QueryCode = ConstraintStatusQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ConstraintStatus.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConstraintStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintStatusQuery.Id,QueryCode = ConstraintStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConstraintStatus.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConstraintStatusQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintStatusQuery.Id,QueryCode = ConstraintStatusQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ConstraintStatus.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConstraintStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintStatusQuery.Id,QueryCode = ConstraintStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ConstraintStatus.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConstraintStatusQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintStatusQuery.Id,QueryCode = ConstraintStatusQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ConstraintStatus.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ConstraintStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintStatusQuery.Id,QueryCode = ConstraintStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ConstraintStatus.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ConstraintStatusQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConstraintStatusQuery.Id,QueryCode = ConstraintStatusQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ConstraintStatus.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
