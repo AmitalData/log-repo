@@ -717,15 +717,21 @@ namespace Logitude.DBMigrations.Models
                 string tempColumnDataType = GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? -1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
 
                 alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
-                alterTypeScript += "ALTER TABLE \"" + tableName + "\" ADD \"" + tempColumnName + "\" " + tempColumnDataType + " NULL;\n";
-                alterTypeScript += "UPDATE \"" + tableName + "\" SET \"" + tempColumnName + "\" = \"" + columnName + "\";\n";
+                alterTypeScript += "DECLARE ColumnCount NUMBER;\n";
+                alterTypeScript += "BEGIN\n";
+                alterTypeScript += "SELECT COUNT(*) INTO ColumnCount FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '" + tableName + "' AND COLUMN_NAME = '" + columnName + "';\n";
+                alterTypeScript += "IF (ColumnCount <> 0) THEN\n";
+                alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" ADD \"" + tempColumnName + "\" " + tempColumnDataType + " NULL';\n";
+                alterTypeScript += "EXECUTE IMMEDIATE 'UPDATE \"" + tableName + "\" SET \"" + tempColumnName + "\" = \"" + columnName + "\"';\n";
                 if (!columnMigration.CurrentColumn.Constraints.Nullable)
                 {
-                    alterTypeScript += "ALTER TABLE \"" + tableName + "\" MODIFY \"" + tempColumnName + "\" NOT NULL;\n";
-                    alterTypeScript += "ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL;\n";
+                    alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + tempColumnName + "\" NOT NULL';\n";
+                    alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL';\n";
                 }
-                alterTypeScript += "ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnName + "\" TO \"" + droppedColumnName + "\";\n";
-                alterTypeScript += "ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + tempColumnName + "\" TO \"" + columnName + "\";\n\n\n";
+                alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnName + "\" TO \"" + droppedColumnName + "\"';\n";
+                alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + tempColumnName + "\" TO \"" + columnName + "\"';\n";
+                alterTypeScript += "END IF;\n";
+                alterTypeScript += "END;\n\n";
             }
             else
             {
@@ -772,15 +778,21 @@ namespace Logitude.DBMigrations.Models
                 string tempColumnDataType = GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size, 0, 0);
 
                 alterSizeScript += "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
-                alterSizeScript += "ALTER TABLE \"" + tableName + "\" ADD \"" + tempColumnName + "\" " + tempColumnDataType + " NULL;\n";
-                alterSizeScript += "UPDATE \"" + tableName + "\" SET \"" + tempColumnName + "\" = \"" + columnName + "\";\n";
+                alterSizeScript += "DECLARE ColumnCount NUMBER;\n";
+                alterSizeScript += "BEGIN\n";
+                alterSizeScript += "SELECT COUNT(*) INTO ColumnCount FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '" + tableName + "' AND COLUMN_NAME = '" + columnName + "';\n";
+                alterSizeScript += "IF (ColumnCount <> 0) THEN\n";
+                alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" ADD \"" + tempColumnName + "\" " + tempColumnDataType + " NULL';\n";
+                alterSizeScript += "EXECUTE IMMEDIATE 'UPDATE \"" + tableName + "\" SET \"" + tempColumnName + "\" = \"" + columnName + "\"';\n";
                 if (!columnMigration.CurrentColumn.Constraints.Nullable)
                 {
-                    alterSizeScript += "ALTER TABLE \"" + tableName + "\" MODIFY \"" + tempColumnName + "\" NOT NULL;\n";
-                    alterSizeScript += "ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL;\n";
+                    alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + tempColumnName + "\" NOT NULL';\n";
+                    alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL';\n";
                 }
-                alterSizeScript += "ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnName + "\" TO \"" + droppedColumnName + "\";\n";
-                alterSizeScript += "ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + tempColumnName + "\" TO \"" + columnName + "\";\n\n\n";
+                alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnName + "\" TO \"" + droppedColumnName + "\"';\n";
+                alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + tempColumnName + "\" TO \"" + columnName + "\"';\n";
+                alterSizeScript += "END IF;\n";
+                alterSizeScript += "END;\n\n";
             }
             else
             {
@@ -1302,6 +1314,23 @@ namespace Logitude.DBMigrations.Models
                 return true;
             }
             if (columnMigration.CurrentColumn.Type == "nvarchar" && columnMigration.CurrentColumn.Size == -1 && columnMigration.NewColumn.Type == "varchar" && columnMigration.NewColumn.Size != -1)
+            {
+                return true;
+            }
+
+            if (columnMigration.CurrentColumn.Type == "varchar" && columnMigration.CurrentColumn.Size != -1 && columnMigration.NewColumn.Type == "varchar" && columnMigration.NewColumn.Size == -1)
+            {
+                return true;
+            }
+            if (columnMigration.CurrentColumn.Type == "varchar" && columnMigration.CurrentColumn.Size != -1 && columnMigration.NewColumn.Type == "nvarchar" && columnMigration.NewColumn.Size == -1)
+            {
+                return true;
+            }
+            if (columnMigration.CurrentColumn.Type == "nvarchar" && columnMigration.CurrentColumn.Size != -1 && columnMigration.NewColumn.Type == "nvarchar" && columnMigration.NewColumn.Size == -1)
+            {
+                return true;
+            }
+            if (columnMigration.CurrentColumn.Type == "nvarchar" && columnMigration.CurrentColumn.Size != -1 && columnMigration.NewColumn.Type == "varchar" && columnMigration.NewColumn.Size == -1)
             {
                 return true;
             }
