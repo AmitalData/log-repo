@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BookingUpdateClass
    {  		
-		public const string HashString = "fa0c5359132bc35faaf6c795ee82e143";
+		public const string HashString = "52be541474c98cd69d1f14e4a3e29c37";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10340,6 +10340,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode BookingTextCode_BookingBPackagesDangerouseGoodsDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.B.Packages.DangerouseGoodsDetails", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode BookingTextCode_BookingMDeleteThisPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.M.DeleteThisPackage", DefaultText = "Delete this package?",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingTHEvents = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
