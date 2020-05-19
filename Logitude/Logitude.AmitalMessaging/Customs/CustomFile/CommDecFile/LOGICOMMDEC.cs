@@ -142,6 +142,8 @@
 
         private string isAutonomyField;
 
+        private string siteCodeField;
+
         /// <remarks/>
         public string CustomFileNo
         {
@@ -714,6 +716,19 @@
             set
             {
                 this.isAutonomyField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string SiteCode
+        {
+            get
+            {
+                return this.siteCodeField;
+            }
+            set
+            {
+                this.siteCodeField = value;
             }
         }
     }
