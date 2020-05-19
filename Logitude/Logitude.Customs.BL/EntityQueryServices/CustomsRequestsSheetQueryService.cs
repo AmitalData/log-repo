@@ -165,7 +165,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2892",
 
 "UCBNDCD",///  Send bonded filing
-
+"2751"//הצהרת יצוא- מסר יוצא
+,"2757" //הצהרת יצוא - מסר נכנס
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
@@ -257,7 +258,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8373",//"שאילתא לשחזור נתוני הצהרה"
  "UCB8212"
  ,"2892" ,
-"UCB9999"};
+"UCB9999",
+"2751",
+"2757"};
 
             return intrefaceTypeListDisplayOnly;
         }
