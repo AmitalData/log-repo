@@ -49,6 +49,7 @@ import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
+import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 
 @Component({
     moduleId: module.id,
@@ -60,6 +61,7 @@ import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/Accoun
 })
 
 export class ListComponent implements OnInit, AfterViewInit {
+    
     public ComponentIndex: number = null;
     private myQueryColumnsPMService: QueryColumnsPMService;
     @Output() BackCompleted = new EventEmitter();
@@ -84,6 +86,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     LayoutDirection: string = 'ltr';
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
 
+    @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     public IsShowTipArea: boolean = false;
     public IsShowTipIcon: boolean = false;
     public IsFirstTipLoad: boolean = false;
@@ -2114,7 +2117,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.DestroyMe = false;
             //this.IsAdvancedSearchOpened = false;
             res.subscribe((aa: any) => {
-                $event.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
+                if (AppTool.IsNullOrEmpty($event) && AppTool.IsNullOrEmpty($event.BackFromEdit)) {
+                    $event.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
+                } else {
+                    this.MyLogGridComponent.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });
+                }
+
                 //this.CurrentSession.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
 
                 this.MyScrollTop = $event.scrollTop;//($event.rowIndex * $event.rowHeight) - $event.rowHeight;
@@ -2144,7 +2152,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     //    //    this.ReattachToDetection = true;
     //    //}
     //}
-
+    
     BackButtonClicked() {
 
         this.DestroyListControl();
