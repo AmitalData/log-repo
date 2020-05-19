@@ -103,7 +103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "קליטת קובץ אישורים",
 			      				    DefaultText =  "Supplier Invioce Items Certificate",
-			      				    Code =  "3367",
+			      				    Code =  "db2f",
 			      				    Name =  "Customs.SupplierInvioceItemCertificat Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

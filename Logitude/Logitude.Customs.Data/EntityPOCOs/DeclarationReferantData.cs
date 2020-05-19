@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,50 +13,51 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.Customs.Data.EntityPOCOs
 {
-
+   
     public class DeclarationReferantData
     {
-        string dbms;
+	 string dbms;
 
         [Key]
         [Column("DeclarationId")]
-        public string DeclarationId { get; set; }
+	    public string DeclarationId { get; set; }
         [Column("Tenant")]
-        public int Tenant { get; set; }
+	    public int Tenant { get; set; }
         [Column("OrderNumber")]
-        public string OrderNumber { get; set; }
+	    public string OrderNumber { get; set; }
         [ForeignKey("CustomsVendor")]
         [Column("VendorId")]
-        public string VendorId { get; set; }
-
+	    public string VendorId { get; set; }
+	      
         public virtual CustomsVendor CustomsVendor { get; set; }
         [Column("ArrivalDate")]
-        public DateTime? ArrivalDate { get; set; }
+	    public DateTime? ArrivalDate { get; set; }
         [Column("EstimatedArrivalDate")]
-        public DateTime? EstimatedArrivalDate { get; set; }
+	    public DateTime? EstimatedArrivalDate { get; set; }
         [Column("Weight")]
-        public decimal? Weight { get; set; }
+	    public decimal? Weight { get; set; }
         [Column("ClassificationStatus")]
-        public string ClassificationStatus { get; set; }
+	    public string ClassificationStatus { get; set; }
         [Column("ControllerStatus")]
-        public string ControllerStatus { get; set; }
+	    public string ControllerStatus { get; set; }
         [Column("CollectionOfMoneyStatus")]
-        public string CollectionOfMoneyStatus { get; set; }
+	    public string CollectionOfMoneyStatus { get; set; }
         [Column("FollowUpDate")]
-        public DateTime? FollowUpDate { get; set; }
+	    public DateTime? FollowUpDate { get; set; }
         [Column("WithPaper")]
-        public bool WithPaper { get; set; }
+	    public bool WithPaper { get; set; }
         [Column("IsClosedForFollowUp")]
-        public string IsClosedForFollowUp { get; set; }
+	    public string IsClosedForFollowUp { get; set; }
         [Column("IsClassificationRemarks")]
-        public bool IsClassificationRemarks { get; set; }
+	    public bool IsClassificationRemarks { get; set; }
         [Column("IsControllerRemarks")]
-        public bool IsControllerRemarks { get; set; }
+	    public bool IsControllerRemarks { get; set; }
         [Column("PreClassification")]
-        public string PreClassification { get; set; }
+	    public string PreClassification { get; set; }
         [Column("SearchFields")]
-        public string SearchFields { get; set; }
+	    public string SearchFields { get; set; }
         [Column("ExceptionReasonsList")]
-        public string ExceptionReasonsList { get; set; }
+	    public string ExceptionReasonsList { get; set; }
     }
 }
+	 
