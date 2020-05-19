@@ -47,7 +47,8 @@ namespace WarehouseDataViews.Service
                 if (viewName.ToLower() == "dimcreatedby" || viewName.ToLower() == "dimoperationalclosedby" || viewName.ToLower() == "dimsalesman" || viewName.ToLower() == "dimnotifyone" || viewName.ToLower() == "dimnotifytwo" || viewName.ToLower() == "dimspecialservices")
                 {
                     result = viewName;
-                }
+                } else if (viewName.ToLower() == "dimsalesman") result = "dimSalesmen";
+
             }
 
             return result;
