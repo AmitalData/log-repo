@@ -42,8 +42,18 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
             foreach (CertificateFromFile item in fromFile)
             {
                 foreach (ModelCodeAndConfirmatioNCode model in item.ModelCodeAndConfirmatioNCodeList) {
+                    if(model.ConfirmationCode=="")
+                    {
+                        AddErrors("", model.RowNumber, "", item.SupplierItemInvoice, model.ModelCode, "מס' אישור לא אותר בעמודה J  באקסל");
+                        break;
+                    }
                     var list = supplierInvoiceRepository.GetDeclarationIdfromInvoiceNumber(item.SupplierItemInvoice, tenant);
                     var decList = delcarationRepository.GetDeclarationsByIdAndClientID(list,clientID);
+                    if (decList.Count == 0)
+                    {
+                        AddErrors("", model.RowNumber, "", item.SupplierItemInvoice, model.ModelCode, "	הצהרה ו/או מס' חשבון ספק לא אותר");
+                        break;
+                    }
                     foreach (var dec in decList)
                     {
                         if (dec.PaymentDate != null)
@@ -57,6 +67,10 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSImport
                             break;
                         }
                         var invoiceItems = supplierInvoiceItemRepository.GetSupplierInvoiceItemByInvoiceNumber(tenant,dec.Id, model.ModelCode);
+                        if (invoiceItems.Count == 0)
+                        {
+                            AddErrors(dec.DeclarationNumber, model.RowNumber, dec.CustomFileNo, item.SupplierItemInvoice, model.ModelCode, "פרט מכס לא אותר");
+                        }
                         foreach(SupplierInvoiceItemPM invoiceItem in invoiceItems)
                         {
                             if (!repo.IsExist(dec.Id, invoiceItem.CounterKey, invoiceItem.LineNumber,tenant,"2402",model.ConfirmationCode,model.RequestNumber))
