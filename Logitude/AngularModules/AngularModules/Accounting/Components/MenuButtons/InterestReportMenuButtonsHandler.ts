@@ -170,11 +170,14 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     OpenConfirmWindow() {
         var confirmMessage: string = null;
         let confirmWindow = new ConfirmWindow();
-        if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4") {
+        if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4" || this.EntityPM.InterestReportStatusCode == "6") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ConfirmCancelling");
            
         } else if (this.EntityPM.InterestReportStatusCode == "2") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.CancelingInvoicedReportMessage");
+        }
+        else if (this.EntityPM.InterestReportStatusCode == "5") {
+            confirmMessage = TextCodeTranslator.Translate("InterestReport.O.TheReportisinProgress");
         }
        
         confirmWindow.Width = 400;
@@ -287,7 +290,13 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             _ARInvoiceLinePM.Description = "Interest For Date " + this.getDateString(this.EntityPM.InterestCalculationDate);
             _ARInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך " + this.getDateString(this.EntityPM.InterestCalculationDate);
          _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
-        _ARInvoiceLinePM.VatTypeId =this.cardList.VatTypeId; 
+        //  if(this.cardList.VatTypeId){
+        //     _ARInvoiceLinePM.VatTypeId =  this.cardList.VatTypeId; 
+        //  }
+        //  else{
+            _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
+
+        //  }
          _ARInvoiceLinePM.GLAccountId = this.EntityPM.GLAccountId;
         _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
          var objectTable = window.ObjectTables.filter(d => d.Name === "InterestReport")[0];
@@ -353,7 +362,7 @@ public VatTypeName:string;
                     resolve(myResponse.Result);
                  }
                  else {
-                    reject();
+                    resolve(null);
                 }
             }
         });

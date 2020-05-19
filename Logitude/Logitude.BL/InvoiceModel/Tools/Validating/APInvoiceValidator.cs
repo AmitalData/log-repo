@@ -41,57 +41,25 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class APInvoiceValidator
     {
-        public static void Validate(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew, IInvoiceContext myContext, string MainShipmentConcurrencyGUID = null)
+        public static void Validate(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew, IInvoiceContext context, ICommonDataContext commonContext, string MainShipmentConcurrencyGUID = null)
         {
             string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant);
 
-            APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(myContext);
-            ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
+            ValidateInvoiceFields(entityPM);
 
-
-            AccountingSetting myAccountingSetting = (from d in myCommonContext.AccountingSettings
-                                                     where d.Id == entityPM.Tenant
-                                                     select d).FirstOrDefault();
-
-
-            bool isVatNumberMandatoryInAP = false;
-            if (myAccountingSetting != null)
+            AccountingSetting accountingSetting = (from d in commonContext.AccountingSettings where d.Id == entityPM.Tenant select d).FirstOrDefault();
+            if (accountingSetting != null)
             {
-                isVatNumberMandatoryInAP = myAccountingSetting.IsVatNumberMandatoryInAP;
-            }
-
-            if (entityPM.InvoiceDate > TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant))
-            {
-                string msg = TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
-                throw new ApplicationException(msg);
-            }
-
-            if (entityPM.InvoiceDate > entityPM.AccountingDate)
-            {
-                string msg = TranslateTextsClass.Translate("APInvoice.O.CheckInvoiceDate", entityPM.Tenant, !(GetLoggedContact(entityPM.Tenant).DontShowLocal));//.t "nvoice Date cant be bigger the the Accounting Date"; // TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
-                throw new ApplicationException(msg);
-            }
-
-            if (isVatNumberMandatoryInAP)
-            {
-                if (string.IsNullOrEmpty(entityPM.VATNumber))
+                if(accountingSetting.IsVatNumberMandatoryInAP)
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
+                    if (string.IsNullOrEmpty(entityPM.VATNumber))
+                    {
+                        throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
+                    }
                 }
             }
+            
            // CheckInvoiceNumberFormat(entityPM.InvoiceNumber, entityPM.Tenant);
-
-            List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-
-            List<string> allVatsIds = (from d in activeLines
-                                       where d.VatTypeId != null
-                                       group d by d.VatTypeId into g
-                                       select g.Key).ToList();
-
-            List<VatType> allVats = (from f in myCommonContext.VatTypes
-                                     where allVatsIds.Contains(f.Id)
-                                     && f.Tenant == entityPM.Tenant
-                                     select f).ToList();
 
             if (entityPM.IsMultipleEntities)
             {
@@ -139,12 +107,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             else
             {
-                if (activeLines.Count == 0)
-                {
-                    string msg = TranslateTextsClass.Translate("APInvoice.M.YouShouldHaveOneLineAtLeast", entityPM.Tenant);
-                    throw new ApplicationException(msg);
-                }
-
                 if (entityPM.InvoiceExpectedAmount == null)
                 {
                     throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant)));
@@ -156,46 +118,152 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(msg);
                 }
 
-                foreach (APInvoiceLinePM item in activeLines)
-                {
-                    if (item.InvoiceCurrencyAmount == 0)
-                    {
-                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceLineAmountNotZero", entityPM.Tenant);
-                        throw new ApplicationException(msg);
-                    }
+                ValidateNormalInvoiceLines(entityPM, commonContext, accountingSetting, msgRequired);
 
-                    if (item.VatTypeId == null)
-                    {
-                        string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatTypeId", entityPM.Tenant);
-                        throw new ApplicationException(msgRequired.Replace("%FieldName", field));
-                    }
-
-                    else
-                    {
-                        if (item.VatPercentage == null)
-                        {
-                            VatType vattType = allVats.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
-                            if (vattType != null)
-                            {
-                                if (!vattType.IsMultiPercentage)
-                                {
-                                    string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatPercentage", entityPM.Tenant);
-                                    throw new ApplicationException(msgRequired.Replace("%FieldName", field));
-                                }
-                            }
-                        }
-                    }
-                }
-
-                ValidateMultiVatPercentages(entityPM, myAccountingSetting, allVats);
                 ValidateShipmentConcurrencyGUID(entityPM, MainShipmentConcurrencyGUID);
             }
 
             ValidateOnVoid(entityPM);
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
             ValidateFullAccounting(entityPM);
-            ValidateExternalAPI(entityPM, myCommonContext);
+            ValidateExternalAPI(entityPM, commonContext);
             ValidateUnUpdateFields(entityPM, entityPOCO, isNew);
+        }
+
+        private static void ValidateNormalInvoiceLines(APInvoicePM entityPM, ICommonDataContext commonContext, AccountingSetting accountingSetting, string msgRequired)
+        {
+            List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+
+            if (activeLines.Count == 0)
+            {
+                string msg = TranslateTextsClass.Translate("APInvoice.M.YouShouldHaveOneLineAtLeast", entityPM.Tenant);
+                throw new ApplicationException(msg);
+            }
+
+            else if (activeLines.Where(d => d.InvoiceCurrencyAmount == 0).Any())
+            {
+                string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceLineAmountNotZero", entityPM.Tenant);
+                throw new ApplicationException(msg);
+            }
+
+            else
+            {
+                if (entityPM.TotalVATOnly)
+                {
+                    ValidateTotalVATOnly(entityPM, commonContext, accountingSetting, msgRequired);
+                }
+
+                else
+                {
+                    ValidateInvoiceLinesVAT(entityPM, commonContext, accountingSetting, msgRequired);
+                }
+            }
+        }
+
+        private static void ValidateTotalVATOnly(APInvoicePM entityPM, ICommonDataContext commonContext, AccountingSetting accountingSetting, string msgRequired)
+        {
+            List<APInvoiceTotalVATPM> activeTotalVats = entityPM.TotalVATs.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+
+            if (activeTotalVats.Count == 0)
+            {
+                throw new ApplicationException("You should have at least 1 invoice total VAT");
+            }
+
+            else
+            {
+                List<VatType> allVatTypes = (from f in commonContext.VatTypes where f.Tenant == entityPM.Tenant select f).ToList();
+
+                foreach (APInvoiceTotalVATPM item in activeTotalVats)
+                {
+                    if (item.VatTypeId == null)
+                    {
+                        string field = TranslateTextsClass.Translate("APInvoiceTotalVAT.F.VatTypeId", entityPM.Tenant);
+                        throw new ApplicationException(msgRequired.Replace("%FieldName", field));
+                    }
+
+                    else if (item.VatPercent == null)
+                    {
+                        VatType itemVatType = allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
+
+                        if (itemVatType != null)
+                        {
+                            if (itemVatType.IsMultiPercentage)
+                            {
+                                if (entityPM.StatusCode == null || entityPM.StatusCode == "WA")
+                                {
+                                    if (!accountingSetting.EnableMultiPercentageVATTypes)
+                                    {
+                                        throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
+                                    }
+                                }
+                            }
+
+                            else
+                            {
+                                string field = TranslateTextsClass.Translate("APInvoiceTotalVAT.F.VatPercent", entityPM.Tenant);
+                                throw new ApplicationException(msgRequired.Replace("%FieldName", field));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void ValidateInvoiceLinesVAT(APInvoicePM entityPM, ICommonDataContext commonContext, AccountingSetting accountingSetting, string msgRequired)
+        {
+            List<VatType> allVatTypes = (from f in commonContext.VatTypes where f.Tenant == entityPM.Tenant select f).ToList();
+
+            List<APInvoiceLinePM> lines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+
+            foreach (APInvoiceLinePM item in lines)
+            {
+                if (item.VatTypeId == null)
+                {
+                    string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatTypeId", entityPM.Tenant);
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", field));
+                }
+
+                else if (item.VatPercentage == null)
+                {
+                    VatType itemVatType = allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
+
+                    if (itemVatType != null)
+                    {
+                        if (itemVatType.IsMultiPercentage)
+                        {
+                            if (entityPM.StatusCode == null || entityPM.StatusCode == "WA")
+                            {
+                                if (!accountingSetting.EnableMultiPercentageVATTypes)
+                                {
+                                    throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatPercentage", entityPM.Tenant);
+                            throw new ApplicationException(msgRequired.Replace("%FieldName", field));
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private static void ValidateInvoiceFields(APInvoicePM entityPM)
+        {
+            if (entityPM.InvoiceDate > TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant))
+            {
+                string msg = TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
+                throw new ApplicationException(msg);
+            }
+
+            if (entityPM.InvoiceDate > entityPM.AccountingDate)
+            {
+                string msg = TranslateTextsClass.Translate("APInvoice.O.CheckInvoiceDate", entityPM.Tenant, !(GetLoggedContact(entityPM.Tenant).DontShowLocal));//.t "nvoice Date cant be bigger the the Accounting Date"; // TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
+                throw new ApplicationException(msg);
+            }
         }
 
         private static void ValidateUnUpdateFields(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew)
@@ -559,25 +627,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateMultiVatPercentages(APInvoicePM entityPM, AccountingSetting accountingSetting, List<VatType> allVats)
-        {
-            if (entityPM.StatusCode == null || entityPM.StatusCode == "WA")
-            {
-                if (allVats.Count > 0)
-                {
-                    if (accountingSetting != null)
-                    {
-                        if (!accountingSetting.EnableMultiPercentageVATTypes)
-                        {
-                            if (allVats.Where(d => d.IsMultiPercentage).Any())
-                            {
-                                throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
-                            }
-                        }
-                    }
-                }
-            }
-        }
+
         public static void ValidateFullAccounting(APInvoicePM invoicePM)//int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
         {
             Tenant tenantPOCO = GetTenant(invoicePM.Tenant);

@@ -81,6 +81,7 @@ namespace WebFreight.Web.AccountingModel.Reports.TaxDeductionReport
             //TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
             TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM.TaxYear, tenant);
             TaxDeductionReportData data = deductionReportDataProvider.GetTaxDeductionReportData();
+            data.ByVendorList= data.ByVendorList.OrderBy(d => d.VendorLocalName).ToList();
             return data;
         }
 

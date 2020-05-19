@@ -29,10 +29,12 @@ export class AddEditAPInvoiceLineComponent {
         }
     }
 
+    public TotalVATOnly: boolean = false;
     SetDataContext(dataContext: APInvoiceLineItem) {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;
         this.EntityPM = dataContext.invoiceLinePM;
+        this.TotalVATOnly = this.DataContext.fatherComponent.EntityPM.TotalVATOnly;
         this.Clone();
     }
 

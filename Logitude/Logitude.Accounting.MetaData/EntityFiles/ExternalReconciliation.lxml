@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;External Reconciliation&quot;"
-  Code="&quot;6c25&quot;"
+  Code="&quot;0676&quot;"
   Name="&quot;ExternalReconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1128,6 +1128,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AccountLocalName&quot;"
     ListPropertyPath="&quot;AccountLocalName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1298,16 +1299,33 @@
       LocalDefaultText="&quot;יש לסמן שורה אחת בכל פעם כאשר מבצעים התאמה של פירעון שיק דחוי.&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.blockOneTransferTwoPageLines&quot;"
+      DefaultText="&quot;When transfer transaction selected, only one line should be marked on the external page with the deferred check amount.&quot;"
+      LocalDefaultText="&quot;כאשר פורעים שיק דחוי יש לסמן רק שורה אחת בצד הבנק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.blockTwoTransferOnePageLine&quot;"
+      DefaultText="&quot;There is two transfer transactions selected, you can select page line only if one transfer ledger is selected&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.OnlyOneTransferTransactionCanReconciledWithOnePageLine&quot;"
+      DefaultText="&quot;Only one transfer transaction can be reconciled with only one page line in one time&quot;"
+      LocalDefaultText="&quot;ניתן לפרוע  שיק אחד בכל פעולה , יש לסמן שורה אחת  מכרטיס שקים לפרעון &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;ExtRecoGenerateTestRecords&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;ExternalReconciliation.Features.ExtRecoGenerateTestRecords&quot;"
+      FeatureDefaultText="&quot;Generate Test Records&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;ExternalReconciliation.Features.ExtRecoGenerateTestRecords&quot;"
-      FeatureDefaultText="&quot;Generate Test Records&quot;" />
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceTotalVATUpdateClass
    {  		
-		public const string HashString = "f2defad6518c49bef05e4ca0ef84cede";
+		public const string HashString = "370b0f357944c1895717c4a0363e788d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	             				    ObjectTableName =  "APInvoiceTotalVAT",
 			      				    IsNew =  false,
 			      				    DBTableName =  "APInvoiceTotalVATs",
-			      				    OldDBTableName =  "APInvoiceTotalVATs",
 			      				    ObjectTableSingular =  "A/P Invoice Total VAT",
 			      				    ObjectTablePlural =  "A/P Invoice Total VATs",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/P Invoice Total VAT",
-			      				    Code =  "8dbd",
+			      				    Code =  "e339",
 			      				    Name =  "APInvoiceTotalVAT",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -140,72 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "QuoteId",
-					  						OldFieldName =  "QuoteId",
-					  						ObjectTableName =  "APInvoiceTotalVAT",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Quote",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "QuoteId",
-					  						ListPropertyPath =  "QuoteId",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "APInvoiceTotalVAT",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						Code =  "QuoteId",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "QuoteId",
-					  						DefaultText =  "Quote",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						HelpTextCode =  "QuoteId",
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "InvoiceCurrencyVATAmount",
-					  						OldFieldName =  "InvoiceCurrencyVATAmount",
 					  						ObjectTableName =  "APInvoiceTotalVAT",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -270,7 +204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "LocalVATAmount",
-					  						OldFieldName =  "LocalVATAmount",
 					  						ObjectTableName =  "APInvoiceTotalVAT",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -335,7 +268,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "InvoiceCurrencyVatableAmount",
-					  						OldFieldName =  "InvoiceCurrencyVatableAmount",
 					  						ObjectTableName =  "APInvoiceTotalVAT",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -400,7 +332,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "LocalVatableAmount",
-					  						OldFieldName =  "LocalVatableAmount",
 					  						ObjectTableName =  "APInvoiceTotalVAT",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -465,7 +396,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "VatPercent",
-					  						OldFieldName =  "VatPercent",
 					  						ObjectTableName =  "APInvoiceTotalVAT",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -508,10 +438,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VatPercent",
 					  						DefaultText =  "VAT Percent",
-					  						FullLocalDefaultText =  "אחוז מע''מ",
+					  						FullLocalDefaultText =  "םחוז מע''מ",
 					  						ListFieldLable =  "VatPercentListLable",
 					  						ListLableDefaultText =  "VAT Percent",
-					  						ListLocalDefaultText =  "אחוז מע''מ",
+					  						ListLocalDefaultText =  "םחוז מע''מ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -532,7 +462,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "VatTypeId",
-					  						OldFieldName =  "VatTypeId",
 					  						ObjectTableName =  "APInvoiceTotalVAT",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VatType",
@@ -597,7 +526,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "VatTypeName",
-					  						OldFieldName =  "VatTypeName",
 					  						ObjectTableName =  "APInvoiceTotalVAT",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -664,7 +592,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "APInvoiceId",
-					  						OldFieldName =  "APInvoiceId",
 					  						ObjectTableName =  "APInvoiceTotalVAT",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "APInvoice",
@@ -729,7 +656,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "VatRecognizedPercentage",
-					  						OldFieldName =  "VatRecognizedPercentage",
 					  						ObjectTableName =  "APInvoiceTotalVAT",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,

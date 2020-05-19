@@ -475,10 +475,12 @@ export class ServiceHelper {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken(),
-                'WorkerRole-Name': SessionLocator.WorkerRoleName != null ? SessionLocator.WorkerRoleName:''
+                'Token': ServiceHelper.GetLoggedUserToken()
             })
         };
+
+        if (!AppTool.IsNullOrEmpty(SessionLocator.WorkerRoleName))
+            httpOptions.headers = httpOptions.headers.append('workerrolename', SessionLocator.WorkerRoleName);
 
         return httpOptions;
     }
@@ -489,12 +491,14 @@ export class ServiceHelper {
 
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken(),
-                'WorkerRole-Name': SessionLocator.WorkerRoleName != null ? SessionLocator.WorkerRoleName : ''
+                'Token': ServiceHelper.GetLoggedUserToken()
             }),
 
             observe: 'response'
         };
+
+        if (!AppTool.IsNullOrEmpty(SessionLocator.WorkerRoleName))
+            httpOptions.headers = httpOptions.headers.append('workerrolename', SessionLocator.WorkerRoleName);
 
         return httpOptions;
     }

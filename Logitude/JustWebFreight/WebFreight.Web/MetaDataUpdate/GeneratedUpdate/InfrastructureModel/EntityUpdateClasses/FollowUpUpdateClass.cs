@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class FollowUpUpdateClass
    {  		
-		public const string HashString = "58531ba696fecbd10c6677c37e37410a";
+		public const string HashString = "46aff6a13d58d4ed504c12710a756dbd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Follow-Up",
-			      				    Code =  "c3e5",
+			      				    Code =  "6f21",
 			      				    Name =  "FollowUp",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",

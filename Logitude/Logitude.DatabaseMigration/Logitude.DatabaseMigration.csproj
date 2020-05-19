@@ -2388,10 +2388,9 @@
     <Compile Include="Migrations\202005031303293_TaxReportLineTotalInvoiceAmountMigration.Designer.cs">
       <DependentUpon>202005031303293_TaxReportLineTotalInvoiceAmountMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs" />
-    <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.Designer.cs">
-      <DependentUpon>202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs</DependentUpon>
-    </Compile>
+
+
+
 
 
     <Compile Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.cs" />
@@ -2402,7 +2401,6 @@
     <Compile Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.Designer.cs">
       <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
     </Compile>
-
  
 
     <Compile Include="Migrations\202005140933249_TaxReportLineOriginalReferenceFieldMigration.cs" />
@@ -2415,16 +2413,24 @@
     <Compile Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.Designer.cs">
       <DependentUpon>202005070955065_UpdatePickupDeliveryNumberLength.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202005140933249_TaxReportLineOriginalReferenceFieldMigration.cs" />
     <Compile Include="Migrations\202005140933249_TaxReportLineOriginalReferenceFieldMigration.Designer.cs">
       <DependentUpon>202005140933249_TaxReportLineOriginalReferenceFieldMigration.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202005171337237_TaxReportLineTaxReportDateMigration.cs" />
+    <Compile Include="Migrations\202005171337237_TaxReportLineTaxReportDateMigration.Designer.cs">
+      <DependentUpon>202005171337237_TaxReportLineTaxReportDateMigration.cs</DependentUpon>
+    </Compile>
 
    
 
     <Compile Include="Migrations\Configuration.cs" />
+
+    <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs" />
+    <Compile Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.Designer.cs">
+      <DependentUpon>202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
       <DependentUpon>202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs</DependentUpon>
@@ -4348,27 +4354,24 @@
     <EmbeddedResource Include="Migrations\202005060749373_Change_MinimumInterestInvoiceBilling_DataType.resx">
       <DependentUpon>202005060749373_Change_MinimumInterestInvoiceBilling_DataType.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202005061012001_Remove_MinimumInterestInvoiceBilling.resx">
       <DependentUpon>202005061012001_Remove_MinimumInterestInvoiceBilling.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005061031045_Add_MinimumInterestInvoiceBilling.resx">
       <DependentUpon>202005061031045_Add_MinimumInterestInvoiceBilling.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202005070955065_UpdatePickupDeliveryNumberLength.resx">
       <DependentUpon>202005070955065_UpdatePickupDeliveryNumberLength.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.resx">
       <DependentUpon>202005060821147_RenameFieldExcelOnlyToDisablePreviewOnReport.cs</DependentUpon>
     </EmbeddedResource>
-
-
     <EmbeddedResource Include="Migrations\202005140933249_TaxReportLineOriginalReferenceFieldMigration.resx">
       <DependentUpon>202005140933249_TaxReportLineOriginalReferenceFieldMigration.cs</DependentUpon>
     </EmbeddedResource>
-
+    <EmbeddedResource Include="Migrations\202005171337237_TaxReportLineTaxReportDateMigration.resx">
+      <DependentUpon>202005171337237_TaxReportLineTaxReportDateMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

@@ -630,6 +630,19 @@ namespace Logitude.Server.Tools.Helpers
                 return value.Trim();
             }
         }
+        public static double GetValue(double? value)
+        {
+            if (value == null)
+            {
+                return 0;
+            }
+
+            else
+            {
+                return value.Value;
+            }
+        }
+
     }
 
     public class DatesHelper

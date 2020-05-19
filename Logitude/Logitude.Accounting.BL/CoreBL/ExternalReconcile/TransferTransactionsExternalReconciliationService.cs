@@ -37,10 +37,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         public void HandleTransferAccountTransactions()
         {
-            if (bankAccountPM == null) // came from glaccount external transaction
+            if (bankAccountPM == null)
+                UpdateExternalReconciliation();  // came from glaccount external transaction
+            else if (bankAccountPM.GLAccountId == bankAccountPM.TransferGLAcccountId)
                 UpdateExternalReconciliation();
             else
             {
+                
                 List<ExternalReconciliationLinePM> transferRecoLines = GetRecoLinesOfTransferAccount();
 
                 if (transferRecoLines.Count == 1)
