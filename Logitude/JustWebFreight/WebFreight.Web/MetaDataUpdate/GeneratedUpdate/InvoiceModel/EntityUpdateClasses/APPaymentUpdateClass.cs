@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-		public const string HashString = "4c116574001941e404cf397d81d9d2a5";
+		public const string HashString = "856e88bb42293077de37d2f01ae79817";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5434,6 +5434,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APPaymentTextCode_APPaymentOShipmentNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.ShipmentNo", DefaultText = "Shipment #",LocalDefaultText = @"משלוח", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentSAPPaymentAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.APPayment.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = @"Additional Fields", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPaymentONoVendorCountry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.NoVendorCountry", DefaultText = "the Country of the vendor is not defined , The APPayment cannot be completed without this value",LocalDefaultText = @" “לא הוגדר מדינה בכרטיס הספק התפעולי , לא ניתן להשלים את הוראת התשלום ללא ערך זה", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
