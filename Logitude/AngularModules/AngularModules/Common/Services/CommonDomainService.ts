@@ -1077,7 +1077,7 @@ export class CommonDomainService {
         var url = this._apiUrl + '/GetTenantLogoUri?tenant=' + Id;
 
         return defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(map(response => {
                  
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
@@ -1096,7 +1096,7 @@ export class CommonDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTenantEcommerceSupportEmail?' + 'id=' + id,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetTenantEcommerceSupportEmail?' + 'id=' + id, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(map(response => {
                 var pm = response;
 
 
