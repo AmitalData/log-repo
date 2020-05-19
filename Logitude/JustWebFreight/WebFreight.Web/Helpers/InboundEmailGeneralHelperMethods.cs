@@ -58,7 +58,12 @@ namespace WebFreight.Web.Helpers
                             if (string.Compare(attachment.Name, 0, "body00", 0, "body00".Length, true) == 0 &&
                                 string.Compare(extension, ".htm", true) == 0)
                             {
-                                bodyHtml = Encoding.UTF8.GetString(attachment.Content);
+                                string charset = attachment.Charset;
+                                if (string.IsNullOrWhiteSpace(charset))
+                                {
+                                    charset = "utf-8";
+                                }
+                                bodyHtml = Encoding.GetEncoding(charset).GetString(attachment.Content);
                                 break;
                             }
                         }
@@ -102,8 +107,12 @@ namespace WebFreight.Web.Helpers
                                     // save body with correct image links to body.html
                                     // then you can try to open body.html in browser, it should workd fine.
                                     // all body html and attachment are save to current winmail.dat folder\temp
-
-                                    intputStream = Encoding.UTF8.GetBytes(bodyHtml);
+                                    string charset = tatt.Charset;
+                                    if (string.IsNullOrWhiteSpace(charset))
+                                    {
+                                        charset = "utf-8";
+                                    }
+                                    intputStream = Encoding.GetEncoding(charset).GetBytes(bodyHtml);
                                     attachmentsFiles.Add(new FileAttachment()
                                     {
                                         ContentLength = intputStream.Length,
