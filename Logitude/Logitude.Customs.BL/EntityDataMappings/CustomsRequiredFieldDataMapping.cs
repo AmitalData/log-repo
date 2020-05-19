@@ -37,7 +37,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.ObjectfieldCode != null)
             {
                 ObjectFieldRepository objectFieldsRep = new ObjectFieldRepository(entityPM.Tenant);
-                ObjectField objectField = objectFieldsRep.GetSingleObjectField(entityPOCO.ObjectfieldCode);
+                ObjectField objectField = objectFieldsRep.GetSingleObjectFieldByObjectFieldCode(entityPOCO.ObjectfieldCode);
                 if( objectField != null)
                 entityPM.ObjectFieldName = objectField.FieldName;
             }
