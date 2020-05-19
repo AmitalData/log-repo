@@ -18,14 +18,12 @@ namespace WarehouseData
     public partial class PrivateDBForm : Form
     {
         string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";
-        string dbDestinationConnection = "Logitude2-5_Global,sa,Saas256,.";
         long timeOut = 10000000000000000;
         public PrivateDBForm()
         {
 
             InitializeComponent();
             this.SourceConnectionlTextBox.Text = dbSourceConnection;
-            this.DestinationConnectiontextBox.Text = dbDestinationConnection;
 
 
         }
@@ -52,12 +50,11 @@ namespace WarehouseData
         {
 
 
-            if (!string.IsNullOrEmpty(dbSourceConnection) && !string.IsNullOrEmpty(dbDestinationConnection))
+            if (!string.IsNullOrEmpty(dbSourceConnection))
             {
                 string[] sourceConnectionArray = dbSourceConnection.Split(',');
-                string[] destinationConnectionArray = dbDestinationConnection.Split(',');
 
-                if (sourceConnectionArray.Length != 4 || destinationConnectionArray.Length != 4)
+                if (sourceConnectionArray.Length != 4)
                 {
                     MessageBox.Show("connection not valid");
                     return;
@@ -87,14 +84,19 @@ namespace WarehouseData
 
                         var dWHSettingsTable = mainDataWarehouseService.privateTenantDataWarehouse.GetPrivateTenant(sourceConnectionString);
 
-                        string userName = destinationConnectionArray[1];
-                        string password = destinationConnectionArray[2];
-                        string server = destinationConnectionArray[3];
+                        //string userName = destinationConnectionArray[1];
+                        //string password = destinationConnectionArray[2];
+                        //string server = destinationConnectionArray[3];
 
                         foreach (DataRow row in dWHSettingsTable.Rows)
                         {
                             int tenant = Int32.Parse(row["Tenant"].ToString());
                             string catalog = row["Catalog"].ToString();
+                            string userName = row["UserName"].ToString();
+                            string password = row["Password"].ToString();
+                            string server = row["Server"].ToString();
+
+
                             string message = "Start " + (type == "Build" ? "building" : "updating") + " data on private tenant (" + tenant + ")";
 
                             if (string.IsNullOrEmpty(allMessage)) allMessage = message + System.Environment.NewLine;
@@ -158,17 +160,7 @@ namespace WarehouseData
             }
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            TextBox textbox = sender as TextBox;
-
-            if (textbox != null)
-            {
-                this.dbDestinationConnection = textbox.Text;
-            }
-
-
-        }
+        
 
 
         delegate void SetControlValueCallback(Control oControl, string propName, object propValue);
