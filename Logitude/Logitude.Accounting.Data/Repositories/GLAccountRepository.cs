@@ -860,6 +860,102 @@ namespace Logitude.Accounting.Data.Repositories
            }
        }
 
+        public List<CardDTO> GetVendorCardsWithoutGLAccountMatchDisplayNumber(int tenant)
+        {
+            var cards = from crm in context.Cards
+                                         where 
+                                         crm.Tenant == tenant &&
+                                        ( crm.PayablesAccountingCard !=null || !crm.PayablesAccountingCard.Equals("")) &&
+                                        (crm.GLAccountId == null || crm.GLAccountId == "")
+                                            && (crm.PartnerTypeId == "VD" || crm.PartnerTypeId == "DR" || crm.PartnerTypeId == "LL" || crm.PartnerTypeId == "WA" || crm.PartnerTypeId == "AG")
+ 
+
+                        join a in context.GLAccounts
+                                              .Where(r => r.AccountTypeCode == "2" && r.Tenant == tenant)
+                                              on crm.PayablesAccountingCard equals a.DisplayNumber
+
+                        select new CardDTO()
+                        {
+                            Id = crm.Id,
+                            PayablesAccountingCard = crm.PayablesAccountingCard,
+                            GLAccountId = a.Id,
+                            AccountNumber = a.DisplayNumber
+                        };
+
+            return cards.ToList();
+        }
+        public List<CardDTO> GetAllOtherCardsWithoutGLAccountMatchDisplayNumberPayable(int tenant)
+        {
+
+            var cards = from crm in context.Cards
+                        where crm.Tenant == tenant &&
+                        (crm.PayablesAccountingCard!= null || !crm.PayablesAccountingCard.Equals("")) &&
+                        (crm.GLAccountId == null || crm.GLAccountId == "")
+
+                                            && (crm.PartnerTypeId != "CS" && crm.PartnerTypeId != "PO" && crm.PartnerTypeId != "AG")
+                                            && (crm.PartnerTypeId != "VD" && crm.PartnerTypeId != "DR" && crm.PartnerTypeId != "LL" && crm.PartnerTypeId != "WA")
+
+
+                        join a in context.GLAccounts
+       .Where(r => r.AccountTypeCode == "1" && r.Tenant == tenant)
+       on crm.PayablesAccountingCard equals a.DisplayNumber
+
+                        select new CardDTO()
+                        {
+                            Id = crm.Id,
+                            PayablesAccountingCard = crm.PayablesAccountingCard,
+                            GLAccountId = a.Id,
+                            AccountNumber = a.DisplayNumber
+                        };
+            return cards.ToList();
+        }
+        public List<CardDTO> GetAllOtherCardsWithoutGLAccountMatchDisplayNumberReceivable(int tenant)
+        {
+                       
+            var cards = from crm in context.Cards
+                        where crm.Tenant == tenant &&
+                        (crm.ReceivablesAccountingCard != null || !crm.ReceivablesAccountingCard.Equals("")) &&
+                        (crm.GLAccountId == null || crm.GLAccountId == "")
+
+                                            && (crm.PartnerTypeId != "CS" && crm.PartnerTypeId != "PO" && crm.PartnerTypeId != "AG")
+                                            && (crm.PartnerTypeId != "VD" && crm.PartnerTypeId != "DR" && crm.PartnerTypeId != "LL" && crm.PartnerTypeId != "WA")
+
+                                                            
+                                                            join a in context.GLAccounts
+                                           .Where(r => r.AccountTypeCode == "1" && r.Tenant == tenant)
+                                           on crm.ReceivablesAccountingCard equals a.DisplayNumber
+
+                                                            select new CardDTO()
+                                                            {
+                                                                Id = crm.Id,
+                                                                ReceivablesAccountingCard = crm.ReceivablesAccountingCard,
+                                                                GLAccountId = a.Id,
+                                                                AccountNumber = a.DisplayNumber
+                                                            };
+            return cards.ToList();
+        }
+        public List<CardDTO> GetCustomerCardsWithoutGLAccountMatchDisplayNumber(int tenant)
+        {
+            var cards = from crm in context.Cards
+                        where crm.Tenant == tenant &&
+                        (crm.ReceivablesAccountingCard != null || !crm.ReceivablesAccountingCard.Equals("")) &&
+                        (crm.GLAccountId == null || crm.GLAccountId == "")
+                        
+                           && (crm.PartnerTypeId == "CS" || crm.PartnerTypeId == "PO")
+                        join a in context.GLAccounts
+                        .Where(r => r.AccountTypeCode == "2" && r.Tenant == tenant)
+                        on crm.ReceivablesAccountingCard equals a.DisplayNumber
+
+                        select new CardDTO()
+                        {
+                            Id = crm.Id,
+                            ReceivablesAccountingCard = crm.ReceivablesAccountingCard,
+                            GLAccountId = a.Id,
+                            AccountNumber = a.DisplayNumber
+                        };
+
+            return cards.ToList();
+        }
         public List<GLAccount> GetByDisplayNumberAndAccType(String displayNumber, String accTypeCode, int tenant)
         {
             if (String.IsNullOrEmpty(displayNumber) || String.IsNullOrEmpty(accTypeCode))
@@ -1049,6 +1145,15 @@ namespace Logitude.Accounting.Data.Repositories
         }
         
 #endif
+    }
+
+    public class CardDTO
+    {
+        public string Id { get;  set; }
+        public string ReceivablesAccountingCard { get;  set; }
+        public string GLAccountId { get;  set; }
+        public string AccountNumber { get;  set; }
+        public string PayablesAccountingCard { get;  set; }
     }
 }
    

@@ -56,16 +56,25 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 string balanceFilter = GetFilterValue<string>("BalanceFilter");
                 decimal balanceFilterValue = GetFilterValue<decimal>("BalanceFilterValue");
-                decimal customerBalance = customer.Sum(d => d.Total);
+                decimal customerBalance = customer.First().BalanceInLocalCurrency ?? 0;
+                //decimal customerBalance = customer.Sum(d => d.Total);
 
 
                 if (balanceFilter == "debtors" && customerBalance > 0
                     || balanceFilter == "debt" && customerBalance > balanceFilterValue
                     || balanceFilter == "all" || balanceFilter == null)
                 {
-                    CustomerStatus customerStatus = CreateNewCustomerStatus(customer, periodsByDate);
+                        CustomerStatus customerStatus = CreateNewCustomerStatus(customer, periodsByDate);
+                    if (GetFilterValue<bool>("IsCreditLimitSet") == true && customerStatus.CreditLimit == 0)
+                    {
 
-                    dataProvider.CustomersStatuses.Add(customerStatus);
+                    }
+                    else
+                    {
+                        dataProvider.CustomersStatuses.Add(customerStatus);
+                    }
+
+
                 }
 
             }
@@ -117,7 +126,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 TotalOpenCheques = customer.First().TotalOpenCheques ?? 0,
                 TotalOpenShipments = customer.First().TotalOpenShipments ?? 0,
 
-                AccountingBalance = customer.Sum(d => d.Total),
+                AccountingBalance = customer.First().BalanceInLocalCurrency ?? 0,
+                //AccountingBalance = customer.Sum(d => d.Total),
                 Periods = GetStatusPeriods(periodsByDate)
             };
             return customerStatus;

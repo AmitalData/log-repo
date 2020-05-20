@@ -30,6 +30,7 @@ export class TaxReportLineList {
 	StatusLocalName: string;
 	StatusEnglishName: string;
 	JournalNumber: string;
+	TaxReportDate: Date;
 	IsExternalLine: boolean;
 	TotalInvoiceAmount: number;
 	OriginalReference: string;
