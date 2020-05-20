@@ -22,7 +22,7 @@ namespace Logitude.DBMigrations.Models
         private List<TableDefinition> DXMLTablesDefinitions;
         private List<DXMLHash> DXMLHashes;
         private List<ExecutedSxmlFile> ExecutedSxmlFiles;
-        private IncludedModules IncludedModules;
+        private IncludedModules IncludedModules = null;
 
         public MigrationTool(string[] arguments, RunSettings runSettings)
         {
@@ -35,6 +35,11 @@ namespace Logitude.DBMigrations.Models
             if(IsArgumentProvided("-exe") && IsArgumentProvided("-datatypechanges"))
             {
                 ExitTool("Error: You Cannot Use -exe And -datatypechanges Arguments Together");
+            }
+
+            if (IsArgumentProvided("-includemodules") && IsArgumentProvided("-excludemodules"))
+            {
+                ExitTool("Error: You Cannot Use -includemodules And -excludemodules Arguments Together");
             }
 
             if (IsArgumentProvided("-root") || RunSettings.DebugMode)
@@ -129,6 +134,7 @@ namespace Logitude.DBMigrations.Models
         {
             Console.WriteLine("Preparing Required Data ...");
 
+            GetIncludedModulesFromArguments();
             GetIncludedModulesFromDB();
             GetDXMLHashesFromDB();
             GetExecutedSXMLFilesFromDB();
@@ -212,7 +218,8 @@ namespace Logitude.DBMigrations.Models
                     {
                         return sxmlFiles.Where(s => s.ToLower().Contains(@"\" + RunSettings.SpecificSxmlFile.ToLower())).ToArray();
                     }
-                    return sxmlFiles;
+
+                    return sxmlFiles.ToList().OrderBy(s => Path.GetFileName(s)).ToArray();
                 }
                 else
                 {
@@ -454,6 +461,21 @@ namespace Logitude.DBMigrations.Models
         {
             string[] arguments = Array.ConvertAll(Arguments, a => a.ToLower());
             int indexOfRootArgument = Array.IndexOf(arguments, "-root") + 1;
+            if (indexOfRootArgument < Arguments.Length && indexOfRootArgument >= 0)
+            {
+                string root = Arguments[indexOfRootArgument];
+                return root;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private string GetModulesFromArguments(string modulesArgument)
+        {
+            string[] arguments = Array.ConvertAll(Arguments, a => a.ToLower());
+            int indexOfRootArgument = Array.IndexOf(arguments, modulesArgument) + 1;
             if (indexOfRootArgument < Arguments.Length && indexOfRootArgument >= 0)
             {
                 string root = Arguments[indexOfRootArgument];
@@ -1728,89 +1750,123 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
+        private void GetIncludedModulesFromArguments()
+        {
+            bool isIncludeModulesArgumentProvided = IsArgumentProvided("-includemodules");
+            bool isExcludeModulesArgumentProvided = IsArgumentProvided("-excludemodules");
+
+            if (isIncludeModulesArgumentProvided || isExcludeModulesArgumentProvided)
+            {
+                string modules;
+                string mode;
+                if (isIncludeModulesArgumentProvided)
+                {
+                    modules = GetModulesFromArguments("-includemodules");
+                    mode = "include";
+                }
+                else
+                {
+                    modules = GetModulesFromArguments("-excludemodules");
+                    mode = "exclude";
+                }
+
+                if (!String.IsNullOrEmpty(modules))
+                {
+                    IncludedModules = new IncludedModules
+                    {
+                        Include = mode == "include",
+                        Modules = modules.ToLower().Split(',').ToList()
+                    };
+                }
+            }
+        }
+
         private void GetIncludedModulesFromDB()
         {
-            string connectionString = GetConnectionString("Main");
-
-            if (DatabaseType.ToLower() == "oracle")
+            if(IncludedModules == null)
             {
-                string queryString = "SELECT * FROM \"DBMIGRATIONSETTINGS\"";
+                string connectionString = GetConnectionString("Main");
 
-                OracleDataReader reader = null;
-                OracleConnection connection = new OracleConnection(connectionString);
-                OracleCommand command = new OracleCommand(queryString, connection);
-
-                IncludedModules includedModules = null;
-
-                try
+                if (DatabaseType.ToLower() == "oracle")
                 {
-                    connection.Open();
-                    reader = command.ExecuteReader();
+                    string queryString = "SELECT * FROM \"DBMIGRATIONSETTINGS\"";
 
-                    reader.Read();
+                    OracleDataReader reader = null;
+                    OracleConnection connection = new OracleConnection(connectionString);
+                    OracleCommand command = new OracleCommand(queryString, connection);
 
-                    if (reader.HasRows)
+                    IncludedModules includedModules = null;
+
+                    try
                     {
-                        includedModules = new IncludedModules
+                        connection.Open();
+                        reader = command.ExecuteReader();
+
+                        reader.Read();
+
+                        if (reader.HasRows)
                         {
-                            Include = reader["MODE"].ToString().ToLower() == "include",
-                            Modules = reader["MODULESLIST"].ToString().ToLower().Split(',').ToList()
-                        };
-                    }
+                            includedModules = new IncludedModules
+                            {
+                                Include = reader["MODE"].ToString().ToLower() == "include",
+                                Modules = reader["MODULESLIST"].ToString().ToLower().Split(',').ToList()
+                            };
+                        }
 
-                    reader.Close();
-                    connection.Close();
-                }
-                catch (Exception)
-                {
-                    if (reader != null)
-                    {
                         reader.Close();
+                        connection.Close();
                     }
-                    connection.Close();
-                }
-
-                IncludedModules = includedModules;
-            }
-            else
-            {
-                string queryString = "SELECT * FROM [dbo].[DBMigrationSettings]";
-
-                SqlDataReader reader = null;
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand(queryString, connection);
-
-                IncludedModules includedModules = null;
-
-                try
-                {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    reader.Read();
-
-                    if (reader.HasRows)
+                    catch (Exception)
                     {
-                        includedModules = new IncludedModules
+                        if (reader != null)
                         {
-                            Include = reader["Mode"].ToString().ToLower() == "include",
-                            Modules = reader["ModulesList"].ToString().ToLower().Split(',').ToList()
-                        };
+                            reader.Close();
+                        }
+                        connection.Close();
                     }
 
-                    reader.Close();
-                    connection.Close();
+                    IncludedModules = includedModules;
                 }
-                catch (Exception)
+                else
                 {
-                    if (reader != null)
-                    {
-                        reader.Close();
-                    }
-                    connection.Close();
-                }
+                    string queryString = "SELECT * FROM [dbo].[DBMigrationSettings]";
 
-                IncludedModules = includedModules;
+                    SqlDataReader reader = null;
+                    SqlConnection connection = new SqlConnection(connectionString);
+                    SqlCommand command = new SqlCommand(queryString, connection);
+
+                    IncludedModules includedModules = null;
+
+                    try
+                    {
+                        connection.Open();
+                        reader = command.ExecuteReader();
+
+                        reader.Read();
+
+                        if (reader.HasRows)
+                        {
+                            includedModules = new IncludedModules
+                            {
+                                Include = reader["Mode"].ToString().ToLower() == "include",
+                                Modules = reader["ModulesList"].ToString().ToLower().Split(',').ToList()
+                            };
+                        }
+
+                        reader.Close();
+                        connection.Close();
+                    }
+                    catch (Exception)
+                    {
+                        if (reader != null)
+                        {
+                            reader.Close();
+                        }
+                        connection.Close();
+                    }
+
+                    IncludedModules = includedModules;
+                }
             }
         }
 

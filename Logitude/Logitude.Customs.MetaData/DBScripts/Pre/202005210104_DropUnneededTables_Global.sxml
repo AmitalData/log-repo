@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Global" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+    DROP TABLE PERFORMANCELOGS CASCADE CONSTRAINTS;
+	DROP TABLE MOBILENOTIFICATIONLOGS CASCADE CONSTRAINTS;
+    ]]>
+  </Oracle>
+</Script>

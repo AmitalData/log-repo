@@ -477,10 +477,10 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            //if (DXMLTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") ? FormatNameLength(u.Columns, DXMLTable.Columns.Where(c => c.Name == u.Columns).First().ShortName) : string.Join(",", u.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())) == index.Columns).Any())
-            //{
-            //    return true;
-            //}
+            if (DXMLTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") ? FormatNameLength(u.Columns, DXMLTable.Columns.Where(c => c.Name == u.Columns).First().ShortName) : string.Join(",", u.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())) == index.Columns).Any())
+            {
+                return true;
+            }
 
             return DXMLTable.Indexes.Where(i => (!i.Columns.Contains(",") ? FormatNameLength(i.Columns, DXMLTable.Columns.Where(c => c.Name == i.Columns).First().ShortName) : string.Join(",", i.Columns.Split(',').Select(ic => FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName)).ToArray())) == index.Columns).Any();
         }
@@ -1111,12 +1111,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDefaultValueScript(bool nullable, string type, string defaultValue)
         {
-            if (nullable)
-            {
-                return null;
-            }
-
-            if (type == "bit" && String.IsNullOrEmpty(defaultValue))
+            if (!nullable && type == "bit" && String.IsNullOrEmpty(defaultValue))
             {
                 return " DEFAULT 0";
             }

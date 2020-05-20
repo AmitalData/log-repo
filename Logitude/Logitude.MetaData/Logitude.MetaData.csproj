@@ -179,6 +179,7 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="DBScripts\InsertDBMigrationSettingsData.sxml" />
     <None Include="DBScripts\ScreenField Unique index removal.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateAllTenantsCustomersActualDataProcedure.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateCustomerActualDataProcedure.dxml" />
