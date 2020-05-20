@@ -667,7 +667,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             this.ImporterCode = item;
             if (item.length < 9) {
                 valid = false;
-                errorMessage = "מספר יבוםן קצר מידיי";
+                errorMessage = "מספר יבואן קצר מידיי";
                 //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
             }
             else if (item.length > 9) {
@@ -1216,7 +1216,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         }
         else if (this.EntityPM.StorageStatusCode) {
             this.ShowStorageStatusMessage = true;
-            this.DisplayOnlyMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+            this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
          
    
@@ -1239,7 +1239,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             }
             else if (this.EntityPM.StorageStatusCode) {
                 this.ShowStorageStatusMessage = true;
-                this.DisplayOnlyMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
+                this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
 
           
