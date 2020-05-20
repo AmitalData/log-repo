@@ -100,7 +100,8 @@
 		union
 
 
-		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , dw_APInvoices.InvoiceNumber,dw_APInvoices.InvoiceCurrencyId,dw_APInvoices.InvoiceCurrencyExchangeRate ,  dw_APInvoices.AmountInInvoiceCurrency, 0 as OpenPayablesinLocal ,0 as OpenPayablesinProfit , dw_APInvoiceLines.LocalCurrencyAmount as AccountedPayablesinLocal ,dw_APInvoiceLines.ProfitCurrencyAmount   as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal , dw_ShipmentPayables.Id as PayableId, null as ReceivableId , 1 as BillTo  , vendorPartners.Id_Number as  Vendor ,dw_APInvoices.Id as InvoiceId   from dw_shipments 
+
+		select dw_ShipmentPayables.ShipmentId ,dw_ShipmentPayables.ChargesTypeId, 'Payables' as EntityType , dw_APInvoices.InvoiceNumber,dw_APInvoices.InvoiceCurrencyId,dw_APInvoices.InvoiceCurrencyExchangeRate ,  dw_APInvoices.AmountInInvoiceCurrency, 0 as OpenPayablesinLocal ,0 as OpenPayablesinProfit , dw_ShipmentPayables.AccountedAmountInLocalCurrency as AccountedPayablesinLocal ,dw_ShipmentPayables.AccountedAmountInProfitCurrency   as AccountedPayablesinProfit , '' as  InvoiceLineId , 0 as ReceivablesTotalAmount ,0 as ReceivablesTotalAmountLocal , dw_ShipmentPayables.Id as PayableId, null as ReceivableId , 1 as BillTo  , vendorPartners.Id_Number as  Vendor ,dw_APInvoices.Id as InvoiceId   from dw_shipments 
         inner JOIN dw_ShipmentPayables  ON dw_shipments.Id = dw_ShipmentPayables.ShipmentId
 		inner JOIN dw_ShipmentPayables masterPayables  ON dw_ShipmentPayables.ShipmentPayableParentId = masterPayables.Id
       	inner JOIN DIM_Partners vendorPartners ON masterPayables.VendorId = vendorPartners.Id
@@ -108,8 +109,6 @@
         inner JOIN dw_APInvoices  ON dw_APInvoiceLines.APInvoiceId = dw_APInvoices.Id
 		where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and dw_ShipmentPayables.ShipmentPayableParentId is not null and dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D')  and ( (dw_APInvoiceLines.LocalCurrencyAmount is not null and dw_APInvoiceLines.LocalCurrencyAmount !=0) or (dw_APInvoiceLines.ProfitCurrencyAmount is not null and dw_APInvoiceLines.ProfitCurrencyAmount !=0) )
 		union
-
-
 
 
 
