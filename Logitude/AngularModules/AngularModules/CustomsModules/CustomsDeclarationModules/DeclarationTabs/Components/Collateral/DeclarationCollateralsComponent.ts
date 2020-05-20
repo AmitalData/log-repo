@@ -286,7 +286,16 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
 
 
         });
+    this.columns.push({
 
+            FieldName: 'OrganizationUnitTypeName',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.OrganizationUnitTypeName"),
+            Styles: { width: '153px' },
+            IsCustomTemplate: true
+
+
+        });
         this.columns.push({
 
             FieldName: 'IsClosed',
