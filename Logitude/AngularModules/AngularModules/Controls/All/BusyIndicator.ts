@@ -103,7 +103,9 @@ export class BusyIndicator implements OnInit {
     }
 
     ngOnInit() {
-        var idIndex = this.CurrentSession.GetNewId("BusyIndicator");
+        if (this.CurrentSession) {
+            var idIndex = this.CurrentSession.GetNewId("BusyIndicator");
+        }
 
         if (this.IdPrefix) {
             this.BusyIndicatorId = this.IdPrefix + "BusyIndicator";
