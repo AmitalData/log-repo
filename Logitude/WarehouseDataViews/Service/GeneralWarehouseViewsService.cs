@@ -45,13 +45,22 @@ namespace WarehouseDataViews.Service
                 else if (lastOneCharacter == "o" && !"a,3,i,o,u".Split(',').Contains(lastSecondCharacter)) result = viewName + "es";
                 else result = viewName + "s";
 
-
-
-                if (viewName.ToLower() == "dimcreatedby" || viewName.ToLower() == "dimoperationalclosedby"  || viewName.ToLower() == "dimnotifyone" || viewName.ToLower() == "dimnotifytwo" || viewName.ToLower() == "dimspecialservices")
+                if (viewName.ToLower() == "dimcreatedby" || viewName.ToLower() == "dimoperationalclosedby" || viewName.ToLower() == "dimdirecthouse" || viewName.ToLower() == "dimnotifyone" || viewName.ToLower() == "dimnotifytwo" || viewName.ToLower() == "dimspecialservices")
                 {
                     result = viewName;
                 }
                 else if (viewName.ToLower() == "dimsalesman") result = "dimSalesmen";
+                else if (viewName.ToLower() == "dimconsigneenotimporter")
+                {
+
+                    result = "dimConsigneesNotImportes";
+                }
+
+
+                else if (viewName.ToLower() == "dimshippernotexporter")
+                {
+                    result = "dimShippersNotExporters";
+                }
 
             }
 
