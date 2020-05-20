@@ -117,8 +117,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 			if(!queryOperations.GetAll)
 			{
-             query2 = query2.Skip(skippedPorts);
-             query2 = query2.Take(queryOperations.PageSize);
+             query2 = query2.OrderBy(d => d.Id).Skip(skippedPorts);
+             query2 = query2.OrderBy(d => d.Id).Take(queryOperations.PageSize);
 			}
             return query2.ToList();
 
