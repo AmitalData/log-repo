@@ -48,7 +48,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
     {
         private int tenant;
         private bool isNewEntity;
-        private bool isUpdateTotalVats;
+        private bool isInvoiceLinesChanged;
         public APInvoice invoice { get; set; }
         private APInvoicePM entityPM;
         private string loggedContactId;
@@ -77,7 +77,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             this.tenant = entityPM.Tenant;
             this.entityPM = entityPM;
-            this.isUpdateTotalVats = false;
+            this.isInvoiceLinesChanged = false;
             this.objectContext = objectContext;
             this.myCommonContext = CommonDataContext.GetContext(tenant);
 
@@ -107,7 +107,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.tenant = entityPM.Tenant;
             this.entityPM = entityPM;
-            this.isUpdateTotalVats = false;
+            this.isInvoiceLinesChanged = false;
             this.invoiceRepository = new APInvoiceRepository(objectContext);
             this.invoiceLineRepository = new APInvoiceLineRepository(objectContext);
             this.invoiceTotalVatRepository = new APInvoiceTotalVATRepository(objectContext);
@@ -228,7 +228,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, this.MainShipmentConcurrencyGUID);
+            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, myCommonContext, this.MainShipmentConcurrencyGUID);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
 
             if (!entityPM.IsGeneralInvoice)
@@ -512,7 +512,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, this.MainShipmentConcurrencyGUID);
+            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, myCommonContext, this.MainShipmentConcurrencyGUID);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
 
             if (!entityPM.IsGeneralInvoice)
@@ -1577,43 +1577,95 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #endregion
 
         #region TotalVats
+        private List<InvoiceTotalsClass> group_Source;
+        private List<InvoiceTotalsClass> group_TotalVATs;
+        private List<VATTypesGroup> allVATTypesGroup;
         private void UpdateTotalVats()
         {
-            if (isUpdateTotalVats)
-            {
-                double? subTotal = 0;
-                double? subTotal_Local = 0;
-                double? sumOfVATsAmounts = 0;
-                double? sumOfVATsAmounts_Local = 0;
-                double? sumOfVATsAmounts_Profit = 0;
-                double? Amount = 0;
-                double? Amount_Local = 0;
-                double? Amount_Profit = 0;
+            this.group_Source = new List<InvoiceTotalsClass>();
+            this.group_TotalVATs = new List<InvoiceTotalsClass>();
+            this.allVATTypesGroup = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant select d).ToList();
 
-                List<APInvoiceTotalVAT> dbTotalVats = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(entityPM.Id, entityPM.Tenant).ToList();
-                foreach (APInvoiceTotalVAT item in dbTotalVats)
+            this.CalculateSubTotals();
+            this.CalculateTotalVATs();
+            this.CalculateInvoiceAmounts();
+            this.InitializeAmountDueFields();
+        }
+
+        private void CalculateSubTotals()
+        {
+            double? subTotal = 0;
+            double? subTotal_Local = 0;
+            List<APInvoiceLinePM> myDataLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
+
+            if (myDataLines.Count > 0)
+            {
+                subTotal = MethodHelper.Round(myDataLines.Sum(s => s.InvoiceCurrencyAmount), 2);
+                subTotal_Local = MethodHelper.Round(myDataLines.Sum(s => s.LocalCurrencyAmount), 2);
+            }
+
+            entityPM.SubTotalInInvoiceCurrency = subTotal;
+            entityPM.SubTotalInLocalCurrency = subTotal_Local;
+        }
+        private void CalculateTotalVATs()
+        {
+            this.BuildTotalVATsDataSource();
+            this.BuildTotalVATsDataGroups();
+            this.GenerateTotalVATs();
+        }
+        private void CalculateInvoiceAmounts()
+        {
+            double? sumOfVATsAmounts = group_TotalVATs.Sum(s=>s.InvoiceCurrencyVATAmount);
+            double? sumOfVATsAmounts_Local = group_TotalVATs.Sum(s => s.LocalCurrencyVATAmount);
+            double? sumOfVATsAmounts_Profit = group_TotalVATs.Sum(s => s.ProfitCurrencyVATAmount);
+            double? Amount = MethodHelper.Round(entityPM.SubTotalInInvoiceCurrency + sumOfVATsAmounts, 2);
+            double? Amount_Local = MethodHelper.Round(entityPM.SubTotalInLocalCurrency + sumOfVATsAmounts_Local, 2);
+            double? Amount_Profit = 0;
+
+            if (entityPM.ProfitCurrencyId == entityPM.InvoiceCurrencyId)
+            {
+                Amount_Profit = Amount;
+            }
+
+            else
+            {
+                Amount_Profit = MethodHelper.Round(Amount_Local / entityPM.ProfitCurrencyExchangeRate, 2);
+            }
+
+            entityPM.AmountInInvoiceCurrency = Amount;
+            entityPM.AmountInLocalCurrency = Amount_Local;
+            entityPM.AmountInProfitCurrency = Amount_Profit;
+        }
+        private void BuildTotalVATsDataSource()
+        {
+            if (entityPM.TotalVATOnly)
+            {
+                this.BuildTotalVATsFromVATsOnly();
+            }
+
+            else
+            {
+                if (entityPM.TotalVATOnly != invoice.TotalVATOnly)
                 {
-                    invoiceTotalVatRepository.Remove(item);
+                    this.BuildTotalVATsFromLines();
                 }
 
-                List<APInvoiceLinePM> myDataLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
-                if (myDataLines.Count > 0)
+                else if (isInvoiceLinesChanged)
                 {
-                    subTotal = MethodHelper.Round(myDataLines.Sum(s => s.InvoiceCurrencyAmount), 2);
-                    subTotal_Local = MethodHelper.Round(myDataLines.Sum(s => s.LocalCurrencyAmount), 2);
+                    this.BuildTotalVATsFromLines();
+                }
+            }
+        }
+        private void BuildTotalVATsFromVATsOnly()
+        {
+            List<APInvoiceTotalVATPM> items = entityPM.TotalVATs.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
 
-                    #region
-                    List<VATTypesGroup> allVatGroups = (from d in myCommonContext.VATTypesGroups
-                                                        where d.Tenant == this.tenant
-                                                        select d).ToList();
-
-                    List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
-
-                    foreach (APInvoiceLinePM item in myDataLines)
+            if(items.Count > 0)
+            {
+                foreach (APInvoiceTotalVATPM item in items)
+                {
+                    VatType lineVatType = this.allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
                     {
-                        #region
-                        VatType lineVatType = this.allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
-
                         if (lineVatType != null)
                         {
                             if (!lineVatType.IsMultiPercentage)
@@ -1622,10 +1674,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 {
                                     Id = item.VatTypeId,
                                     VatTypeId = item.VatTypeId,
-                                    VatTypePercentage = item.VatPercentage,
-                                    LocalCurrencyAmount = item.LocalCurrencyAmount,
-                                    InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
-                                    ProfitCurrencyAmount = item.ProfitCurrencyAmount,
+                                    VatTypePercentage = MethodHelper.GetValue(item.VatPercent),
+                                    LocalCurrencyAmount = item.LocalVatableAmount,
+                                    InvoiceCurrencyAmount = item.InvoiceCurrencyVatableAmount,
+                                    ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitVatableAmount),
                                     ExternalVatCard = item.ExternalVATCard,
                                     ExternalTAXItemId = lineVatType.ExternalTAXItemId,
                                 };
@@ -1647,16 +1699,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             else
                             {
-                                List<VATTypesGroup> myVatGroups = allVatGroups.Where(d => d.GroupVATTypeId == item.VatTypeId).ToList();
-                                foreach (VATTypesGroup itemGroup in myVatGroups)
+                                List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == item.VatTypeId).ToList();
+
+                                foreach (VATTypesGroup itemGroup in vatTypesGroup)
                                 {
                                     InvoiceTotalsClass newItem = new InvoiceTotalsClass()
                                     {
                                         Id = itemGroup.SingleVATTypeId,
                                         VatTypeId = itemGroup.SingleVATTypeId,
-                                        LocalCurrencyAmount = item.LocalCurrencyAmount,
-                                        InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
-                                        ProfitCurrencyAmount = item.ProfitCurrencyAmount,
+                                        LocalCurrencyAmount = item.LocalVatableAmount,
+                                        InvoiceCurrencyAmount = item.InvoiceCurrencyVatableAmount,
+                                        ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitVatableAmount),
                                     };
 
                                     VatType vatType = this.allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
@@ -1673,7 +1726,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
                                     if (myPercentagePM != null)
                                     {
-                                        newItem.VatTypePercentage = myPercentagePM.Percentage;
+                                        newItem.VatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
                                     }
 
                                     if (string.IsNullOrEmpty(newItem.ExternalVatCard))
@@ -1692,76 +1745,220 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 }
                             }
                         }
-                        #endregion
                     }
+                }
+            }
+        }
+        private void BuildTotalVATsFromLines()
+        {
+            List<APInvoiceLinePM> items = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
 
-                    List<InvoiceTotalsClass> group_data
-                        = (from items in group_Source
-                           group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId, items.VatRecognizedPercentage } into g
-                           select new InvoiceTotalsClass()
-                           {
-                               Id = g.Key.VatTypeId,
-                               VatTypeId = g.Key.VatTypeId,
-                               VatTypePercentage = g.Key.VatTypePercentage,
-                               LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
-                               InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
-                               ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
-                               ExternalVatCard = g.Key.ExternalVatCard,
-                               ExternalTAXItemId = g.Key.ExternalTAXItemId,
-                               VatRecognizedPercentage = g.Key.VatRecognizedPercentage
-                           }).ToList();
+            if (items.Count > 0)
+            {
+                foreach (APInvoiceLinePM item in items)
+                {
+                    VatType lineVatType = this.allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
 
-                    foreach (InvoiceTotalsClass item in group_data)
+                    if (lineVatType != null)
                     {
-                        APInvoiceTotalVAT record = new APInvoiceTotalVAT()
+                        if (!lineVatType.IsMultiPercentage)
                         {
-                            Id = IdCounter.GetNumber("APInvoiceTotalVAT", entityPM.Tenant).ToString(),
-                            Tenant = entityPM.Tenant,
-                            APInvoiceId = entityPM.Id,
-                            VatTypeId = item.Id,
-                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 3),
-                            LocalVatableAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2),
-                            InvoiceCurrencyVatableAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2),
-                            ProfitVatableAmount = MethodHelper.Round(item.ProfitCurrencyAmount, 2),
-                            ExternalVATCard = item.ExternalVatCard,
-                            ExternalTAXItemId = item.ExternalTAXItemId,
-                            // VatRecognizedPercentage = item.VatRecognizedPercentage,
-                        };
-                        //InvoiceCurrencyVatableAmount= LocalVatableAmount/InvoiceCurrencyExchangeRate
-                      
-                       record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
-                       record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
-                        
-                        record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
-                        invoiceTotalVatRepository.Add(record);
+                            InvoiceTotalsClass newItem = new InvoiceTotalsClass()
+                            {
+                                Id = item.VatTypeId,
+                                VatTypeId = item.VatTypeId,
+                                VatTypePercentage = MethodHelper.GetValue(item.VatPercentage),
+                                LocalCurrencyAmount = MethodHelper.GetValue(item.LocalCurrencyAmount),
+                                InvoiceCurrencyAmount = MethodHelper.GetValue(item.InvoiceCurrencyAmount),
+                                ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitCurrencyAmount),
+                                ExternalVatCard = item.ExternalVATCard,
+                                ExternalTAXItemId = lineVatType.ExternalTAXItemId,
+                            };
 
-                        sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
-                        sumOfVATsAmounts_Local += record.LocalVATAmount;
-                        sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
+                            if (string.IsNullOrEmpty(newItem.ExternalVatCard))
+                            {
+                                if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+                                {
+                                    newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
+                                }
+                                else
+                                {
+                                    newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
+                                }
+                            }
+
+                            group_Source.Add(newItem);
+                        }
+
+                        else
+                        {
+                            List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == item.VatTypeId).ToList();
+
+                            foreach (VATTypesGroup itemGroup in vatTypesGroup)
+                            {
+                                InvoiceTotalsClass newItem = new InvoiceTotalsClass()
+                                {
+                                    Id = itemGroup.SingleVATTypeId,
+                                    VatTypeId = itemGroup.SingleVATTypeId,
+                                    LocalCurrencyAmount = MethodHelper.GetValue(item.LocalCurrencyAmount),
+                                    InvoiceCurrencyAmount = MethodHelper.GetValue(item.InvoiceCurrencyAmount),
+                                    ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitCurrencyAmount),
+                                };
+
+                                VatType vatType = this.allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
+                                if (vatType != null)
+                                {
+                                    newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
+                                }
+
+                                if (this.accountingSetting != null)
+                                {
+                                    newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
+                                }
+
+                                VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                                if (myPercentagePM != null)
+                                {
+                                    newItem.VatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
+                                }
+
+                                if (string.IsNullOrEmpty(newItem.ExternalVatCard))
+                                {
+                                    if (this.accountingSetting.AccountingSystemCode == "HV" || this.accountingSetting.AccountingSystemCode == "RH")
+                                    {
+                                        newItem.ExternalVatCard = this.accountingSetting.PayableVATCard;
+                                    }
+                                    else if (vatType != null)
+                                    {
+                                        newItem.ExternalVatCard = vatType.ReceivablesExternalId;
+                                    }
+                                }
+
+                                group_Source.Add(newItem);
+                            }
+                        }
                     }
+                }
+            }
+        }
+        private void BuildTotalVATsDataGroups()
+        {
+            if (this.group_Source.Count > 0)
+            {
+                this.group_TotalVATs = (from items in group_Source
+                                        group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId, items.VatRecognizedPercentage } into g
+                                        select new InvoiceTotalsClass()
+                                        {
+                                            Id = g.Key.VatTypeId,
+                                            VatTypeId = g.Key.VatTypeId,
+                                            VatTypePercentage = g.Key.VatTypePercentage,
+                                            LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
+                                            InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
+                                            ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
+                                            ExternalVatCard = g.Key.ExternalVatCard,
+                                            ExternalTAXItemId = g.Key.ExternalTAXItemId,
+                                            VatRecognizedPercentage = g.Key.VatRecognizedPercentage
+                                        }).ToList();
 
-                    Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
-                    Amount_Local = MethodHelper.Round(subTotal_Local + sumOfVATsAmounts_Local, 2);
+                foreach (InvoiceTotalsClass item in group_TotalVATs)
+                {
+                    item.VatTypePercentage = MethodHelper.Roundd(item.VatTypePercentage, 3);
+                    item.LocalCurrencyAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2);
+                    item.ProfitCurrencyAmount = MethodHelper.Roundd(item.ProfitCurrencyAmount, 2);
+                    item.InvoiceCurrencyAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2);
+                    item.LocalCurrencyVATAmount = MethodHelper.Roundd((item.LocalCurrencyAmount * item.VatTypePercentage / 100), 2);
+                    item.ProfitCurrencyVATAmount = MethodHelper.Roundd((item.ProfitCurrencyAmount * item.VatTypePercentage / 100), 2);
+                    item.InvoiceCurrencyVATAmount = MethodHelper.Roundd((item.InvoiceCurrencyAmount * item.VatTypePercentage / 100), 2);
+                }
+            }
+        }
+        private void GenerateTotalVATs()
+        {
+            bool isGeneratingVATs = this.CheckIfGeneratingVATs();
 
-                    if (entityPM.ProfitCurrencyId == entityPM.InvoiceCurrencyId)
-                    {
-                        Amount_Profit = Amount;
-                    }
+            if (isGeneratingVATs)
+            {
+                List<APInvoiceTotalVAT> dbTotalVats = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(entityPM.Id, entityPM.Tenant).ToList();
 
-                    else
-                    {
-                        Amount_Profit = MethodHelper.Round(Amount_Local / entityPM.ProfitCurrencyExchangeRate, 2);
-                    }
-                    #endregion
+                foreach (APInvoiceTotalVAT item in dbTotalVats)
+                {
+                    invoiceTotalVatRepository.Remove(item);
                 }
 
-                entityPM.SubTotalInInvoiceCurrency = subTotal;
-                entityPM.SubTotalInLocalCurrency = subTotal_Local;
-                entityPM.AmountInInvoiceCurrency = Amount;
-                entityPM.AmountInLocalCurrency = Amount_Local;
-                entityPM.AmountInProfitCurrency = Amount_Profit;
-                this.InitializeAmountDueFields();
+                foreach (InvoiceTotalsClass item in group_TotalVATs)
+                {
+                    APInvoiceTotalVAT itemPOCO = new APInvoiceTotalVAT()
+                    {
+                        Id = IdCounter.GetNumber("APInvoiceTotalVAT", entityPM.Tenant).ToString(),
+                        Tenant = entityPM.Tenant,
+                        APInvoiceId = entityPM.Id,
+                        VatTypeId = item.Id,
+                        ExternalVATCard = item.ExternalVatCard,
+                        ExternalTAXItemId = item.ExternalTAXItemId,
+                        VatPercent = MethodHelper.GetValue(item.VatTypePercentage),
+                        LocalVatableAmount = MethodHelper.GetValue(item.LocalCurrencyAmount),
+                        InvoiceCurrencyVatableAmount = MethodHelper.GetValue(item.InvoiceCurrencyAmount),
+                        ProfitVatableAmount = item.ProfitCurrencyAmount,
+                        LocalVATAmount = item.LocalCurrencyVATAmount,
+                        ProfitCurrencyVATAmount = item.ProfitCurrencyVATAmount,
+                        InvoiceCurrencyVATAmount = item.InvoiceCurrencyVATAmount,
+                    };
+
+                    invoiceTotalVatRepository.Add(itemPOCO);
+                }
             }
+        }
+        private bool CheckIfGeneratingVATs()
+        {
+            bool output = false;
+
+            if (this.isNewEntity)
+            {
+                output = true;
+            }
+
+            else if (entityPM.TotalVATOnly != invoice.TotalVATOnly)
+            {
+                output = true;
+            }
+
+            else if (entityPM.TotalVATOnly)
+            {
+                if (entityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any())
+                {
+                    output = true;
+                }
+
+                else if (entityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).Any())
+                {
+                    output = true;
+                }
+
+                else if (entityPM.TotalVATs.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).Any())
+                {
+                    output = true;
+                }
+            }
+
+            else
+            {
+                if (entityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert).Any())
+                {
+                    output = true;
+                }
+
+                else if (entityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Update).Any())
+                {
+                    output = true;
+                }
+
+                else if (entityPM.InvoiceLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).Any())
+                {
+                    output = true;
+                }
+            }
+
+            return output;
         }
         #endregion
 
@@ -1777,7 +1974,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     item.LineNumber = lineNumber;
                     this.CreateInvoiceLine(item);
                     this.UpdatePayable(item);
-                    this.isUpdateTotalVats = true;
+                    this.isInvoiceLinesChanged = true;
                 }
             }
 
@@ -1804,7 +2001,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         item.LineNumber = lastLineNumber;
                                         this.CreateInvoiceLine(item);
                                         this.UpdatePayable(item);
-                                        this.isUpdateTotalVats = true;
+                                        this.isInvoiceLinesChanged = true;
                                         break;
                                     }
 
@@ -1812,14 +2009,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     {
                                         this.UpdateInvoiceLine(item);
                                         this.UpdatePayable(item);
-                                        isUpdateTotalVats = true;
+                                        isInvoiceLinesChanged = true;
                                         break;
                                     }
 
                                 case ChangeSetOperation.Delete:
                                     {
                                         this.DeleteInvoiceLine(item);
-                                        this.isUpdateTotalVats = true;
+                                        this.isInvoiceLinesChanged = true;
                                         break;
                                     }
 

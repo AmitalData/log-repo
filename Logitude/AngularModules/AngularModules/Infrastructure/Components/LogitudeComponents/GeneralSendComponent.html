@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .iwanttohover:hover {
         background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
@@ -256,7 +256,7 @@
                                                             <td style="width:5px"><div></div></td>
                                                             <td>
                                                                 <div>
-                                                                    <EmailSearchTextBox [EmailsText]="ToEmail"  (EmailsTextChanged)="ToEmail = $event" ></EmailSearchTextBox>
+                                                                    <EmailSearchTextBox [EmailsText]="ToEmail" [DontInCludeInactive]="true" (EmailsTextChanged)="ToEmail = $event" ></EmailSearchTextBox>
                                                                 </div>
                                                             </td>
                                                             <td style="width:10px"><div></div></td>
@@ -269,7 +269,7 @@
                                                             <td style="width:5px"><div></div></td>
                                                             <td>
                                                                 <div>
-                                                                    <EmailSearchTextBox [EmailsText]="Cc"  (EmailsTextChanged)="Cc = $event" ></EmailSearchTextBox>
+                                                                    <EmailSearchTextBox [EmailsText]="Cc" [DontInCludeInactive]="true" (EmailsTextChanged)="Cc = $event" ></EmailSearchTextBox>
                                                                 </div>
                                                             </td>
                                                             <td style="width:10px"><div></div></td>
@@ -282,7 +282,7 @@
                                                             <td style="width:5px"><div></div></td>
                                                             <td>
                                                                 <div>
-                                                                    <EmailSearchTextBox [EmailsText]="Bcc"  (EmailsTextChanged)="Bcc = $event" ></EmailSearchTextBox>
+                                                                    <EmailSearchTextBox [EmailsText]="Bcc" [DontInCludeInactive]="true" (EmailsTextChanged)="Bcc = $event" ></EmailSearchTextBox>
                                                                 </div>
                                                             </td>
                                                             <td style="width:10px"><div></div></td>

@@ -24,7 +24,7 @@ namespace Logitude.Accounting.Data.Repositories
         public InterestReport GetSingleByCusstomerAndStatudDraft(string CustomerId,int tenant)
         {
             InterestReport interestReport = (from a in context.InterestReports
-                                      where a.Tenant == tenant && a.InterestReportStatusCode == "1"  &&a.CustomerId== CustomerId
+                                      where a.Tenant == tenant && (a.InterestReportStatusCode == "1" || a.InterestReportStatusCode == "5") && a.CustomerId== CustomerId
                                       select a ).FirstOrDefault();
             return interestReport;
         }
@@ -40,7 +40,7 @@ namespace Logitude.Accounting.Data.Repositories
         public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant,string glaccountId)
         {
             decimal? closedBalance = (from a in context.InterestReports
-                                     where a.Tenant == tenant && a.InterestReportStatusCode != "1" && a.InterestReportStatusCode != "3" && a.GLAccountId==glaccountId
+                                     where a.Tenant == tenant && (a.InterestReportStatusCode == "2" || a.InterestReportStatusCode == "4") && a.GLAccountId==glaccountId
                                      orderby a.InterestCalculationDate descending
                                      select a.CloseBalance).FirstOrDefault();
             return closedBalance != null ? closedBalance.Value : 0;

@@ -333,5 +333,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string VendorCountry { get; set; }
 
         public string CreatedByPartner { get; set; }
+        public bool TotalVATOnly { get; set; }
+
     }
 }

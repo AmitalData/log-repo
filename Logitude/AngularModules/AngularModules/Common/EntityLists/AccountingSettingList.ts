@@ -55,5 +55,6 @@ export class AccountingSettingList {
 		EnableAPPaymentExternalPayment: boolean;
 		TransferToFTPActivated: boolean;
 		TransferFTPDetailId: string;
+		EnableEnteringTotalVAT: boolean;
 	
 }

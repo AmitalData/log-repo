@@ -43,6 +43,7 @@ export class AccountingAdvancedAPSettingsComponent extends BaseComponent {
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('EnableAPPaymentExternalPayment');
+        this.myCloner.AddField('EnableEnteringTotalVAT');
         this.myCloner.AddEntity(this.EntityPM);
     }
 

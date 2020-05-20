@@ -48,7 +48,16 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.BirthDayOfYear = entityPM.Birthday != null ? entityPM.Birthday.Value.DayOfYear : 0;
             entityPOCO.ContactDoneMethodCode = entityPM.ContactDoneMethodCode;
             entityPOCO.Position = entityPM.Position;
-            entityPOCO.DontShowLocalLabels = !isNewState?  entityPM.DontShowLocalLabels: entityPOCO.DontShowLocalLabels;
+
+            if (LogitudeSettings.DeploymentStage == "Simplog")
+            {
+                entityPOCO.DontShowLocalLabels = true;
+            }
+            else
+            {
+                entityPOCO.DontShowLocalLabels = !isNewState ? entityPM.DontShowLocalLabels : entityPOCO.DontShowLocalLabels;
+
+            }
 
             //entityPOCO.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true; //bug 44449
             if (entityPM.CompanyName != null)

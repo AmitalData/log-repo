@@ -201,10 +201,42 @@ export class AddEditFCLChargeComponent implements OnDestroy {
                 }
             }
 
-            this.DataContext.fatherComponent.ComputeTotals();
-            this.CurrentSession.CloseCurrentWindowEmit("OK");
+            if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNew) {
+                var property = this.propertiesChanges.filter(a => a == "CostUnitPrice" || a == "CostTotalAmount" || a == "CostCurrencyId"
+                    || a == "CostContainerType1UnitPrice" || a == "CostContainerType2UnitPrice" || a == "CostContainerType3UnitPrice"
+                    || a == "CostContainerType4UnitPrice" || a == "CostContainerType5UnitPrice")[0];
+                if (property) {
+                    this.ShowTariffDisconnectionWindow();
+                }
+                else {
+                    this.DataContext.fatherComponent.ComputeTotals();
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
+                }
+            }
+
+            else {
+                this.DataContext.fatherComponent.ComputeTotals();
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
         }
     }
+
+    ShowTariffDisconnectionWindow() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Editing this line will unlink it from the tariff it was generated from.");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.DataContext.TariffId = null;
+                this.DataContext.TariffNumber = null;
+                //this.DataContext.SetUIProperties();
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
+            if (confirmWindow.No) {
+                //nothing 
+            }
+        });
+    }
+
 
     private myCloner: Cloner;
     private Clone() {
@@ -239,21 +271,5 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     }
     private RejectChanges() {
         this.myCloner.RejectChanges();
-    }
-
-    ShowTariffDisconnectionWindow() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Editing this line will unlink it from the tariff it was generated from.");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.DataContext.TariffId = null;
-                this.DataContext.TariffNumber = null;
-                //this.DataContext.SetUIProperties();
-                this.CurrentSession.CloseCurrentWindowEmit("OK");
-            }
-            if (confirmWindow.No) {
-                //nothing 
-            }
-        });
     }
 }

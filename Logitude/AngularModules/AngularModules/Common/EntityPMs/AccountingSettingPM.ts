@@ -290,6 +290,11 @@ export class AccountingSettingPM {
     public set TransferFTPDetailHost(newValue: string) { if (this.transferFTPDetailHost != newValue) { this.transferFTPDetailHost = newValue; this.MarkAsDirty("TransferFTPDetailHost"); } }
        
 	 
+    private enableEnteringTotalVAT: boolean;
+    public get EnableEnteringTotalVAT() { return this.enableEnteringTotalVAT; }
+    public set EnableEnteringTotalVAT(newValue: boolean) { if (this.enableEnteringTotalVAT != newValue) { this.enableEnteringTotalVAT = newValue; this.MarkAsDirty("EnableEnteringTotalVAT"); } }
+       
+	 
 
     public OldEntityPM: AccountingSettingPM;
 		

@@ -843,6 +843,10 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         }
     }
     OnEntityDataGenerated() {
+        var rate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
+        this.EntityPM.EstimateProfitInProfitCurrency = AppTool.Round(this.EntityPM.EstimateProfitInLocalCurrency / rate, 2);
+        this.estimateProfitInSelectedCurrency = this.GetEstimateProfitInSelectedCurrency();
+
         this.BuildItemsSource();
         this.ComputeShipmentFields();
     }

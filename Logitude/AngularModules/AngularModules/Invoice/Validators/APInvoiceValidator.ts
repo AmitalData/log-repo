@@ -1,4 +1,4 @@
-﻿import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
+import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool, ArrayTool} from '../../Infrastructure/Tools';
 import {Validator} from '../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
@@ -65,18 +65,20 @@ export class APInvoiceValidator {
                         this.Errors.push(TextCodeTranslator.Translate("APInvoice.M.InvoiceLineAmountNotZero"));
                     }
 
-                    if (item.VatTypeId == null) {
-                        var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatTypeId");
-                        this.Errors.push(this.message.replace("%FieldName", field));
-                    }
+                    if (!entityPM.TotalVATOnly) {
+                        if (item.VatTypeId == null) {
+                            var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatTypeId");
+                            this.Errors.push(this.message.replace("%FieldName", field));
+                        }
 
-                    else {
-                        if (item.VatPercentage == null) {
-                            var vattType = allVatTypes.filter(d => d.Id == item.VatTypeId)[0];
-                            if (vattType != null) {
-                                if (!vattType.IsMultiPercentage) {
-                                    var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatPercentage");
-                                    this.Errors.push(this.message.replace("%FieldName", field));
+                        else {
+                            if (item.VatPercentage == null) {
+                                var vattType = allVatTypes.filter(d => d.Id == item.VatTypeId)[0];
+                                if (vattType != null) {
+                                    if (!vattType.IsMultiPercentage) {
+                                        var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatPercentage");
+                                        this.Errors.push(this.message.replace("%FieldName", field));
+                                    }
                                 }
                             }
                         }

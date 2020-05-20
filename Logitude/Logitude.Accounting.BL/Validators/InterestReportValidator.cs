@@ -66,7 +66,15 @@ namespace Logitude.Accounting.BL.Validators
             InterestReport interestReport = interestReportRepository.GetSingleByCusstomerAndStatudDraft(entityPM.CustomerId, entityPM.Tenant);
             if (interestReport != null)
             {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CustomeralreadyhasaDraftinterest", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
+                if (interestReport.InterestReportStatusCode =="1")
+                {
+                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CustomeralreadyhasaDraftinterest", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
+
+                }
+                else
+                {
+                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasaninprogress", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
+                }
             }
 
             interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId, entityPM.InterestCalculationDate, entityPM.Tenant);

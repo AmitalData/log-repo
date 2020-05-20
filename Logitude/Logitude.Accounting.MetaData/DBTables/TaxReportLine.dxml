@@ -136,6 +136,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="TaxReportDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsExternalLine"
     Type="bit">
     <Constraints
@@ -146,6 +152,13 @@
     Type="decimal"
     Precision="16"
     Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OriginalReference"
+    Type="varchar"
+    Size="20">
     <Constraints
       Nullable="true" />
   </Column>

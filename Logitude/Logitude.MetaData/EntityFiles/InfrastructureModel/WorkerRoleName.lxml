@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Worker Role Name&quot;"
-  Code="&quot;4d65&quot;"
+  Code="&quot;d39a&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"

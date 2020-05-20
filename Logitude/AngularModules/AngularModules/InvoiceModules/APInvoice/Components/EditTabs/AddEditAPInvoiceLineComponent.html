@@ -34,7 +34,7 @@
                             </tr>
 
                             <!-- VatTypeId -->
-                            <tr class="FormFieldRow">
+                            <tr class="FormFieldRow" *ngIf="!TotalVATOnly">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'VatTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -57,7 +57,7 @@
                             </tr>
 
                             <!-- VatPercentage -->
-                            <tr class="FormFieldRow">
+                            <tr class="FormFieldRow" *ngIf="!TotalVATOnly">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'VatPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -66,7 +66,7 @@
                                     <div class="MediaFill">
                                         <div class="MediaFillRelative">
                                             <LogTextBox [DigitsAfterPoint]="3" [ObjectFieldName]="'VatPercentage'" [Text]="DataContext.VatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                            <div class="Value" style="position: absolute; left: 10px; top: 7px;" *ngIf="DataContext.VatIsMultiPercentage">Multi</div>
+                                            <div class="Value" style="position: absolute; left: 5px; top: 5px;" *ngIf="DataContext.VatIsMultiPercentage">Multi</div>
                                         </div>
                                     </div>
                                 </td>

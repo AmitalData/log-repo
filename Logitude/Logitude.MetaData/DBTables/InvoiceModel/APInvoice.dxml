@@ -447,6 +447,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TotalVATOnly"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="Cards"

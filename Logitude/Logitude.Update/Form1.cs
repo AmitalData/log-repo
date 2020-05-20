@@ -135,7 +135,7 @@ namespace Logitude.Update
                 string storageServiceMode = "fs";
                 string queueServiceMode = "azure";
                 Logitude.Server.Tools.ContainerAccessor.InitContainer();
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null);
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null);
 
                 CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
             }

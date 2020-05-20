@@ -18,7 +18,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public CardContactQuery()
         {
-            repository = new CardContactRepository(); 
+            repository = new CardContactRepository();
         }
 
         public CardContactQuery(int tenant)
@@ -43,7 +43,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              Tenant = a.Tenant,
                                              InternetAccess = a.InternetAccess,
                                              LastLoginDate = a.LastLoginDate,
-                                             IsAirExport= a.IsAirExport,
+                                             IsAirExport = a.IsAirExport,
                                              IsAirImport = a.IsAirImport,
                                              IsInlandExport = a.IsInlandExport,
                                              IsInlandImport = a.IsInlandImport,
@@ -111,12 +111,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           Tenant = a.Tenant,
                                           Position = a.Contact.Position,
 
-                                       
+
                                       }).FirstOrDefault();
             return cardContacts;
         }
 
-        public CardContactPM GetSinglePMByCardCodeContactExternalId(string contactExternalId,string cardCode, int tenant)
+        public CardContactPM GetSinglePMByCardCodeContactExternalId(string contactExternalId, string cardCode, int tenant)
         {
             CardContactPM cardcontact = (from a in repository.context.CardContacts
                                          where a.Contact.ExternalId == contactExternalId && a.Card.Code == cardCode && a.Tenant == tenant
@@ -146,7 +146,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(repository.context);
             CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(cardContactAdditionalServiceRepository);
             cardcontact.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardcontact.Id, cardcontact.Tenant).ToList();
-            
+
             return cardcontact;
         }
 
@@ -178,6 +178,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     PartnerTypeId = card.PartnerTypeId,
                     PartnerTypeName = card.PartnerType == null ? null : card.PartnerType.Name,
                     SalesmanUserId = card.Customer != null ? card.Customer.SalesmanUserId : "",
+                    AccountManagerUserId = card.Customer != null ? card.Customer.AccountManagerUserId : "",
                     Website = card.Website,
                     InvoiceCurrencyId = card.InvoiceCurrencyId,
                     VatTypeId = card.VatTypeId,

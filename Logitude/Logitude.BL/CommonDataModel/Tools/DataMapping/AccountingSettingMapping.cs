@@ -62,6 +62,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.EnableAPPaymentExternalPayment = entityPM.EnableAPPaymentExternalPayment;
             poco.TransferToFTPActivated = entityPM.TransferToFTPActivated;
             poco.TransferFTPDetailId = entityPM.TransferFTPDetailId;
+            poco.EnableEnteringTotalVAT = entityPM.EnableEnteringTotalVAT;
         }
     }
 }

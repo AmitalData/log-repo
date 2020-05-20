@@ -117,6 +117,9 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Field8).HasColumnName("Field8");
             this.Property(t => t.Field9).HasColumnName("Field9");
             this.Property(t => t.Field10).HasColumnName("Field10");
+            this.Property(t => t.TotalVATOnly).HasColumnName("TotalVATOnly");
+
+
             // Relationships
             this.HasRequired(t => t.Status).WithMany().HasForeignKey(d => d.StatusCode);
             this.HasRequired(t => t.Branch).WithMany().HasForeignKey(d => d.BranchId);

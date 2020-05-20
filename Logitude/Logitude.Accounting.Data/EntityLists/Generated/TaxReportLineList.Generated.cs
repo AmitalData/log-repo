@@ -61,9 +61,13 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string JournalNumber  { get; set; }
        [DataMember]
+       public DateTime? TaxReportDate  { get; set; }
+       [DataMember]
        public bool IsExternalLine  { get; set; }
        [DataMember]
        public decimal? TotalInvoiceAmount  { get; set; }
+       [DataMember]
+       public string OriginalReference  { get; set; }
    }
 
 }

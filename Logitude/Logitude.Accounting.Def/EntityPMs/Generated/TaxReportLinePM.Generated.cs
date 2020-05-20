@@ -528,12 +528,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime taxReportDate ;
+	  private DateTime? taxReportDate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime TaxReportDate  
+       public DateTime? TaxReportDate  
 	   {
 	    
 	     get
@@ -544,7 +544,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(taxReportDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportDate",OldValue=taxReportDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportDate",OldValue=taxReportDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   taxReportDate=value;
 		   }
@@ -593,6 +593,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalInvoiceAmount",OldValue=totalInvoiceAmount,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   totalInvoiceAmount=value;
+		   }
+			
+		 }
+	   }
+	  private string originalReference ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginalReference  
+	   {
+	    
+	     get
+		{
+		   return originalReference;
+		 }
+		 set
+		 {
+		   if(originalReference != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginalReference",OldValue=originalReference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originalReference=value;
 		   }
 			
 		 }

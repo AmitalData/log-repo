@@ -35,28 +35,29 @@ export class APInvoiceDetailsTabComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.entityResourceService.getEntityResourceByTableName("APInvoice").subscribe((res: any) => {
-      this.entityResourceService.getEntityResourceByTableName("APInvoiceLine").subscribe((res: any) => {
-
-        if (this.EntityPM.IsMultipleEntities) {
-          SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceMultipleDetailsTabComponent", this.Child.Location)
-            .then(cmpRef => {
-              //cmpRef.instance 66
-              var d = 9;
-            });
-        }
-        else if (this.EntityPM.IsGeneralInvoice) {
-          SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDetailsTabGeneral", this.Child.Location)
-            .then(cmpRef => {
-              //cmpRef.instance
-            });
-        }
-        else {
-          SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDetailsTabNormal", this.Child.Location)
-            .then(cmpRef => {
-              //cmpRef.instance
-            });
-        }
+    this.entityResourceService.getEntityResourceByTableName("APInvoice").subscribe((res1: any) => {
+      this.entityResourceService.getEntityResourceByTableName("APInvoiceLine").subscribe((res2: any) => {
+          this.entityResourceService.getEntityResourceByTableName("APInvoiceTotalVAT").subscribe((res3: any) => {
+              if (this.EntityPM.IsMultipleEntities) {
+                  SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceMultipleDetailsTabComponent", this.Child.Location)
+                      .then(cmpRef => {
+                          //cmpRef.instance 66
+                          var d = 9;
+                      });
+              }
+              else if (this.EntityPM.IsGeneralInvoice) {
+                  SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDetailsTabGeneral", this.Child.Location)
+                      .then(cmpRef => {
+                          //cmpRef.instance
+                      });
+              }
+              else {
+                  SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDetailsTabNormal", this.Child.Location)
+                      .then(cmpRef => {
+                          //cmpRef.instance
+                      });
+              }
+          });
       });
     });
   }
