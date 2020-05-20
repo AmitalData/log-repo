@@ -4184,6 +4184,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
@@ -4216,8 +4217,7 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false"
-    NumberOfDigits="18" />
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;c0ddf4df-e9a4-4300-a5c5-9a47e2be2c03&quot;"
     FieldName="&quot;DeclarationConstraints&quot;"
@@ -17384,6 +17384,7 @@
         DefaultText="&quot;Special Action Request&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="7"
+        LocalDefaultText="&quot;בקשה לפעולה מיוחדת&quot;"
         FeatureCode="&quot;DECLARATIONSPECIALACTION&quot;"
         IsPackagable="true"
         TextCodeCode="&quot;Customs.General.O.SpecialActivityRequest&quot;"
