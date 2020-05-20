@@ -365,8 +365,8 @@ namespace MetaDataGenerator
 		private void btnFormatModelLXMLs_Click(object sender, RoutedEventArgs e)
 		{
 
-			SetDontCreateObjectFieldAttribute();
-			return;
+			//SetDontCreateObjectFieldAttribute();
+			//return;
 
 			string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
 			DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
