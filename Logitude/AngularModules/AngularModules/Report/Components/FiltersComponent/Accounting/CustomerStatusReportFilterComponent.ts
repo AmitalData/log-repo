@@ -293,6 +293,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
             myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
             myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
+            myFilterItems.push(new QueryFilterItem("IsCreditLimitSet", this.IsCreditLimitSet));
 
             myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
             myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));

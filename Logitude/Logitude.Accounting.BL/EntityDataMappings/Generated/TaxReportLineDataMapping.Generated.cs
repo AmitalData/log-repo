@@ -41,6 +41,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         JournalId, 
 	         IsManuallyChanged, 
 	         IsEquipment, 
+	         TaxReportDate, 
 	         IsExternalLine, 
 	         TotalInvoiceAmount, 
 	         OriginalReference,
@@ -169,6 +170,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.IsEquipment = entityPM.IsEquipment;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportDate))
+            {
+				entityPOCO.TaxReportDate = entityPM.TaxReportDate;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExternalLine))
             {
 				entityPOCO.IsExternalLine = entityPM.IsExternalLine;
@@ -285,6 +291,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.IsEquipment = entityPOCO.IsEquipment;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TaxReportDate))
+            {
+					entityPM.TaxReportDate = entityPOCO.TaxReportDate;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExternalLine))
             {
 					entityPM.IsExternalLine = entityPOCO.IsExternalLine;
@@ -389,6 +400,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsEquipment))
             {
                 oldEntityPM.IsEquipment = entityPM.IsEquipment;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportDate))
+            {
+                oldEntityPM.TaxReportDate = entityPM.TaxReportDate;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExternalLine))

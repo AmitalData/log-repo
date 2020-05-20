@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.OutputOrInput == "O")
             {
                
-                if(entityPM.ReferenceDate.Value.Month != entityPM.TaxReportDate.Month)
+                if(entityPM.ReferenceDate.Value.Month != entityPM.TaxReportDate.Value.Month)
                 {
                     entityPM.StatusCode = "7";
                 }
@@ -232,8 +232,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             return vatNumber;
         }
-
-
+       
         protected override void Validate(TaxReportLinePM entityPM)
         {
             
