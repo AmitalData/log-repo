@@ -123,7 +123,7 @@ namespace Logitude.Accounting.BL.DataContract
             setting = GetFullAccountingPMForTenant();
             List<LedgerTransaction> transactions = (from a in accountingContext.LedgerTransactions
                     join j in accountingContext.Journals on a.JournalId equals j.Id
-                    where (a.DocumentDate >= startDate && a.DocumentDate <= endDate)
+                    where (a.AccountingDate >= startDate && a.AccountingDate <= endDate)
                     && a.Tenant == Tenant &&  a.AccountId == setting.TaxWithholdingGLAccountId
                     && j.ExternalSystem != null && a.LocalAmountDebit == 0
                    select a).ToList();
