@@ -4744,12 +4744,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime loadingDateTime ;
+	  private DateTime? loadingDateTime ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime LoadingDateTime  
+       public DateTime? LoadingDateTime  
 	   {
 	    
 	     get
@@ -4760,7 +4760,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(loadingDateTime != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LoadingDateTime",OldValue=loadingDateTime,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LoadingDateTime",OldValue=loadingDateTime,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   loadingDateTime=value;
 		   }

@@ -371,7 +371,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	      
         public virtual CustomsCountry CustomsCountry { get; set; }
         [Column("LoadingDateTime")]
-	    public DateTime LoadingDateTime { get; set; }
+	    public DateTime? LoadingDateTime { get; set; }
         [ForeignKey("CustomsShip")]
         [Column("ShipCode")]
 	    public string ShipCode { get; set; }
