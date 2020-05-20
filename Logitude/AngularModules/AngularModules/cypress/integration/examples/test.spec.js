@@ -15,17 +15,27 @@ context('Actions', () => {
 */
   it('redirect into logitude', () => {
 	   
-		//cy.visit('http://localhost:4200') 
-		cy.visit('https://test.logitudeworld.com/test') 
+		//cy.visit('http://192.168.1.100/test') 
+		cy.visit('https://test.logitudeworld.com/staging') 
 		//cy.request('http://localhost:9996/LinksGateway.aspx') 
   })
-  it('Login to the system', () => {
+  it('Login to the test system', () => {
 		cy.get('#Email').type('protractor@test.com') 
 		cy.get('#Password').type('!P123t456') 
         cy.get('#cmdLogin').click().then(()=>{
 			//cy.contains('#errorsList')
-           cy.url().should('include', '/Angular')
-
+           //cy.url().should('include', '/Angular')
+           cy.wait(30000);
         })
   })
+
+  // it('Login to the Local system', () => {
+	// 	cy.get('#Email').type('angular@fnarsoft.com') 
+	// 	cy.get('#Password').type('1') 
+  //       cy.get('#cmdLogin').click().then(()=>{
+	// 		//cy.contains('#errorsList')
+  //          //cy.url().should('include', '/Angular')
+
+  //       })
+  // })
 })
