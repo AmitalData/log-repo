@@ -449,15 +449,22 @@
                     </tr>
                     <tr *ngIf="RefreshButtonVisibility"
                         class="FormFieldRow">
+
+
+ 
+
+
+
                         <td style="width:400px;"><div></div></td>
                         <td style="width:350px;padding-right:15px;"><div></div></td>
                         <td style="width:370px;">
                             <table>
+                                 <tbody>
                                 <tr class="FormFieldRow">
                                     <td style="width: 150px"></td>
                                     <td style="width:10px"></td>
 
-                                    <td style="width: 200px; padding-right: 15px;text-align:left">
+                                    <td style="width: 200px;">
                                         <button class="GreenButton"
                                                 style="width:90px;"
                                                 [disabled]="!IsSearchButtonEnabled"
@@ -465,12 +472,22 @@
                                             {{'Customs.Notification.O.Search' | TextCodeTranslationPipe}}
                                         </button>
                                     </td>
+                                   </tr>
+                                     <tr  >
+                                        <td  style="width: 150px"></td>
+                                        <td   style="width: 150px; padding-right: 15px;">
+                                            
+                                        </td>
+    
+                                        <td  >
+                                            <div >
+                                              
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                                    <td style="width: 150px; padding-right: 15px;"></td>
-
-                                    <td><div></div></td>
-
-                                </tr>
+                               
+                                </tbody>
                             </table>
 
 
