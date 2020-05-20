@@ -530,7 +530,11 @@ namespace WebFreight.Web.DataProviders
         public string ShipperNotExporterAddress { get; set; }
         public string ConsigneeNotImporter { get; set; }
         public string ConsigneeNotImporterAddress { get; set; }
-        
+        public string SalesmanEmail { get; set; }
+        public string MoveType { get; set; }
+        public string MainCarriageLastdestinationPortName { get; set; }
+        public string MainCarriageLastdestinationPortCode { get; set; }
+        public string BillToBillingAddress { get; set; }
     }
 
     public class SAT
