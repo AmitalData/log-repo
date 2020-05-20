@@ -339,7 +339,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string DestinationCountryCode  { get; set; }
        [DataMember]
-       public DateTime LoadingDateTime  { get; set; }
+       public DateTime? LoadingDateTime  { get; set; }
        [DataMember]
        public string ShipCode  { get; set; }
        [DataMember]
