@@ -722,7 +722,8 @@ namespace Logitude.CustomsMessaging.RequestServices
         private Declaration Getdeclaration(Customs.Def.EntityPMs.DeclarationPM declarationPM)
         {
             var customDeclaration = new Declaration();
-            customDeclaration.ID = new DeclarationIdentificationIDType() { Value = declarationPM.DeclarationNumber };
+            if(declarationPM.DeclarationNumber!= null)
+                customDeclaration.ID = new DeclarationIdentificationIDType() { Value = declarationPM.DeclarationNumber };
 
             customDeclaration.DeclarationOfficeID = SetIDTypeValue<DeclarationDeclarationOfficeIDType>(declarationPM.DeclarationOfficeCode);
  
@@ -736,22 +737,23 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 new DeclarationExporter()
                 {
-                    ID = SetIDTypeValue<ExporterIdentificationIDType>("1233"),
+                    ID = SetIDTypeValue<ExporterIdentificationIDType>(declarationPM.ImporterCode),
                 DMExtensions = new DeclarationExporterDMExtensions()
                 {
                     RoleCode = SetCodeTypeValue<DeclarationExporterDMExtensionsRoleCode>("11"),
+                     
                     IssueLocation =  new DeclarationExporterDMExtensionsIssueLocation() { Value ="IL"}
                 }
                 }
             };
-            
 
+            customDeclaration.Exporter[0].ID.schemeID="1";
 
             if (!String.IsNullOrWhiteSpace(declarationPM.ProcedureCurrentCode))
             {
                 customDeclaration.GovernmentProcedure = new DeclarationGovernmentProcedure()
                 {
-                    CurrentCode = SetCodeTypeValue<GovernmentProcedureCurrentCodeType>(declarationPM.ProcedureCurrentCode) // new GovernmentProcedureCurrentCodeType()
+                    CurrentCode = SetCodeTypeValue<GovernmentProcedureCurrentCodeType>("1000001") // declarationPM.ProcedureCurrentCodenew GovernmentProcedureCurrentCodeType()
                 };
                 }
 
@@ -802,7 +804,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.CustomFileNo = declarationPM.CustomFileNo;
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             this.MyRequestSheetParam.EntityId1 = declarationPM.Id;
-            this.MyRequestSheetParam.RequestDescription = "הצהרת יבוא " + declarationPM.DeclarationNumber + " " + declarationPM.VersionId;
+            this.MyRequestSheetParam.RequestDescription = "הצהרת יצוא " + declarationPM.DeclarationNumber + " " + declarationPM.VersionId;
 
             var DMExtensions = new DeclarationDMExtensions();
             DMExtensions.ReleaseDateTime = new ReleaseDateType() {
