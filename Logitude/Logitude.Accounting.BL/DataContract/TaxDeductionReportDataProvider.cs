@@ -376,7 +376,7 @@ namespace Logitude.Accounting.BL.DataContract
                 ByVendorList groupedbyVendor = new ByVendorList()
                 {
                     Month = item.MonthOfRegisterDate,
-                    TaxDeductionPercentage =(int?)Math.Round((double)deductionPercentage, MidpointRounding.AwayFromZero),
+                    TaxDeductionPercentage =(int?)Math.Round((double)deductionPercentage*100, MidpointRounding.AwayFromZero),
                     VendorId = item.VendorId,
                 };
                 groupedbyVendor.EndYearBalance = 0;
