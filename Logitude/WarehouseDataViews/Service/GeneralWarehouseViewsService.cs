@@ -29,7 +29,7 @@ namespace WarehouseDataViews.Service
             viewName += fieldName;
             return PluralViewName(viewName);
         }
-
+         
        public string PluralViewName(string viewName)
         {
             string result = string.Empty; 
