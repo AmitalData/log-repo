@@ -41,7 +41,7 @@
                         <div style="margin-top:8px">
                             <div style="position: relative;">
                                 <div class="RadioButton">
-                                    <input type="radio" id="air" value="air" name="TransportMode" (click)="TransportModeClicked('A')" checked/>
+                                    <input type="radio" id="air" value="air" name="TransportMode" (click)="TransportModeClicked('A')"/>
                                     <label for="air" style="font-size:12px;"> אויר </label>
                                     <img style="left:30px " class="CenterCenter" src="./Images/TransportModes/A.png" />
                                 </div>
@@ -123,10 +123,10 @@
                                                         [ObjectTableName]="ObjectTableName"
                                                         [DataContext]="DataContext"
                                                         [SelectedValue]="CustomerId"
-                                                        [DependencyFilter1Value]="'CS'"
+                                                        [DisplayMemberPath]="'LocalName'"
                                                         [HideAddLink]="true"
                                                         [LookUpTableName]="'Card'"
-                                                        [DisplayFieldsFromList]="'Code,LocalName'">
+                                                        [DisplayFieldsFromList]="'Code,LocalName,EnglishName'">
                                                 </LogLov>
                                             </td>
                                             <td><div></div></td>

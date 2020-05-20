@@ -2549,7 +2549,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "הצהרת יצוא ";
+        logWindow.Title = "פתיחת הצהרת יצוא חדשה";
         logWindow.Width = 800;
         logWindow.Height = 500;
         logWindow.NewWizardArgs = { IsNewEntity: true };

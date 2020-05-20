@@ -49,7 +49,6 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
 
     }
     SetDefaultValues() {
-        this.EntityPM.TransportModeId = "A";
         this.EntityPM.Direction = "E";
         if (this._CustomsSettingListService == null) {
             this._CustomsSettingListService = new CustomsSettingListService();
