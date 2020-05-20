@@ -43,7 +43,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.EstimatedArrivalDate).HasColumnName("EstimatedArrivalDate");
 
-            this.Property(t => t.GatewayPortCode).HasColumnName("GatewayPortCode").HasMaxLength(35).IsUnicode(false);
+            this.Property(t => t.GatewayPortCode).HasColumnName("GatewayPortCode").HasMaxLength(17).IsUnicode(false);
 
             this.Property(t => t.OriginPortCode).HasColumnName("OriginPortCode").HasMaxLength(17).IsUnicode(false);
 
@@ -69,7 +69,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.WeightValueCode).HasColumnName("WeightValueCode").HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.StorageSiteCode).HasColumnName("StorageSiteCode").HasMaxLength(17).IsUnicode(false);
+            this.Property(t => t.StorageSiteCode).HasColumnName("StorageSiteCode").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.TruckerId).HasColumnName("TruckerId").HasMaxLength(15).IsUnicode(false);
 

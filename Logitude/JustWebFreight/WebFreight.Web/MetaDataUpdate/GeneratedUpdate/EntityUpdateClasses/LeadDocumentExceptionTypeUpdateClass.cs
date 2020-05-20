@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LeadDocumentExceptionTypeUpdateClass
    {  		
-		public const string HashString = "d873af23ca9dc10e357cfc58e66acdbe";
+		public const string HashString = "8bdf1af38388a509767025abede401d7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

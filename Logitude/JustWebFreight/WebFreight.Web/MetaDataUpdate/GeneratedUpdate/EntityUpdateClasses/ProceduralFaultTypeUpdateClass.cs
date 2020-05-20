@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ProceduralFaultTypeUpdateClass
    {  		
-		public const string HashString = "e1b5758e17711e20f9971ec47faea2e9";
+		public const string HashString = "962900266fc5263c2959a5f2599ff8a2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

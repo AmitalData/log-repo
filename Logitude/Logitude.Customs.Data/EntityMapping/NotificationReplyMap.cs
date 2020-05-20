@@ -29,18 +29,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.ResponseToCustoms).HasMaxLength(2000);
-			}
-            else
-            {
-              this.Property(t => t.ResponseToCustoms).HasMaxLength(32000);
-			}
-
-
-            this.Property(t => t.ResponseToCustoms).HasColumnName("ResponseToCustoms").IsUnicode(true);
+            this.Property(t => t.ResponseToCustoms).HasColumnName("ResponseToCustoms").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.RepliedByUserId).HasColumnName("RepliedByUserId").HasMaxLength(15).IsUnicode(false);
 

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AuthorizedSignerPermitUpdateClass
    {  		
-		public const string HashString = "62ca31435b1256efb79212d2175fd995";
+		public const string HashString = "23ab98e6bce3bf17c46af4c768b2d8a8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

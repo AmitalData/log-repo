@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RansomViolationTypeUpdateClass
    {  		
-		public const string HashString = "9957f86cf8c016c78d05300799c0bc44";
+		public const string HashString = "571dae085be116ee05de0c5097c6769f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

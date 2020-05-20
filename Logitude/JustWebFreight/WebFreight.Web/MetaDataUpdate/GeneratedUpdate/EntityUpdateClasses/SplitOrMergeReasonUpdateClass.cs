@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SplitOrMergeReasonUpdateClass
    {  		
-		public const string HashString = "9f37922f4eab17e3815ea5275b9791d1";
+		public const string HashString = "86a1a1563b5ef5367db5245e1635fda2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

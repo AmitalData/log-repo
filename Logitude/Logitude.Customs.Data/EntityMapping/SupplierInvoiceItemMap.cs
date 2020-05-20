@@ -51,7 +51,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.TaxExemptCode).HasColumnName("TaxExemptCode").HasMaxLength(15).IsUnicode(true);
 
-            this.Property(t => t.OptionalTamaPercentage).HasColumnName("OptionalTamaPercentage");
+            this.Property(t => t.OptionalTamaPercentage).HasColumnName("OptionalTamaPercentage").HasPrecision(18, 2);
 
             this.Property(t => t.SalesTaxExemptionTypeCode).HasColumnName("SalesTaxExemptionTypeCode").HasMaxLength(4).IsUnicode(false);
 

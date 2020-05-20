@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GatepassReturnCodeUpdateClass
    {  		
-		public const string HashString = "612a06f5b8b3347b6d3731afd2c54708";
+		public const string HashString = "9129f45b900ab653abf06329193c6fee";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

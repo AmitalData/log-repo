@@ -31,13 +31,13 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CompanyCommNumber).HasColumnName("CompanyCommNumber").IsRequired().HasMaxLength(50).IsUnicode(false);
 
-            this.Property(t => t.CompanyCommTypeCode).HasColumnName("CompanyCommTypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.CompanyCommTypeCode).HasColumnName("CompanyCommTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.ContactName).HasColumnName("ContactName").IsRequired().HasMaxLength(70).IsUnicode(true);
 
             this.Property(t => t.ContactCommNumber).HasColumnName("ContactCommNumber").IsRequired().HasMaxLength(50).IsUnicode(false);
 
-            this.Property(t => t.ContactCommTypeCode).HasColumnName("ContactCommTypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.ContactCommTypeCode).HasColumnName("ContactCommTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.ContactId).HasColumnName("ContactId").HasMaxLength(5).IsUnicode(false);
         }

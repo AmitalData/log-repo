@@ -97,9 +97,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ReferentUserId).HasColumnName("ReferentUserId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.StorageSiteCode).HasColumnName("StorageSiteCode").HasMaxLength(17).IsUnicode(false);
+            this.Property(t => t.StorageSiteCode).HasColumnName("StorageSiteCode").HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.PlatformFee).HasColumnName("PlatformFee");
+            this.Property(t => t.PlatformFee).HasColumnName("PlatformFee").HasPrecision(18, 2);
 
             this.Property(t => t.CreateDateTime).HasColumnName("CreateDateTime");
 
@@ -201,7 +201,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CourierSearchFields).HasColumnName("CourierSearchFields").HasMaxLength(500).IsUnicode(true);
 
-            this.Property(t => t.AcceptanceStatusCode).HasColumnName("AcceptanceStatusCode").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.AcceptanceStatusCode).HasColumnName("AcceptanceStatusCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.CasualImporterAddress1).HasColumnName("CasualImporterAddress1").HasMaxLength(35).IsUnicode(true);
 
@@ -231,7 +231,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.AmendmentRequestNumber).HasColumnName("AmendmentRequestNumber").HasMaxLength(9).IsUnicode(false);
 
-            this.Property(t => t.AmendmentStatus).HasColumnName("AmendmentStatus").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.AmendmentStatus).HasColumnName("AmendmentStatus").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.AmendmentissueDate).HasColumnName("AmendmentissueDate");
 
