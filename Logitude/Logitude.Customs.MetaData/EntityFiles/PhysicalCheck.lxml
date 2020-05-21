@@ -3408,6 +3408,191 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
+             Code="&quot;OpenChecks&quot;"
+    TextCode="&quot;Open Checks&quot;"
+    LocalTextCode="&quot;בדיקות פתוחות&quot;"
+    QueryGroupCode="&quot;PHCK&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    QuerySection="&quot;Customs.PhysicalCheck&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    QueryGroupName="&quot;Customs.PhysicalCheck&quot;"
+    TextCodeCode="&quot;Customs.PhysicalCheck.Q.OpenChecks&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        ColumnWidth="90" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;DeclarationNo&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;StorageSiteName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CheckSiteName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;QueueTypeName&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;CheckId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;LimitDate&quot;"
+        ColumnWidth="110" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;ContainerNubmer&quot;"
+        ColumnWidth="110" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;OperationName&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;IsComprehensiveCheck&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;CheckTypeCode&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;CheckTypeName&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;OpenChecks&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;ClosedChecks&quot;"
+    TextCode="&quot;Closed Checks&quot;"
+    LocalTextCode="&quot;בדיקות סגורות&quot;"
+    QueryGroupCode="&quot;PHCK&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
+    QuerySection="&quot;Customs.PhysicalCheck&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    QueryGroupName="&quot;Customs.PhysicalCheck&quot;"
+    TextCodeCode="&quot;Customs.PhysicalCheck.Q.ClosedChecks&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        ColumnWidth="90" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;DeclarationNo&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;StorageSiteName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CheckSiteName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;QueueTypeName&quot;"
+        ColumnWidth="70" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;CheckId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;LimitDate&quot;"
+        ColumnWidth="110" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;ContainerNubmer&quot;"
+        ColumnWidth="110" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;OperationName&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;IsComprehensiveCheck&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;CheckTypeCode&quot;"
+        ColumnWidth="80" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;CheckTypeName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;VehicleChassisNumber&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;ClosedChecks&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsClosed&quot;"
+        IsPredefined="true"
+        IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Query
     Code="&quot;By Upcoming Checks&quot;"
     TextCode="&quot;All Checks&quot;"
     LocalTextCode="&quot;כל הבדיקות&quot;"
