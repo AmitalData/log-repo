@@ -66,6 +66,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public context;
     public CountText: string;
     public IsFilterValueChanged: boolean = false;
+    public ValidationErrorsList: string[] = [];
+    public HasRunFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     @Output() ComputeFiltersCommand = new EventEmitter();
     constructor() {
@@ -77,22 +79,28 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         });
     }
     ngOnInit() {
-        this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopy");
-        this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
-        this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe((myResult:any) => {
-            if (!myResult.HasError) {
-                this.DWQueryData = myResult.Result;
-                if (this.DWQueryData.Filters) {
-                    var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
-                    var temp = [];
-                    temp.push(MyFilter);
-                    //temp[0].FilterType = 'Ask User';
-                    this.SelectedFiltersDataSource = temp;
-                    //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
+        this.HasRunFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportRun");
+        if (!this.HasRunFeature) {
+            this.ValidationErrorsList.push('You have no permission to run the report. Please contact your system administrator.');
+        }
+        else {
+            this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopy");
+            this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
+            this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe((myResult: any) => {
+                if (!myResult.HasError) {
+                    this.DWQueryData = myResult.Result;
+                    if (this.DWQueryData.Filters) {
+                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
+                        var temp = [];
+                        temp.push(MyFilter);
+                        //temp[0].FilterType = 'Ask User';
+                        this.SelectedFiltersDataSource = temp;
+                        //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
+                    }
                 }
-            }
-        });
-        this.LoadBIReportData();
+            });
+            this.LoadBIReportData();
+        }
     }
     public Run(args: any) {
         this.InitializeServices();

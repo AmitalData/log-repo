@@ -113,11 +113,13 @@ export class NewBIReport extends BaseComponent {
             factTablesNames.forEach((factTable: string) => {
                 switch (factTable) {
                     case "Fact_Shipments":
-                        this.FactTables.push("Shipments");
+                        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport.Fact.Shipments"))
+                            this.FactTables.push("Shipments");
                         break;
 
                     case "Fact_Charges":
-                        this.FactTables.push("Shipment Charges");
+                        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport.Fact.ShipmentCharges"))
+                            this.FactTables.push("Shipment Charges");
                         break;
                 }
             });
