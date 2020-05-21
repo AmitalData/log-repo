@@ -3828,6 +3828,7 @@
         DefaultText="&quot;Close Physical Check&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="1"
+        LocalDefaultText="&quot;סגירת בדיקה&quot;"
         FeatureCode="&quot;CLOSEPHYSICALCHECK&quot;"
         IsPackagable="true"
         TextCodeCode="&quot;Customs.PhysicalCheck.B.ClosePhysicalCheck&quot;"
