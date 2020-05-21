@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "3442a935e7281f4ca81bebbad354e77b";
+		public const string HashString = "e85d48a77399ec3b1b5b25a2091a3a19";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3193,7 +3193,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PhysicalCheckFeature_MB00.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "סגירת בדיקה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PhysicalCheckFeature_MB00.FeatureUniqeCode,
