@@ -115,7 +115,7 @@ namespace WebFreight.Web.App_Code
 
             if (shipment != null)
             {
-                CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
+                //CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
 
                 ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
                 DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
@@ -127,7 +127,7 @@ namespace WebFreight.Web.App_Code
                     myDocumentFilings = myDocumentFilings.Where(d => d.IsAgentView).ToList();
                 }
 
-                else if (partnerType == "CS")
+                else //if (partnerType == "CS") commented: if view from external link there will be no partner type and we want to show customer view events
                 {
                     myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
                 }
