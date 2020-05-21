@@ -206,7 +206,7 @@
                                         <table>
                                             <tr style="height: 30px">
                                                 <td class="TabTitleRow" style="width:150px">
-                                                    <!-- {{'Customs.Claim.O.PaymentDetails'| TextCodeTranslationPipe}} -->
+                                                    {{'Customs.Claim.O.PaymentDetails'| TextCodeTranslationPipe}}
                                                 </td>
                                                 <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
                                                     <div>
@@ -311,8 +311,31 @@
 </ng-template>
                                                             </log-column>
 
-                                                            <!-- UpdateTypeCode -->
                                                             <log-column [header]="'Customs.CargoSeal.F.UpdateTypeCode' | TextCodeTranslationPipe"
+                                                            [width]="'100'" [Alignment]="'right'" [binding]="'UpdateTypeCode'">
+                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
+                                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.UpdateTypeName}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogLov [ObjectFieldName]="'UpdateTypeCode'"
+                                                            [ObjectTableName]="'Customs.AmendmentType'"
+                                                            [DataContext]="item"
+                                                            [LookUpTableName]="'Customs.AmendmentType'"
+                                                            (SelectedItemChanged)="item.SetLocalName($event,'UpdateTypeName')"
+                                                            [HideColumns]="true"
+                                                            [FocusOnMe]="true"
+                                                            [SelectedValue]="item.UpdateTypeCode">
+                                                    </LogLov>
+                                                        </div>
+                                                    </log-cell-template>
+</ng-template>
+                                                </log-column>
+
+
+                                                            <!-- UpdateTypeCode -->
+                                                            <!-- <log-column [header]="'Customs.CargoSeal.F.UpdateTypeCode' | TextCodeTranslationPipe"
                                                                         [width]="'100'" [Alignment]="'right'" [binding]="'UpdateTypeCode'">
                                                                 <ng-template let-item>
 <log-cell-template  #logcelltemplate [IgnoreMods]="item.CanToAdd!=false">
@@ -320,9 +343,7 @@
                                                                         <span>{{item.UpdateTypeName}}</span>
                                                                     </div>
                                                                     <div *ngIf="logcelltemplate.IsEditMode &&   item.CanToAdd==false">
-                                                                        <!--<select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 200px; cursor:pointer;" #selectControl (change)="item.SetLocalName($event,'UpdateTypeName')">
-                                                                            <option *ngFor="let c of AmendmentTypes" [value]="c.Id" [selected]="c.Id==item.UpdateTypeCode">{{c.LocalName}}</option>
-                                                                        </select>-->
+                                                                        
                                                                         <LogLov [ObjectFieldName]="'UpdateTypeCode'"
                                                                                 [ObjectTableName]="'Customs.AmendmentType'"
                                                                                 [DataContext]="item"
@@ -335,7 +356,7 @@
                                                                     </div>
                                                                 </log-cell-template>
 </ng-template>
-                                                            </log-column>
+                                                            </log-column> -->
 
                                                             <!-- Remarks -->
                                                             <log-column [header]="'Customs.CargoSeal.F.Remarks' | TextCodeTranslationPipe"

@@ -295,7 +295,7 @@ export class CustomsRequestMenuService {
         }
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = item.WindowWidth; //850;
-        logitudeWindow.Height = item.WindowHeight + 10;//500;
+        logitudeWindow.Height = item.WindowHeight + 30;//500;
         logitudeWindow.ShowCloseButton = true;
         logitudeWindow.Title = item.TranslatedName//"Declaration restore query";
 
