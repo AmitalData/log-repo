@@ -731,8 +731,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             customDeclaration.TypeCode = SetCodeTypeValue<DeclarationTypeCodeType>(declarationPM.DeclarationTypeCode);// MUST  hard coded
 
             customDeclaration.DMExtensions = GetDMExtensions(declarationPM);
- 
-            customDeclaration.Agent = GetDeclarationAgent(declarationPM);
+             customDeclaration.Agent = GetDeclarationAgent(declarationPM);
             customDeclaration.Exporter = new DeclarationExporter[]
             {
                 new DeclarationExporter()
@@ -740,14 +739,15 @@ namespace Logitude.CustomsMessaging.RequestServices
                     ID = SetIDTypeValue<ExporterIdentificationIDType>(declarationPM.ImporterCode),
                 DMExtensions = new DeclarationExporterDMExtensions()
                 {
-                    RoleCode = SetCodeTypeValue<DeclarationExporterDMExtensionsRoleCode>("11"),
+                    RoleCode = SetCodeTypeValue<DeclarationExporterDMExtensionsRoleCode>("7"),
                      
                     IssueLocation =  new DeclarationExporterDMExtensionsIssueLocation() { Value ="IL"}
                 }
+                
                 }
             };
 
-            customDeclaration.Exporter[0].ID.schemeID="1";
+            customDeclaration.Exporter[0].ID.schemeID= "1";
 
             if (!String.IsNullOrWhiteSpace(declarationPM.ProcedureCurrentCode))
             {
@@ -813,10 +813,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             DMExtensions.ReferenceDateTime = DataTypeConvertorUtil.Convert(DateTime.Today);
             ;
 
-            DMExtensions.AgentFileReferenceID = SetIDTypeValue<AgentFileReferenceIDType>(declarationPM.ExportFile); //new AgentFileReferenceIDType() { Value = declarationPM.CustomFileNo };
+            DMExtensions.AgentFileReferenceID = SetIDTypeValue<AgentFileReferenceIDType>(declarationPM.CustomFileNo); //new AgentFileReferenceIDType() { Value = declarationPM.CustomFileNo };
             // moran 25.5.14 - Bug 6059 - commented -->
              DMExtensions.VersionID = SetIDTypeValue<DeclarationVersionIDType>(declarationPM.VersionId); // new DeclarationDMExtensionsVersionID() { Value = declarationPM.VersionId };
-            DMExtensions.ExternalDeclarationID = SetIDTypeValue<ExternalDeclarationIDType>(String.IsNullOrWhiteSpace(declarationPM.ExternalDeclarationNumber) ? declarationPM.ExportFile : declarationPM.ExternalDeclarationNumber); // hard coded - mandatory - takes from field other than the mapped if empty 
+            DMExtensions.ExternalDeclarationID = SetIDTypeValue<ExternalDeclarationIDType>(String.IsNullOrWhiteSpace(declarationPM.ExternalDeclarationNumber) ? declarationPM.CustomFileNo : declarationPM.ExternalDeclarationNumber); // hard coded - mandatory - takes from field other than the mapped if empty 
 
             // DMExtensions.ExternalDeclarationID = SetIDTypeValue<ExternalDeclarationIDType>(declarationPM.CustomFileNo); //new AgentFileReferenceIDType() { Value = declarationPM.CustomFileNo };
             //{
@@ -1208,7 +1208,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails = new DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails();
                     declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.SequenceNumeric = supplierInvoicePayments.SequenceNumeric;
                     declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.PaymentType = SetCodeTypeValue<PaymentType>(supplierInvoicePayments.PaymentTypeCode);
-                    declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.PaymentAmount = new PaymentAmountAmountType() { Value = supplierInvoicePayments.PaymentAmount };
+                    declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.PaymentAmount = new PaymentAmountAmountType() { Value = supplierInvoicePayments.PaymentAmount ,currencyID=ISO3AlphaCurrencyCodeContentType.USD,currencyIDSpecified=true };
                  
 
                     DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.Add(declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails);
@@ -1942,8 +1942,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                 declarationConsignment.UnloadingLocation = new DeclarationGoodsShipmentConsignmentUnloadingLocation()
                 {
-                    ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentUnloadingLocationID>(consignmentPM.UnloadPortCode), // new UnloadingLocationIdentificationIDType() { Value = consignmentPM.UnloadPortCode },
-                   // ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
+                    ID = SetIDTypeValue<DeclarationGoodsShipmentConsignmentUnloadingLocationID>("ZWHUI"), //consignmentPM.UnloadPortCode// new UnloadingLocationIdentificationIDType() { Value = consignmentPM.UnloadPortCode },
+                                                                                                   // ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
                 };
                 declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentConsignmentLoadingLocation()
                 {
