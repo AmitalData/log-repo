@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimUpdateClass
    {  		
-		public const string HashString = "ac8ffdd0d567dc269582a7eac00d33c8";
+		public const string HashString = "2a8bfd90403d1f551a997b56bfbbb854";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3746,7 +3746,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
       
             ScreenField CustomsClaimClaimClaimHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Claim.TapagNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsClaimClaimClaimHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Claim.TapagTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsClaimClaimClaimHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Claim.TapagTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
             ScreenField CustomsClaimClaimClaimHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ClaimClaimHeaderScreenScreen0.Id,ScreenCode = ClaimClaimHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Claim.CustomerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
@@ -4061,7 +4061,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = "ביטול סגירת תביעה",
+						LocalDefaultText = "פעולות",
 						FeatureUniqeCode = null,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -4081,7 +4081,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  ClaimFeature_MB10.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "סגירת תביעה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  ClaimFeature_MB10.FeatureUniqeCode,
@@ -4101,7 +4101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  ClaimFeature_MB11.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "ביטול סגירת תביעה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  ClaimFeature_MB11.FeatureUniqeCode,
