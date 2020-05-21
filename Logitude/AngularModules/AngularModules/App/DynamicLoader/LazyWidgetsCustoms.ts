@@ -44,6 +44,7 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
   { loadChildren: () => import('../../CustomsModules/CustomsReferant/ModuleCustomsReferant').then(m => m.ModuleCustomsReferant), path: 'CustomsReferant' },
   { loadChildren: () => import('../../CustomsModules/CustomsCollateral/ModuleCustomsCollateral').then(m => m.ModuleCustomsCollateral), path: 'CustomsCollateral' },
   { loadChildren: () => import('../../CustomsModules/CustomsPhysicalCheck/ModulePhysicalCheck').then(m => m.ModulePhysicalCheck), path: 'PhysicalCheck' },
+  { loadChildren: () => import('../../CustomsModules/CustomsPhysicalCheck/ModulePhysicalCheck').then(m => m.ModulePhysicalCheck), path: 'CustomsPhysicalCheck' },
   { loadChildren: () => import('../../CustomsModules/CustomsProceduralFault/ModuleProceduralFault').then(m => m.ModuleProceduralFault), path: 'ProceduralFault' },
   { loadChildren: () => import('../../CustomsModules/CustomsVehicle/ModuleCustomsVehicle').then(m => m.ModuleCustomsVehicle), path: 'CustomsVehicle' },
   { loadChildren: () => import('../../CustomsModules/CustomsPaymentOrder/ModuleCustomsPaymentOrder').then(m => m.ModuleCustomsPaymentOrder), path: 'CustomsPaymentOrder' },
