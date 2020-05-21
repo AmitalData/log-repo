@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class VehicleUpdateClass
    {  		
-		public const string HashString = "9a6a95760b0de876ed31f5393342ef21";
+		public const string HashString = "94d2a3607754fc121922c6e21a826a92";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2182,10 +2182,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DateOnRoadAbroad",
 					  						DefaultText =  "Date On Road Abroad",
-					  						FullLocalDefaultText =  "תאריך עליה לכביש בחו\\\"ל",
+					  						FullLocalDefaultText =  "תאריך עליה לכביש בחו\"ל",
 					  						ListFieldLable =  "DateOnRoadAbroadListLable",
 					  						ListLableDefaultText =  "Date On Road Abroad",
-					  						ListLocalDefaultText =  "תאריך עליה לכביש בחו\\\"ל",
+					  						ListLocalDefaultText =  "תאריך עליה לכביש בחו\"ל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
