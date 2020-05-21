@@ -1310,6 +1310,7 @@ div#two {
                 <li>
             <asp:Button ID="ButtonGetSystem1000" runat="server" Text="Get System 1000(Tenant)" OnClick="ButtonGetSystem1000_Click" />        
             <asp:Button ID="ButtonLoadSystem1000" runat="server" Text="Load System 1000(Tenant)" OnClick="ButtonLoadSystem1000_Click" />        
+            <asp:Button ID="ButtonLoadConsolTaxRep" runat="server" Text="Load Consol. Tax Rep.(Tenant)" OnClick="ButtonLoadConsolTaxRep_Click" />        
                 </li>
             </ul>
             

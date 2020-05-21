@@ -1591,6 +1591,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         }
         #endregion
 
+        #region LoadTextCodes_ConsolidatedTaxReport
+        private void LoadTextCodes_ConsolidatedTaxReport(Dictionary<string, TextCode> textcodes)
+        {
+            ObjectTable objectTable = objectContext.ObjectTables.Where(f => f.Name == "GLAccount" && f.Tenant == 0).FirstOrDefault();
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.ConsolidatedTaxReport", DefaultText = "Consolidated Tax Report", LocalDefaultText = "דיווח מס מרוכז", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.Q.ConsolidatedTaxReport", DefaultText = "Consolidated Tax Report", LocalDefaultText = "דיווח מס מרוכז", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.DeductionFileNumber", DefaultText = "Deduction File Number is undefined.", LocalDefaultText = "מספר תיק ניכויים אינו מוגדר.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.FinishingRowType", DefaultText = "Finishing Row Type", LocalDefaultText = "רשומת סיכום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.StartingRowType", DefaultText = "Starting Row Type", LocalDefaultText = "רשומת פתיחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.TaxLineRowType", DefaultText = "Tax Line Row Type", LocalDefaultText = "רשומת תנועה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.NotValidRowType", DefaultText = "Not a valid Row Type", LocalDefaultText = "רשומת לא מסוג תקין", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.DoesntStartWithRowType", DefaultText = "does not start with a Line Row Type", LocalDefaultText = "לא מתחיל בסוג רשומה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.NotEncountered", DefaultText = "not encountered", LocalDefaultText = "לא זוהתה עד כה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.DiffersFrom", DefaultText = "differs from ", LocalDefaultText = "לא זהה ל", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.IsMissing", DefaultText = "is missing", LocalDefaultText = "חסר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.IsEmpty", DefaultText = "is empty", LocalDefaultText = "ריק", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.NotFound", DefaultText = "not found", LocalDefaultText = "לא נמצא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.AppearsBefore", DefaultText = "Appears Before", LocalDefaultText = "מופיעה לפני", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.StartingRowDeductionFile", DefaultText = "Starting Row Deduction File", LocalDefaultText = "תיק ניכויים ברשומת הפתיחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.FinishingRowDeductionFile", DefaultText = "Finishing Row Deduction File", LocalDefaultText = "תיק ניכויים ברשומת הסיכום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.OurDeductionFile", DefaultText = "Our Deduction File Number", LocalDefaultText = "מספר תיק הניכויים שלנו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.FinishingRowTotals", DefaultText = "Finishing Row totals are not summing up together", LocalDefaultText = "כמויות לא מתחברות יחד ברשימת הסיכום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.TaxLineNo", DefaultText = "Tax Line #", LocalDefaultText = "שורת תנועה מס' ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.TaxReportId", DefaultText = "Tax Report Id", LocalDefaultText = "מזהה דו\"ח מס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.OppositeVatNumber", DefaultText = "Opposite VAT #", LocalDefaultText = "מספר תיק של צד נגדי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.LocatedDeductionFile", DefaultText = "Located Deduction File", LocalDefaultText = "תיק ניכויים שאותר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.LocatedVATNumber", DefaultText = "Located VAT Number", LocalDefaultText = "מספר עוסק מורשה שאותר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.ReferenceDate", DefaultText = "Reference Date", LocalDefaultText = "תאריך אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.Reference", DefaultText = "Reference #", LocalDefaultText = "מספר אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.EndDate", DefaultText = "End Date", LocalDefaultText = "תאריך סיום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.FailedWhilePerforming", DefaultText = "failed while performing", LocalDefaultText = "תקלה בביצוע", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConsolidatedTaxReport.O.NoLinesProcessed", DefaultText = "No Lines Processed", LocalDefaultText = "אין שורות לעיבוד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+        }
+        #endregion
+
+
+
+
+
+
+
 
         #region LoadTextCodes_AutomaticReconcileMethod
         private void LoadTextCodes_AutomaticReconcileMethod(Dictionary<string, TextCode> textcodes)
