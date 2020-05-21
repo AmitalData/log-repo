@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "0f5ac454017fe9bd98e347ded13d856a";
+		public const string HashString = "0a752c75157c3bb4ee269d93185ee013";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "5c0d",
+			      				    Code =  "e551",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1907,7 +1907,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_CustomsSupplierInvioceItemsCertificate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvioceItemsCertificate", DefaultText = "Supplier Invioce Items Certificate",LocalDefaultText = null, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsGeneralTextCode_CustomsDeclarationTHPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Payments", DefaultText = "Declaration Payment",LocalDefaultText = @"Declaration Payment", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationTHPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Payments", DefaultText = "Declaration Payment",LocalDefaultText = @"הגשת תשלום", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CommunicationLogStepsOStepNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLogSteps.O.StepNumber", DefaultText = "Step Number",LocalDefaultText = @"שלב מספר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
