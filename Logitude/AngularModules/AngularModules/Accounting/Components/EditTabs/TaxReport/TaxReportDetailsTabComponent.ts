@@ -272,12 +272,12 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         switch (this.FilterSelectedValue) {
             case "TaxableTransactions": {
                 filters.addAdditionalFilter("OutputOrInput", "O", null, null, "Equals", false, false, false, "string");
-              //  filters.addAdditionalFilter("VatAmount", 0, null, null, "NotEqual", false, false, false, "string");
+                filters.addAdditionalFilter("VatAmount", 0, null, null, "NotEqual", false, false, false, "string");
                 break;
             }
             case "ExemptTransactions": {
                 filters.addAdditionalFilter("OutputOrInput", "O", null, null, "Equals", false, false, false, "string");
-             //   filters.addAdditionalFilter("VatAmount", 0, null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("VatAmount", 0, null, null, "Equals", false, false, false, "string");
                 break;
             }
             case "AllTransactions": {
