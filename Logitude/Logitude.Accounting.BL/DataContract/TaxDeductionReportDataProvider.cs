@@ -376,7 +376,7 @@ namespace Logitude.Accounting.BL.DataContract
                 ByVendorList groupedbyVendor = new ByVendorList()
                 {
                     Month = item.MonthOfRegisterDate,
-                    TaxDeductionPercentage =(int?)Math.Round((double)deductionPercentage, MidpointRounding.AwayFromZero),
+                    TaxDeductionPercentage =(int?)Math.Round((double)deductionPercentage*100, MidpointRounding.AwayFromZero),
                     VendorId = item.VendorId,
                 };
                 groupedbyVendor.EndYearBalance = 0;
@@ -389,7 +389,7 @@ namespace Logitude.Accounting.BL.DataContract
                     ValidateGLAccountVendors(selectedVendors, gLAccount);
                     
                         groupedbyVendor = SetGLAccountFields(gLAccount, groupedbyVendor);
-
+                    
                         groupedbyVendor.VATNumber = selectedVendors[0].VatNumber!= null? selectedVendors[0].VatNumber : throw new Exception(TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant)+", "+ TextCodesTranslator.TranslateText("Card.F.Code", Tenant) +":"+  selectedVendors[0].Code);
                         groupedbyVendor.VendorName = selectedVendors[0].EnglishName;
                         Address address = addresses.Where(d => d.CardId == selectedVendors[0].Id).FirstOrDefault();
@@ -405,7 +405,7 @@ namespace Logitude.Accounting.BL.DataContract
                         groupedbyVendor.IsAutonomy = selectedVendors[0].IsAutonomy;
                         groupedbyVendor.IsInternationlPartner = selectedVendors[0].IsInternationalPartner;
                         groupedbyVendor.VendorLocalName = selectedVendors[0].LocalName;
-                        groupedbyVendor.SumOfAmountInLocalCurrency = Math.Round(item.AmountInLocalCurrency.Value+ (double)item.TaxDeductionLocalAmount, 0);
+                        groupedbyVendor.SumOfAmountInLocalCurrency = Math.Round(item.AmountInLocalCurrency.Value, 0);
                         groupedbyVendor.SumOfTaxDeductionLocalAmount = Math.Round(item.TaxDeductionLocalAmount.Value, 0);
                         byVendorList.Add(groupedbyVendor);
                    
