@@ -68,9 +68,13 @@ export class ReferantSpotlightDataTemplate
         }
     }
     spotLightViewContainerRef: ViewContainerRef;
+
     Run(entity: DeclarationReferantDataPM, SpotLightViewContainerRef: ViewContainerRef, RowIndex) {
+
         this.EntityPM = entity;
+
         this.RowIndex = RowIndex;
+
         this.spotLightViewContainerRef = SpotLightViewContainerRef;
         this.LoadReferantException();
         this.IsDisplayOnly = false;
@@ -184,6 +188,7 @@ export class ReferantSpotlightDataTemplate
                 this.ShowBusyIndicator = true;
                 this.BuildExceptionReasonsList();
                 this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
+
                     SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.RowIndex });
                     //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                 });
@@ -211,7 +216,7 @@ export class ReferantSpotlightDataTemplate
     }
     DeleteButtonClicked(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
-            var msg = "שורה זו תמחק, האם להמשיך?" 
+            var msg = "שורה זו תמחק, הםם להמשיך?" 
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
             confirmWindow.Height = 150;
