@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef}  from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -12,20 +12,20 @@ import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomai
 import {ShipmentCustomsTransmissionPM} from  '../../../../Shipment/EntityPMs/ShipmentCustomsTransmissionPM';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ChildDirective } from '../../../../Controls/Directives/ChildDirective';
 
-@Component({
-    
+@Component({    
     templateUrl: './CustomsTabComponent.html',
 })
 
-export class CustomsTabComponent extends BaseComponent implements OnInit, OnDestroy {
+export class CustomsTabComponent extends BaseComponent implements OnInit, OnDestroy, AfterViewInit {
     public EntityPM: ShipmentPM = null;
     public ObjectTableName: string = null;
     public DataContext: CustomsTabComponent = this;
     public IsSendToAESButtonVisible: boolean = false;
     public DeclarationNumberLabel: string = TextCodeTranslator.Translate("Shipment.F.DeclarationNumber");
     public DeclarationDateLabel: string = TextCodeTranslator.Translate("Shipment.F.DeclarationDate");
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild(ChildDirective) Child: ChildDirective;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -43,53 +43,23 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
             this.DeclarationNumberLabel = "Entry Summary";
             this.DeclarationDateLabel = "Entry Summary Date";
         }
-
-      this.BuildAdditionalFields();
     }
 
-  // Additional Fields
-  private Retries: number = 0;
-  private timerToken: any;
-  private GeneratedComponent: any;
-  BuildAdditionalFields() {
-    this.RunComponent();
-  }
-  RunComponent() {
-    if (this.viewContainerRef) {
-      this.LoadChildComponent();
+    ngAfterViewInit() {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.Child.Location)
+            .then(cmpRef => {
+
+                //this.GeneratedComponent = cmpRef.instance;
+
+                cmpRef.instance.LoadCompleted.subscribe(s => {
+
+                });
+
+                var screenCode = "Shipment.CustomsAdditionalFields";
+                //cmpRef.instance.LabelWidth = 110;
+                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+            });
     }
-
-    else {
-      this.RunComponentTimer();
-    }
-  }
-  RunComponentTimer() {
-    this.Retries++;
-
-    if (this.timerToken) {
-      clearTimeout(this.timerToken);
-    }
-
-    if (this.Retries < 20) {
-      this.timerToken = setTimeout(() => this.RunComponent(), 1);
-    }
-  }
-
-  LoadChildComponent() { 
-    SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
-      .then(cmpRef => {
-
-        //this.GeneratedComponent = cmpRef.instance;
-
-        cmpRef.instance.LoadCompleted.subscribe(s => {
-          
-        });
-
-        var screenCode = "Shipment.CustomsAdditionalFields";
-        //cmpRef.instance.LabelWidth = 110;
-        cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
-      });
-  }
 
     public IsTenantUS: boolean = false;
     public IsOceanOrAir: boolean = false;
