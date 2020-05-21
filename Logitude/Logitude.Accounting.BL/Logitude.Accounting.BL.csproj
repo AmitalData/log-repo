@@ -215,6 +215,7 @@
     <Compile Include="CoreBL\BuildTenant\DummyTenantProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\FullAccountingProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
+    <Compile Include="CoreBL\ConsolidatedTaxReportFlatFileAnalyser.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileMoveBankCheckFromTransferService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingFeesService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileAdjustBankFeesService.cs" />
@@ -576,6 +577,7 @@
     <Compile Include="EntityQueryServices\ReconciliationLineQueryService.cs" />
     <Compile Include="EntityQueryServices\ExternalReconciliationQueryService.cs" />
     <Compile Include="EntityQueryServices\RevenueExpenseTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\TaxReportLineQueryService.cs" />
     <Compile Include="EntityQueryServices\TaxReportQueryService.cs" />
     <Compile Include="EntityQueryServices\TaxWithholdingAssessOfficeQueryService.cs" />
     <Compile Include="EntityQueryServices\WithholdingTaxDeductionTypeQueryService.cs" />

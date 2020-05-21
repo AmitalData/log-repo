@@ -87,7 +87,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonLoadSystem1000_Click,
             _ButtonYearTransferCancel_Click,
             _ButtonExternalReconcile_click,
-            _ButtonCardIndexNew_Click
+            _ButtonCardIndexNew_Click,
+            _ButtonLoadConsolTaxRep_Click
         }
 
         //DateTime _MyDate;
@@ -1672,6 +1673,52 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
         }
 
+
+
+
+        protected void ButtonLoadConsolTaxRep_Click(object sender, EventArgs e)
+        {
+
+            string param = "";
+            string paramDefault = "Please insert page, you can add a header  //Tenant=1071\n//ReportId=1-12345678";
+
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonLoadConsolTaxRep_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                string fileConsolidatedTaxReport = _TextBoxParam.Text;
+
+                var myConsolidatedTaxReportFlatFileAnalyser = new ConsolidatedTaxReportFlatFileAnalyser();
+                myConsolidatedTaxReportFlatFileAnalyser.Analyse(null, null, fileConsolidatedTaxReport);
+
+                _LabelResult.Text = JsonConvert.SerializeObject(myConsolidatedTaxReportFlatFileAnalyser.MyFlatFileLoadResult); ;
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonLoadConsolTaxRep_Click.ToString();
+                if (string.IsNullOrWhiteSpace(param))
+                {
+                    param = paramDefault;
+                }
+
+                _TextBoxParam.Text = param;
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+        }
 
 
 
