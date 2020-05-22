@@ -211,10 +211,9 @@
         <button onclick="MapDocumentTypeCustomsData()">MapDocumentTypeCustomsData</button>
         <button onclick="MapPendingReasonCodeData()">MapPendingReasonCodeData</button>
         <button onclick="MapExceptionReasonCodeData()">MapExceptionReasonCodeData</button>
-        <button onclick="ShowGeneralLOVReturnSelected('Customs.TermsOfSaleType','CIF','תנאי מכר')">1426ShowGeneralLOVReturnSelected</button>
+        <button onclick="ShowGeneralLOVReturnSelected('Customs.TermsOfSaleType','CIF','תנםי מכר')">1426ShowGeneralLOVReturnSelected</button>
         <button onclick="ShowGeneralLOVReturnSelected('Customs.FreightPaymentMethod','PU','סוג תשלום')">1345ShowGeneralLOVReturnSelected</button>
         <button onclick="JustReturn()">JustReturn(CFIUFILE)</button>
-
     </div>
 
     <!--<div  class="tabcontent">-->
@@ -331,7 +330,7 @@
         
 
         function ShowDeclarationByIdReturnCloseSave() {
-            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-235456" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationByIdReturnCloseSave" , "formtitle"  :  "הצהרת יבוא"}';
+            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-235456" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationByIdReturnCloseSave" , "formtitle"  :  "הצהרת יבום"}';
             
             var objParams = JSON.parse(json);
             objParams.Requset = new Array();
@@ -344,7 +343,7 @@
         }
 
         function ShowDeclarationStatusOrManifestQuery() {
-            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-115619" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationStatusQuery" , "formtitle"  :  "הצהרת יבוא"}';
+            var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "171910681" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-115619" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "ShowDeclarationStatusQuery" , "formtitle"  :  "הצהרת יבום"}';
             
             
             var objParams = JSON.parse(json);
@@ -428,6 +427,14 @@
             objParams.Requset = new Array();
             RaiseUnifaceRequestEvent(objParams);
         }
+            function MapExceptionReasonCodeData() {
+            var json = '{ "UnifreightEntity"  :  "GTBFUSTATUS" , "UnifreightEntityNumber"  :  "FSI" , "LogitudeEntity"  :  "Customs.ExceptionReason" , "LogitudeEntityNumber"  :  "" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "MapExceptionReasonCodeData" , "formtitle"  :  "חריגות רפרנט"}';
+            var objParams = JSON.parse(json);
+            objParams.Requset = new Array();
+            RaiseUnifaceRequestEvent(objParams);
+ 	
+        }
+
         function MapExceptionReasonCodeData() {
             var json = '{ "UnifreightEntity"  :  "GTBFUSTATUS" , "UnifreightEntityNumber"  :  "FSI" , "LogitudeEntity"  :  "Customs.ExceptionReason" , "LogitudeEntityNumber"  :  "" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "MapExceptionReasonCodeData" , "formtitle"  :  "חריגות רפרנט"}';
 
@@ -435,6 +442,7 @@
             objParams.Requset = new Array();
             RaiseUnifaceRequestEvent(objParams);
         }
+
         function ShowClientReturnIfExist() {
             let objParams =
             {

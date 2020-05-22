@@ -276,9 +276,7 @@ export const ControlsComponents =
         ImageLibraryComponent,
         TaskSchedulerHistoryComponent,
         DropdownMenuComponent,
-        MultiSelectLOVComponent,
-         
-
+        MultiSelectLOVComponent
     ];
 export const Components =
     [

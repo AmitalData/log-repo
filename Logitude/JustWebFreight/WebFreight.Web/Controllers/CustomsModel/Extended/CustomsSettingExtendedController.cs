@@ -267,6 +267,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                                         .ToList();
                                 }
                                 break;
+                       
                             default:
                                 throw new Exception($"SincroScreen is not valid (SincroScreen)");
                                 break;

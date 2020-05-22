@@ -1,11 +1,11 @@
-import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef, ViewContainerRef, OnChanges, SimpleChanges } from '@angular/core';
 import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { PhysicalCheckPMService } from '../../Services/StandardPMs/PhysicalCheckPMService'
-import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationReferantDataPMService';
-import { DeclarationReferantDataPM } from '../../EntityPMs/DeclarationReferantDataPM';
+import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationRefernatDataPMService';
+import { DeclarationReferantDataPM } from '../../EntityPMs/DeclarationRefernatDataPM';
 import { BaseRequestsSheetMassaging } from '../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ReferantExceptionPM } from '../../EntityPMs/ReferantExceptionPM';
@@ -16,28 +16,35 @@ import { ExceptionReasonPM } from '../../EntityPMs/ExceptionReasonPM';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { KeyValuePair } from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
+import { ReferantExceptionExtendedPMService } from '../../Services/ExtendedPMs/ReferantExceptionExtendedPMService';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { SpotlightSharedDataService } from '../../../Customs/Services/DataChange/SpotlightSharedDataService';
 
 @Component({
     templateUrl: './ReferantSpotlightDataTemplate.html',
 })
 
 
-export class ReferantSpotlightDataTemplate extends BaseComponent implements AfterViewInit{
-  public IsDisplayOnly: boolean = false;
-  public OnRowEnded(event:any) { }
-
-
+export class ReferantSpotlightDataTemplate
+    extends BaseComponent
+    implements AfterViewInit{
+    RowIndex: any;
     ngAfterViewInit(): void { 
         this.ShowBusyIndicator = false;
     }
     public DataContext: any = this;
+    IsDisplayOnly: boolean;
+    DeletedCodeList: string[] = [];
     public ReferantExceptionItemsSource: ObservableCollection;
     public ObjectTableName: string = "Customs.DeclarationReferantData";
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    private _DeclarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
-    private referantExceptionPmService: ReferantExceptionPMService = new ReferantExceptionPMService();
+    private _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
+    private _referantExceptionPMService: ReferantExceptionPMService = new ReferantExceptionPMService();
+    private _referantExceptionExtendedPMService: ReferantExceptionExtendedPMService = new ReferantExceptionExtendedPMService();
 
+
+    public spotlightSharedDataService = new SpotlightSharedDataService();
     _IsReady: boolean = false;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
@@ -48,7 +55,7 @@ export class ReferantSpotlightDataTemplate extends BaseComponent implements Afte
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
     }
-
+    
     IsChanged: boolean = false;
     private showBusyIndicator: boolean = false;
     get ShowBusyIndicator() { return this.showBusyIndicator; }
@@ -56,27 +63,35 @@ export class ReferantSpotlightDataTemplate extends BaseComponent implements Afte
         if (this.showBusyIndicator != value) {
             this.showBusyIndicator = value;
             this.CurrentSession.FireEvent("SpotLightDetectChanges");
+            this.spotlightSharedDataService.IsDirty = false;
         }
     }
-    Run(entity: DeclarationReferantDataPM) {
+    spotLightViewContainerRef: ViewContainerRef;
+    Run(entity: DeclarationReferantDataPM, SpotLightViewContainerRef: ViewContainerRef, RowIndex) {
         this.EntityPM = entity;
+        this.RowIndex = RowIndex;
+        this.spotLightViewContainerRef = SpotLightViewContainerRef;
         this.LoadReferantException();
+        this.IsDisplayOnly = false;
+        this.spotlightSharedDataService.IsDirty = false;
+
     }
     private LoadReferantException() {
         this.ShowBusyIndicator = true;
         this.SplitExceptionList(this.EntityPM.ExceptionReasonsList);
         this.getData(this.ExceptionsList);
         this.ShowBusyIndicator = false;
-
+        this.DeletedCodeList = [];  // list of items need to be deleted
+        this._IsReady = true;
     }
 
     private ReferantExceptionListPM : ReferantExceptionPM[] = [];
     getData(ExceptionsList: string[]) {
         for (let exceptionReasonsCode of this.ExceptionsList) {
-            this.referantExceptionPmService.get(this.EntityPM.DeclarationId, exceptionReasonsCode)
+            this._referantExceptionPMService.get(this.EntityPM.DeclarationId, exceptionReasonsCode)
                 .subscribe((response: any) => {
                     this.ReferantExceptionListPM.push = response.Result;
-                    this.ReferantExceptionItemsSource.Insert(new ExceptionReason(response.Result, this));
+                    this.ReferantExceptionItemsSource.Insert(new ExceptionReason(response.Result, this, this.spotlightSharedDataService));
                 });
         }
     }
@@ -86,9 +101,12 @@ export class ReferantSpotlightDataTemplate extends BaseComponent implements Afte
         item.Tenant = this.EntityPM.Tenant;
         item.Status = "A";
         this.ReferantExceptionListPM.includes(item);
-        var _exceptionReason = new ExceptionReason(item, this.EntityPM);
+        var _exceptionReason = new ExceptionReason(item, this.EntityPM, this.spotlightSharedDataService);
         _exceptionReason.IsNew = true;
+        _exceptionReason.ShowCode = false;
         this.ReferantExceptionItemsSource.Insert(_exceptionReason);
+
+
     }
 
     private ExceptionsList: string[] = [];
@@ -98,6 +116,7 @@ export class ReferantSpotlightDataTemplate extends BaseComponent implements Afte
             this.ExceptionsList.shift();
         } 
     }
+
     private BuildExceptionReasonsList() {
         var newValue: string="";
         this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
@@ -107,7 +126,10 @@ export class ReferantSpotlightDataTemplate extends BaseComponent implements Afte
     }
 
     public get FollowUpDate() { return this.EntityPM.FollowUpDate; }
-    public set FollowUpDate(newValue: Date) { this.EntityPM.FollowUpDate = newValue; }
+    public set FollowUpDate(newValue: Date) {
+        this.spotlightSharedDataService.IsDirty = true;
+        this.EntityPM.FollowUpDate = newValue;
+    }
 
     public get ExceptionReasonsList() { return this.EntityPM.ExceptionReasonsList; }
     public set ExceptionReasonsList(newValue: string) { this.EntityPM.ExceptionReasonsList = newValue; }
@@ -116,7 +138,7 @@ export class ReferantSpotlightDataTemplate extends BaseComponent implements Afte
         console.log("this.ReferantExceptionItemsSource.Length : " + this.ReferantExceptionItemsSource.Length);
         if (this.ReferantExceptionItemsSource != null && ($event) == this.ReferantExceptionItemsSource.Length) {
             this.Add();
-
+             
         }
     }
     OnFocus() {
@@ -129,8 +151,7 @@ export class ReferantSpotlightDataTemplate extends BaseComponent implements Afte
         this.SelectedRow = itemComponent;
         this.IsChanged = true;
     }
-    isValid: boolean;
-    inValid: boolean;
+
     FIELD_IS_REQUIERD: string;
     existCodeList: string[] = [];
     errors: string[] = [];
@@ -141,40 +162,52 @@ export class ReferantSpotlightDataTemplate extends BaseComponent implements Afte
             } else {
                 if (this.existCodeList.indexOf(item.ExceptionReasonsCode) >= 0) {
                     this.errors.push("כבר קיימת רשומה עם קוד חריג  " + item.ExceptionReasonsCode);
+                    this.ReferantExceptionItemsSource.Remove(item);
+                    this.ExceptionsList = this.ExceptionsList.filter(e => e !== item.ExceptionReasonsCode);
                 } else {
                     this.existCodeList.push(item.ExceptionReasonsCode);
                 }
             }
         });
     }
+
     OkButtonClicked() {
-        this.ValidationErrorsList = [];
-        this.errors = [];
-        this.existCodeList = [];
-        this.CheckForDuplicate()
-        if (this.errors.length != 0) {
-            this.ValidationErrorsList = this.errors;
-        }
-        if (this.errors.length == 0) {
-            this.ShowBusyIndicator = true;
-            this.BuildExceptionReasonsList();
-            this._DeclarationReferantDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-
-
-                 });
-            this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
-                if (item.IsNew == true) {
-                    this.referantExceptionPmService.insert(item.EntityPM).subscribe((response: ServiceResponse) => {
+        if (this.spotlightSharedDataService.IsDirty) { 
+            this.ValidationErrorsList = [];
+            this.errors = [];
+            this.existCodeList = [];
+            this.CheckForDuplicate()
+            if (this.errors.length != 0) {
+                this.ValidationErrorsList = this.errors;
+            } if (this.errors.length == 0) {
+                this.ShowBusyIndicator = true;
+                this.BuildExceptionReasonsList();
+                this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
+                    SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.RowIndex });
+                    //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                });
+                this.DeletedCodeList.forEach((item: string) => {
+                    this._referantExceptionExtendedPMService.Delete(this.EntityPM.DeclarationId, item).subscribe((response: any) => {
+                        this.DeletedCodeList.splice(this.DeletedCodeList.indexOf(item), 1);
                     });
-                } else if (item.EntityPM.IsDirty == true) {
-                    this.referantExceptionPmService.update(item.EntityPM).subscribe((response: ServiceResponse) => {
-                    });
-                }
-            });
+                });
+                this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
+                    if (item.IsNew == true) {
+                        this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
+                            item.IsNew = false;
+                            item.ShowCode = true;
+                        });
+                    } else if (item.EntityPM.IsDirty == true) {
+                        this._referantExceptionPMService.update(item.EntityPM).subscribe();
+                    }
+                }); 
+            }
+            
+            this.spotlightSharedDataService.IsDirty = false;
+            this.ShowBusyIndicator = false;
+
         }
-        this.ShowBusyIndicator = false;
     }
-    
     DeleteButtonClicked(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
             var msg = "שורה זו תמחק, האם להמשיך?" 
@@ -187,10 +220,15 @@ export class ReferantSpotlightDataTemplate extends BaseComponent implements Afte
                     this.ReferantExceptionItemsSource.Remove(item);
                     this.ExceptionsList = this.ExceptionsList.filter(e => e !== item.ExceptionReasonsCode);
                     this.ReferantExceptionListPM.splice(this.ReferantExceptionListPM.indexOf(item), 1);
+                    if (!this.ExceptionsList.includes(item.ExceptionReasonsCode)) {
+                        this.DeletedCodeList.push(item.ExceptionReasonsCode);
+                        this.spotlightSharedDataService.IsDirty = true;
+                    }
                 }
             });
         }
     }
+
 }
 export class ExceptionReason extends BaseComponent {
     public DataContext = this;
@@ -198,22 +236,26 @@ export class ExceptionReason extends BaseComponent {
     public EntityPM: ReferantExceptionPM;
     public IsNew: boolean=false;
     public parent: ReferantSpotlightDataTemplate;
+    public ShowCode: boolean = true;
     _StatusItems: KeyValuePair[] = [];
-    constructor(entity: ReferantExceptionPM, Parent: ReferantSpotlightDataTemplate) {
+    constructor(entity: ReferantExceptionPM, Parent: ReferantSpotlightDataTemplate,public spotlightSharedDataService: SpotlightSharedDataService) {
         super();
         this.parent = Parent;
         this.EntityPM = entity;
         this._StatusItems.push({ 'Key': "A", 'Value': "Active" });
         this._StatusItems.push({ 'Key': "S", 'Value': "Solved" });
-
+        if (this.EntityPM.ExceptionReasonsCode == null) {
+            this.ShowCode = false;
+        }
     }
-   
+    
     _SelectedItemStatus: KeyValuePair;
     get SelectedItemStatus() {
         if (this.Status == "S") {
             this._SelectedItemStatus = this._StatusItems[1];
         } else {
             this._SelectedItemStatus = this._StatusItems[0];
+
         }
         return this._SelectedItemStatus;
     }
@@ -221,6 +263,7 @@ export class ExceptionReason extends BaseComponent {
         if (this._SelectedItemStatus != value) {
             this._SelectedItemStatus = value;
             this.Status = this._SelectedItemStatus.Key;
+
         }
     }
     StatusChanged(val) {
@@ -230,23 +273,32 @@ export class ExceptionReason extends BaseComponent {
     set Status(value: string) {
         if (this.EntityPM.Status != value) {
             this.EntityPM.Status = value;
+            this.spotlightSharedDataService.IsDirty = true;
+
         }
+
     }
     get ExceptionReasonsCode() { return this.EntityPM.ExceptionReasonsCode; }
     set ExceptionReasonsCode(value: string) {
+        if (this.EntityPM.ExceptionReasonsCode != null ) {
+        }
         if (this.EntityPM.ExceptionReasonsCode != value) {
             this.EntityPM.ExceptionReasonsCode = value;
+            this.spotlightSharedDataService.IsDirty = true;
 
         }
+
     }
+
     get ExceptionRemarks() { return this.EntityPM.ExceptionRemarks; }
     set ExceptionRemarks(value: string) {
         if (this.EntityPM.ExceptionRemarks != value) {
             this.EntityPM.ExceptionRemarks = value;
+            this.spotlightSharedDataService.IsDirty = true;
 
         }
-    }
 
+    }
 
     SetLocalName(entity, fieldName) {
         if (!AppTool.IsNullOrEmpty(entity)) {
@@ -254,12 +306,10 @@ export class ExceptionReason extends BaseComponent {
         } else {
             this[fieldName] = null;
         }
-
     }
     exceptionReason: ExceptionReasonPM;
     get ExceptionReason() { return this.exceptionReason; }
     set ExceptionReason(value: ExceptionReasonPM) {
-
         if (this.ExceptionReason != value) {
             this.ExceptionReason = value;
         } else {

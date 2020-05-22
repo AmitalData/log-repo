@@ -39,7 +39,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OriginCountryCode, 
 	         StorageSiteCode, 
 	         ReceiverWarehouseCode, 
-	         DeliveryPlaceName,
+	         DeliveryPlaceName, 
+	         IsDangerousGoods, 
+	         FinalDestinationPortCode, 
+	         RecieverWareHouseCode,
 	      }
 
 
@@ -69,7 +72,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReceiverWarehouseCode, 
 	         ReceiverWarehouseName, 
 	         CargoDate, 
-	         DeliveryPlaceName,
+	         DeliveryPlaceName, 
+	         IsDangerousGoods, 
+	         FinalDestinationPortCode, 
+	         FinalDestinationPortName, 
+	         RecieverWareHouseCode, 
+	         RecieverWareHouseName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -156,6 +164,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryPlaceName))
             {
 				entityPOCO.DeliveryPlaceName = entityPM.DeliveryPlaceName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDangerousGoods))
+            {
+				entityPOCO.IsDangerousGoods = entityPM.IsDangerousGoods;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalDestinationPortCode))
+            {
+				entityPOCO.FinalDestinationPortCode = entityPM.FinalDestinationPortCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RecieverWareHouseCode))
+            {
+				entityPOCO.RecieverWareHouseCode = entityPM.RecieverWareHouseCode;
 			}
 			}
 
@@ -252,6 +275,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DeliveryPlaceName = entityPOCO.DeliveryPlaceName;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDangerousGoods))
+            {
+					entityPM.IsDangerousGoods = entityPOCO.IsDangerousGoods;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FinalDestinationPortCode))
+            {
+					entityPM.FinalDestinationPortCode = entityPOCO.FinalDestinationPortCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RecieverWareHouseCode))
+            {
+					entityPM.RecieverWareHouseCode = entityPOCO.RecieverWareHouseCode;
+            }
+
 		}
 
 		public void PMToOldPM(ConsignmentPM entityPM, ConsignmentPM oldEntityPM)
@@ -336,6 +374,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryPlaceName))
             {
                 oldEntityPM.DeliveryPlaceName = entityPM.DeliveryPlaceName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDangerousGoods))
+            {
+                oldEntityPM.IsDangerousGoods = entityPM.IsDangerousGoods;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FinalDestinationPortCode))
+            {
+                oldEntityPM.FinalDestinationPortCode = entityPM.FinalDestinationPortCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RecieverWareHouseCode))
+            {
+                oldEntityPM.RecieverWareHouseCode = entityPM.RecieverWareHouseCode;
             }
 			
 		}

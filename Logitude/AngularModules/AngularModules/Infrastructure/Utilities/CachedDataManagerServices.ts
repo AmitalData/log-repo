@@ -72,6 +72,12 @@ import { InterfaceTenantDefinitionListService } from '../../Customs/Services/Sta
 import { CustomsItemListService } from '../../Customs/Services/StandardLists/CustomsItemListService';
 import { CurrencyTypeListService } from '../../Customs/Services/StandardLists/CurrencyTypeListService';
 
+import { NbcDeclarationTypeListService } from '../../Customs/Services/StandardLists/NbcDeclarationTypeListService';
+import { PartyRelationshipTypeListService } from '../../Customs/Services/StandardLists/PartyRelationshipTypeListService';
+import { AmountTypeListService } from '../../Customs/Services/StandardLists/AmountTypeListService';
+import { ClaimReasonTypeListService } from '../../Customs/Services/StandardLists/ClaimReasonTypeListService';
+import { ClassificationTypeListService } from '../../Customs/Services/StandardLists/ClassificationTypeListService';
+import { TransactionNatureTypeListService } from '../../Customs/Services/StandardLists/TransactionNatureTypeListService';
 
 // Business Process
 import {BusinessRoleListService} from '../Services/StandardLists/BusinessRoleListService'; 
@@ -100,7 +106,6 @@ import { SessionLocator } from './SessionLocator';
 import { ObjectsLocator } from '../Locators/ObjectsLocator';
 import { AppTool } from '../Tools';
 import { ExceptionReasonListService } from '../../Customs/Services/StandardLists/ExceptionReasonListService';
-
 
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
@@ -209,6 +214,13 @@ export class CachedDataManagerServices {
             case "TariffListService": { myResult = new TariffListService(); break; }               
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
             case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
+            case "Customs.TransactionNatureTypeListService": { myResult = new TransactionNatureTypeListService(); break; }
+            case "Customs.ClassificationTypeListService": { myResult = new ClassificationTypeListService(); break; }
+            case "Customs.ClaimReasonTypeListService": { myResult = new ClaimReasonTypeListService(); break; }
+            case "Customs.AmountTypeListService": { myResult = new AmountTypeListService(); break; }
+            case "Customs.PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
+            case "Customs.NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
+
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }    
             case "TariffProductListService": { myResult = new TariffProductListService(); break; }    
             default: {

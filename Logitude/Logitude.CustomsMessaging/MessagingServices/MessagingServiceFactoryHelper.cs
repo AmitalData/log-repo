@@ -405,6 +405,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             DCAInUCB2750_MsgMessagingService>
                             ((new DCAInUCB2750_MsgMessagingService()).MainInterfaceCode);
 
+            //ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+            //                DCAInUCB2751_MsgMessagingService>
+            //                ((new DCAInUCB2751_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCB2755_MsgMessagingService>
@@ -469,8 +472,28 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new DF_MSG2892_ImportDeclarationAmendmentMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+              DF_MSG2892_ImportDeclarationAmendmentMessagingService>
+              ((new DF_MSG2892_ImportDeclarationAmendmentMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 SE_6001_SealUpdateMessagingService>
                 ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
+
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+
+              DCAInUCB9999ReAnAnalysis_MsgMessagingService>
+              ((new DCAInUCB9999ReAnAnalysis_MsgMessagingService()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+
+               DCAInUCSBondedDocument_MessagingService>
+               ((new DCAInUCSBondedDocument_MessagingService()).MainInterfaceCode);
+
+
+
 
         }
         public static void InitContainer()

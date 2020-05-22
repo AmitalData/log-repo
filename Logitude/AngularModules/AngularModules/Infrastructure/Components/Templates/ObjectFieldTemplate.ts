@@ -8,10 +8,10 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import { ChildDirective } from '../../Directives/ChildDirective';
 
 @Component({
-
-  templateUrl: "./ObjectFieldTemplate.html",
-  selector: 'ObjectFieldTemplate',
-  inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate', 'SpotlightDataTemplate'],
+    
+    templateUrl: "./ObjectFieldTemplate.html",
+    selector: 'ObjectFieldTemplate',
+    inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate', 'SpotlightDataTemplate','RowIndex'],
 })
 
 // https://github.com/angular/angular/issues/10762
@@ -41,7 +41,8 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
   public isRTL: boolean = false;
   private CurrentSession = SessionLocator.SelectedSession;
   @ViewChild(ChildDirective) Child: ChildDirective;
-  public ShowChildTemplate: boolean = false;
+    public ShowChildTemplate: boolean = false;
+    public RowIndex: string;
   constructor(private changeDetector: ChangeDetectorRef) {
   }
 
@@ -246,7 +247,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
 
       SessionLocator.DynamicLoader.Load(myComponentPath, this.Child.Location)
         .then(cmpRef => {
-          cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate, IsSpotLightTemplate: this.IsSpotLightTemplate, SpotlightDataTemplate: this.SpotlightDataTemplate });
+            cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate, IsSpotLightTemplate: this.IsSpotLightTemplate, SpotlightDataTemplate: this.SpotlightDataTemplate, RowIndex: this.RowIndex});
 
           this.DetectChanges();
 

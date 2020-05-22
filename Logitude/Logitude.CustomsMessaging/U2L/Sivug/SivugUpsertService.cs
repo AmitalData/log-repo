@@ -151,7 +151,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             this._MyDeclarationPM.MarkAsChanged = true;
-            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20200220HD341093.isNewHandleDocSIPointer"])) isNewHandleDocSIPointer = true;
+            //if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20200220HD341093.isNewHandleDocSIPointer"])) isNewHandleDocSIPointer = true;
+            isNewHandleDocSIPointer = true;
             int minute = DateTime.Now.Minute;
             
             if (this.RequestParams != null)

@@ -84,6 +84,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AmendmentTypeMap());
 	
+            modelBuilder.Configurations.Add(new AmountTypeMap());
+	
             modelBuilder.Configurations.Add(new ApprovedProfessionMap());
 	
             modelBuilder.Configurations.Add(new AssigneeNotificationTypeMap());
@@ -140,6 +142,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ClaimImporterDeclarsPage3BMap());
 	
+            modelBuilder.Configurations.Add(new ClaimReasonTypeMap());
+	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesAmountMap());
 	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesReasonMap());
@@ -153,6 +157,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new ClaimsRelatedEntsExpDeclarMap());
 	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntsReasonsExpMap());
+	
+            modelBuilder.Configurations.Add(new ClassificationTypeMap());
 	
             modelBuilder.Configurations.Add(new ClientMap());
 	
@@ -314,6 +320,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsSettingMap());
 	
+            modelBuilder.Configurations.Add(new CustomsShipMap());
+	
             modelBuilder.Configurations.Add(new CustomsTransportModeMap());
 	
             modelBuilder.Configurations.Add(new CustomsVendorMap());
@@ -351,6 +359,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new DeclarationCourierStatusMap());
 	
             modelBuilder.Configurations.Add(new DeclarationErrorMappingMap());
+	
+            modelBuilder.Configurations.Add(new DeclarationExportRecipientMap());
 	
             modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
 	
@@ -470,6 +480,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new MorningMessageTypeMap());
 	
+            modelBuilder.Configurations.Add(new NbcDeclarationTypeMap());
+	
             modelBuilder.Configurations.Add(new NotificationMap());
 	
             modelBuilder.Configurations.Add(new NotificationDefinitionMap());
@@ -487,6 +499,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PackingTypeMap());
 	
             modelBuilder.Configurations.Add(new ParagraphTypeMap());
+	
+            modelBuilder.Configurations.Add(new PartyRelationshipTypeMap());
 	
             modelBuilder.Configurations.Add(new PassportTypeMap());
 	
@@ -596,6 +610,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SubCountryMap());
 	
+            modelBuilder.Configurations.Add(new SuppInvoiceItemsAbachStatementMap());
+	
             modelBuilder.Configurations.Add(new SupplierInvioceItemCertificatMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceMap());
@@ -616,6 +632,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsModMap());
 	
+            modelBuilder.Configurations.Add(new SupplierInvoiceItemsPriceMap());
+	
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsProdIdentMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsSerialNumMap());
@@ -630,6 +648,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceModificationMap());
 	
+            modelBuilder.Configurations.Add(new SupplierInvoicePaymentMap());
+	
+            modelBuilder.Configurations.Add(new SupplierInvoiceUCRMap());
+	
             modelBuilder.Configurations.Add(new TapagMap());
 	
             modelBuilder.Configurations.Add(new TapagConnectionTableMap());
@@ -643,6 +665,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new TradeAgreementMap());
 	
             modelBuilder.Configurations.Add(new TradeLevyExamptTypeMap());
+	
+            modelBuilder.Configurations.Add(new TransactionNatureTypeMap());
 	
             modelBuilder.Configurations.Add(new TransferCargoMethodTypeMap());
 	
@@ -827,11 +851,19 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.Weight).HasPrecision(15, 3);
 				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OcrHeight).HasPrecision(5, 0);
+				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OcrTop).HasPrecision(5, 0);
+				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OcrPageNumber).HasPrecision(3, 0);
+				
 			modelBuilder.Entity<SupplierInvoiceItemModVehicle>().Property(x => x.DeductAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceItemsConDeclar>().Property(x => x.Quantity).HasPrecision(14, 3);
 				
 			modelBuilder.Entity<SupplierInvoiceItemsMod>().Property(x => x.Amount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsPrice>().Property(x => x.AdditionalPrice).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.TaxRate).HasPrecision(17, 2);
 				
@@ -846,6 +878,8 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<SupplierInvoiceItemVehicleMod>().Property(x => x.DeductAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceModification>().Property(x => x.Amount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<SupplierInvoicePayment>().Property(x => x.PaymentAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<Vehicle>().Property(x => x.GreenIndex).HasPrecision(9, 3);
 				
@@ -1192,6 +1226,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<AmountType> AmountTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ApprovedProfession> ApprovedProfessions 
 	 {
 	      get; set;
@@ -1360,6 +1400,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ClaimReasonType> ClaimReasonTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ClaimsRelatedEntitiesAmount> ClaimsRelatedEntitiesAmounts 
 	 {
 	      get; set;
@@ -1397,6 +1443,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ClaimsRelatedEntsReasonsExp> ClaimsRelatedEntsReasonsExps 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ClassificationType> ClassificationTypes 
 	 {
 	      get; set;
 	 
@@ -1882,6 +1934,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CustomsShip> CustomsShips 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomsTransportMode> CustomsTransportModes 
 	 {
 	      get; set;
@@ -1991,6 +2049,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationErrorMapping> DeclarationErrorMappings 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationExportRecipient> DeclarationExportRecipients 
 	 {
 	      get; set;
 	 
@@ -2350,6 +2414,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<NbcDeclarationType> NbcDeclarationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<Notification> Notifications 
 	 {
 	      get; set;
@@ -2399,6 +2469,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ParagraphType> ParagraphTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PartyRelationshipType> PartyRelationshipTypes 
 	 {
 	      get; set;
 	 
@@ -2728,6 +2804,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatements 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats 
 	 {
 	      get; set;
@@ -2788,6 +2870,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<SupplierInvoiceItemsPrice> SupplierInvoiceItemsPrices 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<SupplierInvoiceItemsProdIdent> SupplierInvoiceItemsProdIdents 
 	 {
 	      get; set;
@@ -2830,6 +2918,18 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<SupplierInvoicePayment> SupplierInvoicePayments 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupplierInvoiceUCR> SupplierInvoiceUCRs 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<Tapag> Tapags 
 	 {
 	      get; set;
@@ -2867,6 +2967,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<TradeLevyExamptType> TradeLevyExamptTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TransactionNatureType> TransactionNatureTypes 
 	 {
 	      get; set;
 	 

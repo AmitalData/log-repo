@@ -175,11 +175,13 @@ export class ConsigmentPackagesDangerComponent
             this.OriginalConsignmentPackDangerPM.LineNumber = -1;
             this.OriginalConsignmentPackDangerPM.ConsignmentNumber = -1;
             this.OriginalConsignmentPackDangerPM.DangerousLineNo = 1;
+            this.OriginalConsignmentPackDangerPM.Tenant = SessionLocator.Tenant;
             this.Package.AddConsignmentPackDanger(this.OriginalConsignmentPackDangerPM);
 
         }
         if (this.OriginalDecDangersContactPM.DeclarationId == undefined && this.Declaration != undefined) {
             this.OriginalDecDangersContactPM.DeclarationId = this.Declaration.Id;
+            this.OriginalDecDangersContactPM.Tenant = SessionLocator.Tenant;
             this.Declaration.AddDecDangersContact(this.OriginalDecDangersContactPM);
         }
 

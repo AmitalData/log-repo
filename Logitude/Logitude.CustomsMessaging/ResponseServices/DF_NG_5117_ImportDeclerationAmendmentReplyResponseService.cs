@@ -72,10 +72,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
 
                     //var key = "ResponseService,declarationNumber:" + declarationNumber + ",tenant:" + requestParams.Tenant.ToString();
+                    string functionalReferenceID = "";
+                    if (customResponse.Response.FunctionalReferenceID != null)
+                        functionalReferenceID =  customResponse.Response.FunctionalReferenceID.Value ;
+                    else
+                        functionalReferenceID = "";
 
-                    var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(customResponse.Response.Declaration.ID.Value, customResponse.Response.FunctionalReferenceID.Value, requestParams.Tenant);
+                    var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(customResponse.Response.Declaration.ID.Value, functionalReferenceID, requestParams.Tenant);
 
-                    DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService();
+                    DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
 
 
                     if (declaration != null)

@@ -1,0 +1,43 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class DeclarationExportRecipient
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId" ,Order = 1)]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+     [Key]
+        [Column("LineNumber" ,Order = 2)]
+	    public int? LineNumber { get; set; }
+        [Column("RecipientName")]
+	    public string RecipientName { get; set; }
+        [Column("RecipientAddress")]
+	    public string RecipientAddress { get; set; }
+        [ForeignKey("Country")]
+        [Column("RecipientIssueCountryCode")]
+	    public string RecipientIssueCountryCode { get; set; }
+	      
+        public virtual CustomsCountry Country { get; set; }
+    }
+}
+	 

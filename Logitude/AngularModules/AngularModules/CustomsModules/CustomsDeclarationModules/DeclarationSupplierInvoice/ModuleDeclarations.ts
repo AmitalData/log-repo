@@ -15,6 +15,8 @@ import { MultiCertificateUpdateComponent } from './Components/SupplierInvoices/M
 import { SupplierInvoiceItemVehicleComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemVehicleComponent';
 import { VehiclesSearchComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/VehiclesSearchComponent';
 import { AddEditActualLinesComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/AddEditActualLinesComponent';
+import { ExporterInvoiceComponent } from './Components/SupplierInvoices/ExporterInvoiceComponent';
+import { ExporterInvoiceItemComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/ExporterInvoiceItemComponent';
 
 
 
@@ -37,7 +39,8 @@ export const Components =
     SupplierInvoiceItemVehicleComponent,
     VehiclesSearchComponent,
     AddEditActualLinesComponent,
-
+        ExporterInvoiceComponent,
+        ExporterInvoiceItemComponent
   ];
 
 export class ModuleDeclarations {
@@ -64,7 +67,10 @@ export class ModuleDeclarations {
       }
 
       case "AddEditActualLinesComponent": { myResult = AddEditActualLinesComponent; break; }
-      case "MultiCertificateUpdateComponent": { myResult = MultiCertificateUpdateComponent; break; }
+        case "MultiCertificateUpdateComponent": { myResult = MultiCertificateUpdateComponent; break; }
+        case "ExporterInvoiceComponent": { myResult = ExporterInvoiceComponent; break; }
+        case "ExporterInvoiceItemComponent": { myResult = ExporterInvoiceItemComponent; break; }
+
     }
 
     return myResult;

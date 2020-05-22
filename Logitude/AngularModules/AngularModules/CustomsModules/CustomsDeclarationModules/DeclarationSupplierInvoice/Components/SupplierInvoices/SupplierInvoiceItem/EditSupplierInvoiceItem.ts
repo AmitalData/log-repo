@@ -49,6 +49,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     public IsDisplayOnly: boolean = false;
     CustomItemErrorMessage: string;
     private CurrentSession = SessionLocator.SelectedSession;
+    allowExport: boolean = false;
     constructor(private cd: ChangeDetectorRef) {
         super();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -69,7 +70,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.IsDisplayOnly = args.IsDisplayOnly;
-
+            this.allowExport = args.allowExport;
             this.OriginalItemPM = args.SupplierInvoiceItemPM;
             this.ClonedItemPM = this.CloneEntity(args.SupplierInvoiceItemPM);
 
@@ -888,6 +889,29 @@ export class EditSupplierInvoiceItem extends BaseComponent{
             if (max <= maxObj[propertyName])
                 max = maxObj[propertyName];
         return max;
+    }
+
+    OpenExporterInvoiceItem() {
+
+
+        if (!this.IsDisplayOnly) {
+            var windowArgs: any = {};
+            windowArgs.SupplierInvoiceItem = this.OriginalItemPM;
+
+            windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+             var windowTitle = "נתונים נוספים ליצוא - שורת חשבון יצואן";
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 700;
+            logWindow.Height = 400;
+            logWindow.Title = windowTitle;
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+ 
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/ExporterInvoiceItemComponent');
+        }
+
+
     }
 
 

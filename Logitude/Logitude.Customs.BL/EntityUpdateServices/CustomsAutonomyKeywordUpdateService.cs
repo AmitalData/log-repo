@@ -28,25 +28,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnCreating(CustomsAutonomyKeywordPM entityPM, EntityPM entityParentPM)
         {
-            CustomsAutonomyKeywordDetails customsAutonomyKeywordDetails = new CustomsAutonomyKeywordDetails();
-            if (customsAutonomyKeywordDetails.GetAllCustomsAutonomyKeywords().FirstOrDefault(x=> x.Code== entityPM.KeywordtypeCode)==null)
-            {
-                throw new Exception($"Insert {entityPM.KeywordtypeCode} not allowed !! Code is not exist (ID:{entityPM.Id})");
 
-            }
-            var poco = (this.Repository as CustomsAutonomyKeywordRepository).GetByKeywordtypeCode(entityPM.KeywordtypeCode, entityPM.Tenant);
-            if (poco!=null)
+        
+            var poco = (this.Repository as CustomsAutonomyKeywordRepository).GetBykeywordList(entityPM.KeywordsList, entityPM.Tenant);
+            if (poco != null)
             {
-                throw new Exception($"Insert {entityPM.KeywordtypeCode} not allowed !! Due already exist (ID:{entityPM.Id})");
+                throw new Exception($"מילת מפתח זו קיימת כבר- לא ניתן להזין מילת מפתח כפולה");
             }
             entityPM.Id= IdCounter.GetNumber("Customs.CustomsAutonomyKeyword", entityPM.Tenant);
             base.OnCreating(entityPM, entityParentPM);
         }
         protected override void OnUpdating(CustomsAutonomyKeywordPM entityPM, CustomsAutonomyKeyword entityPOCO)
         {
-            if (entityPM.KeywordtypeCode!=entityPOCO.KeywordtypeCode && !String.IsNullOrWhiteSpace(entityPOCO.KeywordtypeCode))
+            if (entityPM.ChangeSetOp != ChangeSetOperation.Delete)
             {
-                throw new Exception($"Change  KeywordtypeCode : {entityPM.KeywordtypeCode} not allowed !! -candidate key");
+                var poco = (this.Repository as CustomsAutonomyKeywordRepository).GetBykeywordList(entityPM.KeywordsList, entityPM.Tenant);
+                if (poco != null)
+                {
+                    throw new Exception($"מילת מפתח זו קיימת כבר- לא ניתן להזין מילת מפתח כפולה");
+                }
             }
             base.OnUpdating(entityPM, entityPOCO);
         }

@@ -422,4 +422,27 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  
+  <DataContracts>
+    <DataContract
+      Name="&quot;Customs.FreightPaymentMethodApiV1&quot;"
+      ComputingPartnerName="&quot;&quot;">
+      <DCField
+        DCFieldName="&quot;Code&quot;"
+        FieldName="&quot;Code&quot;"
+        IsKey="true"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false" />
+      <DCField
+        DCFieldName="&quot;LocalName&quot;"
+        FieldName="&quot;LocalName&quot;"
+        IsKey="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false" />
+    </DataContract>
+  </DataContracts>
 </entity>

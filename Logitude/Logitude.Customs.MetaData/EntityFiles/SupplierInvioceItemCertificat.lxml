@@ -33,7 +33,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   ParentTableName="SupplierInvoiceItem"
-  LocalDefaultText="&quot;&quot;"
+  LocalDefaultText="&quot;קליטת קובץ אישורים&quot;"
   DefaultText="&quot;Supplier Invioce Items Certificate&quot;"
   Code="&quot;3430&quot;"
   Name="&quot;Customs.SupplierInvioceItemCertificat Query Group&quot;"

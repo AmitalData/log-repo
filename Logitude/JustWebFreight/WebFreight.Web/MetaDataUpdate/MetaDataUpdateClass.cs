@@ -62404,6 +62404,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Partners.Vendors", DefaultText = "Vendors", LocalDefaultText = "ספקים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Partners.Clients", DefaultText = "Clients", LocalDefaultText = "לקוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.ReAnalysis", DefaultText = "Re-request analysis", LocalDefaultText="ניתוח בקשות מכס מחדש" ,  ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.CheckEntityTypes", DefaultText = "Check Entity Types", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.CheckRepresentativeTypes", DefaultText = "Check Representative Types", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);

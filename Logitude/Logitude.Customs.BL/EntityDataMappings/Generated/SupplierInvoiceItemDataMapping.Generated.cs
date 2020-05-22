@@ -70,7 +70,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         MarksAndNumbers, 
 	         PackageQuantity, 
-	         Weight,
+	         Weight, 
+	         OcrHeight, 
+	         OcrTop, 
+	         OcrPageNumber, 
+	         ClassificationTypeCode, 
+	         TransactionNatureCode, 
+	         ClaimReasonCode,
 	      }
 
 
@@ -135,7 +141,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         MarksAndNumbers, 
 	         PackageQuantity, 
-	         Weight,
+	         Weight, 
+	         OcrHeight, 
+	         OcrTop, 
+	         OcrPageNumber, 
+	         ClassificationTypeCode, 
+	         TransactionNatureCode, 
+	         ClaimReasonCode, 
+	         ClassificationTypeName, 
+	         TransactionNatureName, 
+	         ClaimReasonName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -372,6 +387,36 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Weight))
             {
 				entityPOCO.Weight = entityPM.Weight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrHeight))
+            {
+				entityPOCO.OcrHeight = entityPM.OcrHeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrTop))
+            {
+				entityPOCO.OcrTop = entityPM.OcrTop;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrPageNumber))
+            {
+				entityPOCO.OcrPageNumber = entityPM.OcrPageNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClassificationTypeCode))
+            {
+				entityPOCO.ClassificationTypeCode = entityPM.ClassificationTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransactionNatureCode))
+            {
+				entityPOCO.TransactionNatureCode = entityPM.TransactionNatureCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimReasonCode))
+            {
+				entityPOCO.ClaimReasonCode = entityPM.ClaimReasonCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -625,6 +670,36 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Weight = entityPOCO.Weight;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OcrHeight))
+            {
+					entityPM.OcrHeight = entityPOCO.OcrHeight;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OcrTop))
+            {
+					entityPM.OcrTop = entityPOCO.OcrTop;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OcrPageNumber))
+            {
+					entityPM.OcrPageNumber = entityPOCO.OcrPageNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClassificationTypeCode))
+            {
+					entityPM.ClassificationTypeCode = entityPOCO.ClassificationTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransactionNatureCode))
+            {
+					entityPM.TransactionNatureCode = entityPOCO.TransactionNatureCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClaimReasonCode))
+            {
+					entityPM.ClaimReasonCode = entityPOCO.ClaimReasonCode;
+            }
+
 		}
 
 		public void PMToOldPM(SupplierInvoiceItemPM entityPM, SupplierInvoiceItemPM oldEntityPM)
@@ -859,6 +934,36 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Weight))
             {
                 oldEntityPM.Weight = entityPM.Weight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrHeight))
+            {
+                oldEntityPM.OcrHeight = entityPM.OcrHeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrTop))
+            {
+                oldEntityPM.OcrTop = entityPM.OcrTop;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrPageNumber))
+            {
+                oldEntityPM.OcrPageNumber = entityPM.OcrPageNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClassificationTypeCode))
+            {
+                oldEntityPM.ClassificationTypeCode = entityPM.ClassificationTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransactionNatureCode))
+            {
+                oldEntityPM.TransactionNatureCode = entityPM.TransactionNatureCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClaimReasonCode))
+            {
+                oldEntityPM.ClaimReasonCode = entityPM.ClaimReasonCode;
             }
 			
 		}

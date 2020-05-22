@@ -40,10 +40,19 @@ namespace Logitude.Customs.BL.CloseTables
                     Entity="Declaration",
                     Param1= @"{ """":""""}"
                 },
+
+                new SincroTestCaseDetail()
+                {
+                    Code = "2892",
+                    Name = "(2892)תיקון הצהרה",
+                    Entity="Declaration",
+                    Param1= @"{ ""Error"":""false""}",
+MainInterfaceCode ="2892"
+                },
                  new SincroTestCaseDetail()
                 {
                     Code = "5117",
-                    Name = "הצהרת תקן5117 ",
+                    Name = "(הצהרת תקן (5117 ",
                     IsDCA= true,
                     Entity="Declaration",
                     Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content32"" :""1"" , 

@@ -55,6 +55,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("ExcludeFromInterface")]
 	    public bool ExcludeFromInterface { get; set; }
+        [Column("IdentifierID")]
+	    public string IdentifierID { get; set; }
+        [ForeignKey("VehicleIDType")]
+        [Column("VehicleIDTypeCode")]
+	    public string VehicleIDTypeCode { get; set; }
+	      
+        public virtual CargoIdentityQualifier VehicleIDType { get; set; }
     }
 }
 	 

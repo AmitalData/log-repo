@@ -258,6 +258,22 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsValidTicketsDiamond).HasColumnName("IsValidTicketsDiamond");
 
             this.Property(t => t.AvailabilityDate).HasColumnName("AvailabilityDate");
+
+            this.Property(t => t.Direction).HasColumnName("Direction").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.ExportFile).HasColumnName("ExportFile").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DeclarationTypeCode).HasColumnName("DeclarationTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.AgentRoleCode).HasColumnName("AgentRoleCode").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.DestinationCountryCode).HasColumnName("DestinationCountryCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.LoadingDateTime).HasColumnName("LoadingDateTime");
+
+            this.Property(t => t.ShipCode).HasColumnName("ShipCode").HasMaxLength(25).IsUnicode(false);
+
+            this.Property(t => t.IsExporterConfirmation).HasColumnName("IsExporterConfirmation");
         }
     }
 }

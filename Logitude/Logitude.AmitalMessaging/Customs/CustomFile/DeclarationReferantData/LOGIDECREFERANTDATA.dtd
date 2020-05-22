@@ -1,4 +1,4 @@
-﻿<!ELEMENT LOGIDECREFERANTDATA (LogitudeDeclarationReferantData*)>
+<!ELEMENT LOGIDECREFERANTDATA (LogitudeDeclarationReferantData*)>
 <!ELEMENT LogitudeDeclarationReferantData (Id?, CustomsFile?, QueueType?, QueueStatus?, QueueRemarks?, FollowUpStatus?, PreClassification?, Tenant?)>
 <!ELEMENT Id (#PCDATA)>
 <!ELEMENT CustomsFile (#PCDATA)>

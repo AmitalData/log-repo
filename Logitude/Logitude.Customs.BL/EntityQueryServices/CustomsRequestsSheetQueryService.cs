@@ -127,9 +127,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-
-
-
         public List<CustomsRequestsSheetPM> GetRequestInProgress(
             int Tenant,
             string InterfaceTypeCode,
@@ -164,7 +161,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB8250",//,Batch Send 8250 per CourierMasterId
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
 "UCB8212",/// Batch Send Collateral
+
 "2892",
+
+"UCBNDCD",///  Send bonded filing
+"2751"//הצהרת יצוא- מסר יוצא
+,"2757" //הצהרת יצוא - מסר נכנס
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
@@ -254,8 +256,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "1171", // - מסר תשובה מצהר
 "1172", // - מסר תשובה מצהר - נדחף
 "8373",//"שאילתא לשחזור נתוני הצהרה"
-       "UCB8212"
-                ,"2892"};
+ "UCB8212"
+ ,"2892" ,
+"UCB9999",
+"2751",
+"2757"};
+
             return intrefaceTypeListDisplayOnly;
         }
 

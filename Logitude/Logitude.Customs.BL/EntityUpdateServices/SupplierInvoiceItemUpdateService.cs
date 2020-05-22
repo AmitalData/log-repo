@@ -102,6 +102,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             SupplierInvoiceItemModVehicleUpdateService supplierInvoiceItemModVehicleUpdateService = new SupplierInvoiceItemModVehicleUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             supplierInvoiceItemModVehicleUpdateService.UpdateMulti(entityPM.SupplierInvoiceItemModVehicles, entityPM.DeletedSupplierInvoiceItemModVehicles, entityPM, false);
 
+            SuppInvoiceItemsAbachStatementUpdateService suppInvoiceItemsAbachStatementUpdateService = new SuppInvoiceItemsAbachStatementUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            suppInvoiceItemsAbachStatementUpdateService.UpdateMulti(entityPM.SuppInvoiceItemsAbachStatements, entityPM.DeletedSuppInvoiceItemsAbachStatements, entityPM, false);
+
+            SupplierInvoiceItemsPriceUpdateService supplierInvoiceItemsPriceUpdateService = new SupplierInvoiceItemsPriceUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            supplierInvoiceItemsPriceUpdateService.UpdateMulti(entityPM.SupplierInvoiceItemsPrices, entityPM.DeletedSupplierInvoiceItemsPrices, entityPM, false);
+
+
+
             base.UpdateComposition(entityPM);
         }
 
@@ -140,33 +148,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(SupplierInvoiceItemPM entityPM, SupplierInvoiceItem entityPOCO)
         {
-            if(entityPM.ItemDescription != entityPOCO.ItemDescription || entityPM.ItemCode != entityPOCO.ItemCode)
-            {
-                if (entityPM.ItemDescription == null && entityPM.ItemCode == null)
-                {
-                    entityPM.MarksAndNumbers = null;
-                }
-                else
-                {
-                    if (entityPM.ItemDescription == null)
-                    {
-                        entityPM.MarksAndNumbers = entityPM.ItemCode;
-                    }
-                    else if (entityPM.ItemCode == null)
-                    {
-                        entityPM.MarksAndNumbers = entityPM.ItemDescription;
-                    }
-                    else
-                    {
-                        entityPM.MarksAndNumbers = string.Concat(entityPM.ItemCode, "-", entityPM.ItemDescription);
-                    }
-                    if (entityPM.MarksAndNumbers != null && entityPM.MarksAndNumbers.Length > 30)
-                    {
-                        entityPM.MarksAndNumbers = entityPM.MarksAndNumbers.Substring(0, 30);
-                    }
-                }
-            }
-
             DateTime stopLogAt = new DateTime(2020, 06, 01);
             string logData = "";
             if (entityPM.ClassificationCode != entityPOCO.ClassificationCode)
@@ -516,6 +497,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var mySupplierInvoiceItemUpdateService = new SupplierInvoiceItemUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
             mySupplierInvoiceItemUpdateService.FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
             //(Repository as Logitude.Customs.Data.Repsitories.SupplierInvoiceItemRepository).FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
+            var supplierInvoiceItemsPriceUpdateService = new SupplierInvoiceItemsPriceUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
+            supplierInvoiceItemsPriceUpdateService.FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
+
+            var suppInvoiceItemsAbachStatementUpdateService = new  SuppInvoiceItemsAbachStatementUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
+             suppInvoiceItemsAbachStatementUpdateService.FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);
+
         }
 
         public void FastDeleteMultiParents(SupplierInvoiceKeys entityKeyFields, List<int> supplierInvoiceItemsParentsLines)

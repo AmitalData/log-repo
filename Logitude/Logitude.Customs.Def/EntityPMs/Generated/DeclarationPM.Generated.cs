@@ -4537,12 +4537,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime availabilityDate ;
+	  private DateTime? availabilityDate ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime AvailabilityDate  
+       public DateTime? AvailabilityDate  
 	   {
 	    
 	     get
@@ -4553,7 +4553,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(availabilityDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AvailabilityDate",OldValue=availabilityDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AvailabilityDate",OldValue=availabilityDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   availabilityDate=value;
 		   }
@@ -4629,7 +4629,272 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private string direction ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Direction  
+	   {
+	    
+	     get
+		{
+		   return direction;
+		 }
+		 set
+		 {
+		   if(direction != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Direction",OldValue=direction,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   direction=value;
+		   }
+			
+		 }
+	   }
+	  private string exportFile ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportFile  
+	   {
+	    
+	     get
+		{
+		   return exportFile;
+		 }
+		 set
+		 {
+		   if(exportFile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportFile",OldValue=exportFile,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportFile=value;
+		   }
+			
+		 }
+	   }
+	  private string declarationTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeclarationTypeCode  
+	   {
+	    
+	     get
+		{
+		   return declarationTypeCode;
+		 }
+		 set
+		 {
+		   if(declarationTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationTypeCode",OldValue=declarationTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string agentRoleCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AgentRoleCode  
+	   {
+	    
+	     get
+		{
+		   return agentRoleCode;
+		 }
+		 set
+		 {
+		   if(agentRoleCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AgentRoleCode",OldValue=agentRoleCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   agentRoleCode=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationCountryCode  
+	   {
+	    
+	     get
+		{
+		   return destinationCountryCode;
+		 }
+		 set
+		 {
+		   if(destinationCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationCountryCode",OldValue=destinationCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? loadingDateTime ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LoadingDateTime  
+	   {
+	    
+	     get
+		{
+		   return loadingDateTime;
+		 }
+		 set
+		 {
+		   if(loadingDateTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LoadingDateTime",OldValue=loadingDateTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   loadingDateTime=value;
+		   }
+			
+		 }
+	   }
+	  private string shipCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipCode  
+	   {
+	    
+	     get
+		{
+		   return shipCode;
+		 }
+		 set
+		 {
+		   if(shipCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipCode",OldValue=shipCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool isExporterConfirmation ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsExporterConfirmation  
+	   {
+	    
+	     get
+		{
+		   return isExporterConfirmation;
+		 }
+		 set
+		 {
+		   if(isExporterConfirmation != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExporterConfirmation",OldValue=isExporterConfirmation,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isExporterConfirmation=value;
+		   }
+			
+		 }
+	   }
+	  private string shipName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipName  
+	   {
+	    
+	     get
+		{
+		   return shipName;
+		 }
+		 set
+		 {
+		   if(shipName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipName",OldValue=shipName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipName=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationCountryName  
+	   {
+	    
+	     get
+		{
+		   return destinationCountryName;
+		 }
+		 set
+		 {
+		   if(destinationCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationCountryName",OldValue=destinationCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationCountryName=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<DeclarationExportRecipientPM> declarationExportRecipients;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DeclarationExportRecipients", "id","DeclarationId")]
+	   [DataMember]
+	   public virtual List<DeclarationExportRecipientPM> DeclarationExportRecipients  
+	   {
+	        get
+             {
+                 if (declarationExportRecipients == null)
+                 {
+                     declarationExportRecipients = new List<DeclarationExportRecipientPM>();
+                 }
+                 return declarationExportRecipients;
+              }
+             set { declarationExportRecipients = value; }
+	    }
+		   
+	   private List<DeclarationExportRecipientPM>  deletedDeclarationExportRecipients;
+	   public virtual List<DeclarationExportRecipientPM> DeletedDeclarationExportRecipients  
+	   {
+	        get
+             {
+                 if ( deletedDeclarationExportRecipients == null)
+                 {
+                      deletedDeclarationExportRecipients = new List<DeclarationExportRecipientPM>();
+                 }
+                 return  deletedDeclarationExportRecipients;
+              }
+             set {  deletedDeclarationExportRecipients = value; }
+	    }
+	     }
    
 }
 	 

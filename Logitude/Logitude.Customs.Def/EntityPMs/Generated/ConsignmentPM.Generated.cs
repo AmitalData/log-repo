@@ -644,6 +644,121 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isDangerousGoods ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsDangerousGoods  
+	   {
+	    
+	     get
+		{
+		   return isDangerousGoods;
+		 }
+		 set
+		 {
+		   if(isDangerousGoods != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDangerousGoods",OldValue=isDangerousGoods,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isDangerousGoods=value;
+		   }
+			
+		 }
+	   }
+	  private string finalDestinationPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FinalDestinationPortCode  
+	   {
+	    
+	     get
+		{
+		   return finalDestinationPortCode;
+		 }
+		 set
+		 {
+		   if(finalDestinationPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalDestinationPortCode",OldValue=finalDestinationPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   finalDestinationPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private string finalDestinationPortName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FinalDestinationPortName  
+	   {
+	    
+	     get
+		{
+		   return finalDestinationPortName;
+		 }
+		 set
+		 {
+		   if(finalDestinationPortName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalDestinationPortName",OldValue=finalDestinationPortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   finalDestinationPortName=value;
+		   }
+			
+		 }
+	   }
+	  private string recieverWareHouseCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RecieverWareHouseCode  
+	   {
+	    
+	     get
+		{
+		   return recieverWareHouseCode;
+		 }
+		 set
+		 {
+		   if(recieverWareHouseCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RecieverWareHouseCode",OldValue=recieverWareHouseCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   recieverWareHouseCode=value;
+		   }
+			
+		 }
+	   }
+	  private string recieverWareHouseName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RecieverWareHouseName  
+	   {
+	    
+	     get
+		{
+		   return recieverWareHouseName;
+		 }
+		 set
+		 {
+		   if(recieverWareHouseName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RecieverWareHouseName",OldValue=recieverWareHouseName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   recieverWareHouseName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
