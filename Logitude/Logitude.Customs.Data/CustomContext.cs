@@ -745,13 +745,23 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<CollateralsRequestFileCond>().Property(x => x.RequestedAmount).HasPrecision(18, 2);
 				
+			modelBuilder.Entity<ConsignmentPackage>().Property(x => x.GrossMassMeasure).HasPrecision(18, 2);
+				
 			modelBuilder.Entity<CourierMaster>().Property(x => x.GrossMassMeasure).HasPrecision(18, 2);
 				
+			modelBuilder.Entity<CustomsCollateralsAnswer>().Property(x => x.AllocatedAmount).HasPrecision(18, 2);
+				
 			modelBuilder.Entity<CustomsCollateralsAnswer>().Property(x => x.RequestFileAmount).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<CustomsCollateralsCondition>().Property(x => x.RequestedAmount).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(15, 10);
 				
 			modelBuilder.Entity<DBMigration>().Property(x => x.MajorVersion).HasPrecision(5, 2);
+				
+			modelBuilder.Entity<DecCargoSplitConsItem>().Property(x => x.GrossMassMeasure).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<DecCargoSplitConsPackDet>().Property(x => x.GrossMassMeasure).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<Declaration>().Property(x => x.LoadingFactor).HasPrecision(18, 10);
 				
@@ -760,6 +770,8 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<Declaration>().Property(x => x.CIFValue).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<Declaration>().Property(x => x.TotalTax).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<Declaration>().Property(x => x.PlatformFee).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<Declaration>().Property(x => x.DealValueWithoutFactor).HasPrecision(16, 2);
 				
@@ -801,7 +813,11 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<GuaranteeCondition>().Property(x => x.GuaranteeAmount).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<PaymentOrder>().Property(x => x.TotalSumToPay).HasPrecision(18, 2);
+				
 			modelBuilder.Entity<PaymentOrder>().Property(x => x.PaymentOrderLeftAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<PaymentOrderLine>().Property(x => x.Amount).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<PaymentOrderMethod>().Property(x => x.Amount).HasPrecision(16, 2);
 				
@@ -839,6 +855,8 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.WholeSaleItemPrice).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OptionalTamaPercentage).HasPrecision(18, 2);
+				
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.StatisticQuantity).HasPrecision(14, 3);
 				
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.InvoiceQuantity).HasPrecision(14, 3);
@@ -872,6 +890,18 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.TaxAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.DeferedTaxAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.DefinedPerUnitMeasure).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.AlternateDefinedPerUnitMeasure).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.DefinedPerUnitQuantity).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.AlternateDefinedPerUnitQuant).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.TotalBtlCoverageNIS).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<SupplierInvoiceItemsTax>().Property(x => x.AlternateRate).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceItemVehicleAdd>().Property(x => x.ChassisVat).HasPrecision(16, 2);
 				
@@ -2804,7 +2834,7 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatements 
+	 public IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatement 
 	 {
 	      get; set;
 	 

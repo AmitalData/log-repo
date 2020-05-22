@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ItemLine).HasColumnName("ItemLine").IsRequired().HasDatabaseGeneratedOption(null);
 
-            this.Property(t => t.GrossMassMeasure).HasColumnName("GrossMassMeasure");
+            this.Property(t => t.GrossMassMeasure).HasColumnName("GrossMassMeasure").HasPrecision(18, 2);
 
             this.Property(t => t.CargoDescription).HasColumnName("CargoDescription").IsRequired().HasMaxLength(255).IsUnicode(true);
 

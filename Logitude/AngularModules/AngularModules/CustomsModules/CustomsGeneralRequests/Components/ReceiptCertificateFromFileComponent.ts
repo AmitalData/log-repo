@@ -28,7 +28,7 @@ declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
     selector: 'ReceiptCertificateFromFileComponent',
-    moduleId: module.id,
+    
     templateUrl: './ReceiptCertificateFromFileComponent.html',
 })
 

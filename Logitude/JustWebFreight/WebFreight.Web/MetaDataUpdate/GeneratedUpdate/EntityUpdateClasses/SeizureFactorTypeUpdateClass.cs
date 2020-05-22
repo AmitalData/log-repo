@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SeizureFactorTypeUpdateClass
    {  		
-		public const string HashString = "7d943c68cfc4a293d20dd09df63ffcb5";
+		public const string HashString = "127938f8f0d0b9a18aed40f3fb917afa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

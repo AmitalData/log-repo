@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PendingErrorPlaceUpdateClass
    {  		
-		public const string HashString = "1425bc8f5af7630b971ecca31f48f9ff";
+		public const string HashString = "480e8f84e70240dcf5ab89d2c6b1e5ad";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

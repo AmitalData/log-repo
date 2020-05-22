@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class HazardousSubstanceUpdateClass
    {  		
-		public const string HashString = "cef84510ac2019c28739c6c587825e17";
+		public const string HashString = "e9c289f36a62dfecedce0091b20bf6e6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

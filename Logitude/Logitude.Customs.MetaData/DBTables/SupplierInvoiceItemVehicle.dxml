@@ -89,7 +89,7 @@
   <Column
     Name="VehicleIDTypeCode"
     Type="varchar"
-    Size="3">
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>

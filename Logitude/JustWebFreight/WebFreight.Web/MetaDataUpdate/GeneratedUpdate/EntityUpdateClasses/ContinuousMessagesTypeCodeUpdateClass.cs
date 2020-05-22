@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContinuousMessagesTypeCodeUpdateClass
    {  		
-		public const string HashString = "cf3bbd20666e9dcd15e1cc9945b9196d";
+		public const string HashString = "60e75623e2b26c56812ec9d3b6c323a1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

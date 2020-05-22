@@ -61,16 +61,16 @@ export class CustomsAutonomyKeywordExtendedPMService {
     }
 
     deleteByid(id: any) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
-            return this._http.delete(this._apiUrl + '/DeleteById/?' + '&id=' + id, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+            return this._http.delete(this._apiUrl + '/DeleteById/?' + '&id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map((response:HttpResponse<any>) => {
+                var myJsonResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 	

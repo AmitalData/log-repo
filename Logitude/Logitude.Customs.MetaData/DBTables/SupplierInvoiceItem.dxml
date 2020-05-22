@@ -352,7 +352,8 @@
     Name="OcrHeight"
     Type="decimal"
     Precision="5"
-    Scale="0">
+    Scale="0"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
@@ -360,7 +361,8 @@
     Name="OcrTop"
     Type="decimal"
     Precision="5"
-    Scale="0">
+    Scale="0"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
@@ -368,21 +370,22 @@
     Name="OcrPageNumber"
     Type="decimal"
     Precision="3"
-    Scale="0">
+    Scale="0"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="ClassificationTypeCode"
     Type="varchar"
-    Size="3">
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="TransactionNatureCode"
     Type="varchar"
-    Size="3">
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>

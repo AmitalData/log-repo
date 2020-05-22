@@ -76,7 +76,7 @@
                     </td>
                     <td>
                         <CheckBox style="float: right; margin-left: 8px;"
-                                  [IsEnabled]="!IsDisplayOnly"
+                                  
                                   [Text]="'Customs.Declaration.F.StatementInd' | TextCodeTranslationPipe"
                                   [IsChecked]="StatementInd"
                                   (Checked)="StatementInd = $event"></CheckBox>
@@ -171,7 +171,7 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                                    <button class="RedButton" (click)="OkButtonClicked()" >{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                                 </td>
                             </tr>
                         </table>

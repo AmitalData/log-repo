@@ -354,22 +354,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsValidTicketsDiamond { get; set; }
         [Column("AvailabilityDate")]
 	    public DateTime? AvailabilityDate { get; set; }
-        [Column("Direction")]
-	    public string Direction { get; set; }
-        [Column("ExportFile")]
-	    public string ExportFile { get; set; }
-        [ForeignKey("LeadDocumentType")]
-        [Column("DeclarationTypeCode")]
-	    public string DeclarationTypeCode { get; set; }
-	      
-        public virtual LeadDocumentType LeadDocumentType { get; set; }
-        [Column("AgentRoleCode")]
-	    public string AgentRoleCode { get; set; }
-        [ForeignKey("CustomsCountry")]
-        [Column("DestinationCountryCode")]
-	    public string DestinationCountryCode { get; set; }
-	      
-        public virtual CustomsCountry CustomsCountry { get; set; }
         [Column("LoadingDateTime")]
 	    public DateTime? LoadingDateTime { get; set; }
         [ForeignKey("CustomsShip")]
@@ -379,6 +363,22 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual CustomsShip CustomsShip { get; set; }
         [Column("IsExporterConfirmation")]
 	    public bool IsExporterConfirmation { get; set; }
+        [Column("Direction")]
+	    public string Direction { get; set; }
+        [Column("AgentRoleCode")]
+	    public string AgentRoleCode { get; set; }
+        [Column("ExportFile")]
+	    public string ExportFile { get; set; }
+        [ForeignKey("LeadDocumentType")]
+        [Column("DeclarationTypeCode")]
+	    public string DeclarationTypeCode { get; set; }
+	      
+        public virtual LeadDocumentType LeadDocumentType { get; set; }
+        [ForeignKey("CustomsCountry")]
+        [Column("DestinationCountryCode")]
+	    public string DestinationCountryCode { get; set; }
+	      
+        public virtual CustomsCountry CustomsCountry { get; set; }
     }
 }
 	 

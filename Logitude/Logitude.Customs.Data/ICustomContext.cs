@@ -288,7 +288,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<StorageMessageType> StorageMessageTypes { get; }
 		 IDbSet<StorageStatus> StorageStatuses { get; }
 		 IDbSet<SubCountry> SubCountries { get; }
-		 IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatements { get; }
+		 IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatement { get; }
 		 IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats { get; }
 		 IDbSet<SupplierInvoice> SupplierInvoices { get; }
 		 IDbSet<SupplierInvoiceFreightAmount> SupplierInvoiceFreightAmounts { get; }

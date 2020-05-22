@@ -1160,31 +1160,6 @@ export class DeclarationPM {
     public set AutomaticPayment(newValue: number) { if (this.automaticPayment != newValue) { this.automaticPayment = newValue; this.MarkAsDirty("AutomaticPayment"); } }
        
 	 
-    private direction: string;
-    public get Direction() { return this.direction; }
-    public set Direction(newValue: string) { if (this.direction != newValue) { this.direction = newValue; this.MarkAsDirty("Direction"); } }
-       
-	 
-    private exportFile: string;
-    public get ExportFile() { return this.exportFile; }
-    public set ExportFile(newValue: string) { if (this.exportFile != newValue) { this.exportFile = newValue; this.MarkAsDirty("ExportFile"); } }
-       
-	 
-    private declarationTypeCode: string;
-    public get DeclarationTypeCode() { return this.declarationTypeCode; }
-    public set DeclarationTypeCode(newValue: string) { if (this.declarationTypeCode != newValue) { this.declarationTypeCode = newValue; this.MarkAsDirty("DeclarationTypeCode"); } }
-       
-	 
-    private agentRoleCode: string;
-    public get AgentRoleCode() { return this.agentRoleCode; }
-    public set AgentRoleCode(newValue: string) { if (this.agentRoleCode != newValue) { this.agentRoleCode = newValue; this.MarkAsDirty("AgentRoleCode"); } }
-       
-	 
-    private destinationCountryCode: string;
-    public get DestinationCountryCode() { return this.destinationCountryCode; }
-    public set DestinationCountryCode(newValue: string) { if (this.destinationCountryCode != newValue) { this.destinationCountryCode = newValue; this.MarkAsDirty("DestinationCountryCode"); } }
-       
-	 
     private loadingDateTime: Date;
     public get LoadingDateTime() { return this.loadingDateTime; }
     public set LoadingDateTime(newValue: Date) { if (this.loadingDateTime != newValue) { this.loadingDateTime = newValue; this.MarkAsDirty("LoadingDateTime"); } }
@@ -1244,7 +1219,32 @@ export class DeclarationPM {
         }
     }
     //public DeclarationExportRecipients: Array<DeclarationExportRecipientPM>= [];
- 
+     private direction: string;
+    public get Direction() { return this.direction; }
+    public set Direction(newValue: string) { if (this.direction != newValue) { this.direction = newValue; this.MarkAsDirty("Direction"); } }
+       
+	 
+    private agentRoleCode: string;
+    public get AgentRoleCode() { return this.agentRoleCode; }
+    public set AgentRoleCode(newValue: string) { if (this.agentRoleCode != newValue) { this.agentRoleCode = newValue; this.MarkAsDirty("AgentRoleCode"); } }
+       
+	 
+    private exportFile: string;
+    public get ExportFile() { return this.exportFile; }
+    public set ExportFile(newValue: string) { if (this.exportFile != newValue) { this.exportFile = newValue; this.MarkAsDirty("ExportFile"); } }
+       
+	 
+    private declarationTypeCode: string;
+    public get DeclarationTypeCode() { return this.declarationTypeCode; }
+    public set DeclarationTypeCode(newValue: string) { if (this.declarationTypeCode != newValue) { this.declarationTypeCode = newValue; this.MarkAsDirty("DeclarationTypeCode"); } }
+       
+	 
+    private destinationCountryCode: string;
+    public get DestinationCountryCode() { return this.destinationCountryCode; }
+    public set DestinationCountryCode(newValue: string) { if (this.destinationCountryCode != newValue) { this.destinationCountryCode = newValue; this.MarkAsDirty("DestinationCountryCode"); } }
+       
+	 
+
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;

@@ -30,14 +30,14 @@ namespace Logitude.Customs.Data.Repsitories
 		
 		public  SuppInvoiceItemsAbachStatement GetSingle(string declarationid, int invoicecounterkey, int invoiceitemlinenumber, int? sequencenumeric, int tenant)
         {
-            return (from a in context.SuppInvoiceItemsAbachStatements
+            return (from a in context.SuppInvoiceItemsAbachStatement
                     where a.DeclarationId == declarationid && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber && a.SequenceNumeric == sequencenumeric && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
         public IQueryable<SuppInvoiceItemsAbachStatement> GetAll(int tenant)
         {
-            return from a in context.SuppInvoiceItemsAbachStatements  
+            return from a in context.SuppInvoiceItemsAbachStatement  
                    where a.Tenant == tenant
                    select a;
         }
@@ -45,7 +45,7 @@ namespace Logitude.Customs.Data.Repsitories
         public SuppInvoiceItemsAbachStatement GetSingle(EntityKeyFields entityKeys)
         {
             SuppInvoiceItemsAbachStatementKeys keys = entityKeys as SuppInvoiceItemsAbachStatementKeys;
-            return (from a in context.SuppInvoiceItemsAbachStatements
+            return (from a in context.SuppInvoiceItemsAbachStatement
                     where a.DeclarationId == keys.DeclarationId && a.InvoiceCounterKey == keys.InvoiceCounterKey && a.InvoiceItemLineNumber == keys.InvoiceItemLineNumber && a.SequenceNumeric == keys.SequenceNumeric
                     select a).FirstOrDefault();
         }
@@ -54,26 +54,26 @@ namespace Logitude.Customs.Data.Repsitories
         public void Add(SuppInvoiceItemsAbachStatement entity)
         {
             onAdd();
-            context.SuppInvoiceItemsAbachStatements.Add(entity);
+            context.SuppInvoiceItemsAbachStatement.Add(entity);
         }
 
         public void Remove(SuppInvoiceItemsAbachStatement entity)
         {
-            context.SuppInvoiceItemsAbachStatements.Attach(entity);
-            context.SuppInvoiceItemsAbachStatements.Remove(entity);
+            context.SuppInvoiceItemsAbachStatement.Attach(entity);
+            context.SuppInvoiceItemsAbachStatement.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(SuppInvoiceItemsAbachStatement entity)
         {
             onUpdate();
-            context.SuppInvoiceItemsAbachStatements.Attach(entity);
+            context.SuppInvoiceItemsAbachStatement.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<SuppInvoiceItemsAbachStatement> All()
         {
-            return context.SuppInvoiceItemsAbachStatements.ToList();
+            return context.SuppInvoiceItemsAbachStatement.ToList();
         }
 
         private ICustomContext context

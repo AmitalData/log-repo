@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ImporterPeriodicDeclarStatusUpdateClass
    {  		
-		public const string HashString = "111c55b115b5650ec675c9e2b2ab70cc";
+		public const string HashString = "11f63ca324e5c3e8f773219606753a38";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

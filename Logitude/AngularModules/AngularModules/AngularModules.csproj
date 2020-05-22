@@ -1360,7 +1360,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DBMigrationPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationPendingPMService.ts" />
-    <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationRefernatDataPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationReferantDataPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ExceptionReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestsPMService.ts" />

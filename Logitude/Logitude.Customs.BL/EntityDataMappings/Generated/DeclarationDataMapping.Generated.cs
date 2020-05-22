@@ -140,14 +140,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsMissMandatoryDiamond, 
 	         IsValidTicketsDiamond, 
 	         AvailabilityDate, 
-	         Direction, 
-	         ExportFile, 
-	         DeclarationTypeCode, 
-	         AgentRoleCode, 
-	         DestinationCountryCode, 
 	         LoadingDateTime, 
 	         ShipCode, 
-	         IsExporterConfirmation,
+	         IsExporterConfirmation, 
+	         Direction, 
+	         AgentRoleCode, 
+	         ExportFile, 
+	         DeclarationTypeCode, 
+	         DestinationCountryCode,
 	      }
 
 
@@ -344,16 +344,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentNumber, 
 	         CourierPendingReasonName, 
 	         AutomaticPayment, 
-	         Direction, 
-	         ExportFile, 
-	         DeclarationTypeCode, 
-	         AgentRoleCode, 
-	         DestinationCountryCode, 
 	         LoadingDateTime, 
 	         ShipCode, 
 	         IsExporterConfirmation, 
 	         ShipName, 
-	         DestinationCountryName,
+	         DestinationCountryName, 
+	         Direction, 
+	         AgentRoleCode, 
+	         ExportFile, 
+	         DeclarationTypeCode, 
+	         DestinationCountryCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -947,31 +947,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.AvailabilityDate = entityPM.AvailabilityDate;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Direction))
-            {
-				entityPOCO.Direction = entityPM.Direction;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
-            {
-				entityPOCO.ExportFile = entityPM.ExportFile;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
-            {
-				entityPOCO.DeclarationTypeCode = entityPM.DeclarationTypeCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AgentRoleCode))
-            {
-				entityPOCO.AgentRoleCode = entityPM.AgentRoleCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationCountryCode))
-            {
-				entityPOCO.DestinationCountryCode = entityPM.DestinationCountryCode;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LoadingDateTime))
             {
 				entityPOCO.LoadingDateTime = entityPM.LoadingDateTime;
@@ -985,6 +960,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExporterConfirmation))
             {
 				entityPOCO.IsExporterConfirmation = entityPM.IsExporterConfirmation;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Direction))
+            {
+				entityPOCO.Direction = entityPM.Direction;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AgentRoleCode))
+            {
+				entityPOCO.AgentRoleCode = entityPM.AgentRoleCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
+            {
+				entityPOCO.ExportFile = entityPM.ExportFile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
+            {
+				entityPOCO.DeclarationTypeCode = entityPM.DeclarationTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationCountryCode))
+            {
+				entityPOCO.DestinationCountryCode = entityPM.DestinationCountryCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1583,31 +1583,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AvailabilityDate = entityPOCO.AvailabilityDate;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Direction))
-            {
-					entityPM.Direction = entityPOCO.Direction;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportFile))
-            {
-					entityPM.ExportFile = entityPOCO.ExportFile;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationTypeCode))
-            {
-					entityPM.DeclarationTypeCode = entityPOCO.DeclarationTypeCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AgentRoleCode))
-            {
-					entityPM.AgentRoleCode = entityPOCO.AgentRoleCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DestinationCountryCode))
-            {
-					entityPM.DestinationCountryCode = entityPOCO.DestinationCountryCode;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LoadingDateTime))
             {
 					entityPM.LoadingDateTime = entityPOCO.LoadingDateTime;
@@ -1621,6 +1596,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsExporterConfirmation))
             {
 					entityPM.IsExporterConfirmation = entityPOCO.IsExporterConfirmation;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Direction))
+            {
+					entityPM.Direction = entityPOCO.Direction;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AgentRoleCode))
+            {
+					entityPM.AgentRoleCode = entityPOCO.AgentRoleCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportFile))
+            {
+					entityPM.ExportFile = entityPOCO.ExportFile;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationTypeCode))
+            {
+					entityPM.DeclarationTypeCode = entityPOCO.DeclarationTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DestinationCountryCode))
+            {
+					entityPM.DestinationCountryCode = entityPOCO.DestinationCountryCode;
             }
 
 		}
@@ -2214,31 +2214,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.AvailabilityDate = entityPM.AvailabilityDate;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Direction))
-            {
-                oldEntityPM.Direction = entityPM.Direction;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
-            {
-                oldEntityPM.ExportFile = entityPM.ExportFile;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
-            {
-                oldEntityPM.DeclarationTypeCode = entityPM.DeclarationTypeCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AgentRoleCode))
-            {
-                oldEntityPM.AgentRoleCode = entityPM.AgentRoleCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationCountryCode))
-            {
-                oldEntityPM.DestinationCountryCode = entityPM.DestinationCountryCode;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LoadingDateTime))
             {
                 oldEntityPM.LoadingDateTime = entityPM.LoadingDateTime;
@@ -2252,6 +2227,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExporterConfirmation))
             {
                 oldEntityPM.IsExporterConfirmation = entityPM.IsExporterConfirmation;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Direction))
+            {
+                oldEntityPM.Direction = entityPM.Direction;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AgentRoleCode))
+            {
+                oldEntityPM.AgentRoleCode = entityPM.AgentRoleCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFile))
+            {
+                oldEntityPM.ExportFile = entityPM.ExportFile;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationTypeCode))
+            {
+                oldEntityPM.DeclarationTypeCode = entityPM.DeclarationTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DestinationCountryCode))
+            {
+                oldEntityPM.DestinationCountryCode = entityPM.DestinationCountryCode;
             }
 			
 		}

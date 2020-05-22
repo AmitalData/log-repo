@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AccumalationStateUpdateClass
    {  		
-		public const string HashString = "6ca1e405ef1d273cb647a2206648d5f5";
+		public const string HashString = "0fc2a40e92e4ce6690c2d2a636b2deef";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

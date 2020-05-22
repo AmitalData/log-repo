@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CheckEssenceLookupUpdateClass
    {  		
-		public const string HashString = "34c1d1bfcca5fe43ca7fcd4874291eac";
+		public const string HashString = "2c3f3a78d84f70131586d6ee39cfbf59";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

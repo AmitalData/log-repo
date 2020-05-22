@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AgentTalkBackTypeUpdateClass
    {  		
-		public const string HashString = "929b7ce7522ad4a3ff421c9c3712a4bb";
+		public const string HashString = "fbb469fbc6f5fb4fca1aed12d3a57e0f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

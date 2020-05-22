@@ -65,10 +65,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.CreateDateTime = DateTime.Now;
             }
 
-            if (entityPM.AvailabilityDate.Year == 1)
-            {
-                entityPM.AvailabilityDate = DateTime.Now;
-            }
+           
 
             ICustomContext context = MainContext as CustomContext;
             if (string.IsNullOrWhiteSpace(entityPM.ImporterTypeCode)) entityPM.ImporterTypeCode = "1";

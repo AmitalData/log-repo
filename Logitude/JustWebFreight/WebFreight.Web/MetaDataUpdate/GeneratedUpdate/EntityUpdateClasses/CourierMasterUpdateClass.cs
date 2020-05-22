@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "8f437c2ffc5a4bb5d0e56a6d8387ee7f";
+		public const string HashString = "6b21af2819443c902420a0a3d8f287dc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -832,7 +832,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.InternationalSite",
 					  						MinLength =  0,
-					  						MaxLength =  35,
+					  						MaxLength =  17,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2234,7 +2234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.DeliverySiteType",
 					  						MinLength =  0,
-					  						MaxLength =  17,
+					  						MaxLength =  20,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3110,7 +3110,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "NoOfCourierHawb",
 					  						ListPropertyPath =  "NoOfCourierHawb",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3170,7 +3169,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsAutomaticManifestSent",
 					  						ListPropertyPath =  "IsAutomaticManifestSent",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3211,9 +3209,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsEstimatedArrivalToDay",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3265,13 +3260,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 	    }
 
@@ -3404,38 +3395,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen CourierMasterCustomsCourierMasterHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CourierMaster.Customs.CourierMasterHeaderScreen", Name = "Customs.CourierMasterHeaderScreen", ObjectTableId = CourierMasterObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CourierMasterCustomsCourierMasterHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CourierMaster.HeaderScreen", Name = "Customs.CourierMasterHeaderScreen", ObjectTableId = CourierMasterObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CustomsCourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.AirlineName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCourierMasterCustomsCourierMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.AirlineName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsCourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.EstimatedArrivalDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCourierMasterCustomsCourierMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.EstimatedArrivalDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsCourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.MAWB", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCourierMasterCustomsCourierMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.MAWB", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsCourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.HAWB", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCourierMasterCustomsCourierMasterHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.HAWB", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsCourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.GatewayPortName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCourierMasterCustomsCourierMasterHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.GatewayPortName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsCourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.CreateDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCourierMasterCustomsCourierMasterHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.CreateDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomsCourierMasterCourierMasterCustomsCourierMasterHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.CreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CustomsCourierMasterCustomsCourierMasterHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id,ScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CourierMaster.CreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CourierMasterObjectTable.HeaderScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id;
 		    CourierMasterObjectTable.HeaderScreenCode = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Code;
-
-	   		  
-	      
-
-	         Screen CourierMasterHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CourierMaster.HeaderScreen", Name = "Header Screen", ObjectTableId = CourierMasterObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      
-            ScreenField CustomsCourierMasterCustomsCourierMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CourierMasterHeaderScreenScreen1.Id,ScreenCode = CourierMasterHeaderScreenScreen1.Code, ObjectFieldCode = "Customs.CourierMaster.AirlinePrefix", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomsCourierMasterCustomsCourierMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CourierMasterHeaderScreenScreen1.Id,ScreenCode = CourierMasterHeaderScreenScreen1.Code, ObjectFieldCode = "Customs.CourierMaster.CreateDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomsCourierMasterCustomsCourierMasterHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = CourierMasterHeaderScreenScreen1.Id,ScreenCode = CourierMasterHeaderScreenScreen1.Code, ObjectFieldCode = "Customs.CourierMaster.CreatedByUserName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
-		    CourierMasterObjectTable.HeaderScreenId = CourierMasterHeaderScreenScreen1.Id;
-		    CourierMasterObjectTable.HeaderScreenCode = CourierMasterHeaderScreenScreen1.Code;
 
 	   		  
 
@@ -3482,7 +3459,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CourierMasterFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 		   Feature CourierMasterFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 		   Feature CourierMasterFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
-		   Feature CourierMasterFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.PackageFeature", NameTextCodeDefaultText = "CourierMaster Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);    
+		   Feature CourierMasterFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierMaster.Features.PackageFeature", NameTextCodeDefaultText = "CourierMaster Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CourierMasterFeature_AllowAccounting = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowAccounting", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.Allow Accounting", NameTextCodeDefaultText = @"Allow Accounting" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+
+   
 	    
 		}
 

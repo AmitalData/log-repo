@@ -250,14 +250,14 @@
   <Column
     Name="BuyerRoleCode"
     Type="varchar"
-    Size="3">
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="PartyRelationshipCode"
     Type="varchar"
-    Size="3">
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>

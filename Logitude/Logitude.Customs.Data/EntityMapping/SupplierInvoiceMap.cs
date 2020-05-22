@@ -91,9 +91,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.BuyerCountryCode).HasColumnName("BuyerCountryCode").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.BuyerRoleCode).HasColumnName("BuyerRoleCode").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.BuyerRoleCode).HasColumnName("BuyerRoleCode").HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.PartyRelationshipCode).HasColumnName("PartyRelationshipCode").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.PartyRelationshipCode).HasColumnName("PartyRelationshipCode").HasMaxLength(4).IsUnicode(false);
         }
     }
 }

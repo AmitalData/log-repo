@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="SuppInvoiceItemsAbachStatements"
+  Name="SuppInvoiceItemsAbachStatement"
+  OldNames="SuppInvoiceItemsAbachStatements"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
@@ -42,7 +43,7 @@
   <Column
     Name="StatementType"
     Type="varchar"
-    Size="3">
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>

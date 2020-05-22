@@ -98,7 +98,7 @@
                                                           [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td style="width: 130px; ">
-                                                <LogTextBoxV2 *ngIf="CargoTypeCode != 17" [ObjectFieldName]="'SecondCargoID'" [Placeholder]="SecondCargoIDPlaceholder" [ObjectTableName]="'Customs.Consignment'"
+                                                <LogTextBoxV2 *ngIf="CargoTypeCode != '17'" [ObjectFieldName]="'SecondCargoID'" [Placeholder]="SecondCargoIDPlaceholder" [ObjectTableName]="'Customs.Consignment'"
                                                               [HideColumns]="true"
                                                               [DataContext]="DataContext" [Text]="SecondCargoID" (LostFocus)="OnSecondCargoLostFocus()"></LogTextBoxV2>
 

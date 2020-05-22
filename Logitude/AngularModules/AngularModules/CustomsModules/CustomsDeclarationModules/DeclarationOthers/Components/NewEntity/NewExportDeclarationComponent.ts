@@ -19,7 +19,7 @@ import { CustomsSettingListService } from '../../../../../Customs/Services/Stand
 
 @Component({
     selector: 'NewExportDeclarationComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewExportDeclarationComponent.html',
 })
 

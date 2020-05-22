@@ -162,13 +162,11 @@ export class CustomsRequestsSheetExtendedListService {
         var callUrl = urlparameters;//this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -182,8 +180,31 @@ export class CustomsRequestsSheetExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
+
+        // return Observable.defer(() => {
+        //     return this._http.get(callUrl, {
+        //         headers: authHeader
+        //     }).map(response => {
+
+        //         var serviceResponse: ServiceResponse;
+        //         serviceResponse = response.json();
+        //         var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
+        //         if (serviceResponse.Result) {
+        //             for (var key in serviceResponse.Result) {
+
+        //                 var entity: CustomsRequestsSheetList;
+        //                 entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+        //                 _mappedListsArray.push(entity);
+
+        //             }
+        //         }
+
+        //         serviceResponse.Result = _mappedListsArray;
+        //         return serviceResponse;
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
 
@@ -220,13 +241,11 @@ export class CustomsRequestsSheetExtendedListService {
         var callUrl = urlparameters;//this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -240,8 +259,30 @@ export class CustomsRequestsSheetExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
+        // return Observable.defer(() => {
+        //     return this._http.get(callUrl, {
+        //         headers: authHeader
+        //     }).map(response => {
+
+        //         var serviceResponse: ServiceResponse;
+        //         serviceResponse = response.json();
+        //         var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
+        //         if (serviceResponse.Result) {
+        //             for (var key in serviceResponse.Result) {
+
+        //                 var entity: CustomsRequestsSheetList;
+        //                 entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+        //                 _mappedListsArray.push(entity);
+
+        //             }
+        //         }
+
+        //         serviceResponse.Result = _mappedListsArray;
+        //         return serviceResponse;
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
     MapJsonToEntityList(jsonList: any) {
