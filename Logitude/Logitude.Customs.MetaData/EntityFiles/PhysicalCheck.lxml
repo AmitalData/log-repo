@@ -3408,7 +3408,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-             Code="&quot;OpenChecks&quot;"
+    Code="&quot;OpenChecks&quot;"
     TextCode="&quot;Open Checks&quot;"
     LocalTextCode="&quot;בדיקות פתוחות&quot;"
     QueryGroupCode="&quot;PHCK&quot;"
@@ -3430,61 +3430,66 @@
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;DeclarationNo&quot;"
+        ObjectFieldName="&quot;VehicleChassisNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CustomerName&quot;"
+        ObjectFieldName="&quot;DeclarationNo&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;StorageSiteName&quot;"
+        ObjectFieldName="&quot;CustomerName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;CheckSiteName&quot;"
+        ObjectFieldName="&quot;StorageSiteName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
         IndexOrder="5"
+        ObjectFieldName="&quot;CheckSiteName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="6"
         ObjectFieldName="&quot;QueueTypeName&quot;"
         ColumnWidth="70" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;CheckId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;LimitDate&quot;"
         ColumnWidth="110" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;ContainerNubmer&quot;"
         ColumnWidth="110" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;OperationName&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;IsComprehensiveCheck&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;CheckTypeCode&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;CheckTypeName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -3597,7 +3602,7 @@
     TextCode="&quot;All Checks&quot;"
     LocalTextCode="&quot;כל הבדיקות&quot;"
     QueryGroupCode="&quot;PHCK&quot;"
-    IndexOrder="0"
+    IndexOrder="2"
     ObjectTableName="&quot;Customs.PhysicalCheck&quot;"
     QuerySection="&quot;Customs.PhysicalCheck&quot;"
     SystemLevel="true"
