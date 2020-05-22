@@ -15565,12 +15565,6 @@
         ObjectFieldName="&quot;DeclarationWithoutRelease&quot;"
         IsPredefined="true"
         IndexOrder="0" />
-      <QueryFilter
-        QueryCode="&quot;DeclarationWithoutRelease&quot;"
-        PredefinedValue="&quot;false&quot;"
-        ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
-        IsPredefined="true"
-        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
