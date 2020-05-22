@@ -506,6 +506,27 @@ export class MainMenuComponent {
                         });
                         break;
                     }
+                    case "General.MH.Claims": {
+                        
+                        var listArgs = new ListComponentArgs();
+                        listArgs.ObjectTableName = "Customs.Claim";
+                        listArgs.HideBackButton = true;
+                        
+                        this._entityResourceService.getEntityResourceByTableName("Customs.Claim", 0).subscribe((response:any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run(listArgs);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
+                                    this.ChangeSessionHeader(this.SelectedMenu);
+                                    this.isChangingSelected = false;
+                                    //this.pointerEvents = 'all';
+                                });
+                            });
+                        });
+                        break;
+                    }
 
                     case "General.MH.AirlineDashboard": {
                         ServiceLocator.SendTotangoUserActivity("Dashboard", "Main View");
