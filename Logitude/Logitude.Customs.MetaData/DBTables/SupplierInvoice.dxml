@@ -226,6 +226,41 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="BuyerName"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BuyerAddress"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BuyerCountryCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BuyerRoleCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PartyRelationshipCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
@@ -289,6 +324,21 @@
   <Relation
     ForeignKeyColumn="AccumalationStateCode"
     ReferencedTable="AccumalationStates"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="BuyerCountryCode"
+    ReferencedTable="CustomsCountries"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="BuyerRoleCode"
+    ReferencedTable="CustomerRoleTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="PartyRelationshipCode"
+    ReferencedTable="PartyRelationshipTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

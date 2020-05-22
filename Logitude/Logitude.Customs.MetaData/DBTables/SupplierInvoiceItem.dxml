@@ -348,6 +348,51 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="OcrHeight"
+    Type="decimal"
+    Precision="5"
+    Scale="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="OcrTop"
+    Type="decimal"
+    Precision="5"
+    Scale="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="OcrPageNumber"
+    Type="decimal"
+    Precision="3"
+    Scale="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ClassificationTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransactionNatureCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ClaimReasonCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId,CounterKey"
     ReferencedTable="SupplierInvoices"
@@ -411,6 +456,21 @@
   <Relation
     ForeignKeyColumn="CertificatesStatusCode"
     ReferencedTable="CertificatesStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ClassificationTypeCode"
+    ReferencedTable="ClassificationTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="TransactionNatureCode"
+    ReferencedTable="TransactionNatureTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ClaimReasonCode"
+    ReferencedTable="ClaimReasonTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
