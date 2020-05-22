@@ -147,6 +147,17 @@
 </ng-template>
                                     </log-column>
 
+                                                             <!-- OrganizationUnitTypeName -->
+                                                             <log-column [header]="'Customs.CustomsCollateral.F.OrganizationUnitTypeName' | TextCodeTranslationPipe" [binding]="'OrganizationUnitTypeName'" [width]="'153'" [Alignment]="'right'">
+                                                                <ng-template let-item>
+                        <log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                                                    <div style="text-align:right">
+                                                                        <span>{{item.OrganizationUnitTypeName}}</span>
+                                                                    </div>
+                                                                </log-cell-template>
+                        </ng-template>
+                                                            </log-column>
+
                                     <!-- IsClosed -->
                                     <log-column [header]="'Customs.CustomsCollateral.F.IsClosed' | TextCodeTranslationPipe" [binding]="'IsClosed'" [width]="'50'" [Alignment]="'right'">
                                         <ng-template let-item>

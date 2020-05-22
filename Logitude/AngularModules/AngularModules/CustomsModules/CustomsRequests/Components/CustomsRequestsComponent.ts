@@ -45,12 +45,14 @@ export class CustomsRequestsComponent implements OnInit {
         this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
             this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response2 => {
                 this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((resp => {
+                    this._entityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((resp => {
+
                     this._CustomsRequestMenuService = new CustomsRequestMenuService();
                     
                     //this.BuildCustomsList();
                     //this.ItemsSource = this.CustomsRequestMenuItems;
                     this.ItemsSource = this._CustomsRequestMenuService.CustomsRequestMenuItems;
-
+                }));
                 }));
             });
         });

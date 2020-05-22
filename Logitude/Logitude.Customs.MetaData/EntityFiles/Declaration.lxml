@@ -16397,12 +16397,6 @@
         ObjectFieldName="&quot;DeclarationWithoutRelease&quot;"
         IsPredefined="true"
         IndexOrder="0" />
-      <QueryFilter
-        QueryCode="&quot;DeclarationWithoutRelease&quot;"
-        PredefinedValue="&quot;false&quot;"
-        ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
-        IsPredefined="true"
-        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -18279,6 +18273,7 @@
         DefaultText="&quot;Special Action Request&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="7"
+        LocalDefaultText="&quot;בקשה לפעולה מיוחדת&quot;"
         FeatureCode="&quot;DECLARATIONSPECIALACTION&quot;"
         IsPackagable="true"
         TextCodeCode="&quot;Customs.General.O.SpecialActivityRequest&quot;"

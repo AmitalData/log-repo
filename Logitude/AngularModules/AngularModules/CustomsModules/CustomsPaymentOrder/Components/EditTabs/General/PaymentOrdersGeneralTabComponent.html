@@ -303,9 +303,11 @@
                                                         <log-column [header]="'Customs.PaymentOrderMethod.F.TypeCode' | TextCodeTranslationPipe"
                                                                     [width]="'140'" [Alignment]="'right'" [binding]="'TypeCode'">
                                                             <log-footer>
+                                                                <ng-template let-item>  
                                                                 <log-footer-template >
                                                                     <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{'Customs.PaymentOrder.O.Total' | TextCodeTranslationPipe}}</div>
                                                                 </log-footer-template>
+                                                            </ng-template>  
                                                             </log-footer>
                                                             <ng-template let-item>
 <log-cell-template  #logcelltemplate>
@@ -331,9 +333,11 @@
                                                         <log-column [width]="'110'" [Alignment]="'right'" [binding]="'Amount'"
                                                                     [header]="'Customs.PaymentOrderMethod.F.Amount' | TextCodeTranslationPipe" >
                                                             <log-footer>
+                                                                <ng-template let-item>  
                                                                 <log-footer-template >
                                                                     <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{MethodItemsAmountTotal | NumbersPipe:'N2'}}</div> 
                                                                 </log-footer-template>
+                                                            </ng-template>  
                                                             </log-footer>
                                                             <ng-template let-item>
 <log-cell-template  #logcelltemplate >
@@ -472,9 +476,11 @@
                                                         <log-column [header]="'Customs.PaymentOrderProtestReason.F.ProtestTypeCode' | TextCodeTranslationPipe"
                                                                     [width]="'140'" [Alignment]="'right'" [binding]="'ProtestTypeName'">
                                                             <log-footer>
+                                                                <ng-template let-item>  
                                                                 <log-footer-template >
                                                                     <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{'Customs.PaymentOrder.O.Total' | TextCodeTranslationPipe}}</div>
                                                                 </log-footer-template>
+                                                            </ng-template>  
                                                             </log-footer>
                                                             <ng-template let-item>
 <log-cell-template  #logcelltemplate>
@@ -534,9 +540,11 @@
                                                         <log-column [width]="'110'" [binding]="'AmountInDispute'" [Alignment]="'right'"
                                                                     [header]="'Customs.PaymentOrderProtestReason.F.AmountInDispute' | TextCodeTranslationPipe">
                                                             <log-footer>
+                                                                <ng-template let-item>  
                                                                 <log-footer-template >
                                                                     <div style="font-size: 12px; font-weight: bold; color:#25446C;">{{AmountInDisputeTotal | NumbersPipe:'N2'}}</div>
                                                                 </log-footer-template>
+                                                            </ng-template>  
                                                             </log-footer>
                                                             <ng-template let-item>
 <log-cell-template  #logcelltemplate>

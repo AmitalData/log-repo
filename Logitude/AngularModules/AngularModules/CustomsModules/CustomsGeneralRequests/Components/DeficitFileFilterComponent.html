@@ -430,7 +430,7 @@
                                                     [ItemSource]="PaymentOrderList">
 
                                     <!-- PaymentID -->
-                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.PaymentID' | TextCodeTranslationPipe"
+                                    <log-column [header]="'Customs.DeficitFileFilterQuery.F.PaymentId' | TextCodeTranslationPipe"
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'PaymentID'">
                                         <ng-template let-item>
@@ -463,9 +463,11 @@
                                                 [width]="'90'" [Alignment]="'right'"
                                                 [binding]="'AmountSum'">
                                         <log-footer>
+                                            <ng-template let-item>  
                                             <log-footer-template >
                                                 <div class="TextTrimming LeftCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{AmountSumTotal | NumbersPipe:'N2'}}</div>
                                             </log-footer-template>
+                                        </ng-template>  
                                         </log-footer>
                                         <ng-template let-item>
 <log-cell-template  #logcelltemplate>

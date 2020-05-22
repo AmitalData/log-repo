@@ -722,7 +722,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ItemPrice&quot;"
     DefaultText="&quot;Item Price&quot;"
-    FullLocalDefaultText="&quot;ערך במט\&quot;ח&quot;"
+    FullLocalDefaultText="&quot;ערך במט&quot;ח&quot;"
     ListFieldLable="&quot;ItemPriceListLable&quot;"
     ListLableDefaultText="&quot;Item Price&quot;"
     ListLocalDefaultText="&quot;ערך במט\&quot;ח&quot;"

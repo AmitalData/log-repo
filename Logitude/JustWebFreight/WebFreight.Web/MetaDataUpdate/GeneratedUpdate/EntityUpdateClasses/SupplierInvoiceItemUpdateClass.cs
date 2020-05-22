@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemUpdateClass
    {  		
-		public const string HashString = "806919c7b6f67e0ca47d68dad5611a5a";
+		public const string HashString = "a50ccc93408d54307314950fbbc7fd1e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -679,7 +679,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ItemPrice",
 					  						DefaultText =  "Item Price",
-					  						FullLocalDefaultText =  "ערך במט\\\"ח",
+					  						FullLocalDefaultText =  "ערך במט\"ח",
 					  						ListFieldLable =  "ItemPriceListLable",
 					  						ListLableDefaultText =  "Item Price",
 					  						ListLocalDefaultText =  "ערך במט\\\"ח",

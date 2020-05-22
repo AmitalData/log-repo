@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PaymentOrderUpdateClass
    {  		
-		public const string HashString = "96677acf3aa82c0cb83a93bd643f53fb";
+		public const string HashString = "05c411933980db3cf6b5cb25e4850b6e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.PaymentOrder",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Customs.PaymentOrders",
-			      				    OldDBTableName =  "Customs.PaymentOrders",
 			      				    ObjectTableSingular =  "Payment Order",
 			      				    ObjectTablePlural =  "Payment Orders",
 			      				    HasCustomFilter =  false,
@@ -145,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentNumber",
-					  						OldFieldName =  "PaymentNumber",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -210,7 +208,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalSumToPay",
-					  						OldFieldName =  "TotalSumToPay",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -246,6 +243,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  18,
 					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -266,7 +264,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
-					  						NumberOfDigits =  18,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -275,7 +272,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastPayDate",
-					  						OldFieldName =  "LastPayDate",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -341,7 +337,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Reason",
-					  						OldFieldName =  "Reason",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -405,7 +400,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -470,7 +464,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerActivityTypeCode",
-					  						OldFieldName =  "CustomerActivityTypeCode",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomerActivityType",
@@ -535,7 +528,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentOrderTypeCode",
-					  						OldFieldName =  "PaymentOrderTypeCode",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.PaymentOrderType",
@@ -600,7 +592,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentProcessCode",
-					  						OldFieldName =  "PaymentProcessCode",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.PaymentProcess",
@@ -665,7 +656,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentStatusCode",
-					  						OldFieldName =  "PaymentStatusCode",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.PaymentOrderStatus",
@@ -730,7 +720,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomsHouseCode",
-					  						OldFieldName =  "CustomsHouseCode",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsHouseType",
@@ -795,7 +784,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActualPayDate",
-					  						OldFieldName =  "ActualPayDate",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -861,7 +849,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InternalNotes",
-					  						OldFieldName =  "InternalNotes",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -925,7 +912,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -990,7 +976,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1055,7 +1040,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1118,7 +1102,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentOrderLines",
-					  						OldFieldName =  "PaymentOrderLines",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1177,7 +1160,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentOrderMethods",
-					  						OldFieldName =  "PaymentOrderMethods",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1236,7 +1218,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentOrderProtestReasons",
-					  						OldFieldName =  "PaymentOrderProtestReasons",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1295,7 +1276,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerName",
-					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1358,7 +1338,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentStatusName",
-					  						OldFieldName =  "PaymentStatusName",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1421,7 +1400,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentOrderTypeName",
-					  						OldFieldName =  "PaymentOrderTypeName",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1484,7 +1462,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentProcessName",
-					  						OldFieldName =  "PaymentProcessName",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1547,7 +1524,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomsEntityTypeCode",
-					  						OldFieldName =  "CustomsEntityTypeCode",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.EntityTypeLookup",
@@ -1611,7 +1587,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FirstEntityID",
-					  						OldFieldName =  "FirstEntityID",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1674,7 +1649,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SecondEntityID",
-					  						OldFieldName =  "SecondEntityID",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1737,7 +1711,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ThirdEntityID",
-					  						OldFieldName =  "ThirdEntityID",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1800,7 +1773,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterId",
-					  						OldFieldName =  "ImporterId",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.Client",
@@ -1864,7 +1836,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterName",
-					  						OldFieldName =  "ImporterName",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1927,7 +1898,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsClosed",
-					  						OldFieldName =  "IsClosed",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1990,7 +1960,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerActivityTypeName",
-					  						OldFieldName =  "CustomerActivityTypeName",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2052,7 +2021,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomsEntityTypeName",
-					  						OldFieldName =  "CustomsEntityTypeName",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2114,7 +2082,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomsHouseName",
-					  						OldFieldName =  "CustomsHouseName",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2176,7 +2143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentOrderConnectionTables",
-					  						OldFieldName =  "PaymentOrderConnectionTables",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -2234,7 +2200,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "HasDeficit",
-					  						OldFieldName =  "HasDeficit",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2291,7 +2256,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "HasDeposit",
-					  						OldFieldName =  "HasDeposit",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2348,7 +2312,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConcurrencyGUID",
-					  						OldFieldName =  "ConcurrencyGUID",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2405,7 +2368,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NewConcurrencyGUID",
-					  						OldFieldName =  "NewConcurrencyGUID",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2462,7 +2424,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccountingCustomFile",
-					  						OldFieldName =  "AccountingCustomFile",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2525,7 +2486,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomFiles",
-					  						OldFieldName =  "CustomFiles",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2588,7 +2548,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentOrderSelectedLabel",
-					  						OldFieldName =  "PaymentOrderSelectedLabel",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2645,7 +2604,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PaymentOrderLeftAmount",
-					  						OldFieldName =  "PaymentOrderLeftAmount",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2710,7 +2668,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DocumentPaymentId",
-					  						OldFieldName =  "DocumentPaymentId",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2773,7 +2730,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerChanged",
-					  						OldFieldName =  "CustomerChanged",
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3234,7 +3190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = "הדפס הודעת חיוב",
+						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
 						HtmlComponentPath = null,
 						Width = 0,
