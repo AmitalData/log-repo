@@ -20171,5 +20171,32 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;EXPORTDECLARATIONNEW2&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.EXPORTDECLARATIONNEW2&quot;"
+      FeatureDefaultText="&quot;New Export Declaration&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;EXPORTDECLARATIONPSCREEN&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.EXPORTDECLARATIONPSCREEN&quot;"
+      FeatureDefaultText="&quot;Export Declaration Pilot Screens&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;EXPORTDECLARATIONPMENU&quot;"
+      FeatureTypeCode="&quot;Menu&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.EXPORTDECLARATIONPMENU&quot;"
+      FeatureDefaultText="&quot;Export Declaration Screens&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
