@@ -20191,7 +20191,7 @@
       IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;EXPORTDECLARATIONPMENU&quot;"
-      FeatureTypeCode="&quot;Menu&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.EXPORTDECLARATIONPMENU&quot;"
       FeatureDefaultText="&quot;Export Declaration Screens&quot;"
       IsPackagable="true"
