@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "46a41c71f2e7d7c2e5df847185b37aa2";
+		public const string HashString = "ec943601781e90ff1675e58ce3d2efe1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13406,7 +13406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
                  
 			   TextCode DeclarationDeclarationAmendmentsTextCode_TH21 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DeclarationAmendment", DefaultText = "Declaration Amendments",LocalDefaultText = "תיקוני הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature DeclarationDeclarationAmendmentsFeature_TH21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONAMENDMENT", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DeclarationAmendment", NameTextCodeDefaultText = "Declaration Amendment", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+			   Feature DeclarationDeclarationAmendmentsFeature_TH21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONAMENDMENT", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DeclarationAmendment", NameTextCodeDefaultText = "Declaration Amendment", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 

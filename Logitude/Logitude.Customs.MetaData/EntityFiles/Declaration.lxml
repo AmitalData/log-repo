@@ -17175,7 +17175,7 @@
     Code="&quot;DCDA&quot;"
     ControlPath="&quot;Logitude.Customs.Views.Tabs.DeclarationAmendmentControl&quot;"
     TextCode="&quot;Customs.Declaration.TH.DeclarationAmendment&quot;"
-    IsPackagable="false"
+    IsPackagable="true"
     IndexOrder="22"
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DeclarationAmendment/DeclarationAmendmentComponent&quot;"
     HtmlComponentName="&quot;DeclarationAmendmentComponent&quot;"
