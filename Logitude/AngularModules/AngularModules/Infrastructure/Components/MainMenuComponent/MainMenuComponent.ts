@@ -472,6 +472,7 @@ export class MainMenuComponent {
                         listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder");
                         listArgs.HideBackButton = true;
                         this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe((response:any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -481,6 +482,7 @@ export class MainMenuComponent {
                                     this.isChangingSelected = false;
                                     //this.pointerEvents = 'all';
                                 });
+                            });
                         });
                         break;
                     }
