@@ -1328,11 +1328,11 @@ export class MaintenanceComponent {
                         let allowed = false;
                         allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital.") || SessionLocator.LoggedUserPM.IsCustomerCare);
 
-                        if (strict && !allowed) {
-                            let messageWindow = new MessageWindow()
-                            messageWindow.Show("Logged User Is not Customer Care ");
-                            return;
-                        }
+                        // if (strict && !allowed) {
+                        //     let messageWindow = new MessageWindow()
+                        //     messageWindow.Show("Logged User Is not Customer Care ");
+                        //     return;
+                        // }
 
                         let confirmWindow = new ConfirmWindow();
                         confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.RecallClientsForCutoms");
@@ -1345,7 +1345,13 @@ export class MaintenanceComponent {
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
 
-                                var servicelink = '../../../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
+                                var servicelink = './Customs/CustomsGeneralRequests/Components/RecallClientsForCutoms';
+                              //  servicelink = './Customs/Services/Others/CustomsRequestMenuService';
+
+                                // SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                                //     service.SendRecallMessageToServer();
+                                // });
+
                                 SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                                     service.SendRecallMessageToServer();
                                 });
