@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "ec943601781e90ff1675e58ce3d2efe1";
+		public const string HashString = "90a23f2bd985ab84b1d3c7bef5356ca2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13488,6 +13488,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_ItemPackageTab = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ItemPackageTab", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ItemPackageTab", NameTextCodeDefaultText = @"Item Package Tab" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_BTPA = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BTPA", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.BTPA", NameTextCodeDefaultText = @"Auto Filling Payment Filing Screen for BTL Disability Statement" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
+		   Feature DeclarationFeature_EXPORTDECLARATIONNEW2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONNEW2", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EXPORTDECLARATIONNEW2", NameTextCodeDefaultText = @"New Export Declaration" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
+		   Feature DeclarationFeature_EXPORTDECLARATIONPSCREEN = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONPSCREEN", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EXPORTDECLARATIONPSCREEN", NameTextCodeDefaultText = @"Export Declaration Pilot Screens" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
+		   Feature DeclarationFeature_EXPORTDECLARATIONPMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTDECLARATIONPMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EXPORTDECLARATIONPMENU", NameTextCodeDefaultText = @"Export Declaration Screens" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
