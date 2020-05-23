@@ -1328,11 +1328,11 @@ export class MaintenanceComponent {
                         let allowed = false;
                         allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital.") || SessionLocator.LoggedUserPM.IsCustomerCare);
 
-                        // if (strict && !allowed) {
-                        //     let messageWindow = new MessageWindow()
-                        //     messageWindow.Show("Logged User Is not Customer Care ");
-                        //     return;
-                        // }
+                        if (strict && !allowed) {
+                            let messageWindow = new MessageWindow()
+                            messageWindow.Show("Logged User Is not Customer Care ");
+                            return;
+                        }
 
                         let confirmWindow = new ConfirmWindow();
                         confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.RecallClientsForCutoms");
