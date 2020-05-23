@@ -13,13 +13,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ObjectTableId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="CustomsName"
     Type="varchar"
     Size="100">
@@ -61,6 +54,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="Existed"
     Type="bit">
     <Constraints
@@ -73,13 +73,13 @@
       Nullable="true" />
   </Column>
   <Relation
-    ForeignKeyColumn="ObjectTableId"
-    ReferencedTable="ObjectTables"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="StatusCode"
     ReferencedTable="ClosedTableStatus"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>
