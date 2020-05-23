@@ -14973,10 +14973,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature CustomsPartnerFtpFeature = tenantFeatures.Where(d => d.Code == "CPARTNERFTP" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature courierDeclarationFeature = tenantFeatures.Where(d => d.Code == "COURIERDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature customsReferantFeature = tenantFeatures.Where(d => d.Code == "CUSTOMREFERANT" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature CUSTOMSDECLARATIONFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSDECLARATION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #region Menus
 
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSDC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 2, CategoryTypeCode = null, TextCode = "General.MH.Declarations", Icon = "CustomersPath", FeatureId = customFeature.Id,FeatureUniqeCode= customFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSDC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 2, CategoryTypeCode = null, TextCode = "General.MH.Declarations", Icon = "CustomersPath", FeatureId = CUSTOMSDECLARATIONFeature.Id,FeatureUniqeCode= customFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", Code = "CSRS", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 7, CategoryTypeCode = null, TextCode = "General.MH.CustomsRequestsSheets", Icon = "ReportsPath", FeatureId = customFeature.Id, FeatureUniqeCode = customFeature.FeatureUniqeCode, }, MenusTablesRepository, tenantMenusTables);
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSPC", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 4, CategoryTypeCode = null, TextCode = "General.MH.PhysicalChecks", Icon = "CustomersPath", FeatureId = customFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.PhysicalCheck").FirstOrDefault().Id, FeatureUniqeCode = customFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);

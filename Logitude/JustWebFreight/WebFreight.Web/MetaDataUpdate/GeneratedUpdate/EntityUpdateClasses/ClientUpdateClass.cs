@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientUpdateClass
    {  		
-		public const string HashString = "05fe1ffa0cf412eb82b9cd3faf06b049";
+		public const string HashString = "59546d4922bb7ad2772f961368029899";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -113,7 +113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",

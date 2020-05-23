@@ -953,8 +953,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     public Tenant: number = SessionInfo.LoggedUserTenant;
     GetQueries() {
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
 
-        this.Queries = allQueries.filter(x => x.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode) && x.SystemLevel == true);
+        if(!this.ObjectTable.IsClosed){
+            this.Queries = allQueries.filter(x =>  FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode) );
+        
+        }
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
         if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == false) {
@@ -965,14 +969,25 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
+           if(this.QueryCode.includes(this.ObjectTableName+".")){
+            this.SelectedQuery = this.Queries.filter(f => f.UniqueCode == (/*this.ObjectTableName+ (f.UserId!= undefined?"." + f.UserId:"") + '.'+*/this.QueryCode))[0];
+           }
+           else{
             this.SelectedQuery = this.Queries.filter(f => f.UniqueCode == (this.ObjectTableName+ (f.UserId!= undefined?"." + f.UserId:"") + '.'+this.QueryCode))[0];
+           }
 
             this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
-            this.SelectedQuery = this.Queries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.'+this.QueryCode))[0];
+        
+            if(this.QueryCode.includes(this.ObjectTableName+".")){
+                this.SelectedQuery = this.Queries.filter(f => f.UniqueCode == (/*this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.'+*/this.QueryCode))[0];
+            }
+               else{
+                this.SelectedQuery = this.Queries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.'+this.QueryCode))[0];
+            }
         }
 
         else {
