@@ -17629,7 +17629,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             }, EventTypesRepository, tenantEventTypes);
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "DPR",
+                Code = "DWR",
                 EnglishName = "Amendment Waiting for customs",
                 Tenant = 0,
                 AddedManually = false,

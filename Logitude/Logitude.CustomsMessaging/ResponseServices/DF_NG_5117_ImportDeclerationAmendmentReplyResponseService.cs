@@ -50,6 +50,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private DeclarationPrintResponseData _SendDeclarationPrintResponse;
         private bool _IsSubmitDeclarationResponse;
         decimal? _TotalBtlCoverageNISSum = 0;
+
+        public INF_MSG_GenericResponseData Update5117(DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams  )
+        {
+             Update( customResponse , requestParams);
+            return this.MyResponseData;
+        }
         public override void Update(DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
         {
             var context = CustomContext.GetContext(requestParams.Tenant);
@@ -59,6 +65,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DeclarationCorrectionsPointerService myDeclarationCorrectionsPointerService = new DeclarationCorrectionsPointerService();
             string error = "";
 
+
+
+      
             FeatureQuery featureQuery = new FeatureQuery();
 
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
@@ -338,7 +347,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     {
                                                         Tenant = _MyDeclarationPM.Tenant,
                                                         objectTableName = "Customs.Declaration",
-                                                        EventCode = "DPR",
+                                                        EventCode = "DWR",
                                                         notes = null,
                                                         CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
                                                         EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
