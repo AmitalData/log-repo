@@ -825,7 +825,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             if (declarationPM.LoadingDateTime != null)
             {
-                DMExtensions.DepartureDateTime = new DepartureDateTimeType() { Value = declarationPM.LoadingDateTime };
+                DMExtensions.DepartureDateTime = new DepartureDateTimeType() { Value = Convert.ToDateTime( declarationPM.LoadingDateTime) };
                 
             }
 
