@@ -35,6 +35,8 @@ import { CustomsCollateralList } from '../../../../../Customs/EntityLists/Custom
 import { CustomsCollateralAnswerSharedDataService } from '../../../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
 import { GenericRequestParams } from "../../../../../Customs/DataContract/RequestParams/GenericRequestParams";
 import { SendRequestVIA } from "../../../../../Customs/DataContract/RequestParams/RequestParamsBase";
+import { DeclarationAmendmentSharedDataService } from "../../../../../Customs/Services/DataChange/DeclarationAmendmentSharedDataService";
+import { DeclarationEventManager } from "../../../../../Customs/Utilities/DeclarationEventManager";
 
 @Component({
     moduleId: module.id,
@@ -44,6 +46,7 @@ import { SendRequestVIA } from "../../../../../Customs/DataContract/RequestParam
 
 export class DeclarationAmendmentComponent extends BaseComponent implements OnInit  {
 
+    public _declarationAmendmentSharedDataService: DeclarationAmendmentSharedDataService = new DeclarationAmendmentSharedDataService();
 
     public amendmentObslist: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -61,6 +64,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
      CanOpenNewAmendment: boolean;
     public ObjectTableName: string = "Customs.Declaration";
     public DataContext: DeclarationAmendmentComponent = this;
+    DeclarationAmendmentCancelledEVENT: any;
 
     constructor(private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,
         private entityArgs: EntityArgs, private _declarationWebService: DeclarationWebService) {
@@ -72,6 +76,21 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                 this.LoadDeclarationAmendmentsList();
                  this.BuildColumns();
 
+                this.DeclarationAmendmentCancelledEVENT = DeclarationEventManager.DeclarationSplitDocumentSelection.subscribe(data => {
+                    //setTimeout(() => {
+                    //    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+                    //}, 10);
+                    alert("tset");
+
+                });
+
+                this._declarationAmendmentSharedDataService.CurrentMessage
+                    .subscribe(message => {
+                        debugger;
+                        if (message == "test") {
+                            alert("tset");
+                        }
+                    });
 
  
             });
@@ -79,9 +98,29 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
     }
 
     ngOnInit(): void {
+
+
+        this.DeclarationAmendmentCancelledEVENT = DeclarationEventManager.DeclarationSplitDocumentSelection.subscribe(data => {
+            //setTimeout(() => {
+            //    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+            //}, 10);
+            alert("tset");
+
+        });
+
+        this._declarationAmendmentSharedDataService.CurrentMessage
+            .subscribe(message => {
+                debugger;
+                if (message == "test") {
+                    alert("tset");
+                }
+            });
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
+ 
+
+
         this.IsLoaded = true;
     }
 
@@ -204,7 +243,16 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
             HtmlListComponentName: 'DeclarationAmendmentListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationAmendmentListTemplate',
         });
-
+        this.columns.push({
+            FieldName: "Delete",
+            DataTypeCode: 'String',
+            Display: '',
+            IsCustomTemplate: true,
+            Styles: { width: '35px' },
+            //IsCheckBox: true,
+            HtmlListComponentName: 'DeclarationAmendmentListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationAmendmentListTemplate',
+        });
     }
     private LoadDeclarationAmendmentsList() {
         this.amendmentObslist = new ObservableCollection([]);

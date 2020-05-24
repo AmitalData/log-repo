@@ -1056,6 +1056,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\TransactionNatureTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransferCargoMethodTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\UpdateCodePM.ts" />
+    <TypeScriptCompile Include="Customs\Services\DataChange\DeclarationAmendmentSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\SpotlightSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\CustomsCollateralAnswerSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\SpotlightSharedDataService.ts" />
