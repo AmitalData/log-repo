@@ -16,8 +16,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationAmendmentComponent } from '../../CustomsDeclarationModules/DeclarationTabs/Components/DeclarationAmendment/DeclarationAmendmentComponent';
 import { DeclarationPMService } from '../../../Customs/Services/StandardPMs/DeclarationPMService';
-import { DeclarationAmendmentSharedDataService } from '../../../Customs/Services/DataChange/DeclarationAmendmentSharedDataService';
-import { DeclarationEventManager } from '../../../Customs/Utilities/DeclarationEventManager';
+ import { DeclarationEventManager } from '../../../Customs/Utilities/DeclarationEventManager';
 
 @Component({
     moduleId: module.id,
@@ -40,8 +39,7 @@ export class DeclarationAmendmentListTemplate {
     public IsDisplayOnly: boolean = false;
     public color: string;
     public allowCancel: boolean;
-    public _declarationAmendmentSharedDataService: DeclarationAmendmentSharedDataService = new DeclarationAmendmentSharedDataService();
-    constructor(private CD: ChangeDetectorRef,
+     constructor(private CD: ChangeDetectorRef,
         private _declarationWebService: DeclarationWebService,
         private EntityResourceService: EntityResourceService,
         private comp: DeclarationAmendmentComponent,
@@ -67,18 +65,15 @@ export class DeclarationAmendmentListTemplate {
         var dec;
         declarationPMService.get(this.rowData.Id).subscribe(
             data => {
-                debugger;
-                dec = data.Result;
+                 dec = data.Result;
                 dec.AmendmentStatus = "5";
                 this.CurrentSession.StartBusyIndicatorSaving();
 
                 declarationPMService.update(dec).subscribe(
                     data => {
                         this.CurrentSession.StopBusyIndicator();
-                        debugger;
-                        DeclarationEventManager.DeclarationAmendmentCancelled.emit(null);
-                        this._declarationAmendmentSharedDataService.SendNextMessage("test");
-                    });
+                         DeclarationEventManager.DeclarationAmendmentCancelled.emit(null);
+                     });
 
         });
 

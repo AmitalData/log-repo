@@ -35,8 +35,7 @@ import { CustomsCollateralList } from '../../../../../Customs/EntityLists/Custom
 import { CustomsCollateralAnswerSharedDataService } from '../../../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
 import { GenericRequestParams } from "../../../../../Customs/DataContract/RequestParams/GenericRequestParams";
 import { SendRequestVIA } from "../../../../../Customs/DataContract/RequestParams/RequestParamsBase";
-import { DeclarationAmendmentSharedDataService } from "../../../../../Customs/Services/DataChange/DeclarationAmendmentSharedDataService";
-import { DeclarationEventManager } from "../../../../../Customs/Utilities/DeclarationEventManager";
+ import { DeclarationEventManager } from "../../../../../Customs/Utilities/DeclarationEventManager";
 
 @Component({
     moduleId: module.id,
@@ -46,8 +45,7 @@ import { DeclarationEventManager } from "../../../../../Customs/Utilities/Declar
 
 export class DeclarationAmendmentComponent extends BaseComponent implements OnInit  {
 
-    public _declarationAmendmentSharedDataService: DeclarationAmendmentSharedDataService = new DeclarationAmendmentSharedDataService();
-
+ 
     public amendmentObslist: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
     private customFileNo: string;
@@ -65,6 +63,7 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
     public ObjectTableName: string = "Customs.Declaration";
     public DataContext: DeclarationAmendmentComponent = this;
     DeclarationAmendmentCancelledEVENT: any;
+    public CurrentEditComponentId: string;
 
     constructor(private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,
         private entityArgs: EntityArgs, private _declarationWebService: DeclarationWebService) {
@@ -75,46 +74,48 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
                 this.CanOpenNewAmendment = (this.EntityPM.PaymentDate != null && this.EntityPM.AmendmentDontDisplayInList==false);
                 this.LoadDeclarationAmendmentsList();
                  this.BuildColumns();
-
-                this.DeclarationAmendmentCancelledEVENT = DeclarationEventManager.DeclarationSplitDocumentSelection.subscribe(data => {
-                    //setTimeout(() => {
-                    //    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-                    //}, 10);
-                    alert("tset");
-
-                });
-
-                this._declarationAmendmentSharedDataService.CurrentMessage
-                    .subscribe(message => {
-                        debugger;
-                        if (message == "test") {
-                            alert("tset");
-                        }
-                    });
-
+                this.Listen();
+ 
  
             });
 
     }
+    private Listen() {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+ 
+
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.ngOnInit();
+                    }
+                })
+            );
+
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
+                             this.ngOnInit();
+                        
+                    }
+                })
+            );
+
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                DeclarationEventManager.DeclarationAmendmentCancelled.subscribe(data => {
+                    this.ngOnInit();
+
+
+
+                }  ));
+        }
+    }
 
     ngOnInit(): void {
-
-
-        this.DeclarationAmendmentCancelledEVENT = DeclarationEventManager.DeclarationSplitDocumentSelection.subscribe(data => {
-            //setTimeout(() => {
-            //    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-            //}, 10);
-            alert("tset");
-
-        });
-
-        this._declarationAmendmentSharedDataService.CurrentMessage
-            .subscribe(message => {
-                debugger;
-                if (message == "test") {
-                    alert("tset");
-                }
-            });
+ 
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
