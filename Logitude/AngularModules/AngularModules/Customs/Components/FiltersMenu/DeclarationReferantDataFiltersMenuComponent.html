@@ -67,5 +67,31 @@
                 </li>
             </ul>
         </td>
+        <td style="width:20px; vertical-align:middle; font-size:11px; color : #6E7172;">
+        </td>
+        <td (click)="ButtonClick($event)">
+            <courier-filter-button #MyDropdownMenuFilterComponent
+                                   [IsDisabled]="IsDisplayOnly">
+                <div class="class-filter-content">
+                    <div>
+                        <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
+                    </div>
+                </div>
+
+                <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
+                    <ul class="P-button-drop-menu" style="text-align:right">
+                        
+                        <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowQueueManagmentAQ1();">
+                            <span>ניהול תורים</span>
+                        </li>
+
+                        <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowOCRQuery();">
+                            <span>שאילתא ל-OCR</span>
+                        </li>
+
+                    </ul>
+                </div>
+            </courier-filter-button>
+        </td>
     </tr>
 </table>
