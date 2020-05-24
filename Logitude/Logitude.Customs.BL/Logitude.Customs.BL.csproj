@@ -1517,6 +1517,8 @@
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PendingByKeywordUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SuppInvoiceItemsAbachStatementUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SupplierInvoiceUCRpdateService.cs" />
+    <Compile Include="EntityUpdateServices\SupplierInvoicePaymentUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleAddUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBanksCardUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBankUpdateService.cs" />
