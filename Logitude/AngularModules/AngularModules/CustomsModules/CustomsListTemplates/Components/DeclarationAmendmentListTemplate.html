@@ -31,3 +31,10 @@
 
     </div>
 </div>
+    <div *ngIf="fieldName == 'Delete'" style="position:relative;width:100%; height: 100%;">
+
+        <div style="width: 30px; float: right; height:20px;padding-top:3px">
+            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="Cancel()" [IsEnabled]="allowCancel"></IconButton>
+        </div>
+        </div>
+ 
