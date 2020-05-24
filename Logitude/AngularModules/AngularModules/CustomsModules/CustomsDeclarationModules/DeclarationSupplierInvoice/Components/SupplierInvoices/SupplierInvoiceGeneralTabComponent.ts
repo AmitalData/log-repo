@@ -276,7 +276,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 700;
-            logWindow.Height = 300;
+            logWindow.Height = 400;
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
