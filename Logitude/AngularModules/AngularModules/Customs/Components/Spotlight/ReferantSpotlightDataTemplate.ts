@@ -250,7 +250,6 @@ export class ExceptionReason extends BaseComponent {
     _StatusItems: KeyValuePair[] = [];
     constructor(entity: ReferantExceptionPM, Parent: ReferantSpotlightDataTemplate,public spotlightSharedDataService: SpotlightSharedDataService) {
         super();
-        debugger;
         this.parent = Parent;
         this.EntityPM = entity;
         this._StatusItems.push({ 'Key': "A", 'Value': "Active" });

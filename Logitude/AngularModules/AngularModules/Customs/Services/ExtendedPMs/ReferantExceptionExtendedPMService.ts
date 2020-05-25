@@ -45,7 +45,6 @@ export class ReferantExceptionExtendedPMService {
                 var serviceResponse: ServiceResponse = response.json();
                 var _mappedListsArray: Array<ReferantExceptionPM> = [];
                 for (var key in serviceResponse) {
-                    debugger;
                     var entity: ReferantExceptionPM;
                     entity = this.MapJsonToEntityPM(serviceResponse[key]);
                     _mappedListsArray.push(entity);
