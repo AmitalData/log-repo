@@ -581,12 +581,11 @@ export class CustomsRequestsSheetsComponent
     };
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+ 
 
-
-
-        if (filters == null) {
+       // if (filters == null) {
             filters = new ApiQueryFilters();
-        }
+       // }
 
         filters.PageSize = take;
         filters.PageIndex = skip;
