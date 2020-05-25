@@ -69,6 +69,15 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
+        public int GetDeclarationMaxAmendmentRequestNumber(int tenant)
+        {
+        
+            return (from a in context.Declarations
+                    where  a.Tenant == tenant
+                    select a).Max(rec => Convert.ToInt32( rec.AmendmentRequestNumber));
+        }
+
+
         public void GetDailyStatistic(int tenant,
             out int TotDec,
             out int TotDecPay,
