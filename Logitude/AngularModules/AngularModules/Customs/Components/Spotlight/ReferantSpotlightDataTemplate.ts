@@ -92,13 +92,15 @@ export class ReferantSpotlightDataTemplate
 
     private ReferantExceptionListPM : ReferantExceptionPM[] = [];
     getData(ExceptionsList: string[]) {
-        for (let exceptionReasonsCode of this.ExceptionsList) {
-            this._referantExceptionPMService.get(this.EntityPM.DeclarationId, exceptionReasonsCode)
+            this._referantExceptionExtendedPMService.GetByDecId(this.EntityPM.DeclarationId)
                 .subscribe((response: any) => {
-                    this.ReferantExceptionListPM.push = response.Result;
-                    this.ReferantExceptionItemsSource.Insert(new ExceptionReason(response.Result, this, this.spotlightSharedDataService));
+                    for (let item of response.Result) {
+                        this.ReferantExceptionListPM.push(item);
+                        this.ReferantExceptionItemsSource.Insert(new ExceptionReason(item, this, this.spotlightSharedDataService));
+
+                    }
                 });
-        }
+        
     }
     Add() {
         var item: ReferantExceptionPM = new ReferantExceptionPM();
@@ -125,7 +127,9 @@ export class ReferantSpotlightDataTemplate
     private BuildExceptionReasonsList() {
         var newValue: string="";
         this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
-            newValue = newValue + "," + item.EntityPM.ExceptionReasonsCode;
+            if (item.EntityPM.Status == "A") {
+                newValue = newValue + "," + item.EntityPM.ExceptionReasonsCode;
+            }
         });
         this.EntityPM.ExceptionReasonsList = newValue;
     }
