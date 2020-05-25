@@ -191,7 +191,7 @@ export class ReferantSpotlightDataTemplate
 
                     SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.RowIndex });
                     //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
-
+                });
                 this.DeletedCodeList.forEach((item: string) => {
                     this._referantExceptionExtendedPMService.Delete(this.EntityPM.DeclarationId, item).subscribe((response: any) => {
                         this.DeletedCodeList.splice(this.DeletedCodeList.indexOf(item), 1);
@@ -208,7 +208,6 @@ export class ReferantSpotlightDataTemplate
                     }
                 }); 
             }
-            
             this.spotlightSharedDataService.IsDirty = false;
             this.ShowBusyIndicator = false;
 
