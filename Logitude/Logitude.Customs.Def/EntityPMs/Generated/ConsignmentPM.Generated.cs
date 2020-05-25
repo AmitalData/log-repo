@@ -713,6 +713,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string recieverWareHouseCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RecieverWareHouseCode  
+	   {
+	    
+	     get
+		{
+		   return recieverWareHouseCode;
+		 }
+		 set
+		 {
+		   if(recieverWareHouseCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RecieverWareHouseCode",OldValue=recieverWareHouseCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   recieverWareHouseCode=value;
+		   }
+			
+		 }
+	   }
+	  private string recieverWareHouseName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RecieverWareHouseName  
+	   {
+	    
+	     get
+		{
+		   return recieverWareHouseName;
+		 }
+		 set
+		 {
+		   if(recieverWareHouseName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RecieverWareHouseName",OldValue=recieverWareHouseName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   recieverWareHouseName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

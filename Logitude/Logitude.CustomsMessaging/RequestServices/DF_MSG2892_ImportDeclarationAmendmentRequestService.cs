@@ -402,11 +402,16 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private string GetNextAmendmentRequestNumber()
         {
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(_DeclarationPMOrg.Tenant);
+           DeclarationQueryService declarationQueryService = new DeclarationQueryService(_DeclarationPMOrg.Tenant);
 
-          var declarations=  declarationQueryService.GetDeclarationAmendmentsById(_DeclarationPMOrg.Tenant, _DeclarationPMOrg.Id);
+            //var declarations=  declarationQueryService.GetDeclarationAmendmentsById(_DeclarationPMOrg.Tenant, _DeclarationPMOrg.Id);
 
-          return (Convert.ToInt32( declarations.Max(x => x.AmendmentRequestNumber) )+ 1).ToString();
+            //return (Convert.ToInt32( declarations.Max(x => x.AmendmentRequestNumber) )+ 1).ToString();
+
+
+            return declarationQueryService.GetDeclarationMaxAmendmentRequestNumber(_DeclarationPMOrg.Tenant)+1.ToString();
+
+
          }
 
         private ResponseAdditionalInformation[] AdditionalInformation()

@@ -231,6 +231,8 @@ import { AmountTypeListService } from './Services/StandardLists/AmountTypeListSe
 import { ClaimReasonTypeListService } from './Services/StandardLists/ClaimReasonTypeListService';
 import { ClassificationTypeListService } from './Services/StandardLists/ClassificationTypeListService';
 import { TransactionNatureTypeListService } from './Services/StandardLists/TransactionNatureTypeListService';
+import { NbcDeclarationTypeListService } from './Services/StandardLists/NbcDeclarationTypeListService';
+
 
 //#endregion
 
@@ -303,8 +305,8 @@ import { SignStationExtendedListService } from './Services/ExtendedLists/SignSta
 import { DeclarationCourierStatusExtendedListService } from './Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
 import { RecallClientsForCutoms } from '../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
 import { CustomsCollateralExtendedListService } from './Services/ExtendedLists/CustomsCollateralExtendedListService';
-import { CourierMasterExtendedListService } from './Services/ExtendedLists/CourierMasterExtendedListService';
-
+ import { CourierMasterExtendedListService } from './Services/ExtendedLists/CourierMasterExtendedListService';
+ 
 //#endregion
 
 //#region ExtendedPMs
@@ -319,8 +321,7 @@ import { SupplierInvoiceExtendedPMService } from './Services/ExtendedPMs/Supplie
 import { ReferantExceptionExtendedPMService } from './Services/ExtendedPMs/ReferantExceptionExtendedPMService';
 
 ///????  import { CustomsRequestSheetExtendedPMService } from './Services/ExtendedPMs/CustomsRequestSheetExtendedPMService';
-
-
+ 
 //#endregion
 
 //#region WebServices
@@ -336,6 +337,7 @@ import { PaymentOrderWebService } from './Services/WebServices/PaymentOrderWebSe
 import { QuantityTypeMessageService } from './Services/WebServices/QuantityTypeMessageService';
 import { TapagMessagesService } from './Services/WebServices/TapagMessagesService';
 import { VendorMessagesService } from './Services/WebServices/VendorMessagesService';
+import { SupplierInvioceItemCertificatsService } from './Services/WebServices/SupplierInvioceItemCertificatsService';
 import { LoadTestService } from './Services/WebServices/LoadTestService';
 //#endregion
 
@@ -603,6 +605,8 @@ export class ModuleProviders {
             case "PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
+            case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
+ 
              //#endregion                
 
             //#region StandardPMs
@@ -704,6 +708,7 @@ export class ModuleProviders {
             case "QuantityTypeMessageService": { myResult = new QuantityTypeMessageService(); break; }
             case "TapagMessagesService": { myResult = new TapagMessagesService(); break; }
             case "VendorMessagesService": { myResult = new VendorMessagesService(); break; }
+            case "SupplierInvioceItemCertificatsService": { myResult = new SupplierInvioceItemCertificatsService(); break; }
             case "LoadTestService": { myResult = new LoadTestService(); break; }
                 
             //#endregion

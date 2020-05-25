@@ -15,7 +15,7 @@ import { CustomsAutonomyKeywordExtendedPMService } from '../../Services/Extended
 import { AppTool } from '../../../Infrastructure/Tools';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-
+ 
 @Component({
     moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
@@ -33,6 +33,7 @@ export class FieldTemplateComponent {
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
     private _ListComponentArgs: ListComponentArgs ;
     @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
+    RowIndex: any;
     constructor(private CD: ChangeDetectorRef) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
@@ -56,6 +57,7 @@ export class FieldTemplateComponent {
         this.IsSpotLightTemplate = args['IsSpotLightTemplate'];
         this.SpotlightDataTemplate = args['SpotlightDataTemplate'];
         this.IsHeaderScreenTemplate = args['IsHeaderScreenTemplate'];
+        this.RowIndex = args['RowIndex'];
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
         }
@@ -70,10 +72,12 @@ export class FieldTemplateComponent {
     RunComponent() {
         if (this.SpotLightViewContainerRef) {
             this.SpotLightViewContainerRef.clear();
+
             var myComponentPath = "./Customs/Components/Spotlight/ReferantSpotlightDataTemplate";
             SessionLocator.DynamicLoader.Load(myComponentPath, this.SpotLightViewContainerRef)
                 .then(cmpRef => {
-                    cmpRef.instance.Run(this.Entity, this.SpotLightViewContainerRef);
+
+                    cmpRef.instance.Run(this.Entity, this.SpotLightViewContainerRef, this.RowIndex);
                 });
 
         }
@@ -127,6 +131,8 @@ export class FieldTemplateComponent {
  
     }
 
+   
+ 
     OpenClassificationRemarks() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
         var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
@@ -158,17 +164,17 @@ export class FieldTemplateComponent {
         logitudeWindow.Width = 750;
         logitudeWindow.ShowCloseButton = true;
         if (this.Entity.IsControllerRemarks) {
-            _declarationRemarksService.GetINCorINAtatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
-                .subscribe((response: any) => {
-                    windowArgs.EntityPM = response.Result;
-                    let counter = response.Result.length;
-                    logitudeWindow.Title = counter + "  הערות מבקר  ";
-                    logitudeWindow.WindowArgs = windowArgs;
-                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
-                });
-        }
+                _declarationRemarksService.GetINCorINAtatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
+                    .subscribe((response: any) => {
+                        windowArgs.EntityPM = response.Result;
+                        let counter = response.Result.length;
+                        logitudeWindow.Title = counter + "  הערות מבקר  ";
+                        logitudeWindow.WindowArgs = windowArgs;
+                        logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+                    });
+         }
     }
-
+ 
 
 
     DeleteAutonomyKey(value: number) {
@@ -181,12 +187,32 @@ export class FieldTemplateComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) { // YES
                     this.customsAutonomyKeywordExtendedPMService.deleteByid(value).subscribe((response: ServiceResponse) => {
-                        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                        //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                        SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
                         this.CD.detectChanges();
                     });
                 }
             });
         }
+    }
+
+ 
+    public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {
+
+
+        var editWindow = new LogitudeWindow();
+
+        editWindow.ShowHeaderButtons = true;
+        editWindow.Title = windowTitle;
+        editWindow.Height = 770;
+        editWindow.Width = 1500;
+
+        editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
+        editWindow.WindowClosed.subscribe(res => {
+
+
+        });
+
     }
 
 
@@ -220,7 +246,9 @@ export class FieldTemplateComponent {
                             sub.unsubscribe();
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+                            this.CD.detectChanges();
                         }
                     }
                 );
@@ -244,7 +272,7 @@ export class FieldTemplateComponent {
             alert("ShowCFIFILEMMoveToQueueScreen");
         }
     }
-    
+
 
     PreShowCFIFILEMMoveSIToOCRScreen(value: string) {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
@@ -282,7 +310,7 @@ export class FieldTemplateComponent {
                             sub.unsubscribe();
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
                         }
                     }
                 );
@@ -337,7 +365,7 @@ export class FieldTemplateComponent {
                             sub.unsubscribe();
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });;
                         }
                     }
                 );
@@ -378,6 +406,7 @@ export class FieldTemplateComponent {
                     ObjectTableName: "Customs.Declaration",
                     //BackButtonLabel: label
                 });
+ 
                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                     if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
                         SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
@@ -390,27 +419,10 @@ export class FieldTemplateComponent {
 
     OnBackFromEdit(selectedEntityId, $event) {
         if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentListComponent != null) {
-            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+            SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
         }
     }
-
-    public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {
-
-
-        var editWindow = new LogitudeWindow();
-
-        editWindow.ShowHeaderButtons = true;
-        editWindow.Title = windowTitle;
-        editWindow.Height = 770;
-        editWindow.Width = 1500;
-
-        editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
-
-
-        });
-
-    }
+ 
     ShowCFIUFILEFromDeclarationReferantData() {
 
         let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
@@ -502,5 +514,6 @@ export class FieldTemplateComponent {
         }
 
     }
+
 
 }

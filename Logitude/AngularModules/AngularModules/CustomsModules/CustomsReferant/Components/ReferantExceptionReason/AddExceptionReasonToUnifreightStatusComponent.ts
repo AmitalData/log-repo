@@ -162,7 +162,7 @@ export class ExceptionReasonLineComponent extends BaseComponent {
                         var confirm = new ConfirmWindow();
                         confirm.Width = 350;
                         confirm.Height = 200;
-                        confirm.Title = "קישור סטטוס לחריג רפרנט"; 
+                        confirm.Title = "קישור סטטוס לחריג רפרנט";
                         confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                         confirm.ShowNoButton = true;
                         confirm.Show("לקוד זה כבר קושר סטטוס " + response.Result.UnifreightStatusCode + " האם להחליף לסטטוס " + this.parent.UnifreightStatusCode + "?");

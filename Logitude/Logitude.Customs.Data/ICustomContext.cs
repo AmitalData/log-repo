@@ -222,6 +222,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<MeasurmentUnit> MeasurmentUnits { get; }
 		 IDbSet<ModificationAndDiscountType> ModificationAndDiscountTypes { get; }
 		 IDbSet<MorningMessageType> MorningMessageTypes { get; }
+		 IDbSet<NbcDeclarationType> NbcDeclarationTypes { get; }
 		 IDbSet<Notification> Notifications { get; }
 		 IDbSet<NotificationDefinition> NotificationDefinitions { get; }
 		 IDbSet<NotificationReply> NotificationReplies { get; }

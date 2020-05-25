@@ -95,6 +95,7 @@ export class CustomsRequestsSheetsComponent
     FiltersSectionVisibility: boolean = true;
     RefreshButtonVisibility: boolean;
     CloseButtonVisibility: boolean;//?????
+    selectStatusesHeight: string;
     //_stratSearch: boolean = true;
     public get AllCRSSChecked() { return this._AllCRSSChecked };
     public set AllCRSSChecked(value: boolean) {
@@ -121,6 +122,11 @@ export class CustomsRequestsSheetsComponent
     SetWindowArgs(args) {
         if (args != null) {
             this.isReAnAnalysis = args.isReAnAnalysis;
+            if (this.isReAnAnalysis)
+                this.selectStatusesHeight = "100px";
+            else
+                this.selectStatusesHeight = "410px";
+
         }
     }
 
@@ -186,8 +192,13 @@ export class CustomsRequestsSheetsComponent
                             return (a.LocalName === b.LocalName) ? 0 : (a.LocalName < b.LocalName) ? -1 : 1
 
                         }).forEach((item) => {
+                            if (this.isReAnAnalysis && ["25", "21", "15"].includes(item.Code)) {
+                                 this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", true));
+}
+                            else if (!this.isReAnAnalysis ){
+                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", false));
 
-                            this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration"));
+                            }
                         });
 
                         if (this.entityArgs.ObjectTableName == "Customs.Declaration") {
@@ -217,14 +228,14 @@ export class CustomsRequestsSheetsComponent
         //this.CRSSearch();
     }
     CancelByFilters() {
-         if (!this.CheckValidation("Cancel")) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Width = 400;
-            messageWindow.Height = 150;
-            messageWindow.ShowErrorIcon = true;
-             messageWindow.Show("You cannot cancel a request other than status Sending failed(15).");
-            return;
-        }
+        // if (!this.CheckValidation("Cancel")) {
+        //    var messageWindow = new MessageWindow();
+        //    messageWindow.Width = 400;
+        //    messageWindow.Height = 150;
+        //    messageWindow.ShowErrorIcon = true;
+        //     messageWindow.Show("אין אפשרות לבטל בקשות בסטטוס ניתוח נכשל/תשובה תקינה , הסר את הסטטוס ונסה שוב");
+        //    return;
+        //}
         this.CurrentSession.StartBusyIndicator("");
 
          this.InitFilter();
@@ -263,7 +274,7 @@ export class CustomsRequestsSheetsComponent
             messageWindow.Width = 400;
             messageWindow.Height = 150;
             messageWindow.ShowErrorIcon = true;
-            messageWindow.Show("Requests in different statuses cannot be re-analyzed from failure or request registered");
+            messageWindow.Show("אין אפשרות לנתח מחדש בקשות בסטטוס שליחה נכשלה , הסר את הסטטוס ונסה שוב");
             return;
         }
         this.CurrentSession.StartBusyIndicator("");
@@ -570,12 +581,11 @@ export class CustomsRequestsSheetsComponent
     };
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+ 
 
-
-
-        if (filters == null) {
+       // if (filters == null) {
             filters = new ApiQueryFilters();
-        }
+       // }
 
         filters.PageSize = take;
         filters.PageIndex = skip;
@@ -680,7 +690,7 @@ export class CustomsRequestsSheetsComponent
     }
 
     GetRequestStatusString(filters: any) {
-        let RequestStatusString: string = "";
+         let RequestStatusString: string = "";
         if (this.AllCRSSChecked) return;
 
 
@@ -780,17 +790,19 @@ export class CustomsRequestsSheetsComponent
 
 ////////////////////////////////////////
 export class CustomsRequestsSheetStatusListVM {
-    constructor(public MyItem: CustomsRequestsSheetStatusList, isdeclaration?: boolean) {
+    constructor(public MyItem: CustomsRequestsSheetStatusList, isdeclaration?: boolean, isReAnAnalysis?: boolean) {
         var Code = MyItem.Code;
-        if (Code == "1" || Code == "2" || Code == "3" || Code == "4" || Code == "5" || Code == "21" || Code == "99") {
-            this.IsChecked = true;
-        }
+         if (!isReAnAnalysis) {
+            if (Code == "1" || Code == "2" || Code == "3" || Code == "4" || Code == "5" || Code == "21" || Code == "99") {
+                this.IsChecked = true;
+            }
 
-        if (//declarationPM != null
-            isdeclaration
-            && Code != "99") {
+            if (//declarationPM != null
+                isdeclaration
+                && Code != "99") {
 
-            this.IsChecked = true;
+                this.IsChecked = true;
+            }
         }
     }
     IsChecked: boolean;

@@ -1,5 +1,5 @@
 declare var window: any;
-import {Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef, OnDestroy, Input} from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {AppTool} from '../../Tools';
 import {ObjectTablePM} from '../../EntityPMs/ObjectTablePM';
@@ -12,7 +12,7 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
     moduleId: module.id,
     templateUrl: "./ObjectFieldTemplate.html",
     selector: 'ObjectFieldTemplate',
-    inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate','SpotlightDataTemplate'],
+    inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate', 'SpotlightDataTemplate','RowIndex'],
 })
 
 // https://github.com/angular/angular/issues/10762
@@ -41,6 +41,9 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
     public NumberFieldTextAlign: string = "right";
     @ViewChild('Template', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     public isRTL: boolean = false;
+   
+    public RowIndex: string;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
     }
@@ -244,7 +247,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
 
                     SessionLocator.DynamicLoader.Load(myComponentPath, this.viewContainerRef)
                         .then(cmpRef => {
-                            cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate, IsSpotLightTemplate: this.IsSpotLightTemplate, SpotlightDataTemplate: this.SpotlightDataTemplate });
+                            cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate, IsSpotLightTemplate: this.IsSpotLightTemplate, SpotlightDataTemplate: this.SpotlightDataTemplate, RowIndex: this.RowIndex});
 
                             this.DetectChanges();
 

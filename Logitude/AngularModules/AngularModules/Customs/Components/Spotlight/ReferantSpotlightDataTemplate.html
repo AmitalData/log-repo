@@ -1,4 +1,4 @@
-<div  style="min-height: 150px; width: 100%; border: 1px solid #6A8299; background-color:#E8F7FF; ">
+<div style="min-height: 150px; width: 100%; border: 1px solid #6A8299; background-color:#E8F7FF; ">
     <div style="height: 150px; position: absolute; left: 5px; right: 5px; top: 5px;">
         <div class="MediaFillRelative" style=" overflow-x: auto;overflow-y: hidden;">
             <table style="width:80%;">
@@ -8,11 +8,11 @@
                     </td>
                 </tr>
                 <tr style="visibility:visible;">
-                    <td style=" width:10%; padding-bottom:115px; right:30px; z-index:99">
-                        <div><IconButton  [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
+                    <td style=" width:10%; padding-bottom:115px; left:110px; z-index:99">
+                        <div><IconButton [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
                     </td>
-                    <td>
-                        <div *ngIf="_IsReady" class="CellContent" style="width:435px; max-height:125px; bottom :15px; left:170px">
+                    <td style="left:150px">
+                        <div *ngIf="_IsReady" class="CellContent" style="width:435px; max-height:125px; bottom :15px; left:300px">
                             <logitude-edit-grid GridWidth="100%"
                                                 GridHeight="100%"
                                                 (RowEnded)="OnRowEnded($event)"

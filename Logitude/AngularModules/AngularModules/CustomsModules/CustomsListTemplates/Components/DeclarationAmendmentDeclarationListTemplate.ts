@@ -15,6 +15,8 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationAmendmentComponent } from '../../CustomsDeclarationModules/DeclarationTabs/Components/DeclarationAmendment/DeclarationAmendmentComponent';
+import { DeclarationPMService } from '../../../Customs/Services/StandardPMs/DeclarationPMService';
+ import { DeclarationEventManager } from '../../../Customs/Utilities/DeclarationEventManager';
 
 @Component({
     moduleId: module.id,
@@ -36,8 +38,12 @@ export class DeclarationAmendmentListTemplate {
 
     public IsDisplayOnly: boolean = false;
     public color: string;
-    constructor(private CD: ChangeDetectorRef, private _declarationWebService: DeclarationWebService,
-        private EntityResourceService: EntityResourceService, private comp: DeclarationAmendmentComponent) {
+    public allowCancel: boolean;
+     constructor(private CD: ChangeDetectorRef,
+        private _declarationWebService: DeclarationWebService,
+        private EntityResourceService: EntityResourceService,
+        private comp: DeclarationAmendmentComponent,
+          ) {
         
     }
 
@@ -48,55 +54,36 @@ export class DeclarationAmendmentListTemplate {
             this.rowData = DeclarationListRecord;
             this.fieldName = fieldName;
             this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as DeclarationPM;
+             this.allowCancel = AppTool.IsNullOrEmpty(this.rowData.AmendmentStatus);
             this.CD.detectChanges();
         });
     }
- 
+
+    Cancel() {
+        var declarationPMService: DeclarationPMService = new DeclarationPMService();
+
+        var dec;
+        declarationPMService.get(this.rowData.Id).subscribe(
+            data => {
+                 dec = data.Result;
+                dec.AmendmentStatus = "5";
+                this.CurrentSession.StartBusyIndicatorSaving();
+
+                declarationPMService.update(dec).subscribe(
+                    data => {
+                        this.CurrentSession.StopBusyIndicator();
+                         DeclarationEventManager.DeclarationAmendmentCancelled.emit(null);
+                     });
+
+        });
+
+    
+    }
 
     ChangeAmendment(id: string) {
          this.comp.OpenNewAmendment(id, this.rowData.DeclarationNumber);
     }
-
-
-    //public OpenNewAmendment(id:string) {
-
-
-    //    var searchParams: GenericRequestParams = new GenericRequestParams();
-    //    searchParams.Tenant = SessionLocator.Tenant;
-    //    searchParams.AppicationId = id;
-    //    searchParams.LoggingEnabled = true;
-    //    searchParams.LoggingEntityId = id;
-    //    searchParams.LoggingEntityReference = this.rowData.DeclarationNumber;
-    //    searchParams.LoggingObjectTableId = this.ObjectTableName;
-    //    searchParams.LoggingUserId = SessionLocator.LoggedUserId;
-    //    searchParams.RequestName = "Declaration Request";
-    //    searchParams.ResponseName = "Declaration Response";
-    //    searchParams.RequestVIA = SendRequestVIA.DCABatch;
-    //    searchParams.ForcePersonalSign = false;
-    //     this._declarationWebService
-    //        .GetNewAmendmentDeclaration(searchParams)
-    //        .subscribe((response: any) => {
-
-    //            if (response) {
-    //                if (!response.HasError) {
-    //                    var entity = response.Result;
-    //                    if (entity != null) {
-    //                        // this.LoadDeclarationAmendmentsList();
-    //                        //setTimeout(() => {
-    //                        //    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-    //                        //}, 10);
-    //                        this.CurrentSession.StopBusyIndicator();
-    //                         this.openNewDeclaration(entity.Id);
-
-    //                    }
-
-    //                }
-    //            }
-    //        });
-
-
-    //}
-
+ 
 
     openNewDeclaration(id: string) {
          SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)

@@ -572,17 +572,34 @@
     <Compile Include="Migrations\202005110650112_CngExpDecCon.Designer.cs">
       <DependentUpon>202005110650112_CngExpDecCon.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202005111320113_AddExportTables.cs" />
     <Compile Include="Migrations\202005111320113_AddExportTables.Designer.cs">
       <DependentUpon>202005111320113_AddExportTables.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202005111347238_DeclarationExportRecipientMap.cs" />
     <Compile Include="Migrations\202005111347238_DeclarationExportRecipientMap.Designer.cs">
       <DependentUpon>202005111347238_DeclarationExportRecipientMap.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202005140811047_AddNbcDeclarationTypes.cs" />
+    <Compile Include="Migrations\202005140811047_AddNbcDeclarationTypes.Designer.cs">
+      <DependentUpon>202005140811047_AddNbcDeclarationTypes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005140836536_ExportChanges.cs" />
+    <Compile Include="Migrations\202005140836536_ExportChanges.Designer.cs">
+      <DependentUpon>202005140836536_ExportChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005141842395_addRecieverWareHouseCode.cs" />
+    <Compile Include="Migrations\202005141842395_addRecieverWareHouseCode.Designer.cs">
+      <DependentUpon>202005141842395_addRecieverWareHouseCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005181449081_RferantChanges.cs" />
+    <Compile Include="Migrations\202005181449081_RferantChanges.Designer.cs">
+      <DependentUpon>202005181449081_RferantChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005200752046_loaddatenull.cs" />
+    <Compile Include="Migrations\202005200752046_loaddatenull.Designer.cs">
+      <DependentUpon>202005200752046_loaddatenull.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1003,14 +1020,27 @@
     <EmbeddedResource Include="Migrations\202005110650112_CngExpDecCon.resx">
       <DependentUpon>202005110650112_CngExpDecCon.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202005111320113_AddExportTables.resx">
       <DependentUpon>202005111320113_AddExportTables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005111347238_DeclarationExportRecipientMap.resx">
       <DependentUpon>202005111347238_DeclarationExportRecipientMap.cs</DependentUpon>
     </EmbeddedResource>
-
+    <EmbeddedResource Include="Migrations\202005140811047_AddNbcDeclarationTypes.resx">
+      <DependentUpon>202005140811047_AddNbcDeclarationTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005140836536_ExportChanges.resx">
+      <DependentUpon>202005140836536_ExportChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005141842395_addRecieverWareHouseCode.resx">
+      <DependentUpon>202005141842395_addRecieverWareHouseCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005181449081_RferantChanges.resx">
+      <DependentUpon>202005181449081_RferantChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005200752046_loaddatenull.resx">
+      <DependentUpon>202005200752046_loaddatenull.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

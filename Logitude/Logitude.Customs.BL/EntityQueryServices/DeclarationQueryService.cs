@@ -275,6 +275,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return MyDeclarationPendingPMList;
         }
 
+
+        public int GetDeclarationMaxAmendmentRequestNumber( int tenant)
+        {
+             DeclarationRepository declarationRepository = new DeclarationRepository(context);
+            return declarationRepository.GetDeclarationMaxAmendmentRequestNumber(tenant);
+        }
+
+
         public string GetIdByDeclarationNumber(string declarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return "";

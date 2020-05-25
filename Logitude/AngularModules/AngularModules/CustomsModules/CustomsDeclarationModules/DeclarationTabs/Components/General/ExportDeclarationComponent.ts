@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
-import { AppTool, FormatTool } from '../../../../../Infrastructure/Tools';
+import { AppTool, FormatTool, DateTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
@@ -31,7 +31,7 @@ export class ExportDeclarationComponent extends BaseComponent {
     public IsDisplayOnly: boolean = false;
     _DeclarationExportRecipientPM: DeclarationExportRecipientPM;
     ClonedDeclarationExportRecipientPM: DeclarationExportRecipientPM;
-
+    public ValidationErrorsList: string[] = [];
     constructor() {
         super();
 
@@ -42,9 +42,20 @@ export class ExportDeclarationComponent extends BaseComponent {
 
     //#region properties
 
+    _LoadingDateTime: any = null;
+    public get LoadingDateTime() {
+        return this._LoadingDateTime;
+        
+        
+    }
+    public set LoadingDateTime(newValue: any) {
+        this.EntityPM.LoadingDateTime = newValue;
+        this._LoadingDateTime = newValue;
+        if (DateTool.IsNullOrMinDateTime(newValue)) {
+            this._LoadingDateTime= null;
+        }
 
-    public get LoadingDateTime() { return this.EntityPM.LoadingDateTime; }
-    public set LoadingDateTime(newValue: Date) { this.EntityPM.LoadingDateTime = newValue; }
+    }
 
 
 
@@ -84,16 +95,33 @@ export class ExportDeclarationComponent extends BaseComponent {
     public get RecipientName() { return this._DeclarationExportRecipientPM.RecipientName; }
     public set RecipientName(newValue: string) {
         this._DeclarationExportRecipientPM.RecipientName = newValue;
+        if (newValue) {
+            this.UIProperties.SetRequired("RecipientName", this.DeclarationExportRecipientTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("RecipientName", this.DeclarationExportRecipientTableName, true);
+        }
     }
     public get RecipientAddress() { return this._DeclarationExportRecipientPM.RecipientAddress; }
     public set RecipientAddress(newValue: string) {
         this._DeclarationExportRecipientPM.RecipientAddress = newValue;
+        if (newValue) {
+            this.UIProperties.SetRequired("RecipientAddress", this.DeclarationExportRecipientTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("RecipientAddress", this.DeclarationExportRecipientTableName, true);
+        }
     }
     public _RecipientIssueCountry: any;
     public get RecipientIssueCountryCode() { return this._DeclarationExportRecipientPM.RecipientIssueCountryCode; }
     public set RecipientIssueCountryCode(newValue: string) {
         this._DeclarationExportRecipientPM.RecipientIssueCountryCode = newValue;
-        
+        if (newValue) {
+            this.UIProperties.SetRequired("RecipientIssueCountryCode", this.DeclarationExportRecipientTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("RecipientIssueCountryCode", this.DeclarationExportRecipientTableName, true);
+        }  
     }
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -118,12 +146,21 @@ export class ExportDeclarationComponent extends BaseComponent {
             if (this.IsDisplayOnly) {
                 this.SetScreenFieldsEditability();
             } else {
-               
+                this.LoadingDateTime = this.EntityPM.LoadingDateTime;//Make Nullabe
+                this.ForceMust();
             }
             
 
 
         }
+    }
+    ForceMust(): any {
+        
+        this.DestinationCountryCode = this.EntityPM.DestinationCountryCode;
+        this.IsExporterConfirmation = this.EntityPM.IsExporterConfirmation;
+        this.RecipientName = this._DeclarationExportRecipientPM.RecipientName;
+        this.RecipientAddress = this._DeclarationExportRecipientPM.RecipientAddress;
+        this.RecipientIssueCountryCode = this._DeclarationExportRecipientPM.RecipientIssueCountryCode;
     }
 
     SetScreenFieldsEditability() {
@@ -191,10 +228,36 @@ export class ExportDeclarationComponent extends BaseComponent {
 
     doDisable: boolean;
 
+    FillErrors() {
+        var errors: string[] = [];
+        //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        this.ValidationErrorsList = errors;
 
+        if (AppTool.IsNullOrEmpty(this.DestinationCountryCode)) {
+
+            this.ValidationErrorsList.push("ארץ יעד הינו שדה  חובה");
+        }
+
+        //if (AppTool.IsNullOrEmpty(this.IsExporterConfirmation)) {
+        //    this.ValidationErrorsList.push("נמל פריקה הינו שדה  חובה");
+        //}
+        if (AppTool.IsNullOrEmpty(this.RecipientName)) {
+            this.ValidationErrorsList.push("שם המקבל הינו שדה  חובה");
+        }
+        if (AppTool.IsNullOrEmpty(this.RecipientAddress)) {
+            this.ValidationErrorsList.push("כתובת המקבל הינו שדה  חובה");
+        }
+        if (AppTool.IsNullOrEmpty(this.RecipientIssueCountryCode)) {
+            this.ValidationErrorsList.push("מדינת המקבל הינו שדה  חובה");
+        }
+
+    }
     OkButtonClicked() {
       
-
+        this.FillErrors();
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
         SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
     
 

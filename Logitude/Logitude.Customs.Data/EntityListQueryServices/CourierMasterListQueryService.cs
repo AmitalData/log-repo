@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CourierMasterList> GetIqueryableList(IQueryable<CourierMaster> iQueryable)
         {
-
+            var today = DateTime.Now.Date;
             var qJoin=
 (from p in context.CourierDeclarations
  join dec in context.Declarations
@@ -60,14 +60,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
 
 
-//#if false
+                                                       //#if false
 
 
                                                    join recJoin in qMyJoin
                                                               on a.Id equals recJoin.CourierMasterId
                                                               into qrecJoin
                                                    from myJoin in qrecJoin.DefaultIfEmpty()
-//#endif
+                                                       //#endif
                                                    select new CourierMasterList()
                                                    {
                                                        // comments made because of cannot convert nclob to char exception ---mohammad
@@ -114,11 +114,36 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        CalcPending900 = myJoin != null ? myJoin.P900 : 0,
                                                        CalcPendingCustoms = myJoin != null ? myJoin.IsPendingCustoms : 0,
                                                        CalcSuspendedDeclarations = myJoin != null ? myJoin.IsSuspendedDeclarations : 0,
-                                                   });
+                                                       EstimatedArrivalColor =
+                                                       a.EstimatedArrivalDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) == today ? "Blue" :
+                                                       (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) < today ? "Red" : "Black")) : "Black",
+                                                    });
+        
             return query;
 		}
 
-		private IQueryable<CourierMaster> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CourierMaster> iQueryable, int tenant)
+
+        public string  SetEstimatedArrivalColor(DateTime? EstimatedArrivalDate)
+        {
+            string sColor = "Black";
+            var today = DateTime.Now.Date;
+
+            if (EstimatedArrivalDate != null)
+            {
+                if( EstimatedArrivalDate  == today)
+                {
+                    sColor = "Blue";
+                }
+                if ( EstimatedArrivalDate  < today)
+                {
+                    sColor = "Red";
+                }
+            }
+
+            return sColor;
+        }
+
+        private IQueryable<CourierMaster> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CourierMaster> iQueryable, int tenant)
         {
             return iQueryable;
 

@@ -4,8 +4,8 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { PhysicalCheckPMService } from '../../Services/StandardPMs/PhysicalCheckPMService'
-import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationReferantDataPMService';
-import { DeclarationReferantDataPM } from '../../EntityPMs/DeclarationReferantDataPM';
+import { DeclarationReferantDataPMService } from '../../Services/StandardPMs/DeclarationRefernatDataPMService';
+import { DeclarationReferantDataPM } from '../../EntityPMs/DeclarationRefernatDataPM';
 import { BaseRequestsSheetMassaging } from '../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ReferantExceptionPM } from '../../EntityPMs/ReferantExceptionPM';
@@ -29,6 +29,7 @@ import { SpotlightSharedDataService } from '../../../Customs/Services/DataChange
 export class ReferantSpotlightDataTemplate
     extends BaseComponent
     implements AfterViewInit{
+    RowIndex: any;
     ngAfterViewInit(): void { 
         this.ShowBusyIndicator = false;
     }
@@ -67,8 +68,13 @@ export class ReferantSpotlightDataTemplate
         }
     }
     spotLightViewContainerRef: ViewContainerRef;
-    Run(entity: DeclarationReferantDataPM, SpotLightViewContainerRef: ViewContainerRef) {
+
+    Run(entity: DeclarationReferantDataPM, SpotLightViewContainerRef: ViewContainerRef, RowIndex) {
+
         this.EntityPM = entity;
+
+        this.RowIndex = RowIndex;
+
         this.spotLightViewContainerRef = SpotLightViewContainerRef;
         this.LoadReferantException();
         this.IsDisplayOnly = false;
@@ -86,13 +92,15 @@ export class ReferantSpotlightDataTemplate
 
     private ReferantExceptionListPM : ReferantExceptionPM[] = [];
     getData(ExceptionsList: string[]) {
-        for (let exceptionReasonsCode of this.ExceptionsList) {
-            this._referantExceptionPMService.get(this.EntityPM.DeclarationId, exceptionReasonsCode)
+            this._referantExceptionExtendedPMService.GetByDecId(this.EntityPM.DeclarationId)
                 .subscribe((response: any) => {
-                    this.ReferantExceptionListPM.push = response.Result;
-                    this.ReferantExceptionItemsSource.Insert(new ExceptionReason(response.Result, this, this.spotlightSharedDataService));
+                    for (let item of response.Result) {
+                        this.ReferantExceptionListPM.push(item);
+                        this.ReferantExceptionItemsSource.Insert(new ExceptionReason(item, this, this.spotlightSharedDataService));
+
+                    }
                 });
-        }
+        
     }
     Add() {
         var item: ReferantExceptionPM = new ReferantExceptionPM();
@@ -119,7 +127,9 @@ export class ReferantSpotlightDataTemplate
     private BuildExceptionReasonsList() {
         var newValue: string="";
         this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
-            newValue = newValue + "," + item.EntityPM.ExceptionReasonsCode;
+            if (item.EntityPM.Status == "A") {
+                newValue = newValue + "," + item.EntityPM.ExceptionReasonsCode;
+            }
         });
         this.EntityPM.ExceptionReasonsList = newValue;
     }
@@ -182,7 +192,9 @@ export class ReferantSpotlightDataTemplate
                 this.ShowBusyIndicator = true;
                 this.BuildExceptionReasonsList();
                 this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
-                    SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+
+                    SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.RowIndex });
+                    //SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                 });
                 this.DeletedCodeList.forEach((item: string) => {
                     this._referantExceptionExtendedPMService.Delete(this.EntityPM.DeclarationId, item).subscribe((response: any) => {
@@ -208,7 +220,7 @@ export class ReferantSpotlightDataTemplate
     }
     DeleteButtonClicked(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
-            var msg = "שורה זו תמחק, האם להמשיך?" 
+            var msg = "שורה זו תמחק, הםם להמשיך?" 
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
             confirmWindow.Height = 150;

@@ -88,7 +88,12 @@ export class StringToColorPipe {
                     color = "#27AAE1";
                     break;
                 }
+            case "Arrival_referant":
 
+                {
+                    color = "#27AAE1";
+                    break;
+                }
             case "Printed":
             case "Pick Up":
             case "On Hand":
@@ -272,12 +277,15 @@ export class StringToColorPipe {
 
         return myResult;
     }
+
+
     private ApplyArrivalDatePipe(value: string) {
         var myResult: string = "Blue";
-        if (value != 'ATA')
-        myResult = "Black";
+        if (value != 'ETA')
+            myResult = "Black";
         return myResult;
     }
+ 
     private ApplyCustomerStatusCodePipe(value: string) {
         var myResult: string = "#282E30";
 

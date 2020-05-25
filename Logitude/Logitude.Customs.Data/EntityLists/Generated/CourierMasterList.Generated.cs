@@ -112,6 +112,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string NoOfCourierHawb  { get; set; }
        [DataMember]
        public bool IsAutomaticManifestSent  { get; set; }
+       [DataMember]
+       public string EstimatedArrivalColor  { get; set; }
    }
 
 }

@@ -49,6 +49,7 @@ import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
+import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 
 @Component({
     moduleId: module.id,
@@ -60,6 +61,7 @@ import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/Accoun
 })
 
 export class ListComponent implements OnInit, AfterViewInit {
+    
     public ComponentIndex: number = null;
     private myQueryColumnsPMService: QueryColumnsPMService;
     @Output() BackCompleted = new EventEmitter();
@@ -84,6 +86,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     LayoutDirection: string = 'ltr';
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
 
+    @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     public IsShowTipArea: boolean = false;
     public IsShowTipIcon: boolean = false;
     public IsFirstTipLoad: boolean = false;
@@ -781,12 +784,12 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                     let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "MNH")[0];
                     if (myLocation != null) {
+
                         let myObjectTableName = this.ObjectTable.Name;
                         if (myObjectTableName.startsWith(this.ObjectTable.ClientModuleName + '.')) {
                             myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
                         }
                         var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
-
                         SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)
                             .then(cmpRef => {
 
@@ -2121,8 +2124,55 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                             });
                             */
+ 
                     }
-                    
+                    else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
+                        var customFile = "";
+                        if ($event != null) customFile = $event.rowData.CustomFileNo;
+                        let myViewModelName = "FieldTemplateComponent.ts-ShowCFIUFILEFromDeclarationReferantData";
+                        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+                            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                                .subscribe(
+                                    (mess: UnifreightMessageM) => {
+                                        var IsMatchUnifreightCallbackCommand = (
+                                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                                            mess.LogitudeEntityNumber == selectedEntityId &&
+                                            mess.LogitudeViewModel == myViewModelName);
+                                        if (IsMatchUnifreightCallbackCommand) {
+                                            sub.unsubscribe();
+                                            SessionLocator.SelectedSession.StopBusyIndicator();
+                                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                                            this.isEditControlOpened = false;
+                                            this.OnBackFromEdit(selectedEntityId, $event)
+                                            //this.CurrentSession.PseventRowSelectEvent.emit({ Name: 'btnComponentComputingPartnerEdit', Value: this.rowData, RowIndex: this.AdditionalData.rowIndex });
+
+                                            //alert("reload");
+                                        }
+                                    }
+                                );
+
+                            SessionLocator.SelectedSession.StartBusyIndicator("");
+                            var unifreightMessageM =
+                                AmitalGatewayUtil.Instance.
+                                    DeclarationMessaging.GetMessage(customFile, selectedEntityId,
+                                        myViewModelName);
+
+
+                            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                                "ScriptableGatewayUtil.ShowCFIUFILEFromDeclarationReferantDataList",
+                                "CFIHMAIN.LogitudeTask",
+                                "ShowCustomFileOPCFromDeclaration",
+                                unifreightMessageM,
+                                " הצגת מסך :הזנת תיק כללי עמילות מכס");
+
+                        }
+ 
+                        else {
+                            alert("ShowCustomFileOPCFromDeclaration");
+                        }
+                    }
                     else {
 
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -2165,7 +2215,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.DestroyMe = false;
             //this.IsAdvancedSearchOpened = false;
             res.subscribe((aa: any) => {
-                $event.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
+                if (AppTool.IsNullOrEmpty($event) && AppTool.IsNullOrEmpty($event.BackFromEdit)) {
+                    $event.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
+                } else {
+                    this.MyLogGridComponent.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex });
+                }
+
                 //this.CurrentSession.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
 
                 this.MyScrollTop = $event.scrollTop;//($event.rowIndex * $event.rowHeight) - $event.rowHeight;
@@ -2195,7 +2250,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     //    //    this.ReattachToDetection = true;
     //    //}
     //}
-
+    
     BackButtonClicked() {
 
         this.DestroyListControl();
@@ -2456,6 +2511,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                         if (this.QueryCode == "Masters" || this.QueryCode == "Open Payables Masters" || this.QueryCode == "All Masters" || IsOriginalMaster) {
                             this.RunNewMasterWizard();
                         }
+                        if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewDeclarationControlCommand" &&
+                            this.HaveFeatureNewExportDeclararion) {
+                            this.RunNewExportDeclaration();
+                        }
+                          
                         else {
                             this.RunNewEntityWizard(this.SelectedQuery.ObjectTableNewWizardControlName);
                         }
@@ -2470,9 +2530,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                         } else if (this.ObjectTableName == "AccountingIntegrityCheck") {
                             this.RunNewAccountingIntegrityCheckWizard();
                         }
+
                         else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
-                            this.RunNewCustomsFileWizard();
+                            this.RunNewCustomsFileWizard(); 
                         }
+
                         
                         else {
 
@@ -2484,6 +2546,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                 });
             }
         }
+    }
+    RunNewExportDeclaration() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "פתיחת הצהרת יצוא חדשה";
+        logWindow.Width = 800;
+        logWindow.Height = 500;
+        logWindow.NewWizardArgs = { IsNewEntity: true };
+        logWindow.Show("./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/NewEntity/NewExportDeclarationComponent");
     }
 
     private RunNewEntityWizard(wizardControlName: string) {
@@ -2743,6 +2813,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             messageWindow.Show("Fill NewWizard Component Path and Name in ObjectTable !!");
         }
     }
+ 
     private RunNewGenaricEntity() {
 
         var componentPath = "./Infrastructure/GenericComponents/NewEntityComponent";

@@ -2918,6 +2918,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<DepositCondition> DepositConditions { get; set; }
         public IDbSet<UnloadingSiteType> UnloadingSiteTypes { get; set; }
         public IDbSet<MorningMessageType> MorningMessageTypes { get; set; }
+        public IDbSet<NbcDeclarationType> NbcDeclarationTypes
+        {
+            get; set;
+
+        }
+
         public IDbSet<VendorStatus> VendorStatuses { get; set; }
         public IDbSet<VendorTransactionType> VendorTransactionTypes { get; set; }
         public IDbSet<ValidCustomsItem> ValidCustomsItems { get; set; }
@@ -3949,6 +3955,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ModificationAndDiscountTypeMap());
 
             modelBuilder.Configurations.Add(new MorningMessageTypeMap());
+            modelBuilder.Configurations.Add(new NbcDeclarationTypeMap());
+
 
             modelBuilder.Configurations.Add(new NotificationMap());
 

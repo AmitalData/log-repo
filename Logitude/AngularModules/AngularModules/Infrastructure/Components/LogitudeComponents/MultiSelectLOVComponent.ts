@@ -14,8 +14,8 @@ import { UserList } from '../../../Common/EntityLists/UserList';
     templateUrl: 'MultiSelectLOVComponent.html',
 })
 
-export class MultiSelectLOVComponent implements OnInit{
-   
+export class MultiSelectLOVComponent implements OnInit {
+
     @Input()
     public IsDisabled: boolean
     //@Output()
@@ -69,7 +69,7 @@ export class MultiSelectLOVComponent implements OnInit{
     }
     public set MyLogLovV2Component(value: LogLovV2Component) {
         this._MyLogLovV2Component = value;
-        
+
     }
 
 
@@ -88,7 +88,7 @@ export class MultiSelectLOVComponent implements OnInit{
         this.MyDropdownMenuFilterId = curId;
         this._MultiSelectLOVId = "MultiSelectLOV_" + curId;
         this._MultiSelectLOVMenuId = "MultiSelectLOVMenuId_" + curId;
-        
+
     }
 
     handleClick(event) {
@@ -141,7 +141,7 @@ export class MultiSelectLOVComponent implements OnInit{
     ngOnInit() {
     }
     public Invalidate(): any {
-        
+
         this.FormatList();
         this._CD.detectChanges();
     }
@@ -150,7 +150,7 @@ export class MultiSelectLOVComponent implements OnInit{
             this.DropdownDisplayClose();
         }
     }
-    
+
     DropdownDisplayClose() {
         this._DropdownDisplay = 'none';
         this._CD.detectChanges();
@@ -182,14 +182,14 @@ export class MultiSelectLOVComponent implements OnInit{
 
         this.DropdowndisplayToggle(event, fucusMe);
     }
-    
+
     DropdowndisplayToggle(event, fucusMe: boolean) {
 
 
         //MouseEvent
 
         //MultiSelectLOVComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
-        
+
         if (this._DropdownDisplay == 'none') {
             var item = document.getElementById(this._MultiSelectLOVId);
             var itemRect = item.getBoundingClientRect();
@@ -207,7 +207,7 @@ export class MultiSelectLOVComponent implements OnInit{
 
             let DDLHeight = 65 + 20;//    height: 22px; * 3 +30 
             let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
-            
+
             if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {//this.PaintTop = true
                 //to shoe the div Upper the Input due -At the end of screen
                 document.getElementById(this._MultiSelectLOVMenuId).style.top =
@@ -232,9 +232,9 @@ export class MultiSelectLOVComponent implements OnInit{
 
 
             }
-            
+
         } else {
-            
+
             this._DropdownDisplay = 'none';
         }
         this._CD.detectChanges();
@@ -258,7 +258,7 @@ export class MultiSelectLOVComponent implements OnInit{
         console.log("ClearList");
         var list: any[] = this.DataContext[this.LOVListComponentPropName];
         //list = [];//list.forEach(r => { list.pop() });
-        while (list.length>0) {
+        while (list.length > 0) {
             list.pop();
         }
         this.FormatList();
@@ -267,11 +267,11 @@ export class MultiSelectLOVComponent implements OnInit{
         console.log("DeleteFromList");
         var list: any[] = this.DataContext[this.LOVListComponentPropName];
         var index = list.findIndex(d => d == item2Del);
-        if (index>-1) {
+        if (index > -1) {
             list.splice(index, 1);
         }
         this.FormatList();
-        
+
 
     }
     AddToList() {
@@ -295,7 +295,7 @@ export class MultiSelectLOVComponent implements OnInit{
         this._ChosenFormatedList = "";
         var list: any[] = this.DataContext[this.LOVListComponentPropName];
         if (list.length > 2) {
-            
+
             this._ChosenFormatedList = list[0][this.MyLogLovV2Component.DisplayMemberPath] + ','
                 + list[1][this.MyLogLovV2Component.DisplayMemberPath] + "+" + (list.length - 2);
         } else {
@@ -309,7 +309,7 @@ export class MultiSelectLOVComponent implements OnInit{
         }
         this.ChosenListItemsChanged.emit(list);
     }
-    
-    
+
+
 
 }

@@ -69,6 +69,15 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
+        public int GetDeclarationMaxAmendmentRequestNumber(int tenant)
+        {
+        
+            return (from a in context.Declarations
+                    where  a.Tenant == tenant
+                    select a).Max(rec => Convert.ToInt32( rec.AmendmentRequestNumber));
+        }
+
+
         public void GetDailyStatistic(int tenant,
             out int TotDec,
             out int TotDecPay,
@@ -310,6 +319,16 @@ namespace Logitude.Customs.Data.Repsitories
         { 
             List<Declaration> declarations = (from a in context.Declarations
                                               where declarationIds.Contains(a.Id)
+                                              select a).ToList();
+
+            return declarations;
+
+        }
+        public List<Declaration> GetDeclarationsByIdAndClientID(List<string> declarationIds,string clientID)
+        {
+            DateTime month3ago = DateTime.Now.AddDays(-90);
+            List<Declaration> declarations = (from a in context.Declarations
+                                              where a.CustomerId==clientID && a.CreateDateTime > month3ago && declarationIds.Contains(a.Id)
                                               select a).ToList();
 
             return declarations;

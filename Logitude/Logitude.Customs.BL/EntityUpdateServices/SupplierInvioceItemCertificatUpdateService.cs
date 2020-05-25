@@ -33,7 +33,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.DeclarationId = entityParentPM.DeclarationId;
             entityPM.InvoiceCounterKey = entityParentPM.CounterKey;
             entityPM.LineNumber = entityParentPM.LineNumber;
-            bool yaronRevertCS7859 = false; 
+            bool yaronRevertCS7859 = false;
             ICustomContext _Context = MainContext as CustomContext;
             if (yaronRevertCS7859)
             {
@@ -48,9 +48,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 entityPM.ItemCertificateCounterKey = maxCounter.Value + 1;
                 maxCounter = entityPM.ItemCertificateCounterKey;
-
             }
+
             base.OnCreating(entityPM, entityParentPM);
+
         }
 
         public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
@@ -630,6 +631,37 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
         }
+        public void InsertSupplierInvioceItemCertificatByCsvFile(string certificateNumber,string requestNumber,int tenant,string decId,int lineNumber,int invoiceCounterkey, SupplierInvoiceItemPM invoiceItem)
+        {
+            ICustomContext customContext = CustomContext.GetContext(tenant);
+            SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
+            SupplierInvioceItemCertificatPM entity = new SupplierInvioceItemCertificatPM();
+            entity.InvoiceCounterKey = invoiceCounterkey;
+            entity.Tenant = tenant;
+            entity.CertificateNumber = certificateNumber;
+            entity.ResConfirmationTypeCode = "2402";
+            entity.ReqConfirmationTypeCode = "2402";
+            entity.AttachmentTypeCode = "2";
+            entity.ApprovalRequestNumber = requestNumber;
+            entity.ChangeSetOp = ChangeSetOperation.Insert;
+            invoiceItem.SupplierInvioceItemCertificats.Add(entity);
+            invoiceItem.ChangeSetOp = ChangeSetOperation.Update;
+            updateService.Update(invoiceItem, true);
+        }
+        public void UpdateCertificateWithoutCertificateExemptionTypeCode(SupplierInvioceItemCertificatPM cert, int tenant)
+        {
+            SupplierInvoiceItemQueryService query = new SupplierInvoiceItemQueryService(tenant);
+            SupplierInvoiceItemPM item = query.GetSingle(cert.DeclarationId, cert.InvoiceCounterKey, cert.LineNumber, false, false);
+            if (!item.SupplierInvioceItemCertificats.Contains(cert))
+            {
+                item.SupplierInvioceItemCertificats.Add(cert);
+            }
+            ICustomContext customContext = CustomContext.GetContext(tenant);
+            SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
+            item.ChangeSetOp = ChangeSetOperation.Update;
+            updateService.Update(item, true);
+        }
+
 
         public void FastDeleteMultiParents(SupplierInvoiceKeys entityKeyFields, List<int> supplierInvoiceItemsParentsLines)
         {
@@ -687,6 +719,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
         }
+
+
 
         private static string GetConnection(int tenant)
         {

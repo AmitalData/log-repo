@@ -158,6 +158,7 @@
     <Compile Include="EntityKeys\MamanStatusKeys.cs" />
     <Compile Include="EntityKeys\ManifestCargoStatusKeys.cs" />
     <Compile Include="EntityKeys\MAWBTypeKeys.cs" />
+    <Compile Include="EntityKeys\NbcDeclarationTypeKeys.cs" />
     <Compile Include="EntityKeys\PartyRelationshipTypeKeys.cs" />
     <Compile Include="EntityKeys\PendingByKeywordKeys.cs" />
     <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="EntityListQueryServices\Generated\MamanStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ManifestCargoStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MAWBTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\NbcDeclarationTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PartyRelationshipTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingByKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
@@ -326,6 +328,7 @@
     <Compile Include="EntityListQueryServices\MamanStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ManifestCargoStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MAWBTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\NbcDeclarationTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PartyRelationshipTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingByKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
@@ -410,6 +413,7 @@
     <Compile Include="EntityLists\Generated\MamanStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ManifestCargoStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MAWBTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\NbcDeclarationTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PartyRelationshipTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PendingByKeywordList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PendingErrorPlaceList.Generated.cs" />
@@ -495,6 +499,7 @@
     <Compile Include="EntityMapping\MamanStatusMap.cs" />
     <Compile Include="EntityMapping\ManifestCargoStatusMap.cs" />
     <Compile Include="EntityMapping\MAWBTypeMap.cs" />
+    <Compile Include="EntityMapping\NbcDeclarationTypeMap.cs" />
     <Compile Include="EntityMapping\PartyRelationshipTypeMap.cs" />
     <Compile Include="EntityMapping\PendingByKeywordMap.cs" />
     <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
@@ -579,6 +584,7 @@
     <Compile Include="EntityPOCOs\MamanStatus.cs" />
     <Compile Include="EntityPOCOs\ManifestCargoStatus.cs" />
     <Compile Include="EntityPOCOs\MAWBType.cs" />
+    <Compile Include="EntityPOCOs\NbcDeclarationType.cs" />
     <Compile Include="EntityPOCOs\PartyRelationshipType.cs" />
     <Compile Include="EntityPOCOs\PendingByKeyword.cs" />
     <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
@@ -718,6 +724,7 @@
     <Compile Include="Repsitories\Generated\MamanStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ManifestCargoStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MAWBTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\NbcDeclarationTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PartyRelationshipTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingByKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
@@ -748,6 +755,7 @@
     <Compile Include="Repsitories\MamanStatusRepository.cs" />
     <Compile Include="Repsitories\ManifestCargoStatusRepository.cs" />
     <Compile Include="Repsitories\MAWBTypeRepository.cs" />
+    <Compile Include="Repsitories\NbcDeclarationTypeRepository.cs" />
     <Compile Include="Repsitories\PartyRelationshipTypeRepository.cs" />
     <Compile Include="Repsitories\PendingByKeywordRepository.cs" />
     <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />

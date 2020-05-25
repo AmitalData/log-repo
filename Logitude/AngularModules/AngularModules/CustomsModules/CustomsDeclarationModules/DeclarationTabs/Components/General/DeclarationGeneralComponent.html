@@ -31,7 +31,6 @@
 
 
     .button_ellipsis {
-      
         width: 30px;
         text-align: center;
         font-weight: bold;
@@ -44,8 +43,6 @@
         .button_ellipsis:hover {
             background-color: #e7e7e7;
         }
-
-           
 </style>
 
 <!--<div class="TabHolder" style="background: red;">
@@ -325,9 +322,11 @@
         </td>
     </tr>
 </table>
-<span
-
-      *ngIf="EntityPM && FeatureLocatorEXPORTDECLARATIONPSCREEN &&   this.EntityPM.Direction =='E'"
+<!--<span *ngIf="EntityPM && FeatureLocatorEXPORTDECLARATIONPSCREEN &&   this.EntityPM.Direction =='E'"
       class="LeftTop">
-    <button class="button_ellipsis" (click)="EditExportDecScreen()" >...</button>
-</span>
+    <button class="button_ellipsis" (click)="EditExportDecScreen()">...</button>
+</span>-->
+<span *ngIf="EntityPM && FeatureLocatorEXPORTDECLARATIONPSCREEN &&   this.EntityPM.Direction =='E'"
+      class="LeftTop buttonelipsis"
+      style="background-color: white; color: black; border: 2px solid #e7e7e7; width: 30px; text-align: center; font-weight: bold;cursor: pointer;"
+      (click)="EditExportDecScreen()">...E</span>

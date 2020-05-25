@@ -16,19 +16,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnCreating(ReferantExceptionPM entityPM, EntityPM entityParentPM)
         {
-            
+
             base.OnCreating(entityPM, entityParentPM);
         }
-        
+
 
         protected override void OnUpdating(ReferantExceptionPM entityPM)
         {
             ICustomContext context = MainContext as CustomContext;
             if (entityPM != null)
             {
-               ExceptionReasonQueryService exceptionReasonQueryService = new ExceptionReasonQueryService(entityPM.Tenant);
-               ExceptionReasonPM exceptionReasonPm= exceptionReasonQueryService.GetSingle(entityPM.ExceptionReasonsCode,false,false);
-               if(exceptionReasonPm.UnifreightStatusCode != null)
+                ExceptionReasonQueryService exceptionReasonQueryService = new ExceptionReasonQueryService(entityPM.Tenant);
+                ExceptionReasonPM exceptionReasonPm = exceptionReasonQueryService.GetSingle(entityPM.ExceptionReasonsCode, false, false);
+                if (exceptionReasonPm.UnifreightStatusCode != null)
                 {
                     if (entityPM.Status == "A")
                     {

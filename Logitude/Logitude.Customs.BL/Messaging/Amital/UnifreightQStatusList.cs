@@ -15,22 +15,22 @@ namespace Logitude.Customs.BL.Messaging.Amital
 
         public enum StatusPartnerEnum
         {
-            MVKR,MSVG
+            MVKR, MSVG
         }
-        public List<StatusItem> GetStatusList(int tenant ,string fileNo, StatusPartnerEnum statusPartnerEnum,  
+        public List<StatusItem> GetStatusList(int tenant, string fileNo, StatusPartnerEnum statusPartnerEnum,
              out string ErrMessage)
         {
             ErrMessage = "";
-            
+
             string P_MESSAGE = "";
             string xmlStatusList = "";
-            
-            
+
+
             try
             {
 
                 string statusList = "", Subject = "";
-                 var myParams =new Hashtable();
+                var myParams = new Hashtable();
 
 
                 switch (statusPartnerEnum)
@@ -45,7 +45,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
 
                 myParams.Add("componentname", "GAQHSIVUG");
                 myParams.Add("Operation", "GetStatusList");
-                myParams.Add("Subject", "GAQHSIVUG:" +Subject);
+                myParams.Add("Subject", "GAQHSIVUG:" + Subject);
                 myParams.Add("StatusList", statusList);
                 //if (!String.IsNullOrWhiteSpace(unifreigtUser))
                 //{
@@ -56,7 +56,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
 
                 string myParamsXML = UnifreightListsUtil.Serialize(myParams);
                 string UnifreightTester = "";
-                var resXML =SendMessageToUServerUtil.SendMessageToUServer(tenant, myParamsXML, out P_MESSAGE,out UnifreightTester);
+                var resXML = SendMessageToUServerUtil.SendMessageToUServer(tenant, myParamsXML, out P_MESSAGE, out UnifreightTester);
                 Debug.WriteLine(UnifreightTester);
                 if (!String.IsNullOrWhiteSpace(resXML))
                 {
@@ -76,11 +76,11 @@ namespace Logitude.Customs.BL.Messaging.Amital
             catch (Exception e)
             {
                 ErrMessage = P_MESSAGE + e.ToString();
-                
+
                 return (null);
             }
-            
-            
+
+
 
         }
 
@@ -92,9 +92,9 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public DateTime StatusDate { get; set; }
 
             public string StatusComment { get; set; }
-  
- 
- 
+
+
+
         }
     }
 }

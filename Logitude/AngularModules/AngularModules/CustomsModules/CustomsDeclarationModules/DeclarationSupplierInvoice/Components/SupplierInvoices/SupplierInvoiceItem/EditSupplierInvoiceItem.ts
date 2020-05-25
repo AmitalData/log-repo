@@ -49,6 +49,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     public IsDisplayOnly: boolean = false;
     CustomItemErrorMessage: string;
     private CurrentSession = SessionLocator.SelectedSession;
+    allowExport: boolean = false;
     constructor(private cd: ChangeDetectorRef) {
         super();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -69,7 +70,7 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.IsDisplayOnly = args.IsDisplayOnly;
-
+            this.allowExport = args.allowExport;
             this.OriginalItemPM = args.SupplierInvoiceItemPM;
             this.ClonedItemPM = this.CloneEntity(args.SupplierInvoiceItemPM);
 

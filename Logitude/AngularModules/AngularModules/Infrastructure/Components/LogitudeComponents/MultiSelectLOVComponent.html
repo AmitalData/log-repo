@@ -8,7 +8,7 @@
         <tr class="FormFieldRow">
             <!--style="width: 400px;"-->
             <td #multiSelectInput>
-             
+
                 <input type="text" placeholder="{{PlaceHolder}}" [(ngModel)]="_ChosenFormatedList"
                        [ngStyle]="LayoutDirection == 'rtl' ? {'padding-left': '30px'} : {'padding-right': '30px'}"
                        (focus)="DropdownMenuButtonClick($event,true)"
@@ -34,7 +34,7 @@
 
 
     </table>
-    
+
     <div [attr.id]="_MultiSelectLOVMenuId"
          [ngStyle]="{'display': _DropdownDisplay  }"
          style="position: fixed;z-index: 1;border: .5px solid  #45494A;border-radius: 3px;background-color: white;">
@@ -46,7 +46,7 @@
                         <td style="width:5px"></td>
                         <!--style="width: 400px;"-->
                         <td class="myLOV-td">
-                            <ng-content select=".class-MultiSelectLOV-content" ></ng-content>
+                            <ng-content select=".class-MultiSelectLOV-content"></ng-content>
                             <!--<LogLov [ObjectFieldName]="'UserId'"
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext"
@@ -71,7 +71,7 @@
                 </table>
             </div>
 
-            <div style="height:5px;margin:5px;" class="TabTitleRow" >{{ChosenListHeader}}</div>
+            <div style="height:5px;margin:5px;" class="TabTitleRow">{{ChosenListHeader}}</div>
 
             <div class="" style="margin:5px;padding:10px;height: 175px;overflow-x: auto;">
                 <table>
@@ -80,7 +80,7 @@
                             <span> {{item[this.MyLogLovV2Component.DisplayMemberPath]}}</span>
                         </td>
                         <td style="width:30px">
-                            <IconButton  [Name]="'Delete'" [IsSmall]="true" (click)="DeleteFromList(item)" title="Delete item"></IconButton>
+                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteFromList(item)" title="Delete item"></IconButton>
                         </td>
                     </tr>
                     <tr>

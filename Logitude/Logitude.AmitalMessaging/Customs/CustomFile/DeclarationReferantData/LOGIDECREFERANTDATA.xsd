@@ -18,6 +18,8 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="FollowUpStatus" />
         <xs:element minOccurs="0" maxOccurs="1" ref="PreClassification" />
         <xs:element minOccurs="0" maxOccurs="1" ref="Tenant" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ClassifiedUserId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ControllerUserId" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -29,4 +31,6 @@
   <xs:element name="FollowUpStatus" type="xs:string" />
   <xs:element name="PreClassification" type="xs:string" />
   <xs:element name="Tenant" type="xs:string" />
+  <xs:element name="ClassifiedUserId" type="xs:string" />
+  <xs:element name="ControllerUserId" type="xs:string" />
 </xs:schema>

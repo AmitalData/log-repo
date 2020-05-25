@@ -600,13 +600,13 @@
       <HintPath>..\..\packages\UltimatePDF.1.0.0\lib\Net40\UltimatePdf.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.3.1803.24\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.3.1803.25\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.3.1803.24\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.3.1803.25\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.3.1803.24\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.3.1803.25\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -1488,6 +1488,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\MeasurmentUnitViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ModificationAndDiscountTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\MorningMessageTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NbcDeclarationTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NotificationDefinitionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NotificationReplyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NotificationTenantDefinitionViewsController.Generated.cs" />
@@ -1658,6 +1659,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\InterfaceManagementController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\InterfaceTenantDefinitionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\InternationalSiteController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\NbcDeclarationTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\NotificationController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\NotificationDefinitionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\NotificationTenantDefinitionController.Generated.cs" />
@@ -1688,6 +1690,7 @@
     <Compile Include="Controllers\CustomsModel\WebServices\CustomsRequierdFieldsController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\CustomDocumentViewerController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\SignStationStatusController.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\SupplierInvioceItemCertificatsController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\VendorController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ClientController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationRestoreController.cs" />
@@ -2040,6 +2043,7 @@
     <Compile Include="CustomWebServices\BL\XLSExport\MasavPaymentsToAgentProvider.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportService.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportBase.cs" />
+    <Compile Include="CustomWebServices\BL\XLSImport\SupplierInvioceItemCertificats.cs" />
     <Compile Include="CustomWebServices\Testers\Tester.cs" />
     <Compile Include="DataContracts\AutomationArgs.cs" />
     <Compile Include="DataContracts\BIReportXMLData.cs" />
@@ -2744,6 +2748,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ManifestCargoStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MAWBTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\NbcDeclarationTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PartyRelationshipTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PendingByKeywordUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionStatusUpdateClass.cs" />
@@ -3011,6 +3016,7 @@
     <Content Include="Integration Test\Security\ShipmentSecurityTest.postman_collection.json" />
     <Content Include="Integration Test\DocsIn\DocumentsIn.postman_collection.json" />
     <Content Include="Integration Test\DocsOut\DocumentsOut.postman_collection.json" />
+    <Compile Include="CustomModel\DomainServices\CustomDomainService.CustomsShip.cs" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
@@ -6402,6 +6408,7 @@
     <Folder Include="MobileApplication\Views\IIGGeneralMessages\" />
     <Folder Include="MobileApplication\Views\InterfaceManagementListExtended\" />
     <Folder Include="MobileApplication\Views\QuoteApiV1\" />
+    <Folder Include="MobileApplication\Views\SupplierInvioceItemCertificats\" />
     <Folder Include="OceanInsights\" />
     <Folder Include="SocialModel\DomainServices\Generated\" />
     <Folder Include="Stimulsoft\CacheFiles\" />

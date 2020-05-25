@@ -152,17 +152,25 @@ export class ExporterInvoiceItemComponent extends BaseComponent
                             this.clonedSupplierInvoiceItemVehicle = this.CloneSupplierInvoiceItemVehicle(args.SupplierInvoiceItem.SupplierInvoiceItemVehicles[0]);
                         }
                         else {
-                            this.originalSupplierInvoiceItemVehicle = new SupplierInvoiceItemVehiclePM(this.originalSupplierInvoiceItem);
+                           this.originalSupplierInvoiceItemVehicle = new SupplierInvoiceItemVehiclePM(this.originalSupplierInvoiceItem);
 
                         }
 
-                        if (args.SupplierInvoiceItem.SuppInvoiceItemsAbacshStatement != null && args.SupplierInvoiceItem.SuppInvoiceItemsAbacshStatement.length > 0) {
-                            this.originalSuppInvoiceItemsAbachStatement = args.SupplierInvoiceItem.SuppInvoiceItemsAbacshStatement[0];
-                            this.clonedSuppInvoiceItemsAbachStatement = this.CloneSuppInvoiceItemsAbachStatement(args.SupplierInvoiceItem.SuppInvoiceItemsAbacshStatement[0]);
+                        if (args.SupplierInvoiceItem.SuppInvoiceItemsAbachStatements != null && args.SupplierInvoiceItem.SuppInvoiceItemsAbachStatements.length > 0) {
+                            this.originalSuppInvoiceItemsAbachStatement = args.SupplierInvoiceItem.SuppInvoiceItemsAbachStatements[0];
+                            this.clonedSuppInvoiceItemsAbachStatement = this.CloneSuppInvoiceItemsAbachStatement(args.SupplierInvoiceItem.SuppInvoiceItemsAbachStatements[0]);
                         }
                         else {
                             this.originalSuppInvoiceItemsAbachStatement = new SuppInvoiceItemsAbachStatementPM(this.originalSupplierInvoiceItem);
 
+                        }
+
+                         if (this.StatementInd == "T") {
+                            this.StatementInd = "1";
+                        }
+
+                        if (this.StatementInd == "F") {
+                            this.StatementInd = "0";
                         }
 
 
@@ -234,15 +242,16 @@ export class ExporterInvoiceItemComponent extends BaseComponent
     }
 
     RejectChanges() {
-        //this.MapEntitytoEntity(this.clonedSupplierInvoiceItem, this.originalSupplierInvoiceItem, true);
-        //this.MapEntitytoEntity(this.clonedSupplierInvoiceItemsPrice, this.originalSupplierInvoiceItemsPrice, true);
-        //this.MapEntitytoEntity(this.clonedSupplierInvoiceItemVehicle, this.originalSupplierInvoiceItemVehicle, true);
-        //this.MapEntitytoEntity(this.clonedSuppInvoiceItemsAbachStatement, this.clonedSuppInvoiceItemsAbachStatement, true);
+        this.MapEntitytoEntity(this.clonedSupplierInvoiceItem, this.originalSupplierInvoiceItem, true);
+        this.MapEntitytoEntity(this.clonedSupplierInvoiceItemsPrice, this.originalSupplierInvoiceItemsPrice, true);
+        this.MapEntitytoEntity(this.clonedSupplierInvoiceItemVehicle, this.originalSupplierInvoiceItemVehicle, true);
+        this.MapEntitytoEntity(this.clonedSuppInvoiceItemsAbachStatement, this.clonedSuppInvoiceItemsAbachStatement, true);
 
     }
 
     MapEntitytoEntity(srcEntity: any, targetEntity: any, takeKeysFromTarget: boolean = false) {
-        var keys;
+        if (srcEntity == null) return;
+         var keys;
         keys = Object.keys(takeKeysFromTarget ? targetEntity : srcEntity);
         for (var key in keys) {
             var property = keys[key];
@@ -252,78 +261,76 @@ export class ExporterInvoiceItemComponent extends BaseComponent
 
     OkButtonClicked() {
          var errors = [];
+ 
+        if (this.StatementInd == "1") {
+            this.StatementInd = "T";
+        }
 
-        //if (this.OriginalConsignmentPackDangerPM.DeclarationId == undefined && this.Package != undefined) {
-        //    this.OriginalConsignmentPackDangerPM.DeclarationId = "-1";
-        //    this.OriginalConsignmentPackDangerPM.LineNumber = -1;
-        //    this.OriginalConsignmentPackDangerPM.ConsignmentNumber = -1;
-        //    this.OriginalConsignmentPackDangerPM.DangerousLineNo = 1;
-        //    this.OriginalConsignmentPackDangerPM.Tenant = SessionLocator.Tenant;
-        //    this.Package.AddConsignmentPackDanger(this.OriginalConsignmentPackDangerPM);
-
-        //}
-        if (this.originalSupplierInvoiceItemsPrice.DeclarationId == undefined && this.originalSupplierInvoiceItem != undefined) {
+        if (this.StatementInd == "0") {
+            this.StatementInd = "F";
+        }
+        if (this.originalSupplierInvoiceItemsPrice.IsDirty && this.originalSupplierInvoiceItemsPrice.DeclarationId == undefined && this.originalSupplierInvoiceItem != undefined) {
             this.originalSupplierInvoiceItemsPrice.DeclarationId = this.originalSupplierInvoiceItem.DeclarationId;
             this.originalSupplierInvoiceItemsPrice.InvoiceCounterKey = this.originalSupplierInvoiceItem.CounterKey;
             this.originalSupplierInvoiceItemsPrice.LineNumber = 1;
             this.originalSupplierInvoiceItemsPrice.InvoiceItemLineNumber = this.originalSupplierInvoiceItem.LineNumber;
 
             this.originalSupplierInvoiceItemsPrice.Tenant = SessionLocator.Tenant;
-            this.originalSupplierInvoiceItem.AddSupplierInvoiceItemsPrice(this.originalSupplierInvoiceItemsPrice);
+             this.originalSupplierInvoiceItem.AddSupplierInvoiceItemsPrice(this.originalSupplierInvoiceItemsPrice);
         }
-        else {
-            this.originalSupplierInvoiceItemsPrice.UniqueKey = "1";
-  
-        }
+    
 
-        if (this.originalSupplierInvoiceItemVehicle.DeclarationId == undefined && this.originalSupplierInvoiceItem != undefined) {
+        if (this.originalSupplierInvoiceItemVehicle.IsDirty &&  this.originalSupplierInvoiceItemVehicle.DeclarationId == undefined && this.originalSupplierInvoiceItem != undefined) {
             this.originalSupplierInvoiceItemVehicle.DeclarationId = this.originalSupplierInvoiceItem.DeclarationId;
             this.originalSupplierInvoiceItemVehicle.InvoiceCounterKey = this.originalSupplierInvoiceItem.CounterKey;
             this.originalSupplierInvoiceItemVehicle.LineNumber = 1;
             this.originalSupplierInvoiceItemVehicle.InvoiceItemLineNumber = this.originalSupplierInvoiceItem.LineNumber;
-
+            this.originalSupplierInvoiceItemVehicle.SequenceNumeric = 1;
             this.originalSupplierInvoiceItemVehicle.Tenant = SessionLocator.Tenant;
             this.originalSupplierInvoiceItem.AddSupplierInvoiceItemVehicle(this.originalSupplierInvoiceItemVehicle);
         }
-        else {
-            this.originalSupplierInvoiceItemVehicle.UniqueKey = "1";
+       
 
-        }
-
-
-        if (this.originalSuppInvoiceItemsAbachStatement.DeclarationId == undefined && this.originalSupplierInvoiceItem != undefined) {
+        if (this.originalSuppInvoiceItemsAbachStatement.IsDirty && this.originalSuppInvoiceItemsAbachStatement.DeclarationId == undefined && this.originalSupplierInvoiceItem != undefined) {
             this.originalSuppInvoiceItemsAbachStatement.DeclarationId = this.originalSupplierInvoiceItem.DeclarationId;
             this.originalSuppInvoiceItemsAbachStatement.InvoiceCounterKey = this.originalSupplierInvoiceItem.CounterKey;
             this.originalSuppInvoiceItemsAbachStatement.SequenceNumeric = 1;
             this.originalSuppInvoiceItemsAbachStatement.InvoiceItemLineNumber = this.originalSupplierInvoiceItem.LineNumber;
 
             this.originalSuppInvoiceItemsAbachStatement.Tenant = SessionLocator.Tenant;
-            this.originalSupplierInvoiceItem.AddSuppInvoiceItemsAbachStatement(this.originalSuppInvoiceItemsAbachStatement);
+             this.originalSupplierInvoiceItem.AddSuppInvoiceItemsAbachStatement(this.originalSuppInvoiceItemsAbachStatement);
         }
-        else {
-            this.originalSuppInvoiceItemsAbachStatement.UniqueKey = "1";
-
-        }
+       
 
         if (this.originalSuppInvoiceItemsAbachStatement.IsDirty || this.originalSupplierInvoiceItemsPrice.IsDirty || this.originalSupplierInvoiceItemVehicle.IsDirty) {
             this.originalSupplierInvoiceItem.IsDirty = true;
 
         }
 
+
         //errors = this.ValidateCustomsItemField();
 
         var errors = [];
         Validator.TryValidateObject(this.originalSupplierInvoiceItem, this.ObjectTableName, errors);
         Validator.TryValidateObject(this.originalSupplierInvoiceItemsPrice, this.ObjectTableNameSupplierInvoiceItemsPrice, errors);
-        Validator.TryValidateObject(this.originalSupplierInvoiceItemVehicle, this.ObjectTableNameSupplierInvoiceItemVehicle, errors);
-        Validator.TryValidateObject(this.originalSuppInvoiceItemsAbachStatement, this.ObjectTableNameSuppInvoiceItemsAbachStatement, errors);
+    //    Validator.TryValidateObject(this.originalSupplierInvoiceItemVehicle, this.ObjectTableNameSupplierInvoiceItemVehicle, errors);
+    //    Validator.TryValidateObject(this.originalSuppInvoiceItemsAbachStatement, this.ObjectTableNameSuppInvoiceItemsAbachStatement, errors);
 
         if (AppTool.IsNullOrEmpty(this.ClaimReasonCode)) errors.push("סיבת תביעה שדה חובה");
         if (AppTool.IsNullOrEmpty(this.TransactionNatureCode)) errors.push("אופי עסקה שדה חובה");
         if (AppTool.IsNullOrEmpty(this.ClassificationTypeCode)) errors.push("סוג ערך סיווג שדה חובה");
         
         if (errors.length > 0) {
-            this.ValidationErrorsList = errors;
+            {
+                this.ValidationErrorsList = errors;
+                if (this.StatementInd == "T") {
+                    this.StatementInd = "1";
+                }
+
+                if (this.StatementInd == "F") {
+                    this.StatementInd = "0";
+                }
+            }
         } else {
 
 
