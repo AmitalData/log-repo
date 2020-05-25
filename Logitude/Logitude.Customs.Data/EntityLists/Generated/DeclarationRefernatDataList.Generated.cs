@@ -74,6 +74,14 @@ namespace Logitude.Customs.Data.EntityLists
        public string ReferentUserId  { get; set; }
        [DataMember]
        public string Actions  { get; set; }
+       [DataMember]
+       public DateTime AvailabilityDate  { get; set; }
+       [DataMember]
+       public string ClassifiedUserId  { get; set; }
+       [DataMember]
+       public string ControllerUserId  { get; set; }
+       [DataMember]
+       public string CollectorUserId  { get; set; }
    }
 
 }
