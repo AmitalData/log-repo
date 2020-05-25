@@ -39,11 +39,13 @@ export class CourierDeclarationWorkspaceListTemplate {
         
         var estimatedArrivalDate = DateTool.GetDateFromDate(this._CourierMasterList.EstimatedArrivalDate);//.setHours(0, 0, 0, 0);
         estimatedArrivalDate.setHours(0, 0, 0, 0);
-        if (this._CourierMasterList.IsEstimatedArrivalToDay) {
-            this.colorDate = "Blue";
-        } else {
-            this.colorDate = "Red";
-        }
+
+        this.colorDate = this._CourierMasterList.EstimatedArrivalColor;
+        //if (this._CourierMasterList.EstimatedArrivalColor) {
+        //    this.colorDate = "Blue";
+        //} else {
+        //    this.colorDate = "Red";
+        //}
         //else if (estimatedArrivalDate.getTime() < today.getTime()) {
         //    this.colorDate = "Red";
         //}
