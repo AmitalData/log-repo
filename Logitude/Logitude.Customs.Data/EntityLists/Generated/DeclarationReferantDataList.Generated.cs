@@ -75,7 +75,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string Actions  { get; set; }
        [DataMember]
-       public DateTime AvailabilityDate  { get; set; }
+       public DateTime? AvailabilityDate  { get; set; }
        [DataMember]
        public string ClassifiedUserId  { get; set; }
        [DataMember]
