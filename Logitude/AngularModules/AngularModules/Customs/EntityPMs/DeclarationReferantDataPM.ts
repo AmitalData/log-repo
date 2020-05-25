@@ -114,6 +114,21 @@ export class DeclarationReferantDataPM {
     public set ExceptionReasonsList(newValue: string) { if (this.exceptionReasonsList != newValue) { this.exceptionReasonsList = newValue; this.MarkAsDirty("ExceptionReasonsList"); } }
        
 	 
+    private classifiedUserId: string;
+    public get ClassifiedUserId() { return this.classifiedUserId; }
+    public set ClassifiedUserId(newValue: string) { if (this.classifiedUserId != newValue) { this.classifiedUserId = newValue; this.MarkAsDirty("ClassifiedUserId"); } }
+       
+	 
+    private controllerUserId: string;
+    public get ControllerUserId() { return this.controllerUserId; }
+    public set ControllerUserId(newValue: string) { if (this.controllerUserId != newValue) { this.controllerUserId = newValue; this.MarkAsDirty("ControllerUserId"); } }
+       
+	 
+    private collectorUserId: string;
+    public get CollectorUserId() { return this.collectorUserId; }
+    public set CollectorUserId(newValue: string) { if (this.collectorUserId != newValue) { this.collectorUserId = newValue; this.MarkAsDirty("CollectorUserId"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

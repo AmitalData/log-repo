@@ -58,6 +58,21 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("ExceptionReasonsList")]
 	    public string ExceptionReasonsList { get; set; }
+        [ForeignKey("ClassifiedUser")]
+        [Column("ClassifiedUserId")]
+	    public string ClassifiedUserId { get; set; }
+	      
+        public virtual User ClassifiedUser { get; set; }
+        [ForeignKey("ControllerUser")]
+        [Column("ControllerUserId")]
+	    public string ControllerUserId { get; set; }
+	      
+        public virtual User ControllerUser { get; set; }
+        [ForeignKey("CollectorUser")]
+        [Column("CollectorUserId")]
+	    public string CollectorUserId { get; set; }
+	      
+        public virtual User CollectorUser { get; set; }
     }
 }
 	 
