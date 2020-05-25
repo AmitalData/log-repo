@@ -269,19 +269,16 @@ export class DeclarationReferantDataFiltersMenuComponent
                     DeclarationMessaging.GetMessage("", "",
                         myViewModelName);
 
-
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowQueueManagmentAQ1",
                 "CFIHMAIN.LogitudeTask",
                 "ShowQueueManagmentAQ1",
                 unifreightMessageM,
                 " הצגת מסך : ניהול תורים");
-
         }
         else {
             alert("ShowQueueManagmentAQ1");
         }
-
     }
 
     ShowOCRQuery() {
@@ -311,14 +308,12 @@ export class DeclarationReferantDataFiltersMenuComponent
                     DeclarationMessaging.GetMessage("", "",
                         myViewModelName);
 
-
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowOCRQuery",
                 "CFIHMAIN.LogitudeTask",
                 "ShowOCRQuery",
                 unifreightMessageM,
                 " הצגת מסך : שאילתא ל - OCR");
-
         }
         else {
             alert("ShowOCRQuery");
