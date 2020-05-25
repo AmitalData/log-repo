@@ -20,6 +20,7 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Accounting.Data.Repositories;
+using System.Diagnostics;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -67,12 +68,12 @@ namespace Logitude.Accounting.BL.Utils
                 IAccountingContext context = AccountingContext.GetContext(tenant);
                 CardQuery cardQueryService = new CardQuery(tenant);
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
-
+                
                 using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                 {
                     try
                     {
-                        TryCustomers(context, tenant);
+                        TryCustomers(context, tenant,9);
 
                         scope.Complete();
                     }
@@ -86,7 +87,7 @@ namespace Logitude.Accounting.BL.Utils
                 {
                     try
                     {
-                        TryVendors( context, tenant);
+                        TryVendors( context, tenant,9);
 
                         scope.Complete();
                     }
@@ -100,7 +101,7 @@ namespace Logitude.Accounting.BL.Utils
                 {
                     try
                     {
-                        TryAllOthers(context, tenant);
+                        TryAllOthers(context, tenant,4);
 
                         scope.Complete();
                     }
@@ -120,8 +121,9 @@ namespace Logitude.Accounting.BL.Utils
                 throw new Exception("CardGLAccountConnectBatch failure ", e);
             }
         }
-        private void TryAllOthers( IAccountingContext context, int tenant)
+        private void TryAllOthers( IAccountingContext context, int tenant, int timeoutinmin)
         {
+            var sw = Stopwatch.StartNew();
             var accountRepository = new GLAccountRepository(context);
             var cards = accountRepository.GetAllOtherCardsWithoutGLAccountMatchDisplayNumberReceivable(tenant);
             if (cards != null)
@@ -137,6 +139,12 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         ConnectCardToGLAccount(cardList.GLAccountId, cardList.Id, context, tenant);
                         _AllOthersMade++;
+                        if (sw.Elapsed.TotalMinutes > timeoutinmin)
+                        {
+                            string errorText = $"Timeout -Operate the method again ";
+                            _badList.Add(errorText);
+                            break;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -268,8 +276,9 @@ namespace Logitude.Accounting.BL.Utils
             }
         }
 
-        private void TryVendors( IAccountingContext context, int tenant)
+        private void TryVendors( IAccountingContext context, int tenant, int timeoutinmin)
         {
+            var sw = Stopwatch.StartNew();
             var accountRepository = new GLAccountRepository(context);
             var vendors = accountRepository.GetVendorCardsWithoutGLAccountMatchDisplayNumber(tenant);
             if (vendors != null)
@@ -285,6 +294,13 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         ConnectCardToGLAccount(cardList.GLAccountId, cardList.Id, context, tenant);
                         _VendorsMade++;
+                        if (sw.Elapsed.TotalMinutes > timeoutinmin)
+                        {
+                            string errorText = $"Timeout -Operate the method again ";
+                            _badList.Add(errorText);
+                            break;
+                        }
+
                     }
                     catch (Exception ex)
                     {
@@ -353,8 +369,9 @@ namespace Logitude.Accounting.BL.Utils
             }
         }
 
-        private void TryCustomers(IAccountingContext context, int tenant)
+        private void TryCustomers(IAccountingContext context, int tenant, int timeoutinmin)
         {
+            var sw = Stopwatch.StartNew();
             var accountRepository = new GLAccountRepository(context);
             var customers = accountRepository.GetCustomerCardsWithoutGLAccountMatchDisplayNumber(tenant);
             if (customers != null)
@@ -370,6 +387,12 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         ConnectCardToGLAccount(cardList.GLAccountId, cardList.Id, context, tenant);
                         _CustomersMade++;
+                        if (sw.Elapsed.TotalMinutes>= timeoutinmin)
+                        {
+                            string errorText = $"Timeout -Operate the method again ";
+                            _badList.Add(errorText);
+                            break;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -440,7 +463,7 @@ namespace Logitude.Accounting.BL.Utils
         }
         private void ConnectCardToGLAccount(string accountId, string cardId, IAccountingContext context, int tenant)
         {
-            bool skipConnectedCardsValidation = false;
+            bool skipConnectedCardsValidation = true;
             try
             {
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
