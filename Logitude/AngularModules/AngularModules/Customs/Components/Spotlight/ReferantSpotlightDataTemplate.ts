@@ -184,7 +184,8 @@ export class ReferantSpotlightDataTemplate
             this.CheckForDuplicate()
             if (this.errors.length != 0) {
                 this.ValidationErrorsList = this.errors;
-            } if (this.errors.length == 0) {
+            }
+            if (this.errors.length == 0) {
                 this.ShowBusyIndicator = true;
                 this.BuildExceptionReasonsList();
                 this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
