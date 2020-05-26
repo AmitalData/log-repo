@@ -350,15 +350,15 @@ namespace Logitude.Customs.Data.Repsitories
 
         }
 
-        public Declaration GetDeclarationByFunctionalReferenceID(string declarationNumber,  string functionalReferenceID)
+        public Declaration GetDeclarationByFunctionalReferenceID( string functionalReferenceID)
         {
-            Declaration declarationParent = (from a in context.Declarations
-                                       where declarationNumber == a.DeclarationNumber
-                                       select a).FirstOrDefault();
+            //Declaration declarationParent = (from a in context.Declarations
+            //                           where declarationNumber == a.DeclarationNumber
+            //                           select a).FirstOrDefault();
 
 
             Declaration declaration = (from a in context.Declarations
-                                              where declarationParent.Id == a.AmendmentOriginalDeclartation && functionalReferenceID ==a.AmendmentRequestNumber
+                                              where functionalReferenceID ==a.AmendmentRequestNumber
                                        select a).FirstOrDefault();
 
             return declaration;

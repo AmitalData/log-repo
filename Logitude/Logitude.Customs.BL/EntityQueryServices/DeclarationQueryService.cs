@@ -290,12 +290,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public DeclarationPM GetDeclarationByfunctionalReferenceID(string declarationNumber, string functionalReferenceID,  int tenant)
+        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant)
         {
-            if (String.IsNullOrWhiteSpace(declarationNumber)) return null;
-            if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
+             if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
 
-            var declaration = repository.GetDeclarationByFunctionalReferenceID(declarationNumber, functionalReferenceID);
+            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID);
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
             if (declaration == null) return null;
