@@ -1,31 +1,29 @@
 declare var window;
-import { Component, AfterViewInit, ChangeDetectorRef, OnInit, Input, Output } from '@angular/core';
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { DocumentsFilingPM } from '../../../Common/EntityPMs/DocumentsFilingPM';
-import { CustomsDocumentPM } from '../../../Customs/EntityPMs/CustomsDocumentPM';
-import { CustomsDocumentsTicketPM } from '../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
-import { CustomsDocumentPointerPM } from '../../../Customs/EntityPMs/CustomsDocumentPointerPM';
+import { Component } from '@angular/core';
+import { DocumentTypeMetaDataExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { CustomsDocumentsTicketPMService } from '../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
-import { CustomsDocumentPMService } from '../../../Customs/Services/StandardPMs/CustomsDocumentPMService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
-import { ICustomsDocumentsController } from './ICustomsDocumentsController';
-import { ConnectedToItem } from './ConnectedToItem';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { CustDocTypeMetaDataWebService } from '../../../Customs/Services/WebServices/CustDocTypeMetaDataWebService';
+import { CustomsClosedTableList } from '../../../Customs/EntityLists/CustomsClosedTableList';
 import { CustomDocumentTypeMetaDataPM } from '../../../Customs/EntityPMs/CustomDocumentTypeMetaDataPM';
 import { CustomsDocumentMetaDataValuePM } from '../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
-import { CustomsClosedTableListService } from '../../../Customs/Services/StandardLists/CustomsClosedTableListService';
-import { CustomsClosedTableList } from '../../../Customs/EntityLists/CustomsClosedTableList';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { CustomDocumentViewerService } from '../../../Customs/Services/WebServices/CustomDocumentViewerService';
-import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
+import { CustomsDocumentPM } from '../../../Customs/EntityPMs/CustomsDocumentPM';
+import { CustomsDocumentPointerPM } from '../../../Customs/EntityPMs/CustomsDocumentPointerPM';
+import { CustomsDocumentsTicketPM } from '../../../Customs/EntityPMs/CustomsDocumentsTicketPM';
 import { CustomDocumentTypeListService } from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
-import { DocumentTypeMetaDataExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
+import { CustomsClosedTableListService } from '../../../Customs/Services/StandardLists/CustomsClosedTableListService';
+import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
+import { CustomsDocumentPMService } from '../../../Customs/Services/StandardPMs/CustomsDocumentPMService';
+import { CustomsDocumentsTicketPMService } from '../../../Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
+import { CustDocTypeMetaDataWebService } from '../../../Customs/Services/WebServices/CustDocTypeMetaDataWebService';
+import { CustomDocumentViewerService } from '../../../Customs/Services/WebServices/CustomDocumentViewerService';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { ConnectedToItem } from './ConnectedToItem';
+import { ICustomsDocumentsController } from './ICustomsDocumentsController';
 
 @Component({ 
     
@@ -181,11 +179,9 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     SetWindowArgs(windowArgs) {
          this.WindowArgs = windowArgs;
+
         this.CustomsDocumentsTicket = windowArgs.CustomsDocumentsTicket;
-        //if (windowArgs.DocumentTypeCode) {
-        //    this.CustomsDocument.DocumentTypeCode = windowArgs.DocumentTypeCode;
-        //    this.DocumentTypeCode = windowArgs.DocumentTypeCode;
-        //}
+
         if (this.CustomsDocumentsTicket) {
             this.CustomsDocumentsTicket.CloneMe();
         }
@@ -572,7 +568,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     updateCustomsDocument: boolean = false;
     OkButtonClicked() {
-        this.OkMethod(false);
+         this.OkMethod(false);
     }
 
     SendButtonClicked() {
@@ -655,10 +651,10 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     newPointer.Tenant = SessionLocator.Tenant;
                     newPointer.ParentEntityId = this.ParentEntityId;
                     newPointer.ParentEntityCode = this.ParentEntityCode;
-                    newPointer.Child1EntityCode = this.currenctSelectConnectTo ==3 ?"DeclarationAmendment" : null;
+                    newPointer.Child1EntityCode = null;
                     newPointer.Child2EntityCode = null;
                     newPointer.Child3EntityCode = null;
-                    newPointer.Child1EntityId = this.currenctSelectConnectTo == 3 ? "3" : null;
+                    newPointer.Child1EntityId =   null;
                     newPointer.Child2EntityId = null;
                     newPointer.Child3EntityId = null;
                     newPointer.DocumentTypeCode = this.CustomsDocumentsTicket.DocumentTypeCode;
@@ -799,29 +795,14 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     SetDefaultConnectedEntityNumber() {
         this.iCustomsDocumentsController.SetDefaultConnectedEntityNumber(this.CustomsDocumentsTicket, this.EntityPM);
     }
-    currenctSelectConnectTo: number;
+  
     ConnectedItemSelectionChanged(index: number) {
-      this.currenctSelectConnectTo = index;
-        if (index != 0  && index != 3) {
+        if (index != 0) {
             var selectInvoicesOnly = true;
             if (index == 2) {
                 selectInvoicesOnly = false;
             }
-             var isAmendment=false;
-            if (index == 3) isAmendment = true;
-
-            this.ShowSelectionComponent(selectInvoicesOnly, isAmendment);
-
-        }
-
-        if (this.currenctSelectConnectTo == 3 && this.CustomsDocumentsTicket.CustomsDocumentPointers.length>0) {
-            this.CustomsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityCode = "DeclarationAmendment";
-            this.CustomsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityId = "3";
-        }
-        else if (this.currenctSelectConnectTo == 0 && this.CustomsDocumentsTicket.CustomsDocumentPointers.length > 0)
-        {
-            this.CustomsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityCode = null;
-            this.CustomsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityId =null;
+            this.ShowSelectionComponent(selectInvoicesOnly);
 
         }
 
@@ -858,13 +839,12 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     //}
 
-    ShowSelectionComponent(selectInvoicesOnly: boolean = false , newChooseIsAmendment = false ) {
+    ShowSelectionComponent(selectInvoicesOnly: boolean = false ) {
         if (!AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket)) {
             this.iCustomsDocumentsController.SelectionCompleted.subscribe(s => {
                 this.SelectionCompleted(s);
             });
-            if (this.currenctSelectConnectTo == 3) newChooseIsAmendment = true;
-            this.iCustomsDocumentsController.ShowSelectionComponent(this.CustomsDocumentsTicket, this.EntityPM, selectInvoicesOnly, this.IsEntityDisplayOnly, newChooseIsAmendment );
+            this.iCustomsDocumentsController.ShowSelectionComponent(this.CustomsDocumentsTicket, this.EntityPM, selectInvoicesOnly, this.IsEntityDisplayOnly );
 
         }
 
@@ -939,7 +919,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                             this.ValidationErrorsList = docRes.ErrorsArray;
                         }
                         //let jDoit = false;
-                        //if (jDoit && !AppTool.IsNullOrEmpty(docRes.ErrorsArray[0])) {//in customsDocumentPMService.update there is message : לא נמצא כרטיס חתימה חברתי (מסר 2715)
+                        //if (jDoit && !AppTool.IsNullOrEmpty(docRes.ErrorsArray[0])) {//in customsDocumentPMService.update there is message : לם נמצם כרטיס חתימה חברתי (מסר 2715)
                         //    this.CurrentSession.StopBusyIndicator();
                         //    var messageWindow = new MessageWindow();
                         //    messageWindow.Width = 400;
@@ -962,6 +942,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     SubmitTicketChanges() {
+        
         if (this.CustomsDocumentsTicket) {
             if (this.CustomsDocumentsTicket.IsDirty) {
                 var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvioceItemCertificatUpdateClass
    {  		
-		public const string HashString = "50693513626a6cd9da2fe8c83796865d";
+		public const string HashString = "1600603eead77ab98af83505ac136b08";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -113,7 +113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "",
+			      				    LocalDefaultText =  "קליטת קובץ אישורים",
 			      				    DefaultText =  "Supplier Invioce Items Certificate",
 			      				    Code =  "3430",
 			      				    Name =  "Customs.SupplierInvioceItemCertificat Query Group",

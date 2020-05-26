@@ -8,7 +8,7 @@
                     <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DeclarationRemarksQueryObservableList">
 
                         <!-- StatusName -->
-                        <log-column [header]="'תאריך'"
+                        <log-column [header]="'תםריך'"
                                     [binding]="'CurrencyTypeId'"
                                     [width]="'80'" [Alignment]="'Right'">
                             <ng-template let-item>
@@ -66,7 +66,7 @@
                                 <div style="height: 100%; width: 100%;">
                                     <LogTextBox [ObjectFieldName]="'StatusComment'" [InputType]="'ntext'" [DataContext]="item"
                                                 [HideColumns]="true"
-                                                [IsMultiline]="true" [NoObjectField]="true" ></LogTextBox>
+                                                [IsMultiline]="true" [NoObjectField]="true"></LogTextBox>
                                 </div>
                             </log-cell-template>
 </ng-template>

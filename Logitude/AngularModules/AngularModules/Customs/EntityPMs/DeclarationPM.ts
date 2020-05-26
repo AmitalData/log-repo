@@ -14,6 +14,7 @@ import {DeclarationConstraintPM} from './DeclarationConstraintPM';
 import {DeclarationErrorViewPM} from './DeclarationErrorViewPM';
 import {DeclarationConsAcceptancePM} from './DeclarationConsAcceptancePM';
 import {DecDangersContactPM} from './DecDangersContactPM';
+import {DeclarationExportRecipientPM} from './DeclarationExportRecipientPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -1157,6 +1158,90 @@ export class DeclarationPM {
     private automaticPayment: number;
     public get AutomaticPayment() { return this.automaticPayment; }
     public set AutomaticPayment(newValue: number) { if (this.automaticPayment != newValue) { this.automaticPayment = newValue; this.MarkAsDirty("AutomaticPayment"); } }
+       
+	 
+    private loadingDateTime: Date;
+    public get LoadingDateTime() { return this.loadingDateTime; }
+    public set LoadingDateTime(newValue: Date) { if (this.loadingDateTime != newValue) { this.loadingDateTime = newValue; this.MarkAsDirty("LoadingDateTime"); } }
+       
+	 
+    private shipCode: string;
+    public get ShipCode() { return this.shipCode; }
+    public set ShipCode(newValue: string) { if (this.shipCode != newValue) { this.shipCode = newValue; this.MarkAsDirty("ShipCode"); } }
+       
+	 
+    private isExporterConfirmation: boolean;
+    public get IsExporterConfirmation() { return this.isExporterConfirmation; }
+    public set IsExporterConfirmation(newValue: boolean) { if (this.isExporterConfirmation != newValue) { this.isExporterConfirmation = newValue; this.MarkAsDirty("IsExporterConfirmation"); } }
+       
+	 
+    private shipName: string;
+    public get ShipName() { return this.shipName; }
+    public set ShipName(newValue: string) { if (this.shipName != newValue) { this.shipName = newValue; this.MarkAsDirty("ShipName"); } }
+       
+	 
+    private destinationCountryName: string;
+    public get DestinationCountryName() { return this.destinationCountryName; }
+    public set DestinationCountryName(newValue: string) { if (this.destinationCountryName != newValue) { this.destinationCountryName = newValue; this.MarkAsDirty("DestinationCountryName"); } }
+       
+	 
+     
+	private declarationExportRecipients: DeclarationExportRecipientPM[];
+    get  DeclarationExportRecipients() {
+        if (this.declarationExportRecipients == null) {
+            this.declarationExportRecipients = [];
+        }
+
+        return this.declarationExportRecipients;
+    }
+    set  DeclarationExportRecipients(newValue: DeclarationExportRecipientPM[]) {
+        if (this.declarationExportRecipients != newValue) {
+            this.declarationExportRecipients = newValue;
+        }
+    }
+    public AddDeclarationExportRecipient(item: DeclarationExportRecipientPM) {
+        if (item != null) {
+            var index = this. DeclarationExportRecipients.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DeclarationExportRecipients.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDeclarationExportRecipient(item: DeclarationExportRecipientPM) {
+        if (item != null) {
+            var index = this. DeclarationExportRecipients.indexOf(item);
+            if (index > -1) {
+                this. DeclarationExportRecipients.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DeclarationExportRecipients: Array<DeclarationExportRecipientPM>= [];
+     private direction: string;
+    public get Direction() { return this.direction; }
+    public set Direction(newValue: string) { if (this.direction != newValue) { this.direction = newValue; this.MarkAsDirty("Direction"); } }
+       
+	 
+    private agentRoleCode: string;
+    public get AgentRoleCode() { return this.agentRoleCode; }
+    public set AgentRoleCode(newValue: string) { if (this.agentRoleCode != newValue) { this.agentRoleCode = newValue; this.MarkAsDirty("AgentRoleCode"); } }
+       
+	 
+    private exportFile: string;
+    public get ExportFile() { return this.exportFile; }
+    public set ExportFile(newValue: string) { if (this.exportFile != newValue) { this.exportFile = newValue; this.MarkAsDirty("ExportFile"); } }
+       
+	 
+    private declarationTypeCode: string;
+    public get DeclarationTypeCode() { return this.declarationTypeCode; }
+    public set DeclarationTypeCode(newValue: string) { if (this.declarationTypeCode != newValue) { this.declarationTypeCode = newValue; this.MarkAsDirty("DeclarationTypeCode"); } }
+       
+	 
+    private destinationCountryCode: string;
+    public get DestinationCountryCode() { return this.destinationCountryCode; }
+    public set DestinationCountryCode(newValue: string) { if (this.destinationCountryCode != newValue) { this.destinationCountryCode = newValue; this.MarkAsDirty("DestinationCountryCode"); } }
        
 	 
 

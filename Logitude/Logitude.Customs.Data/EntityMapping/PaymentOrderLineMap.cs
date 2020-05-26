@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ParagraphTypeCode).HasColumnName("ParagraphTypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.Amount).HasColumnName("Amount");
+            this.Property(t => t.Amount).HasColumnName("Amount").HasPrecision(18, 2);
         }
     }
 }

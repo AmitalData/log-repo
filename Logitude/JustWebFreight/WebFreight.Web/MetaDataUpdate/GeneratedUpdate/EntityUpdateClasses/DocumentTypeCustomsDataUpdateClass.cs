@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DocumentTypeCustomsDataUpdateClass
    {  		
-		public const string HashString = "aa3c1fa2a51942cf9df9346135e2b57c";
+		public const string HashString = "acbf9d2b044e7ff0e11bb365395ee856";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

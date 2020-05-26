@@ -222,6 +222,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     _CCUPAYHAND.OBJECTIONEXPLAIN = _CCUPAYHAND.OBJECTIONEXPLAIN + declarationPaymentProtests.CustomsAgentExplanation;
                 }
             }
+            if (!string.IsNullOrEmpty(_CCUPAYHAND.OBJECTIONEXPLAIN) && _CCUPAYHAND.OBJECTIONEXPLAIN.Length > 75) _CCUPAYHAND.OBJECTIONEXPLAIN = _CCUPAYHAND.OBJECTIONEXPLAIN.Substring(0, 75);
             User myUser = userRepository.GetSingleUser(_DirtyDeclarationPaymentPM.CreatedByUserId, _DirtyDeclarationPaymentPM.Tenant, true);
             if (myUser != null)
             {

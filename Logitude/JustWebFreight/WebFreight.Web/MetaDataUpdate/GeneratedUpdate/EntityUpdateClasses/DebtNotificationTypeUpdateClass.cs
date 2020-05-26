@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DebtNotificationTypeUpdateClass
    {  		
-		public const string HashString = "f2e61aa8b272130e1449f562ff30b145";
+		public const string HashString = "9275ac3bf2b03400a446666ec6be5b32";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TapagConnectionTableUpdateClass
    {  		
-		public const string HashString = "110efdd86eda6b53cde04236257154a3";
+		public const string HashString = "0da02e516706591b179c246a0332dc4c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

@@ -10,13 +10,14 @@ import { CourierConnectedDeclarationListTemplate } from './Components/CourierCon
 import { SignStationListTemplate } from './Components/SignStationListTemplate';
 import { CourierWorksheetListTemplate } from './Components/CourierWorksheetListTemplate';
 import { DeclarationQueryListTemplate } from './Components/DeclarationQueryListTemplate';
- 
 import { CourierDeclarationWorkspaceListTemplate } from './Components/CourierDeclarationWorkspaceListTemplate'
  import { CustomsCollateralListTemplate } from './Components/CustomsCollateralListTemplate';
 import { DeclarationAmendmentListTemplate } from './Components/DeclarationAmendmentDeclarationListTemplate';
 import { DeclarationListTemplate } from './Components/DeclarationListTemplate';
+import { ActionListHeaderTemplate } from './Components/ListHeaderTemplates/ActionListHeaderTemplate';
+import { ArrivalDateListHeaderTemplate } from './Components/ListHeaderTemplates/ArrivalDateListHeaderTemplate';
 
- 
+
 export const Components =
   [
     CustomsRequestsSheetsListTemplate,
@@ -34,7 +35,10 @@ export const Components =
     CustomsCollateralListTemplate,
     CourierDeclarationWorkspaceListTemplate,
     DeclarationAmendmentListTemplate,
-    DeclarationListTemplate
+        DeclarationListTemplate,
+        ActionListHeaderTemplate,
+        ArrivalDateListHeaderTemplate
+ 
 
   ];
 
@@ -60,6 +64,10 @@ export class ModuleDeclarations {
           case "CourierDeclarationWorkspaceListTemplate": { myResult = CourierDeclarationWorkspaceListTemplate; break; }
           case "DeclarationAmendmentListTemplate": { myResult = DeclarationAmendmentListTemplate; break; }
           case "DeclarationListTemplate": { myResult = DeclarationListTemplate; break; }
+          case "ActionListHeaderTemplate": { myResult = ActionListHeaderTemplate; break; }
+          case "ArrivalDateListHeaderTemplate": { myResult = ArrivalDateListHeaderTemplate; break; }
+ 
+
       }
 
     return myResult;

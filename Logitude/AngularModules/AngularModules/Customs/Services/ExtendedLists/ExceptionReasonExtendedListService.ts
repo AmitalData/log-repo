@@ -46,7 +46,7 @@ export class ExceptionReasonExtendedListService {
         authHeader.append('Token', SessionInfo.Token);
 
         return defer(() => {
-            return this._http.delete(this._apiUrl + '/DeleteExceptionReasonByUnifreightStatus/?' + 'courierPendingReasonList=' + exceptionReasonCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.delete(this._apiUrl + '/DeleteExceptionReasonByUnifreightStatus/?' + 'ExceptionReasonCode=' + exceptionReasonCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;

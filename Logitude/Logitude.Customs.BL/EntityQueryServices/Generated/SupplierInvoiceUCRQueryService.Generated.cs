@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class SupplierInvoiceUCRQueryService: EntityQueryService<SupplierInvoiceUCR,SupplierInvoiceUCRKeys,SupplierInvoiceUCRPM,SupplierInvoicePM,SupplierInvoiceKeys>
+   {
+   
+        SupplierInvoiceUCRRepository repository;
+		ICustomContext  context;
+        public SupplierInvoiceUCRQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new SupplierInvoiceUCRRepository(context);
+            Repository = repository;
+            mapping = new SupplierInvoiceUCRDataMapping();
+        }
+
+        public SupplierInvoiceUCRQueryService(SupplierInvoiceUCRRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new SupplierInvoiceUCRDataMapping();
+        }
+
+        public SupplierInvoiceUCRQueryService(ICustomContext context)
+        {
+            this.repository = new SupplierInvoiceUCRRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new SupplierInvoiceUCRDataMapping();
+        }
+		 
+		public  SupplierInvoiceUCRPM GetSingle(string declarationid, int invoicecounterkey, int sequencenumeric,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new SupplierInvoiceUCRKeys(){ DeclarationId = declarationid, InvoiceCounterKey = invoicecounterkey, SequenceNumeric = sequencenumeric };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(SupplierInvoiceUCR entityPOCO)
+        {
+            SupplierInvoiceUCRKeys entityKeys = new SupplierInvoiceUCRKeys() { DeclarationId = entityPOCO.DeclarationId, InvoiceCounterKey = entityPOCO.InvoiceCounterKey, SequenceNumeric = entityPOCO.SequenceNumeric,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

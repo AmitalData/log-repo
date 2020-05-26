@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -477,10 +477,10 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            //if (DXMLTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") ? FormatNameLength(u.Columns, DXMLTable.Columns.Where(c => c.Name == u.Columns).First().ShortName) : string.Join(",", u.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())) == index.Columns).Any())
-            //{
-            //    return true;
-            //}
+            if (DXMLTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") ? FormatNameLength(u.Columns, DXMLTable.Columns.Where(c => c.Name == u.Columns).First().ShortName) : string.Join(",", u.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())) == index.Columns).Any())
+            {
+                return true;
+            }
 
             return DXMLTable.Indexes.Where(i => (!i.Columns.Contains(",") ? FormatNameLength(i.Columns, DXMLTable.Columns.Where(c => c.Name == i.Columns).First().ShortName) : string.Join(",", i.Columns.Split(',').Select(ic => FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName)).ToArray())) == index.Columns).Any();
         }
@@ -714,7 +714,7 @@ namespace Logitude.DBMigrations.Models
                 string columnName = columnMigration.CurrentColumn.Name.ToUpper();
                 string tempColumnName = FormatNameLength("temp_" + columnMigration.CurrentColumn.Name, null).ToUpper();
                 string droppedColumnName = FormatNameLength("cdrop_" + columnMigration.CurrentColumn.Name, null).ToUpper();
-                string tempColumnDataType = GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? -1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
+                string tempColumnDataType = GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.NewColumn.Size == 0 ? -1 : columnMigration.NewColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
 
                 alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
                 alterTypeScript += "DECLARE ColumnCount NUMBER;\n";
@@ -726,7 +726,10 @@ namespace Logitude.DBMigrations.Models
                 if (!columnMigration.CurrentColumn.Constraints.Nullable)
                 {
                     alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + tempColumnName + "\" NOT NULL';\n";
-                    alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL';\n";
+                    if (!columnMigration.CurrentColumn.Constraints.PrimaryKey)
+                    {
+                        alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL';\n";
+                    }
                 }
                 alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnName + "\" TO \"" + droppedColumnName + "\"';\n";
                 alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + tempColumnName + "\" TO \"" + columnName + "\"';\n";
@@ -787,7 +790,10 @@ namespace Logitude.DBMigrations.Models
                 if (!columnMigration.CurrentColumn.Constraints.Nullable)
                 {
                     alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + tempColumnName + "\" NOT NULL';\n";
-                    alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL';\n";
+                    if (!columnMigration.CurrentColumn.Constraints.PrimaryKey)
+                    {
+                        alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL';\n";
+                    }
                 }
                 alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnName + "\" TO \"" + droppedColumnName + "\"';\n";
                 alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + tempColumnName + "\" TO \"" + columnName + "\"';\n";
@@ -1111,12 +1117,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDefaultValueScript(bool nullable, string type, string defaultValue)
         {
-            if (nullable)
-            {
-                return null;
-            }
-
-            if (type == "bit" && String.IsNullOrEmpty(defaultValue))
+            if (!nullable && type == "bit" && String.IsNullOrEmpty(defaultValue))
             {
                 return " DEFAULT 0";
             }

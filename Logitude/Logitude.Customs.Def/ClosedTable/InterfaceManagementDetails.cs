@@ -2537,6 +2537,26 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false
 
             });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCB9999",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "ניתוח מחדש",// "Unifreight Courier *2750* Batch Send",
+                DcaPrefixName = "UnifreightCustoms_UCB9999_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //    InterfaceType = "C",
+                //  NeedSignature = false
+
+            });
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "UCB2715",
@@ -2681,6 +2701,55 @@ namespace Logitude.Customs.Def.ClosedTable
                 //    NeedSignature = false,
             });
 
+
+
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                //TML ==>https://www.abbreviations.com/abbreviation/terminal
+                Code = "UCBNDCD",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "העלאת מסמך מבונדד",
+                DcaPrefixName = "UnifreightCustomBatch_UCBNDCD_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2751",
+                InOut = InOutEnum.O.ToString(),
+                Description = "הצהרת יצוא",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                 Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "2757",
+             });
+
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2757",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר תשובה הצהרה יצוא",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                 Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+             });
             //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
             var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
             var myRequestCode = pm.ResponseInterfaceCode;

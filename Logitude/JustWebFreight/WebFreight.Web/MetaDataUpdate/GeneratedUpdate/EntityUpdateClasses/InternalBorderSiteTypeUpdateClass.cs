@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InternalBorderSiteTypeUpdateClass
    {  		
-		public const string HashString = "ba68dfdbc0abde3c1016ddfa77301b45";
+		public const string HashString = "c4ab0851d98d8675a105e54b64706cdc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

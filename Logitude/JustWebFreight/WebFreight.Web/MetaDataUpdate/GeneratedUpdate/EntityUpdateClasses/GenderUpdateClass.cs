@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GenderUpdateClass
    {  		
-		public const string HashString = "8f294cb22e89d84d3dd07f567352064d";
+		public const string HashString = "e0c728d368d449d3e2faa8a2edf96fd3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

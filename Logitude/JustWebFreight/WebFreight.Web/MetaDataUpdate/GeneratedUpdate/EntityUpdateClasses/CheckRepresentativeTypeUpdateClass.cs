@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CheckRepresentativeTypeUpdateClass
    {  		
-		public const string HashString = "dd179f027805209b586de52c69f90202";
+		public const string HashString = "907bdb00f1d293c3420590fed51998f6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

@@ -35,9 +35,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity");
 
-            this.Property(t => t.GrossMassMeasure).HasColumnName("GrossMassMeasure");
+            this.Property(t => t.GrossMassMeasure).HasColumnName("GrossMassMeasure").HasPrecision(18, 2);
 
-            this.Property(t => t.PackageTypeCode).HasColumnName("PackageTypeCode").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.PackageTypeCode).HasColumnName("PackageTypeCode").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.MarksNumbers).HasColumnName("MarksNumbers").HasMaxLength(512).IsUnicode(false);
 

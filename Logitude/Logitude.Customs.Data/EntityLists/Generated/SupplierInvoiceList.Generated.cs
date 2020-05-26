@@ -92,6 +92,22 @@ namespace Logitude.Customs.Data.EntityLists
        public string ChangeInSupplierInvoice  { get; set; }
        [DataMember]
        public string InvoiceCurrencyTypeName  { get; set; }
+       [DataMember]
+       public string BuyerName  { get; set; }
+       [DataMember]
+       public string BuyerAddress  { get; set; }
+       [DataMember]
+       public string BuyerCountryCode  { get; set; }
+       [DataMember]
+       public string BuyerRoleCode  { get; set; }
+       [DataMember]
+       public string PartyRelationshipCode  { get; set; }
+       [DataMember]
+       public string PartyRelationshipName  { get; set; }
+       [DataMember]
+       public string BuyerRoleName  { get; set; }
+       [DataMember]
+       public string BuyerCountryName  { get; set; }
    }
 
 }

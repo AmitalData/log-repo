@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class VehicleUpdateClass
    {  		
-		public const string HashString = "f1e83ec8d91e59d0ac114f35666c0de2";
+		public const string HashString = "94d2a3607754fc121922c6e21a826a92";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.Vehicle",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Customs.Vehicles",
-			      				    OldDBTableName =  "Customs.Vehicles",
 			      				    ObjectTableSingular =  "Vehicle",
 			      				    ObjectTablePlural =  "Vehicles",
 			      				    HasCustomFilter =  false,
@@ -145,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "RichbitFileNumber",
-					  						OldFieldName =  "RichbitFileNumber",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -208,7 +206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleChassisNumber",
-					  						OldFieldName =  "VehicleChassisNumber",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -271,7 +268,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehiclePoolTypeCode",
-					  						OldFieldName =  "VehiclePoolTypeCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.VehiclePoolType",
@@ -335,7 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehiclePriceListTypeCode",
-					  						OldFieldName =  "VehiclePriceListTypeCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.VehiclePriceListType",
@@ -399,7 +394,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleManufacturerCode",
-					  						OldFieldName =  "VehicleManufacturerCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.VehicleManufacturer",
@@ -463,7 +457,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ModelCode",
-					  						OldFieldName =  "ModelCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -526,7 +519,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsABS",
-					  						OldFieldName =  "IsABS",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -589,7 +581,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AirBagsNumber",
-					  						OldFieldName =  "AirBagsNumber",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "UnsInteger",
 					  						MinLength =  0,
@@ -652,7 +643,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConverterTypeCode",
-					  						OldFieldName =  "ConverterTypeCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.ConverterType",
@@ -716,7 +706,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsArmoredVehicle",
-					  						OldFieldName =  "IsArmoredVehicle",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -779,7 +768,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsLoweringVehicleForInvalid",
-					  						OldFieldName =  "IsLoweringVehicleForInvalid",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -842,7 +830,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GreenIndex",
-					  						OldFieldName =  "GreenIndex",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -907,7 +894,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GreenIndexGroup",
-					  						OldFieldName =  "GreenIndexGroup",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -970,7 +956,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsStabilityControl",
-					  						OldFieldName =  "IsStabilityControl",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1033,7 +1018,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsraelEnterDate",
-					  						OldFieldName =  "IsraelEnterDate",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1097,7 +1081,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EngineCapacity",
-					  						OldFieldName =  "EngineCapacity",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "UnsInteger",
 					  						MinLength =  0,
@@ -1160,7 +1143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehiclePowerKW",
-					  						OldFieldName =  "VehiclePowerKW",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1225,7 +1207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleTecnologyTypeCode",
-					  						OldFieldName =  "VehicleTecnologyTypeCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.VehicleTecnologyType",
@@ -1289,7 +1270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FuelTypeCode",
-					  						OldFieldName =  "FuelTypeCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.FuelType",
@@ -1353,7 +1333,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleWindowNumber",
-					  						OldFieldName =  "VehicleWindowNumber",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1416,7 +1395,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ManufactureCountryCode",
-					  						OldFieldName =  "ManufactureCountryCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsCountry",
@@ -1480,7 +1458,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MedalNumber",
-					  						OldFieldName =  "MedalNumber",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1543,7 +1520,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CommercialNickname",
-					  						OldFieldName =  "CommercialNickname",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1606,7 +1582,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ModelDescription",
-					  						OldFieldName =  "ModelDescription",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1669,7 +1644,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NumberOfSeats",
-					  						OldFieldName =  "NumberOfSeats",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "UnsInteger",
 					  						MinLength =  0,
@@ -1732,7 +1706,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalVehicleWeight",
-					  						OldFieldName =  "TotalVehicleWeight",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "UnsInteger",
 					  						MinLength =  0,
@@ -1795,7 +1768,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SelfVehicleWeight",
-					  						OldFieldName =  "SelfVehicleWeight",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "UnsInteger",
 					  						MinLength =  0,
@@ -1858,7 +1830,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NumberOfWheels",
-					  						OldFieldName =  "NumberOfWheels",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "UnsInteger",
 					  						MinLength =  0,
@@ -1921,7 +1892,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleManufactureDate",
-					  						OldFieldName =  "VehicleManufactureDate",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1985,7 +1955,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleTypeCode",
-					  						OldFieldName =  "VehicleTypeCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.VehicleType",
@@ -2049,7 +2018,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransmissionDateWithoutTax",
-					  						OldFieldName =  "TransmissionDateWithoutTax",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2113,7 +2081,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterIdentityId",
-					  						OldFieldName =  "ImporterIdentityId",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.Client",
@@ -2176,7 +2143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DateOnRoadAbroad",
-					  						OldFieldName =  "DateOnRoadAbroad",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2216,10 +2182,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DateOnRoadAbroad",
 					  						DefaultText =  "Date On Road Abroad",
-					  						FullLocalDefaultText =  "תאריך עליה לכביש בחו\\\"ל",
+					  						FullLocalDefaultText =  "תאריך עליה לכביש בחו\"ל",
 					  						ListFieldLable =  "DateOnRoadAbroadListLable",
 					  						ListLableDefaultText =  "Date On Road Abroad",
-					  						ListLocalDefaultText =  "תאריך עליה לכביש בחו\\\"ל",
+					  						ListLocalDefaultText =  "תאריך עליה לכביש בחו\"ל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2239,7 +2205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleSafetyAccessoryPoints",
-					  						OldFieldName =  "VehicleSafetyAccessoryPoints",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2304,7 +2269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StatusCode",
-					  						OldFieldName =  "StatusCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.VehicleStatus",
@@ -2368,7 +2332,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleSafetyAccessories",
-					  						OldFieldName =  "VehicleSafetyAccessories",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -2426,7 +2389,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleOwners",
-					  						OldFieldName =  "VehicleOwners",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -2484,7 +2446,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterName",
-					  						OldFieldName =  "ImporterName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2546,7 +2507,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehiclePoolTypeName",
-					  						OldFieldName =  "VehiclePoolTypeName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2608,7 +2568,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleManufacturerName",
-					  						OldFieldName =  "VehicleManufacturerName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2670,7 +2629,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastSaftyLineNumber",
-					  						OldFieldName =  "LastSaftyLineNumber",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2727,7 +2685,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastOwnerLineNumber",
-					  						OldFieldName =  "LastOwnerLineNumber",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2784,7 +2741,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehiclePriceListTypeName",
-					  						OldFieldName =  "VehiclePriceListTypeName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2846,7 +2802,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConverterTypeName",
-					  						OldFieldName =  "ConverterTypeName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2908,7 +2863,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleTecnologyTypeName",
-					  						OldFieldName =  "VehicleTecnologyTypeName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2970,7 +2924,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ManufactureCountryName",
-					  						OldFieldName =  "ManufactureCountryName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3032,7 +2985,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleTypeName",
-					  						OldFieldName =  "VehicleTypeName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3094,7 +3046,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StatusName",
-					  						OldFieldName =  "StatusName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3156,7 +3107,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3214,7 +3164,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FuelTypeName",
-					  						OldFieldName =  "FuelTypeName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3276,7 +3225,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InvalidChassisNumber",
-					  						OldFieldName =  "InvalidChassisNumber",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3333,7 +3281,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConcurrencyGUID",
-					  						OldFieldName =  "ConcurrencyGUID",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3390,7 +3337,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NewConcurrencyGUID",
-					  						OldFieldName =  "NewConcurrencyGUID",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3447,7 +3393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeclarationId",
-					  						OldFieldName =  "DeclarationId",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3504,7 +3449,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomFileNumber",
-					  						OldFieldName =  "CustomFileNumber",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3566,7 +3510,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsThreeWheeledForReduction",
-					  						OldFieldName =  "IsThreeWheeledForReduction",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3629,7 +3572,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TaxiMedalOwner",
-					  						OldFieldName =  "TaxiMedalOwner",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3692,7 +3634,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterPassportNumber",
-					  						OldFieldName =  "ImporterPassportNumber",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3755,7 +3696,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterPassCountryCode",
-					  						OldFieldName =  "ImporterPassCountryCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
@@ -3818,7 +3758,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterPassCountryName",
-					  						OldFieldName =  "ImporterPassCountryName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3880,7 +3819,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterPassportTypeCode",
-					  						OldFieldName =  "ImporterPassportTypeCode",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.PassportType",
@@ -3944,7 +3882,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ImporterPassportTypeName",
-					  						OldFieldName =  "ImporterPassportTypeName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4007,7 +3944,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCBS",
-					  						OldFieldName =  "IsCBS",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4070,7 +4006,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsSlipperClutch",
-					  						OldFieldName =  "IsSlipperClutch",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4133,7 +4068,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsSteeringDamper",
-					  						OldFieldName =  "IsSteeringDamper",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4196,7 +4130,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsTCS",
-					  						OldFieldName =  "IsTCS",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4259,7 +4192,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsTPS",
-					  						OldFieldName =  "IsTPS",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4322,7 +4254,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleCategory",
-					  						OldFieldName =  "VehicleCategory",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4385,7 +4316,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VehicleMaxPowerKW",
-					  						OldFieldName =  "VehicleMaxPowerKW",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -4450,7 +4380,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PassportName",
-					  						OldFieldName =  "PassportName",
 					  						ObjectTableName =  "Customs.Vehicle",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,

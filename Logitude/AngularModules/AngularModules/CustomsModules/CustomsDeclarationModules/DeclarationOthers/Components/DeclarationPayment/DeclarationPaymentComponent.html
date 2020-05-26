@@ -390,7 +390,7 @@
                                         <td colspan="2" style="padding-right: 10px;">
                                             <LogDatePicker [ObjectFieldName]="'FuturePaymentTime'" [ObjectTableName]="ObjectTableName"
                                                            [DataContext]="DataContext" [HideColumns]="true" [ForceSubscribe]="true"
-                                                         (ValueChanged)="FuturePaymentDateTimeOnBlur($event)"  [SelectedDateValue]="FuturePaymentTime" [InputType]="'time'"></LogDatePicker>
+                                                         (ValueChanged)="FuturePaymentTimeOnBlur($event)"  [SelectedDateValue]="FuturePaymentTime" [InputType]="'time'"></LogDatePicker>
                                         </td>
 
                                     </tr>
@@ -415,7 +415,7 @@
                             </td>
 
                             <td style="width: 30px;">
-                                <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsDisplayOnly" (click)="AddPaymentMethodClicked()"></IconButton>
+                                <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsDisplayOnly" (click)="AddPaymentMethodClicked(false)"></IconButton>
                             </td>
                         </tr>
 

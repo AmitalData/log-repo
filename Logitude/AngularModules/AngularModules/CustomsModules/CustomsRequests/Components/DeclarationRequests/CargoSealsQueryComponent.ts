@@ -59,12 +59,6 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
         this.CargoSealObslist = new ObservableCollection([]);
         this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSealIdentifier").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.CargoSeal").subscribe(response => {
-            //    debugger;
-            //    this.amendmentTypeListService.getAll().subscribe(
-            //        data => {
-            //            this.AmendmentTypes = data.Result;
-            //        });
- 
                 this.IsReady = true;
             });
         });
@@ -148,10 +142,10 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
                 if (this.CurrentEntity.CargoSeals != null) {
                     this.CurrentEntity.CargoSeals.forEach((item: CargoSealPM) => {
                          if (item.UpdateTypeCode == '2') {
-                            //item.CanToAdd = true;
+                            item.CanToAdd = true;
                         }
                         else {
-                            //item.CanToAdd = false;
+                            item.CanToAdd = false;
 
                         }
                         this.CargoSealObslist.Insert(new CargoSealComponent(item));
@@ -179,7 +173,11 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
             this._IsDisplayOnly = value;
         }
     }
-    
+
+    public get IsReady() { return this._IsReady; }
+    public set IsReady(newValue: boolean) { this._IsReady = newValue; }
+
+ 
     get UpdateDate() { return this.RequestParams.UpdateDate; }
     set UpdateDate(value: Date) {
         if (this.RequestParams.UpdateDate != value) {
@@ -324,13 +322,7 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
         }
     }
 
-    get IsReady() { return this._IsReady; }
-    set IsReady(newValue: boolean) {
-        if (this._IsReady != newValue) {
-            this._IsReady = newValue;
-        }
-    }
-
+ 
     get ResponseMessage() { return this.ResponseData ? this.ResponseData.UserMessage : null; }
     set ResponseMessage(value: string) {
         if (this.ResponseData.UserMessage != value) {
@@ -622,7 +614,7 @@ export class CargoSealsQueryComponent extends BaseRequestsSheetMassaging impleme
 
     AddCargoSealCommand() {
         var newCargoSealPM = new CargoSealPM(this.EntityPM);
-        //newCargoSealPM.CanToAdd = false;
+        newCargoSealPM.CanToAdd = false;
           this.CargoSealObslist.Insert(new CargoSealComponent(newCargoSealPM));
     }
 
@@ -695,8 +687,8 @@ export class CargoSealComponent extends BaseComponent {
     public get UpdateTypeName() { return this.entityPM.UpdateTypeName; }
     public set UpdateTypeName(newValue: string) { this.entityPM.UpdateTypeName = newValue; }
 
-    //public get CanToAdd() { return this.entityPM.CanToAdd; }
-    //public set CanToAdd(newValue: boolean) { this.entityPM.CanToAdd = newValue; }
+    public get CanToAdd() { return this.entityPM.CanToAdd; }
+    public set CanToAdd(newValue: boolean) { this.entityPM.CanToAdd = newValue; }
 
 
      public SetLocalName(entity, fieldName) {

@@ -71,32 +71,34 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                             this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response:any) => {
                                 this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
                                     this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
-                                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
+                                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response: any) => {
+                                            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationExportRecipient").subscribe((response: any) => {
 
-                        this.EntityPM = this.entityArgs.EntityPM;
-                this.ObjectTableName = this.entityArgs.ObjectTableName;
-                this.Listen();
-                //var tab;
-                console.log("DeclarationGeneralComponent/EntityPM ", this.EntityPM);
-                if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
-                    // create consignment tabs from entity
-                    //for (let item of this.EntityPM.Consignments) {
 
-                    //    tab = new LogTab();
-                    //    tab.EntityPM = item;
-                    //    tab.Code = item.SequenceNumeric.toString();
-                    //    tab.Header = (item.ManifestNumber ? (item.ManifestNumber + '-') : '') + item.SequenceNumeric;
-                    //    tab.ComponentPath = "./Customs/Components/Declaration/EditTabs/General/ConsigmentTabContent/ConsigmentTabContentComponent";
-                    //    this.ConsigmentTabs.push(tab);
-                    //}
-                    this.BuildConsignments();
-                    this.checkImportersVisibility();
-                    this.DisplayOnlyCheck();
-                    this.CheckRequrierdFieldsForSend();
-                    this.PreceduralFilterItems = new ApiQueryFilters();
-                    this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
-                }
+                                                this.EntityPM = this.entityArgs.EntityPM;
+                                                this.ObjectTableName = this.entityArgs.ObjectTableName;
+                                                this.Listen();
+                                                //var tab;
+                                                console.log("DeclarationGeneralComponent/EntityPM ", this.EntityPM);
+                                                if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
+                                                    // create consignment tabs from entity
+                                                    //for (let item of this.EntityPM.Consignments) {
 
+                                                    //    tab = new LogTab();
+                                                    //    tab.EntityPM = item;
+                                                    //    tab.Code = item.SequenceNumeric.toString();
+                                                    //    tab.Header = (item.ManifestNumber ? (item.ManifestNumber + '-') : '') + item.SequenceNumeric;
+                                                    //    tab.ComponentPath = "./Customs/Components/Declaration/EditTabs/General/ConsigmentTabContent/ConsigmentTabContentComponent";
+                                                    //    this.ConsigmentTabs.push(tab);
+                                                    //}
+                                                    this.BuildConsignments();
+                                                    this.checkImportersVisibility();
+                                                    this.DisplayOnlyCheck();
+                                                    this.CheckRequrierdFieldsForSend();
+                                                    this.PreceduralFilterItems = new ApiQueryFilters();
+                                                    this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
+                                                }
+                                            });
                 });
                 });
                 });
@@ -117,7 +119,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     //#region XML Errors
     XMLErrors: string[] = [];
     IsWindowMode: boolean = false;
-
+    
     // used in show XML errors process in Customs Answers
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
@@ -843,6 +845,40 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
     }
+
+    public FeatureLocatorEXPORTDECLARATIONPSCREEN = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN")
+    public VisibleExportDecScreen: boolean;
+    //public get VisibleExportDecScreen(): boolean{
+    //    if (AppTool.IsNullOrEmpty(this.EntityPM)) {
+    //        return false;
+    //    }
+    //    return this.EntityPM.Direction == "E" && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN");
+    //}
+    //public set VisibleExportDecScreen(newval: boolean) { }
+
+    EditExportDecScreen() {
+        
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
+
+        var logWindow = new LogitudeWindow();
+        //windowArgs.Type = "Importer";
+        //this.Type = "Importer";
+        logWindow.Width = 1000;
+        logWindow.Height = 250 ;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ExportDeclarationComponent');
+    }
+
+
 
     SearchImporter(type, item) {
 

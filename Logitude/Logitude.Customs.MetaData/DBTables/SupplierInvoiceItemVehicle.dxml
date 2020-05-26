@@ -79,6 +79,20 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IdentifierID"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VehicleIDTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber"
     ReferencedTable="SupplierInvoiceItems"
@@ -93,5 +107,10 @@
     ForeignKeyColumn="VehicleId"
     ReferencedTable="Vehicles"
     ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="VehicleIDTypeCode"
+    ReferencedTable="CargoIdentityQualifiers"
+    ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CheckQueueTypeUpdateClass
    {  		
-		public const string HashString = "f0ac7d5a65b74da466c516d407f52dc7";
+		public const string HashString = "c4c9567fdfefd5634ed2e7565357f0b7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

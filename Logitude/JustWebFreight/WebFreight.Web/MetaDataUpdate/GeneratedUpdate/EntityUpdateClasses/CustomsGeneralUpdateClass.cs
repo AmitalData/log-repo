@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "0f5ac454017fe9bd98e347ded13d856a";
+		public const string HashString = "ac0ce86bb9e0b95a1ba1f78c177b9980";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "5c0d",
+			      				    Code =  "43db",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1907,7 +1907,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_CustomsSupplierInvioceItemsCertificate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvioceItemsCertificate", DefaultText = "Supplier Invioce Items Certificate",LocalDefaultText = null, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsGeneralTextCode_CustomsDeclarationTHPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Payments", DefaultText = "Declaration Payment",LocalDefaultText = @"Declaration Payment", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationTHPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Payments", DefaultText = "Declaration Payment",LocalDefaultText = @"הגשת תשלום", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CommunicationLogStepsOStepNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLogSteps.O.StepNumber", DefaultText = "Step Number",LocalDefaultText = @"שלב מספר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -1962,6 +1962,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsClaimTHClaimDecision = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.ClaimDecision", DefaultText = "Claim Decision",LocalDefaultText = @"החלטת המכס", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsVehicleOVehicaleOwner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.O.VehicaleOwner", DefaultText = "Vehicle Owners",LocalDefaultText = @"בעלים רכב", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralOConnectedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ConnectedDeclarations", DefaultText = "Connected Declarations",LocalDefaultText = @"הצהרות מקושרות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationOConsignmentPackagesDanger = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ConsignmentPackagesDanger", DefaultText = "Consignment Packages Danger",LocalDefaultText = @"חבילות משלוחים סכנה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralOAddresses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Addresses", DefaultText = "Addresses",LocalDefaultText = @"כתובות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralODrivingLicense = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DrivingLicense", DefaultText = "Driving License",LocalDefaultText = @"רשיון נהיגה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralOEvents = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Events", DefaultText = "Events",LocalDefaultText = @"אירועים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralORequestSheets = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.RequestSheets", DefaultText = "Request Sheets",LocalDefaultText = @"גיליון בקשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralONewCustomsFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NewCustomsFile", DefaultText = "New Customs File",LocalDefaultText = @"פתיחת תיק חדש", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationReferantDataOFollowUpDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FollowUpDate", DefaultText = "FollowUpDate",LocalDefaultText = @"תאריך מעקב", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationReferantDataOExceptionReasonsCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.ExceptionReasonsCode ", DefaultText = "ExceptionReasonsCode ",LocalDefaultText = @"קוד חריג", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationReferantDataOExceptionRemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.ExceptionRemarks ", DefaultText = "ExceptionRemarks ",LocalDefaultText = @"הערות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationReferantDataOStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.Status ", DefaultText = "Status ",LocalDefaultText = @"סטטוס", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMCCustomsReAnalysis = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customs.ReAnalysis", DefaultText = "Re-Analysis",LocalDefaultText = @"ניתוח בקשות גורף", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMCCustomsRecallClientsForCutoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customs.RecallClientsForCutoms", DefaultText = "Update Importers Data",LocalDefaultText = @"עדכון נתוני יבואנים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsInterfaceManagementOTenantDefinitions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InterfaceManagement.O.TenantDefinitions", DefaultText = "Tenant Definitions",LocalDefaultText = @"הגדרות סביבה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

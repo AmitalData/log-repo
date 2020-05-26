@@ -9,18 +9,18 @@ import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
 export class DeclarationEditComponentController implements IEditComponentController {
     FilterTabs(allTabs: any[]) {
         let currentEntity: DeclarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-
-        var indexOfTab = allTabs.findIndex(t => t.Code == "DCCR");
-
+         var indexOfTab = allTabs.findIndex(t => t.Code == "DCCR");
         if (!currentEntity.IsAmendment && FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT")) {
             if (indexOfTab > -1) {
                 allTabs.splice(indexOfTab, 1);
             }
+        }
 
-          
-
-        } else {
-             allTabs[indexOfTab].IndexOrder = Math.max.apply(Math, allTabs.map(function (o) { return o.IndexOrder; })) + 1;
+       else if (!FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT")) {
+            allTabs[indexOfTab].IndexOrder = Math.max.apply(Math, allTabs.map(function (o) { return o.IndexOrder; })) + 1;
+        }
+       else if (currentEntity.IsAmendment && FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONAMENDMENT")) {
+            allTabs[indexOfTab].IndexOrder = -1;
         }
 
         if (currentEntity.AmendmentDontDisplayInList) {

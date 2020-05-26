@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AmendmentFieldReasonTypeUpdateClass
    {  		
-		public const string HashString = "c517ec1e36508b10b90bf95ffc55e544";
+		public const string HashString = "0b6ee60aeca105439509bf5339300297";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

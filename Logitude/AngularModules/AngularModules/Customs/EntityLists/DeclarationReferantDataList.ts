@@ -36,6 +36,8 @@ export class DeclarationReferantDataList {
 	SearchFields: string;
 	ExceptionReasonsList: string;
 	Actions: string;
+	DepartmentId: string;
+	ReferentUserId: string;
 	
 }
  

@@ -25,6 +25,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Data.EntityPOCOs;
 //using Simplog.Infrastructure.SimplogUtilities;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
@@ -812,7 +813,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             }
         }
-
         private void DeclarationReferantDataUpdate()
         {
             MyGenericResponseObj.Stage = "DeclarationReferantDataUpsert";
@@ -864,6 +864,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 AppendLogLine("amitalvendorId is null");
                 return null;
+
             }
             CustomsVendor myCustomsVendor = null;
 

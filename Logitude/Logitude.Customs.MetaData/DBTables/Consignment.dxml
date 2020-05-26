@@ -13,16 +13,16 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="ConsignmentNumber"
     Type="int">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
       Nullable="false" />
   </Column>
   <Column
@@ -127,6 +127,26 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsDangerousGoods"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FinalDestinationPortCode"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RecieverWareHouseCode"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
@@ -165,6 +185,16 @@
   <Relation
     ForeignKeyColumn="ReceiverWarehouseCode"
     ReferencedTable="RegisteredWarehouseSiteTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="FinalDestinationPortCode"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="RecieverWareHouseCode"
+    ReferencedTable="DeliverySiteTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

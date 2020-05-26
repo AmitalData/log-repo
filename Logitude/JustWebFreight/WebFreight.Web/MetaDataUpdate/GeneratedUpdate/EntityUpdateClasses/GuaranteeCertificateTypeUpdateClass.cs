@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GuaranteeCertificateTypeUpdateClass
    {  		
-		public const string HashString = "3c48b0c44b2911d646cbe973fbb38f5b";
+		public const string HashString = "cc3aaf0b6f32686cb1e31852ef0a9c89";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RequestTypeUpdateClass
    {  		
-		public const string HashString = "cf867e2d17fefeb68e70a17b5ab768bd";
+		public const string HashString = "97fd9b57e98c769c5e94c369a9837d0f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוג בקשה",
 			      				    DefaultText =  "Request Type",
-			      				    Code =  "20af",
+			      				    Code =  "29af",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -452,7 +452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup RequestTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "20af", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup RequestTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "29af", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 						QueryGroup RequestTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "85d4", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable RequestTypeObjectTable = objectTables.ContainsKey("Customs.RequestType") ? objectTables["Customs.RequestType"] : null;

@@ -103,14 +103,52 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBOthers\Procedures\DeleteObjectTableMetadataProcedure.dxml" />
+    <None Include="DBOthers\Procedures\PreDeleteMetadataProcedure.dxml" />
+    <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />
+    <None Include="DBScripts\Post\202005210124_InsertFieldDataTypes.sxml" />
+    <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
+    <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
+    <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
+    <None Include="DBScripts\Pre\202005210106_DropUnneededTables_SystemLogs.sxml" />
+    <None Include="DBScripts\Pre\202005210107_TablesBackup.sxml" />
+    <None Include="DBScripts\Pre\202005210108_AddMetadataColumns.sxml" />
+    <None Include="DBScripts\Pre\202005210109_ColorIndexScripts.sxml" />
+    <None Include="DBScripts\Pre\202005210110_DeleteDuplicateCountries.sxml" />
+    <None Include="DBScripts\Pre\202005210111_DeleteDuplicateCountryCities.sxml" />
+    <None Include="DBScripts\Pre\202005210112_DeleteDuplicateIncoterms.sxml" />
+    <None Include="DBScripts\Pre\202005210113_DeleteDuplicatePorts.sxml" />
+    <None Include="DBScripts\Pre\202005210114_DeleteDuplicateStates.sxml" />
+    <None Include="DBScripts\Pre\202005210115_NullColumnsMustHaveValueInTenants.sxml" />
+    <None Include="DBScripts\Pre\202005210116_PackageTypePrintAsNullable.sxml" />
+    <None Include="DBScripts\Pre\202005210117_DeleteDuplicateQueries.sxml" />
+    <None Include="DBScripts\Pre\202005210118_UpdateObjectFieldCode.sxml" />
+    <None Include="DBScripts\Pre\202005210119_DropIX_COMMUNICATIONLOGS_ENTITYID.sxml" />
+    <None Include="DBScripts\Pre\202005210120_DataTypeChanges_Global.sxml" />
+    <None Include="DBScripts\Pre\202005210121_DataTypeChanges_Main.sxml" />
+    <None Include="DBScripts\Pre\202005210122_BeforeDeleteMetadata.sxml" />
+    <None Include="DBScripts\Pre\202005261025_CreateSpellCheckedTextCodesTable.sxml" />
+    <None Include="DBScripts\Pre\202005261026_AddSpellCheckedTextCodes.sxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
+    <None Include="EntityFiles\DeclarationReferantData.lxml" />
+    <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />
+    <None Include="EntityFiles\AmountType.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceItemsPrice.lxml" />
+    <None Include="EntityFiles\SuppInvoiceItemsAbachStatement.lxml" />
+    <None Include="EntityFiles\SupplierInvoicePayment.lxml" />
+    <None Include="EntityFiles\SupplierInvoiceUCR.lxml" />
+    <None Include="EntityFiles\TransactionNatureType.lxml" />
+    <None Include="EntityFiles\ClaimReasonType.lxml" />
     <None Include="EntityFiles\ContinuousRequestType.lxml" />
     <None Include="EntityFiles\CurrencyTypeTenant.lxml" />
+    <None Include="EntityFiles\ClassificationType.lxml" />
+    <None Include="EntityFiles\PartyRelationshipType.lxml" />
     <None Include="EntityFiles\CustomsAutonomyKeyword.lxml" />
     <None Include="EntityFiles\CustomsGeneral.lxml" />
     <None Include="EntityFiles\CustomsPartnerFtp.lxml" />
@@ -118,10 +156,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ConsignmentPackDanger.lxml" />
+    <None Include="EntityFiles\CustomsShip.lxml" />
     <None Include="EntityFiles\DBMigration.lxml" />
     <None Include="EntityFiles\DBMigrationLine.lxml" />
     <None Include="EntityFiles\DecDangersContacts.lxml" />
-    <None Include="EntityFiles\DeclarationReferantData.lxml" />
+    <None Include="EntityFiles\DeclarationExportRecipient.lxml" />
     <None Include="EntityFiles\ExceptionReason.lxml" />
     <None Include="EntityFiles\HazardousSubstance.lxml" />
     <None Include="EntityFiles\RequestType.lxml">

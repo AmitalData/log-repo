@@ -27,6 +27,7 @@ import { CouriersVatPMService } from '../../../../../../Customs/Services/Standar
 import { CouriersVatExtendedPMService } from '../../../../../../Customs/Services/ExtendedPMs/CouriersVatExtendedPMService';
 import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
+import { WindowArgs } from '../../../../../../Infrastructure/DataContracts/WindowArgs';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -95,6 +96,33 @@ export class ConsigmentTabContentComponent
             this._SubConsignmentsChanged.unsubscribe();
             this._SubConsignmentsChanged = null;
         }
+    }
+
+    public FeatureLocatorEXPORTDECLARATIONPSCREEN = FeatureLocator.HasFeaturePermession("Customs.Declaration", "EXPORTDECLARATIONPSCREEN")
+
+
+    ShowExportConsScreen() {
+
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.declarationPM = this.declarationPM;
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        //var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
+        var windowTitle = "נתונים נוספים ליצוא - חטיבת משגור";
+
+        var logWindow = new LogitudeWindow();
+        //windowArgs.Type = "Importer";
+        //this.Type = "Importer";
+        logWindow.Width = 1000;
+        logWindow.Height = 250;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        //logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ExportConsigmentContentComponent');
     }
     private Listen() {
         this._SubDisplayModeChanged=

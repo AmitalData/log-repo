@@ -362,6 +362,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         StatisticQuantityTypeName = a.StatisticMeasurmentUnit != null ? a.StatisticMeasurmentUnit.LocalName : null,
                     }).ToList();
         }
+        public List<SupplierInvoiceItemPM> GetSupplierInvoiceItemByInvoiceNumber(int tenant, string declarationId, string ItemCode)
+        {
+            List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetSupplierInvoiceItemByInvoiceNumber(tenant,declarationId,ItemCode);
+            return (from a in supplierInvoiceItems
+                    select new SupplierInvoiceItemPM()
+                    {
+                        DeclarationId = a.DeclarationId,
+                        CounterKey = a.CounterKey,
+                        LineNumber = a.LineNumber,
+                        Tenant=a.Tenant,
+                        SequenceNumeric = a.SequenceNumeric,
+                        ItemCode = a.ItemCode,
+                    }).ToList();
+        }
 
         public int GetSupplierInvoiceItemsCountForDeclaration(string declarationId, int tenant)
         {

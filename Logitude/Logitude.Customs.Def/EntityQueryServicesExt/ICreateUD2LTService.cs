@@ -13,4 +13,9 @@ namespace Logitude.Customs.Def.EntityQueryServicesExt
         //void JustDoIt(string DocumentsFilingId,int tenant);
         //void MustInit(DocumentsFiling pocoDocumentsFiling);
     }
+    public interface ISendBondedCustomDocumentService
+    {
+        void JustDoIt(object documentsFilingPM);
+
+    }
 }

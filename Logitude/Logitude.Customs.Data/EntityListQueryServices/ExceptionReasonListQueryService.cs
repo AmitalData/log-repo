@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,34 +15,33 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class ExceptionReasonListQueryService
     {
-	    private IQueryable<ExceptionReasonList> GetIqueryableList(IQueryable<ExceptionReason> iQueryable)
+        private IQueryable<ExceptionReasonList> GetIqueryableList(IQueryable<ExceptionReason> iQueryable)
         {
-		IQueryable<ExceptionReasonList> query = (from a in iQueryable
-                                            select new ExceptionReasonList()
-											{
-                     
-					                          Code = a.Code,
-					
-					                          EnglishName = a.EnglishName,
-					
-					                          LocalName = a.LocalName,
-					
-					                          IsActive = a.IsActive,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<ExceptionReasonList> query = (from a in iQueryable
+                                                     select new ExceptionReasonList()
+                                                     {
 
-		private IQueryable<ExceptionReason> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ExceptionReason> iQueryable, int tenant)
+                                                         Code = a.Code,
+
+                                                         EnglishName = a.EnglishName,
+
+                                                         LocalName = a.LocalName,
+
+                                                         IsActive = a.IsActive,
+
+                                                     });
+            return query;
+        }
+
+        private IQueryable<ExceptionReason> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ExceptionReason> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-			}
+            return iQueryable;
+        }
+    }
 
 
 }
-	

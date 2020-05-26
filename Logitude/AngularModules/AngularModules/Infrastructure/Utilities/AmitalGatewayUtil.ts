@@ -30,7 +30,6 @@ import { ServiceResponse } from '../DataContracts/ServiceResponse';
 import { DeclarationWebService } from '../../Customs/Services/WebServices/DeclarationWebService';
 
 
-
 export class AmitalGatewayUtil {
     //private CurrentSession = SessionLocator.SelectedSession;
     //private constructor() { }
@@ -110,7 +109,7 @@ export class AmitalGatewayUtil {
             "CFIHMAIN.LogitudeTask",
             "ShowDeclarationCertificatesByGroupsUnifreightCallBack",
             unifreightMessageM,
-            " אישורים נדרשים");
+            " םישורים נדרשים");
     }
 
     public ShowDocumentsSharing(
@@ -148,8 +147,7 @@ export class AmitalGatewayUtil {
             unifreightMessageM,
             "קבצי רכבים");
     }
-
-
+ 
     public ShowCFIFILEMMoveToQueueScreen(
         UnifreightEntityNumber: string,
         LogitudeEntityNumber: string,
@@ -185,6 +183,43 @@ export class AmitalGatewayUtil {
             unifreightMessageM,
             " העברת חשבונות ספק ל-OCR");
     }
+
+
+    public ShowCFIFILEMEnterRemarks(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMEnterRemarks",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMEnterRemarks",
+            unifreightMessageM,
+            " הזנת הערות לתור");
+    }
+
+
+    public NewCustomsFileScreen(
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage("", "", ViewModelName);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.NewCustomsFileScreen",
+            "CFIHMAIN.LogitudeTask",
+            "NewCustomsFileScreen",
+            unifreightMessageM,
+            "פתיחת תיק עמילות חדש");
+    }
+
+ 
 
     SendTotangoUserActivity(module: string, activity: string) {
         var req = new UnifreightMessageM();
@@ -521,7 +556,7 @@ export class AmitalGatewayUtil {
     
     ShowDeclarationByIdReturnCloseSave = class {
         static StartDoIt(unifreightMessage: UnifreightMessageM, myEditTab, callback2TabZero: () => void) {
-            //BackButtonLabel: "הצהרות ללא התרה"EntityId :"1-103991" ,ObjectTableName:"Customs.Declaration"
+            //BackButtonLabel: "הצהרות ללם התרה"EntityId :"1-103991" ,ObjectTableName:"Customs.Declaration"
             let isSaved: boolean = false;
             let BackButtonLabel = "תיק עמילות"
 
@@ -537,17 +572,19 @@ export class AmitalGatewayUtil {
                     let myDeclarationEditComponentController: DeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
                     this.getEntity(unifreightMessage.LogitudeEntityNumber).subscribe((data:any) => {
                         cmpRef.instance.Run({
-                            EntityId: (data && data.Result) ? data.Result.Id : unifreightMessage.LogitudeEntityNumber  , //unifreightMessage.LogitudeEntityNumber,//"1-103991"
+                            EntityId: (data && data.Result) ? data.Result.Id : unifreightMessage.LogitudeEntityNumber, //unifreightMessage.LogitudeEntityNumber,//"1-103991"
+ 
                             ObjectTableName: unifreightMessage.LogitudeEntity,//'Customs.Declaration'
                             BackButtonLabel: BackButtonLabel
-                        });  
-                    })
+ 
+                        });
+                     })
                 
 
                     let lockMess = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.LockedMessage");
                     let unifreightJumpTo = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.JumpTo");
                     console.log(lockMess);
-                    if (!AppTool.IsNullOrEmpty(lockMess)) {
+                     if (!AppTool.IsNullOrEmpty(lockMess)) {
 
 
 
@@ -681,14 +718,20 @@ export class AmitalGatewayUtil {
 
                     });
                 });
+ 
         }
+
         static getEntity(LogitudeEntityNumber: string) {
-
-           var declarationWebService: DeclarationWebService = new DeclarationWebService();
-
-          return    declarationWebService.GetAcceptDeclarationAmendment(LogitudeEntityNumber)
-               
+            var declarationWebService: DeclarationWebService = new DeclarationWebService();
+            return declarationWebService.GetAcceptDeclarationAmendment(LogitudeEntityNumber)
+ 
+                
         }
+         
+    
+     	
+
+
 
         private static ShowSupplierInvoiceSelectorByDecIdUnifreightCallBack(
             SupplierInvoiceSelector: string, CancelButtonClick: boolean) {
@@ -903,7 +946,7 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseInstructionReturnCanIContinueMessage,
                 unifreightMessageM,
-                "AMI-49615 - הפעלת Instructions מתוך הצהרת יבוא");
+                "AMI-49615 - הפעלת Instructions מתוך הצהרת יבום");
         }
 
         public static RaiseCheckInsuranseReturnIsNeededAmount(
@@ -922,7 +965,7 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 "RaiseCheckInsuranseReturnIsNeededAmount",
                 unifreightMessageM,
-                "AMI-49619 - ביטוח שער עולמי - פיתוח ממשק לבדיקה האם נדרש לתיק ביטוח");
+                "AMI-49619 - ביטוח שער עולמי - פיתוח ממשק לבדיקה הםם נדרש לתיק ביטוח");
         }
 
         public static RaiseOpenNewBrowser(url: string) {
@@ -1024,7 +1067,7 @@ export class AmitalGatewayUtil {
                 "CFIHMAIN.LogitudeTask",
                 "ShowDeclarationCertificatesByGroupsUnifreightCallBack",
                 unifreightMessageM,
-                " אישורים נדרשים");
+                " םישורים נדרשים");
         }
 
         public ShowDocumentsSharingUnifreightCallBack(
@@ -1269,6 +1312,7 @@ export class MapPendingReasonCodeData {
     }
 
 }
+ 
 
 export class MapExceptionReasonCodeData {
     public Run(unifreightMessage: UnifreightMessageM) {
@@ -1291,3 +1335,5 @@ export class MapExceptionReasonCodeData {
     }
 
 }
+
+

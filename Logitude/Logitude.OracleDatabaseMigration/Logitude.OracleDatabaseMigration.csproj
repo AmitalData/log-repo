@@ -577,6 +577,66 @@
     <Compile Include="Migrations\202004231226250_missing23042020.Designer.cs">
       <DependentUpon>202004231226250_missing23042020.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004020908214_AddOcrToSupplierInvoiceItems.cs" />
+    <Compile Include="Migrations\202004020908214_AddOcrToSupplierInvoiceItems.Designer.cs">
+      <DependentUpon>202004020908214_AddOcrToSupplierInvoiceItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004190752541_AddSearchfieldTAutonomyKeyword.cs" />
+    <Compile Include="Migrations\202004190752541_AddSearchfieldTAutonomyKeyword.Designer.cs">
+      <DependentUpon>202004190752541_AddSearchfieldTAutonomyKeyword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005050458332_EnabaleNullAvailabilityDate.cs" />
+    <Compile Include="Migrations\202005050458332_EnabaleNullAvailabilityDate.Designer.cs">
+      <DependentUpon>202005050458332_EnabaleNullAvailabilityDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005071033444_AddCustomsShip.cs" />
+    <Compile Include="Migrations\202005071033444_AddCustomsShip.Designer.cs">
+      <DependentUpon>202005071033444_AddCustomsShip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005100616033_AddedCustomTablesForExport.cs" />
+    <Compile Include="Migrations\202005100616033_AddedCustomTablesForExport.Designer.cs">
+      <DependentUpon>202005100616033_AddedCustomTablesForExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005100716392_CngSFCustomsShip2.cs" />
+    <Compile Include="Migrations\202005100716392_CngSFCustomsShip2.Designer.cs">
+      <DependentUpon>202005100716392_CngSFCustomsShip2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005101414116_CngExpDec.cs" />
+    <Compile Include="Migrations\202005101414116_CngExpDec.Designer.cs">
+      <DependentUpon>202005101414116_CngExpDec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005110650112_CngExpDecCon.cs" />
+    <Compile Include="Migrations\202005110650112_CngExpDecCon.Designer.cs">
+      <DependentUpon>202005110650112_CngExpDecCon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005111320113_AddExportTables.cs" />
+    <Compile Include="Migrations\202005111320113_AddExportTables.Designer.cs">
+      <DependentUpon>202005111320113_AddExportTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005111347238_DeclarationExportRecipientMap.cs" />
+    <Compile Include="Migrations\202005111347238_DeclarationExportRecipientMap.Designer.cs">
+      <DependentUpon>202005111347238_DeclarationExportRecipientMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005140811047_AddNbcDeclarationTypes.cs" />
+    <Compile Include="Migrations\202005140811047_AddNbcDeclarationTypes.Designer.cs">
+      <DependentUpon>202005140811047_AddNbcDeclarationTypes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005140836536_ExportChanges.cs" />
+    <Compile Include="Migrations\202005140836536_ExportChanges.Designer.cs">
+      <DependentUpon>202005140836536_ExportChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005141842395_addRecieverWareHouseCode.cs" />
+    <Compile Include="Migrations\202005141842395_addRecieverWareHouseCode.Designer.cs">
+      <DependentUpon>202005141842395_addRecieverWareHouseCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005181449081_RferantChanges.cs" />
+    <Compile Include="Migrations\202005181449081_RferantChanges.Designer.cs">
+      <DependentUpon>202005181449081_RferantChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005200752046_loaddatenull.cs" />
+    <Compile Include="Migrations\202005200752046_loaddatenull.Designer.cs">
+      <DependentUpon>202005200752046_loaddatenull.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -972,6 +1032,51 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003221244107_ExceptionReasonAddSearchFields.resx">
       <DependentUpon>202003221244107_ExceptionReasonAddSearchFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004020908214_AddOcrToSupplierInvoiceItems.resx">
+      <DependentUpon>202004020908214_AddOcrToSupplierInvoiceItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004190752541_AddSearchfieldTAutonomyKeyword.resx">
+      <DependentUpon>202004190752541_AddSearchfieldTAutonomyKeyword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005050458332_EnabaleNullAvailabilityDate.resx">
+      <DependentUpon>202005050458332_EnabaleNullAvailabilityDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005071033444_AddCustomsShip.resx">
+      <DependentUpon>202005071033444_AddCustomsShip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005100616033_AddedCustomTablesForExport.resx">
+      <DependentUpon>202005100616033_AddedCustomTablesForExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005100716392_CngSFCustomsShip2.resx">
+      <DependentUpon>202005100716392_CngSFCustomsShip2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005101414116_CngExpDec.resx">
+      <DependentUpon>202005101414116_CngExpDec.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005110650112_CngExpDecCon.resx">
+      <DependentUpon>202005110650112_CngExpDecCon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005111320113_AddExportTables.resx">
+      <DependentUpon>202005111320113_AddExportTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005111347238_DeclarationExportRecipientMap.resx">
+      <DependentUpon>202005111347238_DeclarationExportRecipientMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005140811047_AddNbcDeclarationTypes.resx">
+      <DependentUpon>202005140811047_AddNbcDeclarationTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005140836536_ExportChanges.resx">
+      <DependentUpon>202005140836536_ExportChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005141842395_addRecieverWareHouseCode.resx">
+      <DependentUpon>202005141842395_addRecieverWareHouseCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005181449081_RferantChanges.resx">
+      <DependentUpon>202005181449081_RferantChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005200752046_loaddatenull.resx">
+      <DependentUpon>202005200752046_loaddatenull.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004090758246_missing09042020Main.resx">
       <DependentUpon>202004090758246_missing09042020Main.cs</DependentUpon>
