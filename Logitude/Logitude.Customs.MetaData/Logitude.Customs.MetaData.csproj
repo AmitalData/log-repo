@@ -122,7 +122,7 @@
     <None Include="DBScripts\Pre\202005210114_DeleteDuplicateStates.sxml" />
     <None Include="DBScripts\Pre\202005210115_NullColumnsMustHaveValueInTenants.sxml" />
     <None Include="DBScripts\Pre\202005210116_PackageTypePrintAsNullable.sxml" />
-    <None Include="DBScripts\Pre\202005210117_DeleteDuplicateQueries.sxml" />
+    <None Include="DBScripts\Pre\202005210123_DeleteDuplicateQueries.sxml" />
     <None Include="DBScripts\Pre\202005210118_UpdateObjectFieldCode.sxml" />
     <None Include="DBScripts\Pre\202005210119_DropIX_COMMUNICATIONLOGS_ENTITYID.sxml" />
     <None Include="DBScripts\Pre\202005210120_DataTypeChanges_Global.sxml" />
