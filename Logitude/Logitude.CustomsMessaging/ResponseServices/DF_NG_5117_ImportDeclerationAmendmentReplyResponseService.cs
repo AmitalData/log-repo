@@ -48,8 +48,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         DeclarationPM _MyDeclarationPMOrg;
 
         private DeclarationPrintResponseData _SendDeclarationPrintResponse;
-        private bool _IsSubmitDeclarationResponse;
-        decimal? _TotalBtlCoverageNISSum = 0;
+ 
 
         public INF_MSG_GenericResponseData Update5117(DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams  )
         {
@@ -102,6 +101,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99")
                     {
                         _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
+
+                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true);
+
+                        //_MyDeclarationPM.AmendmentCorrectedByUserId = requestParams.LoggingUserId;
+                        //_MyDeclarationPM.AmendmentDontDisplayInList = false;
+                        //_MyDeclarationPM.IsAmendment = true;
                     }
 
                     else
@@ -109,7 +114,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         string id = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
 
-                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, true, id, out error, true);
+                        _MyDeclarationPM = dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, true);
                         fromMehes = true;
                     }
 
@@ -131,13 +136,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var declarationQueryService = new DeclarationQueryService(_MyDeclarationPM.Tenant);
                 _MyDeclarationPMOrg = declarationQueryService.GetSingle(_MyDeclarationPM.AmendmentOriginalDeclartation, true, false);
 
-
-                //var _currentDeclarationId = "";
-
-
-                //_currentDeclarationId = _MyDeclarationPM.AmendmentOriginalDeclartation;
-                //if (string.IsNullOrEmpty(_currentDeclarationId)) _currentDeclarationId = _MyDeclarationPM.Id;
-
+ 
                 string loggingUserId = "";
                 UserRepository userRepository = new UserRepository(_MyDeclarationPM.Tenant);
                 var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
@@ -150,8 +149,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.Id, requestParams.Tenant);
                 using (var disposableToken =
-                    //ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5117ResponseService.Update")
-                    ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update")
+                     ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update")
                     )
                 {
                     foreach (var additionalInformation in customResponse.Response.AdditionalInformation)
@@ -184,40 +182,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
                                                 _MyDeclarationPM.AmendmentStatus = "3";
-                                                _MyDeclarationPM.DeclarationNumber = declarationParent.DeclarationNumber;
-                                                declarationParent.AmendmentDontDisplayInList = true;
-                                                declarationParent.DeclarationNumber = null;
+                                                if(declarationParent!=null)
+                                                {
+                                                    _MyDeclarationPM.DeclarationNumber = declarationParent.DeclarationNumber;
+                                                    declarationParent.AmendmentDontDisplayInList = true;
+                                                    declarationParent.DeclarationNumber = null;
 
 
-                                                declarationParent.ChangeSetOp = ChangeSetOperation.Update;
-                                                myDeclarationUpdateService.Update(declarationParent, true);
+                                                    declarationParent.ChangeSetOp = ChangeSetOperation.Update;
+                                                    myDeclarationUpdateService.Update(declarationParent, true);
 
 
-                                                //EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                                //{
-                                                //    Tenant = _MyDeclarationPM.Tenant,
-                                                //    EventTypeCode = "DMA",
-                                                //    UserId = _MyDeclarationPM.CreatedByUserId,
-                                                //    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
-                                                //    ObjectTableName = "Customs.Declaration",
-                                                //    Notes = null
-                                                //});
 
+                                                }
                                                 var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                                                 {
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMA",
                                                     notes = null,
-                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
-                                                    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
+                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
+                                                    EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
 
                                                     CommunicationSubject = "FU Status DMA from logitude ",
                                                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                                                     {
                                                         entname = "CFIFILEM",
-                                                        primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                                                        primary_number = _MyDeclarationPM.CustomFileNo,
                                                         status = "new",
                                                         xml_status = "new",
                                                         status_id = "DMA",
@@ -238,15 +230,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMD",
                                                     notes = null,
-                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
-                                                    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
+                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
+                                                    EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
 
                                                     CommunicationSubject = "FU Status DMD from logitude ",
                                                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                                                     {
                                                         entname = "CFIFILEM",
-                                                        primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                                                        primary_number = _MyDeclarationPM.CustomFileNo,
                                                         status = "new",
                                                         xml_status = "new",
                                                         status_id = "DMD",
@@ -270,15 +262,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMC",
                                                     notes = null,
-                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
-                                                    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
+                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
+                                                    EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
 
                                                     CommunicationSubject = "FU Status DMC from logitude ",
                                                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                                                     {
                                                         entname = "CFIFILEM",
-                                                        primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                                                        primary_number = _MyDeclarationPM.CustomFileNo,
                                                         status = "new",
                                                         xml_status = "new",
                                                         status_id = "DMC",
@@ -301,24 +293,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 _MyDeclarationPM.AmendmentStatus = "6";
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
                                                 declarationParent = myDeclarationQueryService.GetSingleDeclarationById(_MyDeclarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
-                                                declarationParent.AmendmentDontDisplayInList = true;
-                                                declarationParent.ChangeSetOp = ChangeSetOperation.Update;
-                                                myDeclarationUpdateService.Update(declarationParent, true);
+                                                if (declarationParent != null)
+                                                {
+                                                    declarationParent.AmendmentDontDisplayInList = true;
+                                                    declarationParent.ChangeSetOp = ChangeSetOperation.Update;
+                                                    myDeclarationUpdateService.Update(declarationParent, true);
+                                                }
+                                               
                                                 var myAmitalEventTracerModel4 = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                                                 {
                                                     Tenant = _MyDeclarationPM.Tenant,
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DMP",
                                                     notes = null,
-                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
-                                                    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
+                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
+                                                    EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
 
                                                     CommunicationSubject = "FU Status DMP from logitude ",
                                                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                                                     {
                                                         entname = "CFIFILEM",
-                                                        primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                                                        primary_number = _MyDeclarationPM.CustomFileNo,
                                                         status = "new",
                                                         xml_status = "new",
                                                         status_id = "DMP",
@@ -341,15 +337,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     objectTableName = "Customs.Declaration",
                                                     EventCode = "DWR",
                                                     notes = null,
-                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg.DeclarationNumber,
-                                                    EntityId = _MyDeclarationPM.AmendmentOriginalDeclartation,
+                                                    CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
+                                                    EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                                                     UserId = loggingUserId,
 
                                                     CommunicationSubject = "FU Status DPR from logitude ",
                                                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                                                     {
                                                         entname = "CFIFILEM",
-                                                        primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                                                        primary_number = _MyDeclarationPM.CustomFileNo,
                                                         status = "new",
                                                         xml_status = "new",
                                                         status_id = "DPR",
@@ -371,47 +367,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                         }
                     }
-
-                    //UpdateDeclaration(customResponse.Response)
-
-
-
-                    //if (!(customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99"))
-                    //{
-                    //    this._MyDeclarationPM = myDeclarationQueryService.GetSingle(requestParams.AppicationId, true, false);
-                    //}
-
+ 
 
                     _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
                     _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
-                    //_MyDeclarationPM.VersionId = "1";
-                    //var myUpdateEventContextTagModel = new EventContextTagModel()
-                    //{
-                    //    CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-                    //    EventCode = "DCH",
-                    //    EventRemarks = "Declaration Changed By Customs",
-                    //    FUStatusRemarks = "בוצע תיקון הצהרה" + this._MyDeclarationPM.DeclarationNumber,
-
-                    //};
-
-                    //this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
-
-
+                  
                     var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                     {
                         Tenant = _MyDeclarationPM.Tenant,
                         objectTableName = "Customs.Declaration",
                         EventCode = "DCH",
                         notes = null,
-                        CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
-                        EntityId = _MyDeclarationPMOrg.Id,
+                        CommunicationLoggingEntityReference = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber,
+                        EntityId = _MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.Id : _MyDeclarationPM.Id,
                         UserId = loggingUserId,
 
                         CommunicationSubject = "FU Status DCH from logitude ",
                         MyFUStatus = new AmitalEventTracerModel.FUStatus()
                         {
                             entname = "CFIFILEM",
-                            primary_number = _MyDeclarationPMOrg.CustomFileNo,
+                            primary_number = _MyDeclarationPM.CustomFileNo,
                             status = "new",
                             xml_status = "new",
                             status_id = "DCH",
@@ -449,11 +424,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _MyDeclarationPM.UserNotes = "LoadTest";
                     }
 
-                    //<--- Yuval Chalup 18.10.2016 TASK-23113
-                    if (customResponse.ProceduralFaults != null)
+                     if (customResponse.ProceduralFaults != null)
                     {
-                        //Transfer ProceduralFaultDetails of 5117 to ProceduralFaultDetails of 8218
-                        var ProceduralFaultDetailsXml_5117 = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.ProceduralFaultDetails[]>
+                         var ProceduralFaultDetailsXml_5117 = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.ProceduralFaultDetails[]>
                             .SerializeObject(customResponse.ProceduralFaults);
 
                         var customResponse_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsg() { };
@@ -463,8 +436,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var ResponseService_8218 = new EV_NG_8218_MSG14100_ProceduralFaultMsgResponseService();
                         ResponseService_8218.Update(customResponse_8218, requestParams);
                     }
-                    //Yuval Chalup 18.10.2016 TASK-23113 --->
-
+ 
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
@@ -482,7 +454,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyRequestSheetParam.EntityId1 = this._MyDeclarationPM.Id;
                     this.MyRequestSheetParam.RequestDescription = "מענה לתיקון הצהרה  " + this._MyDeclarationPM.DeclarationNumber;
 
-                    bool sendDeclarationPrintSync = false;// ConfigurationManager.AppSettings["20180307.5117SendDeclarationPrintSync"] =="1";
+                    bool sendDeclarationPrintSync = false;  
                     if (sendDeclarationPrintSync)
                     {
                         SendDeclarationPrintSync(requestParams);
@@ -492,7 +464,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         SendDeclarationPrint(requestParams);
                     }
 
-                    if (customResponse.CollateralRequests != null) // Create Collateral
+                    if (customResponse.CollateralRequests != null)  
                     {
                         LogMessagingUtil.Instance.AppendLine("ImportDeclarationAmendmentReplyMsg: Create Collateral");
                         var requestXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.ID.CollateralRequestDetails[]>.SerializeObject(customResponse.CollateralRequests);
@@ -517,11 +489,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
 
                 }
-
-
-                //if (!fromMehes)
-                //{
-                DF_NG_2754_MSG10004_ImportDeclarationResponseService dF_NG_2754_MSG10004_ImportDeclarationResponseService = new DF_NG_2754_MSG10004_ImportDeclarationResponseService();
+                if(customResponse.Response.Declaration!=null)
+                {
+                    DF_NG_2754_MSG10004_ImportDeclarationResponseService dF_NG_2754_MSG10004_ImportDeclarationResponseService = new DF_NG_2754_MSG10004_ImportDeclarationResponseService();
 
                 UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse dec_2754 = new UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse();
                 dec_2754.Response = new UnifreightIIG.Common.ImportDeclarationServiceReference.Response();
@@ -541,15 +511,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 };
 
                 dF_NG_2754_MSG10004_ImportDeclarationResponseService.Update(dec_2754, requestParams_2754);
+
+                }
+                
                 //}
 
                 if (customResponse.AmendmentDocumentDetails != null) // Create Document 
                 {
                     LogMessagingUtil.Instance.AppendLine("ConstraintApprovalDecision: Create Document");
-                    //var headerXml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Constraint.RequestContentHeader>
-                    //                .SerializeObject(customResponse.);
-                    //var header = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Ransom.RequestContentHeader>.DeSerializeObject(headerXml);
-
+ 
                     foreach (var documentItem in customResponse.AmendmentDocumentDetails)
                     {
 
@@ -572,19 +542,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         listConnectedEntity.Add(entityXml);
 
                         VAL_NG_8227_MSG_520_RequiredDocumentMessage myVAL_NG_8227_MSG_520_RequiredDocumentMessage = new VAL_NG_8227_MSG_520_RequiredDocumentMessage();
-                        //  myVAL_NG_8227_MSG_520_RequiredDocumentMessage.RequestContentHeader = header;
-                        myVAL_NG_8227_MSG_520_RequiredDocumentMessage.RequiredDocumentDetails = documentXml;
+                         myVAL_NG_8227_MSG_520_RequiredDocumentMessage.RequiredDocumentDetails = documentXml;
 
                         myVAL_NG_8227_MSG_520_RequiredDocumentMessage.RelatedEntity = listConnectedEntity.ToArray();
-                        //if (customResponse.CollateralRequestMsg != null)
-                        //{
-                        //    var worker = new UnifreightIIG.Common.MessageLib.Ransom.Worker();
-                        //    worker.customsHouse = customResponse.ConstraintApprovalDecision.CollateralRequestMsg[0].Worker.customsHouse;
-                        //    worker.organizationUnitType = customResponse.ConstraintApprovalDecision.CollateralRequestMsg[0].Worker.organizationUnitType;
-                        //    worker.workerName = customResponse.ConstraintApprovalDecision.CollateralRequestMsg[0].Worker.workerName;
-                        //    myVAL_NG_8227_MSG_520_RequiredDocumentMessage.Worker = worker;
-                        //}
-                        var xml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Ransom.VAL_NG_8227_MSG_520_RequiredDocumentMessage>
+                         var xml = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Ransom.VAL_NG_8227_MSG_520_RequiredDocumentMessage>
                             .SerializeObject(myVAL_NG_8227_MSG_520_RequiredDocumentMessage);
 
                         var ser = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Ransom.VAL_NG_8227_MSG_520_RequiredDocumentMessage>.DeSerializeObject(xml);
@@ -595,12 +556,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-                requestParams.AppicationId = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
-                if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
-                {
-                    //if still not found search by ExternalDeclarationNumber
-                    requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
-                }
+                requestParams.AppicationId = myDeclarationQueryService.GetIdByDeclarationNumber(_MyDeclarationPM.Id, requestParams.Tenant);
+                //if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
+                //{
+                //     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
+                //}
 
 
             }
@@ -613,16 +573,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 requestParams.AppicationId = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
                 if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
                 {
-                    //if still not found search by ExternalDeclarationNumber
-                    requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
+                     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
                 }
 
                 var declarationNumber = "";
                 if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99")
                 {
                     _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
-                    // declarationNumber = customResponse.Response.Declaration.ID.Value;
-                }
+                 }
                 else
                 {
                     if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -633,15 +591,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         this.MyResponseData.UserMessage = "Can not find declaration- DeclarationNumber: " + customResponse.Response.Declaration.ID.Value + " ExternalDeclarationNumber: " + customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value;
                         return;
                     }
-                    //declarationNumber = requestParams.AppicationId;
-                }
+                 }
                 declarationNumber = customResponse.Response.Declaration.ID.Value;
 
-                //var key = "ResponseService,declarationNumber:" + declarationNumber + ",tenant:" + requestParams.Tenant.ToString();
-                string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
+                 string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
                 using (var disposableToken =
-                    //ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5117ResponseService.Update")
-                    ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update")
+                     ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "5117ResponseService.Update")
                     )
                 {
                     if (!(customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99"))
