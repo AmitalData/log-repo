@@ -807,9 +807,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.RequestDescription = "הצהרת יצוא " + declarationPM.DeclarationNumber + " " + declarationPM.VersionId;
 
             var DMExtensions = new DeclarationDMExtensions();
-            DMExtensions.ReleaseDateTime = new ReleaseDateType() {
-                Value = DateTime.Today
-            };
+            //DMExtensions.ReleaseDateTime = new ReleaseDateType() {
+            //    Value = DateTime.Today
+            //};
             DMExtensions.ReferenceDateTime = DataTypeConvertorUtil.Convert(DateTime.Today);
             ;
 
@@ -828,11 +828,20 @@ namespace Logitude.CustomsMessaging.RequestServices
                 DMExtensions.DepartureDateTime = new DepartureDateTimeType() { Value = declarationPM.LoadingDateTime };
                 
             }
+            DMExtensions.AutonomyRegionType = SetIDTypeValue<OriginRegionIDType>(declarationPM.AutonomyRegionTypeCode); //new OriginRegionIDType() { Value = declarationPM.AutonomyRegionTypeCode };
 
             if (declarationPM.DestinationCountryCode != null)
             {
                 DMExtensions.DestinationCountry = SetCodeTypeValue<DeclarationDMExtensionsDestinationCountry>( declarationPM.DestinationCountryCode);
             }
+
+            //if (declarationPM.LoadingFactor.HasValue)
+            //{
+            //    DMExtensions.ExpenseLoadingFactor = new DeclarationDMExtensionsExpenseLoadingFactor()
+            //    {
+            //        Value = declarationPM.LoadingFactor.Value
+            //    };
+            //}
 
 
             DMExtensions.TransferDeclarationToDestinationCountry = new TransferDeclarationToDestinationCountryIndType() { Value = declarationPM.IsExporterConfirmation };
@@ -1028,7 +1037,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     //LocationID = SetIDTypeValue <TradeTermsLocationIDType >(String.IsNullOrWhiteSpace(supplierInvoicePM.IssueCountryCode) ? "CN" : supplierInvoicePM.IssueCountryCode) 
                  //   LocationID = SetIDTypeValue<TradeTermsLocationIDType>(supplierInvoicePM.IssueCountryCode)
                 };
-               //  declarationGoodsShipment.CustomsValuation = GetcustomsValuation(supplierInvoicePM).ToArray();
+              //    declarationGoodsShipment.CustomsValuation = GetcustomsValuation(supplierInvoicePM).ToArray();
                 if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment)
                 {
                     declarationGoodsShipment.Consignment = GetDeclarationConsignment(declarationPM).ToArray();
@@ -1170,23 +1179,20 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
 
             var DMExtensions = new DeclarationGoodsShipmentInvoiceDMExtensions();
-          //  DMExtensions.IsPrefarenceDocumentInd = new IsPrefarenceDocumentIndType() { Value = supplierInvoicePM.IsPreference };
-            //if (!String.IsNullOrWhiteSpace(supplierInvoicePM.PreferenceDocumentTypeCode)) //דורית שורר <PrefarenceDocumentType/>   יש לאתחל אותו כ- NULL
-            //{
-            //    //not valid  <PrefarenceDocumentType/>   
-            //    ///valid <PrefarenceDocumentType xsi:nil="true"/>
-            //    DMExtensions.PrefarenceDocumentType = new DeclarationGoodsShipmentInvoiceDMExtensionsPrefarenceDocumentType() { Value = supplierInvoicePM.PreferenceDocumentTypeCode };
-            //}
+            DMExtensions.IsPreferenceDocumentInd = new IsPrefarenceDocumentIndType() { Value = supplierInvoicePM.IsPreference };
+            if (!String.IsNullOrWhiteSpace(supplierInvoicePM.PreferenceDocumentTypeCode)) //דורית שורר <PrefarenceDocumentType/>   יש לאתחל אותו כ- NULL
+            {
+                //not valid  <PrefarenceDocumentType/>   
+                ///valid <PrefarenceDocumentType xsi:nil="true"/>
+                DMExtensions.PreferenceDocumentType = new DeclarationGoodsShipmentInvoiceDMExtensionsPreferenceDocumentType() { Value = supplierInvoicePM.PreferenceDocumentTypeCode };
+            }
             //DMExtensions.PaymentType = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsPaymentType>(supplierInvoicePM.PaymentTypeCode); // new DeclarationGoodsShipmentInvoiceDMExtensionsPaymentType() { Value = supplierInvoicePM.PaymentTypeCode };
             //DMExtensions.InvoiceAmount = new InvoiceAmountType() { Value = supplierInvoicePM.InvoiceAmount.HasValue ? supplierInvoicePM.InvoiceAmount.Value : 0 };
             //DMExtensions.InvoiceAmount = new InvoiceAmountType() {currencyIDSpecified=true,  currencyID = entityPM.USD, Value = supplierInvoicePM.InvoiceAmount.HasValue ? supplierInvoicePM.InvoiceAmount.Value : 0 };
             if (supplierInvoicePM.InvoiceAmount.HasValue && supplierInvoicePM.InvoiceAmount != decimal.Zero)//18202
             {
                 DMExtensions.InvoiceAmount = SetAmountTypeValue<InvoiceAmountType>(supplierInvoicePM.InvoiceCurrencyTypeCode, supplierInvoicePM.InvoiceAmount.Value);
-                DMExtensions.IsPreferenceDocumentInd = new IsPrefarenceDocumentIndType()
-                {
-                    Value = false
-                };
+ 
             }
 
             //DMExtensions.InvoiceCurrency // ???
@@ -1197,8 +1203,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //}
             //DMExtensions.RateNumeric = supplierInvoicePM.ExchangeRate; // moran 18.11.15 - Task 18415 - not to send - commented
             //DMExtensions.RateNumericSpecified = supplierInvoicePM.ExchangeRate != null ? true : false; // moran 18.11.15 - Task 18415 - not to send - commented
-
-            if (supplierInvoicePM.PartyRelationshipCode != null)
+             if (supplierInvoicePM.PartyRelationshipCode != null)
                  DMExtensions.PartyRelationshipCode = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsPartyRelationshipCode>(supplierInvoicePM.PartyRelationshipCode);
             if (supplierInvoicePM.SupplierInvoicePayments != null && supplierInvoicePM.SupplierInvoicePayments.Count() > 0)
             {
@@ -1243,6 +1248,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     CountryCode = new OriginCountryCodeType() { Value = supplierInvoiceItemPM.OriginCountryCode }
                 };
+                declarationGoodsShipmentGovernmentAgencyGoodsItem.GovernmentProcedure = GetGoodsItemGovernmentProcedure(supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes);
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.Commodity = GetGoodsItemCommodity(supplierInvoiceItemPM);
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.GoodsMeasure = GetGoodsMeasure(supplierInvoiceItemPM); // MUST
 
@@ -1258,31 +1264,32 @@ namespace Logitude.CustomsMessaging.RequestServices
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.DMExtensions = GetDMExtensionsGoodsItem(supplierInvoiceItemPM, supplierInvoicePM);
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.AdditionalDocument = GetGoodsItemAdditionalDocument(supplierInvoiceItemPM);
                 //  declarationGoodsShipmentGovernmentAgencyGoodsItem.ValuationAdjustment = GetGoodsItemValuationAdjustment(supplierInvoiceItemPM);
-
  
+
                 declarationGoodsShipmentGovernmentAgencyGoodsItemList.Add(declarationGoodsShipmentGovernmentAgencyGoodsItem);
             }
             return declarationGoodsShipmentGovernmentAgencyGoodsItemList;
         }
 
-        //private DeclarationGoodsShipmentGovernmentAgencyGoodsItemValuationAdjustment[] GetGoodsItemValuationAdjustment(SupplierInvoiceItemPM supplierInvoiceItemPM)
-        //{
-        //    if (supplierInvoiceItemPM.SupplierInvoiceItemsMods == null)
-        //    {
-        //        return null;
-        //    }
-        //    var valuationAdjustmentList = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemValuationAdjustment>();
-        //    foreach (var valuationAdjustmentItem in supplierInvoiceItemPM.SupplierInvoiceItemsMods)
-        //    {
-        //        var valuationAdjustment = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemValuationAdjustment();
-        //        valuationAdjustment.AdditionCode = new ValuationAdjustmentAdditionCodeType();
-        //        valuationAdjustment.AdditionCode.Value = valuationAdjustmentItem.TypeCode;
-        //        valuationAdjustment.AmountAmount = new ValuationAdjustmentAmountAmountType();
-        //        valuationAdjustment.AmountAmount = SetAmountTypeValue<ValuationAdjustmentAmountAmountType>(valuationAdjustmentItem.CurrencyTypeCode, valuationAdjustmentItem.Amount > 0 ? (Decimal)valuationAdjustmentItem.Amount : 0);
-        //        valuationAdjustmentList.Add(valuationAdjustment);
-        //    }
-        //    return valuationAdjustmentList.ToArray();
-        //}
+        private DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsValuationAdjustment[] GetGoodsItemValuationAdjustment(SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+            if (supplierInvoiceItemPM.SupplierInvoiceItemsMods == null)
+            {
+                return null;
+            }
+            var valuationAdjustmentList = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsValuationAdjustment>();
+            foreach (var valuationAdjustmentItem in supplierInvoiceItemPM.SupplierInvoiceItemsMods)
+            {
+                var valuationAdjustment = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsValuationAdjustment();
+                valuationAdjustment.AdditionCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsValuationAdjustmentAdditionCode();
+                valuationAdjustment.AdditionCode.Value = valuationAdjustmentItem.TypeCode;
+                valuationAdjustment.AmountAmount = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsValuationAdjustmentAmountAmount();
+                valuationAdjustment.AmountAmount = SetAmountTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsValuationAdjustmentAmountAmount>(valuationAdjustmentItem.CurrencyTypeCode, valuationAdjustmentItem.Amount > 0 ? (Decimal)valuationAdjustmentItem.Amount : 0);
+              //  valuationAdjustment.SequenceNumeric = valuationAdjustmentItem.
+                valuationAdjustmentList.Add(valuationAdjustment);
+            }
+            return valuationAdjustmentList.ToArray();
+        }
 
         private DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocument[] GetGoodsItemAdditionalDocument(SupplierInvoiceItemPM supplierInvoiceItemPM)
         {
@@ -1386,12 +1393,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                 if (supplierInvoiceItemConnectedDeclaration.ItemSequence.HasValue)
                 {
                     previousDocument.SequenceNumeric = supplierInvoiceItemConnectedDeclaration.ItemSequence.Value; // ConnectedDeclarationsSeq + 1;
-                    previousDocument.SequenceNumericSpecified = true;
+                     previousDocument.SequenceNumericSpecified = true;
+
                 }
                 previousDocument.TypeCode = SetCodeTypeValue<PreviousDocumentTypeCodeType>(supplierInvoiceItemConnectedDeclaration.DeclarationTypeCode);
                 previousDocument.DMExtensions = GetItemPreviousDocumentDMExtensions(supplierInvoiceItemConnectedDeclaration);
-
-                previousDocumentList.Add(previousDocument);
+                 previousDocumentList.Add(previousDocument);
             }
             return previousDocumentList.ToArray();
 
@@ -1509,7 +1516,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                       //   Value = supplierInvoiceItemPM.ClassificationCode
                      //},
                         IdentificationTypeCode = SetCodeTypeValue < ClassificationIdentificationTypeCodeType>(supplierInvoiceItemPM.ClassificationTypeCode),
-                        DangerousGoodsStatement = GetDangerousGoodsStatement(supplierInvoiceItemPM.SuppInvoiceItemsAbachStatements)
+                        DangerousGoodsStatement = GetDangerousGoodsStatement(supplierInvoiceItemPM.SuppInvoiceItemsAbachStatements),
+                        TaxExemptCode =SetCodeTypeValue < DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTaxExemptCode>(supplierInvoiceItemPM.TaxExemptCode),
+                        ProductName = GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductName(supplierInvoiceItemPM),
+                        ProductIdentification =  GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductIdentification(supplierInvoiceItemPM),
+                        SerialNumbers= GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsSerialNumbers(supplierInvoiceItemPM),
+                        TradeLevyAndExampt =GetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt(supplierInvoiceItemPM)
+
                     },
 
                     myDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassification
@@ -1536,19 +1549,18 @@ namespace Logitude.CustomsMessaging.RequestServices
             return dangerousGoodsStatements.ToArray();
          }
 
-        // moran 8.3.15 - Task 11745 -->
-        //private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityGovernmentProcedure[] GetGoodsItemCommodityGovernmentProcedure(List<SupplierInvoiceItemProcesTypePM> SupplierInvoiceItemsProcessTypesPM)
-        //{
+         private DeclarationGoodsShipmentGovernmentAgencyGoodsItemGovernmentProcedure[] GetGoodsItemGovernmentProcedure(List<SupplierInvoiceItemProcesTypePM> SupplierInvoiceItemsProcessTypesPM)
+        {
 
-        //    var goodsItemCommodityGovernmentProcedureList = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityGovernmentProcedure>();
-        //    foreach (var SupplierInvoiceItemsProcessType in SupplierInvoiceItemsProcessTypesPM)
-        //    {
-        //        var GoodsItemCommodityGovernmentProcedure = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityGovernmentProcedure();
-        //        GoodsItemCommodityGovernmentProcedure.CurrentCode = SetCodeTypeValue<GovernmentProcedureCurrentCodeType>(SupplierInvoiceItemsProcessType.ProcessTypeCode);
-        //        goodsItemCommodityGovernmentProcedureList.Add(GoodsItemCommodityGovernmentProcedure);
-        //    }
-        //    return goodsItemCommodityGovernmentProcedureList.ToArray();
-        //}
+            var goodsItemCommodityGovernmentProcedureList = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemGovernmentProcedure>();
+            foreach (var SupplierInvoiceItemsProcessType in SupplierInvoiceItemsProcessTypesPM)
+            {
+                var GoodsItemCommodityGovernmentProcedure = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemGovernmentProcedure();
+                GoodsItemCommodityGovernmentProcedure.CurrentCode = SetCodeTypeValue<GovernmentProcedureCurrentCodeType>(SupplierInvoiceItemsProcessType.ProcessTypeCode);
+                goodsItemCommodityGovernmentProcedureList.Add(GoodsItemCommodityGovernmentProcedure);
+            }
+            return goodsItemCommodityGovernmentProcedureList.ToArray();
+        }
         // moran 8.3.15 - Task 11745 <--
 
 
@@ -1659,126 +1671,126 @@ namespace Logitude.CustomsMessaging.RequestServices
         //    return DMExtensions;
         //}
 
-        //private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductIdentification[] GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductIdentification(SupplierInvoiceItemPM supplierInvoiceItemPM)
-        //{
-        //    if (supplierInvoiceItemPM.SupplierInvoiceItemsProdIdents == null || supplierInvoiceItemPM.SupplierInvoiceItemsProdIdents.Count < 1)
-        //    {
-        //        return null;
-        //    }
+        private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductIdentification[] GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductIdentification(SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+            if (supplierInvoiceItemPM.SupplierInvoiceItemsProdIdents == null || supplierInvoiceItemPM.SupplierInvoiceItemsProdIdents.Count < 1)
+            {
+                return null;
+            }
 
-        //    List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductIdentification> myDMExtensionsProductIdentification = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductIdentification>();
-        //    foreach (var productIdentificationItem in supplierInvoiceItemPM.SupplierInvoiceItemsProdIdents)
-        //    {
-        //        var productIdentification = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductIdentification();
-        //        productIdentification.ID = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductIdentificationID();
-        //        productIdentification.ID.Value = productIdentificationItem.Identification;
-        //        productIdentification.IDTypeCode = new CommodityIDTypeCodeType();
-        //        productIdentification.IDTypeCode.Value = productIdentificationItem.TypeCode;
-        //        myDMExtensionsProductIdentification.Add(productIdentification);
-        //    }
+            List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductIdentification> myDMExtensionsProductIdentification = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductIdentification>();
+            foreach (var productIdentificationItem in supplierInvoiceItemPM.SupplierInvoiceItemsProdIdents)
+            {
+                var productIdentification = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductIdentification();
+                productIdentification.ID = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductIdentificationID();
+                productIdentification.ID.Value = productIdentificationItem.Identification;
+                productIdentification.IDTypeCode = new CommodityIDTypeCodeType();
+                productIdentification.IDTypeCode.Value = productIdentificationItem.TypeCode;
+                myDMExtensionsProductIdentification.Add(productIdentification);
+            }
 
-        //    return myDMExtensionsProductIdentification.ToArray(); ;
-        //}
+            return myDMExtensionsProductIdentification.ToArray(); ;
+        }
 
-//        private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductName[] GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductName(SupplierInvoiceItemPM supplierInvoiceItemPM)
-//        {
-//            if (supplierInvoiceItemPM.SupplierInvoiceItemsDescripts == null || supplierInvoiceItemPM.SupplierInvoiceItemsDescripts.Count < 1)
-//            {
-//                return null;
-//            }
+        private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductName[] GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductName(SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+            if (supplierInvoiceItemPM.SupplierInvoiceItemsDescripts == null || supplierInvoiceItemPM.SupplierInvoiceItemsDescripts.Count < 1)
+            {
+                return null;
+            }
 
-//            List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductName> myDMExtensionsProductName = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductName>();
-//            foreach (var productNameItem in supplierInvoiceItemPM.SupplierInvoiceItemsDescripts)
-//            {
-//                var productName = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductName();
-//                productName.Name = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductNameName();
-//                productName.Name.Value = productNameItem.Description;
-//                productName.NameQualifierCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductNameNameQualifierCode();
-//                productName.NameQualifierCode.Value = productNameItem.TypeCode;
-//                myDMExtensionsProductName.Add(productName);
-//            }
+            List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductName> myDMExtensionsProductName = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductName>();
+            foreach (var productNameItem in supplierInvoiceItemPM.SupplierInvoiceItemsDescripts)
+            {
+                var productName = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductName();
+                productName.Name = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductNameName();
+                productName.Name.Value = productNameItem.Description;
+                productName.NameQualifierCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationProductNameNameQualifierCode();
+                productName.NameQualifierCode.Value = productNameItem.TypeCode;
+                myDMExtensionsProductName.Add(productName);
+            }
 
-//            return myDMExtensionsProductName.ToArray(); ;
-//        }
+            return myDMExtensionsProductName.ToArray(); ;
+        }
 
-//        private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsSerialNumbers[] GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsSerialNumbers(SupplierInvoiceItemPM supplierInvoiceItemPM)
-//        {
-//            if (supplierInvoiceItemPM.SupplierInvoiceItemsSerialNums == null || supplierInvoiceItemPM.SupplierInvoiceItemsSerialNums.Count < 1)
-//            {
-//                return null;
-//            }
+        private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationSerialNumbers[] GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsSerialNumbers(SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+            if (supplierInvoiceItemPM.SupplierInvoiceItemsSerialNums == null || supplierInvoiceItemPM.SupplierInvoiceItemsSerialNums.Count < 1)
+            {
+                return null;
+            }
 
-//            List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsSerialNumbers> myDMExtensionsSerialNumbers = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsSerialNumbers>();
-//            foreach (var serialNumbersItem in supplierInvoiceItemPM.SupplierInvoiceItemsSerialNums)
-//            {
-//                var serialNumber = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsSerialNumbers();
-//                serialNumber.ID = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsSerialNumbersID();
-//                serialNumber.ID.Value = serialNumbersItem.SerialNumber;
-//                serialNumber.IdentityQualifierCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsSerialNumbersIdentityQualifierCode();
-//                serialNumber.IdentityQualifierCode.Value = serialNumbersItem.TypeCode;
-//                myDMExtensionsSerialNumbers.Add(serialNumber);
-//            }
+            List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationSerialNumbers> myDMExtensionsSerialNumbers = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationSerialNumbers>();
+            foreach (var serialNumbersItem in supplierInvoiceItemPM.SupplierInvoiceItemsSerialNums)
+            {
+                var serialNumber = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationSerialNumbers();
+                serialNumber.ID = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationSerialNumbersID();
+                serialNumber.ID.Value = serialNumbersItem.SerialNumber;
+                serialNumber.IdentityQualifierCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationSerialNumbersIdentityQualifierCode();
+                serialNumber.IdentityQualifierCode.Value = serialNumbersItem.TypeCode;
+                myDMExtensionsSerialNumbers.Add(serialNumber);
+            }
 
-//            return myDMExtensionsSerialNumbers.ToArray(); ;
-//        }
+            return myDMExtensionsSerialNumbers.ToArray(); ;
+        }
 
-//        //<--- Yuval Chalup 30.12.2014 TASK-9501
-//        private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt[] GetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt(SupplierInvoiceItemPM supplierInvoiceItemPM)
-//        {
-//            if (supplierInvoiceItemPM.SupplierInvoiceItemLevies == null)
-//            {
-//                return null;
-//            }
-//            if (supplierInvoiceItemPM.SupplierInvoiceItemLevies.Count < 1)
-//            {
-//                return null;
-//            }
+        //        //<--- Yuval Chalup 30.12.2014 TASK-9501
+        private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTradeLevyAndExampt[] GetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt(SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+            if (supplierInvoiceItemPM.SupplierInvoiceItemLevies == null)
+            {
+                return null;
+            }
+            if (supplierInvoiceItemPM.SupplierInvoiceItemLevies.Count < 1)
+            {
+                return null;
+            }
 
-//            List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt> declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExamptList = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt>();
+            List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTradeLevyAndExampt> declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExamptList = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTradeLevyAndExampt>();
 
-//            foreach (var supplierInvoiceItemLevies in supplierInvoiceItemPM.SupplierInvoiceItemLevies)
-//            {
-//                DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt();
-//                if (!string.IsNullOrWhiteSpace(supplierInvoiceItemLevies.TradeLevyExamptCode))
-//                {
-//                    declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt.tradeLevyExamptCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExamptTradeLevyExamptCode
-//                    {
-//                        Value = supplierInvoiceItemLevies.TradeLevyExamptCode
-//                    };
-//                }
-//                if (!string.IsNullOrEmpty(supplierInvoiceItemLevies.TradeLevyNumber)) // changed by Alaa WI:13229
-//                {
-//                    declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt.tradeLevyNumber = new TradeLevyNumberType
-//                    {
-//                        Value = supplierInvoiceItemLevies.TradeLevyNumber
-//                    };
-//                }
+            foreach (var supplierInvoiceItemLevies in supplierInvoiceItemPM.SupplierInvoiceItemLevies)
+            {
+                DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTradeLevyAndExampt declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTradeLevyAndExampt();
+                if (!string.IsNullOrWhiteSpace(supplierInvoiceItemLevies.TradeLevyExamptCode))
+                {
+                    declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt.TradeLevyExamptCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTradeLevyAndExamptTradeLevyExamptCode
+                    {
+                        Value = supplierInvoiceItemLevies.TradeLevyExamptCode
+                    };
+                }
+                if (!string.IsNullOrEmpty(supplierInvoiceItemLevies.TradeLevyNumber)) // changed by Alaa WI:13229
+                {
+                    declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt.TradeLevyNumber = new TradeLevyNumberType
+                    {
+                        Value = supplierInvoiceItemLevies.TradeLevyNumber
+                    };
+                }
 
-//                declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExamptList.Add(declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt);
+                declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExamptList.Add(declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExampt);
 
-//            }
-//            return declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExamptList.ToArray();
-//        }
-//        //Yuval Chalup 30.12.2014 TASK-9501 --->
+            }
+            return declarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsTradeLevyAndExamptList.ToArray();
+        }
+        //        //Yuval Chalup 30.12.2014 TASK-9501 --->
 
-//#if refreshWSDL20141230
-//        private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsValuationDeductionAdjustment[] GetGoodsItemCommodityDMExtensionsValuationDeductionAdjustment(List<SupplierInvoiceItemsModificationPM> supplierInvoiceItemsModificationsPM)
-//         {
-//             var ValuationDeductionAdjustmentList = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsValuationDeductionAdjustment>();
-//             for (int itemsModificationsSeq = 0; itemsModificationsSeq < supplierInvoiceItemsModificationsPM.Count(); itemsModificationsSeq++)
-//             {
-//                 var supplierInvoiceItemsModification = supplierInvoiceItemsModificationsPM[itemsModificationsSeq];
-//                 var ValuationDeductionAdjustment = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsValuationDeductionAdjustment();
-//                 ValuationDeductionAdjustment.ChargesTypeCode = new CustomsValuationChargesTypeCodeType() { Value = supplierInvoiceItemsModification.TypeCode };
-//                 if (supplierInvoiceItemsModification.Amount.HasValue)
-//                 {
-//                     ValuationDeductionAdjustment.DeductAmount = SetAmountTypeValue<DutyTaxFeeDeductAmountType>(supplierInvoiceItemsModification.CurrencyTypeCode, supplierInvoiceItemsModification.Amount.Value);
-//                 }
-//                 ValuationDeductionAdjustmentList.Add(ValuationDeductionAdjustment);
-//             }
-//             return ValuationDeductionAdjustmentList.ToArray();
-//         }
-//#endif
+        //#if refreshWSDL20141230
+        //        private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsValuationDeductionAdjustment[] GetGoodsItemCommodityDMExtensionsValuationDeductionAdjustment(List<SupplierInvoiceItemsModificationPM> supplierInvoiceItemsModificationsPM)
+        //         {
+        //             var ValuationDeductionAdjustmentList = new List<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsValuationDeductionAdjustment>();
+        //             for (int itemsModificationsSeq = 0; itemsModificationsSeq < supplierInvoiceItemsModificationsPM.Count(); itemsModificationsSeq++)
+        //             {
+        //                 var supplierInvoiceItemsModification = supplierInvoiceItemsModificationsPM[itemsModificationsSeq];
+        //                 var ValuationDeductionAdjustment = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsValuationDeductionAdjustment();
+        //                 ValuationDeductionAdjustment.ChargesTypeCode = new CustomsValuationChargesTypeCodeType() { Value = supplierInvoiceItemsModification.TypeCode };
+        //                 if (supplierInvoiceItemsModification.Amount.HasValue)
+        //                 {
+        //                     ValuationDeductionAdjustment.DeductAmount = SetAmountTypeValue<DutyTaxFeeDeductAmountType>(supplierInvoiceItemsModification.CurrencyTypeCode, supplierInvoiceItemsModification.Amount.Value);
+        //                 }
+        //                 ValuationDeductionAdjustmentList.Add(ValuationDeductionAdjustment);
+        //             }
+        //             return ValuationDeductionAdjustmentList.ToArray();
+        //         }
+        //#endif
 
 
         private DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensions GetDMExtensionsGoodsItem(SupplierInvoiceItemPM supplierInvoiceItemPM, SupplierInvoicePM supplierInvoicePM)
@@ -1826,17 +1838,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
            
              DMExtensions.Vehicle = GetDeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsProductIdentification(supplierInvoiceItemPM.SupplierInvoiceItemVehicles); // Mirit 16/08/15 Task 15960
-            // if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.PreferenceDocumentNumber)) // moran 9.3.15 - Task 11774
-            //{
-                DMExtensions.PreferenceDocumentNumber = SetIDTypeValue<PreferenceDocumentNumberType>("11");
+                                                                                                                                                                              // if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.PreferenceDocumentNumber)) // moran 9.3.15 - Task 11774
 
-            // SetIDTypeValue<PreferenceDocumentNumberType>(supplierInvoiceItemPM.PreferenceDocumentNumber);SetIDTypeValue<PreferenceDocumentNumberType>(supplierInvoiceItemPM.PreferenceDocumentNumber);
-            //}
-
+            DMExtensions.PreferenceDocumentNumber = SetIDTypeValue<PreferenceDocumentNumberType>("11"); // SetIDTypeValue<PreferenceDocumentNumberType>(supplierInvoiceItemPM.PreferenceDocumentNumber);
             DMExtensions.InvoiceLineNumbers = "1";// supplierInvoiceItemPM.ActualInvoiceLines;
             DMExtensions.TransactionNatureCode = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTransactionNatureCode>(supplierInvoiceItemPM.TransactionNatureCode);
             DMExtensions.ClaimReasonCode = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsClaimReasonCode>(supplierInvoiceItemPM.ClaimReasonCode);
- 
+            DMExtensions.ValuationAdjustment = GetGoodsItemValuationAdjustment(supplierInvoiceItemPM);
             return DMExtensions;
         }
 
@@ -2005,7 +2013,12 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
 
             DMExtensions.PackagesMeasure = GetDeclarationConsignmentPackages(consignmentPM).ToArray();
-            DMExtensions.DangerousGoodsIndicator = new DangerousGoodsIndicatorIndType() {Value =consignmentPM.IsDangerousGoods };  
+            DMExtensions.DangerousGoodsIndicator = new DangerousGoodsIndicatorIndType() {Value =consignmentPM.IsDangerousGoods };
+            DMExtensions.FinalDestinationPort = new DeclarationGoodsShipmentConsignmentDMExtensionsFinalDestinationPort()
+            {
+                Value = consignmentPM.FinalDestinationPortCode
+            };
+
             return DMExtensions;
         }
 
