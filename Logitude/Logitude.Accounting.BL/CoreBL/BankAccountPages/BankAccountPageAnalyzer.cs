@@ -365,12 +365,12 @@ s             b                   a
             {
 
 
-                bool avoidCheckReferenceDate = true;//ohad+ eyal
-                if (avoidCheckReferenceDate)
-                {
+                //bool avoidCheckReferenceDate = true;//ohad+ eyal
+                //if (avoidCheckReferenceDate)
+                //{
 
-                }
-                else
+                //}
+                //else
                 {
                     if (prevReconcileExternalPagePM.ToDate >= newBankPageLines.First().ReferenceDate)
                     {
