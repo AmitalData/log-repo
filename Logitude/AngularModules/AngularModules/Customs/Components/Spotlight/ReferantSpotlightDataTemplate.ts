@@ -212,7 +212,6 @@ export class ReferantSpotlightDataTemplate
                     }
                 }); 
             }
-            
             this.spotlightSharedDataService.IsDirty = false;
             this.ShowBusyIndicator = false;
 

@@ -64,11 +64,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  DeclarationOfficeName = d.DeclarationOffice.LocalName,
 
                                                                  VendorName = a.CustomsVendor.VendorName,
-                                                                 ArrivalDate =   a.ArrivalDate != null ? a.ArrivalDate : a.EstimatedArrivalDate,
-                                                                 ATAOrETA =   a.ArrivalDate != null ? "ATA" : "ETA",
+                                                                 ArrivalDate = a.ArrivalDate != null ? a.ArrivalDate : a.EstimatedArrivalDate,
+                                                                 ATAOrETA = a.ArrivalDate != null ? "ATA" : "ETA",
 
                                                                  DeclarationStatusTypeName = d.DeclarationStatusType.LocalName,
-                                                                  
+
                                                                  DeclarationStatusTypeCode = d.DeclarationStatusTypeCode,
                                                                  ExceptionReasonsList = a.ExceptionReasonsList,
                                                                  ReferentUserId = d.ReferentUserId,
