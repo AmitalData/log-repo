@@ -142,7 +142,7 @@ export class CargoSealsQueryComponent
                 this.CargoSealObslist.Clear();
                 if (this.CurrentEntity.CargoSeals != null) {
                     this.CurrentEntity.CargoSeals.forEach((item: CargoSealPM) => {
-                        if (item.UpdateTypeCode == '2') {
+                         if (item.UpdateTypeCode == '2') {
                             item.CanToAdd = true;
                         }
                         else {
