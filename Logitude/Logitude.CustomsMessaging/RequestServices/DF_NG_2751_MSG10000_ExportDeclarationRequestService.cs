@@ -825,8 +825,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             if (declarationPM.LoadingDateTime != null)
             {
-                DMExtensions.DepartureDateTime = new DepartureDateTimeType() { Value = declarationPM.LoadingDateTime };
-                
+                DMExtensions.DepartureDateTime = new DepartureDateTimeType() { Value =declarationPM.LoadingDateTime.Value };
             }
             DMExtensions.AutonomyRegionType = SetIDTypeValue<OriginRegionIDType>(declarationPM.AutonomyRegionTypeCode); //new OriginRegionIDType() { Value = declarationPM.AutonomyRegionTypeCode };
 
