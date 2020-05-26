@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+delete from querycolumns where querycode in (select UniqueCode from queries group by UniqueCode having count(*) > 1 );
+delete from advancedqueryfilters where querycode in (select UniqueCode from queries group by UniqueCode having count(*) > 1 );
+update queries set originalqueryid = null where originalqueryid in (select id from queries where uniquecode in (select UniqueCode from queries group by UniqueCode having count(*) > 1 ));
+delete from queries where UniqueCode in (select UniqueCode from queries group by UniqueCode having count(*) > 1 );
+delete from querycolumns where queryid in (select id from queries where userid is null and tenant <> 0 );
+delete from advancedqueryfilters where queryid in (select id from queries where userid is null and tenant <> 0 );
+delete from queries where id in (select id from queries where userid is null and tenant <> 0 );
+    ]]>
+  </Oracle>
+</Script>

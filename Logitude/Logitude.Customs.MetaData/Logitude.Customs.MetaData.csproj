@@ -103,6 +103,33 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBOthers\Procedures\DeleteObjectTableMetadataProcedure.dxml" />
+    <None Include="DBOthers\Procedures\PreDeleteMetadataProcedure.dxml" />
+    <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />
+    <None Include="DBScripts\Post\202005210124_InsertFieldDataTypes.sxml" />
+    <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
+    <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
+    <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
+    <None Include="DBScripts\Pre\202005210106_DropUnneededTables_SystemLogs.sxml" />
+    <None Include="DBScripts\Pre\202005210107_TablesBackup.sxml" />
+    <None Include="DBScripts\Pre\202005210108_AddMetadataColumns.sxml" />
+    <None Include="DBScripts\Pre\202005210109_ColorIndexScripts.sxml" />
+    <None Include="DBScripts\Pre\202005210110_DeleteDuplicateCountries.sxml" />
+    <None Include="DBScripts\Pre\202005210111_DeleteDuplicateCountryCities.sxml" />
+    <None Include="DBScripts\Pre\202005210112_DeleteDuplicateIncoterms.sxml" />
+    <None Include="DBScripts\Pre\202005210113_DeleteDuplicatePorts.sxml" />
+    <None Include="DBScripts\Pre\202005210114_DeleteDuplicateStates.sxml" />
+    <None Include="DBScripts\Pre\202005210115_NullColumnsMustHaveValueInTenants.sxml" />
+    <None Include="DBScripts\Pre\202005210116_PackageTypePrintAsNullable.sxml" />
+    <None Include="DBScripts\Pre\202005210117_DeleteDuplicateQueries.sxml" />
+    <None Include="DBScripts\Pre\202005210118_UpdateObjectFieldCode.sxml" />
+    <None Include="DBScripts\Pre\202005210119_DropIX_COMMUNICATIONLOGS_ENTITYID.sxml" />
+    <None Include="DBScripts\Pre\202005210120_DataTypeChanges_Global.sxml" />
+    <None Include="DBScripts\Pre\202005210121_DataTypeChanges_Main.sxml" />
+    <None Include="DBScripts\Pre\202005210122_BeforeDeleteMetadata.sxml" />
+    <None Include="DBScripts\Pre\202005261025_CreateSpellCheckedTextCodesTable.sxml" />
+    <None Include="DBScripts\Pre\202005261026_AddSpellCheckedTextCodes.sxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
