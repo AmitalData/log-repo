@@ -1266,6 +1266,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\DeclarartionController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\DeclarationSupplierInvoicesController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\DeclarationVehicleModificationController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\ExceptionReasonController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\GITITEMController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\GovernmentProcedureTypesController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\InterfaceManagementListExtendedController.cs" />
@@ -1274,9 +1275,11 @@
     <Compile Include="Controllers\CustomsModel\Extended\MultiCertificatesController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\NotificationListExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PaymentOrderConnectionTableController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\ReferantExceptionExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\SignStationExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\SupplierInvoiceController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\UIMessagesController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\UrouterController .cs" />
     <Compile Include="Controllers\CustomsModel\Extended\VendorCommissionController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\VehicleController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\VendorExtendedController.cs" />
@@ -1422,6 +1425,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationPaymentProtestViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationPaymentViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationPendingViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationReferantDataViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationStatementTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationStatusTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationTaxViewsController.Generated.cs" />
@@ -1439,6 +1443,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DocumentTypeCustomsDataViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\EntitlementTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\EntityTypeLookupViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExceptionReasonViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FacilitationTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FaultInspectionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FreightPaymentMethodViewsController.Generated.cs" />
@@ -1514,6 +1519,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ProductNameTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PropertiesDetailsHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RansomViolationTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferantExceptionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RefundCustomerActivityTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RegisteredWarehouseSiteTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RequestStatusViewsController.Generated.cs" />
@@ -1622,10 +1628,12 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationMamanSpecialActionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationPaymentController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationPendingController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationReferantDataController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeficitConnFileParagraphTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeficitController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DepositController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DocumentTypeCustomsDataController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExceptionReasonController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GatepassRequestController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GovernmentProcedureTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\GuaranteeController.Generated.cs" />
@@ -1640,6 +1648,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PendingByKeywordController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PhysicalCheckController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ProceduralFaultController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantExceptionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SupplierInvoiceController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TapagConnectionTableController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TapagController.Generated.cs" />
@@ -2684,8 +2693,10 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationCourierStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationMamanSpecialActionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationPendingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationReferantDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeficitDecisionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DocumentTypeCustomsDataUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExceptionReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExternalReconciliationLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExternalReconciliationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FeatureToggleUpdateClass.cs" />
@@ -2724,6 +2735,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferantExceptionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RefundCustomerActivityTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RevaluationStatusUpdateClass.cs" />

@@ -1,0 +1,91 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
+using Simplog.Server.Infrastructure;
+
+namespace Logitude.Customs.Data.Repsitories
+{
+   public partial class DeclarationReferantDataRepository:IRepository<DeclarationReferantData>
+   {
+   
+        private ICustomContext currentContext;
+        public DeclarationReferantDataRepository(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public DeclarationReferantDataRepository(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		 
+		
+		public  DeclarationReferantData GetSingle(string declarationid, int tenant)
+        {
+            return (from a in context.DeclarationReferantDatas
+                    where a.DeclarationId == declarationid && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<DeclarationReferantData> GetAll(int tenant)
+        {
+            return from a in context.DeclarationReferantDatas  
+                   where a.Tenant == tenant
+                   select a;
+        }
+				 
+        public DeclarationReferantData GetSingle(EntityKeyFields entityKeys)
+        {
+            DeclarationReferantDataKeys keys = entityKeys as DeclarationReferantDataKeys;
+            return (from a in context.DeclarationReferantDatas
+                    where a.DeclarationId == keys.DeclarationId
+                    select a).FirstOrDefault();
+        }
+		         
+        partial void onAdd();//Partial Methods Definition in Generated
+        public void Add(DeclarationReferantData entity)
+        {
+            onAdd();
+            context.DeclarationReferantDatas.Add(entity);
+        }
+
+        public void Remove(DeclarationReferantData entity)
+        {
+            context.DeclarationReferantDatas.Attach(entity);
+            context.DeclarationReferantDatas.Remove(entity);
+        }
+
+        partial void onUpdate();//Partial Methods Definition in Generated
+        public void Update(DeclarationReferantData entity)
+        {
+            onUpdate();
+            context.DeclarationReferantDatas.Attach(entity);
+            context.SetAsModified(entity);
+        }
+
+        public List<DeclarationReferantData> All()
+        {
+            return context.DeclarationReferantDatas.ToList();
+        }
+
+        private ICustomContext context
+        {
+            get { return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+	 
+   }
+   }
+	 

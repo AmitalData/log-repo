@@ -558,7 +558,26 @@ export class MainMenuComponent {
                     }
 
 
+                    case "General.MH.ReferantScreen": {
 
+                        var listArgs = new ListComponentArgs();
+                        listArgs.ObjectTableName = "Customs.DeclarationReferantData";
+                        listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewCustomsFile");
+                        if (AppTool.IsNullOrEmpty(listArgs.NewButtonLabel)) listArgs.NewButtonLabel = "פתיחת תיק חדש";
+                        listArgs.HideBackButton = true;
+                        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData", 0).subscribe(response => {
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run(listArgs);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
+                                    this.ChangeSessionHeader(this.SelectedMenu);
+                                    this.isChangingSelected = false;
+                                    //this.pointerEvents = 'all';
+                                });
+                        });
+                        break;
+                    }
                     default: {
                         if (this.SelectedMenu.ObjectTableName) {
                             ServiceLocator.SendTotangoUserActivity(this.SelectedMenu.ObjectTableName, "List View");

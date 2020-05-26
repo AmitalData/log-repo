@@ -160,6 +160,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DeclarationPaymentMethod> DeclarationPaymentMethods { get; }
 		 IDbSet<DeclarationPaymentProtest> DeclarationPaymentProtests { get; }
 		 IDbSet<DeclarationPending> DeclarationPendings { get; }
+		 IDbSet<DeclarationReferantData> DeclarationReferantDatas { get; }
 		 IDbSet<DeclarationStatementType> DeclarationStatementTypes { get; }
 		 IDbSet<DeclarationStatusType> DeclarationStatusTypes { get; }
 		 IDbSet<DeclarationTax> DeclarationTaxes { get; }
@@ -176,6 +177,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DocumentTypeCustomsData> DocumentTypeCustomsData { get; }
 		 IDbSet<EntitlementType> EntitlementTypes { get; }
 		 IDbSet<EntityTypeLookup> EntityTypeLookups { get; }
+		 IDbSet<ExceptionReason> ExceptionReasons { get; }
 		 IDbSet<FacilitationType> FacilitationTypes { get; }
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }
 		 IDbSet<FreightPaymentMethod> FreightPaymentMethods { get; }
@@ -252,6 +254,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ProductNameType> ProductNameTypes { get; }
 		 IDbSet<PropertiesDetailsHistory> PropertiesDetailsHistorys { get; }
 		 IDbSet<RansomViolationType> RansomViolationTypes { get; }
+		 IDbSet<ReferantException> ReferantExceptions { get; }
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }
