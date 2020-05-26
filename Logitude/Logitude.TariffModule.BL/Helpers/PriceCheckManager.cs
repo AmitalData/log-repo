@@ -700,7 +700,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.TariffId = item.tariffid;
                     tariffsSummary.TariffNumber = result.TariffNumber;
 
-                    var airChrageType = chargesTypes.Where(p => p.Code == result.FreightChargeId).Select(p => p).FirstOrDefault();
+                    var airChrageType = chargesTypes.Where(p => p.Id == result.FreightChargeId).Select(p => p).FirstOrDefault();
                     tariffsSummary.ChargeTypeId = airChrageType.Id;
                     tariffsSummary.TotalSurcharge = Sum + "";
                     tariffsSummary.WholePrice = (decimal?)Sum + calculatedLocalAmount + "";
@@ -805,7 +805,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.TariffId = tariffLine.TariffId;
                     tariffsSummary.TariffNumber = trariff.TariffNumber;
                     tariffsSummary.TransitTime = tariffLine.TransitTime;
-                    var airChrageType = chargesTypes.Where(p => p.Code == trariff.FreightChargeId).Select(p => p).FirstOrDefault();
+                    var airChrageType = chargesTypes.Where(p => p.Id == trariff.FreightChargeId).Select(p => p).FirstOrDefault();
                     tariffsSummary.ChargeTypeId = airChrageType.Id;
                     tariffsSummary.TotalSurcharge = Sum + "";
                     tariffsSummary.WholePrice = (decimal?)Sum + calculatedLocalAmount + "";
