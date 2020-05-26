@@ -59,6 +59,7 @@ import {ErrorLogPM} from '../../../../../Infrastructure/EntityPMs/ErrorLogPM';
 import { DateTimeFormat } from '../../../../../Infrastructure/Utilities/DateTimeZone';
 import { DeclarationCourierStatusList } from '../../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
+import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 
 
 @Component({
@@ -88,10 +89,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     customerActivityTypeListService: CustomerActivityTypeListService = new CustomerActivityTypeListService();
     declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
     _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+    supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     PaymentMethodsList: ObservableCollection;
     PaymentProtestsList: ObservableCollection;
     SelectedInvoiceItems: ObservableCollection;
     SelectedInvoices: ObservableCollection;
+    sumBtl: any = 0.0;
 
     _ErrorLogPMFileLoggerService: ErrorLogPMFileLoggerService;
     _2LogBankList: boolean = false;
@@ -128,6 +131,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
                                     this.DeclarationPM = args.EntityPM;
+
                                     if (this.DeclarationPM.IsCourierDeclaration) {
                                         let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
                                         
@@ -146,10 +150,36 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                             });
                                         
                                     }
+                                     if ((this.DeclarationPM.ImporterEntitlementTypeCode == "17" || this.DeclarationPM.ImporterEntitlementTypeCode == "18" ) && FeatureLocator.HasFeaturePermession("Customs.Declaration", "BTPA")) {
+                                        this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(this.DeclarationPM.Id).subscribe(
+                                            invoices => {
+                                                if (invoices.Result != null) {
+                                                    this.sumBtl = 0.0;
+                                                    invoices.Result.forEach((el) => {
+                                                        if (el.SupplierInvoiceItems != null && el.SupplierInvoiceItems.length > 0) {
+                                                            el.SupplierInvoiceItems.forEach(si => {
+                                                                if (si.SupplierInvoiceItemTaxes != null && si.SupplierInvoiceItemTaxes.length > 0) {
+                                                                    si.SupplierInvoiceItemTaxes.forEach(it => {
+                                                                        if (it.TotalBtlCoverageNIS != null)
+                                                                            this.sumBtl += it.TotalBtlCoverageNIS;
+                                                                    })
+                                                                }
+                                                            })
+                                                        }
 
-                                    this.LoadPayment();
+                                                    });
+                                                }
+                                                this.LoadPayment();
 
-                                    this.CheckRequrierdFieldsForSend();
+                                                this.CheckRequrierdFieldsForSend();
+                                            });
+                                    }
+
+                                    else {
+                                        this.LoadPayment();
+
+                                        this.CheckRequrierdFieldsForSend();
+                                    }
 
 
                                 });
@@ -497,7 +527,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
             this.entityCreated = true;
         }
-
+         
         this.PostSendCreditToGetBank();
 
         if (this.paymentPM.FuturePaymentDateTime) {
@@ -629,8 +659,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     this.FuturePaymentDateTime = customFileCreditResponseData.PaymentDateTime;
                     this.FuturePaymentTime = DateTool.GetDateParts(customFileCreditResponseData.PaymentDateTime).DateObject;
                 }
-
-                if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)) {
+                 if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)) {
                     var customBankListService: CustomBankListService = new CustomBankListService();
                     customBankListService.getAll().subscribe((response: ServiceResponse) => {
                         let allCustomBankList: CustomBankList[] = response.Result;
@@ -649,6 +678,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 else if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
                     this.AutoFillPaymentScreenByDefault();
                 }
+            
                 SessionLocator.SelectedSession.StopBusyIndicator();
             });
     }
@@ -697,9 +727,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 });
         }
     }
-
     AutoFillPaymentScreenByDefault() {
         this.NewMethodMethod();
+      
+
+        this.JustAutoFillPaymentScreen();
+
 
         if (!AppTool.IsNullOrEmpty(this.GetCreditInternalBankId)) {
             if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
@@ -744,16 +777,57 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     JustAutoFillPaymentScreen() {
-        for (let method of this.PaymentMethodsList.Collection) {
+ 
+        if (this.sumBtl != null && this.sumBtl > 0)
+        {
+            for (let method of this.PaymentMethodsList.Collection) {
+                method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
+                method.MethodTypeCode = "1";
+                this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
+                    method.MethodTypeName = response.Result.LocalName;
+                });
+            }
+            this.NewMethodMethod(true);
+            this.PaymentMethodsList.Collection[this.PaymentMethodsList.Collection.length - 1].Amount = this.sumBtl;
+            
+           
+       //     this.PaymentMethodsList.Collection.push(method);
+
+        }
+           else {
+     for (let method of this.PaymentMethodsList.Collection) {
             method.Amount = this.DeclarationPM.TotalTax;
             method.MethodTypeCode = "1";
             this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
                 method.MethodTypeName = response.Result.LocalName;
             });
         }
+        }    
+   
     }
 
+
+ 
     JustAutoFillPaymentScreenCash(defaultValue: string) {
+
+        if (this.sumBtl != null && this.sumBtl > 0) {
+            for (let method of this.PaymentMethodsList.Collection) {
+                method.Amount = this.DeclarationPM.TotalTax - this.sumBtl;
+                method.MethodTypeCode = "2";
+                this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                    method.MethodTypeName = response.Result.LocalName;
+                });
+                method.PayerActivityTypeCode = defaultValue;
+                this.customerActivityTypeListService.getSingleFromCache(defaultValue).subscribe((response: ServiceResponse) => {
+                    method.PayerActivityTypeName = response.Result.LocalName;
+                });
+            }
+            this.NewMethodMethod();
+            this.PaymentMethodsList.Collection[this.PaymentMethodsList.Collection.length - 1].Amount = this.sumBtl;
+
+        }
+    else
+        {
         for (let method of this.PaymentMethodsList.Collection) {
             method.Amount = this.DeclarationPM.TotalTax;
             method.MethodTypeCode = "2";
@@ -764,6 +838,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.customerActivityTypeListService.getSingleFromCache(defaultValue).subscribe((response: ServiceResponse) => {
                 method.PayerActivityTypeName = response.Result.LocalName;
             });
+            }
         }
     }
 
@@ -822,8 +897,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     NewProtestMethod() {
         this.NewProtestClicked();
     }
-    NewMethodMethod() {
-        this.AddPaymentMethodClicked();
+    NewMethodMethod(isBtl=false) {
+        this.AddPaymentMethodClicked(isBtl);
     }
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
@@ -1069,14 +1144,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     IsPaymentMethodMessageVisible: boolean = false;
     newLine: boolean = false;
 
-    AddPaymentMethodClicked() {
+    AddPaymentMethodClicked(isBtl: boolean) {
 
         this.newLine = true;
         var line = 0;
         var seq = 0;
         var method: DeclarationPaymentMethodPM = null;
 
-        if (this.paymentPM.DeclarationPaymentMethods.length == 1) {
+        if (this.paymentPM.DeclarationPaymentMethods.length == 1 && !isBtl) {
             method = this.paymentPM.DeclarationPaymentMethods.find(d => d.PayerActivityTypeCode == null || d.MethodTypeCode == null || d.Amount == null);
         }
         if (!AppTool.IsNullOrEmpty(method)) {
