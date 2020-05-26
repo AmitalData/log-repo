@@ -188,6 +188,27 @@
                                     </td>
                                 </tr>
 
+                                <!-- Freight Charges Type -->
+                                <tr *ngIf="EntityPM.TypeCode == 'AFC' || EntityPM.TypeCode == 'OLC' || EntityPM.TypeCode == 'OFC'" class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'FreightChargeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'FreightChargeId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'ChargesType'"
+                                                [HideColumns]="false"
+                                                [DependencyFilter1Value]="'FRT'"
+                                                [QueryFilterItems]="FreightChargeTypesQueryFilters"
+                                                [SelectedValue]="FreightChargeId">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+
                                 <!-- Notes -->
                                 <tr style="height: 80px;">
                                     <td style="vertical-align: top; padding-top: 5px;">

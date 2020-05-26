@@ -20,6 +20,7 @@
   LookUp2="&quot;EnglishName&quot;"
   CodeField="&quot;Code&quot;"
   NameField="&quot;EnglishName&quot;"
+  DependencyFilter1="&quot;ChargesGroupCode&quot;"
   KeyPropertyPath="&quot;Id&quot;"
   AutoCompleteSearchWindow="true"
   IsClosed="false"

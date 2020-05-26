@@ -1659,6 +1659,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string freightChargeId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FreightChargeId  
+	   {
+	    
+	     get
+		{
+		   return freightChargeId;
+		 }
+		 set
+		 {
+		   if(freightChargeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FreightChargeId",OldValue=freightChargeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   freightChargeId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

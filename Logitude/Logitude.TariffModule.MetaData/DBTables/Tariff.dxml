@@ -338,6 +338,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="FreightChargeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -481,6 +488,11 @@
   <Relation
     ForeignKeyColumn="TariffProductId"
     ReferencedTable="TariffProducts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FreightChargeId"
+    ReferencedTable="ChargesTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>
