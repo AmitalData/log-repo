@@ -273,7 +273,6 @@ FROM SpellCheckedTextCodes t2
 WHERE t1.code = t2.code );
      
 update textcodes set isspellchecked =1 where code in (select code from SpellCheckedTextCodes);
-
     ]]>
   </Oracle>
 </Script>

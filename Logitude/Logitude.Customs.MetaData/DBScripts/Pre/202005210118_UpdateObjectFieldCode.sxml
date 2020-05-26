@@ -3,7 +3,7 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="2">
+  <Oracle Version="1">
     <![CDATA[
     update objectfields set code = fieldname where length(code) is null;
     ]]>
