@@ -128,6 +128,8 @@
     <None Include="DBScripts\Pre\202005210120_DataTypeChanges_Global.sxml" />
     <None Include="DBScripts\Pre\202005210121_DataTypeChanges_Main.sxml" />
     <None Include="DBScripts\Pre\202005210122_BeforeDeleteMetadata.sxml" />
+    <None Include="DBScripts\Pre\202005261025_CreateSpellCheckedTextCodesTable.sxml" />
+    <None Include="DBScripts\Pre\202005261026_AddSpellCheckedTextCodes.sxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />

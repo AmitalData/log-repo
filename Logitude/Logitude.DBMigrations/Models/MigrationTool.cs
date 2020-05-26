@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 using System.Linq;
 using System.Collections.Generic;
 using System.Security;
@@ -82,7 +82,7 @@ namespace Logitude.DBMigrations.Models
                         }
                     }
 
-                    if (sxmlFiles != null)
+                    if (sxmlFiles != null && !IsArgumentProvided("-basic") && !IsArgumentProvided("-datatypechanges"))
                     {
                         preGeneralScript = GetGeneralScripts(sxmlFiles, true);
 
@@ -104,7 +104,7 @@ namespace Logitude.DBMigrations.Models
                         }
                     }
 
-                    if (sxmlFiles != null)
+                    if (sxmlFiles != null && !IsArgumentProvided("-basic") && !IsArgumentProvided("-datatypechanges"))
                     {
                         postGeneralScript = GetGeneralScripts(sxmlFiles, false);
 
@@ -1403,6 +1403,8 @@ namespace Logitude.DBMigrations.Models
 
                                     if (!String.IsNullOrEmpty(sxmlScript))
                                     {
+                                        string sxmlScriptBody = sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }).Length > 20000 ? "Scripts body too long" : sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' });
+
                                         scriptBody = "DECLARE\n" +
                                             "StartTime TIMESTAMP;\n" +
                                             "EndTime TIMESTAMP;\n" +
@@ -1415,7 +1417,7 @@ namespace Logitude.DBMigrations.Models
                                             "BEGIN\n" +
                                             "DECLARE ScriptBody NCLOB;\n" +
                                             "BEGIN\n" +
-                                            "ScriptBody := '" + sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "';\n" +
+                                            "ScriptBody := '" + sxmlScriptBody + "';\n" +
                                             saveScriptHistoryQuery + "\n" +
                                             "END;\n" +
                                             "END;\n" +
@@ -1529,6 +1531,8 @@ namespace Logitude.DBMigrations.Models
 
                                     if (!String.IsNullOrEmpty(sxmlScript))
                                     {
+                                        string sxmlScriptBody = sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }).Length > 20000 ? "Scripts body too long" : sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' });
+
                                         scriptBody = "DECLARE\n" +
                                             "StartTime TIMESTAMP;\n" +
                                             "EndTime TIMESTAMP;\n" +
@@ -1542,7 +1546,7 @@ namespace Logitude.DBMigrations.Models
                                             "BEGIN\n" +
                                             "DECLARE ScriptBody NCLOB;\n" +
                                             "BEGIN\n" +
-                                            "ScriptBody := '" + sxmlScript.Replace("'", "''").TrimEnd(new char[] { '\r', '\n' }) + "';\n" +
+                                            "ScriptBody := '" + sxmlScriptBody + "';\n" +
                                             saveScriptHistoryQuery + "\n" +
                                             "END;\n" +
                                             "END;\n" +

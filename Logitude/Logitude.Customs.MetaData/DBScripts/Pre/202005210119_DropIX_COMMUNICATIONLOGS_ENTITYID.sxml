@@ -5,7 +5,7 @@
 
   <Oracle Version="1">
     <![CDATA[
-    DROP INDEX "IX_COMMUNICATIONLOGS_ENTITYID";
+    EXECUTE IMMEDIATE 'DROP INDEX "IX_COMMUNICATIONLOGS_ENTITYID"';
     ]]>
   </Oracle>
 </Script>

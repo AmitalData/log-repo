@@ -5,7 +5,7 @@
 
   <Oracle Version="1">
     <![CDATA[
-    DROP TABLE ERRORLOGS CASCADE CONSTRAINTS;
+    EXECUTE IMMEDIATE 'DROP TABLE ERRORLOGS CASCADE CONSTRAINTS';
     ]]>
   </Oracle>
 </Script>

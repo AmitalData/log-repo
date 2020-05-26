@@ -5,40 +5,40 @@
 
   <Oracle Version="1">
     <![CDATA[
-create table Bak_countries as select * from countries;
-create table Bak_states as select * from states;
-create table Bak_COUNTRYCITIES as select * from COUNTRYCITIES;
-create table Bak_INCOTERMS as select * from INCOTERMS;
-create table Bak_PORTS as select * from PORTS;
-create table Bak_objectfields as select * from objectfields;
-create table Bak_querycolumns as select * from querycolumns;
-create table Bak_ScreenFields as select * from ScreenFields;
-create table Bak_AdvancedQueryFilters as select * from AdvancedQueryFilters;
-create table Bak_RuleConditionFields as select * from RuleConditionFields;
-create table Bak_ObjectTableRuleFields as select * from ObjectTableRuleFields;
-create table Bak_ObjectTableRules as select * from ObjectTableRules;
-create table Bak_screens as select * from screens;
-create table Bak_Queries as select * from Queries;
-create table Bak_MenuButtons as select * from MenuButtons;
-create table Bak_ObjectTableTabs as select * from ObjectTableTabs;
-create table Bak_textcodes as select * from textcodes;
-create table Bak_Features as select * from Features;
-create table Bak_MenusTables as select * from MenusTables;
-create table Bak_CustomsRequiredFields as select * from CustomsRequiredFields;
-create table Bak_AirlineMessagingRules as select * from AirlineMessagingRules;
-create table Bak_restrictions as select * from restrictions;
-create table Bak_CustomerFieldsUpdateSettings as select * from CustomerFieldsUpdateSettings;
-create table Bak_ObjectFieldValidations as select * from ObjectFieldValidations;
-create table Bak_ObjectFieldModifications as select * from ObjectFieldModifications;
-create table Bak_ScreenModifications as select * from ScreenModifications;
-create table Bak_ObjectTables as select * from ObjectTables;
-create table Bak_SharedUserQueries as select * from SharedUserQueries;
-create table Bak_Tips as select * from Tips;
-create table Bak_Translations as select * from Translations;
-create table Bak_PackageFeatures as select * from PackageFeatures;
-create table Bak_RoleFeatures as select * from RoleFeatures;
-create table Bak_Reports as select * from Reports;
-create table Bak_ObjectTableHelperControls as select * from ObjectTableHelperControls;
+EXECUTE IMMEDIATE 'create table Bak_countries as select * from countries';
+EXECUTE IMMEDIATE 'create table Bak_states as select * from states';
+EXECUTE IMMEDIATE 'create table Bak_COUNTRYCITIES as select * from COUNTRYCITIES';
+EXECUTE IMMEDIATE 'create table Bak_INCOTERMS as select * from INCOTERMS';
+EXECUTE IMMEDIATE 'create table Bak_PORTS as select * from PORTS';
+EXECUTE IMMEDIATE 'create table Bak_objectfields as select * from objectfields';
+EXECUTE IMMEDIATE 'create table Bak_querycolumns as select * from querycolumns';
+EXECUTE IMMEDIATE 'create table Bak_ScreenFields as select * from ScreenFields';
+EXECUTE IMMEDIATE 'create table Bak_AdvancedQueryFilters as select * from AdvancedQueryFilters';
+EXECUTE IMMEDIATE 'create table Bak_RuleConditionFields as select * from RuleConditionFields';
+EXECUTE IMMEDIATE 'create table Bak_ObjectTableRuleFields as select * from ObjectTableRuleFields';
+EXECUTE IMMEDIATE 'create table Bak_ObjectTableRules as select * from ObjectTableRules';
+EXECUTE IMMEDIATE 'create table Bak_screens as select * from screens';
+EXECUTE IMMEDIATE 'create table Bak_Queries as select * from Queries';
+EXECUTE IMMEDIATE 'create table Bak_MenuButtons as select * from MenuButtons';
+EXECUTE IMMEDIATE 'create table Bak_ObjectTableTabs as select * from ObjectTableTabs';
+EXECUTE IMMEDIATE 'create table Bak_textcodes as select * from textcodes';
+EXECUTE IMMEDIATE 'create table Bak_Features as select * from Features';
+EXECUTE IMMEDIATE 'create table Bak_MenusTables as select * from MenusTables';
+EXECUTE IMMEDIATE 'create table Bak_CustomsRequiredFields as select * from CustomsRequiredFields';
+EXECUTE IMMEDIATE 'create table Bak_AirlineMessagingRules as select * from AirlineMessagingRules';
+EXECUTE IMMEDIATE 'create table Bak_restrictions as select * from restrictions';
+EXECUTE IMMEDIATE 'create table Bak_CustomerFieldsUpdateSettings as select * from CustomerFieldsUpdateSettings';
+EXECUTE IMMEDIATE 'create table Bak_ObjectFieldValidations as select * from ObjectFieldValidations';
+EXECUTE IMMEDIATE 'create table Bak_ObjectFieldModifications as select * from ObjectFieldModifications';
+EXECUTE IMMEDIATE 'create table Bak_ScreenModifications as select * from ScreenModifications';
+EXECUTE IMMEDIATE 'create table Bak_ObjectTables as select * from ObjectTables';
+EXECUTE IMMEDIATE 'create table Bak_SharedUserQueries as select * from SharedUserQueries';
+EXECUTE IMMEDIATE 'create table Bak_Tips as select * from Tips';
+EXECUTE IMMEDIATE 'create table Bak_Translations as select * from Translations';
+EXECUTE IMMEDIATE 'create table Bak_PackageFeatures as select * from PackageFeatures';
+EXECUTE IMMEDIATE 'create table Bak_RoleFeatures as select * from RoleFeatures';
+EXECUTE IMMEDIATE 'create table Bak_Reports as select * from Reports';
+EXECUTE IMMEDIATE 'create table Bak_ObjectTableHelperControls as select * from ObjectTableHelperControls';
     ]]>
   </Oracle>
 </Script>

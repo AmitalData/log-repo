@@ -3,9 +3,9 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="1">
+  <Oracle Version="2">
     <![CDATA[
-    update OBJECTFIELDS set code = fieldname where code is null;
+    update objectfields set code = fieldname where length(code) is null;
     ]]>
   </Oracle>
 </Script>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -714,7 +714,7 @@ namespace Logitude.DBMigrations.Models
                 string columnName = columnMigration.CurrentColumn.Name.ToUpper();
                 string tempColumnName = FormatNameLength("temp_" + columnMigration.CurrentColumn.Name, null).ToUpper();
                 string droppedColumnName = FormatNameLength("cdrop_" + columnMigration.CurrentColumn.Name, null).ToUpper();
-                string tempColumnDataType = GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? -1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
+                string tempColumnDataType = GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.NewColumn.Size == 0 ? -1 : columnMigration.NewColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
 
                 alterTypeScript += "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name.ToUpper() + "\n";
                 alterTypeScript += "DECLARE ColumnCount NUMBER;\n";
@@ -726,7 +726,10 @@ namespace Logitude.DBMigrations.Models
                 if (!columnMigration.CurrentColumn.Constraints.Nullable)
                 {
                     alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + tempColumnName + "\" NOT NULL';\n";
-                    alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL';\n";
+                    if (!columnMigration.CurrentColumn.Constraints.PrimaryKey)
+                    {
+                        alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL';\n";
+                    }
                 }
                 alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnName + "\" TO \"" + droppedColumnName + "\"';\n";
                 alterTypeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + tempColumnName + "\" TO \"" + columnName + "\"';\n";
@@ -787,7 +790,10 @@ namespace Logitude.DBMigrations.Models
                 if (!columnMigration.CurrentColumn.Constraints.Nullable)
                 {
                     alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + tempColumnName + "\" NOT NULL';\n";
-                    alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL';\n";
+                    if (!columnMigration.CurrentColumn.Constraints.PrimaryKey)
+                    {
+                        alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" MODIFY \"" + columnName + "\" NULL';\n";
+                    }
                 }
                 alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + columnName + "\" TO \"" + droppedColumnName + "\"';\n";
                 alterSizeScript += "EXECUTE IMMEDIATE 'ALTER TABLE \"" + tableName + "\" RENAME COLUMN \"" + tempColumnName + "\" TO \"" + columnName + "\"';\n";
