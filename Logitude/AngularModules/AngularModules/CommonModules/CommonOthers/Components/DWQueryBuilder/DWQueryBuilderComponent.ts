@@ -1447,14 +1447,16 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
 
     public ComputeDisplayName(DWObjectField: any) {
+        var displayname: string = DWObjectField.DisplayName;
+        if (!DWObjectField.IsCustom) {
+            var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.Translate(DWObjectField.FullNameTextCodeCode) : "";
+            var partnerTranslateText = DWObjectField.PartnerFullNameTextCodeCode ? TextCodeTranslator.Translate(DWObjectField.PartnerFullNameTextCodeCode) : "";
 
-        var translateText = DWObjectField.FullNameTextCodeCode ? TextCodeTranslator.Translate(DWObjectField.FullNameTextCodeCode) : "";
-        var partnerTranslateText = DWObjectField.PartnerFullNameTextCodeCode ? TextCodeTranslator.Translate(DWObjectField.PartnerFullNameTextCodeCode) : "";
+            displayname = (translateText ? translateText : DWObjectField.Name);
 
-        var displayname = (translateText ? translateText : DWObjectField.Name);
-
-        if (DWObjectField.DimensionTableDisplayName) {
-            displayname = (partnerTranslateText ? partnerTranslateText : DWObjectField.DimensionTableDisplayName) + " "+ displayname;
+            if (DWObjectField.DimensionTableDisplayName) {
+                displayname = (partnerTranslateText ? partnerTranslateText : DWObjectField.DimensionTableDisplayName) + " " + displayname;
+            }
         }
 
         return displayname;
