@@ -39,7 +39,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsControllerRemarks, 
 	         PreClassification, 
 	         SearchFields, 
-	         ExceptionReasonsList,
+	         ExceptionReasonsList, 
+	         ClassifiedUserId, 
+	         ControllerUserId, 
+	         CollectorUserId,
 	      }
 
 
@@ -63,7 +66,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsControllerRemarks, 
 	         PreClassification, 
 	         SearchFields, 
-	         ExceptionReasonsList,
+	         ExceptionReasonsList, 
+	         ClassifiedUserId, 
+	         ControllerUserId, 
+	         CollectorUserId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -155,6 +161,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExceptionReasonsList))
             {
 				entityPOCO.ExceptionReasonsList = entityPM.ExceptionReasonsList;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClassifiedUserId))
+            {
+				entityPOCO.ClassifiedUserId = entityPM.ClassifiedUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControllerUserId))
+            {
+				entityPOCO.ControllerUserId = entityPM.ControllerUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CollectorUserId))
+            {
+				entityPOCO.CollectorUserId = entityPM.CollectorUserId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -253,6 +274,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExceptionReasonsList = entityPOCO.ExceptionReasonsList;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClassifiedUserId))
+            {
+					entityPM.ClassifiedUserId = entityPOCO.ClassifiedUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ControllerUserId))
+            {
+					entityPM.ControllerUserId = entityPOCO.ControllerUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CollectorUserId))
+            {
+					entityPM.CollectorUserId = entityPOCO.CollectorUserId;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -342,6 +378,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExceptionReasonsList))
             {
                 oldEntityPM.ExceptionReasonsList = entityPM.ExceptionReasonsList;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClassifiedUserId))
+            {
+                oldEntityPM.ClassifiedUserId = entityPM.ClassifiedUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControllerUserId))
+            {
+                oldEntityPM.ControllerUserId = entityPM.ControllerUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CollectorUserId))
+            {
+                oldEntityPM.CollectorUserId = entityPM.CollectorUserId;
             }
 			
 		}

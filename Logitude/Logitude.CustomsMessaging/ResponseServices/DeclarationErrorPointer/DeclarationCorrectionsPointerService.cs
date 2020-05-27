@@ -43,7 +43,7 @@ namespace Logitude.CustomsMessaging.ResponseServices.DeclarationErrorPointer
             //Get General Data
             _DeclarationCorrection = new General();
             _DeclarationCorrection.IssueDateTime = response.IssueDateTime;
-            if (response.Declaration.DMExtensions != null && response.Declaration.DMExtensions.VersionID != null)
+            if (response.Declaration!= null && response.Declaration.DMExtensions != null && response.Declaration.DMExtensions.VersionID != null)
             {
                 _DeclarationCorrection.VersionId = response.Declaration.DMExtensions.VersionID.Value;
             }

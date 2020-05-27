@@ -600,6 +600,10 @@
     <Compile Include="Migrations\202005200752046_loaddatenull.Designer.cs">
       <DependentUpon>202005200752046_loaddatenull.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005251456360_AddControllerUserId.cs" />
+    <Compile Include="Migrations\202005251456360_AddControllerUserId.Designer.cs">
+      <DependentUpon>202005251456360_AddControllerUserId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1040,6 +1044,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005200752046_loaddatenull.resx">
       <DependentUpon>202005200752046_loaddatenull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005251456360_AddControllerUserId.resx">
+      <DependentUpon>202005251456360_AddControllerUserId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

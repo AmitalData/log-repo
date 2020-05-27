@@ -38,6 +38,10 @@ export class DeclarationReferantDataList {
 	DepartmentId: string;
 	ReferentUserId: string;
 	Actions: string;
+	AvailabilityDate: Date;
+	ClassifiedUserId: string;
+	ControllerUserId: string;
+	CollectorUserId: string;
 	
 }
  

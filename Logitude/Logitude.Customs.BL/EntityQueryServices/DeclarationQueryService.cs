@@ -275,6 +275,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return MyDeclarationPendingPMList;
         }
 
+
+        public int GetDeclarationMaxAmendmentRequestNumber( int tenant)
+        {
+             DeclarationRepository declarationRepository = new DeclarationRepository(context);
+            return declarationRepository.GetDeclarationMaxAmendmentRequestNumber(tenant);
+        }
+
+
         public string GetIdByDeclarationNumber(string declarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
@@ -282,12 +290,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public DeclarationPM GetDeclarationByfunctionalReferenceID(string declarationNumber, string functionalReferenceID,  int tenant)
+        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant)
         {
-            if (String.IsNullOrWhiteSpace(declarationNumber)) return null;
-            if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
+             if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
 
-            var declaration = repository.GetDeclarationByFunctionalReferenceID(declarationNumber, functionalReferenceID);
+            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID);
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
             if (declaration == null) return null;

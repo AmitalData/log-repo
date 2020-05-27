@@ -923,10 +923,18 @@ export class SendDeclarationService implements OnDestroy {
                 this.ValidationErrors.push(err);
                 this.FillValidationErrors("Errors");
             });
-
-        this.DeclarationService.PostSendDeclaration(searchParams).subscribe((response: ServiceResponse) => {
-            //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        });
+        if (this.EntityPM.Direction == "E") {
+            this.DeclarationService.PostSendExportDeclaration(searchParams).subscribe((response: ServiceResponse) => {
+                //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            });
+        }
+        else {
+            this.DeclarationService.PostSendDeclaration(searchParams).subscribe((response: ServiceResponse) => {
+                //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            });
+        
+}
+      
     }
 
     GetRequiredErrorsList(errorsList: any[]) {

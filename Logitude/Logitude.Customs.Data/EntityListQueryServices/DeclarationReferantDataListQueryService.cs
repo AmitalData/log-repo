@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              where d.ReferentUserId != null
                                                              select new DeclarationReferantDataList()
                                                              {
-                                                                 Tenant=a.Tenant,
+                                                                 Tenant = a.Tenant,
 
                                                                  DeclarationId = a.DeclarationId,
 
@@ -64,16 +64,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  DeclarationOfficeName = d.DeclarationOffice.LocalName,
 
                                                                  VendorName = a.CustomsVendor.VendorName,
-                                                                 ArrivalDate = DateTime.MinValue != a.ArrivalDate ? a.ArrivalDate : a.EstimatedArrivalDate,
-                                                                 ATAOrETA = DateTime.MinValue != a.ArrivalDate ? "ATA" : "ETA",
+                                                                 ArrivalDate = a.ArrivalDate != null ? a.ArrivalDate : a.EstimatedArrivalDate,
+                                                                 ATAOrETA = a.ArrivalDate != null ? "ATA" : "ETA",
 
                                                                  DeclarationStatusTypeName = d.DeclarationStatusType.LocalName,
-                                                                 
-                                                                DeclarationStatusTypeCode = d.DeclarationStatusTypeCode,
-                                                                ExceptionReasonsList = a.ExceptionReasonsList,
-                                                                ReferentUserId=d.ReferentUserId,
-                                                                DepartmentId=d.DepartmentId,
-                                                               
+
+                                                                 DeclarationStatusTypeCode = d.DeclarationStatusTypeCode,
+                                                                 ExceptionReasonsList = a.ExceptionReasonsList,
+                                                                 ReferentUserId = d.ReferentUserId,
+                                                                 DepartmentId = d.DepartmentId,
+                                                                 AvailabilityDate = d.AvailabilityDate,
+
                                                              });
             return query;
         }

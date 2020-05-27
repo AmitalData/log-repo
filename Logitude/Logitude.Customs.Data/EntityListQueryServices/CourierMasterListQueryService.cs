@@ -114,14 +114,36 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        CalcPending900 = myJoin != null ? myJoin.P900 : 0,
                                                        CalcPendingCustoms = myJoin != null ? myJoin.IsPendingCustoms : 0,
                                                        CalcSuspendedDeclarations = myJoin != null ? myJoin.IsSuspendedDeclarations : 0,
-                                                       IsEstimatedArrivalToDay = a.EstimatedArrivalDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) == today ? true : false) : false,
-                                                       //EstimatedArrivalDateOnly =
-                                                       //a.EstimatedArrivalDate != null ? System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) : null
-                                                   });
+                                                       EstimatedArrivalColor =
+                                                       a.EstimatedArrivalDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) == today ? "Blue" :
+                                                       (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) < today ? "Red" : "Black")) : "Black",
+                                                    });
+        
             return query;
 		}
 
-		private IQueryable<CourierMaster> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CourierMaster> iQueryable, int tenant)
+
+        public string  SetEstimatedArrivalColor(DateTime? EstimatedArrivalDate)
+        {
+            string sColor = "Black";
+            var today = DateTime.Now.Date;
+
+            if (EstimatedArrivalDate != null)
+            {
+                if( EstimatedArrivalDate  == today)
+                {
+                    sColor = "Blue";
+                }
+                if ( EstimatedArrivalDate  < today)
+                {
+                    sColor = "Red";
+                }
+            }
+
+            return sColor;
+        }
+
+        private IQueryable<CourierMaster> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CourierMaster> iQueryable, int tenant)
         {
             return iQueryable;
 

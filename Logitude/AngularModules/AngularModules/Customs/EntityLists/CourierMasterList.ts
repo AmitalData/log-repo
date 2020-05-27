@@ -57,7 +57,7 @@ export class CourierMasterList {
 	CalcSuspendedDeclarations: number;
 	NoOfCourierHawb: string;
 	IsAutomaticManifestSent: boolean;
-	IsEstimatedArrivalToDay: boolean;
+	EstimatedArrivalColor: string;
 	
 }
  

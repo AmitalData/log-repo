@@ -633,6 +633,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         public void InsertSupplierInvioceItemCertificatByCsvFile(string certificateNumber,string requestNumber,int tenant,string decId,int lineNumber,int invoiceCounterkey, SupplierInvoiceItemPM invoiceItem)
         {
+            ICustomContext customContext = CustomContext.GetContext(tenant);
+            SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
             SupplierInvioceItemCertificatPM entity = new SupplierInvioceItemCertificatPM();
             entity.InvoiceCounterKey = invoiceCounterkey;
             entity.Tenant = tenant;
@@ -642,9 +644,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entity.AttachmentTypeCode = "2";
             entity.ApprovalRequestNumber = requestNumber;
             entity.ChangeSetOp = ChangeSetOperation.Insert;
-            this.EntityParentPM = invoiceItem;
-            this.Update(entity, true);
+            invoiceItem.SupplierInvioceItemCertificats.Add(entity);
+            invoiceItem.ChangeSetOp = ChangeSetOperation.Update;
+            updateService.Update(invoiceItem, true);
         }
+        public void UpdateCertificateWithoutCertificateExemptionTypeCode(SupplierInvioceItemCertificatPM cert, int tenant)
+        {
+            SupplierInvoiceItemQueryService query = new SupplierInvoiceItemQueryService(tenant);
+            SupplierInvoiceItemPM item = query.GetSingle(cert.DeclarationId, cert.InvoiceCounterKey, cert.LineNumber, false, false);
+            if (!item.SupplierInvioceItemCertificats.Contains(cert))
+            {
+                item.SupplierInvioceItemCertificats.Add(cert);
+            }
+            ICustomContext customContext = CustomContext.GetContext(tenant);
+            SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
+            item.ChangeSetOp = ChangeSetOperation.Update;
+            updateService.Update(item, true);
+        }
+
+
         public void FastDeleteMultiParents(SupplierInvoiceKeys entityKeyFields, List<int> supplierInvoiceItemsParentsLines)
         {
             (Repository as Logitude.Customs.Data.Repsitories.SupplierInvioceItemCertificatRepository).FastDeleteMultiParents(entityKeyFields, supplierInvoiceItemsParentsLines);

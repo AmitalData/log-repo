@@ -17,8 +17,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
    public partial class SuppInvoiceItemsAbachStatementUpdateService
     {
+
+        protected override void OnCreating(SuppInvoiceItemsAbachStatementPM entityPM, SupplierInvoiceItemPM entityParentPM)
+        {
+            entityPM.DeclarationId = entityParentPM.DeclarationId;
+            entityPM.InvoiceCounterKey = entityParentPM.CounterKey;
+            entityPM.InvoiceItemLineNumber = entityParentPM.LineNumber;
+
  
-       public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
+            base.OnCreating(entityPM, entityParentPM);
+        }
+
+
+        public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
        {
            (Repository as Logitude.Customs.Data.Repsitories.SuppInvoiceItemsAbachStatementRepository).FastDeleteMulti(entityKeyFields);
        }

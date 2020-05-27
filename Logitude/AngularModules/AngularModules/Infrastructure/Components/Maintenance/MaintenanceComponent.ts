@@ -1254,7 +1254,7 @@ export class MaintenanceComponent {
                     logitudeWindow.Title = "קליטת קובץ אישורים מאיקאה להצהרה";
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 600;
-                    logitudeWindow.Width = 650;
+                    logitudeWindow.Width = 700;
                     logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/ReceiptCertificateFromFileComponent')
                     break;
                 }

@@ -69,6 +69,30 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
+        public int GetDeclarationMaxAmendmentRequestNumber(int tenant)
+        {
+            //var x=  (from a in context.Declarations
+            //         where a.Tenant == tenant
+            //         select Convert.ToInt32(a.AmendmentRequestNumber)).Max();
+
+
+            //  return (from a in context.Declarations
+            //          where  a.Tenant == tenant
+            //          select a).Max(rec => Convert.ToInt32( rec.AmendmentRequestNumber));
+
+            var list = (from a in context.Declarations
+                         where a.Tenant == tenant && a.AmendmentRequestNumber!= null
+                        select a.AmendmentRequestNumber).ToList();
+
+            int max = 0;
+
+            if (list.Count() != 0)
+                max = list.Select(int.Parse).ToList().Max();
+
+            return max;
+        }
+
+
         public void GetDailyStatistic(int tenant,
             out int TotDec,
             out int TotDecPay,
@@ -326,15 +350,15 @@ namespace Logitude.Customs.Data.Repsitories
 
         }
 
-        public Declaration GetDeclarationByFunctionalReferenceID(string declarationNumber,  string functionalReferenceID)
+        public Declaration GetDeclarationByFunctionalReferenceID( string functionalReferenceID)
         {
-            Declaration declarationParent = (from a in context.Declarations
-                                       where declarationNumber == a.DeclarationNumber
-                                       select a).FirstOrDefault();
+            //Declaration declarationParent = (from a in context.Declarations
+            //                           where declarationNumber == a.DeclarationNumber
+            //                           select a).FirstOrDefault();
 
 
             Declaration declaration = (from a in context.Declarations
-                                              where declarationParent.Id == a.AmendmentOriginalDeclartation && functionalReferenceID ==a.AmendmentRequestNumber
+                                              where functionalReferenceID ==a.AmendmentRequestNumber
                                        select a).FirstOrDefault();
 
             return declaration;
