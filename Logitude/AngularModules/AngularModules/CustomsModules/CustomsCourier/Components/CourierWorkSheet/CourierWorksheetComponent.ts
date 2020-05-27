@@ -1744,7 +1744,7 @@ implements OnDestroy
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
-            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            myMessageWindow.Show("לם ניתן לבצע גייטפס העברות ללם מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
 
@@ -1818,7 +1818,7 @@ implements OnDestroy
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי אתר אחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.Title = "שינוי םתר םחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetStorageSiteCodeComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
@@ -1830,7 +1830,7 @@ implements OnDestroy
 
 
         if (this.entityPM.IsReadyForInvoice) {
-            let text = "האם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
+            let text = "הםם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Show(text);
             confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -1886,7 +1886,7 @@ implements OnDestroy
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי םתר םיחסון ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
