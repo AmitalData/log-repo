@@ -505,7 +505,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     {
                         queueservice.InitializeQueue("PrivateLabelApprovalQueue", 0);
                     }
-                    queueservice.Send(new Dictionary<string, string>() { { "Id", data.Id }, { "Tenant", data.Tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+                    queueservice.Send(new Dictionary<string, string>() { { "Id", data.Id }, { "Tenant", data.Tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, data.Tenant);
                     scope.Complete();
 
                     return Request.CreateResponse(HttpStatusCode.OK, data);

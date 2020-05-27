@@ -100,7 +100,7 @@ namespace WebFreight.Web
                 {
                     DbQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue("GeneralWebHookAnalyzer", 0);
-                    queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
+                    queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } }, analyzeQueue.Tenant);
                     queueservice.Complete();
                 }
 

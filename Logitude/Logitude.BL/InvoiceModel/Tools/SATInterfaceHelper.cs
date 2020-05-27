@@ -1543,7 +1543,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             DbQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("SATInterface", 0);
             Dictionary<string, string> param = new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() }, { "CancellationRequest", isCancellation.ToString() } };
-            queueservice.Send(param);
+            queueservice.Send(param, tenant);
 
             if (!isCancellation)
             {

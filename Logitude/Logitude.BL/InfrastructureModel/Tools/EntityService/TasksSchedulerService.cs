@@ -94,7 +94,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.SubmitChanges();
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("SchedularQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", Poco.Version.ToString() } }, null, null, null, Poco.NextRunTimeUTC);
+            queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", Poco.Version.ToString() } }, tenant, null, null, null, Poco.NextRunTimeUTC);
 
         }
 
@@ -123,7 +123,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 theEntityPm.NextRunTimeUTC = theEntityPm.StartDateTimeUTC;
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("SchedularQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", theEntityPm.Version.ToString() } }, null, null, null, theEntityPm.NextRunTimeUTC);
+                queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", theEntityPm.Version.ToString() } }, tenant, null, null, null, theEntityPm.NextRunTimeUTC);
 
             }
             TasksSchedulerMapping.MapEntity(theEntityPm, Poco, isNewEntity);

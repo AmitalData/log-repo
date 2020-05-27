@@ -91,7 +91,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", entityPM.Tenant.ToString() }
-                });
+                }, Tenant);
         }
 
 

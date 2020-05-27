@@ -377,7 +377,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 queueservice.Send(new Dictionary<string, string>() {
                     { "BIReportExecutionLogId", bIReportExecutionLog.Id },
                     { "Tenant", bIReportExecutionLog.Tenant.ToString() }
-                }, null, null, null, null);
+                }, tenant, null, null, null, null);
 
                 return Request.CreateResponse(HttpStatusCode.OK, bIReportXMLData);
             }

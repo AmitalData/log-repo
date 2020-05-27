@@ -126,11 +126,11 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         
                         
-                        queueService.Send(messageProperties, _QueueSendModel.Delay);
+                        queueService.Send(messageProperties, _QueueSendModel.Tenant, _QueueSendModel.Delay);
                     }
                     else
                     {
-                        queueId = queueService.Send(messageProperties);
+                        queueId = queueService.Send(messageProperties, _QueueSendModel.Tenant);
                     }
                     
                     LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:CreateNew:SBQueueName=" + _SBQueueName + "QMId=" + queueId);

@@ -30,7 +30,7 @@ namespace Logitude.Server.Tools.Helpers
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("entitychangequeue", tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", entityChangeId }, { "Tenant", tenant.ToString() }, { "Type", type }, { "IsDelayAutomation", IsDelayAutomation.ToString().ToLower() } }, null, null, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", entityChangeId }, { "Tenant", tenant.ToString() }, { "Type", type }, { "IsDelayAutomation", IsDelayAutomation.ToString().ToLower() } }, tenant, null, null, null, null);
         }
         #endregion
 
@@ -44,7 +44,7 @@ namespace Logitude.Server.Tools.Helpers
 
             DateTime nextRunDate = DateTime.UtcNow.AddMinutes((double)delay);
             TimeSpan delayTime = nextRunDate - DateTime.UtcNow;
-            queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", entityChangeId }, { "Tenant", tenant.ToString() }, { "Type", type }, { "EntityId", entityId }, { "AutomationId", automationId } }, delayTime, null, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", entityChangeId }, { "Tenant", tenant.ToString() }, { "Type", type }, { "EntityId", entityId }, { "AutomationId", automationId } }, tenant, delayTime, null, null, null);
         }
         #endregion
 

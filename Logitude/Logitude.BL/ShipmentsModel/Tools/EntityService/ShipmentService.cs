@@ -1170,7 +1170,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             {
                                 queueservice.InitializeQueue("ImportersShipmentQueue", 0);
                             }
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", entityPM.CustomerId } }, null, entityPM.CustomerId);
+                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", entityPM.CustomerId } }, tenant, null, entityPM.CustomerId);
                         }
                     }
                 }
@@ -1213,7 +1213,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             {
                                 queueservice.InitializeQueue("ImportersShipmentQueue", 0);
                             }
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, null, entityPM.CustomerId);
+                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
                         }
                         else if ((customerTenantAccessInfo == null || customerTenantAccessInfo.HasAccess == false) && !string.IsNullOrEmpty(entityPoco.CustomerShipmentNumber) && !string.IsNullOrEmpty(OldCustomerId))
                         {
@@ -1229,7 +1229,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 {
                                     queueservice.InitializeQueue("ImportersShipmentQueue", 0);
                                 }
-                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", entityPoco.CustomerTenantNumber.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, null, entityPM.CustomerId);
+                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", entityPoco.CustomerTenantNumber.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
 
                             }
                         }
@@ -1245,7 +1245,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             {
                                 queueservice.InitializeQueue("ImportersShipmentQueue", 0);
                             }
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, null, entityPM.CustomerId);
+                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, tenant, null, entityPM.CustomerId);
                         }
                     }
                     EntityStatusRepository entityStatusRep = new EntityStatusRepository(tenant);
@@ -1256,7 +1256,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         {
                             IQueueService queueservice = new DbQueueService();
                             queueservice.InitializeQueue("ForwarderShipmentQueue", 0);
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant);
                         }
                        
                     }
@@ -2377,7 +2377,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                                 IQueueService queueservice = new DbQueueService();
                                 queueservice.InitializeQueue("AgentsSharedDocumentQueue", tenant);
-                                queueservice.Send(new Dictionary<string, string>() { { "EntityId", agentSharedDocument.Id }, { "Tenant", sourceAgentTenantPOCO.Id.ToString() }, { "AgentTenant", agentSharedDocument.Tenant.ToString() } }, null, null, null, null);
+                                queueservice.Send(new Dictionary<string, string>() { { "EntityId", agentSharedDocument.Id }, { "Tenant", sourceAgentTenantPOCO.Id.ToString() }, { "AgentTenant", agentSharedDocument.Tenant.ToString() } }, tenant, null, null, null, null);
 
 
                                 //using (TransactionScope scope = TransactionFactory.GetTransaction())
@@ -3234,7 +3234,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ImporterApprovalReceivedQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, tenant, null, null);
         }
 
         private void AddPaymentReceivedToQueue()

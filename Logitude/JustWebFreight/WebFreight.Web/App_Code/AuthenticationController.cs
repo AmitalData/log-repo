@@ -1769,7 +1769,7 @@ namespace WebFreight.Web
                 DbQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("MobileSMS", 0);
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "LogId", commLog.Id }, { "Tenant", tenant.ToString() } };
-                queueservice.Send(param);
+                queueservice.Send(param, tenant);
 
                 return GetContactMaskedMobileNumber(loggedContact);
             }

@@ -394,7 +394,7 @@ namespace Logitude.CRM.BL.WorkRoles
                     myTimeSpan = myNearestDueDate.Value - myCreateDate;
                     Dictionary<string, string> param = new Dictionary<string, string>() { { "Tenant", Tenant.ToString() }, { "TicketId", myTicket.Id.ToString() } };
 
-                    queueservice.Send(param, myTimeSpan);
+                    queueservice.Send(param, Tenant, myTimeSpan);
                 }
             }
 
